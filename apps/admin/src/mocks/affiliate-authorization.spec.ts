@@ -53,7 +53,15 @@ describe('REQ-312 Affiliate MSW rejects an already-issued session after account 
     [
       '/admin/affiliate/policy',
       'PUT',
-      { defaultRate: 31, cookieDays: 45, fundraisingRate: 10, terms: 'Test' },
+      {
+        defaultRate: 31,
+        yearOneRate: 50,
+        annualDecrease: 10,
+        minimumRate: 20,
+        cookieDays: 45,
+        fundraisingRate: 10,
+        terms: 'Test',
+      },
     ],
     ['/admin/affiliates/m1/payouts', 'POST', { monthKey: '2026-09' }],
     ['/admin/affiliate/commissions/export', 'POST', { ids: ['demo-referral-c1'] }],

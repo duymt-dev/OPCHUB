@@ -31,6 +31,9 @@ afterEach(cleanup);
 
 const value: AffiliatePolicy = {
   defaultRate: 20,
+  yearOneRate: 50,
+  annualDecrease: 10,
+  minimumRate: 20,
   cookieDays: 30,
   fundraisingRate: 10,
   terms: 'Điều khoản từ API',
@@ -91,6 +94,9 @@ describe('REQ-308 REQ-312 policy form preserves ver2 rules and editable API term
     await waitFor(() => expect(api.saveAffiliatePolicy).toHaveBeenCalledTimes(1));
     expect(api.saveAffiliatePolicy).toHaveBeenCalledWith({
       defaultRate: 27,
+      yearOneRate: 50,
+      annualDecrease: 10,
+      minimumRate: 20,
       cookieDays: 45,
       fundraisingRate: 10,
       terms: 'Điều khoản đã sửa',
@@ -109,7 +115,7 @@ describe('REQ-308 REQ-312 policy form preserves ver2 rules and editable API term
     expect(fund.textContent).toContain(
       '= 1.500.000đ / Gói Gọi vốn 15.000.000đ · ghi nhận khi Admin duyệt',
     );
-    expect(screen.queryAllByRole('spinbutton')).toHaveLength(2);
+    expect(screen.queryAllByRole('spinbutton')).toHaveLength(5);
     expect(screen.queryByText(/thành viên 600\.000đ/)).toBeNull();
   });
 
@@ -199,6 +205,9 @@ describe('REQ-308 REQ-312 policy form preserves ver2 rules and editable API term
       await waitFor(() => expect(api.saveAffiliatePolicy).toHaveBeenCalledTimes(2));
       expect(api.saveAffiliatePolicy).toHaveBeenLastCalledWith({
         defaultRate: 27,
+        yearOneRate: 50,
+        annualDecrease: 10,
+        minimumRate: 20,
         cookieDays: 45,
         fundraisingRate: 10,
         terms: 'Draft after validation failure',

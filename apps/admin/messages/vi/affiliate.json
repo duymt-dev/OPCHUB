@@ -1,4 +1,12 @@
 {
+  "sharingPolicy": {
+    "title": "Quy tắc chia sẻ doanh thu thực thu · Media Soft ↔ GĐ Vùng",
+    "scope": "Media Soft chỉ chia sẻ với GĐ Vùng · chỉ tính thành viên qua link affiliate · GĐ Vùng tự phân chia cho trưởng nhóm & affiliate cấp dưới",
+    "yearOneRate": "GĐ Vùng năm 1",
+    "annualDecrease": "Giảm mỗi năm từ năm 2",
+    "minimumRate": "Mức duy trì tối thiểu (chi phí vận hành)",
+    "invalid": "Nhập số nguyên từ 0 đến 100"
+  },
   "title": "Affiliate",
   "directors": {
     "title": "Cấu hình Giám đốc Vùng",

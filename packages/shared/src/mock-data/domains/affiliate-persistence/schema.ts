@@ -74,7 +74,13 @@ export const affiliateSnapshotSchema = z
     seen: entries(integer),
     seq: integer,
     dbSeq: integer,
-    policy: affiliatePolicySchema,
+    // Sharing policy lives only in revenue.policy. Keep legacy financial snapshots readable.
+    policy: z.object({
+      defaultRate: affiliatePolicySchema.shape.defaultRate,
+      cookieDays: affiliatePolicySchema.shape.cookieDays,
+      fundraisingRate: affiliatePolicySchema.shape.fundraisingRate,
+      terms: affiliatePolicySchema.shape.terms,
+    }),
     snapshots: entries(
       z.strictObject({ paidAt: z.string().nullable(), bank: affiliateBankSchema.nullable() }),
     ),

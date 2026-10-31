@@ -15,6 +15,7 @@ import {
   setAffiliateRates,
 } from '../api';
 import { affiliateMoney } from '../format';
+import { revenueKeys } from '../revenue-sharing-api';
 import { useAffiliateAccess } from './use-affiliate-access';
 import { useCommissionStatusWrites } from './use-commission-status-writes';
 
@@ -70,7 +71,7 @@ export function useAffiliateWrites() {
     onSuccess: async (result) => {
       if (!result) return;
       toast(t('toast.policy'));
-      await refresh();
+      await Promise.all([refresh(), qc.invalidateQueries({ queryKey: revenueKeys.all })]);
     },
     onError: fail,
   });

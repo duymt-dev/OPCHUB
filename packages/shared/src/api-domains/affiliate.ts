@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { pageSchema } from '../api';
 import { pageQuerySchema } from './common';
+import { revenueSharingPolicySchema } from './revenue-sharing';
 
 export const AFFILIATE_BANKS = [
   'Vietcombank',
@@ -59,13 +60,15 @@ export const affiliateBankSchema = z.object({
     .pipe(z.string().regex(/^[A-Z ]+$/, 'Tên chủ tài khoản chỉ gồm chữ cái')),
 });
 export type AffiliateBank = z.infer<typeof affiliateBankSchema>;
-export const affiliatePolicySchema = z.object({
-  defaultRate: z.number().int().min(1).max(50),
-  cookieDays: z.number().int().min(1).max(365),
-  /** D-70: % hoa hồng Gói Gọi vốn, ghi khi Admin duyệt */
-  fundraisingRate: z.number().int().min(1).max(50),
-  terms: z.string().max(5000),
-});
+export const affiliatePolicySchema = revenueSharingPolicySchema
+  .safeExtend({
+    defaultRate: z.number().int().min(1).max(50),
+    cookieDays: z.number().int().min(1).max(365),
+    /** D-70: % hoa hồng Gói Gọi vốn, ghi khi Admin duyệt */
+    fundraisingRate: z.number().int().min(1).max(50),
+    terms: z.string().max(5000),
+  })
+  .strip();
 export type AffiliatePolicy = z.infer<typeof affiliatePolicySchema>;
 export const affiliateStatsSchema = z.object({
   clicks30d: z.number().int().min(0),

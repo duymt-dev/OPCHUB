@@ -33,6 +33,9 @@ describe('Affiliate policy API (TIP-V2-402)', () => {
     const { token, user } = await affiliateAdminToken(t);
     const next = {
       defaultRate: 27,
+      yearOneRate: 50,
+      annualDecrease: 10,
+      minimumRate: 20,
       cookieDays: 45,
       fundraisingRate: 12,
       terms: 'Điều khoản Affiliate thử nghiệm',

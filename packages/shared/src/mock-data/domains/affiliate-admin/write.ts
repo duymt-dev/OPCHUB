@@ -17,8 +17,12 @@ export const mockAffiliatePolicy = readMockAffiliatePolicy;
 export function saveMockAffiliatePolicy(actor: string, input: unknown) {
   const parsed = affiliatePolicySchema.safeParse(input);
   if (!parsed.success) return invalidAffiliateInput(parsed.error);
+  const before = mockAffiliatePolicy();
   replaceMockAffiliatePolicy(parsed.data);
-  logSetting(actor, 'affiliate.policy_update', '1', 'Cập nhật chính sách Affiliate', 'affiliate');
+  logSetting(actor, 'affiliate.policy_update', '1', 'Cập nhật chính sách Affiliate', 'affiliate', {
+    before,
+    after: mockAffiliatePolicy(),
+  });
   return ok(mockAffiliatePolicy());
 }
 

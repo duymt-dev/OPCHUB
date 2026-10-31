@@ -511,6 +511,48 @@ Keep the required visible empty-result feedback even where the prototype only
 shows headers; do not suppress data/controls or weaken parity for a passing image.
 No shared shell/table component, API, financial data or policy changes.
 
+### Configurable sharing policy slice (REQ-617 / D-119)
+
+Completion audit found the three values stored/read but not editable. Extend the
+existing policy GET/PUT and form; do not defer this explicit802 requirement to803.
+The legacy defaultRate/cookieDays/fundraisingRate/terms fields remain intact.
+Files (modify unless marked create):
+
+- `packages/shared/src/api-domains/affiliate.ts`; `affiliate-policy.spec.ts` (create).
+- `apps/server/src/modules/affiliate/repositories/policy.repository.ts`.
+- `apps/server/test/affiliate/policy.int.spec.ts`; `revenue-policy.int.spec.ts` (create).
+- `packages/shared/src/mock-data/domains/affiliate-policy.ts`,
+  `affiliate-admin/write.ts`, `affiliate-persistence/schema.ts`,
+  `affiliate-persistence/snapshot.ts`, `affiliate-persistence/snapshot.spec.ts`;
+  `revenue-sharing/policy.spec.ts` (create).
+- `apps/admin/src/features/affiliate/components/revenue-policy-fields.tsx`,
+  `revenue-policy-fields.module.css`, `revenue-policy-form.spec.tsx` (create);
+  `policy-form.tsx`, `policy-form.spec.tsx` (modify).
+- Affiliate hooks `use-affiliate-policy-form.ts`, `use-affiliate-writes.ts`,
+  `use-affiliate-writes.spec.tsx`, `use-affiliate-queries.spec.tsx`; `api.spec.ts`.
+- `apps/admin/messages/vi/affiliate.json` (add translations under wire lock).
+- `apps/admin/src/mocks/affiliate-handlers.spec.ts`, `affiliate-authorization.spec.ts`
+  (complete expanded policy payload fixtures).
+- `apps/admin/src/mocks/revenue-policy.spec.ts` (create: HTTP policy validation,
+  permissions and consistent dashboard policy, separate from browser evidence).
+- `e2e/behavior/regional-revenue-policy.spec.ts` (create: same-assertion MSW/native
+  save, validation, live dashboard refresh, historical ledger and reload at both widths).
+
+Given an authorized Admin, saving all three percentages persists them with one
+before/after audit; missing/invalid/fractional/out-of-range/floor-above-first values
+return field errors without writes. View-only users cannot update. Given receipts
+captured before a policy edit, delayed delivery and existing paid/recorded rows
+retain their snapshots; future receipts use the new policy. Mock policy reads,
+dashboard, capture and persisted reload must use one canonical sharing policy,
+including lossless restoration of legacy fake financial snapshots.
+
+Tests: `affiliate-policy.spec.ts`, `revenue-policy.int.spec.ts`, mock
+`revenue-sharing/policy.spec.ts`, `revenue-policy-form.spec.tsx` and affected prior
+suites. Remaining browser/parity policy states are required before TIP closure;
+do not claim them from component/API tests. No migration/index needed: existing
+singleton policy PK and columns suffice. No recalculation, payout policy change,
+fallback production rates or removal of803 work.
+
 Native follow-up: exact72px row assertion exposed AntD injection order overriding
 the owning table's13px font to14px. Preserve the assertion and fix feature-local
 selector specificity; do not special-case native expectations. Also modify

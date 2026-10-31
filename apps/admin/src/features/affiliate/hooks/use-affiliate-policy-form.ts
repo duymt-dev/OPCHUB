@@ -5,7 +5,14 @@ import { Form } from 'antd';
 import { fieldsOf } from '@/lib/api-errors';
 import { useAffiliateWrites } from './use-affiliate-writes';
 
-const POLICY_FIELDS = ['defaultRate', 'cookieDays', 'terms'] as const;
+const POLICY_FIELDS = [
+  'defaultRate',
+  'cookieDays',
+  'terms',
+  'yearOneRate',
+  'annualDecrease',
+  'minimumRate',
+] as const;
 
 export function useAffiliatePolicyForm() {
   const [form] = Form.useForm<AffiliatePolicy>();
@@ -16,8 +23,10 @@ export function useAffiliatePolicyForm() {
       form.setFields(
         result.error.issues.flatMap((issue) => {
           const key = issue.path[0];
-          if (key !== 'defaultRate' && key !== 'cookieDays' && key !== 'terms') return [];
-          return [{ name: key, errors: [issue.message] }];
+          return POLICY_FIELDS.filter((name) => name === key).map((name) => ({
+            name,
+            errors: [issue.message],
+          }));
         }),
       );
       return;

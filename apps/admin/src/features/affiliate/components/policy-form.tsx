@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useAffiliatePolicyForm } from '../hooks/use-affiliate-policy-form';
 import type { AffiliatePolicyFormProps } from '../types';
 import { PolicyFields } from './policy-fields';
+import { RevenuePolicyFields } from './revenue-policy-fields';
 import { PolicyRules } from './policy-rules';
 import { PolicyTerms } from './policy-terms';
 import layout from './policy-layout.module.css';
@@ -23,6 +24,7 @@ export function PolicyForm({ value }: AffiliatePolicyFormProps) {
       onFinish={submit}
       disabled={policy.isPending}
     >
+      <RevenuePolicyFields />
       <PolicyFields />
       <PolicyRules rate={value.defaultRate} />
       <div className={layout.actions}>

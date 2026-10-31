@@ -78,7 +78,7 @@ export function restoreMockAffiliateSnapshot(input: unknown): void {
   state.seq = data.seq;
   extra.snapshots = new Map(data.snapshots);
   extra.receipts = new Map(data.receipts);
-  replaceMockAffiliatePolicy(data.policy);
+  replaceMockAffiliatePolicy({ ...readMockAffiliatePolicy(), ...data.policy });
   restoreMockAffiliateScenarioSeeded(data.demoSeeded);
   restoreMockAffiliateWebhooks(data.webhooks);
   restoreMockWelcomeSeen(data.welcomeSeen);

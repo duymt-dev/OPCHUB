@@ -17,7 +17,15 @@ vi.mock('../api', async (original) => ({
   exportAffiliates: vi.fn(),
 }));
 const all = ['affiliate.view', 'affiliate.action', 'affiliate.payout'];
-const policy = { defaultRate: 20, cookieDays: 30, fundraisingRate: 10, terms: '' };
+const policy = {
+  defaultRate: 20,
+  yearOneRate: 50,
+  annualDecrease: 10,
+  minimumRate: 20,
+  cookieDays: 30,
+  fundraisingRate: 10,
+  terms: '',
+};
 const intent = { id: 'a1', month: '2026-09', key: 'intent-stable' };
 
 beforeEach(() => {

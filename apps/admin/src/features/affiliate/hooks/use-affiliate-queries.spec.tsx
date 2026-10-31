@@ -58,6 +58,9 @@ beforeEach(() => {
   });
   vi.mocked(api.fetchAffiliatePolicy).mockResolvedValue({
     defaultRate: 20,
+    yearOneRate: 50,
+    annualDecrease: 10,
+    minimumRate: 20,
     fundraisingRate: 10,
     cookieDays: 30,
     terms: '',
@@ -214,6 +217,9 @@ describe('REQ-312 permission-gated Affiliate query orchestration', () => {
   it('uses the shared policy query for actual attribution days and refreshes after invalidation', async () => {
     vi.mocked(api.fetchAffiliatePolicy).mockResolvedValue({
       defaultRate: 20,
+      yearOneRate: 50,
+      annualDecrease: 10,
+      minimumRate: 20,
       fundraisingRate: 10,
       cookieDays: 45,
       terms: '',
@@ -227,6 +233,9 @@ describe('REQ-312 permission-gated Affiliate query orchestration', () => {
     expect(api.fetchAffiliatePolicy).toHaveBeenCalledTimes(1);
     vi.mocked(api.fetchAffiliatePolicy).mockResolvedValue({
       defaultRate: 20,
+      yearOneRate: 50,
+      annualDecrease: 10,
+      minimumRate: 20,
       fundraisingRate: 10,
       cookieDays: 17,
       terms: '',

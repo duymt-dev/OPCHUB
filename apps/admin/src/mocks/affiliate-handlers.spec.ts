@@ -234,6 +234,9 @@ describe('TIP-V2-404 Affiliate Admin MSW contract', () => {
       (
         await request('/admin/affiliate/policy', 'PUT', {
           defaultRate: 0,
+          yearOneRate: 50,
+          annualDecrease: 10,
+          minimumRate: 20,
           cookieDays: 30,
           fundraisingRate: 10,
           terms: '',
@@ -244,6 +247,9 @@ describe('TIP-V2-404 Affiliate Admin MSW contract', () => {
       (
         await request('/admin/affiliate/policy', 'PUT', {
           defaultRate: 30,
+          yearOneRate: 50,
+          annualDecrease: 10,
+          minimumRate: 20,
           cookieDays: 45,
           fundraisingRate: 10,
           terms: 'Điều khoản',
@@ -268,6 +274,9 @@ describe('TIP-V2-404 Affiliate Admin MSW contract', () => {
     resetMockDb();
     expect(await (await request('/admin/affiliate/policy')).json()).toMatchObject({
       defaultRate: 20,
+      yearOneRate: 50,
+      annualDecrease: 10,
+      minimumRate: 20,
       cookieDays: 30,
     });
   });

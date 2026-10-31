@@ -62,6 +62,9 @@ describe('Affiliate financial persistence boundary for the MSW bridge (not brows
     expect(
       saveMockAffiliatePolicy('admin', {
         defaultRate: 31,
+        yearOneRate: 50,
+        annualDecrease: 10,
+        minimumRate: 20,
         cookieDays: 45,
         fundraisingRate: 10,
         terms: 'Policy',
@@ -133,6 +136,9 @@ describe('Affiliate financial persistence boundary for the MSW bridge (not brows
     expect(
       saveMockAffiliatePolicy('admin', {
         defaultRate: 31,
+        yearOneRate: 50,
+        annualDecrease: 10,
+        minimumRate: 20,
         cookieDays: 45,
         fundraisingRate: 10,
         terms: 'Persisted',

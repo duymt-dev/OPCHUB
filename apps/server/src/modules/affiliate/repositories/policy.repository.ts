@@ -3,7 +3,15 @@ import type { DbTx } from '@opchub/db';
 import type { AffiliatePolicy } from '@opchub/shared/api-domains';
 import { PrismaService } from '@/common/prisma/prisma.service';
 
-const SELECT = { defaultRate: true, cookieDays: true, fundraisingRate: true, terms: true } as const;
+const SELECT = {
+  defaultRate: true,
+  cookieDays: true,
+  fundraisingRate: true,
+  terms: true,
+  yearOneRate: true,
+  annualDecrease: true,
+  minimumRate: true,
+} as const;
 @Injectable()
 export class PolicyRepository {
   constructor(private readonly prisma: PrismaService) {}
@@ -22,7 +30,9 @@ export class PolicyRepository {
   async lock(tx: DbTx): Promise<AffiliatePolicy> {
     const [row] = await tx.$queryRaw<AffiliatePolicy[]>`
       SELECT default_rate AS "defaultRate",cookie_days AS "cookieDays",
-        fundraising_rate AS "fundraisingRate",terms FROM affiliate_policy
+        fundraising_rate AS "fundraisingRate",terms,
+        year_one_rate AS "yearOneRate",annual_decrease AS "annualDecrease",
+        minimum_rate AS "minimumRate" FROM affiliate_policy
       WHERE id=1 FOR UPDATE`;
     if (!row) throw new Error('Thiếu chính sách Affiliate bắt buộc');
     return row;

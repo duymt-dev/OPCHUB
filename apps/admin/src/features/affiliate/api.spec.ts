@@ -108,7 +108,15 @@ describe('REQ-312 Affiliate Admin API contract wiring', () => {
   });
 
   it('uses policy GET/PUT and audited export endpoints with the CSV response schema', async () => {
-    const policy = { defaultRate: 20, cookieDays: 30, fundraisingRate: 10, terms: 'Điều khoản' };
+    const policy = {
+      defaultRate: 20,
+      yearOneRate: 50,
+      annualDecrease: 10,
+      minimumRate: 20,
+      cookieDays: 30,
+      fundraisingRate: 10,
+      terms: 'Điều khoản',
+    };
     await fetchAffiliatePolicy();
     await saveAffiliatePolicy(policy);
     await exportCommissions({ ids: ['c1'], status: 'recorded' });
