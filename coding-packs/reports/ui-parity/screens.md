@@ -415,3 +415,7 @@ Trạng thái ver2 đã có sẵn id cũ (không thêm): popup V4 + 6 dịch v�
 | ID | Area | State | Prototype actions | App route | Viewports |
 |---|---|---|---|---|---|
 | D-V46-GDV-SHARING | Admin | Default sharing ledger (AF0, not opt-in functional receipts) | Login Admin → Mạng lưới Affiliate → GĐ Vùng | `/affiliate?tab=gdv` | 1440, 390 |
+
+| D-V46-GDV-DETAIL | Admin | Expanded north ledger/history (default AF0) | Sharing → click Trần Quốc Bảo | `/affiliate?tab=gdv` | 1440, 390 |
+| D-V46-GDV-SEARCH | Admin | Central region only | Sharing → search Miền Trung | `/affiliate?tab=gdv&q=Miền+Trung` | 1440, 390 |
+| D-V46-GDV-EMPTY | Admin | Search with no directors | Sharing → search ZZZ-NO-DIRECTOR | `/affiliate?tab=gdv&q=ZZZ-NO-DIRECTOR` | 1440, 390 |

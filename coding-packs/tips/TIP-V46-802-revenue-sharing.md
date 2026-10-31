@@ -379,3 +379,14 @@ through the real relay, retaining events and respecting leases/backoff. Refuse
 non-test DB/Redis and fail teardown if pending work cannot progress. Dedicated
 native tests prove actual ledger effects, replay, multi-batch drain, unrelated
 event preservation and invalid/leased-event failure. No fake dispatch or delete.
+
+### P7 expanded-state parity inventory (31/10/2026)
+
+Exact scope: `e2e/parity/scenarios/admin-revenue-sharing.ts`, parity
+`screens.md`, `results.md`, `results.json`, generated FAIL diff PNGs, new
+`reports/TIP-V46-802-parity-states.md` and progress. Add default AF0 states for
+expanded north-director ledger/history, central-region search and empty search
+at1440/390. Keep existing default capture, thresholds and financial data unchanged.
+Use visible public UI only; assert the requested state before capture. Existing
+sharing-flow and responsive-search behavior tests remain applicable unchanged.
+This extends required coverage, not a waiver for missing histories or payout UI.

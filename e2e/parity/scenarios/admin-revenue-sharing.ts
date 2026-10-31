@@ -1,21 +1,56 @@
-import { nav, tap, waitText } from '../steps';
-import type { Scenario } from '../types';
+import { expect } from '@playwright/test';
+import { nav, tap, tick, type, waitText } from '../steps';
+import type { Scenario, StepCtx } from '../types';
 
-/** P7 default dataset, not the optional functional receipt fixture used by behavior tests. */
+async function sharing(c: StepCtx) {
+  await nav(c, 'Mạng lưới Affiliate');
+  if (c.side === 'app') await c.page.getByRole('tab', { name: /^GĐ Vùng/ }).click();
+  else await tap(c, 'GĐ Vùng');
+  await waitText(c, 'Tổng phần GĐ Vùng');
+  await waitText(c, 'Trần Quốc Bảo');
+  await c.page.waitForLoadState('networkidle');
+}
+
+async function search(c: StepCtx, query: string) {
+  await sharing(c);
+  await type(c, 'Tìm GĐ Vùng hoặc vùng...', query);
+  await tick(c, 400); // Run the existing300ms URL debounce, never change its timeout.
+  await c.page.waitForLoadState('networkidle');
+  await expect(
+    c.page.getByText('Trần Quốc Bảo', { exact: true }).filter({ visible: true }),
+  ).toHaveCount(0);
+  await expect(
+    c.page.getByText('Phạm Thu Hà', { exact: true }).filter({ visible: true }),
+  ).toHaveCount(0);
+}
+
+const scenario = (id: string, name: string, steps: NonNullable<Scenario['steps']>): Scenario => ({
+  id,
+  name,
+  demo: 'affiliate',
+  start: 'admin',
+  fullPage: true,
+  steps,
+});
+
+/** Default AF0 dataset, not the optional functional receipt fixture used by behavior tests. */
 export const ADMIN_REVENUE_SHARING: Scenario[] = [
-  {
-    id: 'D-V46-GDV-SHARING',
-    name: 'GĐ Vùng · sổ chia sẻ mặc định',
-    demo: 'affiliate',
-    start: 'admin',
-    fullPage: true,
-    steps: async (c) => {
-      await nav(c, 'Mạng lưới Affiliate');
-      if (c.side === 'app') await c.page.getByRole('tab', { name: /^GĐ Vùng/ }).click();
-      else await tap(c, 'GĐ Vùng');
-      await waitText(c, 'Tổng phần GĐ Vùng');
-      await waitText(c, 'Trần Quốc Bảo');
-      await c.page.waitForLoadState('networkidle');
-    },
-  },
+  scenario('D-V46-GDV-SHARING', 'GĐ Vùng · sổ chia sẻ mặc định', sharing),
+  scenario('D-V46-GDV-DETAIL', 'GĐ Vùng · khoản ghi nhận và lịch sử Bảo', async (c) => {
+    await sharing(c);
+    await tap(c, 'Trần Quốc Bảo');
+    await waitText(c, 'Khoản ghi nhận cho GĐ Vùng');
+    await waitText(c, 'Lịch sử chi trả');
+    await c.page.waitForLoadState('networkidle');
+  }),
+  scenario('D-V46-GDV-SEARCH', 'GĐ Vùng · tìm Miền Trung', async (c) => {
+    await search(c, 'Miền Trung');
+    await waitText(c, 'Lê Minh Hải');
+  }),
+  scenario('D-V46-GDV-EMPTY', 'GĐ Vùng · tìm không có kết quả', async (c) => {
+    await search(c, 'ZZZ-NO-DIRECTOR');
+    await expect(
+      c.page.getByText('Lê Minh Hải', { exact: true }).filter({ visible: true }),
+    ).toHaveCount(0);
+  }),
 ];
