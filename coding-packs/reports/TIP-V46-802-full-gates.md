@@ -1,5 +1,16 @@
 # V46-802 — full gate checkpoint (not completion)
 
+Latest presentation checkpoint **72345a1e**: configured customer-year/
+per-plan matrices and default D-84-POL **0.409446%/0.846509% PASS** at1440/390.
+Same browser checks6/6 each mode; final Admin production builds both PASS.
+Root lint/typecheck/unit **2237passed +2existing skips**/depcheck PASS. [Presentation evidence](TIP-V46-802-policy-preview.md).
+This supersedes the missing-presentation/default-policy FAIL statement below;
+it does not cover every policy/payout substate or waive the historical full
+integration failure. Final corresponding full regression/native-dev acceptance
+remain required. Test base restored, pending `[]`, original native HOLD retained.
+
+## Prior policy write checkpoint
+
 Latest implementation checkpoint **d7e080c1** closes the3 sharing-policy
 write-path gap: Admin/API/MSW save, validation/permissions/audit, immutable
 receipts and reload. Root2225passed+2existing skips/lint/typecheck/depcheck PASS;
