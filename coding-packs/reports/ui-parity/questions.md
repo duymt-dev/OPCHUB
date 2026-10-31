@@ -997,6 +997,12 @@ cancellation browser2/2 each mode proves no writes/history loss only. No cutoff
 decision or waiver inferred; continue other goal work. See
 [action-state evidence](../TIP-V46-802-action-states.md).
 
+Closure clarification requested after the0741e854 acceptance audit: choose the
+actual final behavior, not a visual waiver — prototype one-click all outstanding
+periods including the current month, or ended-month-only selection/confirmation.
+No answer has been recorded, no option is assumed approved, and neither existing
+financial code nor prototype acceptance expectations have been silently changed.
+
 ### Q-V46-802-3 — prototype history has no equivalent actual receipt provenance
 
 The prototype assigns synthetic customer years to its AF0 rows and marks older
@@ -1059,3 +1065,20 @@ not fix this boundary defect. Record for a bounded corrective task; no unrelated
 project-domain code change inside revenue-sharing TIP and no clock manipulation,
 skipped test or assertion relaxation. Continue802 UI/acceptance work; not a goal
 block. Full gate remains FAIL until a scoped repair and appropriate checks pass.
+
+Read-only deterministic reproduction at35742320 calls the actual exported
+`activeWindow` through Node's TypeScript stripping, without a DB/server/clock
+change. All cases add6months:
+
+| Start UTC | Actual end UTC | Actual month difference |
+|---|---|---:|
+|2026-10-31T00:00:00Z |2027-05-01T00:00:00Z |7 |
+|2026-08-31T00:00:00Z |2027-03-03T00:00:00Z |7 |
+|2027-08-31T00:00:00Z |2028-03-02T00:00:00Z |7 |
+|2026-04-30T00:00:00Z |2026-10-30T00:00:00Z |6 |
+
+Thus the failure is not limited to today's October boundary; a bounded repair
+needs non-leap February, leap February and an unchanged valid-day control.
+Log:`e2e/.parity-out/v46-802-calendar-scope-35742320.log`,exit0 (diagnostic execution,
+**not** a passing acceptance test). Requested explicit scope permission for this
+project-domain repair and its affected gates. No approval or code fix is inferred.
