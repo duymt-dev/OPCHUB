@@ -1,5 +1,59 @@
 # V46-802 — full gate checkpoint (not completion)
 
+## Current full MSW regression — d6ab302c
+
+**Terminal exit0:356passed +4existing skips,360collected,22.7m**, runner10437.
+Root `pnpm e2e`, two workers, no filter, retry, new skip or relaxed assertion.
+This supersedes the historical351/4 run for current shared-fixture/policy scope.
+Compared with355previous cases, the five additions are2default-history cases,
+2payout-cancellation cases and1policy-persistence case. The4existing skips remain
+3server-only DLPL stub cases and1live-provider case; no external provider called.
+
+Command environment:
+`NEXT_DIST_DIR=.next-v46802-msw-build NEXT_PUBLIC_API_MOCKING=msw
+NEXT_PUBLIC_API_URL=/v1 NEXT_PUBLIC_PORTAL_URL=http://localhost:3000
+API_PROXY_URL='' PORTAL_PORT=3000 ADMIN_PORT=3001 PARITY_WORKERS=2
+E2E_TARGET=msw pnpm e2e`.
+Log: `e2e/.parity-out/v46-802-full-msw-current-d6ab302c.log`.
+
+Includes current policy preview/validation/save/reload, cross-origin financial
+persistence, default AF0 history/pagination, responsive sharing, cancellation,
+years/revocation/retained-bank/payout/reload, and all existing801 lifecycle/mail/
+province/Portal checks. Slow bot files10.3m and5.5m finished normally. No source,
+fixture or active build was changed during the accepted run. Root precommit
+lint/typecheck/unit2237+2existing skips/depcheck at586d9010 remains applicable:
+only documentation has changed since, not another code implementation.
+
+### Build provenance correction
+
+The first attempt (`v46-802-full-msw-d6ab302c.log`, runner94877) was deliberately
+stopped, exit1, after discovering stale Portal build provenance. It is incomplete,
+not a failed-test diagnosis or accepted full gate. Verified runnerPID24288 and
+only its descendant process tree were stopped; held services/prototype untouched.
+
+Portal imports the shared financial browser bridge, affiliate demo and persisted
+snapshot/policy schema. Its old build atff1deb38 predatesd880150b/d7e080c1; absence
+of Portal-local source changes does **not** make that output current. Rebuilt
+Portal atd6ab302c using the environment above and `pnpm build --filter=@opchub/portal
+--force --env-mode=loose --concurrency=1`:1/1tasks,0cached,27.42s,exit0,
+runner73928. Log:`e2e/.parity-out/v46-802-portal-current-build-d6ab302c.log`.
+No ignored build output or secret is committed. Admin production output remains
+72345a1e: `git diff 72345a1e..d6ab302c -- apps packages` is empty. The new full
+run started only after the old runner and Portal build were terminal.
+
+This corrects earlier blanket Portal-output retention claims for MSW. Native
+Portal output still predates these shared changes: revalidate/rebuild its affected
+scope before final native-dev acceptance. Do not call this MSW-only run native
+or image-parity proof. Existing actual payout parity FAIL and Q-V46-802-2 remain;
+full native integration calendar failure Q4 also remains. Not TIP-DONE.
+
+No DB/Redis seed/reset needed for this MSW run. Owned3000/3001 listeners released;
+no running browser handles. API28484/socket33408/worker16200 retain original
+30October start times and binaries. `gh auth status` still reports no login;
+existing pushed stacked compare link remains the authorized PR fallback.
+
+## Prior action-state checkpoint
+
 Latest coverage checkpoint **586d9010**: policy draft55/10/25 visual PASS
 0.670272%/1.477480%; actual payout action FAIL85.329244%/38.096884% at1440/390.
 Prototype immediate all-due payout versus app ended-month confirmation remains

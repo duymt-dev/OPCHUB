@@ -1071,3 +1071,31 @@ native mailbox links still verified. P7 default measured7.80%/16.04% FAIL at
 1440/390; default financial data and mobile geometry remain outstanding, with
 diff PNGs retained. No full gate/native-dev acceptance claim. See
 `reports/TIP-V46-802-retained-ui.md`.
+
+### V46-802 current policy / receipt / browser traceability (PARTIAL)
+
+This supersedes missing implementation/coverage statements in the earlier802
+checkpoints, not their recorded failures. Sourcesd880150b (default chronology),
+d7e080c1 (policy writes),72345a1e (policy matrices),586d9010 (action tests).
+
+| Requirement | Current authoritative tests | Evidence / remaining gap |
+|---|---|---|
+| REQ-617 / D-119 configurable sharing percentages | `apps/server/test/affiliate/revenue-policy.int.spec.ts`; shared `api-domains/affiliate-policy.spec.ts`; `e2e/behavior/regional-revenue-policy.spec.ts` | Native permission/validation/audit and frozen paid/recorded/pending receipts; save/reload and unchanged ledger/history on both modes. Policy write report records11/11native and3/3browser each mode. |
+| REQ-617 configured customer-year and plan presentation | Admin `policy-preview.spec.ts` and policy component suites; `e2e/behavior/affiliate-policy-responsive.spec.ts` | Actual floor/constant/zero/draft/whole-VND/loading/error/keyboard cases; final browser6/6each mode in policy preview report. Default policy visual0.409446%/0.846509%PASS. |
+| D-119 / D-122 coherent AF0 first receipts and payout history | Shared `mock-data/domains/revenue-sharing/affiliate-demo.spec.ts`; DB `revenue-affiliate-demo.int.spec.ts`, `revenue-demo.int.spec.ts`; `e2e/behavior/regional-revenue-default.spec.ts` | Default history/pagination/reload, not invented runtime entitlement. Default-demo report records37/37shared,18/18DB,5/5browser each mode. |
+| REQ-617 cancellation safety | `e2e/behavior/regional-revenue-payout-dialog.spec.ts` | 1440/390, Escape/Close, zero payout POSTs, bank identity and complete ledger/history after reload:2/2each mode. Does not prove payout cutoff or one-click behavior. |
+| REQ-617 changed visual states | `e2e/parity/scenarios/admin-revenue-policy.ts`, `admin-revenue-sharing.ts` | Draft55/10/25:0.670272%/1.477480%PASS; actual payout action85.329244%/38.096884%FAIL. Q-V46-802-2/DV-V46-802-1 retained. |
+
+Reports: `reports/TIP-V46-802-default-demo.md`, `TIP-V46-802-policy-write.md`,
+`TIP-V46-802-policy-preview.md`, `TIP-V46-802-action-states.md`. None is a
+completion report. Q-V46-802-4 calendar integration failure and native-dev final
+acceptance remain. Full regression results belong to `TIP-V46-802-full-gates.md`;
+focused tests never replace that gate. No801 acceptance or803 implementation claim.
+
+Full MSW atd6ab302c is now terminal PASS:356passed +4existing skips,360collected,
+22.7m. Portal rebuilt from current shared snapshot/demo dependencies, Admin output
+retained from72345a1e (no later runtime diff). Includes all current802 default,
+layout, cancellation, policy and payout/reload cases plus cross-origin persistence.
+The earlier same-HEAD attempt with stale Portal output was deliberately stopped,
+not accepted as a gate. Native full integration remains FAIL at5a3ca36b; no rerun
+or waiver. See the full-gates report for exact commands, provenance and limits.
