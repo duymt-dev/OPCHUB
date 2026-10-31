@@ -75,6 +75,9 @@
 .table :global(.ant-table-container) {
   min-width: 900px;
 }
+.table :global(.ant-table-expanded-row > td) {
+  padding: 0 !important;
+}
 .identity {
   border: 0;
   padding: 0;
@@ -122,8 +125,12 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 4px 4px 6px 28px;
-  background: var(--ant-color-primary-bg, #e6f4ff);
+  padding: 14px 16px 16px 40px;
+  background: color-mix(
+    in srgb,
+    var(--ant-color-primary, #1677ff) 2%,
+    var(--ant-color-bg-container, #fff)
+  );
 }
 .detail section > div {
   border: 0 !important;
@@ -133,10 +140,15 @@
 .detail :global(.ant-table) {
   background: transparent;
 }
+.detail :global(.ant-table-container) {
+  min-width: 0;
+}
 .detail :global(.ant-table-cell) {
   padding: 6px !important;
 }
 .detail :global(.ant-table-thead > tr > th) {
+  height: auto;
+  background: transparent;
   font-size: 12px;
   font-weight: 400;
   color: var(--ant-color-text-tertiary, rgba(0, 0, 0, 0.45));

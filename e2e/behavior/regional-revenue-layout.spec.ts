@@ -49,5 +49,25 @@ for (const width of [1440, 390]) {
     await expect(
       page.getByRole('button', { name: 'GĐ Vùng đã thu hồi', exact: true }),
     ).toBeVisible();
+    const director = page.getByRole('button', { name: /Trần Quốc Bảo/ });
+    await director.click();
+    await expect(director).toHaveAttribute('aria-expanded', 'true');
+    const ledger = page.getByRole('region', { name: 'Khoản ghi nhận cho GĐ Vùng', exact: true });
+    await expect(ledger.getByRole('row')).toHaveCount(5);
+    await expect(ledger).toContainText('Khách chia sẻ năm một');
+    await expect(ledger).toContainText('600.001đ');
+    const detail = ledger.locator('..');
+    await expect(detail).toHaveCSS('padding', '14px 16px 16px 40px');
+    await expect(detail.locator('..')).toHaveCSS('padding', '0px');
+    const heading = ledger.getByRole('columnheader', { name: 'Ngày', exact: true });
+    const headingBox = await heading.boundingBox();
+    expect(headingBox).not.toBeNull();
+    expect(headingBox!.height).toBeLessThanOrEqual(34);
+    expect(headingBox!.height).toBeGreaterThanOrEqual(24);
+    await expect(page.getByRole('region', { name: 'Lịch sử chi trả', exact: true })).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
+    await director.click();
+    await expect(director).toHaveAttribute('aria-expanded', 'false');
+    await expect(ledger).toBeHidden();
   });
 }

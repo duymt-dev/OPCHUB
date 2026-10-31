@@ -390,3 +390,16 @@ at1440/390. Keep existing default capture, thresholds and financial data unchang
 Use visible public UI only; assert the requested state before capture. Existing
 sharing-flow and responsive-search behavior tests remain applicable unchanged.
 This extends required coverage, not a waiver for missing histories or payout UI.
+
+### P7 expanded-row layout correction (31/10/2026)
+
+Exact scope: `apps/admin/src/features/affiliate/components/revenue-sharing.module.css`
+and `e2e/behavior/regional-revenue-layout.spec.ts`, this TIP, progress, new
+`reports/TIP-V46-802-detail-layout.md` and generated parity results/diffs.
+Remove the expanded cell's duplicate inset, use the reference's pale detail
+surface with theme-derived color, and stop parent table sizing/header rules
+leaking into the nested ledger. Preserve every ledger/history field, empty/error
+state, payout control, former-beneficiary access and financial fixture. Add
+expanded geometry/content/collapse assertions at both widths, identical in MSW
+and server. Rerun related browser/parity and Admin build; unchanged backend and
+unrelated application scopes retain source-attributed evidence.
