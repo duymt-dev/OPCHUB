@@ -3855,65 +3855,65 @@
   "id": "D-V46-GDV-DETAIL",
   "name": "GĐ Vùng · khoản ghi nhận và lịch sử Bảo",
   "viewport": 1440,
-  "diffPct": 4.717849266103887,
-  "size": "1440×1461",
-  "sha": "d880150b"
+  "diffPct": 4.1077190731669395,
+  "size": "1440×1429",
+  "sha": "2de80624"
  },
  {
   "id": "D-V46-GDV-DETAIL",
   "name": "GĐ Vùng · khoản ghi nhận và lịch sử Bảo",
   "viewport": 390,
-  "diffPct": 6.682425213675214,
+  "diffPct": 9.076522435897436,
   "size": "390×1920",
-  "sha": "d880150b"
+  "sha": "2de80624"
  },
  {
   "id": "D-V46-GDV-EMPTY",
   "name": "GĐ Vùng · tìm không có kết quả",
   "viewport": 1440,
-  "diffPct": 1.119212962962963,
+  "diffPct": 1.1002314814814815,
   "size": "1440×900",
-  "sha": "d880150b"
+  "sha": "2de80624"
  },
  {
   "id": "D-V46-GDV-EMPTY",
   "name": "GĐ Vùng · tìm không có kết quả",
   "viewport": 390,
-  "diffPct": 10.545856305241971,
-  "size": "390×1172",
-  "sha": "d880150b"
+  "diffPct": 6.328608779413789,
+  "size": "390×1118",
+  "sha": "2de80624"
  },
  {
   "id": "D-V46-GDV-SEARCH",
   "name": "GĐ Vùng · tìm Miền Trung",
   "viewport": 1440,
-  "diffPct": 1.2895061728395063,
+  "diffPct": 1.2705246913580246,
   "size": "1440×900",
-  "sha": "d880150b"
+  "sha": "2de80624"
  },
  {
   "id": "D-V46-GDV-SEARCH",
   "name": "GĐ Vùng · tìm Miền Trung",
   "viewport": 390,
-  "diffPct": 7.523281030743717,
-  "size": "390×1206",
-  "sha": "d880150b"
+  "diffPct": 3.1381321225071224,
+  "size": "390×1152",
+  "sha": "2de80624"
  },
  {
   "id": "D-V46-GDV-SHARING",
   "name": "GĐ Vùng · sổ chia sẻ mặc định",
   "viewport": 1440,
-  "diffPct": 6.269294214681278,
-  "size": "1440×943",
-  "sha": "d880150b"
+  "diffPct": 1.7209104938271607,
+  "size": "1440×900",
+  "sha": "2de80624"
  },
  {
   "id": "D-V46-GDV-SHARING",
   "name": "GĐ Vùng · sổ chia sẻ mặc định",
   "viewport": 390,
-  "diffPct": 7.89365124420475,
-  "size": "390×1355",
-  "sha": "d880150b"
+  "diffPct": 4.045605944145529,
+  "size": "390×1301",
+  "sha": "2de80624"
  },
  {
   "id": "D-V46-GDV-UNASSIGNED",
