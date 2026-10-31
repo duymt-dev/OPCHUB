@@ -404,3 +404,32 @@ state, payout control, former-beneficiary access and financial fixture. Add
 expanded geometry/content/collapse assertions at both widths, identical in MSW
 and server. Rerun related browser/parity and Admin build; unchanged backend and
 unrelated application scopes retain source-attributed evidence.
+
+### Coherent default AF0 sharing demo (D-119, 31/10/2026)
+
+Replace the empty sharing ledger only in the explicit AF0 demo, not production
+seed/runtime data. Exact scope (new unless marked modify):
+
+- `packages/shared/src/fixtures/revenue-affiliate-demo/{chronology.ts,receipts.ts,index.ts,receipts.spec.ts}`;
+  fixtures `index.ts` export (modify).
+- `packages/shared/src/mock-data/domains/revenue-sharing/affiliate-demo.ts`,
+  `affiliate-demo.spec.ts`; `domains/affiliate-demo.ts` (modify: wire),
+  `revenue-sharing/demo.spec.ts` (modify: retain epoch safeguards with new scenario).
+- `packages/db/seed/demo/revenue-affiliate-{accounts,ledger}.ts`,
+  `demo/index.ts` (modify: wire after existing receipt baseline).
+- `packages/db/test/revenue-affiliate-demo.int.spec.ts`;
+  `seed-revenue.int.spec.ts` (modify: retain baseline checks with explicit AF0 history).
+  `affiliate-demo.int.spec.ts` (modify: assert24 additional linked first-receipt periods).
+- `reports/TIP-V46-802-default-demo.md`, progress/questions and resulting evidence.
+- `e2e/behavior/regional-revenue-default.spec.ts`: same-assertion default AF0 ledger,
+  history, cursor pagination and reload at1440/390. Run MSW and isolated native.
+
+One fixture recipe supplies actual historical first receipts, registration/referral
+chronology, north appointment before earned August receipts, province memberships,
+immutable historical payouts and policy-derived amounts. Later first-year receipts
+must not overwrite earlier anchors. The invalid referral retains its real payment
+as direct Media Soft revenue, not an earned director share. No financial total is
+hardcoded in UI and no current runtime appointment is backdated. Existing functional
+revenue-only scenario stays independent. Prove native/MSW equality, linked source
+receipts, dates, conservation, payout totals, reset/idempotence and rollback.
+Do not wire into code imported by the live full integration runner until it exits.

@@ -63,7 +63,11 @@ describe('Affiliate AF0 native demo scenario', () => {
 
   it('REQ-301 REQ-311 all 51 customers have real first periods and their own affiliates', async () => {
     // D-122 includes the expired m4 historical receipt, not just currently usable fees.
-    expect(await counts()).toEqual({ agents: 66, refs: 51, commissions: 51, clicks: 6, fees: 63 });
+    // AF0 also has24 linked historical first receipts; no current payment was removed.
+    expect(await counts()).toEqual({ agents: 66, refs: 51, commissions: 51, clicks: 6, fees: 87 });
+    expect(
+      await db.membershipFeePeriod.count({ where: { id: { startsWith: 'af-first-period-' } } }),
+    ).toBe(24);
     const rows = await db.commission.findMany({
       where: { id: { startsWith: 'demo-commission-' } },
       select: {

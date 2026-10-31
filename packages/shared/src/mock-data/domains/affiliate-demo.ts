@@ -16,6 +16,10 @@ import { readMockPrices } from './price-config';
 import { seedMockAffiliatePayoutScenario } from './affiliate-payout-scenario';
 import { mockDb, type MockDb } from './store';
 import { seedMockRevenueEpochs } from './revenue-sharing/demo';
+import {
+  assertMockAffiliateRevenueSeedable,
+  seedMockAffiliateRevenueDemo,
+} from './revenue-sharing/affiliate-demo';
 
 const seeded = new WeakSet<MockDb>();
 export const isMockAffiliateScenarioSeeded = () => seeded.has(mockDb());
@@ -154,6 +158,7 @@ export function seedMockAffiliateScenario(
 ): void {
   const db = mockDb();
   if (seeded.has(db)) return;
+  if (!options.paused && !options.payout) assertMockAffiliateRevenueSeedable();
   seedMockScenarioFees();
   seedMockScenarioAgents();
   seedMockScenarioHistory();
@@ -168,6 +173,7 @@ export function seedMockAffiliateScenario(
   }
   if (options.payout) seedMockAffiliatePayoutScenario();
   seedMockRevenueEpochs();
+  if (!options.paused && !options.payout) seedMockAffiliateRevenueDemo();
   seeded.add(db);
 }
 

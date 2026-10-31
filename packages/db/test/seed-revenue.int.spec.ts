@@ -14,7 +14,7 @@ const db = createPrismaClient(testEnv.TEST_DATABASE_URL, { max: 2 });
 beforeAll(() => seedDemo(db, { affiliate: true }));
 afterAll(() => db.$disconnect());
 describe('REQ-617 native demo receipt/epoch baseline', () => {
-  it('D-122 native and early-initialized MSW have identical epochs, no retroactive shares', async () => {
+  it('D-122 native and early-initialized MSW have identical epochs and explicit AF0 history', async () => {
     resetMockDb();
     captureMockAffiliateSnapshot();
     seedMockAffiliateScenario();
@@ -25,8 +25,8 @@ describe('REQ-617 native demo receipt/epoch baseline', () => {
     expect(new Map(rows.map((r) => [r.userId, r.firstReceivedAt.toISOString()]))).toEqual(
       new Map(mock?.first),
     );
-    expect(await db.revenueShare.count()).toBe(0);
-    expect(await db.revenuePayout.count()).toBe(0);
+    expect(await db.revenueShare.count()).toBe(51);
+    expect(await db.revenuePayout.count()).toBe(2);
     const periods = await db.membershipFeePeriod.findMany({
       where: { id: { startsWith: 'demo-fee-' } },
       select: {

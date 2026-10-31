@@ -49,3 +49,4 @@ export type { IndustryGroupSeed } from './industry-groups';
 export * from './stores-seed-media';
 export * from './revenue-demo';
 export * from './revenue-sharing';
+export * from './revenue-affiliate-demo';

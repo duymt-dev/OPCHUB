@@ -21,6 +21,7 @@ import { resetDemoData } from './reset';
 import { seedDemoDirectors } from './regional-directors';
 import { seedDemoRevenueBaseline } from './revenue-baseline';
 import { seedRevenueDemo } from './revenue-scenario';
+import { seedAffiliateRevenueDemo } from './revenue-affiliate-ledger';
 import { seedServices } from './service';
 import { seedNeeds } from './needs';
 import { seedStores } from './stores';
@@ -99,6 +100,8 @@ export async function seedDemo(
       await seedAuditLog(tx);
       await seedStatsDaily(tx);
       await seedDemoRevenueBaseline(tx);
+      if (options.affiliate && !options.affiliatePaused && !options.affiliatePayout)
+        await seedAffiliateRevenueDemo(tx);
       if (options.revenue) await seedRevenueDemo(tx);
     },
     { timeout: 120_000, maxWait: 30_000 },

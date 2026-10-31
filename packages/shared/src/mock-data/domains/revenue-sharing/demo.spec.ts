@@ -9,6 +9,10 @@ import { captureMockRevenue } from './capture';
 import { seedMockRevenueEpochs } from './demo';
 import { mockRevenueState } from './state';
 import { receipt } from './revenue.fixture';
+import {
+  affiliateRevenueCustomers,
+  affiliateRevenueOwners,
+} from '../../../fixtures/revenue-affiliate-demo';
 
 beforeEach(() => resetMockDb());
 describe('REQ-617 D-122 demo epoch provenance', () => {
@@ -17,16 +21,24 @@ describe('REQ-617 D-122 demo epoch provenance', () => {
     (options) => {
       mockRevenueState();
       seedMockAffiliateScenario(options);
-      expect(new Map(mockRevenueState().first)).toEqual(
-        new Map(
-          mockDb()
-            .fees.filter((f) => f.paidAt && f.amount > 0)
-            .map((f) => [f.userId, f.paidAt]),
-        ),
+      const expected = new Map(
+        mockDb()
+          .fees.filter((f) => f.paidAt && f.amount > 0)
+          .map((f) => [f.userId, f.paidAt]),
       );
-      expect(mockRevenueState().shares).toEqual([]);
+      const regenerated = !('paused' in options) && !('payout' in options);
+      if (regenerated)
+        for (const p of [...affiliateRevenueCustomers, ...affiliateRevenueOwners]) {
+          const previous = expected.get(p.userId);
+          expected.set(
+            p.userId,
+            previous && previous < p.firstReceivedAt ? previous : p.firstReceivedAt,
+          );
+        }
+      expect(new Map(mockRevenueState().first)).toEqual(expected);
+      expect(mockRevenueState().shares).toHaveLength(regenerated ? 51 : 0);
       expect(mockRevenueState().pending).toEqual([]);
-      expect(mockRevenueState().payouts).toEqual([]);
+      expect(mockRevenueState().payouts).toHaveLength(regenerated ? 2 : 0);
       const snapshot = captureMockAffiliateSnapshot();
       seedMockAffiliateScenario(options);
       expect(captureMockAffiliateSnapshot()).toEqual(snapshot);
@@ -35,9 +47,11 @@ describe('REQ-617 D-122 demo epoch provenance', () => {
       expect(captureMockAffiliateSnapshot().revenue).toEqual(snapshot.revenue);
     },
   );
-  it('does not overwrite an earlier real receipt with a newer demo paidAt', () => {
+  it('rejects default regeneration after a real receipt without overwriting its earlier epoch', () => {
     captureMockRevenue(receipt('af-customer-c1', { receivedAt: '2020-01-01T00:00:00.000Z' }));
-    seedMockAffiliateScenario();
+    const before = captureMockAffiliateSnapshot();
+    expect(() => seedMockAffiliateScenario()).toThrow('before recording revenue');
+    expect(captureMockAffiliateSnapshot()).toEqual(before);
     expect(new Map(mockRevenueState().first).get('af-customer-c1')).toBe(
       '2020-01-01T00:00:00.000Z',
     );
