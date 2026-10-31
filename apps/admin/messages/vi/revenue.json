@@ -23,6 +23,7 @@
   "formerNote": "Khoản đã hưởng được giữ theo người thụ hưởng, không chuyển sang người thay thế. Vùng hiển thị theo khoản thu gần nhất.",
   "formerEmpty": "Chưa có khoản chia sẻ của GĐ Vùng đã thu hồi.",
   "more": "Xem thêm",
+  "moreReceipts": "+ {count} khoản khác",
   "pay": "Chi trả",
   "noDue": "Không có khoản chờ",
   "readOnly": "Bạn chỉ có quyền xem sổ chia sẻ doanh thu.",

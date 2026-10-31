@@ -31,14 +31,14 @@ export function DirectorRevenueHistory({
               month: affiliateMonthLabel(r.monthKey),
               date: revenueDate(r.paidAt),
             })}
-            <small>
-              {t('receiptBank', {
-                holder: r.bank.bankHolder,
-                bank: r.bank.bankName,
-                account: r.bank.bankNo,
-              })}
-            </small>
           </span>
+          <small>
+            {t('receiptBank', {
+              holder: r.bank.bankHolder,
+              bank: r.bank.bankName,
+              account: r.bank.bankNo,
+            })}
+          </small>
           <b className={styles.paid}>{revenueMoney(r.amount)}</b>
         </div>
       ))}

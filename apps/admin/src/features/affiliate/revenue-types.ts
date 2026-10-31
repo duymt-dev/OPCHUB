@@ -8,6 +8,10 @@ import type { z } from 'zod';
 import type { InfiniteData, UseInfiniteQueryResult } from '@tanstack/react-query';
 
 export type RevenueCursor = { at: string; id: string } | null;
+export interface RevenueDetailProps {
+  directorId: string;
+  receiptCount: string;
+}
 export interface RevenueTableProps {
   rows: RevenueDirector[];
   onPay: (row: RevenueDirector) => void;

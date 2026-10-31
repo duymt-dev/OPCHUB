@@ -469,3 +469,27 @@ instead of accidentally removing payout-history row separators. No fixed filler
 height, record deletion, masked capture, fixture/date/bank or payout-rule change.
 Assert actual column bounds and wrapping with the same browser tests in both
 modes; preserve eight→sixteen row pagination, immutable bank/history and reload.
+
+### Remaining-count pagination and compact history (31/10/2026)
+
+Exact scope: Admin affiliate `revenue-types.ts`, components
+`director-revenue-detail.tsx`, `director-revenue-history.tsx`,
+`revenue-sharing-table.tsx`, `revenue-sharing.module.css`, new dedicated
+`director-revenue-detail.spec.tsx`; additive `messages/vi/revenue.json` key under
+the shared wiring lock; `e2e/behavior/regional-revenue-default.spec.ts`.
+Pass the existing director-scoped receipt count into detail and subtract loaded
+rows with BigInt. Show the remaining count on the real pagination button; the
+server cursor remains authoritative, including when dashboard totals are stale.
+No new count query, unsafe Number conversion, hardcoded fixture count or hidden
+pagination. Present immutable history bank metadata between period and amount,
+allowing long bank names to wrap without truncation. Preserve error/retry and
+keyboard use. Unit tests cover exact large counts, stale totals and cursors;
+both-mode browser tests retain eight→sixteen rows, reload and full bank identity.
+Measure unchanged eight-state parity; report real failures in progress and a new
+`reports/TIP-V46-802-history-pagination.md`, without threshold/reference edits.
+The native keyboard check exposed the spinner's accessible name changing the
+action label: explicitly retain the action name and expose `aria-busy`, with a
+deferred-response unit regression. Read-only prototype geometry also shows a6px
+gap between the header and each ledger row (not included in the30/47px row
+heights). Translate that spacing to the real table, with top row separators;
+assert actual row gaps in both modes. No fixed row height or filler block.

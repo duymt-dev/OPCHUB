@@ -24,7 +24,12 @@ export function RevenueSharingTable(props: RevenueTableProps) {
           showExpandColumn: false,
           expandedRowKeys: open ? [open] : [],
           expandedRowRender: (row) =>
-            row.directorId ? <DirectorRevenueDetail directorId={row.directorId} /> : null,
+            row.directorId ? (
+              <DirectorRevenueDetail
+                directorId={row.directorId}
+                receiptCount={row.stats.receiptCount}
+              />
+            ) : null,
           rowExpandable: (row) => Boolean(row.directorId),
         }}
       />

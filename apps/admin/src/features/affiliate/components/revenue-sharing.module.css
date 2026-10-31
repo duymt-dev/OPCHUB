@@ -148,6 +148,13 @@
 .ledger > button {
   align-self: flex-start;
 }
+.ledgerMore.ledgerMore {
+  height: auto;
+  padding: 0;
+  font-size: 12px;
+  line-height: normal;
+  color: var(--ant-color-text-secondary, rgba(0, 0, 0, 0.65));
+}
 .ledger > div {
   border: 0 !important;
   padding: 0 !important;
@@ -159,6 +166,16 @@
 }
 .detail :global(.ant-table-container) {
   min-width: 0;
+}
+.detail :global(.ant-table-content > table) {
+  border-collapse: separate;
+  border-spacing: 0 6px;
+  /* Table spacing adds outer edges too; the section already owns those gaps. */
+  margin-block: -6px;
+}
+.detail :global(.ant-table-measure-row) {
+  /* Retain column measurement without a second gap for its empty internal row. */
+  visibility: collapse;
 }
 .detail :global(.ant-table-cell) {
   padding: 6px !important;
@@ -173,6 +190,11 @@
   font-size: 12px;
   font-weight: 400;
   color: var(--ant-color-text-tertiary, rgba(0, 0, 0, 0.45));
+  border-bottom: 0;
+}
+.detail :global(.ant-table-tbody > tr > td) {
+  border-top: 1px solid var(--ant-color-border-secondary, #f0f0f0);
+  border-bottom: 0;
 }
 .history {
   display: flex;
@@ -180,14 +202,16 @@
   gap: 6px;
 }
 .history > div {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 1fr) auto;
+  align-items: baseline;
   gap: 8px;
   border-top: 1px solid var(--ant-color-border-secondary, #f0f0f0);
   padding: 6px 0;
 }
 .history small {
   display: block;
+  overflow-wrap: anywhere;
 }
 .formerToggle {
   align-self: flex-start;

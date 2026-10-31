@@ -55,18 +55,47 @@ for (const width of [1440, 390]) {
     expect(customerBox!.width).toBeCloseTo(((tableBox!.width - 90) * 12) / 65, 0);
     await expect(first.getByRole('cell').first()).toHaveCSS('vertical-align', 'top');
     await expect(first.getByRole('cell').first()).toHaveCSS('white-space', 'normal');
+    const rowBoxes = await ledger.getByRole('row').evaluateAll((rows) =>
+      rows.map((row) => ({
+        top: row.getBoundingClientRect().top,
+        bottom: row.getBoundingClientRect().bottom,
+      })),
+    );
+    for (let i = 1; i < rowBoxes.length; i++) {
+      expect(rowBoxes[i]!.top - rowBoxes[i - 1]!.bottom).toBeCloseTo(6, 0);
+    }
     const history = page.getByRole('region', { name: 'Lịch sử chi trả', exact: true });
     await expect(history).toContainText('Tháng 09/2026');
     await expect(history).toContainText('20.880.000đ');
     await expect(history).toContainText('Tháng 08/2026');
     await expect(history).toContainText('7.800.000đ');
     await expect(history).toContainText('TRAN QUOC BAO · Vietcombank · 001100104567');
-    await ledger.getByRole('button', { name: 'Xem thêm', exact: true }).click();
+    const latest = history.getByText('20.880.000đ', { exact: true }).locator('..');
+    const bank = latest.getByText('TRAN QUOC BAO · Vietcombank · 001100104567', { exact: true });
+    const period = latest.getByText(/Tháng 09\/2026/);
+    await bank.scrollIntoViewIfNeeded();
+    await expect(bank).toBeInViewport();
+    const [bankBox, periodBox] = await Promise.all([bank.boundingBox(), period.boundingBox()]);
+    expect(bankBox).not.toBeNull();
+    expect(periodBox).not.toBeNull();
+    expect(Math.abs(bankBox!.y - periodBox!.y)).toBeLessThan(3);
+    const more = ledger.getByRole('button', { name: '+ 41 khoản khác', exact: true });
+    await more.focus();
+    await more.press('Enter');
     await expect(ledger.getByRole('row')).toHaveCount(17);
+    await expect(
+      ledger.getByRole('button', { name: '+ 33 khoản khác', exact: true }),
+    ).toBeVisible();
+    await expect(
+      ledger.getByRole('button', { name: '+ 33 khoản khác', exact: true }),
+    ).toHaveAttribute('aria-busy', 'false');
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
     await page.reload({ waitUntil: 'networkidle' });
     await page.getByRole('button', { name: /Trần Quốc Bảo/ }).click();
     await expect(ledger.getByRole('row')).toHaveCount(9);
+    await expect(
+      ledger.getByRole('button', { name: '+ 41 khoản khác', exact: true }),
+    ).toBeVisible();
     await expect(history.getByText('20.880.000đ', { exact: true })).toHaveCount(1);
     await expect(history.getByText('7.800.000đ', { exact: true })).toHaveCount(1);
   });
