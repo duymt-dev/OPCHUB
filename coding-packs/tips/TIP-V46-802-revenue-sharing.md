@@ -396,6 +396,7 @@ This extends required coverage, not a waiver for missing histories or payout UI.
 Exact scope: `apps/admin/src/features/affiliate/components/revenue-sharing.module.css`
 and `e2e/behavior/regional-revenue-layout.spec.ts`, this TIP, progress, new
 `reports/TIP-V46-802-detail-layout.md` and generated parity results/diffs.
+`reports/ui-parity/questions.md` records the D-119 demo-regeneration clarification.
 Remove the expanded cell's duplicate inset, use the reference's pale detail
 surface with theme-derived color, and stop parent table sizing/header rules
 leaking into the nested ledger. Preserve every ledger/history field, empty/error

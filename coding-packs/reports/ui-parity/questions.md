@@ -1018,3 +1018,13 @@ scenario separately proves retained3120000 and payout1680001 in both browsers.
 Do not conflate these datasets or mark the default parity accepted. Mobile
 KPI/table geometry also differs and is actionable independently of chronology.
 See [retained UI evidence](../TIP-V46-802-retained-ui.md). Continue work; no goal block.
+
+Q-V46-802-3 clarification after re-reading D-119 at `ff1deb38`: the owner has
+already authorized regeneration of demo data before go-live. This does permit
+an explicit, internally consistent replacement demo with account/referral dates,
+actual first receipts, appointment history and payout receipts. It does not permit
+retroactive assignment of real runtime receipts, or screenshot totals without
+those records. Therefore a coherent native/MSW default demo is an available
+implementation task, not a new approval dependency. The existing default FAILs
+remain until that task and parity are actually verified. See
+[latest measurement and next scope](../TIP-V46-802-detail-layout.md).
