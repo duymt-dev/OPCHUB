@@ -1,5 +1,15 @@
 # V46-802 — full gate checkpoint (not completion)
 
+Latest implementation checkpoint **d7e080c1** closes the3 sharing-policy
+write-path gap: Admin/API/MSW save, validation/permissions/audit, immutable
+receipts and reload. Root2225passed+2existing skips/lint/typecheck/depcheck PASS;
+native focused11/11, browser3/3 each mode. [Evidence](TIP-V46-802-policy-write.md).
+New actual policy parity D-84-POL **34.790233%/16.312345% FAIL**; policy-year/
+per-plan presentation still missing. Earlier P7 eightPASS is not policy acceptance.
+This shared-contract change also requires corresponding full regression at the
+final gate. The historical full integration failure below remains unresolved;
+no final TIP-DONE or goal completion claim.
+
 Tested source: `44994da5` (production source `31fb5817`). No source edits during
 these runs. Root lint/typecheck/unit/depcheck evidence at31fb5817 remains applicable;
 44994da5 changes documentation only. All open parity/semantic questions remain.

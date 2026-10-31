@@ -453,8 +453,8 @@
 | D-84-COM-RECORDED | Admin · Affiliate · Hoa hồng đã ghi nhận | 390 | 10.55% | ❌ chưa đạt | 390×3075 | 396e2fad |
 | D-84-COM-RECORDED-MENU | Admin · Affiliate · Menu khoản đã ghi nhận | 1440 | 15.83% | ❌ chưa đạt | 1440×1235 | 396e2fad |
 | D-84-COM-RECORDED-MENU | Admin · Affiliate · Menu khoản đã ghi nhận | 390 | 11.01% | ❌ chưa đạt | 390×3075 | 396e2fad |
-| D-84-POL | Admin · Affiliate · Chính sách | 1440 | 34.59% | ❌ chưa đạt | 1440×1356 | 396e2fad |
-| D-84-POL | Admin · Affiliate · Chính sách | 390 | 31.44% | ❌ chưa đạt | 390×1951 | 396e2fad |
+| D-84-POL | Admin · Affiliate · Chính sách | 1440 | 34.79% | ❌ chưa đạt | 1440×1356 | 420099cd |
+| D-84-POL | Admin · Affiliate · Chính sách | 390 | 16.31% | ❌ chưa đạt | 390×1951 | 420099cd |
 | D-85 | Admin · Affiliate · Chi tiết đại lý | 1440 | 0.92% | ✅ đạt | 1440×900 | ad0d5e3f |
 | D-85 | Admin · Affiliate · Chi tiết đại lý | 390 | 2.35% | ✅ đạt | 390×954 | ad0d5e3f |
 | D-85-CUS | Admin · Affiliate · Khách hàng của đại lý | 1440 | 1.84% | ✅ đạt | 1440×1118 | ad0d5e3f |
