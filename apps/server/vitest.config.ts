@@ -15,6 +15,7 @@ export default defineConfig({
         resolve: { alias },
         test: {
           name: 'int',
+          globalSetup: ['test/setup/revenue-outbox.teardown.ts'],
           include: ['test/**/*.int.spec.ts'],
           setupFiles: ['test/setup/env.ts'],
           fileParallelism: false,

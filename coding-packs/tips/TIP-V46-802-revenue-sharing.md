@@ -365,3 +365,17 @@ directors. Browser sharing data, retained totals and acceptance gates remain ope
 - [ ] Admin + MSW + seed + same-assertion E2E + parity.
 - [ ] Before each code commit: lint/typecheck/unit/depcheck; push clean SHA.
 - [ ] Final full integration/build/regression gates; report actual results.
+
+### Full-gate outbox teardown repair (31/10/2026)
+
+Full root integration at44994da5 ran server before DB: server1865pass, then
+DB seed suites correctly refused pending revenue events left by payment tests.
+Exact scope: `apps/server/vitest.config.ts` (int global teardown only), new
+`test/setup/revenue-outbox.teardown.ts`, `test/setup/revenue-outbox-drain.ts`,
+`test/affiliate/revenue-outbox-teardown.int.spec.ts`, this TIP, progress and
+`reports/TIP-V46-802-full-gates.md`. No production or DB reset guard change.
+After all server integration tests, invoke only the real two revenue consumers
+through the real relay, retaining events and respecting leases/backoff. Refuse
+non-test DB/Redis and fail teardown if pending work cannot progress. Dedicated
+native tests prove actual ledger effects, replay, multi-batch drain, unrelated
+event preservation and invalid/leased-event failure. No fake dispatch or delete.
