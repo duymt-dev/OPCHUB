@@ -40,6 +40,13 @@ export const ADMIN_AFFILIATE_STATES: Scenario[] = [
     steps: async (c) => {
       await openAffiliate(c);
       await affiliateTab(c, 'Chính sách');
+      // MSW/network idle can precede React's policy/price-query render. Capture the
+      // loaded public page, never a skeleton-sized image that clips the live form.
+      if (c.side === 'app')
+        await c.page
+          .getByRole('region', { name: 'Phần GĐ Vùng theo từng gói', exact: true })
+          .waitFor({ state: 'visible' });
+      else await c.page.getByText('Phần GĐ Vùng theo từng gói', { exact: true }).waitFor();
       await resetScroll(c);
     },
   },

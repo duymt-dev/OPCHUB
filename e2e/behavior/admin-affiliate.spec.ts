@@ -74,9 +74,7 @@ test.describe('Affiliate Admin (TIP-V2-404)', () => {
   }) => {
     await openAffiliate(page);
     await page.getByRole('tab', { name: 'Chính sách', exact: true }).click();
-    await page
-      .getByRole('spinbutton', { name: 'Tỷ lệ hoa hồng mặc định (%)', exact: true })
-      .fill('30');
+    await page.getByRole('spinbutton', { name: 'GĐ Vùng năm 1', exact: true }).fill('30');
     await page
       .getByRole('spinbutton', { name: 'Thời gian ghi nhận link (ngày)', exact: true })
       .fill('45');
@@ -98,9 +96,9 @@ test.describe('Affiliate Admin (TIP-V2-404)', () => {
     ).toBeVisible();
     await page.getByRole('tab', { name: /^Hoa hồng/ }).click();
     await page.getByRole('tab', { name: 'Chính sách', exact: true }).click();
-    await expect(
-      page.getByRole('spinbutton', { name: 'Tỷ lệ hoa hồng mặc định (%)', exact: true }),
-    ).toHaveValue('30');
+    await expect(page.getByRole('spinbutton', { name: 'GĐ Vùng năm 1', exact: true })).toHaveValue(
+      '30',
+    );
     await expect(
       page.getByRole('spinbutton', { name: 'Thời gian ghi nhận link (ngày)', exact: true }),
     ).toHaveValue('45');
@@ -110,9 +108,9 @@ test.describe('Affiliate Admin (TIP-V2-404)', () => {
       termsDialog.getByRole('textbox', { name: 'Điều khoản chương trình', exact: true }),
     ).toHaveValue('Điều khoản kiểm thử P4');
     await termsDialog.getByRole('button', { name: 'Xong', exact: true }).click();
-    await expect(
-      page.getByRole('spinbutton', { name: 'Tỷ lệ hoa hồng mặc định (%)', exact: true }),
-    ).toHaveValue('30');
+    await expect(page.getByRole('spinbutton', { name: 'GĐ Vùng năm 1', exact: true })).toHaveValue(
+      '30',
+    );
     await page.getByRole('tab', { name: /^Affiliate/ }).click();
     await page.getByPlaceholder('Tìm tên, mã giới thiệu, email...').fill('HAOPC');
     await page

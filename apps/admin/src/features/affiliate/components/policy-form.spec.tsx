@@ -11,7 +11,7 @@ vi.mock('@/lib/permissions', () => ({ useGrants: vi.fn() }));
 // D-94 5A: giá gói từ Cấu hình bảng giá (`GET /public/price-config`) — giá mặc định §27.2
 vi.mock('@/lib/use-prices', async () => {
   const { PRICE_DEFAULTS } = await import('@opchub/shared/fixtures');
-  return { usePrices: () => PRICE_DEFAULTS };
+  return { usePricesQuery: () => ({ data: PRICE_DEFAULTS, isError: false }) };
 });
 vi.mock('../api', async (original) => ({
   ...(await original<typeof api>()),
@@ -39,8 +39,7 @@ const value: AffiliatePolicy = {
   terms: 'Điều khoản từ API',
 };
 const form = () => screen.getByRole('form', { name: /^Chính sách$/ });
-const rate = () =>
-  screen.getByRole<HTMLInputElement>('spinbutton', { name: /^Tỷ lệ hoa hồng mặc định \(%\)$/ });
+const rate = () => screen.getByRole<HTMLInputElement>('spinbutton', { name: /^GĐ Vùng năm 1$/ });
 const days = () =>
   screen.getByRole<HTMLInputElement>('spinbutton', { name: /^Thời gian ghi nhận link \(ngày\)$/ });
 // D-91 (2): ô điều khoản nằm trong hộp thoại "Sửa điều khoản" nhưng vẫn thuộc form (forceRender)
@@ -51,18 +50,18 @@ const terms = () =>
   });
 const openTerms = () => fireEvent.click(screen.getByRole('button', { name: 'Sửa điều khoản' }));
 
-describe('REQ-308 REQ-312 policy form preserves ver2 rules and editable API terms', () => {
+describe('REQ-617 REQ-312 D-91 policy form sharing rules and editable API terms', () => {
   it('renders supplied values and the complete static rules separately from editable terms', () => {
     render(<PolicyForm value={value} />, affiliateTestContext());
-    expect(rate().value).toBe('20');
+    expect(rate().value).toBe('50');
     expect(days().value).toBe('30');
     expect(terms().value).toBe(value.terms);
-    expect(screen.getByText(/không cần quản trị duyệt/).textContent).toContain(
-      'không tạo đại lý thủ công',
+    expect(screen.getByText(/^Quy tắc: Media Soft chỉ chia sẻ/).textContent).toContain(
+      'tham khảo và đối soát',
     );
     expect(terms().maxLength).toBe(5000);
     expect(
-      screen.getByText(/không cần quản trị duyệt/).compareDocumentPosition(terms()) &
+      screen.getByText(/^Quy tắc: Media Soft chỉ chia sẻ/).compareDocumentPosition(terms()) &
         Node.DOCUMENT_POSITION_FOLLOWING,
     ).toBeTruthy();
   });
@@ -93,8 +92,8 @@ describe('REQ-308 REQ-312 policy form preserves ver2 rules and editable API term
     fireEvent.submit(form());
     await waitFor(() => expect(api.saveAffiliatePolicy).toHaveBeenCalledTimes(1));
     expect(api.saveAffiliatePolicy).toHaveBeenCalledWith({
-      defaultRate: 27,
-      yearOneRate: 50,
+      defaultRate: 20,
+      yearOneRate: 27,
       annualDecrease: 10,
       minimumRate: 20,
       cookieDays: 45,
@@ -103,24 +102,21 @@ describe('REQ-308 REQ-312 policy form preserves ver2 rules and editable API term
     });
   });
 
-  it('D-70 gợi ý giá 2 gói + ô Gọi vốn chỉ đọc 10% = 1.500.000đ / 15.000.000đ', () => {
+  it('D-119 renders sharing matrices for all plans and preserves legacy values without old payout controls', () => {
     render(<PolicyForm value={value} />, affiliateTestContext());
     expect(
-      screen.getByText(
-        'Áp dụng trên phí năm thực thu: Gói Cá nhân 1.200.000đ · Gói Doanh nghiệp 3.600.000đ · 3 tháng miễn phí không phát sinh hoa hồng',
-      ),
-    ).toBeDefined();
-    const fund = screen.getByRole('group', { name: 'Hoa hồng Gói Gọi vốn (%)' });
-    expect(fund.textContent).toContain('10');
-    expect(fund.textContent).toContain(
-      '= 1.500.000đ / Gói Gọi vốn 15.000.000đ · ghi nhận khi Admin duyệt',
-    );
-    expect(screen.queryAllByRole('spinbutton')).toHaveLength(5);
-    expect(screen.queryByText(/thành viên 600\.000đ/)).toBeNull();
+      screen.getByRole('region', { name: 'Phần GĐ Vùng theo từng gói' }).textContent,
+    ).toContain('7.500.000đ');
+    expect(
+      screen.getByRole('region', { name: 'Tỷ lệ chia sẻ theo năm của khách' }).textContent,
+    ).toContain('80 / 20');
+    expect(screen.queryAllByRole('spinbutton')).toHaveLength(4);
+    expect(screen.queryByRole('spinbutton', { name: 'Tỷ lệ hoa hồng mặc định (%)' })).toBeNull();
+    expect(screen.queryByText(/cuối tháng Admin chi trả riêng từng đại lý/)).toBeNull();
   });
 
   it.each([
-    ['rate', { ...value, defaultRate: 51 }],
+    ['rate', { ...value, yearOneRate: 101 }],
     ['days', { ...value, cookieDays: 366 }],
     ['terms', { ...value, terms: 'x'.repeat(5001) }],
   ] as const)('rejects invalid %s without sending a mutation', async (key, invalid) => {
@@ -135,7 +131,7 @@ describe('REQ-308 REQ-312 policy form preserves ver2 rules and editable API term
     expect(helpId).toBeTruthy();
     await waitFor(() =>
       expect(document.getElementById(helpId ?? '')?.textContent).toContain(
-        key === 'rate' ? '50' : key === 'days' ? '365' : '5000',
+        key === 'rate' ? '100' : key === 'days' ? '365' : '5000',
       ),
     );
     expect(api.saveAffiliatePolicy).not.toHaveBeenCalled();
@@ -173,7 +169,7 @@ describe('REQ-308 REQ-312 policy form preserves ver2 rules and editable API term
     expect(api.saveAffiliatePolicy).not.toHaveBeenCalled();
   });
 
-  it.each(['defaultRate', 'cookieDays', 'terms'] as const)(
+  it.each(['yearOneRate', 'cookieDays', 'terms'] as const)(
     'REQ-312 maps server 400 %s errors to the field and retains the retry draft',
     async (key) => {
       const message = `Server rejected ${key}`;
@@ -189,7 +185,7 @@ describe('REQ-308 REQ-312 policy form preserves ver2 rules and editable API term
       fireEvent.change(days(), { target: { value: '45' } });
       fireEvent.change(terms(), { target: { value: 'Draft after validation failure' } });
       fireEvent.submit(form());
-      const field = key === 'defaultRate' ? rate() : key === 'cookieDays' ? days() : terms();
+      const field = key === 'yearOneRate' ? rate() : key === 'cookieDays' ? days() : terms();
       await waitFor(() => expect(field.getAttribute('aria-invalid')).toBe('true'));
       await waitFor(() => {
         const ids = field.getAttribute('aria-describedby')?.split(' ') ?? [];
@@ -204,8 +200,8 @@ describe('REQ-308 REQ-312 policy form preserves ver2 rules and editable API term
       fireEvent.submit(form());
       await waitFor(() => expect(api.saveAffiliatePolicy).toHaveBeenCalledTimes(2));
       expect(api.saveAffiliatePolicy).toHaveBeenLastCalledWith({
-        defaultRate: 27,
-        yearOneRate: 50,
+        defaultRate: 20,
+        yearOneRate: 27,
         annualDecrease: 10,
         minimumRate: 20,
         cookieDays: 45,

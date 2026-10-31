@@ -11,7 +11,7 @@ for (const width of [360, 390]) {
     await page.setViewportSize({ width, height: 844 });
     await signInAffiliate(page, ADMIN_URL, 'admin@opchub.community', 'Admin@2026');
     await page.getByRole('tab', { name: 'Chính sách', exact: true }).click();
-    const rate = page.getByRole('spinbutton', { name: 'Tỷ lệ hoa hồng mặc định (%)', exact: true });
+    const rate = page.getByRole('spinbutton', { name: 'GĐ Vùng năm 1', exact: true });
     const days = page.getByRole('spinbutton', {
       name: 'Thời gian ghi nhận link (ngày)',
       exact: true,
@@ -20,24 +20,30 @@ for (const width of [360, 390]) {
     const openTerms = page.getByRole('button', { name: 'Sửa điều khoản', exact: true });
     const dialog = page.getByRole('dialog', { name: 'Điều khoản chương trình' });
     const terms = dialog.getByRole('textbox', { name: 'Điều khoản chương trình', exact: true });
-    // D-70 (V4-602): gợi ý giá 2 gói + ô Gọi vốn chỉ đọc thay cho ví dụ theo thành viên 600.000
-    await expect(
-      page.getByText(
-        'Áp dụng trên phí năm thực thu: Gói Cá nhân 1.200.000đ · Gói Doanh nghiệp 3.600.000đ · 3 tháng miễn phí không phát sinh hoa hồng',
-        {
-          exact: true,
-        },
-      ),
-    ).toBeVisible();
-    await expect(page.getByRole('group', { name: 'Hoa hồng Gói Gọi vốn (%)' })).toContainText(
-      '= 1.500.000đ / Gói Gọi vốn 15.000.000đ · ghi nhận khi Admin duyệt',
+    // D-119 supersedes direct-affiliate controls with configured regional sharing examples.
+    const plans = page.getByRole('region', { name: 'Phần GĐ Vùng theo từng gói' });
+    await expect(plans.getByRole('row')).toHaveCount(4);
+    await expect(plans.getByRole('row').filter({ hasText: 'Gói Cá nhân' })).toContainText(
+      '1.200.000đ / năm',
+    );
+    await expect(plans.getByRole('row').filter({ hasText: 'Gói Doanh nghiệp' })).toContainText(
+      '3.600.000đ / năm',
+    );
+    await expect(plans.getByRole('row').filter({ hasText: 'Gói Gọi vốn' })).toContainText(
+      '15.000.000đ / dự án',
     );
     await expect(page.getByText(/thành viên 600\.000đ/)).toHaveCount(0);
     for (const control of [rate, days, openTerms]) {
       await expect(control).toBeVisible();
       const box = await control.boundingBox();
       expect(box).not.toBeNull();
-      if (control !== openTerms) expect(box!.width).toBeGreaterThanOrEqual(240);
+      if (control === days) expect(box!.width).toBeGreaterThanOrEqual(240);
+      if (control === rate) {
+        const field = await rate
+          .locator('xpath=ancestor::div[contains(@class,"ant-input-number")][1]')
+          .boundingBox();
+        expect(field!.width).toBeCloseTo(60, 0); // Outer control, not AntD's padded inner input.
+      }
       expect(box!.x).toBeGreaterThanOrEqual(0);
       expect(box!.x + box!.width).toBeLessThanOrEqual(width);
     }
@@ -69,16 +75,17 @@ for (const width of [360, 390]) {
     await openTerms.click();
     await expect(terms).toHaveValue('Điều khoản mobile P4');
     await dialog.getByRole('button', { name: 'Xong', exact: true }).click();
-    await expect(
-      page.getByText(
-        'Áp dụng trên phí năm thực thu: Gói Cá nhân 1.200.000đ · Gói Doanh nghiệp 3.600.000đ · 3 tháng miễn phí không phát sinh hoa hồng',
-        {
-          exact: true,
-        },
-      ),
-    ).toBeVisible();
-    await expect(page.getByText(/không cần quản trị duyệt/)).toContainText(
-      'không tạo đại lý thủ công',
+    await expect(plans.getByRole('columnheader', { name: 'Từ năm 2', exact: true })).toBeVisible();
+    await expect(plans.getByRole('row').filter({ hasText: 'Gói Cá nhân' })).toContainText(
+      '300.000đ',
     );
+    await expect(page.getByText(/^Quy tắc: Media Soft/)).toContainText('GĐ Vùng tự quyết tỷ lệ');
+    // Leave the public policy unchanged for subsequent native-mode tests.
+    await rate.fill('50');
+    const restored = page.waitForResponse(
+      (r) => r.url().endsWith('/admin/affiliate/policy') && r.request().method() === 'PUT',
+    );
+    await page.getByRole('button', { name: 'Lưu chính sách', exact: true }).click();
+    expect((await restored).status()).toBe(200);
   });
 }

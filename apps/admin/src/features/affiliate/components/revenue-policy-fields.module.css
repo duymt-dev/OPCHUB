@@ -18,10 +18,53 @@
 }
 .heading span {
   font-size: 12px;
-  color: var(--ant-color-text-secondary, rgba(0, 0, 0, 0.65));
+  color: var(--ant-color-text-tertiary, rgba(0, 0, 0, 0.45));
 }
 .fields {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
   gap: 12px;
+}
+.section.section :global(.ant-form-item-label) {
+  padding-bottom: 4px;
+  line-height: normal;
+}
+.section.section :global(.ant-form-item-label > label) {
+  display: flex;
+  height: auto;
+  font-size: 12px;
+  line-height: normal;
+  white-space: normal;
+  color: rgba(0, 0, 0, 0.55);
+}
+.section.section :global(.ant-form-item-label > label::after) {
+  display: none;
+}
+.section.section :global(.ant-form-item-control-input) {
+  min-height: 30px;
+}
+.section.section :global(.ant-form-item) {
+  line-height: normal;
+}
+.control {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+.control :global(.ant-input-number) {
+  width: 60px;
+  height: 30px;
+  padding: 0;
+}
+.control :global(.ant-input-number-input) {
+  height: 28px;
+  padding: 0 8px;
+  text-align: right;
+  font-size: 13px;
+}
+@media (max-width: 767px) {
+  .fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }

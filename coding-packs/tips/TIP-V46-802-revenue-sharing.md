@@ -553,6 +553,43 @@ do not claim them from component/API tests. No migration/index needed: existing
 singleton policy PK and columns suffice. No recalculation, payout policy change,
 fallback production rates or removal of803 work.
 
+### Sharing-policy presentation (D-118/D-119, REQ-617; policy-page overlap with803)
+
+Replace the touched page's obsolete direct-affiliate-payout explanation, not just
+add inputs above it. The v4.6 prototype removes the old default/fundraising
+commission controls from this page; carry those API values unchanged, do not reset
+or recalculate them. Preserve D-91's editable terms dialog.803 still owns the
+reference-only commission list/actions and wider affiliate migration; its policy
+page acceptance must reuse/recheck this work rather than restore old UI.
+
+Exact files (modify unless create):
+- Affiliate `components/policy-form.tsx`, `policy-fields.tsx`, `policy-rules.tsx`,
+  `policy-layout.module.css`, `revenue-policy-fields.tsx`, `revenue-policy-fields.module.css`.
+- `components/revenue-policy-preview.tsx`, `revenue-policy-years.tsx`,
+  `revenue-policy-plans.tsx`, `revenue-policy-tables.module.css` (create).
+- `policy-preview.ts`, `policy-preview.spec.ts`, `components/revenue-policy-preview.spec.tsx`
+  (create); `types.ts` (preview types).
+- `apps/admin/src/lib/use-prices.ts` (export existing query result for loading/error/retry).
+- `apps/admin/messages/vi/affiliate.json` (append v4.6 policy copy under wire lock).
+- `components/policy-form.spec.tsx`, `revenue-policy-form.spec.tsx` (update only
+  superseded controls; preserve validation/retry/permissions/terms/persistence tests).
+- `e2e/behavior/affiliate-policy-responsive.spec.ts`, `affiliate-ui-debt-policy.spec.ts`,
+  `admin-affiliate.spec.ts`, `regional-revenue-policy.spec.ts` (same assertions both modes).
+- `e2e/parity/scenarios/admin-affiliate-states.ts`: D-84-POL must wait for the
+  visible per-plan matrix before capture. Network-idle can precede React's query
+  render and produce a skeleton-sized screenshot with a clipped form. This only
+  strengthens readiness: same public journey, full-page capture, viewport,
+  reference, pixel comparison and3% threshold; no mask or extra timeout.
+
+Preview uses the shared D-119 rate/rounding math and current price config, never
+hardcoded monetary examples. Draft changes update tables without saving money.
+Arbitrary policy reaches its actual floor year (zero decrease stays constant);
+never label year4 as a perpetual floor when configured rates reach it later.
+Invalid drafts show validation feedback, missing prices show loading/error/retry.
+Tests include configured/zero/early/late floor, odd VND conservation, all3plans,
+no mutation while previewing, no document overflow and keyboard-scrollable tables.
+Measure D-84-POL1440/390 unchanged3%; no old-rule preservation or hidden visual masks.
+
 Native follow-up: exact72px row assertion exposed AntD injection order overriding
 the owning table's13px font to14px. Preserve the assertion and fix feature-local
 selector specificity; do not special-case native expectations. Also modify

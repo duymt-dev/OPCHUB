@@ -1,10 +1,25 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
+import { previewPolicy } from '../policy-preview';
 import layout from './policy-layout.module.css';
 
-/** D-94 3A (v4.2): % mặc định hiện hành trong câu "mọi thành viên … với % mặc định {rate}%" */
-export function PolicyRules({ rate }: { rate: number }) {
-  const t = useTranslations('affiliate');
-  return <div className={layout.rules}>{t('policy.ruleText', { rate })}</div>;
+export function PolicyRules({ values }: { values: unknown }) {
+  const t = useTranslations('affiliate.policyPreview');
+  const policy = previewPolicy(values);
+  return policy ? (
+    <div className={layout.rules}>
+      {t(
+        policy.annualDecrease === 0 || policy.yearOneRate === policy.minimumRate
+          ? 'constantRules'
+          : 'rules',
+        {
+          first: policy.yearOneRate,
+          mediaSoft: 100 - policy.yearOneRate,
+          decrease: policy.annualDecrease,
+          floor: policy.minimumRate,
+        },
+      )}
+    </div>
+  ) : null;
 }

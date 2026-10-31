@@ -1,11 +1,20 @@
 'use client';
 
 import { revenueSharingPolicySchema } from '@opchub/shared/api-domains';
-import { Form, InputNumber } from 'antd';
+import { Form, InputNumber, type InputNumberProps } from 'antd';
 import { useTranslations } from 'next-intl';
 import styles from './revenue-policy-fields.module.css';
 
 const fields = ['yearOneRate', 'annualDecrease', 'minimumRate'] as const;
+
+function PercentInput(props: InputNumberProps<number>) {
+  return (
+    <div className={styles.control}>
+      <InputNumber {...props} controls={false} />
+      <span>%</span>
+    </div>
+  );
+}
 
 /** D-119: editable policy only; historical receipts retain their captured rates. */
 export function RevenuePolicyFields() {
@@ -32,7 +41,7 @@ export function RevenuePolicyFields() {
               },
             ]}
           >
-            <InputNumber min={0} max={100} aria-label={t(name)} suffix="%" />
+            <PercentInput min={0} max={100} aria-label={t(name)} />
           </Form.Item>
         ))}
       </div>

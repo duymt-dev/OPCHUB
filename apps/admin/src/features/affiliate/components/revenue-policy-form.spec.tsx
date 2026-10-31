@@ -9,7 +9,9 @@ import { affiliateTestContext, setupAffiliateBrowser } from '../tests/context';
 import { PolicyForm } from './policy-form';
 
 vi.mock('@/lib/permissions', () => ({ useGrants: vi.fn() }));
-vi.mock('@/lib/use-prices', () => ({ usePrices: () => undefined }));
+vi.mock('@/lib/use-prices', () => ({
+  usePricesQuery: () => ({ data: undefined, isError: false }),
+}));
 vi.mock('../api', async (original) => ({
   ...(await original<typeof api>()),
   saveAffiliatePolicy: vi.fn(),

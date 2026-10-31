@@ -36,6 +36,12 @@ export type AffiliateParams = z.infer<typeof affiliateParamsSchema>;
 export interface AffiliatePolicyFormProps {
   value: AffiliatePolicy;
 }
+export interface PolicyYear {
+  year: number;
+  rate: number;
+  mediaSoft: number;
+  ongoing: boolean;
+}
 export type AffiliateAgentIdentityProps = Pick<
   AffiliateAdminListRow,
   'id' | 'name' | 'email' | 'status' | 'bank'

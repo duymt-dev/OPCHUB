@@ -53,6 +53,13 @@ test('REQ-617 D-119 policy edits persist, refresh live rules and never rewrite h
   await first.fill('63');
   await decrease.fill('7');
   await floor.fill('21');
+  const years = page.getByRole('region', { name: 'Tỷ lệ chia sẻ theo năm của khách' });
+  const plans = page.getByRole('region', { name: 'Phần GĐ Vùng theo từng gói' });
+  await expect(years.getByRole('row')).toHaveCount(8);
+  await expect(years).toContainText('Từ năm 7 trở đi');
+  await expect(plans.getByRole('row').filter({ hasText: 'Gói Cá nhân' })).toContainText('756.000đ');
+  await expect(plans.getByRole('columnheader', { name: 'Từ năm 7', exact: true })).toBeAttached();
+  expect(puts).toBe(0); // Preview is local; draft changes do not write policy or history.
   const saved = page.waitForResponse(
     (r) => r.url().endsWith('/admin/affiliate/policy') && r.request().method() === 'PUT',
   );
