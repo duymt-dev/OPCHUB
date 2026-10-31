@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 438/484 ảnh.
+> Đạt 440/490 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -485,8 +485,14 @@
 | D-98 | Kiểm duyệt · Thời gian khóa 14 ngày | 390 | 0.25% | ✅ đạt | 390×1667 | 0b76e98a |
 | D-V46-GDV-CONFIG | GĐ Vùng · ba ô cấu hình mặc định | 1440 | 1.03% | ✅ đạt | 1440×1272 | 03def207 |
 | D-V46-GDV-CONFIG | GĐ Vùng · ba ô cấu hình mặc định | 390 | 1.14% | ✅ đạt | 390×3269 | 03def207 |
-| D-V46-GDV-SHARING | GĐ Vùng · sổ chia sẻ mặc định | 1440 | 6.50% | ❌ chưa đạt | 1440×943 | 31fb5817 |
-| D-V46-GDV-SHARING | GĐ Vùng · sổ chia sẻ mặc định | 390 | 8.29% | ❌ chưa đạt | 390×1355 | 31fb5817 |
+| D-V46-GDV-DETAIL | GĐ Vùng · khoản ghi nhận và lịch sử Bảo | 1440 | 21.48% | ❌ chưa đạt | 1440×1429 | f3d5781f |
+| D-V46-GDV-DETAIL | GĐ Vùng · khoản ghi nhận và lịch sử Bảo | 390 | 21.72% | ❌ chưa đạt | 390×1920 | f3d5781f |
+| D-V46-GDV-EMPTY | GĐ Vùng · tìm không có kết quả | 1440 | 1.19% | ✅ đạt | 1440×900 | f3d5781f |
+| D-V46-GDV-EMPTY | GĐ Vùng · tìm không có kết quả | 390 | 10.75% | ❌ chưa đạt | 390×1172 | f3d5781f |
+| D-V46-GDV-SEARCH | GĐ Vùng · tìm Miền Trung | 1440 | 1.45% | ✅ đạt | 1440×900 | f3d5781f |
+| D-V46-GDV-SEARCH | GĐ Vùng · tìm Miền Trung | 390 | 7.81% | ❌ chưa đạt | 390×1206 | f3d5781f |
+| D-V46-GDV-SHARING | GĐ Vùng · sổ chia sẻ mặc định | 1440 | 6.50% | ❌ chưa đạt | 1440×943 | f3d5781f |
+| D-V46-GDV-SHARING | GĐ Vùng · sổ chia sẻ mặc định | 390 | 8.29% | ❌ chưa đạt | 390×1355 | f3d5781f |
 | D-V46-GDV-UNASSIGNED | GĐ Vùng · bỏ phân công Hà Nội | 1440 | 7.31% | ❌ chưa đạt | 1440×1354 | 03def207 |
 | D-V46-GDV-UNASSIGNED | GĐ Vùng · bỏ phân công Hà Nội | 390 | 10.11% | ❌ chưa đạt | 390×3447 | 03def207 |
 
