@@ -419,3 +419,5 @@ Trạng thái ver2 đã có sẵn id cũ (không thêm): popup V4 + 6 dịch v�
 | D-V46-GDV-DETAIL | Admin | Expanded north ledger/history (default AF0) | Sharing → click Trần Quốc Bảo | `/affiliate?tab=gdv` | 1440, 390 |
 | D-V46-GDV-SEARCH | Admin | Central region only | Sharing → search Miền Trung | `/affiliate?tab=gdv&q=Miền+Trung` | 1440, 390 |
 | D-V46-GDV-EMPTY | Admin | Search with no directors | Sharing → search ZZZ-NO-DIRECTOR | `/affiliate?tab=gdv&q=ZZZ-NO-DIRECTOR` | 1440, 390 |
+| D-V46-POL-EDIT | Admin | Configured policy preview55/10/25 | Affiliate → Chính sách → edit first rate55 and floor25 | `/affiliate?tab=cfg` | 1440, 390 |
+| D-V46-GDV-PAYOUT | Admin | Actual result of payout action (Q-V46-802-2) | Sharing → first row Chi trả; no injected state or app auto-confirm | `/affiliate?tab=gdv` | 1440, 390 |

@@ -53,4 +53,17 @@ export const ADMIN_REVENUE_SHARING: Scenario[] = [
       c.page.getByText('Lê Minh Hải', { exact: true }).filter({ visible: true }),
     ).toHaveCount(0);
   }),
+  scenario('D-V46-GDV-PAYOUT', 'GĐ Vùng · sau khi bấm Chi trả của Bảo', async (c) => {
+    await sharing(c);
+    await c.page.getByRole('button', { name: 'Chi trả', exact: true }).first().click();
+    // Complete the real enter animation on both sides before freeze CSS is applied.
+    await c.page.clock.runFor(350);
+    // Q-V46-802-2: capture the real divergence, not an artificially aligned payout.
+    if (c.side === 'app') {
+      const dialog = c.page.getByRole('dialog', { name: 'Chi trả GĐ Vùng', exact: true });
+      await dialog.getByRole('combobox', { name: 'Kỳ chi', exact: true }).waitFor();
+      await expect(dialog).toContainText('TRAN QUOC BAO');
+      await expect(dialog).toHaveCSS('opacity', '1');
+    } else await waitText(c, /Đã chi trả .+ cho GĐ Vùng Trần Quốc Bảo/);
+  }),
 ];

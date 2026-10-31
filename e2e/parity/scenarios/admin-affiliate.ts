@@ -3,6 +3,7 @@ import { affiliateDetail, openAffiliate } from './admin-affiliate-steps';
 import { ADMIN_AFFILIATE_STATES } from './admin-affiliate-states';
 import { ADMIN_AFFILIATE_LIST_STATES } from './admin-affiliate-list-states';
 import { ADMIN_AFFILIATE_COMMISSION_STATES } from './admin-affiliate-commission-states';
+import { ADMIN_REVENUE_POLICY } from './admin-revenue-policy';
 
 /** TIP-V2-404: measure the actual default AF0 list, never hide automatic agents for parity. */
 export const ADMIN_AFFILIATE: Scenario[] = [
@@ -25,4 +26,5 @@ export const ADMIN_AFFILIATE: Scenario[] = [
   ...ADMIN_AFFILIATE_STATES,
   ...ADMIN_AFFILIATE_LIST_STATES,
   ...ADMIN_AFFILIATE_COMMISSION_STATES,
+  ...ADMIN_REVENUE_POLICY,
 ];

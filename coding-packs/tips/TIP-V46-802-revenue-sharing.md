@@ -590,6 +590,29 @@ Tests include configured/zero/early/late floor, odd VND conservation, all3plans,
 no mutation while previewing, no document overflow and keyboard-scrollable tables.
 Measure D-84-POL1440/390 unchanged3%; no old-rule preservation or hidden visual masks.
 
+### Policy-edit / payout-action acceptance coverage
+
+After72345a1e default-policy PASS, extend evidence to actual public actions,
+without changing the financial cutoff to make a screenshot pass. Exact paths:
+- `e2e/parity/scenarios/admin-revenue-policy.ts` (create) and
+  `admin-affiliate.ts` (register): policy55/10/25 draft matrix at1440/390.
+- `e2e/parity/scenarios/admin-revenue-sharing.ts` (modify): first director's
+  payout action, capturing the actual resulting state on each side. Q-V46-802-2
+  remains open: prototype immediately pays all due, app opens an ended-month
+  selector. Do not inject equivalent paid state, auto-confirm the app, alter the
+  clock/cutoff, mask the dialog or label a divergent image PASS.
+- `e2e/behavior/regional-revenue-payout-dialog.spec.ts` (create): at1440/390,
+  opening/cancelling by Escape and Close sends no payout POST; bank identity,
+  accessible month selection, bounded modal geometry and complete ledger/history
+  survive cancellation/reload. Same native/MSW assertions; no current-month
+  clock-dependent eligibility claim from this cancellation test.
+- `reports/ui-parity/screens.md`, results/diffs, questions/deviations, progress,
+  `reports/TIP-V46-802-action-states.md` (evidence only).
+
+Use existing AF0 native/MSW demo and unchanged production builds. Readiness must
+wait for loaded query-backed content. No new product behavior, API, seed money,
+baseline, timeout, comparison threshold or test skip in this coverage slice.
+
 Native follow-up: exact72px row assertion exposed AntD injection order overriding
 the owning table's13px font to14px. Preserve the assertion and fix feature-local
 selector specificity; do not special-case native expectations. Also modify
