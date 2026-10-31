@@ -29,12 +29,32 @@ for (const width of [1440, 390]) {
     await expect(page.getByRole('button', { name: 'GĐ Vùng đã thu hồi', exact: true })).toHaveCount(
       0,
     );
+    const directorHeading = await page
+      .getByRole('columnheader', { name: 'GĐ Vùng', exact: true })
+      .boundingBox();
+    expect(directorHeading).not.toBeNull();
+    expect(directorHeading!.height).toBeCloseTo(55, 0);
     await page.getByRole('button', { name: /Trần Quốc Bảo/ }).click();
     const ledger = page.getByRole('region', { name: 'Khoản ghi nhận cho GĐ Vùng', exact: true });
     await expect(ledger.getByRole('row')).toHaveCount(9);
     const first = ledger.getByRole('row').filter({ hasText: 'Đỗ Minh Tuấn' });
     await expect(first).toContainText('40% · Năm 2');
     await expect(first).toContainText('1.440.000đ');
+    const table = ledger.getByRole('table');
+    await expect(table).toHaveCSS('table-layout', 'fixed');
+    const date = ledger.getByRole('columnheader', { name: 'Ngày', exact: true });
+    const customer = ledger.getByRole('columnheader', { name: 'Thành viên', exact: true });
+    const [tableBox, dateBox, customerBox] = await Promise.all(
+      [table, date, customer].map((column) => column.boundingBox()),
+    );
+    expect(tableBox).not.toBeNull();
+    expect(tableBox!.width).toBeLessThan(width === 390 ? 900 : 1100);
+    expect(dateBox).not.toBeNull();
+    expect(customerBox).not.toBeNull();
+    expect(dateBox!.width).toBeCloseTo(90, 0);
+    expect(customerBox!.width).toBeCloseTo(((tableBox!.width - 90) * 12) / 65, 0);
+    await expect(first.getByRole('cell').first()).toHaveCSS('vertical-align', 'top');
+    await expect(first.getByRole('cell').first()).toHaveCSS('white-space', 'normal');
     const history = page.getByRole('region', { name: 'Lịch sử chi trả', exact: true });
     await expect(history).toContainText('Tháng 09/2026');
     await expect(history).toContainText('20.880.000đ');

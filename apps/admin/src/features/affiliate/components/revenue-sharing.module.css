@@ -66,6 +66,7 @@
 }
 .table :global(.ant-table-thead > tr > th) {
   font-size: 13px;
+  line-height: normal;
   height: 55px;
   vertical-align: top;
 }
@@ -74,6 +75,10 @@
 }
 .table :global(.ant-table-container) {
   min-width: 900px;
+}
+.table :global(.ant-table-content > table) {
+  width: 100% !important;
+  table-layout: fixed !important;
 }
 .table :global(.ant-table-expanded-row > td) {
   padding: 0 !important;
@@ -104,6 +109,7 @@
   gap: 0;
 }
 .bank {
+  gap: 0;
   line-height: 1.4;
 }
 .identity b {
@@ -123,31 +129,46 @@
 }
 .detail {
   display: flex;
+  container-type: inline-size;
   flex-direction: column;
   gap: 16px;
   padding: 14px 16px 16px 40px;
+  line-height: normal;
   background: color-mix(
     in srgb,
     var(--ant-color-primary, #1677ff) 2%,
     var(--ant-color-bg-container, #fff)
   );
 }
-.detail section > div {
+.ledger {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ledger > button {
+  align-self: flex-start;
+}
+.ledger > div {
   border: 0 !important;
   padding: 0 !important;
   background: transparent !important;
 }
 .detail :global(.ant-table) {
   background: transparent;
+  line-height: normal;
 }
 .detail :global(.ant-table-container) {
   min-width: 0;
 }
 .detail :global(.ant-table-cell) {
   padding: 6px !important;
+  vertical-align: top;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 .detail :global(.ant-table-thead > tr > th) {
   height: auto;
+  padding: 4px 6px !important;
   background: transparent;
   font-size: 12px;
   font-weight: 400;

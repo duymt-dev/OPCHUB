@@ -449,3 +449,23 @@ No CSS hiding, prototype-control removal, financial/API/schema/seed change.
 Prove no requests without permission, empty result, error retry, late invalidation,
 actual former data and retained lazy detail/history. Rerun identical browser
 assertions in both modes and unchanged unmasked eight-state parity.
+
+### Measured nested-ledger columns and wrapping (31/10/2026)
+
+Exact scope: Admin affiliate components `director-revenue-detail.tsx`,
+`revenue-ledger-columns.tsx` (new: extracted typed columns),
+`revenue-sharing.module.css`; `e2e/behavior/regional-revenue-default.spec.ts`;
+this TIP, progress, new ledger-geometry report and generated parity results.
+Read-only browser measurement finds90px date plus proportional remaining columns,
+normal line height and wrapping in the reference. Keep AdminTable but constrain
+the nested table to its actual detail width rather than intrinsic max-content;
+size columns by those measured proportions. Restore normal top-aligned wrapping,
+Constrain the owning table to its viewport/minimum width so the nested table
+cannot enlarge the parent's intrinsic max-content width; retain horizontal scroll.
+Keep outer header line height normal so wrapped labels fit its measured55px
+height, and remove the extra bank-line gap; assert that header height at both widths.
+header/body padding and title spacing. Limit table-shell reset styles to ledger
+instead of accidentally removing payout-history row separators. No fixed filler
+height, record deletion, masked capture, fixture/date/bank or payout-rule change.
+Assert actual column bounds and wrapping with the same browser tests in both
+modes; preserve eight→sixteen row pagination, immutable bank/history and reload.
