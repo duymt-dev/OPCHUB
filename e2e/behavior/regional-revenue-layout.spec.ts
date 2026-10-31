@@ -46,9 +46,9 @@ for (const width of [1440, 390]) {
     await expect(page.getByRole('button', { name: /Trần Quốc Bảo/ })).toBeVisible();
     await expect(page.getByRole('button', { name: /Lê Minh Hải/ })).toHaveCount(0);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
-    await expect(
-      page.getByRole('button', { name: 'GĐ Vùng đã thu hồi', exact: true }),
-    ).toBeVisible();
+    await expect(page.getByRole('button', { name: 'GĐ Vùng đã thu hồi', exact: true })).toHaveCount(
+      0,
+    );
     const director = page.getByRole('button', { name: /Trần Quốc Bảo/ });
     await director.click();
     await expect(director).toHaveAttribute('aria-expanded', 'true');

@@ -107,9 +107,10 @@ describe('REQ-617 GĐ Vùng Admin tab', () => {
     vi.mocked(useGrants).mockReturnValue({ keys: [], roleName: 'No access', previewing: false });
     show();
     expect(api.fetchRevenueDashboard).not.toHaveBeenCalled();
+    expect(api.fetchFormerRevenueDirectors).not.toHaveBeenCalled();
   });
 
-  it('AT-GDV04 exposes retired beneficiaries lazily, without replacing current director identity', async () => {
+  it('AT-GDV04 discovers retired beneficiaries without replacing current identity or loading detail', async () => {
     const row = revenueFixture().items[0]!;
     vi.mocked(api.fetchFormerRevenueDirectors).mockResolvedValue({
       items: [
@@ -126,9 +127,43 @@ describe('REQ-617 GĐ Vùng Admin tab', () => {
     });
     show();
     await ready();
-    expect(api.fetchFormerRevenueDirectors).not.toHaveBeenCalled();
+    expect(api.fetchFormerRevenueDirectors).toHaveBeenCalledExactlyOnceWith(null);
+    expect(api.fetchRevenueLedger).not.toHaveBeenCalled();
+    expect(api.fetchRevenueHistory).not.toHaveBeenCalled();
     fireEvent.click(screen.getByRole('button', { name: 'GĐ Vùng đã thu hồi' }));
     expect(await screen.findByRole('button', { name: /Former recipient/ })).toBeTruthy();
+    expect(screen.getByRole('button', { name: /Bảo/ })).toBeTruthy();
+  });
+
+  it('omits only a confirmed-empty former section and restores access after invalidation', async () => {
+    const context = affiliateTestContext();
+    render(<RevenueSharingTab query="" onQuery={vi.fn()} />, context);
+    await ready();
+    await waitFor(() => {
+      expect(api.fetchFormerRevenueDirectors).toHaveBeenCalledExactlyOnceWith(null);
+      expect(screen.queryByRole('button', { name: 'GĐ Vùng đã thu hồi' })).toBeNull();
+    });
+    vi.mocked(api.fetchFormerRevenueDirectors).mockResolvedValue({
+      items: [{ ...revenueFixture().items[0]!, current: false, provinces: [] }],
+      nextCursor: null,
+    });
+    await context.client.invalidateQueries({ queryKey: api.revenueKeys.former });
+    fireEvent.click(await screen.findByRole('button', { name: 'GĐ Vùng đã thu hồi' }));
+    const section = await screen.findByRole('region', { name: 'GĐ Vùng đã thu hồi' });
+    expect(within(section).getByRole('button', { name: /Bảo/ })).toBeTruthy();
+  });
+
+  it('keeps failed former lookup accessible and permits retry without hiding current rows', async () => {
+    vi.mocked(api.fetchFormerRevenueDirectors).mockRejectedValueOnce(new Error('offline'));
+    show();
+    await ready();
+    fireEvent.click(await screen.findByRole('button', { name: 'GĐ Vùng đã thu hồi' }));
+    const section = await screen.findByRole('region', { name: 'GĐ Vùng đã thu hồi' });
+    fireEvent.click(await within(section).findByRole('button', { name: 'Thử lại' }));
+    expect(
+      await within(section).findByText('Chưa có khoản chia sẻ của GĐ Vùng đã thu hồi.'),
+    ).toBeTruthy();
+    expect(api.fetchFormerRevenueDirectors).toHaveBeenCalledTimes(2);
     expect(screen.getByRole('button', { name: /Bảo/ })).toBeTruthy();
   });
 

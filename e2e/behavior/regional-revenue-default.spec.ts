@@ -26,6 +26,9 @@ for (const width of [1440, 390]) {
       '44.880.000đ',
     );
     await expect(page.getByText('50 khoản từ 6 affiliate', { exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'GĐ Vùng đã thu hồi', exact: true })).toHaveCount(
+      0,
+    );
     await page.getByRole('button', { name: /Trần Quốc Bảo/ }).click();
     const ledger = page.getByRole('region', { name: 'Khoản ghi nhận cho GĐ Vùng', exact: true });
     await expect(ledger.getByRole('row')).toHaveCount(9);

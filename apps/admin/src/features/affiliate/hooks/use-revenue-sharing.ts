@@ -12,7 +12,7 @@ import {
 import type { RevenueCursor } from '../revenue-types';
 import { useAffiliateAccess } from './use-affiliate-access';
 
-export function useRevenueSharing(showFormer: boolean, q: string) {
+export function useRevenueSharing(q: string) {
   const access = useAffiliateAccess();
   const dashboard = useQuery({
     queryKey: revenueKeys.dashboard(q),
@@ -25,7 +25,7 @@ export function useRevenueSharing(showFormer: boolean, q: string) {
     initialPageParam: null as string | null,
     queryFn: ({ pageParam }) => fetchFormerRevenueDirectors(pageParam),
     getNextPageParam: (p) => p.nextCursor ?? undefined,
-    enabled: access.view && showFormer,
+    enabled: access.view,
   });
   return { dashboard, former, access };
 }

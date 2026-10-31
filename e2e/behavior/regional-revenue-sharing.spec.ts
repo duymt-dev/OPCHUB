@@ -29,6 +29,9 @@ test('REQ-617 AT-GDV04 D-122 years, retained debt, month payout and immutable hi
   page,
 }) => {
   await openSharing(page);
+  await expect(page.getByRole('button', { name: 'GĐ Vùng đã thu hồi', exact: true })).toHaveCount(
+    0,
+  );
   const retained = page.getByRole('status', {
     name: 'Doanh thu Media Soft giữ lại (sau phần GĐ Vùng)',
     exact: true,

@@ -23,7 +23,7 @@ export function RevenueSharingTab({
   const t = useTranslations('revenue');
   const [showFormer, setShowFormer] = useState(false);
   const [paying, setPaying] = useState<RevenueDirector | null>(null);
-  const { dashboard, former, access } = useRevenueSharing(showFormer, query);
+  const { dashboard, former, access } = useRevenueSharing(query);
   if (!access.view) return null;
   if (dashboard.isPending) return <PageSkeleton />;
   if (dashboard.isError)
@@ -36,6 +36,8 @@ export function RevenueSharingTab({
     );
   const data = dashboard.data;
   const rows = data.items.filter((r) => data.visible.ids.includes(r.id));
+  // Hide only a confirmed-empty optional section, never an error or earned history.
+  const hasFormer = !former.isSuccess || former.data.pages.some((page) => page.items.length > 0);
   const pay = (row: RevenueDirector) => {
     if (access.guard('affiliate.payout')) setPaying(row);
   };
@@ -48,14 +50,16 @@ export function RevenueSharingTab({
         canPay={access.payout && !dashboard.isPlaceholderData}
         onPay={pay}
       />
-      <Button
-        type="link"
-        className={`${styles.formerToggle}`}
-        aria-expanded={showFormer}
-        onClick={() => setShowFormer(!showFormer)}
-      >
-        {t('former')}
-      </Button>
+      {hasFormer || showFormer ? (
+        <Button
+          type="link"
+          className={`${styles.formerToggle}`}
+          aria-expanded={showFormer}
+          onClick={() => setShowFormer(!showFormer)}
+        >
+          {t('former')}
+        </Button>
+      ) : null}
       {showFormer ? (
         <FormerRevenueDirectors query={former} onPay={pay} canPay={access.payout} />
       ) : null}

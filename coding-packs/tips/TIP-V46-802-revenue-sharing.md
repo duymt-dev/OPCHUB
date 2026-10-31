@@ -433,3 +433,19 @@ hardcoded in UI and no current runtime appointment is backdated. Existing functi
 revenue-only scenario stays independent. Prove native/MSW equality, linked source
 receipts, dates, conservation, payout totals, reset/idempotence and rollback.
 Do not wire into code imported by the live full integration runner until it exits.
+
+### Contextual former-beneficiary section (31/10/2026)
+
+Exact scope: Admin affiliate `hooks/use-revenue-sharing.ts`, components
+`revenue-sharing-tab.tsx`, `revenue-sharing-tab.spec.tsx`; E2E
+`regional-revenue-default.spec.ts`, `regional-revenue-layout.spec.ts` and
+`regional-revenue-sharing.spec.ts`.
+Probe the existing bounded former-beneficiary endpoint when a permitted user
+opens sharing. Only a successful empty response suppresses the additional
+former-beneficiary section; pending/error remain accessible, with retry and
+pagination unchanged. Actual former beneficiaries, debt and history must remain
+reachable after revocation and reload; current-director rows never replaced.
+No CSS hiding, prototype-control removal, financial/API/schema/seed change.
+Prove no requests without permission, empty result, error retry, late invalidation,
+actual former data and retained lazy detail/history. Rerun identical browser
+assertions in both modes and unchanged unmasked eight-state parity.
