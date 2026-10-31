@@ -106,3 +106,15 @@ boundary, comparison rule or threshold change. Preserve native ended-month
 contract pending owner resolution; this is not a new D-xx, waiver or approval of
 that discrepancy. Cancellation tests prove no writes only. Continue other goal
 work rather than blocking the whole goal over the question.
+
+## V4.6 / 802 — gate placement and read-only dev readiness
+
+At0741e854, re-read GOAL rather than inheriting the prior report's extra gate:
+per-TIP integration explicitly uses opchub_test/Redis2, plus real-server/MSW E2E.
+The complete server-dev AT-GDV01–07/TC-461–494 gate is assigned to812. Retain that
+unfinished final requirement, but do not reset HOLD dev data to manufacture an
+additional prerequisite for an802 checkpoint. This is not a relaxation of full
+integration, E2E or3% parity:802 still fails payout-state parity and full integration.
+The read-only dev probe finds94migrations/3directors but0customer epochs/shares/
+payouts, so dev readiness is not functional acceptance. Q1/Q2/Q4 remain unchanged.
+See [scope-by-scope audit](../TIP-V46-802-acceptance-audit.md).
