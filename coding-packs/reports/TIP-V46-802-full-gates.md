@@ -108,10 +108,12 @@ explicit demo-regeneration authorization. No runtime historical entitlement is
 rewritten. The new default-demo report supersedes the earlier missing-history
 observation; no seed/business change was made during the full gate itself.
 
-Latest P7 at4c4eba9d: default1.692824%PASS/3.361053%FAIL; expanded
-3.357075%/4.488970%FAIL. Eight-state current result4PASS/4FAIL; search passes
-both widths. [Measured ledger geometry](TIP-V46-802-ledger-geometry.md) records
-current5/5 browser coverage in each mode, root2196+2existing skips and builds.
+Latest P7 at88ceb8e4: default1.692824%PASS/3.361053%FAIL; expanded
+2.687766%PASS/3.752962%FAIL. Eight-state current result5PASS/3FAIL; search passes
+both widths. [History/pagination evidence](TIP-V46-802-history-pagination.md)
+records current5/5 browser coverage in each mode, root2203+2existing skips,
+exact cursor counts/accessibility and both Admin production builds. Mobile empty
+remains6.320352%FAIL. Earlier geometry evidence retains prior results.
 No gate waiver; full integration remains FAIL and shared-fixture full regression
 remains required at final acceptance.
 Q-V46-802-2 payout cutoff and expanded/payout/history parity remain open. Final
