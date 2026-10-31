@@ -1,5 +1,46 @@
 # V46-802 — full gate checkpoint (not completion)
 
+## Current native Portal build / cross-app verification — fb9cf3b3
+
+The native Portal output provenance gap is now closed. Production build
+`pnpm --filter @opchub/portal build` passed, runner63509 terminal exit0, using
+`NEXT_DIST_DIR=.next-v46802-native-build NEXT_PUBLIC_API_MOCKING=off
+NEXT_PUBLIC_API_URL=/v1 NEXT_PUBLIC_PORTAL_URL=http://localhost:4730
+API_PROXY_URL=http://localhost:4732`. Direct package build avoids generating an
+additional Turbo archive on the low-space drive; same production `next build`,
+not a dev server or skipped compiler. Log:
+`e2e/.parity-out/v46-802-native-portal-build-fb9cf3b3.log`.
+
+Related native browser command:
+`pnpm --filter @opchub/e2e exec playwright test --project=behavior
+affiliate-cross-app.spec.ts regional-director-portal.spec.ts`.
+**2/2 PASS,15.7s,exit0**, runner84933 terminal. Uses the rebuilt Portal,
+unchanged Admin72345a1e output and isolated backendd7e080c1, with
+E2E_TARGET=server,SKIP_SEED=1,PORTAL_PORT/SERVER_PORTAL_PORT4730,
+ADMIN_PORT/SERVER_ADMIN_PORT4731,API4732 and one worker. Log:
+`e2e/.parity-out/v46-802-native-current-browser.log`.
+
+Same existing assertions as the full MSW pass atd6ab302c: actual bank edit and
+rate/policy changes cross Portal/Admin origins and survive F5; old paid bank
+snapshots remain unchanged; cancellation propagates with its reason; incumbent
+director retains fee exemption, billing history, paid fundraising and responsive
+pricing/sidebar controls. No assertion/test/source changes, mode-specific
+expectations or fresh full-MSW/integration rerun. The other802 native default,
+layout, sharing and policy checks retain their recorded source scopes; these two
+cases validate the newly rebuilt Portal boundary, not replace all TIP tests.
+
+Guarded AF0 setup used only native opchub_test5432/Redis2. Pending802 audit after
+the browser returned `[]`; base test demo restored and only Redis2 cleared.
+Owned API7312 was stopped after checking its launch command; API session1980
+is terminal (exit1 from intentional stop). Owned4730/4731/4732 listeners released.
+HOLD API28484/socket33408/worker16200 retain original30October start times.
+No devDB mutation, held binary overwrite, migration or external provider call.
+
+This closes the stale native-build follow-up below, **not final acceptance on
+opchub_dev**. Full MSW356/4 remains current: no runtime diff since that run.
+Q-V46-802-1/2, actual payout-action visual/behavior FAIL and Q4 calendar integration
+failure remain; no financial-rule decision or TIP-DONE inferred from these checks.
+
 ## Current full MSW regression — d6ab302c
 
 **Terminal exit0:356passed +4existing skips,360collected,22.7m**, runner10437.

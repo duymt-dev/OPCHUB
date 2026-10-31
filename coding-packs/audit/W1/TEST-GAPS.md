@@ -1099,3 +1099,12 @@ layout, cancellation, policy and payout/reload cases plus cross-origin persisten
 The earlier same-HEAD attempt with stale Portal output was deliberately stopped,
 not accepted as a gate. Native full integration remains FAIL at5a3ca36b; no rerun
 or waiver. See the full-gates report for exact commands, provenance and limits.
+
+Native Portal provenance follow-up atfb9cf3b3: production native Portal rebuilt,
+then `affiliate-cross-app.spec.ts` and `regional-director-portal.spec.ts` passed
+2/2,15.7s against actual opchub_test/Redis2. Same assertions as the full MSW run;
+no test/code changes or mock-server substitute. Cross-origin policy/bank/rate/F5,
+immutable historical bank and incumbent fee-exemption behavior verified. Base
+demo restored, pending802 `[]`, owned services released, original HOLD untouched.
+This closes the old native Portal build gap, not opchub_dev final acceptance,
+payout cutoff parity or full-integration Q4. Source-scope details in full-gates.
