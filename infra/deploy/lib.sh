@@ -70,7 +70,7 @@ restart_rolling() {
   for i in $(enabled_instances opchub-portal@ "${PORTAL_INSTANCES:-}"); do
     log "restart opchub-portal@${i}"
     systemctl restart "opchub-portal@${i}"
-    wait_http "http://127.0.0.1:310${i}/" '^(2|3)[0-9][0-9]$' || return 1
+    wait_http "http://127.0.0.1:430${i}/" '^(2|3)[0-9][0-9]$' || return 1
   done
   log "restart opchub-admin"
   systemctl restart opchub-admin
