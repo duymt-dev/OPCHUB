@@ -2,16 +2,13 @@
 
 import type { TableProps } from 'antd';
 import { useTranslations } from 'next-intl';
-import { Button } from 'antd';
 import { affiliateDate, affiliateMoney } from '../format';
-import { affiliateMonthLabel, isClosedAffiliateMonth } from '../model';
+import { affiliateMonthLabel } from '../model';
 import type { AffiliateMonthRow } from '../types';
 import { MonthStatus } from './month-status';
 import styles from './affiliate-detail.module.css';
 
-export function usePayoutColumns(
-  onPay: (row: AffiliateMonthRow) => void,
-): NonNullable<TableProps<AffiliateMonthRow>['columns']> {
+export function usePayoutColumns(): NonNullable<TableProps<AffiliateMonthRow>['columns']> {
   const t = useTranslations('affiliate');
   return [
     {
@@ -43,23 +40,10 @@ export function usePayoutColumns(
       render: (_, row) => affiliateDate(row.paidAt),
     },
     {
-      title: t('payout'),
+      title: t('regionalPays'),
       key: 'payout',
       width: 90,
-      render: (_, row) =>
-        row.payable > 0 && isClosedAffiliateMonth(row.monthKey) ? (
-          <Button
-            size="small"
-            type="primary"
-            onClick={() => {
-              onPay(row);
-            }}
-          >
-            {t('payout')}
-          </Button>
-        ) : (
-          '—'
-        ),
+      render: (_, row) => (row.amount > 0 ? t('regionalPays') : '—'),
     },
   ];
 }

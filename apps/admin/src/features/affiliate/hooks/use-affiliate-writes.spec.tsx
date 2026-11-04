@@ -1,4 +1,4 @@
-import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
+import { act, cleanup, renderHook } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { useGrants } from '@/lib/permissions';
 import * as api from '../api';
@@ -11,13 +11,14 @@ vi.mock('../api', async (original) => ({
   cancelCommissions: vi.fn(),
   setAffiliateRate: vi.fn(),
   setAffiliateRates: vi.fn(),
-  payAffiliateMonth: vi.fn(),
   saveAffiliatePolicy: vi.fn(),
   exportCommissions: vi.fn(),
   exportAffiliates: vi.fn(),
 }));
 const all = ['affiliate.view', 'affiliate.action', 'affiliate.payout'];
 const policy = {
+  renewalRate: 10,
+  renewalMaxYear: 3,
   regionalFirstYear: 50,
   regionalStep: 10,
   regionalMin: 20,
@@ -26,7 +27,6 @@ const policy = {
   fundraisingRate: 10,
   terms: '',
 };
-const intent = { id: 'a1', month: '2026-09', key: 'intent-stable' };
 
 beforeEach(() => {
   vi.clearAllMocks();
@@ -34,7 +34,6 @@ beforeEach(() => {
   vi.mocked(api.cancelCommissions).mockResolvedValue({ cancelled: 2 });
   vi.mocked(api.setAffiliateRate).mockResolvedValue({ updated: 1 });
   vi.mocked(api.setAffiliateRates).mockResolvedValue({ updated: 2 });
-  vi.mocked(api.payAffiliateMonth).mockResolvedValue({ paid: 1, amount: 120000 });
   vi.mocked(api.saveAffiliatePolicy).mockResolvedValue(policy);
 });
 afterEach(cleanup);
@@ -52,7 +51,6 @@ describe('REQ-308 REQ-309 REQ-310 Affiliate mutation permissions', () => {
         await result.current.cancel.mutateAsync({ ids: ['c1'], reason: 'Violation' }),
       ).toBeNull();
       expect(await result.current.rates.mutateAsync({ ids: ['a1'], rate: 30 })).toBeNull();
-      expect(await result.current.payout.mutateAsync(intent)).toBeNull();
       expect(await result.current.policy.mutateAsync(policy)).toBeNull();
       expect(await result.current.csv.mutateAsync({ type: 'com', ids: ['c1'] })).toBeNull();
       expect(await result.current.csv.mutateAsync({ type: 'aff', ids: ['a1'] })).toBeNull();
@@ -61,7 +59,6 @@ describe('REQ-308 REQ-309 REQ-310 Affiliate mutation permissions', () => {
       api.cancelCommissions,
       api.setAffiliateRate,
       api.setAffiliateRates,
-      api.payAffiliateMonth,
       api.saveAffiliatePolicy,
       api.exportCommissions,
       api.exportAffiliates,
@@ -75,10 +72,8 @@ describe('REQ-308 REQ-309 REQ-310 Affiliate mutation permissions', () => {
     const { result } = renderHook(useAffiliateWrites, affiliateTestContext());
     expect(result.current.access.view).toBe(true);
     expect(result.current.access.write).toBe(false);
-    await act(async () => {
-      await result.current.payout.mutateAsync(intent);
-    });
-    expect(api.payAffiliateMonth).not.toHaveBeenCalled();
+    expect(result.current).not.toHaveProperty('payout');
+    await act(async () => {});
   });
 
   it('action permission can cancel/rate but cannot authorize payout', async () => {
@@ -90,10 +85,8 @@ describe('REQ-308 REQ-309 REQ-310 Affiliate mutation permissions', () => {
     const hook = renderHook(useAffiliateWrites, affiliateTestContext());
     await act(async () => {
       await hook.result.current.cancel.mutateAsync({ ids: ['c1', 'c2'], reason: 'Violation' });
-      await hook.result.current.payout.mutateAsync(intent);
     });
     expect(api.cancelCommissions).toHaveBeenCalledWith(['c1', 'c2'], 'Violation');
-    expect(api.payAffiliateMonth).not.toHaveBeenCalled();
   });
 
   it('individual and bulk rates use their dedicated API and invalidate the shared root', async () => {
@@ -117,30 +110,8 @@ describe('REQ-308 REQ-309 REQ-310 Affiliate mutation permissions', () => {
     });
     const { result } = renderHook(useAffiliateWrites, affiliateTestContext());
     await act(async () => {
-      await result.current.payout.mutateAsync(intent);
       await result.current.rates.mutateAsync({ ids: ['a1'], rate: 30 });
     });
-    expect(api.payAffiliateMonth).toHaveBeenCalledWith('a1', '2026-09', 'intent-stable');
     expect(api.setAffiliateRate).not.toHaveBeenCalled();
-  });
-
-  it('failed payout retains the supplied idempotency key on retry and does not invalidate on failure', async () => {
-    vi.mocked(api.payAffiliateMonth).mockRejectedValueOnce(new Error('Bank not configured'));
-    const context = affiliateTestContext();
-    const invalidate = vi.spyOn(context.client, 'invalidateQueries');
-    const { result } = renderHook(useAffiliateWrites, context);
-    await act(async () => {
-      await expect(result.current.payout.mutateAsync(intent)).rejects.toThrow(
-        'Bank not configured',
-      );
-    });
-    expect(invalidate).not.toHaveBeenCalled();
-    await act(async () => {
-      await result.current.payout.mutateAsync(intent);
-    });
-    expect(vi.mocked(api.payAffiliateMonth).mock.calls[0]).toEqual(
-      vi.mocked(api.payAffiliateMonth).mock.calls[1],
-    );
-    await waitFor(() => expect(result.current.payout.isSuccess).toBe(true));
   });
 });

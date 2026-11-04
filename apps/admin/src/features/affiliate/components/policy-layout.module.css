@@ -11,11 +11,11 @@
 /* TD-P4-UI-03: rules are scoped under .ant-form so AntD CSS-in-JS, injected after CSS Modules
    on hard navigation, cannot reset the prototype's 13px labels, 12px hints and 6px rhythm. */
 .form {
-  max-width: 820px;
+  max-width: 960px;
   display: flex;
   flex-direction: column;
   /* Prototype: các khối của tab Chính sách cách nhau 14px */
-  gap: 14px;
+  gap: 10px;
 }
 .form:global(.ant-form) :global(.ant-form-item) {
   margin-bottom: 0;

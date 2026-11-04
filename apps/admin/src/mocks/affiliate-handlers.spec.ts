@@ -6,7 +6,6 @@ import {
   affiliateCommissionsSchema,
   affiliateDetailSchema,
   affiliateMonthsSchema,
-  affiliatePayoutResultSchema,
   affiliateSummarySchema,
   csvFileSchema,
 } from '@opchub/shared/api-domains';
@@ -17,7 +16,6 @@ import {
   checkMockAffiliate,
   feeAction,
   listSettingsLog,
-  mockAffiliateBank,
   mockAffiliateReferrals,
   myMockAffiliate,
   resetMockDb,
@@ -28,7 +26,6 @@ import { handlers } from './handlers';
 const server = setupServer(...handlers);
 const BASE = `${location.origin}/v1`;
 const PAGE = { page: 1, size: 100 };
-const BANK = { bankName: 'BIDV', bankNo: '135792468', bankHolder: 'NGUYEN VAN AN' } as const;
 const request = (path: string, method = 'GET', body?: unknown, actor = 'admin', key?: string) =>
   fetch(`${BASE}${path}`, {
     method,
@@ -59,7 +56,7 @@ afterAll(() => server.close());
 describe('TIP-V2-404 Affiliate Admin MSW contract', () => {
   it('REQ-312 pages real AF0 data, filters search/status and returns backend-owned totals', async () => {
     const all = await commissions();
-    expect(all.total).toBe(51);
+    expect(all.total).toBe(53);
     const agents = affiliateAdminPageSchema.parse(
       await (await request('/admin/affiliates?size=100')).json(),
     );
@@ -86,6 +83,7 @@ describe('TIP-V2-404 Affiliate Admin MSW contract', () => {
       payable: 0,
       paid: 0,
       netRevenue: 0,
+      regionalTotal: 0,
       plans: { business: 0, personal: 0, fundraising: 0 },
     });
     const detail = affiliateDetailSchema.parse(
@@ -95,17 +93,17 @@ describe('TIP-V2-404 Affiliate Admin MSW contract', () => {
     expect(
       affiliateMonthsSchema.parse(await (await request('/admin/affiliates/m1/months')).json())
         .total,
-    ).toBe(3);
+    ).toBe(5);
     expect(
       affiliateAdminCustomersSchema.parse(
         await (await request('/admin/affiliates/m1/customers')).json(),
       ).total,
-    ).toBe(9);
+    ).toBe(11);
   });
 
   it('REQ-310 cancellation requires reason, is atomic on unknown ids and exposes the reason in Portal', async () => {
     const all = await commissions();
-    const row = all.items.find((r) => r.status === 'recorded')!;
+    const row = all.items.find((r) => r.status === 'recorded' && r.customerYear === 1)!;
     expect(
       (await request('/admin/affiliate/commissions/cancel', 'POST', { ids: [row.id], reason: ' ' }))
         .status,
@@ -158,75 +156,11 @@ describe('TIP-V2-404 Affiliate Admin MSW contract', () => {
     const after = await commissions();
     for (const row of before.items) {
       const updated = after.items.find((r) => r.id === row.id)!;
-      if (row.affiliateId === 'm1' && row.status === 'recorded')
+      if (row.affiliateId === 'm1' && row.status === 'recorded' && row.customerYear === 1)
         // D-110: 30% × phí thực trả của khoản (gói thực trả), làm tròn đến đồng
         expect(updated).toMatchObject({ rate: 30, amount: Math.round(row.feeAmount * 0.3) });
       else expect(updated).toEqual(row);
     }
-  });
-
-  it('AT-AF06 missing bank is 409 without financial/audit effects; retry keeps one receipt and old snapshots', async () => {
-    const agent = affiliateMockState().agents.get('m1')!;
-    agent.bank = null;
-    const before = await commissions();
-    const logs = listSettingsLog().length;
-    const pay = () =>
-      request(
-        '/admin/affiliates/m1/payouts',
-        'POST',
-        { monthKey: '2026-10' },
-        'admin',
-        'same-intent',
-      );
-    expect((await pay()).status).toBe(409);
-    expect((await commissions()).items).toEqual(before.items);
-    expect(listSettingsLog()).toHaveLength(logs);
-    mockAffiliateBank('m1', BANK);
-    const paid = affiliatePayoutResultSchema.parse(await (await pay()).json());
-    // D-110: c1 DN 720.000 + c2, c3 Cá nhân 240.000 (prototype v4.2 P-97 1.200.000đ)
-    expect(paid).toEqual({ paid: 3, amount: 1200000 });
-    expect(await (await pay()).json()).toEqual(paid);
-    expect(listSettingsLog()).toHaveLength(logs + 1);
-    const history = affiliateAdminCustomersSchema.parse(
-      await (await request('/admin/affiliates/m1/customers?size=100')).json(),
-    );
-    expect(
-      history.items
-        .filter((r) => r.date.startsWith('2026-10'))
-        .every((r) => r.bank?.bankName === 'BIDV'),
-    ).toBe(true);
-    expect(
-      history.items
-        .filter((r) => !r.date.startsWith('2026-10'))
-        .every((r) => r.bank?.bankName === 'Vietcombank'),
-    ).toBe(true);
-  });
-
-  it('D-110 expired agent stays active; payout pays ended months, blocks current/future', async () => {
-    resetMockDb();
-    seedMockAffiliateScenario({ paused: true });
-    const id = 'af-owner-a3';
-    expect(myMockAffiliate(id, '').state).toBe('active');
-    expect(
-      (
-        await request(
-          `/admin/affiliates/${id}/payouts`,
-          'POST',
-          { monthKey: '2026-11' },
-          'admin',
-          'future',
-        )
-      ).status,
-    ).toBe(409);
-    const ended = await request(
-      `/admin/affiliates/${id}/payouts`,
-      'POST',
-      { monthKey: '2026-10' },
-      'admin',
-      'ended',
-    );
-    expect(ended.status).toBe(200);
-    expect(((await ended.json()) as { paid: number }).paid).toBeGreaterThan(0);
   });
 
   it('REQ-308 REQ-303 policy updates cookie TTL/new agents, not rates of existing agents; reset drops state', async () => {
@@ -264,7 +198,7 @@ describe('TIP-V2-404 Affiliate Admin MSW contract', () => {
     });
     feeAction('m6', 'collect', Date.now());
     feeAction('m6', 'renew', Date.now());
-    expect((await commissions()).total).toBe(51);
+    expect((await commissions()).total).toBe(53);
     resetMockDb();
     expect(await (await request('/admin/affiliate/policy')).json()).toMatchObject({
       defaultRate: 20,
@@ -290,7 +224,7 @@ describe('TIP-V2-404 Affiliate Admin MSW contract', () => {
           'denied',
         )
       ).status,
-    ).toBe(403);
+    ).toBe(404);
     expect(
       (
         await request(
@@ -301,7 +235,7 @@ describe('TIP-V2-404 Affiliate Admin MSW contract', () => {
           'allowed',
         )
       ).status,
-    ).toBe(200);
+    ).toBe(404);
   });
 
   it('REQ-310 CSV validates ids, neutralizes formula injection and writes the native audit action', async () => {
@@ -321,5 +255,23 @@ describe('TIP-V2-404 Affiliate Admin MSW contract', () => {
       tag: 'affiliate',
       summary: 'Xuất CSV 1 dòng commissions',
     });
+  });
+  it('D-119 removed payout has no financial or audit effects even with payout permission', async () => {
+    const before = await commissions();
+    const logs = listSettingsLog().length;
+    for (const actor of ['admin', 'adm-mai', 'adm-trang'])
+      expect(
+        (
+          await request(
+            '/admin/affiliates/m1/payouts',
+            'POST',
+            { monthKey: '2026-10' },
+            actor,
+            'same',
+          )
+        ).status,
+      ).toBe(404);
+    expect((await commissions()).items).toEqual(before.items);
+    expect(listSettingsLog()).toHaveLength(logs);
   });
 });

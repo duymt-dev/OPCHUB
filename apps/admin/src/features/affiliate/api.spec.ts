@@ -2,7 +2,6 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   affiliateCancelResultSchema,
   affiliateCommissionsSchema,
-  affiliatePayoutResultSchema,
   affiliatePolicySchema,
   affiliateRateResultSchema,
   csvFileSchema,
@@ -20,7 +19,6 @@ import {
   fetchAffiliates,
   fetchAffiliateSummary,
   fetchCommissions,
-  payAffiliateMonth,
   saveAffiliatePolicy,
   setAffiliateRate,
   setAffiliateRates,
@@ -95,20 +93,10 @@ describe('REQ-312 Affiliate Admin API contract wiring', () => {
     });
   });
 
-  it('REQ-309 preserves caller idempotency key on payout retry, sends no client total', async () => {
-    await payAffiliateMonth('a1', '2026-09', 'same-financial-intent');
-    await payAffiliateMonth('a1', '2026-09', 'same-financial-intent');
-    expect(request.mock.calls[0]).toEqual(request.mock.calls[1]);
-    expect(request).toHaveBeenCalledWith('/admin/affiliates/a1/payouts', {
-      method: 'POST',
-      body: { monthKey: '2026-09' },
-      idempotencyKey: 'same-financial-intent',
-      schema: affiliatePayoutResultSchema,
-    });
-  });
-
   it('uses policy GET/PUT and audited export endpoints with the CSV response schema', async () => {
     const policy = {
+      renewalRate: 10,
+      renewalMaxYear: 3,
       regionalFirstYear: 50,
       regionalStep: 10,
       regionalMin: 20,

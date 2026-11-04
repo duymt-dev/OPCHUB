@@ -36,7 +36,16 @@ export function useCommissionColumns(
       width: 110,
       render: (_, row) => affiliateMoney(row.feeAmount),
     },
-    { title: t('columns.rate'), key: 'rate', width: 70, render: (_, row) => `${row.rate}%` },
+    {
+      title: t('columns.rate'),
+      key: 'rate',
+      width: 150,
+      render: (_, row) =>
+        t(row.customerYear === 1 ? 'commissionFirstYear' : 'commissionRenewalYear', {
+          rate: row.rate,
+          year: row.customerYear,
+        }),
+    },
     {
       title: t('columns.commission'),
       key: 'amount',

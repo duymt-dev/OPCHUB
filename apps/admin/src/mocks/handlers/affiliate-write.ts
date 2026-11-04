@@ -1,16 +1,14 @@
+import { z } from 'zod';
 import {
   affiliateBulkRateSchema,
   affiliateCancelSchema,
   affiliateExportSchema,
-  affiliatePayoutRequestSchema,
-  affiliatePolicySchema,
   affiliateRateSchema,
   affiliateRestoreSchema,
 } from '@opchub/shared/api-domains';
 import {
   cancelMockAffiliateCommissions,
   exportMockAffiliateCsv,
-  payMockAffiliateMonth,
   restoreMockAffiliateCommissions,
   saveMockAffiliatePolicy,
   setMockAffiliateRates,
@@ -21,6 +19,8 @@ import { param, parseBody, reply, userIdOf } from './domain-util';
 import { API } from './util';
 
 export const affiliateWriteHandlers = [
+  // D-119: prevent a missing mock route falling through to a stale native provider.
+  http.post(`${API}/admin/affiliates/:id/payouts`, () => new Response(null, { status: 404 })),
   http.post(`${API}/admin/affiliate/commissions/cancel`, async ({ request }) => {
     const denied = affiliateAdminGuard(request, 'affiliate.action');
     if (denied) return denied;
@@ -56,23 +56,8 @@ export const affiliateWriteHandlers = [
   http.put(`${API}/admin/affiliate/policy`, async ({ request }) => {
     const denied = affiliateAdminGuard(request, 'affiliate.action');
     if (denied) return denied;
-    const b = await parseBody(request, affiliatePolicySchema);
+    const b = await parseBody(request, z.unknown());
     return b.ok ? reply(saveMockAffiliatePolicy(userIdOf(request), b.data)) : b.res;
-  }),
-  http.post(`${API}/admin/affiliates/:id/payouts`, async ({ request, params }) => {
-    const denied = affiliateAdminGuard(request, 'affiliate.payout');
-    if (denied) return denied;
-    const b = await parseBody(request, affiliatePayoutRequestSchema);
-    return b.ok
-      ? reply(
-          payMockAffiliateMonth(
-            userIdOf(request),
-            param(params, 'id'),
-            b.data.monthKey,
-            request.headers.get('Idempotency-Key') ?? undefined,
-          ),
-        )
-      : b.res;
   }),
   http.post(`${API}/admin/affiliate/commissions/export`, async ({ request }) => {
     const denied = affiliateAdminGuard(request, 'affiliate.action');

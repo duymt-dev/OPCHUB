@@ -6,7 +6,6 @@ import * as api from '../api';
 import { affiliateTestContext, setupAffiliateBrowser } from '../tests/context';
 import { CancelDialog } from './cancel-dialog';
 import { RateDialog } from './rate-dialog';
-import { PayoutDialog } from './payout-dialog';
 
 vi.mock('@/lib/permissions', () => ({ useGrants: vi.fn() }));
 vi.mock('../api', async (original) => ({
@@ -14,7 +13,6 @@ vi.mock('../api', async (original) => ({
   cancelCommissions: vi.fn(),
   setAffiliateRate: vi.fn(),
   setAffiliateRates: vi.fn(),
-  payAffiliateMonth: vi.fn(),
 }));
 beforeAll(setupAffiliateBrowser);
 beforeEach(() => {
@@ -26,7 +24,6 @@ beforeEach(() => {
   });
   vi.mocked(api.cancelCommissions).mockResolvedValue({ cancelled: 2 });
   vi.mocked(api.setAffiliateRate).mockResolvedValue({ updated: 1 });
-  vi.mocked(api.payAffiliateMonth).mockResolvedValue({ paid: 1, amount: 120000 });
 });
 afterEach(cleanup);
 
@@ -67,35 +64,5 @@ describe('REQ-308 REQ-309 REQ-310 Affiliate financial dialogs', () => {
     fireEvent.click(screen.getByRole('button', { name: /^Lưu$/ }));
     await waitFor(() => expect(onClose).toHaveBeenCalledTimes(1));
     expect(api.setAffiliateRate).toHaveBeenCalledWith('a1', 30);
-  });
-  it('AT-AF06 retains the payout intent after missing-bank conflict and retries the same key', async () => {
-    vi.mocked(api.payAffiliateMonth).mockRejectedValueOnce(
-      new ApiError('CONFLICT', 409, 'Lê Thu Hà chưa cập nhật số tài khoản'),
-    );
-    const onClose = vi.fn();
-    const intent = {
-      id: 'a1',
-      name: 'Lê Thu Hà',
-      month: '2026-09',
-      amount: 120000,
-      key: 'payout-intent',
-    };
-    render(<PayoutDialog intent={intent} onClose={onClose} />, affiliateTestContext());
-    fireEvent.click(screen.getByRole('button', { name: /^Chi trả$/ }));
-    await waitFor(() =>
-      expect(screen.getByRole('status').textContent).toBe('Lê Thu Hà chưa cập nhật số tài khoản'),
-    );
-    expect(onClose).not.toHaveBeenCalled();
-    await waitFor(() =>
-      expect(
-        screen.getByRole('button', { name: /^Chi trả$/ }).getAttribute('aria-disabled'),
-      ).not.toBe('true'),
-    );
-    fireEvent.click(screen.getByRole('button', { name: /^Chi trả$/ }));
-    await waitFor(() => expect(onClose).toHaveBeenCalledTimes(1));
-    expect(vi.mocked(api.payAffiliateMonth).mock.calls).toEqual([
-      ['a1', '2026-09', 'payout-intent'],
-      ['a1', '2026-09', 'payout-intent'],
-    ]);
   });
 });
