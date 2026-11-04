@@ -74,3 +74,13 @@ Một khái niệm chỉ có một tên trong code. UI hiển thị tiếng Vi�
 | `ProjectFundraising.status` | `pending_payment`, `pending_review`, `active`, `rejected` (→ `pending_review` khi bổ sung, D-113), `expired` | Chờ thanh toán, Chờ duyệt, Đang gọi vốn, Từ chối, Hết hạn |
 
 Nhãn tiếng Việt chỉ đặt trong file messages của next-intl, không viết cứng trong component.
+
+## GĐ Vùng (D-120, D-128, D-129)
+
+| Thuật ngữ | Code / dữ liệu | Ý nghĩa |
+|---|---|---|
+| Giám đốc Vùng (GĐ Vùng) | `RegionalDirector`, `regional_directors` | Thành viên được bổ nhiệm phụ trách một trong ba miền |
+| Ô vùng | `RegionalDirector.region` | Ba ô cố định Bắc, Trung & Tây Nguyên, Nam; thu hồi chỉ làm trống ô |
+| Tỉnh phụ trách | `regional_director_provinces` | Phạm vi hiển thị; không quyết định bên nhận chia sẻ doanh thu (D-129) |
+| Miễn phí · GĐ Vùng | `MembershipFeeStatus.regional_director` | Miễn phí không hạn trong nhiệm kỳ; không tính là khoản phí thực thu |
+| Quyền bổ nhiệm / thu hồi | `affiliate.regional` | Quyền ghi cấu hình GĐ Vùng; `affiliate.view` chỉ cho xem |
