@@ -17,6 +17,14 @@ export const mockAffiliatePolicy = readMockAffiliatePolicy;
 export function saveMockAffiliatePolicy(actor: string, input: unknown) {
   const parsed = affiliatePolicySchema.safeParse(input);
   if (!parsed.success) return invalidAffiliateInput(parsed.error);
+  if (parsed.data.regionalMin > parsed.data.regionalFirstYear)
+    return {
+      ok: false as const,
+      status: 422 as const,
+      code: 'VALIDATION_ERROR' as const,
+      message: 'Mức tối thiểu không được vượt năm đầu',
+      fields: [{ path: 'regionalMin', message: 'Mức tối thiểu không được vượt năm đầu' }],
+    };
   replaceMockAffiliatePolicy(parsed.data);
   logSetting(actor, 'affiliate.policy_update', '1', 'Cập nhật chính sách Affiliate', 'affiliate');
   return ok(mockAffiliatePolicy());

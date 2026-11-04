@@ -13,6 +13,9 @@ import { resetDemoBotWorkflows } from './bot-workflow-reset';
  * `stats_daily`.
  */
 export async function resetDemoData(tx: DbTx): Promise<void> {
+  await tx.regionalShare.deleteMany();
+  await tx.regionalPayout.deleteMany();
+  await tx.customerYear.deleteMany();
   await tx.regionalDirectorEvent.deleteMany();
   await tx.regionalDirectorProvince.deleteMany();
   await tx.regionalDirector.deleteMany();

@@ -22,6 +22,12 @@ const fundraisingRef = z.object({
 });
 
 export const outboxEvents = {
+  'regional_share.recorded': z.object({ shareId: z.string() }),
+  'regional_share.payout_recorded': z.object({
+    payoutId: z.string(),
+    region: z.enum(['north', 'central', 'south']),
+    directorUserId: z.string(),
+  }),
   'regional_director.appointed': z.object({
     region: z.enum(['north', 'central', 'south']),
     userId: z.string(),

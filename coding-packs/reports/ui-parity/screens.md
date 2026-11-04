@@ -404,6 +404,7 @@ Trạng thái ver2 đã có sẵn id cũ (không thêm): popup V4 + 6 dịch v�
 |---|---|---|---|---|---|
 | D-120-GCFG | Admin | Cấu hình GĐ Vùng | Affiliate > Cấu hình GĐ Vùng | /affiliate?tab=gcfg | 1440, 390 |
 | D-120-GCFG-RO | Admin | Kế toán chỉ xem | Cài đặt > xem thử Kế toán > Affiliate > Cấu hình GĐ Vùng | /affiliate?tab=gcfg | 1440, 390 |
-| D-120-GDV | Admin | Danh sách GĐ Vùng / sổ chia sẻ | Affiliate > GĐ Vùng | /affiliate?tab=gdv | pending 802 — không tính PASS tại 801 |
+| D-120-GDV | Admin | Danh sách GĐ Vùng / sổ chia sẻ | Affiliate > GĐ Vùng | /affiliate?tab=gdv | 1440, 390 — 802 đã đo, chưa đạt cả hai |
+| D-120-GDV-OPEN | Admin | Khoản ghi nhận Miền Bắc + lịch sử | Affiliate > GĐ Vùng > mở Miền Bắc | /affiliate?tab=gdv | 1440, 390 — 802 đã đo, chưa đạt |
 | D-18-GDV | Admin | Miễn phí · GĐ Vùng | Phí thành viên > Miễn phí · GĐ Vùng | /fees?status=gdv | 1440, 390 |
 | D-78-GDV | Admin | Email hệ thống GĐ Vùng | Marketing > Email tự động | /marketing?tab=auto | 1440, 390 |

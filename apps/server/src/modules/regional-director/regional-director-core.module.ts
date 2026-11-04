@@ -1,4 +1,13 @@
 import { Module } from '@nestjs/common';
+import { AffiliateCoreModule } from '@/modules/affiliate';
+import { AdminRegionalSharesController } from './controllers/admin-regional-shares.controller';
+import { RegionalShareRepository } from './repositories/regional-share.repository';
+import { RegionalPayoutRepository } from './repositories/regional-payout.repository';
+import { RegionalShareSummaryRepository } from './repositories/regional-share-summary.repository';
+import { RegionalShareLedgerService } from './services/regional-share-ledger.service';
+import { RegionalShareEventsHandler } from './services/regional-share-events.handler';
+import { RegionalShareReadService } from './services/regional-share-read.service';
+import { RegionalPayoutService } from './services/regional-payout.service';
 import { AccountCoreModule } from '@/modules/account';
 import { MembershipFeeCoreModule } from '@/modules/membership-fee';
 import { MailCoreModule } from '@/modules/mail';
@@ -11,6 +20,13 @@ import { RegionalDirectorReadService } from './services/regional-director-read.s
 import { RegionalDirectorEventsHandler } from './services/regional-director-events.handler';
 
 const providers = [
+  RegionalShareRepository,
+  RegionalPayoutRepository,
+  RegionalShareSummaryRepository,
+  RegionalShareLedgerService,
+  RegionalShareEventsHandler,
+  RegionalShareReadService,
+  RegionalPayoutService,
   RegionalDirectorRepository,
   RegionalDirectorService,
   RegionalDirectorReadService,
@@ -18,6 +34,7 @@ const providers = [
 ];
 @Module({
   imports: [
+    AffiliateCoreModule,
     AccountCoreModule,
     MembershipFeeCoreModule,
     MailCoreModule,
@@ -29,5 +46,8 @@ const providers = [
 })
 export class RegionalDirectorCoreModule {}
 
-@Module({ imports: [RegionalDirectorCoreModule], controllers: [AdminRegionalDirectorsController] })
+@Module({
+  imports: [RegionalDirectorCoreModule],
+  controllers: [AdminRegionalDirectorsController, AdminRegionalSharesController],
+})
 export class RegionalDirectorHttpModule {}

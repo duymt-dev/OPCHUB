@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 448/478 ảnh.
+> Đạt 449/482 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -280,6 +280,10 @@
 | D-120-GCFG | Cấu hình Giám đốc Vùng | 390 | 8.57% | ❌ chưa đạt | 390×3330 | 81556c27 |
 | D-120-GCFG-RO | Cấu hình GĐ Vùng · Kế toán chỉ xem | 1440 | 10.53% | ❌ chưa đạt | 1440×1469 | 81556c27 |
 | D-120-GCFG-RO | Cấu hình GĐ Vùng · Kế toán chỉ xem | 390 | 10.23% | ❌ chưa đạt | 390×3499 | 81556c27 |
+| D-120-GDV | GĐ Vùng · Sổ chia sẻ | 1440 | 1.92% | ✅ đạt | 1440×900 | d4316aa7 |
+| D-120-GDV | GĐ Vùng · Sổ chia sẻ | 390 | 5.78% | ❌ chưa đạt | 390×1291 | d4316aa7 |
+| D-120-GDV-OPEN | GĐ Vùng · Khoản ghi nhận Miền Bắc | 1440 | 10.53% | ❌ chưa đạt | 1440×1429 | d4316aa7 |
+| D-120-GDV-OPEN | GĐ Vùng · Khoản ghi nhận Miền Bắc | 390 | 8.40% | ❌ chưa đạt | 390×1920 | d4316aa7 |
 | D-13 | Thành viên · menu dòng | 1440 | 0.02% | ✅ đạt | 1440×900 | 0b76e98a |
 | D-13 | Thành viên · menu dòng | 390 | 0.00% | ✅ đạt | 390×844 | 0b76e98a |
 | D-14 | Thành viên · đã khóa 1 dòng | 1440 | 0.04% | ✅ đạt | 1440×1119 | 0b76e98a |
@@ -453,8 +457,8 @@
 | D-84-COM-RECORDED | Admin · Affiliate · Hoa hồng đã ghi nhận | 390 | 1.60% | ✅ đạt | 390×2882 | 0b76e98a |
 | D-84-COM-RECORDED-MENU | Admin · Affiliate · Menu khoản đã ghi nhận | 1440 | 1.46% | ✅ đạt | 1440×1073 | 0b76e98a |
 | D-84-COM-RECORDED-MENU | Admin · Affiliate · Menu khoản đã ghi nhận | 390 | 1.92% | ✅ đạt | 390×2882 | 0b76e98a |
-| D-84-POL | Admin · Affiliate · Chính sách | 1440 | 34.57% | ❌ chưa đạt | 1440×1356 | 81556c27 |
-| D-84-POL | Admin · Affiliate · Chính sách | 390 | 32.37% | ❌ chưa đạt | 390×1951 | 81556c27 |
+| D-84-POL | Admin · Affiliate · Chính sách | 1440 | 32.37% | ❌ chưa đạt | 1440×1356 | d4316aa7 |
+| D-84-POL | Admin · Affiliate · Chính sách | 390 | 15.16% | ❌ chưa đạt | 390×1951 | d4316aa7 |
 | D-85 | Admin · Affiliate · Chi tiết đại lý | 1440 | 0.71% | ✅ đạt | 1440×900 | 0b76e98a |
 | D-85 | Admin · Affiliate · Chi tiết đại lý | 390 | 1.71% | ✅ đạt | 390×954 | 0b76e98a |
 | D-85-CUS | Admin · Affiliate · Khách hàng của đại lý | 1440 | 1.54% | ✅ đạt | 1440×1046 | 0b76e98a |

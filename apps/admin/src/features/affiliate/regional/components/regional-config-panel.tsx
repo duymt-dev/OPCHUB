@@ -23,7 +23,7 @@ export function RegionalConfigPanel({ list = false }: { list?: boolean }) {
       <ErrorState title={t('error')} retryLabel={t('retry')} onRetry={() => void q.refetch()} />
     );
   if (!q.data) return <PageSkeleton />;
-  if (list) return <RegionalList items={q.data.items} />;
+  if (list) return <RegionalList />;
   const canManage = allowed && q.data.canManage;
   const add = () => {
     const empty = q.data.items.find((s) => !s.member);

@@ -131,6 +131,11 @@ export class RegionalDirectorService {
       member?.fullName ?? slot.userId,
       'revoke',
       now,
+      {
+        bankName: slot.bankName ?? '',
+        bankNo: slot.bankNo ?? '',
+        bankHolder: slot.bankHolder ?? '',
+      },
     );
     await this.outbox.add(tx, 'regional_director.revoked', {
       region: slot.region,
@@ -149,6 +154,7 @@ export class RegionalDirectorService {
     userName: string,
     action: 'appoint' | 'revoke',
     createdAt: Date,
+    bankSnapshot?: Prisma.InputJsonValue,
   ) {
     await this.repo.event(tx, {
       region,
@@ -158,6 +164,7 @@ export class RegionalDirectorService {
       createdAt,
       actorId: actor.id,
       actorRole: actor.role,
+      ...(bankSnapshot === undefined ? {} : { bankSnapshot }),
     });
     await this.audit.log(tx, {
       actorId: actor.id,

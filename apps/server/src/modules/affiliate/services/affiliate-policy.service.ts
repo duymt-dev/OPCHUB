@@ -4,6 +4,7 @@ import { AuditService } from '@/common/audit';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { PolicyRepository } from '../repositories/policy.repository';
 import type { AffiliateActor } from '../types';
+import { RegionalValidationError } from './regional-policy-validation';
 
 @Injectable()
 export class AffiliatePolicyService {
@@ -18,6 +19,7 @@ export class AffiliatePolicyService {
   }
 
   update(actor: AffiliateActor, policy: AffiliatePolicy) {
+    if (policy.regionalMin > policy.regionalFirstYear) throw new RegionalValidationError();
     return this.prisma.db.$transaction(async (tx) => {
       const before = await this.repo.lock(tx);
       const updated = await this.repo.update(tx, policy);

@@ -60,6 +60,9 @@ export const affiliateBankSchema = z.object({
 });
 export type AffiliateBank = z.infer<typeof affiliateBankSchema>;
 export const affiliatePolicySchema = z.object({
+  regionalFirstYear: z.number().int().min(1).max(100).default(50),
+  regionalStep: z.number().int().min(0).max(100).default(10),
+  regionalMin: z.number().int().min(0).max(100).default(20),
   defaultRate: z.number().int().min(1).max(50),
   cookieDays: z.number().int().min(1).max(365),
   /** D-70: % hoa hồng Gói Gọi vốn, ghi khi Admin duyệt */

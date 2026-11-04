@@ -7,6 +7,7 @@ import type { RegionalAction } from '../types';
 import { useCan } from '@/lib/permissions';
 import { messageOf } from '@/lib/api-errors';
 import { appointRegional, revokeRegional, patchRegional, regionalKey } from '../api';
+import { regionalShareKey } from '../share-api';
 
 export function useRegionalWrites(region: RegionalRegion) {
   const can = useCan('affiliate.regional');
@@ -29,6 +30,7 @@ export function useRegionalWrites(region: RegionalRegion) {
             : t('saved'),
       );
       await qc.invalidateQueries({ queryKey: regionalKey });
+      await qc.invalidateQueries({ queryKey: regionalShareKey });
       await qc.invalidateQueries({ queryKey: ['admin-fees'] });
     },
     onError: (e) => toast(messageOf(e, t('error'))),

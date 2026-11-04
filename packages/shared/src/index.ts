@@ -7,6 +7,8 @@ export * from './membership/fee-access';
 export * from './membership/regional-revoke';
 export * from './onboarding';
 export * from './errors';
+export * from './membership/regional-share';
+export * from './membership/regional-share-cursor';
 export * from './permissions';
 export { KeywordMatcher } from './moderation/keyword-matcher';
 export { KEYWORD_REASON } from './moderation/keyword-reason';

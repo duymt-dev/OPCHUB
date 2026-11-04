@@ -35,6 +35,9 @@ describe('Affiliate policy API (TIP-V2-402)', () => {
       defaultRate: 27,
       cookieDays: 45,
       fundraisingRate: 12,
+      regionalFirstYear: 60,
+      regionalStep: 15,
+      regionalMin: 25,
       terms: 'Điều khoản Affiliate thử nghiệm',
     };
     const res = await t.call('/admin/affiliate/policy', { method: 'PUT', token, json: next });

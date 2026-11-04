@@ -7,6 +7,7 @@ import { seedRequired } from '../required';
 import { type DemoHashes, seedFees, seedUsers } from './account';
 import { seedAdmins } from './admin';
 import { seedAffiliates } from './affiliate';
+import { seedRegionalShares } from './regional-shares';
 import { seedAffiliateScenario } from './affiliate-scenario';
 import { seedBots } from './bot';
 import { seedBotHistory } from './bot-history';
@@ -94,6 +95,7 @@ export async function seedDemo(
       await seedNotifications(tx);
       await seedAuditLog(tx);
       await seedStatsDaily(tx);
+      await seedRegionalShares(tx);
     },
     { timeout: 120_000, maxWait: 30_000 },
   );

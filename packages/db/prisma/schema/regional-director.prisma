@@ -22,6 +22,8 @@ model RegionalDirector {
   user      User?                      @relation(fields: [userId], references: [id])
   provinces RegionalDirectorProvince[]
   events    RegionalDirectorEvent[]
+  shares    RegionalShare[]
+  payouts   RegionalPayout[]
 
   @@map("regional_directors")
 }
@@ -37,6 +39,7 @@ model RegionalDirectorProvince {
 }
 
 model RegionalDirectorEvent {
+  bankSnapshot Json? @map("bank_snapshot")
   id        String                 @id @default(uuid(7))
   region    Region
   userId    String                 @map("user_id")
