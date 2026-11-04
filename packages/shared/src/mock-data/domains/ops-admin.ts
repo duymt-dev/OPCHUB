@@ -20,6 +20,7 @@ import { services } from '../../fixtures';
 import { feeStatusOf } from './admin';
 import { feePeriodEnd } from './fee-period';
 import { FEE_BANK, mockQr } from './extras';
+import { recordMockRegionalShare } from './regional-shares';
 import { setAssignedRole } from './group-admin';
 import { mockDb, nextId } from './store';
 import { conflict, includesText, iso, MOCK_NOW, notFound, ok, type MockResult } from './util';
@@ -93,6 +94,14 @@ export function feeAction(userId: string, action: FeeAction, now = MOCK_NOW): Mo
   const until = feePeriodEnd(from);
   f.validUntil = iso(until);
   f.status = feeStatusOf(until, now);
+  recordMockRegionalShare({
+    source: 'membership',
+    sourceId: `fee-${userId}-${now}`,
+    customerId: userId,
+    baseAmount: f.amount,
+    plan: f.accountType === 'business' ? 'business' : 'personal',
+    at: iso(now),
+  });
   return ok(f);
 }
 

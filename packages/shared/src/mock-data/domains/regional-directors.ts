@@ -15,6 +15,7 @@ import { conflict, notFound, ok, MOCK_NOW, type MockResult } from './util';
 import type { FeeLike } from '../../membership/fee-access';
 import { regionalSnapshotSchema, type RegionalSnapshot } from './regional-snapshot';
 import { registeredMockProfiles } from './registration/state';
+import { rememberRegionalBank } from './regional-share-bank';
 
 interface State {
   data: RegionalDirectors;
@@ -147,6 +148,7 @@ export function mockRegionalRevoke(
   const slot = data.items.find((s) => s.region === region);
   if (!slot?.member) return conflict('Vùng này chưa có GĐ Vùng');
   const id = slot.member.id;
+  rememberRegionalBank(region, id, slot.bank);
   const fee = mockDb().fees.find((f) => f.userId === id);
   const prev = previous.get(id);
   if (fee) {

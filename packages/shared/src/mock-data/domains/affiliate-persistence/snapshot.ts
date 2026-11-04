@@ -1,5 +1,6 @@
 import { affiliateMockState, syncMockAffiliates } from '../affiliate';
 import { captureMockRegionalSnapshot, restoreMockRegionalSnapshot } from '../regional-directors';
+import { captureRegionalShareState, restoreRegionalShareState } from '../regional-share-state';
 import { affiliateAdminState, paidSnapshot } from '../affiliate-admin/state';
 import {
   isMockAffiliateScenarioSeeded,
@@ -23,6 +24,7 @@ export function captureMockAffiliateSnapshot(): AffiliateSnapshot {
   return affiliateSnapshotSchema.parse({
     version: 1,
     regional: captureMockRegionalSnapshot(),
+    regionalShares: captureRegionalShareState(),
     demoSeeded: isMockAffiliateScenarioSeeded(),
     welcomeSeen: captureMockWelcomeSeen(),
     webhooks: captureMockAffiliateWebhooks(),
@@ -55,6 +57,7 @@ export function restoreMockAffiliateSnapshot(input: unknown): void {
   const extra = affiliateAdminState();
   db.fees = data.fees;
   restoreMockRegionalSnapshot(data.regional);
+  restoreRegionalShareState(data.regionalShares);
   db.seq = Math.max(db.seq, data.dbSeq);
   state.agents = new Map(data.agents);
   state.referrals = new Map(data.referrals);

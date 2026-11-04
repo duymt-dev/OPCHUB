@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { regionalSnapshotSchema } from '../regional-snapshot';
+import { regionalShareSnapshotSchema } from '../regional-share-state';
 import {
   affiliateBankSchema,
   affiliateCodeSchema,
@@ -52,6 +53,7 @@ export const affiliateSnapshotSchema = z
   .strictObject({
     version: z.literal(1),
     regional: regionalSnapshotSchema.optional(),
+    regionalShares: regionalShareSnapshotSchema.optional(),
     demoSeeded: z.boolean(),
     // Legacy mock ledgers predate this metadata; retain every financial row on upgrade.
     welcomeSeen: z.array(id).default([]),
