@@ -1,7 +1,7 @@
 # Vibecode Kit v5.0 — OPCHUB Builder Handoff (Backend)
 
 > Dán file này vào Claude Code **đầu mỗi phiên build**, sau đó dán TIP của phiên (`tips/TIP-<id>-*.md`).
-> **Hiện hành (04/11/2026): v4.6** — goal [plans/GOAL-V4.6.md](plans/GOAL-V4.6.md) (12 TIP V46-801 → 812), quyết định D-118 → D-127,
+> **Hiện hành (04/11/2026): v4.6** — goal [plans/GOAL-V4.6.md](plans/GOAL-V4.6.md) (12 TIP V46-801 → 812), quyết định D-118 → D-130,
 > REQ-616 → 630, đối chiếu đặc tả ↔ code [audit/SPEC-V4.6-DELTA.md](audit/SPEC-V4.6-DELTA.md). Khi file này trái `AGENTS.md` hoặc GOAL, lấy `AGENTS.md` / GOAL.
 > Blueprint gốc 17/10/2026. Phụ lục bắt buộc: [plans/api-contract.md](plans/api-contract.md) (193 endpoint + socket),
 > [plans/data-model.md](plans/data-model.md) (bảng, index, seed). Task graph: [02-TASK-GRAPH.md](02-TASK-GRAPH.md).
@@ -167,6 +167,9 @@ nút no-op vẫn làm nghiệp vụ (D-95). Đối chiếu: `audit/SPEC-V4.6-DEL
 | D-125 | **Không Zalo ZNS** (ẩn kênh Zalo ở Nhắc gia hạn); **PWA / Web Push**: chỉ màn cấu hình lưu được, không gửi đẩy thật; cổng đối soát dùng adapter `bank-webhook` hiện có |
 | D-126 | Thứ tự: GĐ Vùng + chia sẻ + Vùng của tôi → Nhắc gia hạn + Đối soát ngân hàng → Nhóm 1 + chuyển đổi vùng + nhật ký / CSV + copy → Tìm kiếm + gợi ý nhu cầu → `/g/` → AI → PWA (= V46-801 → 812) |
 | D-127 | Theo prototype: copy đăng nhập / chào; BR-461 đếm đã đọc chỉ khi đổi phòng / có tin mới; BR-463 không tạo hoa hồng 0đ, ẩn khoản 0đ cũ; BR-465 tự mở khoá lúc đăng nhập + job; BR-495 nhãn affiliate gọn |
+| D-128 | Affiliate nhiều nhóm tỉnh → tỉnh của **nhóm tham gia sớm nhất còn là thành viên** (nhóm ngành lấy tỉnh nhóm cha); vùng chụp vào từng khoản lúc đối soát, không tính lại khoản cũ; không còn nhóm → 100% Media Soft |
+| D-129 | Tỉnh chưa được tick → tính cho **GĐ Vùng của miền**; tỉnh phụ trách chỉ hiển thị, không quyết định tiền; "vùng trống → Media Soft" chỉ khi cả miền chưa có GĐ Vùng |
+| D-130 | Năm của khách tính từ giao dịch thực thu đầu tiên **gồm cả Gọi vốn**; backfill lấy khoản đã đối soát sớm nhất của cả phí và Gọi vốn |
 
 v4.6 thay ở các bảng bên dưới: D-94 3A / D-110 phần **chi trả hoa hồng** → D-119 (hoa hồng chỉ tham khảo); hoa hồng Gọi vốn 10% (D-70, §29) → D-119;
 nhắc phí T-30 / T-7 / T-0 / T+3 (D-57) → mốc 30 / 7 / 1 ngày cấu hình được (REQ-620).

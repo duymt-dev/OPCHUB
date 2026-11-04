@@ -3,7 +3,7 @@
 > Vibecode Kit v5.0 — BƯỚC 2 (RRI) Output
 > Cập nhật: 2026-10-30 (RRI v4.6); 2026-11-04 đồng bộ REQ bị thay, phạm vi, quality gate theo D-118 → D-127
 > Nguồn: `docs/spec/` gói v4.6 (`dac-ta.html` §1–33, prototype `index.html`), `00-PROJECT-CONTEXT.md`, phỏng vấn Chủ nhà.
-> Quyết định mới nhất **D-127**; khi trái nhau số lớn hơn thắng. REQ bị thay ghi `~~gạch~~ → REQ mới`. Phần v4.6: **D17** (REQ-616 → 630, D-118 → D-127).
+> Quyết định mới nhất **D-130**; khi trái nhau số lớn hơn thắng. REQ bị thay ghi `~~gạch~~ → REQ mới`. Phần v4.6: **D17** (REQ-616 → 630, D-118 → D-127).
 
 ---
 
@@ -306,12 +306,12 @@
 | REQ-615 | Sửa lỗi B1 → B6 (D-117) | P0 | Tất cả | TBD |
 
 
-### D17 — Nâng cấp v4.6 (RRI 30/10/2026, D-118 → D-127)
+### D17 — Nâng cấp v4.6 (RRI 30/10/2026, D-118 → D-127; bổ sung 04/11/2026 D-128 → D-130)
 
 | REQ-ID | Requirement | Priority | Persona | TIP |
 |---|---|---|---|---|
 | REQ-616 | GĐ Vùng: bổ nhiệm / thu hồi từ TV đã đăng ký (3 vùng, mỗi vùng đúng 1, mỗi TV 1 vùng, mỗi tỉnh 1 vùng), tỉnh phụ trách, tài khoản nhận, lịch sử; trạng thái phí "Miễn phí · GĐ Vùng"; thu hồi giữ hạn phí cũ; email EM-GDV1/2; quyền riêng; audit (D-120, D-121) | P0 | Admin, GĐ Vùng | TBD |
-| REQ-617 | Sổ chia sẻ Media Soft ↔ GĐ Vùng theo năm của khách (50 / 40 / 30 / 20, 3 thông số cấu hình), ghi khi phí được đối soát, chi trả cuối tháng từng GĐ Vùng, lịch sử chi trả (D-119, D-122) | P0 | Admin, Kế toán | TBD |
+| REQ-617 | Sổ chia sẻ Media Soft ↔ GĐ Vùng theo năm của khách (50 / 40 / 30 / 20, 3 thông số cấu hình), ghi khi phí được đối soát, chi trả cuối tháng từng GĐ Vùng, lịch sử chi trả (D-119, D-122, D-128 → D-130) | P0 | Admin, Kế toán | TBD |
 | REQ-618 | Portal › Affiliate › tab "Vùng của tôi" (chỉ xem) + banner GĐ Vùng (D-120) | P0 | GĐ Vùng | TBD |
 | REQ-619 | Admin › Affiliate: Chính sách theo §31, Hoa hồng chỉ để tham khảo / đối soát (bỏ chi trả trực tiếp), cột "Thuộc vùng (theo tỉnh)" chỉ hiển thị (D-119, D-121) | P0 | Admin | TBD |
 | REQ-620 | Nhắc gia hạn tự động 30 / 7 / 1 ngày, kênh Email + Thông báo (ẩn Zalo), gửi tay từng người / tất cả, cột Lần gửi (BR-471 → 474, D-125) | P1 | Admin, Thành viên | TBD |
@@ -494,6 +494,9 @@ Index đầy đủ: [standards/README.md](standards/README.md). Tóm tắt bắt
 | D-125 | Tích hợp ngoài (Q-V4.6-5) | Làm / để sau | **Zalo ZNS chưa làm** → ẩn kênh Zalo ở Nhắc gia hạn (giữ OQ-11). **PWA / Web Push để sau**: chỉ dựng màn cấu hình lưu được, chưa gửi đẩy thật. Cổng đối soát dùng adapter hiện có (OQ-17) | owner "zalo chưa cần" |
 | D-126 | Thứ tự làm v4.6 (Q-V4.6-6) | — | (1) GĐ Vùng + chia sẻ + chi trả + Vùng của tôi (REQ-616 → 619) · (2) Nhắc gia hạn + Đối soát ngân hàng (620, 621) · (3) Nhóm 1 + chuyển đổi vùng + nhật ký / CSV + copy (622 → 624, 630) · (4) Tìm kiếm chung + gợi ý nhu cầu (625, 626) · (5) Trang `/g/` (627) · (6) Nhà cung cấp AI (628) · (7) Màn PWA (629) | owner "theo đề xuất" |
 | D-127 | Thay đổi nhỏ v4.6 (tự quyết theo D-93 / D-101) | — | Theo prototype: copy trang đăng nhập / chào; BR-461 (đếm đã đọc chỉ khi đổi phòng / tin mới); BR-463 (không tạo hoa hồng 0đ, ẩn khoản 0đ cũ); BR-465 (tự mở khóa: kiểm lúc đăng nhập + job, không cần chu kỳ 15 giây); BR-495 nhãn affiliate gọn | §33.1, §33.4 |
+| D-128 | Vùng của affiliate khi tham gia nhiều nhóm tỉnh (owner, 04/11/2026 — bổ sung D-121) | Nhóm đầu tiên / nhóm mới nhất / tỉnh hồ sơ | **Tỉnh của nhóm tham gia sớm nhất mà affiliate còn là thành viên** (nhóm ngành con lấy tỉnh của nhóm tỉnh cha). Vùng **chụp vào từng khoản chia sẻ lúc đối soát**: rời nhóm / đổi vùng chỉ áp cho giao dịch sau, khoản đã ghi và kỳ chi đã chốt không tính lại. Không còn nhóm nào → vùng trống → 100% Media Soft (D-121) | Gần prototype `provOf` (nhóm đầu = nhóm chọn khi đăng ký, NA-18), ổn định, không sửa lịch sử |
+| D-129 | Tỉnh chưa được GĐ Vùng nào tick (owner, 04/11/2026 — bổ sung D-120, D-121) | Tự theo miền / 100% Media Soft | **Tự tính cho GĐ Vùng của miền chứa tỉnh** (prototype "tự gán theo miền"). Danh sách tỉnh phụ trách chỉ để hiển thị phạm vi, **không** quyết định tiền; màn Cấu hình GĐ Vùng giữ dòng cảnh báo "N tỉnh chưa có GĐ Vùng phụ trách". "Vùng trống → 100% Media Soft" của D-121 chỉ áp khi **cả miền** chưa có GĐ Vùng | Prototype thắng (D-89); mỗi miền đúng 1 GĐ Vùng nên không có người nhận khác; Admin quên tick không làm mất tiền |
+| D-130 | Gọi vốn và năm của khách (owner, 04/11/2026 — làm rõ D-122) | Tính / không tính | **Tính**: năm 1 của khách bắt đầu từ giao dịch thực thu đầu tiên bất kể phí thành viên hay Gọi vốn; phí và Gọi vốn sau đó dùng chung mốc năm. Backfill lấy khoản đã đối soát sớm nhất trong cả hai nguồn | D-122 "mọi loại gói" |
 
 ### P5-PLAN-01 — Chốt số lượt hội thoại tự sinh (owner, 21/10/2026)
 
