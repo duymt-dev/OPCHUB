@@ -723,3 +723,16 @@ Parity phải đo dữ liệu seed thật, không chép thuật toán dữ liệ
 đổi ledger để làm xanh ảnh. Chính sách ngoài ba tham số mới thuộc TIP-803.
 Owner chốt dùng lại opchub_v46_801_dev / opchub_v46_801_test và Memurai 6381;
 giữ nguyên DB và Redis native.
+
+## V4.6 — TIP-V46-803
+
+| ID | Điểm cần ghi nhận | Owner đã chốt |
+|---|---|---|
+| Q-V46-803-1 | Các ô tỷ lệ không còn trên prototype | D-132: ẩn defaultRate/fundraisingRate và trường gia hạn, giữ giá trị đã tải khi lưu |
+| Q-V46-803-2 | Hoa hồng tham khảo khi gia hạn | D-131: năm đầu dùng tỷ lệ affiliate/Gọi vốn; năm 2 đến năm tối đa dùng renewalRate; sau đó hoặc làm tròn 0đ không ghi khoản |
+| Q-V46-803-3 | Nhãn quyền affiliate.payout | Giữ permission cho GĐ Vùng; đổi nhãn ở TIP-807, không mở lại chi trực tiếp affiliate |
+| Q-V46-803-4 | Doanh thu giữ lại sau hủy hoa hồng | D-132: revenue hiện hành trừ tổng sổ GĐ Vùng cùng tháng; không đảo sổ khi hủy hoa hồng |
+| Q-V46-803-5 | regionalStep = 0, min nhỏ hơn năm đầu | D-132: một dòng “Từ năm 1 trở đi”, không sao chép lỗi lặp của prototype |
+| Q-V46-803-6 | Reporting chỉ đọc nhưng TIP đặt firstPaid tại đây | Owner chấp thuận ngoại lệ hẹp đúng TIP/D-131: chỉ CustomerYearRepository.firstPaid ghi mốc chung trong transaction của consumer |
+
+Owner xác nhận tiếp tục hai DB riêng và Memurai 6381; không reset DB/cache native.
