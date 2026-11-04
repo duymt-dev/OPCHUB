@@ -125,6 +125,9 @@ model Commission {
 
 /// Chính sách chung — một dòng id = 1
 model AffiliatePolicy {
+  regionalFirstYear Int @default(50) @map("regional_first_year")
+  regionalStep      Int @default(10) @map("regional_step")
+  regionalMin       Int @default(20) @map("regional_min")
   id              Int      @id @default(1)
   defaultRate     Int      @default(20) @map("default_rate")
   cookieDays      Int      @default(30) @map("cookie_days")
