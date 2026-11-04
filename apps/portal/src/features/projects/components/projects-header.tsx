@@ -1,25 +1,13 @@
 'use client';
 
-import { Icon, PageHeader } from '@opchub/ui';
+import { DateRangePicker, PageHeader } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import styles from './explore.module.css';
 
 /** Tiêu đề trang (pageTitle/pageSub của prototype) + ô khoảng ngày */
 export function ProjectsPageHeader() {
   const t = useTranslations('projects.page');
-  return (
-    <PageHeader
-      title={t('title')}
-      subtitle={t('sub')}
-      extra={
-        <div className={styles.dateRange}>
-          <Icon name="calendar" stroke="rgba(0,0,0,0.65)" />
-          {t('dateRange')}
-          <Icon name="chevronDown" size={14} stroke="rgba(0,0,0,0.45)" />
-        </div>
-      }
-    />
-  );
+  return <PageHeader title={t('title')} subtitle={t('sub')} extra={<DateRangePicker />} />;
 }
 
 interface ScopeProps {

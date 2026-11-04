@@ -1,6 +1,6 @@
 'use client';
 
-import { ErrorState, Icon, PageHeader, PageSkeleton } from '@opchub/ui';
+import { DateRangePicker, ErrorState, PageHeader, PageSkeleton } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import { useEvents, useToggleRegistration } from '../hooks/use-events';
@@ -15,19 +15,7 @@ import { EventsToolbar } from './events-toolbar';
 
 function EventsHeader() {
   const t = useTranslations('events.page');
-  return (
-    <PageHeader
-      title={t('title')}
-      subtitle={t('sub')}
-      extra={
-        <div className={styles.dateRange}>
-          <Icon name="calendar" stroke="rgba(0,0,0,0.65)" />
-          {t('dateRange')}
-          <Icon name="chevronDown" size={14} stroke="rgba(0,0,0,0.45)" />
-        </div>
-      }
-    />
-  );
+  return <PageHeader title={t('title')} subtitle={t('sub')} extra={<DateRangePicker />} />;
 }
 
 /** P-49 → P-54: Sự kiện sắp tới (orchestrator) — chi tiết ở `/events/:id` */

@@ -58,8 +58,8 @@ export function LanguageMenu({
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
       >
-        {/* Màn đăng nhập: cờ của ngôn ngữ đang chọn; thanh trên cùng (v4) và khi chưa chọn: quả địa cầu */}
-        {active && variant === 'auth' ? (
+        {/* Cờ của ngôn ngữ đang chọn; khi chưa chọn / không có cờ: quả địa cầu dự phòng */}
+        {active?.flagSrc ? (
           <img className={styles.triggerFlag} src={active.flagSrc} alt="" />
         ) : (
           <Icon name="globe" size={18} />

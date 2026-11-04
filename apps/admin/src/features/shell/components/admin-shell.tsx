@@ -1,9 +1,10 @@
 'use client';
 
-import { AppShell, useToast } from '@opchub/ui';
-import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
+import { AppShell, LanguageSwitch, useToast } from '@opchub/ui';
+import { useLocale, useTranslations } from 'next-intl';
+import { usePathname, useRouter } from 'next/navigation';
 import type { ReactNode } from 'react';
+import { languageOptions, LOCALE_COOKIE } from '@opchub/shared/fixtures';
 import { logout } from '@/features/auth';
 import { useAuthStore } from '@/lib/auth-store';
 import { useSessionEndNavigator } from '@/lib/session-end-navigator';
@@ -30,17 +31,64 @@ const SHELL_KEYS = [
   'settings',
 ] as const;
 
+function executeAdminSearch(query: string, pathname: string, router: ReturnType<typeof useRouter>) {
+  const q = query.trim();
+  const params = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
+  if (q) {
+    params.set('q', q);
+    params.set('page', '1');
+  } else {
+    params.delete('q');
+  }
+  const qs = params.toString();
+  if (pathname === '/overview' || pathname === '/settings' || pathname === '/') {
+    router.push(`/members?q=${encodeURIComponent(q)}`);
+  } else {
+    router.push(qs ? `${pathname}?${qs}` : pathname);
+  }
+}
+
+function AdminShellBody({
+  allowed,
+  readOnly,
+  roleName,
+  home,
+  children,
+}: {
+  allowed: boolean;
+  readOnly: boolean;
+  roleName: string;
+  home: string;
+  children: ReactNode;
+}) {
+  if (allowed) {
+    return (
+      <ViewOnlyZone readOnly={readOnly} role={roleName} banner={<PreviewBanner />}>
+        {children}
+      </ViewOnlyZone>
+    );
+  }
+  return (
+    <>
+      <PreviewBanner />
+      <ForbiddenPanel home={home} />
+    </>
+  );
+}
+
 /**
  * Khung Admin: sidebar theo 25 khoá §21 (RB-R06) + topbar; nội dung bọc dải xem thử (RB-R09) và
  * chế độ chỉ xem (RB-R07). Trang con chỉ render nội dung.
  */
 export function AdminShell({ children }: { children: ReactNode }) {
   const t = useTranslations('common');
+  const tAuth = useTranslations('auth');
+  const locale = useLocale();
   const router = useRouter();
+  const pathname = usePathname();
   const me = useAuthStore((s) => s.me);
   const signOut = useAuthStore((s) => s.signOut);
   const toast = useToast();
-  const tAuth = useTranslations('auth.login');
   const badges = useNavBadges();
   const nav = useAdminNav();
   useRbacErrors();
@@ -79,6 +127,16 @@ export function AdminShell({ children }: { children: ReactNode }) {
       }}
       labels={labels}
       notifications={<AdminNotifications />}
+      language={
+        <LanguageSwitch
+          title={tAuth('langTitle')}
+          current={locale}
+          options={languageOptions}
+          cookieName={LOCALE_COOKIE}
+          variant="topbar"
+        />
+      }
+      onSearch={(q) => executeAdminSearch(q, pathname, router)}
       onNavigate={(href) => router.push(href)}
       {...(canSettings ? { onSettings: () => router.push('/settings') } : {})}
       onBack={() => router.push('/overview')}
@@ -87,19 +145,12 @@ export function AdminShell({ children }: { children: ReactNode }) {
         // signOut (không phải clear) để AuthGate không chen `/login?next=…`
         signOut();
         router.replace('/login');
-        toast(tAuth('loggedOut'));
+        toast(tAuth('login.loggedOut'));
       }}
     >
-      {allowed ? (
-        <ViewOnlyZone readOnly={readOnly} role={grants.roleName} banner={<PreviewBanner />}>
-          {children}
-        </ViewOnlyZone>
-      ) : (
-        <>
-          <PreviewBanner />
-          <ForbiddenPanel home={home} />
-        </>
-      )}
+      <AdminShellBody allowed={allowed} readOnly={readOnly} roleName={grants.roleName} home={home}>
+        {children}
+      </AdminShellBody>
     </AppShell>
   );
 }

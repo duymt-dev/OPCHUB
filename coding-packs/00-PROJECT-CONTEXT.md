@@ -1,16 +1,9 @@
 # OPCHUB — Project Context (Scan Report)
 
-> **27/10/2026 (scan v4.2):** `docs/spec/` đã thay bằng gói **v4.2** (`dac-ta.html` thêm §28 v4.1 + §29 v4.2; prototype thêm trial 3 tháng, Cấu hình bảng giá, Gọi vốn nhiều dự án + VietQR, trình tạo gian hàng, File chia sẻ, Bot tự trả lời; bỏ cột Khởi đầu). Thư mục `deploy/` đã xoá. **Ưu tiên prototype** khi lệch đặc tả; thay đổi backend / lớn hỏi owner (D-93). Delta + câu hỏi: `audit/SPEC-V4.2-DELTA.md` (P1 → P12, Q-V4.2-1 → 6).
-
-> **23/10/2026 (scan ver4):** `docs/spec/` đã thay bằng bản v4 (**OPCHUB-SRS-4.0**, prototype 35 màn) (§27 thay §1–26 khi khác). **Đã chấp nhận làm nguồn sự thật (D-67, RRI 23/10/2026)**; quyết định D-67…D-80, REQ D15 (REQ-501…517). Delta + câu hỏi: `audit/SPEC-V4-DELTA.md` (V4-01…V4-19, Q-V4-1…10).
-
-> **18/10/2026:** đặc tả nguồn là **OPCHUB-SRS-3.6**; số § trong file đã đổi theo SRS-3.6 (§8 nghiệp vụ ẩn NA, §9 máy trạng thái … §17 lộ trình; mới §18–§23). Phạm vi mới: `01-REQUIREMENTS-MATRIX.md` D-49…D-63, REQ D9–D14.
-
 > Vibecode Kit v5.0 — BƯỚC 1 (SCAN)
 > Coding workspace: `D:\CODING\OPCHUB\CODING`
-> Ghi chú 2026-10-16: thư mục thiết kế đã chuyển sang `docs/spec/`.
-> Scanned: 2026-10-16
-> Scan type: **Greenfield + spec-driven** (chưa có source code; có SRS v2.0 + prototype tương tác)
+> Scanned: **2026-10-30** trên `dev` `cb29030d` (sau PR #72 — gói đặc tả v4.6)
+> Scan type: **Brownfield + spec-driven delta** (code đã chạy hết v4.2; quét để đón v4.6)
 
 ---
 
@@ -19,191 +12,156 @@
 ### Workspace inventory
 
 ```
-D:\CODING\OPCHUB\CODING\
-├── coding-packs/                                   ← tạo bởi /vibecode:scan
-└── OPCHUB Thiết kế giải pháp cộng đồng/
-    └── deploy/                                     ← gói thiết kế tĩnh (không phải source sản phẩm)
-        ├── README.md         Hướng dẫn deploy + tài khoản demo
-        ├── dac-ta.html       243 KB — Đặc tả OPCHUB-SRS-2.0 (bản nghiệm thu, 16 mục)
-        ├── index.html        820 KB — Prototype tương tác (User Portal + Admin), dữ liệu giả lập
-        ├── support.js        69 KB  — "dc-runtime" (generated, render template x-dc bằng React)
-        ├── doc-page.js       39 KB  — khung trang in A4 cho dac-ta.html
-        └── assets/           opchub-logo.png, vcb-qr.png
+apps/portal   Next.js — User Portal      478 file · ~30k LoC
+apps/admin    Next.js — Admin Dashboard  631 file · ~39k LoC
+apps/server   NestJS — api / socket / worker  598 file · ~41k LoC
+packages/     shared · db (26 file schema, 80 model, 54 enum, 86 migration) · ui · integrations · config
+e2e/          Playwright 91 spec (audit, behavior, parity, llm)
+docs/spec/    gói v4.6: dac-ta.html (§1–33), index.html (prototype), README, assets, mau-bao-cao, PDF
+docs/adr/     ADR · coding-packs/  TIP, audit, report, standards, product
 ```
 
-- Không có git repo, không có package.json, không có test, không có .env. **0 dòng code sản phẩm.**
-- Prototype `index.html`: 1 template `<x-dc>` (~509 KB markup, 328 `sc-if`, 240 `sc-for`) + 1 script ~280 KB chứa state, i18n, seed data. Đây là **tài liệu UI tham chiếu**, không tái sử dụng làm code. [SoT: deploy/index.html]
+[SoT: `docs/spec/README.md` v4.6 · 29/10/2026; `coding-packs/audit/SPEC-V4.6-DELTA.md`]
 
-### TECH_STACK
+### TECH_STACK (chốt — `standards/global/tooling.md`)
 
-Hiện trạng: không có. Phương án **đề xuất (baseline, chờ Kiến trúc sư duyệt)** theo SRS §3.3: [SoT: dac-ta.html §3.3]
-
-| Layer | Đề xuất |
+| Layer | Phiên bản (pnpm catalog) |
 |---|---|
-| Frontend | Next.js 14, TypeScript, Ant Design 5 (Admin: Ant Design Pro), TanStack Query; SSR trang công khai; responsive 360px+ / PWA |
-| Backend | NestJS + Prisma, **modular monolith**, worker tách riêng |
-| Realtime | Socket.IO + Redis adapter |
-| Workers (BullMQ) | mail (retry 5, backoff), reconcile (webhook + quét bù 2'), bot (tick 1'), export (≤2 job song song) |
-| Database | PostgreSQL primary + replica; Redis (cache, presence); S3 object storage; OpenSearch |
-| Identity | Keycloak OIDC + Identity Brokering (Google/Facebook/LinkedIn; ChatGPT/Gemini/DeepSeek = nút riêng đi qua Google); JWT 15' + refresh 7d xoay vòng; 2FA admin |
-| Integrations | Brevo SMTP; SePay/Casso/PayOS webhook HMAC → TK VCB 1203132809; tra cứu MST (nguồn chưa chốt); Google Maps embed; GitHub/GitLab link |
-| Infra | Docker, Kubernetes (portal×2, admin×2, api×3, socket×2, 4 worker), GitLab CI/CD, Dev→Staging→Prod, Prometheus/Grafana/Loki, Sentry, Vault/K8s Secret |
+| Runtime / build | Node 24 LTS · pnpm 12.11 · Turborepo 2.11 · TypeScript 6.0.3 |
+| Frontend | Next.js 16.4 · React 19.3 · Ant Design 6.6 · TanStack Query 5.104 · next-intl 4.14 · Tiptap 3.32 |
+| Backend | NestJS 11.2 (express, websockets, socket.io, bullmq, throttler) · nestjs-zod 5.5 · zod 4.6 |
+| Data | Prisma 7 (schema nhiều file) · PostgreSQL 16 + PgBouncer · Redis 7 · BullMQ · MinIO |
+| Test | Vitest 5 · Testing Library · Playwright · k6 |
+| Hạ tầng | 1 VPS native (systemd `opchub-api@`, `opchub-socket@`, `opchub-worker`, Nginx) |
 
-> ⚠️ Lưu ý: global CLAUDE.md của người dùng có rule backend nhắc Rust/Go/Python/Node và SQL theo PostgreSQL — tương thích với NestJS + PostgreSQL. Stack cần **chốt ở RRI**.
+### EXISTING_MODULES
 
-### EXISTING_MODULES (theo spec — chưa có code)
+**Server `apps/server/src/modules/` (25):** account · admin-account · affiliate · bot · chat · community · dashboard · event · export · investor · llm-config · local-business · mail · marketing · membership-fee · moderation · notification · onboarding · pricing · project · reporting · service · settings · system · uploads.
 
-**Backend modules** [SoT: §3.2]
+**Worker processors (21):** account-lock · account · affiliate · bot-publication · bot · community · event · export · fee · fundraising · housekeeping · html-backfill · mail · marketing · media-backfill · moderation · notification · onboarding · outbox-relay · stats · store.
 
-| Module | Trách nhiệm | Bảng chính |
-|---|---|---|
-| Account | Đăng ký, OTP, login, SSO, hồ sơ, khóa/mở | user, business_profile, sso_link, otp |
-| Membership | Trạng thái phí, nội dung CK, đối soát, gia hạn, nhắc | membership_fee, payment_txn |
-| Community | Nhóm tỉnh/thành, thành viên, duyệt, gán, xuất | community_group, group_member |
-| Chat | Phòng, tin, reply, reaction, @mention, ghim, tìm | room, message, reaction |
-| Moderation | Từ khóa nhạy cảm, báo cáo, xử lý | report, keyword |
-| Event | Sự kiện online/offline, đăng ký | event, event_registration |
-| Project | Dự án, đội ngũ, repo, gọi vốn, góp ý, duyệt | project, project_member, funding, comment |
-| Investor | Quan tâm đầu tư, gộp NĐT, trao đổi | investor_interest, investor_comment |
-| Service Request | Phiếu YC-xxxx, trạng thái, phụ trách, bình luận nội bộ | service_request, request_comment |
-| Bot Engine | Persona, kịch bản, lịch, khung giờ, tự sinh, tự trả lời | persona, script, sim_thread |
-| Mail / Notification | Email OTP/chào mừng/nhắc phí; in-app | mail_template, mail_log, notification |
-| Settings / Audit / Export | Danh mục, phân quyền, SMTP, nhật ký | category, role_perm, smtp_config, audit_log |
+**Controllers:** `auth`, `auth/sso`, `me/*` (affiliate, chat, declaration, membership, onboarding, welcome-mail), `groups`, `events`, `members`, `notifications`, `uploads`, `dashboard`, `public/*` (affiliate, price-config, unsubscribe), `webhooks/bank`, `admin/*` (accounts, roles, affiliate + policy, bot + bulk-scripts / conversation-types / replies / schedule, categories, events, exports, fees, groups, investors, needs, price-config, projects, reports, settings + llm, stores, users).
 
-**Routes / screens** [SoT: §5, prototype `screen`/`pTab`/`aTab`]
+**Portal routes:** dashboard · community · chat · events · projects (+ mine, [id]) · stores (+ mine, [id]) · needs (+ mine) · services · affiliate · profile · membership/pay · public: login, register, forgot/reset-password, sso/callback, `r/[code]`, huong-dan, unsubscribe.
 
-- Auth (`screen:'auth'`): AU-01 Login · AU-02 SSO · AU-03 chọn loại TK · AU-04 ĐK cá nhân · AU-05 ĐK DN + tra MST · AU-06 OTP · AU-07 email chào mừng · AU-08 quên MK · AU-09 đăng xuất
-- User Portal (`screen:'portal'`, `pTab`): UP-01 dashboard · UP-02 community · UP-03 chat · UP-04 events · UP-05 projects · UP-06 profile · UP-07 services (popup Gói dịch vụ, **bắt buộc khi chưa đóng phí**) · UP-08 thông báo
-- Admin (`screen:'admin'`, `aTab`, sidebar 1 cấp 10 mục): AD-01 overview · AD-02 members · AD-03 fees · AD-04 groups (+tab Kiểm duyệt tin nhắn) · AD-05 bot · AD-06 events · AD-07 projects · AD-08 investors · AD-09 services · AD-10 settings (chung, danh mục, phân quyền, email chào mừng, SMTP, TK quản trị, nhật ký)
+**Admin routes:** overview · members · fees (+ transactions) · groups (+ chat) · bots · events · projects · investors · stores · needs · requests · affiliate · marketing · reports · settings · public: login, first-password, two-factor, forgot/reset-password.
 
-**API** (base `https://api.opchub.community/v1`) — 11 nhóm: Auth, Membership (gồm `POST /webhooks/bank`), Users, Groups, Chat (REST + WS), Bot, Events, Projects, Investors, Services, Settings. WS events: `room.join/leave`, `message.send/new/react/pin`, `member.request`, `notification.new`, `membership.updated`. [SoT: §14]
+**Integrations (`packages/integrations`):** bank-webhook (SePay + fake, HMAC, parse nội dung `OPCHUB …`) · llm (local + fake) · mail (Brevo, SMTP, fake) · sso (Google, fake) · storage (S3, local, fake) · tax-lookup (chuỗi esgoo → dlpl → vietqr, fake).
 
-### Database schema (ERD) [SoT: §10]
+### Database schema
 
-~28 thực thể: user · business_profile · sso_link · otp · membership_fee · payment_txn · community_group · group_member · room · message · reaction · report · keyword · event · event_registration · project · project_member · comment · funding · investor_interest · investor_comment · service_request · request_comment · persona · script · sim_thread · mail_template · mail_log · category · notification · audit_log · smtp_config · role_perm.
+80 model / 54 enum chia theo domain trong `packages/db/prisma/schema/*.prisma`. Nhóm chính: User / AuthIdentity / BusinessProfile / RefreshToken · AdminUser / AdminRole / AdminRolePermission / AuditLog · MembershipFee (`trial | pending_payment | active | expiring | expired`) / MembershipFeePeriod / PaymentTransaction / FeeReminder · PriceConfig (+ History) · Affiliate / AffiliatePolicy / Referral / Commission (`plan`, `listAmount`, `amount`, `status`) / AffiliateClickDaily · Group / GroupMember / Room / Message / RoomReadCursor / PinnedMessage / MessageReaction / MessageFlag · Moderation* / Report · Event / EventRegistration · Project / ProjectFundraising / ProjectFunding / ProjectComment… · InvestorInterest / InvestorSummary · Store / StoreItem / StoreDailyView / StoreFavorite · Need · Service / ServiceRequest · Persona / BotScript / BotThread / BotReplyRun / BotBulk* / BotRotationCursor · Campaign / MailLog / MailSuppression · Notification · Onboarding* · OutboxEvent · ExportJob · StatsDaily · LlmConfig · AppSetting / SmtpConfig.
 
-Quan hệ chính: user 1–0..1 business_profile · user 1–1 membership_fee (lịch sử ở payment_txn) · user n–n community_group qua group_member (role owner/moderator/member) · group 1–n room 1–n message (`is_simulated`, `sender_id | persona_id`) · project 1–0..1 funding 1–n investor_interest · service_request 1–n request_comment (`mentions[]` → notification) · persona n–n group.
-
-### State machines [SoT: §9]
-
-| Đối tượng | Trạng thái |
-|---|---|
-| Tài khoản | Hoạt động ⇄ Đã khóa (không có "Chờ xác minh") |
-| Phí thành viên | Chờ thanh toán → Đang hiệu lực → Sắp hết hạn (≤30d) → Hết hạn → (gia hạn) Đang hiệu lực |
-| Yêu cầu vào nhóm | Chờ duyệt → Thành viên \| Từ chối \| Hủy |
-| Dự án | Nháp → Chờ duyệt → Đang hiển thị ⇄ Đã ẩn \| Cần chỉnh sửa→Chờ duyệt \| Bị từ chối |
-| Báo cáo tin | Mới → Đã xử lý (bỏ qua/ẩn/cảnh báo/khóa) |
-| ĐK sự kiện | Đã đăng ký → Đã tham dự \| Đã hủy |
-| Phiếu YC | Mới → Đang tư vấn → Đã báo giá → Thành công \| Từ chối (mở lại) |
-| Quan tâm đầu tư | Đã gửi → Đang trao đổi (auto khi admin bình luận đầu) → Đã kết nối |
-| Hội thoại bot | Chờ lịch → Đang chạy → Hoàn tất |
+**Chưa có cho v4.6:** bảng GĐ Vùng (vùng, tỉnh phụ trách, tài khoản nhận, lịch sử bổ nhiệm), sổ chia sẻ GĐ Vùng + kỳ chi, trạng thái phí `Miễn phí · GĐ Vùng`, cấu hình nhắc gia hạn / kênh, slug + SEO trang công khai gian hàng, nhiều nhà cung cấp AI + phân bổ + ngân sách, cấu hình PWA / thông báo đẩy + subscription.
 
 ### PATTERNS_DETECTED
 
-- **Paywall gate toàn Portal**: phí chưa hiệu lực → popup không đóng được; API trả `402 MEMBERSHIP_REQUIRED`; WS `membership.updated` đóng popup. [§5.2 UP-07, §14.2]
-- **Đối soát CK theo nội dung**: `OPCHUB [Mã TV] [SĐT]` + 600.000đ; webhook HMAC-SHA256 + quét bù 2'; fallback Admin "Ghi nhận đã thu"; idempotency (không trùng kích hoạt). [QT-03, QĐ-01]
-- **RBAC 4 vai trò hệ thống** (Super Admin / Quản trị viên / Điều phối viên / Thành viên) + **vai trò ngữ cảnh Chủ nhóm** theo `group_id`. Vai trò lúc đăng ký (Chuyên gia, Giảng viên, Kỹ sư, Nhà đầu tư…) chỉ là thuộc tính hồ sơ. [§2]
-- **Auth flow**: đăng ký → OTP email 6 số/10' → Active ngay; email chào mừng có mật khẩu tạm (bắt buộc đổi lần đầu); khóa tạm 15' sau 5 lần sai; reset link 15', 3 lần/giờ, thu hồi mọi phiên.
-- **Admin list convention**: phân trang 10/trang (Sự kiện 9, Nhóm 12, Cộng đồng Portal 9); "Chọn tất cả" chỉ trang hiện tại; tự lùi trang khi lọc; xuất CSV; mobile → bảng thành thẻ. [BR-12]
-- **Audit bất biến** mọi thao tác Admin + log xuất dữ liệu cá nhân. [BR-13]
-- **API conventions**: JSON UTF-8, ISO 8601 UTC, tiền = số nguyên VND, `?page&size → {items,page,size,total}`, `?sort=-created_at`, `Idempotency-Key` cho thanh toán/YC/quan tâm đầu tư; error codes 400/401/402/403/404/409/422/429. [§14.1–13.2]
-- **Bot persona**: tin mô phỏng `is_simulated` (không hiện nhãn với user); chỉ đăng trong nhóm gán + khung giờ.
-- **Rich text**: trình soạn thảo + sanitize allowlist (sự kiện, dự án, email chào mừng, bình luận YC).
-- **i18n (prototype)**: 10 ngôn ngữ ASEAN+ (vi, en, th, zh, id, ms, fil, km, lo, my); SĐT có cờ + mã quốc gia ASEAN. ⚠️ SRS §15 chỉ ghi "tiếng Việt" → cần chốt.
+- **Một app NestJS, ba process** (api / socket / worker) dùng chung `modules/<domain>`; ranh giới import ép bằng `pnpm depcheck` + ESLint boundaries. [`standards/backend/nestjs-modules.md`]
+- **Outbox** trong cùng transaction cho hiệu ứng phụ (thanh toán, khóa, duyệt) → `outbox-relay.processor`.
+- **Transition có điều kiện** `WHERE status = <from>` cho mọi máy trạng thái.
+- **Permission key** (56 key trong `packages/shared/src/permissions.ts`), không check tên vai trò.
+- **zod ở biên** cho HTTP / socket / webhook / job / env (`packages/shared`).
+- **Adapter + fake provider** cho mọi dịch vụ ngoài.
+- **Trial 90 ngày → paywall** (D-94), **giá cấu hình** (`PriceConfig`, D-94 / D-116), **đối soát `OPCHUB …`** số tiền đúng bằng giá gói (D-104).
+- **Affiliate**: mã cho mọi TV (D-94-3), hoa hồng % × số tiền gói thực trả, lưu `plan` (D-70, D-110).
+- **FE**: feature folder, screen = orchestrator, TanStack Query + socket → cache, AntD theme chung `packages/ui`, i18n `messages/vi/*.json`, MSW cho parity.
+- **Parity prototype ≤ 3%** ở 1440 + 390 (`standards/frontend/ui-parity.md`, D-89).
 
-### REUSABLE_COMPONENTS (từ prototype — tái tạo bằng AntD, không copy code)
+### REUSABLE_COMPONENTS (cho v4.6)
 
-- Seed/danh mục dùng làm migration seed: 34 tỉnh/thành mới (`PROVINCES` + vùng), danh mục lĩnh vực `CAT_SEED` (tên, màu, scope project/biz), vai trò đăng ký `REG_ROLES`, danh mục dịch vụ `SVC_SEED` (OPC cấp tỉnh G2B, trường ĐH/CĐ B2B, …), trạng thái YC `RQ_ST`, mẫu email chào mừng `WELCOME_TPL`, persona/script seed. [SoT: index.html script]
-- UI patterns cần dựng component chung: Rich editor + SafeHTML, popup bắt buộc (non-closable modal), bảng Admin có bulk-select + export + pagination, thẻ nhóm có ảnh bìa, panel chi tiết dạng drawer, timeline trao đổi 2 chiều, chip trạng thái theo bảng màu.
-- Assets: `opchub-logo.png`, `vcb-qr.png`.
+| Cần cho v4.6 | Có sẵn để dùng lại |
+|---|---|
+| Nhắc gia hạn 30 / 7 / 1 (BR-471 → 474) | `FeeReminder` (mỗi mốc ≤ 1 lần / kỳ, NA-04, D-57) + `fee.processor` + `mail` |
+| Đối soát ngân hàng (BR-481 → 484) | `bank-webhook` adapter (HMAC, SePay), `webhooks/bank`, màn `admin/fees/transactions`, khớp tay (D-113) |
+| Nhật ký thao tác Admin (BR-485, 486) | `AuditLog` + `audit-log-tab.tsx` (90 ngày, D-75) + `export` |
+| Nhà cung cấp AI (P13) | `llm-config` module + `LlmConfig` + `settings/llm-tab.tsx` + adapter `llm` |
+| Tự mở khóa (BR-465) | `User.lockedUntil` + `account-lock.processor` |
+| GĐ Vùng / chia sẻ | `Affiliate`, `Commission`, `AffiliatePolicy`, `Referral` (cookie link `/r/[code]`), 34 tỉnh + vùng trong seed |
+| Tìm kiếm chung (BR-491) | Topbar có ô tìm (`602e7c5e`, chỉ FE) |
+| Email bổ nhiệm / thu hồi (EM-GDV1/2) | `mail` + `MailLog` + màn Marketing › Email |
 
-### GAPS_DETECTED
+### GAPS_DETECTED (v4.6 so với code — chi tiết `audit/SPEC-V4.6-DELTA.md`)
 
-1. **Chưa có source code, repo git, CI** — toàn bộ là greenfield.
-2. **Mâu thuẫn trạng thái Phiếu YC**: SRS = Mới → Đang tư vấn → Đã báo giá → Thành công/Từ chối; prototype có thêm `won`="Đã chốt" + `done`="Hoàn thành". Cần chốt.
-3. **Ngôn ngữ**: prototype 10 ngôn ngữ vs SRS "tiếng Việt".
-4. **Quan hệ user–membership_fee 1–1** nhưng gia hạn/lịch sử nằm ở payment_txn → cần bảng lịch sử kỳ phí rõ ràng (đề xuất `membership_period`).
-5. **Phí 50.000đ/tháng nhưng thu 600.000đ/năm** — chỉ gói năm? Có gói khác không?
-6. **Mã TV** (`TV000123`) — quy tắc sinh chưa đặc tả.
-7. **Vấn đề mở SRS §16**: nguồn tra cứu MST/VSIC; danh mục & quyền lợi dịch vụ chính thức; chính sách công bố thành viên mô phỏng; miễn trừ thông tin gọi vốn.
-8. **OpenSearch** có trong kiến trúc nhưng chưa có use case cụ thể (tìm tin chat?) — có thể bỏ ở MVP, dùng Postgres FTS/trigram.
-9. **Quyền xóa tài khoản (NĐ 13/2023)** có trong NFR nhưng không có chức năng/API tương ứng.
-10. **Notification preferences**, xóa/sửa tin nhắn chat, giới hạn file upload trong chat — chưa đặc tả.
-11. "Đã tham dự" (check-in sự kiện) — không có chức năng/API ghi nhận.
+1. **GĐ Vùng** (§31.4, §32, P5 → P9, P16, P17): chưa có gì — bảng, quyền, API `/admin/gdv`, tab "Vùng của tôi", trạng thái phí miễn phí GĐ Vùng.
+2. **Mô hình chia sẻ §31** đổi hẳn hoa hồng affiliate hiện hành; xung đột D-70 / D-110 / §29.
+3. **Cú pháp CK** `OPC <SĐT> <GÓI>` (§33.3) ≠ `OPCHUB …` (D-104, §28.1).
+4. **Nhắc gia hạn cấu hình được** (mốc / kênh / gửi tay / cột Lần gửi) và **kênh Zalo ZNS** — chưa có adapter.
+5. **Trang công khai `/g/<slug>`** + SEO — chưa có route công khai cho gian hàng.
+6. **Tìm kiếm chung** server-side, **gợi ý nhu cầu** chấm điểm (BR-478 → 480), **chuyển đổi theo vùng** (BR-475 → 477).
+7. **PWA + Web Push** — chưa có manifest / service worker / subscription.
+8. **AI nhiều nhà cung cấp** + dự phòng + ngân sách + ẩn PII; dòng "Trợ lý OPC Hub" trái D-92.
+9. Đặc tả tự mâu thuẫn: GDV-R06 "tối thiểu 1 GĐ Vùng / vùng" vs prototype "mỗi vùng 1 GĐ Vùng".
 
 ### CODE_HEALTH
 
 | Metric | Value |
 |---|---|
-| Source code | Không có (greenfield) |
-| TypeScript strict / ESLint | N/A |
-| Tests | 0 (SRS nói prototype chạy 44 bước auto, đạt 100% — script không có trong folder) |
-| Console.logs (prototype) | 0 |
-| Git | Chưa init |
+| TypeScript strict | Có; `any` = 0 ngoài code sinh của Prisma |
+| ESLint | Có (`max-lines`, boundaries); lefthook pre-commit (prettier) + commitlint |
+| Tests | 543 file `*.spec.ts(x)` + 91 e2e Playwright |
+| `console.*` | 0 |
+| TODO / FIXME | 2 |
+| File vượt trần | 0 file tay; `packages/shared/src/fixtures/stores-seed.ts` 608 dòng (fixture dữ liệu) — 1 trường hợp cần xem lại |
+| Parity | Kết quả màn P1 → P17 của v4.6 hết hiệu lực, chờ đo lại |
 
-### ESTIMATED_SIZE (ước lượng build theo SRS)
+### ESTIMATED_SIZE (phần v4.6 còn phải làm)
 
-- Màn hình: 9 auth + 8 portal + 10 admin (≈ 25 sub-tab) → ~45 view
-- API: ~70 endpoint REST + 8 WS event
-- Bảng DB: ~33
-- Worker: 4 (mail, reconcile, bot, export)
-- Timeline SRS: 16 tuần, team 1 PO + 1 TL + 2 FE + 3 BE + 1 DevOps + 2 QA + 1 UI/UX
-- LoC ước tính: FE ~35–45k, BE ~30–40k
+| Hạng mục | Ước lượng |
+|---|---|
+| GĐ Vùng + chia sẻ + chi trả (P5 → P9, P16, P17) | 2–3 TIP lớn · ~5 bảng mới · ~10 endpoint · 3 màn Admin + 1 tab Portal |
+| Nhắc gia hạn + Zalo adapter (P11) | 1 TIP |
+| Đối soát ngân hàng màn cấu hình (P12) | 1 TIP vừa (phụ thuộc Q-V4.6-3) |
+| Trang công khai `/g/` (P4) | 1 TIP lớn (route công khai, SEO) |
+| Tìm kiếm chung + gợi ý nhu cầu + chuyển đổi vùng (P2, P3, P10) | 2 TIP vừa |
+| AI nhiều nhà cung cấp (P13) | 1 TIP vừa |
+| PWA + Web Push (P14) | 1 TIP lớn |
+| Copy, nhãn, nhật ký, BR-461/463/465 (P1, P15, nhóm 1) | 1 TIP nhỏ |
 
 ---
 
 ## Auto-Answered Requirements (for RRI — skip these)
 
-- Mục tiêu, đối tượng, phạm vi/ngoài phạm vi [§1]
-- RBAC đầy đủ (ma trận quyền 5 cột) [§2]
-- Luồng nghiệp vụ QT-01 → QT-13 với quy tắc/ngoại lệ [§7]
-- Business rules BR-01 → BR-13 [§13]
-- Thông báo & email matrix [§12]
-- API catalogue + conventions + error codes + WS events [§14]
-- NFR & SLO: API p95 <300ms; tin nhắn <500ms; list <2s 4G; OTP <30s; đối soát <5'; 5xx <0,5%; uptime 99,5%; RPO 24h / RTO 4h; 100k TK, 5k socket; OWASP ASVS L2; WCAG 2.1 AA; NĐ 13/2023 [§15]
-- Load test: ĐK 200/phút p95<800ms; chat 5k conn 50 msg/s p95<500ms; admin 100 phiên p95<400ms; 1.000 CK/giờ đối soát <5' [§15.2]
-- UAT-01 → UAT-31 + tiêu chí nghiệm thu [§16]
-- Lộ trình 4 GĐ / 16 tuần + mốc M0–M4 [§17]
-- QĐ-01 (webhook trung gian + fallback thủ công), QĐ-02 (3 trạng thái NĐT), QĐ-03 (tab kiểm duyệt trong Nhóm) [§17.5]
-- Bảo mật: rate-limit login 10/phút, OTP 3/15', API 100/phút, auth 20/phút; upload ảnh MIME + 5MB; TLS 1.2+; at-rest encryption [§3.6]
+- Stack, hạ tầng, cấu trúc repo, luật cứng — `AGENTS.md`, `standards/` (chốt, không hỏi lại).
+- Nghiệp vụ v4 → v4.2 đã chốt D-89 → D-117 (trial, giá cấu hình, đối soát `OPCHUB`, affiliate mọi TV, gian hàng, bot, File chia sẻ…).
+- Nguyên tắc nguồn: prototype thắng khi lệch (D-89, D-93); nút không bấm được vẫn làm đúng nghiệp vụ (D-95); test dùng stub (D-103).
+- Tỷ lệ chia sẻ mặc định §31.1 (50 / 40 / 30 / 20, công thức, 3 thông số cấu hình) — rõ trong đặc tả, chỉ hỏi phần xung đột.
+- Quy tắc §32 GDV-R01 → R08, QT-32, máy trạng thái §32.3, AT-GDV01 → 07 — rõ, trừ R06.
+- BR-461 → 495, TC-461 → 494 — rõ về hành vi; còn câu hỏi phạm vi / tích hợp.
 
-## Questions for RRI (còn mở)
+## Questions for RRI → đã chốt D-118 → D-127 (RRI 30/10/2026); câu gốc Q-V4.6-1 → 7 ở `audit/SPEC-V4.6-DELTA.md` §4
 
-1. Chốt stack (NestJS/Prisma theo SRS, hay khác?) + quy mô hạ tầng MVP (K8s ngay hay docker-compose/VPS trước?)
-2. Keycloak hay auth tự viết (NestJS + Passport) cho MVP?
-3. Phạm vi MVP: theo GĐ 1 (lõi) hay full 16 tuần? Team thực tế là ai (AI agents / người)?
-4. i18n: chỉ vi, hay vi+en, hay 10 ngôn ngữ như prototype?
-5. Trạng thái phiếu YC (gap #2), mã TV, gói phí (gap #5, #6)
-6. Nhà cung cấp webhook ngân hàng cụ thể (SePay / Casso / PayOS)
-7. Nguồn tra cứu MST
-8. Monorepo layout (portal + admin chung app hay 2 app Next.js?)
-9. Xóa tài khoản / quyền dữ liệu cá nhân
+1. Mô hình chia sẻ §31 thay hoa hồng affiliate — số dư hoa hồng cũ, migration.
+2. Mỗi vùng đúng 1 hay tối thiểu 1 GĐ Vùng.
+3. Cú pháp CK `OPC <SĐT> <GÓI>` hay giữ `OPCHUB …`.
+4. Dòng "Trợ lý OPC Hub" ở phân bổ AI (D-92).
+5. Cổng đối soát / Zalo ZNS / Web Push: adapter + fake trước hay chờ hợp đồng.
+6. Phạm vi + thứ tự TIP các mục lớn.
+7. Mốc "năm của khách" cho TK đã đóng phí trước v4.6.
 
 ## Constraints
 
-- **Global CLAUDE.md (bắt buộc)**: backend 200–400 dòng/file (cap 600); frontend 150–250 (cap 400); màn hình chính chỉ orchestrate, tách `components/`, `hooks/`, `types.ts`; test ở file riêng; tách domain rõ ràng.
-- **PostgreSQL rules (bắt buộc)**: composite index "bằng trước, khoảng/sort sau"; covering index `INCLUDE`; deferred join cho phân trang (mọi danh sách Admin đều phân trang → áp dụng rộng); partial index (vd. `membership_fee WHERE status IN ('pending','expiring')`); expression index (`LOWER(email)`).
-- **Git**: commit ngay khi xong + test pass; báo DONE kèm git SHA. → **cần `git init`** trước khi build.
-- Tên đường dẫn thư mục thiết kế có dấu + khoảng trắng → tooling nên tham chiếu bằng quoted path hoặc copy spec vào `docs/`.
-- UI: Ant Design, phẳng, tiếng Việt, responsive 360px+, WCAG 2.1 AA.
-- Thanh toán chỉ chuyển khoản VCB; không cổng thẻ/ví; không giao dịch đầu tư thực.
+- Luật cứng `AGENTS.md` 1 → 14 + global `~/.claude/CLAUDE.md` (trần dòng, PostgreSQL index / deferred join, commit + SHA).
+- Git flow: code trên `dev` / `feature/*` từ `dev`; `dev → main` chỉ qua PR do owner merge.
+- Thay đổi backend / lớn chưa có D-xx → hỏi owner (D-93). v4.6 **chưa có D-xx**.
+- Tiền số nguyên VND; chia sẻ GĐ Vùng phải làm tròn xác định (ghi rõ khi chốt).
+- Dịch vụ ngoài mới (Zalo ZNS, Web Push, cổng đối soát mới) chỉ qua adapter trong `packages/integrations` + fake provider; env mới vào `.env.example` + zod schema.
+- Mọi thao tác Admin (bổ nhiệm / thu hồi / chi trả / đổi cấu hình) ghi `audit_logs`; hiệu ứng tiền qua outbox.
 
 ## Risks / Tech Debt
 
 | Rủi ro | Mức | Ghi chú |
 |---|---|---|
-| Kiến trúc SRS nặng (K8s, Keycloak, OpenSearch, 4 worker) cho MVP | Cao | Đề xuất đơn giản hóa ở Vision; giữ ranh giới module để scale sau |
-| Webhook báo tiền về gián đoạn / trùng kích hoạt | Cao | Idempotency theo `txnId`, quét bù, fallback thủ công (QĐ-01) |
-| Bot persona (thành viên mô phỏng) — rủi ro pháp lý/uy tín | Trung bình | Công bố trong Điều khoản; flag tắt được |
-| Nguồn MST không ổn định | Trung bình | Cache + nhập tay |
-| Email OTP vào spam / vượt hạn mức Brevo (free 300/ngày) | Trung bình | SPF/DKIM/DMARC; nâng gói |
-| Paywall chặn toàn Portal → giảm conversion | Trung bình | Quyết định sản phẩm, đã chốt trong BR-03 |
-| Spec và prototype lệch nhau ở vài chi tiết | Thấp | Ưu tiên SRS; liệt kê lệch ở GAPS |
+| §31 đổi mô hình tiền affiliate đang chạy | Cao | Cần quyết định số dư / khoản chờ chi trước khi migration |
+| Đổi cú pháp CK khi đã phát hành mã QR / nội dung `OPCHUB` | Cao | Có thể phải chấp nhận cả hai cú pháp một thời gian |
+| GĐ Vùng miễn phí ảnh hưởng paywall + trial + nhắc phí | Trung bình | Máy trạng thái phí thêm trạng thái; kiểm hồi quy D-94 |
+| Zalo ZNS / Web Push cần duyệt mẫu, hợp đồng (VM-461 → 463) | Trung bình | Làm adapter + fake trước để không chặn |
+| Trang `/g/` công khai lộ dữ liệu gian hàng | Trung bình | Chỉ trường công khai, tôn trọng bật/tắt Google (noindex) |
+| Parity v4.6 chưa đo | Thấp | Đo lại sau khi dựng các màn |
+| `stores-seed.ts` 608 dòng | Thấp | Fixture; tách khi đụng tới |
 
 ---
 
-*[SoT: dac-ta.html = OPCHUB-SRS-2.0 (10/2026, Media Soft, trạng thái "Chờ nghiệm thu"); index.html = OPC Hub Community v4 Ant prototype]*
-
+*[SoT: `docs/spec/dac-ta.html` v4.6 (§33 > §32 > §31 > §29 > §28 > §27 > §1–26); `docs/spec/index.html` v4.6; code `dev` `cb29030d`]*
 
 ---
 ---

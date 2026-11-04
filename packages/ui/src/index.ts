@@ -27,3 +27,4 @@ export * from './upload-image/use-image-upload';
 export * from './form-errors';
 export * from './confirm-dialog';
 export * from './pay-qr';
+export * from './date-range-picker/date-range-picker';

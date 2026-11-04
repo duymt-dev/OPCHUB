@@ -1,6 +1,6 @@
 'use client';
 
-import { ErrorState, Icon, PageHeader, PageSkeleton, Tabs } from '@opchub/ui';
+import { DateRangePicker, ErrorState, PageHeader, PageSkeleton, Tabs } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useProfile } from '../hooks/use-profile';
 import { useProfileForm } from '../hooks/use-profile-form';
@@ -49,17 +49,7 @@ function ProfileBody({ profile }: { profile: Profile }) {
 
   return (
     <>
-      <PageHeader
-        title={t('page.title')}
-        subtitle={t('page.sub')}
-        extra={
-          <div className={styles.dateRange}>
-            <Icon name="calendar" stroke="rgba(0,0,0,0.65)" />
-            {t('page.dateRange')}
-            <Icon name="chevronDown" size={14} stroke="rgba(0,0,0,0.45)" />
-          </div>
-        }
-      />
+      <PageHeader title={t('page.title')} subtitle={t('page.sub')} extra={<DateRangePicker />} />
       <div className={styles.screen}>
         <div className={styles.side}>
           <ProfileCard profile={profile} onTab={setTab} />

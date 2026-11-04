@@ -23,7 +23,7 @@ describe('LanguageMenu', () => {
     expect(trigger.querySelectorAll('svg')).toHaveLength(1);
   });
 
-  it('V4-615 thanh trên cùng (prototype v4): quả địa cầu + tên ngôn ngữ, không cờ', () => {
+  it('thanh trên cùng (topbar): hiện cờ của ngôn ngữ đang chọn thay quả địa cầu', () => {
     render(
       <LanguageMenu
         title="Chọn"
@@ -34,6 +34,18 @@ describe('LanguageMenu', () => {
       />,
     );
     const trigger = screen.getByRole('button', { name: 'ภาษาไทย' });
+    expect(trigger.querySelector('img')?.getAttribute('src')).toBe(
+      'https://flagcdn.com/w80/th.png',
+    );
+    // chỉ còn mũi tên mở, không còn quả địa cầu
+    expect(trigger.querySelectorAll('svg')).toHaveLength(1);
+  });
+
+  it('khi không có cờ thì hiện quả địa cầu dự phòng', () => {
+    render(
+      <LanguageMenu title="Chọn" current="xx" options={[]} onSelect={vi.fn()} variant="topbar" />,
+    );
+    const trigger = screen.getByRole('button');
     expect(trigger.querySelector('img')).toBeNull();
     // quả địa cầu + mũi tên mở
     expect(trigger.querySelectorAll('svg')).toHaveLength(2);

@@ -1,6 +1,6 @@
 'use client';
 
-import { ErrorState, Icon, PageHeader } from '@opchub/ui';
+import { DateRangePicker, ErrorState, PageHeader } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useCan } from '@/lib/permissions';
 import { useNeedParams } from '../hooks/use-need-params';
@@ -18,13 +18,7 @@ function NeedsHeader() {
       title={t('title')}
       // Prototype có dòng mô tả rỗng (pageSub '') vẫn chiếm khoảng cách 4px; khoảng trắng → cao 0
       subtitle=" "
-      extra={
-        <div className={styles.range}>
-          <Icon name="calendar" stroke="rgba(0,0,0,0.65)" />
-          {t('dateRange')}
-          <Icon name="chevronDown" size={14} stroke="rgba(0,0,0,0.45)" />
-        </div>
-      }
+      extra={<DateRangePicker />}
     />
   );
 }

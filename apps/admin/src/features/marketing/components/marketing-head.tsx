@@ -1,7 +1,7 @@
 'use client';
 
 import type { MarketingSummary } from '@opchub/shared/api-domains';
-import { Icon, PageHeader } from '@opchub/ui';
+import { DateRangePicker, PageHeader } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useRovingTabs } from '../hooks/use-roving-tabs';
 import { statValues } from '../model';
@@ -10,19 +10,7 @@ import styles from './marketing.module.css';
 
 export function MarketingHeader() {
   const t = useTranslations('marketing');
-  return (
-    <PageHeader
-      title={t('title')}
-      subtitle={t('sub')}
-      extra={
-        <div className={styles.range}>
-          <Icon name="calendar" stroke="rgba(0,0,0,0.65)" />
-          {t('dateRange')}
-          <Icon name="chevronDown" size={14} stroke="rgba(0,0,0,0.45)" />
-        </div>
-      }
-    />
-  );
+  return <PageHeader title={t('title')} subtitle={t('sub')} extra={<DateRangePicker />} />;
 }
 
 const STAT_KEYS = ['campaigns', 'sent', 'open', 'welcome'] as const;

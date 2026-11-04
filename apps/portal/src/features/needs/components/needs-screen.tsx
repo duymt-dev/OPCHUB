@@ -1,6 +1,6 @@
 'use client';
 
-import { Icon, PageHeader } from '@opchub/ui';
+import { DateRangePicker, PageHeader } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
@@ -25,13 +25,7 @@ function PageHead() {
       title={t('title')}
       // Prototype có dòng mô tả rỗng (pageSub '') vẫn chiếm khoảng cách 4px; khoảng trắng → cao 0
       subtitle=" "
-      extra={
-        <div className={styles.dateRange}>
-          <Icon name="calendar" stroke="rgba(0,0,0,0.65)" />
-          {t('dateRange')}
-          <Icon name="chevronDown" size={14} stroke="rgba(0,0,0,0.45)" />
-        </div>
-      }
+      extra={<DateRangePicker />}
     />
   );
 }

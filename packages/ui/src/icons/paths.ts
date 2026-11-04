@@ -77,6 +77,7 @@ export const ICON_PATHS = {
   chevronRight: 'M9 6l6 6-6 6',
   camera:
     'M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2zM12 9a4 4 0 100 8 4 4 0 000-8z',
+  close: 'M18 6L6 18M6 6l12 12',
 } as const;
 
 export type IconName = keyof typeof ICON_PATHS;

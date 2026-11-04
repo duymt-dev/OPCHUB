@@ -1,6 +1,6 @@
 'use client';
 
-import { ErrorState, Icon, PageHeader, Pagination } from '@opchub/ui';
+import { DateRangePicker, ErrorState, PageHeader, Pagination } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
 import { useInvestorParams } from '../hooks/use-investor-params';
@@ -30,17 +30,7 @@ export function InvestorsScreen() {
 
   return (
     <>
-      <PageHeader
-        title={t('title')}
-        subtitle=" "
-        extra={
-          <div className={styles.range}>
-            <Icon name="calendar" stroke="rgba(0,0,0,0.65)" />
-            {t('dateRange')}
-            <Icon name="chevronDown" size={14} stroke="rgba(0,0,0,0.45)" />
-          </div>
-        }
-      />
+      <PageHeader title={t('title')} subtitle=" " extra={<DateRangePicker />} />
       <div data-screen-label="Admin · Nhà đầu tư" className={styles.wrap}>
         <InvestorStats s={summary.data} />
         <div className={styles.card}>

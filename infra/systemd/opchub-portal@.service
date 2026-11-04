@@ -1,4 +1,4 @@
-# OPCHUB User Portal — Next.js `next start`. Instance 1..9 → cổng 310<i> (portal@1 → 3101).
+# OPCHUB User Portal — Next.js `next start`. Instance 1..9 → cổng 430<i> (portal@1 → 4301).
 # NEXT_PUBLIC_* được nhúng lúc build (deploy.sh chép /etc/opchub/portal.env vào bản phát hành trước `pnpm build`).
 [Unit]
 Description=OPCHUB Portal instance %i
@@ -13,7 +13,7 @@ Group=opchub
 WorkingDirectory=/srv/opchub/current/apps/portal
 EnvironmentFile=/etc/opchub/portal.env
 Environment=NODE_ENV=production
-Environment=PORT=310%i
+Environment=PORT=430%i
 Environment=HOSTNAME=127.0.0.1
 Environment=NEXT_TELEMETRY_DISABLED=1
 ExecStart=/usr/bin/node node_modules/next/dist/bin/next start -H 127.0.0.1 -p ${PORT}

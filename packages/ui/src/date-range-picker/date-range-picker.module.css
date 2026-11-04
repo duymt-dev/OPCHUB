@@ -1,0 +1,54 @@
+.dateRangePicker {
+  height: 40px !important;
+  background: #fff !important;
+  border: 1px solid #f0f0f0 !important;
+  border-radius: 6px !important;
+  padding: 0 12px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: rgba(0, 0, 0, 0.88) !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease-in-out;
+}
+
+.dateRangePicker:hover {
+  border-color: #1677ff !important;
+}
+
+.dateRangePicker:global(.ant-picker-focused) {
+  border-color: #1677ff !important;
+  box-shadow: 0 0 0 2px rgba(22, 119, 255, 0.1) !important;
+}
+
+.dateRangePicker :global(.ant-picker-input > input) {
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: rgba(0, 0, 0, 0.88) !important;
+  text-align: center !important;
+  cursor: pointer !important;
+  width: 82px !important;
+}
+
+.dateRangePicker :global(.ant-picker-range-separator) {
+  padding: 0 4px !important;
+  color: rgba(0, 0, 0, 0.45) !important;
+  font-weight: 500 !important;
+  display: inline-flex;
+  align-items: center;
+}
+
+.dateRangePicker :global(.ant-picker-prefix) {
+  margin-inline-end: 8px !important;
+  color: rgba(0, 0, 0, 0.65) !important;
+  display: inline-flex;
+  align-items: center;
+}
+
+.dateRangePicker :global(.ant-picker-suffix) {
+  margin-inline-start: 6px !important;
+  color: rgba(0, 0, 0, 0.45) !important;
+  display: inline-flex;
+  align-items: center;
+}

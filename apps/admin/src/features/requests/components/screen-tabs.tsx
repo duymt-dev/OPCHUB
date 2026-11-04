@@ -1,6 +1,6 @@
 'use client';
 
-import { Icon, PageHeader } from '@opchub/ui';
+import { DateRangePicker, PageHeader } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import type { RequestTab } from '../types';
 import styles from './requests.module.css';
@@ -9,19 +9,7 @@ const TABS: RequestTab[] = ['list', 'catalog'];
 
 export function RequestsHeader() {
   const t = useTranslations('requests');
-  return (
-    <PageHeader
-      title={t('title')}
-      subtitle=" "
-      extra={
-        <div className={styles.range}>
-          <Icon name="calendar" stroke="rgba(0,0,0,0.65)" />
-          {t('dateRange')}
-          <Icon name="chevronDown" size={14} stroke="rgba(0,0,0,0.45)" />
-        </div>
-      }
-    />
-  );
+  return <PageHeader title={t('title')} subtitle=" " extra={<DateRangePicker />} />;
 }
 
 /** Tab "Yêu cầu đăng ký" / "Danh mục dịch vụ" (gạch chân xanh như prototype rqTabs) */

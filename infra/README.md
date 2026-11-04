@@ -7,7 +7,7 @@ Mục **L3** = cần chủ nhà cung cấp/quyết định, agent không tự l�
 
 ```
 Cloudflare ─► Nginx :80/:443
-              ├─ opchub.community        /            → opchub_portal  (portal@i  :310i)
+              ├─ opchub.community        /            → opchub_portal  (portal@i  :430i)
               │                          /_next/static → cache 1 năm, immutable
               ├─ admin.opchub.community  /            → opchub_admin   (admin     :3200)
               ├─ (cả hai host)           /v1/         → opchub_api     (api@i     :410i, least_conn)
@@ -24,7 +24,7 @@ worker ─► SMTP, SePay, S3
 | ---------------------------- | ------------------------ | --------------------------------------- |
 | `opchub-api@<i>`             | `410<i>` (4101, 4102, …) | `Environment=API_PORT=410%i` trong unit |
 | `opchub-socket@<i>`          | `420<i>` (4201, …)       | `Environment=SOCKET_PORT=420%i`         |
-| `opchub-portal@<i>`          | `310<i>` (3101, …)       | `Environment=PORT=310%i`                |
+| `opchub-portal@<i>`          | `430<i>` (4301, …)       | `Environment=PORT=430%i`                |
 | `opchub-admin`               | 3200                     | cố định                                 |
 | `opchub-worker`              | —                        | không nghe HTTP                         |
 | PgBouncer / Postgres / Redis | 6432 / 5432 / 6379       |                                         |
@@ -117,7 +117,7 @@ Nâng máy 4→8→16 vCPU (ADR-0004), không đổi code:
 
 ```bash
 sudo systemctl enable --now opchub-api@2 opchub-socket@2 opchub-portal@2
-# bỏ comment server 127.0.0.1:4102 / 4202 / 3102 trong /etc/nginx/conf.d/opchub.conf
+# bỏ comment server 127.0.0.1:4102 / 4202 / 4302 trong /etc/nginx/conf.d/opchub.conf
 sudo nginx -t && sudo systemctl reload nginx
 # cập nhật API_INSTANCES / SOCKET_INSTANCES trong /etc/opchub/health.env
 ```

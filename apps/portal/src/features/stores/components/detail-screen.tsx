@@ -1,6 +1,6 @@
 'use client';
 
-import { ErrorState, Icon, PageHeader, PageSkeleton } from '@opchub/ui';
+import { DateRangePicker, ErrorState, PageHeader, PageSkeleton } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { StoreNeeds } from '@/features/needs';
@@ -22,18 +22,7 @@ const INTRO_ICON = 'M3 21h18M5 21V7l7-4 7 4v14M9 9h1M14 9h1M9 13h1M14 13h1M9 17h
 /** Tiêu đề trang + khoảng ngày — prototype chỉ hiện ở trang chi tiết (`showPageHead`) */
 function DetailPageHeader() {
   const t = useTranslations('stores.detail');
-  return (
-    <PageHeader
-      title={t('back')}
-      extra={
-        <div className={styles.dateRange}>
-          <Icon name="calendar" stroke="rgba(0,0,0,0.65)" />
-          {t('dateRange')}
-          <Icon name="chevronDown" size={14} stroke="rgba(0,0,0,0.45)" />
-        </div>
-      }
-    />
-  );
+  return <PageHeader title={t('back')} extra={<DateRangePicker />} />;
 }
 
 /**
