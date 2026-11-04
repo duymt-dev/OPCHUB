@@ -1,3 +1,6 @@
+import { commissionRateFor, customerYearOf } from '@opchub/shared';
+import { CustomerYearRepository } from '../../reporting';
+import { PolicyRepository } from '../repositories/policy.repository';
 import { Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
 import type { OutboxPayload } from '@opchub/shared/outbox';
@@ -12,11 +15,13 @@ import { AffiliateAllocationService } from './affiliate-allocation.service';
 /**
  * Consumer outbox phí → đại lý (§20, idempotent). D-94 3A: mọi TV là đại lý từ khi đăng ký (tạo ở
  * `AffiliateEnrollService`); ở đây chỉ bảo đảm còn thiếu thì tạo. D-110: mã luôn hoạt động — không
- * tạm dừng theo phí (bỏ AF-R07). AF-R05/R06: hoa hồng lần đóng phí đầu theo gói thực trả.
+ * tạm dừng theo phí (bỏ AF-R07). D-131: hoa hồng theo năm của khách và gói thực trả.
  */
 @Injectable()
 export class AffiliateLifecycleHandler {
   constructor(
+    private readonly years: CustomerYearRepository,
+    private readonly policy: PolicyRepository,
     private readonly prisma: PrismaService,
     private readonly commissions: CommissionRepository,
     private readonly outbox: OutboxService,
@@ -39,23 +44,34 @@ export class AffiliateLifecycleHandler {
     await this.allocation.ensure(tx, [{ userId, fullName: user.fullName, status: 'active' }]);
   }
 
-  /** AF-R05/R06 + BR-AFF-REV: chỉ lần đóng phí đầu (trial không phát sự kiện) */
+  /** D-131 + BR-AFF-REV: năm 1 / gia hạn dùng tỷ lệ snapshot; trial không phát sự kiện */
   private async recordCommission(
     tx: DbTx,
     p: OutboxPayload<'membership_fee.confirmed'>,
     at: Date,
   ): Promise<void> {
-    const ref = await this.commissions.pendingReferral(tx, p.userId);
-    if (!ref || !p.isFirst) return;
-    if (!(await this.commissions.closeReferral(tx, ref.id, 'converted', at))) return;
+    if (p.listAmount <= 0) return;
+    const anchor = await this.years.firstPaid(tx, p.userId, at, 'membership', p.periodId);
+    const ref = p.isFirst
+      ? await this.commissions.pendingReferral(tx, p.userId)
+      : await this.commissions.referrerOf(tx, p.userId);
+    if (!ref || ref.affiliateUserId === p.userId) return;
+    if (p.isFirst && !(await this.commissions.closeReferral(tx, ref.id, 'converted', at))) return;
+    const customerYear = customerYearOf(anchor.firstPaidAt, at);
+    const policy = await this.policy.get(tx);
+    const rate = commissionRateFor(customerYear, { ...policy, firstYearRate: ref.rate });
+    if (rate === null) return;
+    const amount = commissionAmount(p.listAmount, rate);
+    if (amount <= 0) return;
     const id = await this.commissions.record(tx, {
       affiliateId: ref.affiliateId,
       referredUserId: p.userId,
       feePeriodId: p.periodId,
       listAmount: p.listAmount,
       plan: p.plan,
-      amount: commissionAmount(p.listAmount, ref.rate),
-      rate: ref.rate,
+      amount,
+      rate,
+      customerYear,
       monthKey: monthKey(at),
     });
     if (id) await this.outbox.add(tx, 'affiliate.commission_recorded', { commissionId: id });

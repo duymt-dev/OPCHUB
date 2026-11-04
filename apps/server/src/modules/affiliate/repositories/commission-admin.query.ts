@@ -36,7 +36,7 @@ export function commissionPageQuery(
   const where = commissionWhere(q, memberIds, options);
   return Prisma.sql`SELECT c.id,c.affiliate_id AS "affiliateId",c.referred_user_id AS "customerId",
     a.user_id AS "affiliateUserId",a.code,c.created_at AS date,c.list_amount AS "feeAmount",
-    c.rate,c.amount,c.status::text AS status,c.cancel_reason AS "cancelReason",c.plan::text AS plan
+    c.customer_year AS "customerYear",c.rate,c.amount,c.status::text AS status,c.cancel_reason AS "cancelReason",c.plan::text AS plan
     FROM (SELECT c.id FROM commissions c ${where}
       ${options.after ? Prisma.sql`AND (c.created_at,c.id)<(${options.after.date},${options.after.id})` : Prisma.empty}
       ORDER BY c.created_at DESC,c.id DESC LIMIT ${q.size} OFFSET ${options.after ? 0 : (q.page - 1) * q.size}

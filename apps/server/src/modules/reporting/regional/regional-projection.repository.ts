@@ -32,6 +32,21 @@ export class RegionalProjectionRepository {
       GROUP BY first_group.region`);
   }
 
+  affiliateRegions(userIds: string[]) {
+    return this.prisma.db.$queryRaw<
+      {
+        userId: string;
+        region: RegionalRegion;
+        provinceName: string;
+        directorName: string | null;
+      }[]
+    >(Prisma.sql`SELECT u.id AS "userId",first_group.region,first_group.province_name AS "provinceName",d.full_name AS "directorName"
+      FROM unnest(${userIds}::text[]) ids(id) JOIN users u ON u.id=ids.id
+      JOIN LATERAL (${earliestRegionalGroup(Prisma.sql`u.id`)}) first_group ON true
+      LEFT JOIN regional_directors r ON r.region=first_group.region
+      LEFT JOIN users d ON d.id=r.user_id`);
+  }
+
   async affiliateRegionAt(tx: DbTx, userId: string) {
     const [row] = await tx.$queryRaw<{ region: RegionalRegion | null }[]>(
       earliestRegionalGroup(Prisma.sql`${userId}`),

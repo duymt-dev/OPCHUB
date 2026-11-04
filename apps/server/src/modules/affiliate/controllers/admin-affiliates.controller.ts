@@ -1,4 +1,4 @@
-import { Controller, Get, Headers, HttpCode, Patch, Post, Put, Req } from '@nestjs/common';
+import { Controller, Get, HttpCode, Patch, Post, Put, Req } from '@nestjs/common';
 import type { Request } from 'express';
 import type { z } from 'zod';
 import {
@@ -10,9 +10,6 @@ import {
   affiliateIdParamsSchema,
   affiliateMonthsSchema,
   affiliatePageQuerySchema,
-  affiliatePayoutKeySchema,
-  affiliatePayoutRequestSchema,
-  affiliatePayoutResultSchema,
   affiliateRateResultSchema,
   affiliateRateSchema,
   csvFileSchema,
@@ -22,14 +19,12 @@ import { respond, ZodBody, ZodParams, ZodQuery } from '@/common/http/zod';
 import { AffiliateAdminService } from '../services/affiliate-admin.service';
 import { AffiliateCsvService } from '../services/affiliate-csv.service';
 import { CommissionAdminService } from '../services/commission-admin.service';
-import { PayoutService } from '../services/payout.service';
 
 @Controller('admin/affiliates')
 export class AdminAffiliatesController {
   constructor(
     private readonly read: AffiliateAdminService,
     private readonly write: CommissionAdminService,
-    private readonly payout: PayoutService,
     private readonly csv: AffiliateCsvService,
   ) {}
 
@@ -102,27 +97,5 @@ export class AdminAffiliatesController {
     @ZodQuery(affiliatePageQuerySchema) q: z.infer<typeof affiliatePageQuerySchema>,
   ) {
     return respond(affiliateAdminCustomersSchema, await this.read.customers(p.id, q));
-  }
-
-  @Post(':id/payouts')
-  @HttpCode(200)
-  @RequireAdmin('affiliate.payout')
-  async pay(
-    @CurrentUser() user: AccessClaims,
-    @Req() req: Request,
-    @ZodParams(affiliateIdParamsSchema) p: z.infer<typeof affiliateIdParamsSchema>,
-    @ZodBody(affiliatePayoutRequestSchema) body: z.infer<typeof affiliatePayoutRequestSchema>,
-    @Headers('idempotency-key') key: string | undefined,
-  ) {
-    const { idempotencyKey } = affiliatePayoutKeySchema.parse({ idempotencyKey: key });
-    return respond(
-      affiliatePayoutResultSchema,
-      await this.payout.record(
-        { id: user.sub, ip: req.ip ?? null },
-        p.id,
-        body.monthKey,
-        idempotencyKey,
-      ),
-    );
   }
 }

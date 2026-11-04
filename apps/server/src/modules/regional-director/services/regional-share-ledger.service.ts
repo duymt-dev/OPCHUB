@@ -1,3 +1,4 @@
+import { CustomerYearRepository } from '../../reporting';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { OutboxService } from '@/common/outbox';
@@ -9,6 +10,7 @@ import { RegionalShareRepository } from '../repositories/regional-share.reposito
 @Injectable()
 export class RegionalShareLedgerService {
   constructor(
+    private readonly customerYears: CustomerYearRepository,
     private readonly prisma: PrismaService,
     private readonly repo: RegionalShareRepository,
     private readonly affiliate: AffiliateShareReader,
@@ -19,7 +21,7 @@ export class RegionalShareLedgerService {
   async record(input: ShareSource) {
     if (input.baseAmount <= 0) return null;
     return this.prisma.db.$transaction(async (tx) => {
-      const first = await this.repo.firstPaid(
+      const first = await this.customerYears.firstPaid(
         tx,
         input.customerId,
         input.at,

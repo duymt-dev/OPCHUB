@@ -1,3 +1,5 @@
+import { PrismaService } from '@/common/prisma/prisma.service';
+import { RegionalProjectionRepository, RegionalShareProjectionRepository } from '../../reporting';
 import { Injectable } from '@nestjs/common';
 import {
   COMMISSION_PLAN_LABEL,
@@ -22,13 +24,20 @@ import { affiliateListPresentation } from './affiliate-list-presentation';
 @Injectable()
 export class AffiliateAdminService {
   constructor(
+    private readonly prisma: PrismaService,
+    private readonly regional: RegionalProjectionRepository,
+    private readonly shareProjection: RegionalShareProjectionRepository,
     private readonly affiliates: AffiliateAdminRepository,
     private readonly commissions: CommissionAdminRepository,
     private readonly members: MemberDirectory,
   ) {}
 
-  summary(month?: string) {
-    return this.commissions.summary(month);
+  async summary(month?: string) {
+    const [summary, regionalTotal] = await Promise.all([
+      this.commissions.summary(month),
+      this.shareProjection.directorTotal(this.prisma.db, month),
+    ]);
+    return { ...summary, regionalTotal, netRevenue: summary.revenue - regionalTotal };
   }
 
   async commissionsPage(q: AffiliateCommissionQuery) {
@@ -59,8 +68,13 @@ export class AffiliateAdminService {
       this.listDto(rows, q.month),
       q.month ? this.affiliates.totals(rows.map((row) => row.id)) : Promise.resolve([]),
     ]);
+    const regions = await this.regional.affiliateRegions(rows.map((r) => r.userId));
+    const byUser = new Map(regions.map((r) => [r.userId, r]));
     return {
-      items: affiliateListPresentation(rows, items, lifetime, q.month),
+      items: affiliateListPresentation(rows, items, lifetime, q.month).map((row) => ({
+        ...row,
+        region: byUser.get(row.userId) ?? null,
+      })),
       page: q.page,
       size: q.size,
       total,
@@ -166,6 +180,7 @@ export class AffiliateAdminService {
       date: row.date.toISOString(),
       feeAmount: row.feeAmount,
       rate: row.rate,
+      customerYear: row.customerYear,
       amount: row.amount,
       status: row.status,
       cancelReason: row.cancelReason,

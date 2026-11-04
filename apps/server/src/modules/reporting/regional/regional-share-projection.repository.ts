@@ -8,6 +8,13 @@ export interface ShareCursor {
 }
 @Injectable()
 export class RegionalShareProjectionRepository {
+  async directorTotal(tx: DbTx, month?: string) {
+    const [row] = await tx.$queryRaw<
+      { amount: bigint }[]
+    >(Prisma.sql`SELECT COALESCE(sum(director_amount),0)::bigint AS amount FROM regional_shares
+      WHERE region IS NOT NULL ${month ? Prisma.sql`AND month_key=${month}` : Prisma.empty}`);
+    return Number(row?.amount ?? 0);
+  }
   members(tx: DbTx, ids: string[]) {
     return tx.user.findMany({
       where: { id: { in: ids } },

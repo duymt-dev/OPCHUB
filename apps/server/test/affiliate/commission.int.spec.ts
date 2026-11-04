@@ -53,7 +53,7 @@ describe('Affiliate hoa hồng lần đầu (TIP-V2-401)', () => {
     expect(notices[0]?.body).toContain('240.000đ');
   });
 
-  it('AT-AF04 REQ-305 gia hạn không sinh hoa hồng lần hai; D-53 tháng VN trước nửa đêm', async () => {
+  it('D-131 AT-AF04 gia hạn năm 2 sinh hoa hồng theo chính sách; D-53 tháng VN trước nửa đêm', async () => {
     const now = new Date('2026-09-30T16:30:00Z');
     const { affiliate } = await createAffiliate(t, now, 23);
     const customer = await createReferral(t, affiliate.id, affiliate.code);
@@ -66,8 +66,13 @@ describe('Affiliate hoa hồng lần đầu (TIP-V2-401)', () => {
     const commissions = await t.prisma.db.commission.findMany({
       where: { referredUserId: customer.id },
     });
-    expect(commissions).toHaveLength(1);
-    expect(commissions[0]).toMatchObject({ amount: 276_000, monthKey: '2026-09' });
+    expect(commissions).toHaveLength(2);
+    expect(commissions).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ amount: 276000, customerYear: 1, monthKey: '2026-09' }),
+        expect.objectContaining({ amount: 120000, customerYear: 2, monthKey: '2027-09' }),
+      ]),
+    );
     await expect(
       t.prisma.db.commission.create({
         data: {
