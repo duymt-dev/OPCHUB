@@ -23,7 +23,7 @@ export class RegionalFeeService {
     const [cur] = await this.fees.lockForUpdate(tx, userId);
     if (!cur) throw notFound('Không tìm thấy phí thành viên');
     if (!canTransition(cur.status, 'regional_director')) throw conflict('Thành viên đã là GĐ Vùng');
-    await this.change(tx, userId, cur.version, 'regional_director', null, now);
+    await this.change(tx, userId, cur, 'regional_director', null, now);
     return { prevStatus: cur.status, prevValidUntil: cur.valid_until };
   }
 
@@ -35,19 +35,19 @@ export class RegionalFeeService {
       throw conflict('Phí vừa được cập nhật bởi thao tác khác');
     }
     const validUntil = status === 'pending_payment' ? null : prev.prevValidUntil;
-    await this.change(tx, userId, cur.version, status, validUntil, now);
+    await this.change(tx, userId, cur, status, validUntil, now);
     return { status, validUntil };
   }
 
   private async change(
     tx: DbTx,
     userId: string,
-    version: number,
+    current: { version: number; status: MembershipFeeStatus },
     status: MembershipFeeStatus,
     validUntil: Date | null,
     now: Date,
   ) {
-    if (!(await this.fees.changeRegional(tx, userId, version, status, validUntil, now))) {
+    if (!(await this.fees.changeRegional(tx, userId, current, status, validUntil, now))) {
       throw conflict('Phí vừa được cập nhật bởi thao tác khác');
     }
     await this.outbox.add(tx, 'membership_fee.changed', {

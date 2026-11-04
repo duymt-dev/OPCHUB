@@ -76,13 +76,13 @@ export class MembershipFeeRepository {
   async changeRegional(
     tx: DbTx,
     userId: string,
-    version: number,
+    current: { version: number; status: MembershipFeeStatus },
     status: MembershipFeeStatus,
     validUntil: Date | null,
     now: Date,
   ): Promise<boolean> {
     const result = await tx.membershipFee.updateMany({
-      where: { userId, version },
+      where: { userId, version: current.version, status: current.status },
       data: { status, validUntil, version: { increment: 1 }, updatedAt: now },
     });
     return result.count === 1;

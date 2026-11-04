@@ -1,4 +1,5 @@
 import { AdminFeesService } from '@/modules/membership-fee/services/admin-fees.service';
+import { MembershipFeeRepository } from '@/modules/membership-fee/repositories/membership-fee.repository';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { Prisma } from '@opchub/db';
 import { usableFeeSql, usableFeeWhere } from '@/common/auth';
@@ -15,6 +16,29 @@ describe('TIP-V46-801 fee gates and concurrent writers', () => {
     await flushAuthState(t);
   });
   afterAll(() => t.close());
+
+  it('regional fee updates require the original status as well as the version', async () => {
+    const user = await createUser(t, { fee: 'trial' });
+    const before = await t.prisma.db.membershipFee.findUniqueOrThrow({
+      where: { userId: user.id },
+    });
+    const changed = await t.prisma.db.$transaction((tx) =>
+      t.app
+        .get(MembershipFeeRepository)
+        .changeRegional(
+          tx,
+          user.id,
+          { version: before.version, status: 'expired' },
+          'regional_director',
+          null,
+          new Date(),
+        ),
+    );
+    expect(changed).toBe(false);
+    expect(
+      await t.prisma.db.membershipFee.findUniqueOrThrow({ where: { userId: user.id } }),
+    ).toEqual(before);
+  });
 
   it('open-ended fees pass both Prisma and SQL visibility gates', async () => {
     const u = await createUser(t, { fee: 'regional_director' });
