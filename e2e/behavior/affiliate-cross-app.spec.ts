@@ -55,7 +55,8 @@ test('REQ-308 REQ-309 REQ-310 REQ-410 bank/rate/policy cross Portal and Admin or
     admin.getByRole('status').filter({ hasText: 'Đã lưu chính sách affiliate' }),
   ).toBeVisible();
   await page.reload();
-  await expect(page.getByText(/Link được ghi nhận trong 45 ngày/)).toBeVisible();
+  // TIP-V46-804 / BR-495 replaces the descriptive paragraph with a cookie badge.
+  await expect(page.getByText('Link ghi nhận 45 ngày', { exact: true })).toBeVisible();
   // Existing paid bank snapshots must not become the newly edited live bank.
   await page.getByRole('tab', { name: /^Lịch sử nhận tiền/ }).click();
   await expect(page.getByText('ACB · 24681357', { exact: true }).first()).toBeVisible();
