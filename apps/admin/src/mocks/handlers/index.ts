@@ -68,3 +68,5 @@ handlers.push(...affiliateReadHandlers, ...affiliateWriteHandlers);
 handlers.unshift(...affiliateDemoHandlers);
 
 handlers.unshift(...memberStatusHandlers);
+handlers.unshift(...regionalDirectorHandlers);
+import { regionalDirectorHandlers } from './regional-directors';

@@ -79,6 +79,9 @@ export function listFees(status?: MembershipFeeStatus, q?: string): FeeRow[] {
 
 /** BR-05: gia hạn nối tiếp ngày hết hạn hiện tại nếu còn hiệu lực */
 export function feeAction(userId: string, action: FeeAction, now = MOCK_NOW): MockResult<FeeRow> {
+  if (mockDb().fees.some((f) => f.userId === userId && f.status === 'regional_director')) {
+    return conflict('Thành viên đang Miễn phí · GĐ Vùng');
+  }
   const f = mockDb().fees.find((x) => x.userId === userId);
   if (!f) return notFound('Không tìm thấy thành viên');
   if (action === 'remind') return ok(f);

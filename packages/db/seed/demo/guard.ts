@@ -1,5 +1,11 @@
 /** Seed demo chỉ được chạy trên DB dev/test cục bộ (TIP-B62) — chặn trước khi mở kết nối */
-export const ALLOWED_DATABASES: readonly string[] = ['opchub_dev', 'opchub_test'];
+export const ALLOWED_DATABASES: readonly string[] = [
+  'opchub_dev',
+  'opchub_test',
+  // Owner-authorized isolated TIP-801 databases; native HOLD must remain untouched.
+  'opchub_v46_801_dev',
+  'opchub_v46_801_test',
+];
 
 /** Tên DB trong URL Postgres (`postgresql://u:p@h:5432/<db>?…`) */
 export function databaseNameOf(url: string): string {

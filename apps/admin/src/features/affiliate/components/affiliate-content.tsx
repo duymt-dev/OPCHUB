@@ -10,6 +10,7 @@ import { CommissionTable } from './commission-table';
 import { PolicyForm } from './policy-form';
 import styles from './affiliate.module.css';
 import policyLayout from './policy-layout.module.css';
+import { RegionalConfigPanel } from '../regional/components/regional-config-panel';
 
 interface Props {
   params: AffiliateParams;
@@ -21,6 +22,13 @@ interface Props {
 
 export function AffiliateContent({ params, update, queries, header, toolbar }: Props) {
   const t = useTranslations('affiliate');
+  if (params.tab === 'gdv' || params.tab === 'gcfg')
+    return (
+      <div className={styles.card}>
+        {header}
+        <RegionalConfigPanel list={params.tab === 'gdv'} />
+      </div>
+    );
   const current =
     params.tab === 'com'
       ? queries.commissions

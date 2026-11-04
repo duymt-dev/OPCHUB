@@ -397,3 +397,13 @@ Trạng thái ver2 đã có sẵn id cũ (không thêm): popup V4 + 6 dịch v�
 | D-39-BULK-TYPE | Admin | Custom-type editor | Open bulk > add conversation type | /bots/scripts | 1440, 390 |
 | D-39-BULK-FORM | Admin | Populated form | Open bulk > one topic, one script, Hanoi group | /bots/scripts | 1440, 390 |
 | D-39-BULK-RESULT | Admin | Generated results | Populated form > generate > reveal results | /bots/scripts | 1440, 390 |
+
+### TIP-V46-801 — GĐ Vùng
+
+| ID | Area | State | Prototype actions | App route | Viewports |
+|---|---|---|---|---|---|
+| D-120-GCFG | Admin | Cấu hình GĐ Vùng | Affiliate > Cấu hình GĐ Vùng | /affiliate?tab=gcfg | 1440, 390 |
+| D-120-GCFG-RO | Admin | Kế toán chỉ xem | Cài đặt > xem thử Kế toán > Affiliate > Cấu hình GĐ Vùng | /affiliate?tab=gcfg | 1440, 390 |
+| D-120-GDV | Admin | Danh sách GĐ Vùng / sổ chia sẻ | Affiliate > GĐ Vùng | /affiliate?tab=gdv | pending 802 — không tính PASS tại 801 |
+| D-18-GDV | Admin | Miễn phí · GĐ Vùng | Phí thành viên > Miễn phí · GĐ Vùng | /fees?status=gdv | 1440, 390 |
+| D-78-GDV | Admin | Email hệ thống GĐ Vùng | Marketing > Email tự động | /marketing?tab=auto | 1440, 390 |

@@ -1,0 +1,52 @@
+enum RegionalDirectorAction {
+  appoint
+  revoke
+
+  @@map("regional_director_action")
+}
+
+/// D-120: three permanent slots, cleared on revocation rather than deleted.
+model RegionalDirector {
+  region         Region               @id
+  userId         String?              @unique @map("user_id")
+  appointedAt    DateTime?            @map("appointed_at") @db.Timestamptz(6)
+  appointedBy    String?              @map("appointed_by")
+  prevFeeStatus  MembershipFeeStatus? @map("prev_fee_status")
+  prevValidUntil DateTime?            @map("prev_valid_until") @db.Timestamptz(6)
+  bankName       String?              @map("bank_name")
+  bankNo         String?              @map("bank_no")
+  bankHolder     String?              @map("bank_holder")
+  version        Int                  @default(1)
+  updatedAt      DateTime             @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user      User?                      @relation(fields: [userId], references: [id])
+  provinces RegionalDirectorProvince[]
+  events    RegionalDirectorEvent[]
+
+  @@map("regional_directors")
+}
+
+/// D-129: display coverage only; never determines the revenue recipient.
+model RegionalDirectorProvince {
+  province String @id
+  region   Region
+  director RegionalDirector @relation(fields: [region], references: [region])
+
+  @@index([region])
+  @@map("regional_director_provinces")
+}
+
+model RegionalDirectorEvent {
+  id        String                 @id @default(uuid(7))
+  region    Region
+  userId    String                 @map("user_id")
+  userName  String                 @map("user_name")
+  action    RegionalDirectorAction
+  actorId   String                 @map("actor_id")
+  actorRole String                 @map("actor_role")
+  createdAt DateTime               @default(now()) @map("created_at") @db.Timestamptz(6)
+  director  RegionalDirector       @relation(fields: [region], references: [region])
+
+  @@index([createdAt(sort: Desc), id(sort: Desc)])
+  @@map("regional_director_events")
+}

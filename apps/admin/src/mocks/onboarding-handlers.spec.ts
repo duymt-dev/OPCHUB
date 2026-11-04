@@ -27,7 +27,7 @@ describe('MSW Admin › Thành viên · Khởi đầu (V4-611)', () => {
   it('x/8 mỗi dòng; lọc Chưa hoàn tất = 8, Đã hoàn tất = 0', async () => {
     const all = await page();
     expect(all.items.find((m) => m.id === 'm1')?.onboarding).toMatchObject({ done: 6 });
-    expect((await page('&onboarding=todo')).total).toBe(8);
+    expect((await page('&onboarding=todo')).total).toBe(10);
     expect((await page('&onboarding=done')).total).toBe(0);
   });
 

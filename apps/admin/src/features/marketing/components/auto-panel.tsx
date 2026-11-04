@@ -1,4 +1,5 @@
 'use client';
+import { RegionalMailList } from './regional-mail-list';
 
 import { welcomeMailSchema, type WelcomeMail } from '@opchub/shared/api-domains';
 import { PageSkeleton, useToast } from '@opchub/ui';
@@ -95,6 +96,7 @@ export function AutoPanel(props: Props) {
   if (!q.data) return <PageSkeleton />;
   return (
     <>
+      <RegionalMailList />
       <Editor key={q.dataUpdatedAt} initial={q.data} {...props} />
       <OnboardingMailEditor />
     </>

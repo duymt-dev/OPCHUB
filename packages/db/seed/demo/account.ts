@@ -109,7 +109,7 @@ const YEAR_MS = 365 * DAY_MS;
  * `updated_at` giảm dần theo thứ tự seed để bảng Admin (updated_at DESC) giữ thứ tự prototype.
  */
 export async function seedFees(tx: DbTx): Promise<void> {
-  const fees = buildFees();
+  const fees = buildFees(false);
   await tx.membershipFee.createMany({
     data: fees.map((f, i) => ({
       userId: f.userId,

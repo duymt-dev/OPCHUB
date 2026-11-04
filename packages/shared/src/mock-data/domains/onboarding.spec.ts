@@ -74,7 +74,7 @@ describe('mock Hướng dẫn bắt đầu (V4-611)', () => {
       reminded: false,
     });
     expect(listAdminMembers({ onboarding: 'done' }).items).toHaveLength(0);
-    expect(listAdminMembers({ onboarding: 'todo' }).items).toHaveLength(8);
+    expect(listAdminMembers({ onboarding: 'todo' }).items).toHaveLength(10);
   });
 
   it('Nhắc: thông báo system + thư onboarding + "Đã nhắc"; lần 2 trong 24 giờ → 429', () => {

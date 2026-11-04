@@ -34,15 +34,15 @@ describe('Affiliate AF0 mock scenario', () => {
   });
   it('REQ-303 opt-in only, reset drops extra users, HAOPC and financial history', () => {
     expect(checkMockAffiliate('HAOPC').valid).toBe(false);
-    expect(mockDb().fees).toHaveLength(8);
+    expect(mockDb().fees).toHaveLength(10);
     seedMockAffiliateScenario();
     expect(checkMockAffiliate('HAOPC')).toMatchObject({ valid: true, affiliateName: 'Lê Thu Hà' });
-    expect(mockDb().fees).toHaveLength(64);
+    expect(mockDb().fees).toHaveLength(66);
     // D-94 3A: mọi TV (không phải NĐT) là đại lý, kể cả chưa đóng phí
-    expect(affiliateMockState().agents.size).toBe(64);
+    expect(affiliateMockState().agents.size).toBe(66);
     resetMockDb();
     expect(checkMockAffiliate('HAOPC').valid).toBe(false);
-    expect(mockDb().fees).toHaveLength(8);
+    expect(mockDb().fees).toHaveLength(10);
   });
   it('REQ-311 same totals and payouts as native fixture; privacy masking and actual pagination', () => {
     seedMockAffiliateScenario();
@@ -71,7 +71,7 @@ describe('Affiliate AF0 mock scenario', () => {
     seedMockAffiliateScenario();
     mockAffiliateBank('m1', { bankName: 'ACB', bankNo: '123456789', bankHolder: 'NGUYEN VAN AN' });
     seedMockAffiliateScenario();
-    expect(mockDb().fees).toHaveLength(64);
+    expect(mockDb().fees).toHaveLength(66);
     expect(affiliateMockState().referrals.size).toBe(51);
     expect(myMockAffiliate('m1', '')).toMatchObject({ bank: { bankName: 'ACB' } });
     expect(mockAffiliatePayouts('m1', { page: 1, size: 6 }).items[0]?.bank.bankName).toBe(

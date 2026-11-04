@@ -15,6 +15,7 @@
   "remindAll": "Gửi nhắc hàng loạt",
   "tabsLabel": "Lọc theo trạng thái phí",
   "tabs": {
+    "gdv": "Miễn phí · GĐ Vùng",
     "all": "Tất cả",
     "active": "Đang hiệu lực",
     "trial": "Miễn phí 3 tháng",
@@ -23,6 +24,7 @@
     "expired": "Hết hạn"
   },
   "status": {
+    "regional_director": "Miễn phí · GĐ Vùng",
     "trial": "Miễn phí 3 tháng",
     "active": "Đang hiệu lực",
     "pending_payment": "Chờ thanh toán",

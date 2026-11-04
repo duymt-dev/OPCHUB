@@ -15,15 +15,15 @@ describe('REQ-141 actual bulk-hide SQL plan on native PostgreSQL', () => {
     if (
       !['localhost', '127.0.0.1'].includes(url.hostname) ||
       url.port !== '5432' ||
-      url.pathname !== '/opchub_test'
+      !['/opchub_test', '/opchub_v46_801_test'].includes(url.pathname)
     )
       throw new Error('Native test-only benchmark guard');
     fixture = new HideFixture(t);
     await fixture.start();
   });
   afterAll(async () => {
-    await fixture.close();
-    await t.close();
+    await fixture?.close();
+    await t?.close();
   });
 
   it('REQ-141 one-update scoped/global hide uses the partial persona index on >10000 wide messages; fixture rolls back', async () => {

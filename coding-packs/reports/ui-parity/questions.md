@@ -693,3 +693,16 @@ the old `.next-v42-713-msw` builds. New moderation builds use separate
 `.next-v42-714-msw` output directories and will only take over after the old
 runner exits. Do not restart the active run or claim its results cover these
 later source/test additions. No native listener, data or process was changed.
+
+## V4.6 — TIP-V46-801
+
+Các phương án an toàn dưới đây đã được TIP chỉ định; không mở rộng nghiệp vụ.
+
+| ID | Điểm cần ghi nhận | Xử lý TIP-801 |
+|---|---|---|
+| Q-V46-801-1 | Chuyển khoản phí khi đang là GĐ Vùng | Giữ unmatched để đối soát tay, không tự cộng hạn |
+| Q-V46-801-2 | Lọc Thành viên Chưa đóng / Hết hạn | Loại GĐ Vùng khỏi nhóm chưa đóng |
+| Q-V46-801-3 | Bổ nhiệm nhà đầu tư | Không cho phép; API trả 422 |
+| Q-V46-801-4 | Prototype cho đổi miền của ô | Miền của ô cố định, chỉ hiển thị theo D-120 |
+| Q-V46-801-5 | Prototype có thể hiện Gửi nhắc cho GĐ Vùng | Không hiện / không gửi theo GDV-R03 |
+| Q-V46-801-6 | Khóa tài khoản đang là GĐ Vùng | Không tự thu hồi; Admin thu hồi tay, chưa bổ sung workflow tự động |

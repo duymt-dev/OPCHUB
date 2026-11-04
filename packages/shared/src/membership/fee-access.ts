@@ -17,6 +17,11 @@ export const USABLE_FEE_STATUS = [
   'trial',
   'active',
   'expiring',
+  'regional_director',
+] as const satisfies readonly MembershipFeeStatus[];
+/** D-120: exemption ends only on revocation. */
+export const OPEN_ENDED_FEE_STATUS = [
+  'regional_director',
 ] as const satisfies readonly MembershipFeeStatus[];
 /** Phí thật đã thu (không gồm trial) — thẻ "Phí", lọc "Đã đóng phí" (D-107) */
 export const PAID_FEE_STATUS = [
@@ -33,6 +38,7 @@ const toMs = (v: string | Date): number => (v instanceof Date ? v.getTime() : Da
  * Thuần — không ghi DB (job vẫn là nơi đổi trạng thái + outbox).
  */
 export function effectiveFeeStatus(fee: FeeLike, now: Date): MembershipFeeStatus {
+  if (has(OPEN_ENDED_FEE_STATUS, fee.status)) return fee.status;
   if (!has(USABLE_FEE_STATUS, fee.status)) return fee.status;
   if (fee.validUntil === null) return fee.status;
   const until = toMs(fee.validUntil);

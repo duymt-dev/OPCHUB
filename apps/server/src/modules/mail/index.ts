@@ -34,3 +34,8 @@ export {
   fundraisingLine,
   fundraisingMail,
 } from './templates-fundraising';
+export {
+  regionalAppointedMail,
+  regionalRevokedMail,
+  regionalRevokeText,
+} from './templates-regional';

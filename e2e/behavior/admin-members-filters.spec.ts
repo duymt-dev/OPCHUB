@@ -19,7 +19,7 @@ async function openMembers(page: Page) {
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await page.waitForURL((u) => !u.pathname.startsWith('/login'));
   await page.locator('aside').getByText('Thành viên', { exact: true }).click();
-  await expect(page.getByText('· 8 tài khoản')).toBeVisible();
+  await expect(page.getByText('· 10 tài khoản')).toBeVisible();
 }
 
 test.describe('Admin · Thành viên · thanh lọc v4', () => {
@@ -63,6 +63,6 @@ test.describe('Admin · Thành viên · thanh lọc v4', () => {
     await expect(page.getByRole('button', { name: 'Xóa lọc (2)' })).toBeVisible();
     await page.getByRole('button', { name: 'Xóa lọc (2)' }).click();
     await expect(page).not.toHaveURL(/st=|fee=/);
-    await expect(page.getByText('Hiển thị 1–8 / 8 thành viên')).toBeVisible();
+    await expect(page.getByText('Hiển thị 1–10 / 10 thành viên')).toBeVisible();
   });
 });

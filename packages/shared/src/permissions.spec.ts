@@ -15,8 +15,8 @@ import {
 
 describe('RBAC Admin 28 khoá (TIP-V2-201, V4-606, V4-614)', () => {
   it('REQ-325 REQ-514 REQ-516 28 khoá, đúng 13 menu, mỗi menu có .view', () => {
-    expect(ADMIN_PERMISSIONS).toHaveLength(28);
-    expect(new Set(ADMIN_PERMISSION_KEYS).size).toBe(28);
+    expect(ADMIN_PERMISSIONS).toHaveLength(29);
+    expect(new Set(ADMIN_PERMISSION_KEYS).size).toBe(29);
     expect(ADMIN_MENUS.map((m) => m.key)).toEqual([...ADMIN_MENU_KEYS]);
     expect(ADMIN_MENUS).toHaveLength(13);
     for (const m of ADMIN_MENUS) {
@@ -25,8 +25,8 @@ describe('RBAC Admin 28 khoá (TIP-V2-201, V4-606, V4-614)', () => {
       if (m.key === 'settings') expect(m.view).toBeNull();
       else expect(m.view).toBe(`${m.key}.view`);
     }
-    expect(ADMIN_MENUS.flatMap((m) => m.keys)).toEqual([...ADMIN_PERMISSION_KEYS]);
-    expect(ADMIN_PERMISSION_KEYS.slice(-7)).toEqual([
+    expect(ADMIN_MENUS.flatMap((m) => m.keys).sort()).toEqual([...ADMIN_PERMISSION_KEYS].sort());
+    expect(ADMIN_PERMISSION_KEYS.slice(-8)).toEqual([
       'settings.general',
       'settings.mail',
       'settings.admins',
@@ -34,6 +34,7 @@ describe('RBAC Admin 28 khoá (TIP-V2-201, V4-606, V4-614)', () => {
       'stores.view',
       'stores.action',
       'reports.view',
+      'affiliate.regional',
     ]);
   });
 
@@ -69,6 +70,7 @@ describe('RBAC Admin 28 khoá (TIP-V2-201, V4-606, V4-614)', () => {
       ['stores.action', '1001'],
       // V4-614 (D-78): Báo cáo cho Quản trị viên + Kế toán (doanh thu / hoa hồng)
       ['reports.view', '1010'],
+      ['affiliate.regional', '1000'],
     ];
     expect(TABLE.map(([k]) => k)).toEqual([...ADMIN_PERMISSION_KEYS]);
     const roles = ['admin', 'lecturer', 'accountant', 'editor'] as const;
@@ -76,7 +78,7 @@ describe('RBAC Admin 28 khoá (TIP-V2-201, V4-606, V4-614)', () => {
       const want = TABLE.filter(([, v]) => v[col] === '1').map(([k]) => k);
       expect([...DEFAULT_ADMIN_ROLE_PERMISSIONS[role]].sort()).toEqual(want.sort());
     });
-    expect(DEFAULT_ADMIN_ROLE_PERMISSIONS.admin).toHaveLength(26);
+    expect(DEFAULT_ADMIN_ROLE_PERMISSIONS.admin).toHaveLength(27);
     expect(ADMIN_SYSTEM_ROLES.map((r) => r.key)).toEqual([...ADMIN_SYSTEM_ROLE_KEYS]);
     expect(effectiveAdminGrants('super_admin', [])).toEqual([...ADMIN_PERMISSION_KEYS]);
     expect(effectiveAdminGrants('lecturer', ['events.view', 'overview.view'])).toEqual([

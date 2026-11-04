@@ -24,7 +24,10 @@ const LEASE_SEC = 60;
 @Injectable()
 export class OutboxRelayService {
   private readonly logger = new Logger(OutboxRelayService.name);
-  private readonly handlers = new Map<OutboxEventType, ((p: unknown) => Promise<void>)[]>();
+  private readonly handlers = new Map<
+    OutboxEventType,
+    ((p: unknown, id: string) => Promise<void>)[]
+  >();
   private reported = false;
 
   constructor(private readonly repo: OutboxRepository) {}
@@ -43,6 +46,16 @@ export class OutboxRelayService {
   /** Bỏ mọi handler của một loại (test dựng lại consumer) */
   unregister(type: OutboxEventType): void {
     this.handlers.delete(type);
+  }
+
+  /** Consumers with durable side effects key their deduplication to the persisted outbox ID. */
+  registerWithId<T extends OutboxEventType>(
+    type: T,
+    handler: (payload: OutboxPayload<T>, id: string) => Promise<void>,
+  ): void {
+    const list = this.handlers.get(type) ?? [];
+    list.push((raw, id) => handler(parseOutboxPayload(type, raw), id));
+    this.handlers.set(type, list);
   }
 
   /** Loại sự kiện đã có ít nhất một handler trong process này */
@@ -89,7 +102,7 @@ export class OutboxRelayService {
   private async dispatch(e: PendingEvent): Promise<string | null> {
     const list = this.handlers.get(e.type as OutboxEventType) ?? [];
     try {
-      for (const handler of list) await handler(e.payload);
+      for (const handler of list) await handler(e.payload, String(e.id));
       return null;
     } catch (err) {
       this.logger.warn({ err, type: e.type }, 'Handler outbox lỗi, sẽ thử lại');
