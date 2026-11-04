@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AFFILIATE_PAYOUT_SCENARIO as scenario } from '../../fixtures';
 import { affiliateMockState, mockAffiliateBank, myMockAffiliate } from './affiliate';
 import { seedMockAffiliateScenario } from './affiliate-demo';
-import { payMockAffiliateMonth } from './affiliate-admin/payout';
+import { seedHistoricalMockPayment as payMockAffiliateMonth } from './affiliate-persistence/historical-payment.fixture';
 import { mockDb, resetMockDb } from './store';
 
 beforeEach(() => {

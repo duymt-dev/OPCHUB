@@ -89,3 +89,6 @@ Nhãn tiếng Việt chỉ đặt trong file messages của next-intl, không vi
 | Kỳ chi | `month_key`, `RegionalPayout.monthKeys` | Tháng Việt Nam của khoản ghi nhận; chỉ chi các tháng đã đóng |
 | Biên lai chi GĐ Vùng | `RegionalPayout`, `regional_payouts` | Tổng VND bigint, người nhận và ngân hàng snapshot; lưu bền vững để chống chi trùng |
 | Quy tắc chia sẻ | `regionalFirstYear`, `regionalStep`, `regionalMin` | Tỷ lệ năm đầu, mức giảm mỗi năm, mức sàn; thay đổi chỉ áp dụng khoản mới |
+| Doanh thu Media Soft giữ lại | `netRevenue = revenue - regionalTotal` | Sau phần GĐ Vùng cùng phạm vi tháng; hủy hoa hồng không đảo sổ chia sẻ (D-132) |
+| Thuộc vùng (theo tỉnh) | `AffiliateAdminRow.region` | Projection chỉ đọc từ nhóm tỉnh tham gia sớm nhất còn hiệu lực; không phải thao tác gán vùng |
+| GĐ Vùng chi | Nhãn lịch sử tháng affiliate | Media Soft không chi trực tiếp affiliate; GĐ Vùng tự chi ngoài hệ thống (D-119) |

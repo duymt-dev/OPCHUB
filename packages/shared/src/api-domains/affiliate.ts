@@ -60,6 +60,8 @@ export const affiliateBankSchema = z.object({
 });
 export type AffiliateBank = z.infer<typeof affiliateBankSchema>;
 export const affiliatePolicySchema = z.object({
+  renewalRate: z.number().int().min(0).max(50).default(10),
+  renewalMaxYear: z.number().int().min(1).max(10).default(3),
   regionalFirstYear: z.number().int().min(1).max(100).default(50),
   regionalStep: z.number().int().min(0).max(100).default(10),
   regionalMin: z.number().int().min(0).max(100).default(20),

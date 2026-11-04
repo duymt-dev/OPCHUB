@@ -7,7 +7,6 @@ import {
   affiliateReferralsSchema,
 } from '@opchub/shared/api-domains';
 import { AffiliateNotifyHandler } from '@/modules/affiliate';
-import { PayoutService } from '@/modules/affiliate/services/payout.service';
 import { createAffiliateApp } from '../factories/affiliate.factory';
 import {
   AFFILIATE_BANK,
@@ -64,8 +63,17 @@ describe('Affiliate history API (TIP-V2-402)', () => {
     const admin = await affiliateAdminToken(t);
     const actor = { id: admin.user.id, ip: null };
     const now = new Date('2026-10-01T01:00:00Z');
+    // D-119: historical paid fixtures only, never exercise a new payment path.
     const pay = () =>
-      t.app.get(PayoutService).record(actor, owner.affiliate.id, '2026-09', randomUUID(), now);
+      t.prisma.db.commission.updateMany({
+        where: { affiliateId: owner.affiliate.id, status: 'recorded' },
+        data: {
+          status: 'paid',
+          paidAt: now,
+          paidBy: actor.id,
+          paidBankSnapshot: { ...AFFILIATE_BANK, payoutId: randomUUID() },
+        },
+      });
     await pay();
     await affiliateEarning(t, owner);
     await pay();

@@ -26,7 +26,9 @@ async function filtered(c: StepCtx, kind: 'com' | 'aff', query: string) {
 }
 
 async function select(c: StepCtx, kind: 'com' | 'aff', text: string) {
-  const row = rows(c, kind).filter({ hasText: text });
+  const candidates = rows(c, kind).filter({ hasText: text });
+  const row =
+    c.side === 'app' && kind === 'com' ? candidates.filter({ hasText: '20% · Năm 1' }) : candidates;
   await expect(row).toHaveCount(1);
   if (c.side === 'app') await row.getByRole('checkbox').check();
   else await row.locator(':scope > div').first().click();
@@ -41,7 +43,10 @@ export const ADMIN_AFFILIATE_LIST_STATES: Scenario[] = [
     fullPage: true,
     steps: async (c) => {
       await filtered(c, 'com', 'Nguyễn Văn An');
-      await expect(rows(c, 'com')).toHaveCount(9);
+      if (c.side === 'app') {
+        await c.page.getByRole('combobox', { name: 'Số dòng mỗi trang' }).selectOption('20');
+      }
+      await expect(rows(c, 'com')).toHaveCount(c.side === 'app' ? 11 : 9);
       await select(c, 'com', 'Đỗ Minh Tuấn');
       await select(c, 'com', 'Đặng Ngọc Ánh');
       await expect(c.page.getByText(/^Đã chọn\s+2(?:\s+mục)?\s*$/)).toBeVisible();

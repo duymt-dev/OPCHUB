@@ -6,7 +6,7 @@ import { signInAffiliate } from './helpers/affiliate-session';
 test.use({ affiliateDemo: true });
 
 const FILTERS = [
-  { key: 'recorded', label: 'Đã ghi nhận', total: 19 },
+  { key: 'recorded', label: 'Đã ghi nhận', total: 21 },
   { key: 'paid', label: 'Đã chi trả', total: 31 },
   { key: 'cancelled', label: 'Đã hủy', total: 1 },
 ] as const;
@@ -29,7 +29,7 @@ for (const width of [1440, 390]) {
     for (const item of await filters.locator('.ant-segmented-item').all())
       await expect(item).toHaveCSS('border-top-left-radius', '0px');
     // Every filter and its count remain reachable, not clipped away to imitate the prototype.
-    for (const name of [/^Tất cả\s*51$/, /^Đã ghi nhận\s*19$/, /^Đã chi trả\s*31$/, /^Đã hủy\s*1$/])
+    for (const name of [/^Tất cả\s*53$/, /^Đã ghi nhận\s*21$/, /^Đã chi trả\s*31$/, /^Đã hủy\s*1$/])
       await expect(page.getByRole('radio', { name })).toHaveCount(1);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
       width,

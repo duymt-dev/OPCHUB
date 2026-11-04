@@ -31,6 +31,7 @@ describe('REQ-312 V2Q-174 server-owned paid summary', () => {
       payable: 0,
       paid: 0,
       netRevenue: 0,
+      regionalTotal: 0,
       plans: { business: 0, personal: 0, fundraising: 0 },
     });
   });
@@ -60,14 +61,15 @@ describe('REQ-312 V2Q-174 server-owned paid summary', () => {
         bankHolder: AFFILIATE_BANK.bankHolder,
       },
     });
-    const payout = await t.call(`/admin/affiliates/${paid.affiliate.id}/payouts`, {
-      method: 'POST',
-      token,
-      json: { monthKey: '2026-09' },
-      headers: { 'Idempotency-Key': randomUUID() },
+    // Historical paid fixture: D-119 has removed the live payout route.
+    await t.prisma.db.commission.update({
+      where: { id: paid.commission.id },
+      data: {
+        status: 'paid',
+        paidAt: new Date('2026-10-01'),
+        paidBankSnapshot: { ...AFFILIATE_BANK, payoutId: randomUUID() },
+      },
     });
-    expect(payout.status).toBe(200);
-    expect(await payout.json()).toEqual({ paid: 1, amount: 240000 });
     const cancel = await t.call('/admin/affiliate/commissions/cancel', {
       method: 'POST',
       token,
@@ -80,7 +82,7 @@ describe('REQ-312 V2Q-174 server-owned paid summary', () => {
       totalCommission: 600000,
       payable: 360000,
       paid: 240000,
-      netRevenue: 1800000,
+      netRevenue: 2400000,
     };
     const after = await summary('2026-09');
     const allAfter = await summary();

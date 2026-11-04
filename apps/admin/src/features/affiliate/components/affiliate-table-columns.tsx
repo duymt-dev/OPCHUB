@@ -1,4 +1,5 @@
 'use client';
+import { AffiliateRegionCell } from './affiliate-region-cell';
 
 import type { TableProps } from 'antd';
 import { useTranslations } from 'next-intl';
@@ -17,8 +18,14 @@ export function useAffiliateColumns(
     {
       title: t('columns.agentName'),
       key: 'agent',
-      width: 'calc(100% - 834px)',
+      width: 270,
       render: (_, row) => <AgentIdentity {...row} />,
+    },
+    {
+      title: t('regionColumn'),
+      key: 'region',
+      width: 230,
+      render: (_, row) => <AffiliateRegionCell region={row.region} />,
     },
     { title: t('columns.code'), dataIndex: 'code', width: 110 },
     { title: t('columns.rateShort'), key: 'rate', width: 70, render: (_, row) => `${row.rate}%` },

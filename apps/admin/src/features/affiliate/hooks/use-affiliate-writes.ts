@@ -9,12 +9,10 @@ import {
   affiliateKeys,
   exportAffiliates,
   exportCommissions,
-  payAffiliateMonth,
   saveAffiliatePolicy,
   setAffiliateRate,
   setAffiliateRates,
 } from '../api';
-import { affiliateMoney } from '../format';
 import { useAffiliateAccess } from './use-affiliate-access';
 import { useCommissionStatusWrites } from './use-commission-status-writes';
 
@@ -50,18 +48,6 @@ export function useAffiliateWrites() {
     },
     onError: fail,
   });
-  const payout = useMutation({
-    mutationFn: async (body: { id: string; month: string; key: string }) => {
-      if (!access.guard('affiliate.payout')) return null;
-      return payAffiliateMonth(body.id, body.month, body.key);
-    },
-    onSuccess: async (result) => {
-      if (!result) return;
-      toast(t('toast.paid', { amount: affiliateMoney(result.amount) }));
-      await refresh();
-    },
-    onError: fail,
-  });
   const policy = useMutation({
     mutationFn: async (body: AffiliatePolicy) => {
       if (!access.guard('affiliate.action')) return null;
@@ -93,5 +79,5 @@ export function useAffiliateWrites() {
     },
     onError: fail,
   });
-  return { access, cancel, restore, rates, payout, policy, csv };
+  return { access, cancel, restore, rates, policy, csv };
 }

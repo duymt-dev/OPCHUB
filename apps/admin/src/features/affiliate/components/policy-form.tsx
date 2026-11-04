@@ -24,7 +24,7 @@ export function PolicyForm({ value }: AffiliatePolicyFormProps) {
       disabled={policy.isPending}
     >
       <PolicyFields />
-      <PolicyRules rate={value.defaultRate} />
+      <PolicyRules />
       <div className={layout.actions}>
         <Button type="primary" htmlType="submit" loading={policy.isPending}>
           {t('policy.save')}

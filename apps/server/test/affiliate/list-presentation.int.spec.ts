@@ -71,14 +71,15 @@ describe('REQ-312 V2Q-178 native list account/lifetime/period contract', () => {
       .onFeeConfirmed(await confirmFee(t, august.id, new Date('2026-08-15T04:00:00Z')));
     const paid = await affiliateEarning(t, owner);
     await t.prisma.db.affiliate.update({ where: { id: owner.affiliate.id }, data: AFFILIATE_BANK });
-    const payout = await t.call(`/admin/affiliates/${owner.affiliate.id}/payouts`, {
-      token,
-      method: 'POST',
-      json: { monthKey: '2026-09' },
-      headers: { 'Idempotency-Key': randomUUID() },
+    // Historical paid fixture: D-119 has removed the live payout route.
+    await t.prisma.db.commission.update({
+      where: { id: paid.commission.id },
+      data: {
+        status: 'paid',
+        paidAt: new Date('2026-10-01'),
+        paidBankSnapshot: { ...AFFILIATE_BANK, payoutId: randomUUID() },
+      },
     });
-    expect(payout.status).toBe(200);
-    expect(await payout.json()).toEqual({ paid: 1, amount: 360000 });
     const changed = await t.call(`/admin/affiliates/${owner.affiliate.id}`, {
       token,
       method: 'PATCH',

@@ -257,7 +257,8 @@ describe('Affiliate Admin commissions (TIP-V2-402)', () => {
       totalCommission: before.totalCommission + 600000,
       payable: before.payable + 360000,
       paid: before.paid + 240000,
-      netRevenue: before.netRevenue + 1800000,
+      netRevenue: before.netRevenue + 2400000,
+      regionalTotal: before.regionalTotal,
       // BR-AFF-REV (TIP-V42-707): đếm khoản hợp lệ theo gói (khoản Đã hủy không tính)
       plans: { ...before.plans, personal: before.plans.personal + 2 },
     });

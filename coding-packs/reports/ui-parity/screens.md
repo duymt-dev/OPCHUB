@@ -408,3 +408,18 @@ Trạng thái ver2 đã có sẵn id cũ (không thêm): popup V4 + 6 dịch v�
 | D-120-GDV-OPEN | Admin | Khoản ghi nhận Miền Bắc + lịch sử | Affiliate > GĐ Vùng > mở Miền Bắc | /affiliate?tab=gdv | 1440, 390 — 802 đã đo, chưa đạt |
 | D-18-GDV | Admin | Miễn phí · GĐ Vùng | Phí thành viên > Miễn phí · GĐ Vùng | /fees?status=gdv | 1440, 390 |
 | D-78-GDV | Admin | Email hệ thống GĐ Vùng | Marketing > Email tự động | /marketing?tab=auto | 1440, 390 |
+
+### TIP-V46-803 — đo ở source 87253d95
+
+| ID | Route/state | 1440 | 390 |
+|---|---|---|---|
+| D-84 | /affiliate?tab=com | 6.614% FAIL | 3.662% FAIL |
+| D-84-AFF | /affiliate?tab=aff | 5.871% FAIL | 9.611% FAIL |
+| D-84-AFF-Q | /affiliate?tab=aff&q=HAOPC | 1.702% PASS | 24.587% FAIL |
+| D-84-POL | /affiliate?tab=cfg | 3.917% FAIL | 10.151% FAIL |
+| D-85 | /affiliate/:id | 1.089% PASS | 7.488% FAIL |
+| D-85-CUS | /affiliate/:id?tab=customers | 8.453% FAIL | 16.518% FAIL |
+
+Đã đo cả 8 D-84-COM-* substates ở 1440/390; xem bảng baseline → cuối trong
+[TIP-803 completion](../TIP-V46-803-completion.md#com-substates--so-với-baseline-mới).
+Ngưỡng 3% giữ nguyên; đây là PARTIAL, không đánh dấu hoàn tất parity.

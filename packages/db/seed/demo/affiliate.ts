@@ -18,6 +18,8 @@ export async function seedAffiliates(tx: DbTx): Promise<void> {
       cookieDays: 30,
       fundraisingRate: 10,
       terms: '',
+      renewalRate: 10,
+      renewalMaxYear: 3,
       regionalFirstYear: 50,
       regionalStep: 10,
       regionalMin: 20,

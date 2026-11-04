@@ -9,7 +9,7 @@ import {
 import { affiliateMockState } from '../affiliate';
 import { seedMockAffiliateScenario } from '../affiliate-demo';
 import { affiliateAdminState } from '../affiliate-admin/state';
-import { payMockAffiliateMonth } from '../affiliate-admin/payout';
+import { seedHistoricalMockPayment as payMockAffiliateMonth } from './historical-payment.fixture';
 import { mockAdminAffiliateCustomers, mockAdminAffiliateSummary } from '../affiliate-admin/read';
 import {
   cancelMockAffiliateCommissions,

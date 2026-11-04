@@ -6,7 +6,6 @@ import {
   affiliateCommissionsSchema,
   affiliateDetailSchema,
   affiliateMonthsSchema,
-  affiliatePayoutResultSchema,
   affiliatePolicySchema,
   affiliateRateResultSchema,
   affiliateSummarySchema,
@@ -85,14 +84,6 @@ export const setAffiliateRates = (ids: string[], rate: number) =>
   });
 
 /** Caller retains the same key for a retry of the same financial intent. */
-export const payAffiliateMonth = (id: string, monthKey: string, idempotencyKey: string) =>
-  api(`${agentPath(id)}/payouts`, {
-    method: 'POST',
-    body: { monthKey },
-    idempotencyKey,
-    schema: affiliatePayoutResultSchema,
-  });
-
 export const fetchAffiliatePolicy = () => api(`${ROOT}/policy`, { schema: affiliatePolicySchema });
 
 export const saveAffiliatePolicy = (body: AffiliatePolicy) =>

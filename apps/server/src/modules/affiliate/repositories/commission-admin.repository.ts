@@ -17,6 +17,7 @@ export interface AdminCommissionRow {
   date: Date;
   feeAmount: number;
   rate: number;
+  customerYear: number;
   amount: number;
   status: CommissionStatus;
   cancelReason: string | null;
@@ -74,7 +75,6 @@ export class CommissionAdminRepository {
       totalCommission,
       payable: Number(r?.payable ?? 0),
       paid: Number(r?.paid ?? 0),
-      netRevenue: revenue - totalCommission,
       plans: {
         business: r?.business ?? 0,
         personal: r?.personal ?? 0,

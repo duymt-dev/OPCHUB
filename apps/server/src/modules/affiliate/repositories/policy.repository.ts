@@ -4,6 +4,8 @@ import type { AffiliatePolicy } from '@opchub/shared/api-domains';
 import { PrismaService } from '@/common/prisma/prisma.service';
 
 const SELECT = {
+  renewalRate: true,
+  renewalMaxYear: true,
   defaultRate: true,
   cookieDays: true,
   fundraisingRate: true,
@@ -29,7 +31,7 @@ export class PolicyRepository {
 
   async lock(tx: DbTx): Promise<AffiliatePolicy> {
     const [row] = await tx.$queryRaw<AffiliatePolicy[]>`
-      SELECT default_rate AS "defaultRate",cookie_days AS "cookieDays",
+      SELECT renewal_rate AS "renewalRate", renewal_max_year AS "renewalMaxYear",default_rate AS "defaultRate",cookie_days AS "cookieDays",
         fundraising_rate AS "fundraisingRate",terms, regional_first_year AS "regionalFirstYear",
         regional_step AS "regionalStep", regional_min AS "regionalMin" FROM affiliate_policy
       WHERE id=1 FOR UPDATE`;

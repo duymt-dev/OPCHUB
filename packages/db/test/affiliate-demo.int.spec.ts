@@ -62,13 +62,14 @@ describe('Affiliate AF0 native demo scenario', () => {
   }, 120_000);
 
   it('REQ-301 REQ-311 all 51 customers have real first periods and their own affiliates', async () => {
-    expect(await counts()).toEqual({ agents: 62, refs: 51, commissions: 51, clicks: 6, fees: 62 });
+    expect(await counts()).toEqual({ agents: 62, refs: 51, commissions: 53, clicks: 6, fees: 65 });
     const rows = await db.commission.findMany({
       where: { id: { startsWith: 'demo-commission-' } },
       select: {
         referredUserId: true,
         feePeriodId: true,
         listAmount: true,
+        customerYear: true,
         rate: true,
         amount: true,
         plan: true,
@@ -76,7 +77,8 @@ describe('Affiliate AF0 native demo scenario', () => {
         referredUser: { select: { affiliate: { select: { id: true } } } },
       },
     });
-    expect(rows).toHaveLength(51);
+    expect(rows.filter((r) => r.customerYear === 1)).toHaveLength(51);
+    expect(await db.commission.count({ where: { customerYear: { gt: 1 } } })).toBe(2);
     // D-110 / BR-AFF-REV: gói thực trả như prototype v4.2 C0 (17 Gói DN, 34 Cá nhân kể cả khoản hủy)
     expect(rows.filter((r) => r.plan === 'business')).toHaveLength(17);
     for (const r of rows) {
@@ -120,7 +122,7 @@ describe('Affiliate AF0 native demo scenario', () => {
       where: { affiliateId: 'a1' },
       select: { status: true, amount: true, monthKey: true, paidAt: true, paidBankSnapshot: true },
     });
-    expect(rows).toHaveLength(9);
+    expect(rows).toHaveLength(11);
     // D-110: như prototype v4.2 P-97 (tháng này 1.200.000đ, đã nhận 2.400.000đ)
     expect(rows.filter((r) => r.monthKey === '2026-10').reduce((n, r) => n + r.amount, 0)).toBe(
       1200000,

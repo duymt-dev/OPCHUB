@@ -15,6 +15,7 @@ export function affiliateListPresentation(
     const total = totals.get(row.id);
     return {
       ...row,
+      region: null,
       bank: accounts.get(row.id) ?? null,
       lifetime: month
         ? { customers: total?.customers ?? 0, revenue: Number(total?.revenue ?? 0) }

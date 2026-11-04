@@ -1,3 +1,4 @@
+import { seedMockAffiliateRenewals } from './affiliate-renewals';
 import {
   AFFILIATE_DEMO_DAY,
   AFFILIATE_PAUSED_START,
@@ -14,15 +15,13 @@ import { newMemberMe, mockPasswordOf, type MockLoginResult } from '../../mock-da
 import { affiliateMockState, mockCommissionAmount } from './affiliate';
 import { readMockPrices } from './price-config';
 import { seedMockAffiliatePayoutScenario } from './affiliate-payout-scenario';
-import { mockDb, type MockDb } from './store';
+import { mockDb } from './store';
+import { seeded } from './affiliate-demo-state';
+export {
+  isMockAffiliateScenarioSeeded,
+  restoreMockAffiliateScenarioSeeded,
+} from './affiliate-demo-state';
 
-const seeded = new WeakSet<MockDb>();
-export const isMockAffiliateScenarioSeeded = () => seeded.has(mockDb());
-/** Restoring a validated snapshot must not append AF0 rows again on the next request. */
-export function restoreMockAffiliateScenarioSeeded(value: boolean): void {
-  if (value) seeded.add(mockDb());
-  else seeded.delete(mockDb());
-}
 const YEAR = 365 * 86_400_000;
 const end = (start: string) => new Date(Date.parse(start) + YEAR).toISOString();
 
@@ -167,6 +166,7 @@ export function seedMockAffiliateScenario(
   }
   if (options.payout) seedMockAffiliatePayoutScenario();
   seeded.add(db);
+  seedMockAffiliateRenewals();
 }
 
 /** Extra AF0 owners are real accounts in the native pack, with the same demo password. */

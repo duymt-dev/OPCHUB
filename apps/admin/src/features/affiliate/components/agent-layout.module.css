@@ -1,8 +1,8 @@
-/* TD-P4-UI-01: the table fits the 1094px card at 1440 instead of overflowing by 6-9px and
-   clipping the month status/action columns; narrower viewports still scroll. */
+/* D-121: retain a readable identity after adding the read-only region column.
+   Like the prototype, desktop scrolls horizontally rather than crushing the name. */
 .agents :global(table) {
   width: 100% !important;
-  min-width: 1080px !important;
+  min-width: 1334px !important;
   table-layout: fixed !important;
 }
 .agents :global(.ant-table-cell)::before {
@@ -23,22 +23,22 @@
   padding: 6px 12px;
   font-size: 14px;
 }
-.agents :global(.ant-table-tbody) > tr > td:nth-child(3) {
+.agents :global(.ant-table-tbody) > tr > td:nth-child(4) {
   font-weight: 600;
   letter-spacing: 0.04em;
   font-size: 13px;
 }
-.agents :global(.ant-table-tbody) > tr > td:nth-child(4) {
+.agents :global(.ant-table-tbody) > tr > td:nth-child(5) {
   font-weight: 600;
 }
-.agents :global(.ant-table-tbody) > tr > td:nth-child(7) {
+.agents :global(.ant-table-tbody) > tr > td:nth-child(8) {
   color: #1677ff;
   font-weight: 600;
 }
 /* Desktop only: the long neutral month label wraps inside its column instead of overflowing
    into the action; mobile cards keep the single-line tag. */
 @media (min-width: 768px) {
-  .agents :global(.ant-table-tbody) > tr > td:nth-child(8) > span {
+  .agents :global(.ant-table-tbody) > tr > td:nth-child(9) > span {
     max-width: 100%;
     white-space: normal !important;
   }

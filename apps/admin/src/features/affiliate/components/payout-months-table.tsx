@@ -2,17 +2,14 @@
 
 import { AdminTable } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
-import { useState, type ReactNode } from 'react';
-import { useAffiliateAccess } from '../hooks/use-affiliate-access';
+import type { ReactNode } from 'react';
 import type { AffiliateDetail, AffiliateDetailParams, AffiliateMonthRow } from '../types';
-import { PayoutDialog, type PayoutIntent } from './payout-dialog';
 import { usePayoutColumns } from './payout-months-table-columns';
 import { AffiliatePagination } from './affiliate-pagination';
 import { DETAIL_PAGE_SIZES } from '../model';
 import styles from './affiliate.module.css';
 
 export function PayoutMonthsTable({
-  agent,
   rows,
   total,
   params,
@@ -29,8 +26,6 @@ export function PayoutMonthsTable({
   loading: boolean;
 }) {
   const t = useTranslations('affiliate');
-  const access = useAffiliateAccess();
-  const [intent, setIntent] = useState<PayoutIntent | null>(null);
   return (
     <div className={styles.tableHost}>
       <AdminTable<AffiliateMonthRow>
@@ -44,16 +39,7 @@ export function PayoutMonthsTable({
         pageSize={params.size}
         pagination={false}
         onPageChange={(page, size) => update({ page, size })}
-        columns={usePayoutColumns((row) => {
-          if (!loading && access.guard('affiliate.payout'))
-            setIntent({
-              id: agent.id,
-              name: agent.name,
-              month: row.monthKey,
-              amount: row.payable,
-              key: crypto.randomUUID(),
-            });
-        })}
+        columns={usePayoutColumns()}
       />
       <AffiliatePagination
         total={total}
@@ -62,7 +48,6 @@ export function PayoutMonthsTable({
         unit={t('pagination.months')}
         sizes={DETAIL_PAGE_SIZES}
       />
-      {intent ? <PayoutDialog intent={intent} onClose={() => setIntent(null)} /> : null}
     </div>
   );
 }

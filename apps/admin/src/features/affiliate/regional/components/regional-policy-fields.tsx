@@ -1,14 +1,16 @@
 'use client';
 import { Form, InputNumber } from 'antd';
 import { useTranslations } from 'next-intl';
-import layout from '../../components/policy-layout.module.css';
+import layout from '../../components/policy-reference.module.css';
 export function RegionalPolicyFields() {
   const t = useTranslations('affiliate.policy');
   return (
-    <section>
-      <h3>{t('regionalTitle')}</h3>
-      <p>{t('regionalHint')}</p>
-      <div className={layout.fields}>
+    <>
+      <div className={layout.heading}>
+        <h3>{t('regionalTitle')}</h3>
+        <p>{t('regionalHint')}</p>
+      </div>
+      <div className={layout.regional}>
         {(['regionalFirstYear', 'regionalStep', 'regionalMin'] as const).map((key) => (
           <Form.Item
             key={key}
@@ -36,11 +38,12 @@ export function RegionalPolicyFields() {
               min={key === 'regionalFirstYear' ? 1 : 0}
               max={100}
               precision={0}
+              suffix="%"
               aria-label={t(key)}
             />
           </Form.Item>
         ))}
       </div>
-    </section>
+    </>
   );
 }

@@ -1,3 +1,6 @@
+import { seedMockAffiliateRenewals } from '../affiliate-renewals';
+import { payoutMonthOf } from '../../../membership/regional-share';
+import { regionalShareState } from '../regional-share-state';
 import type { z } from 'zod';
 import type {
   AffiliateAdminRow,
@@ -23,6 +26,7 @@ type Detail = z.infer<typeof affiliateDetailSchema>;
 type Month = z.infer<typeof affiliateMonthRowSchema>;
 
 export function mockAdminCommissionRows(q: AffiliateCommissionQuery): Commission[] {
+  seedMockAffiliateRenewals();
   const agents = syncMockAffiliates().agents;
   return affiliateCommissionRefs()
     .flatMap((r): Commission[] => {
@@ -43,6 +47,7 @@ export function mockAdminCommissionRows(q: AffiliateCommissionQuery): Commission
           date: row.date,
           feeAmount: row.feeAmount,
           rate: row.rate,
+          customerYear: r.customerYear ?? 1,
           amount: row.commission,
           status: row.status,
           cancelReason: row.cancelReason,
@@ -57,6 +62,7 @@ export const mockAdminCommissions = (q: AffiliateCommissionQuery) =>
   mockAffiliatePage(mockAdminCommissionRows(q), q);
 
 export function mockAdminAffiliateSummary(month?: string) {
+  seedMockAffiliateRenewals();
   const rows = affiliateCommissionRefs().filter(
     (r) => r.row.status !== 'cancelled' && (!month || r.month === month),
   );
@@ -66,12 +72,16 @@ export function mockAdminAffiliateSummary(month?: string) {
       .reduce((total, r) => total + r.row.commission, 0);
   const revenue = rows.reduce((total, r) => total + r.row.feeAmount, 0);
   const totalCommission = sum();
+  const regionalTotal = regionalShareState()
+    .rows.filter((r) => r.region !== null && (!month || payoutMonthOf(r.recordedAt) === month))
+    .reduce((n, r) => n + r.directorAmount, 0);
   return {
     revenue,
+    regionalTotal,
     totalCommission,
     payable: sum('recorded'),
     paid: sum('paid'),
-    netRevenue: revenue - totalCommission,
+    netRevenue: revenue - regionalTotal,
     // BR-AFF-REV (v4.2): số khoản hợp lệ theo gói thực trả
     plans: {
       business: rows.filter((r) => r.plan === 'business').length,

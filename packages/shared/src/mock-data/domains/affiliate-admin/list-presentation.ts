@@ -1,3 +1,4 @@
+import { mockAffiliateRegion } from '../affiliate-regional-projection';
 import type { AffiliateAdminListRow, AffiliateAdminRow, AffiliateBank } from '../../../api-domains';
 
 /** Fake provider mirrors the server DTO; no rendering component calculates these totals. */
@@ -12,6 +13,7 @@ export function mockAffiliateListPresentation(
     const total = lifetime.get(row.id);
     return {
       ...row,
+      region: mockAffiliateRegion(row.userId),
       bank: agents.get(row.id)?.bank ?? null,
       lifetime: { customers: total?.customers ?? 0, revenue: total?.revenue ?? 0 },
       period: {

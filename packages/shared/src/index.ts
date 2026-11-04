@@ -33,3 +33,5 @@ export {
 export { planAutoPersonas, nextAutoTopic, type AutoPersona } from './bot/auto-plan';
 export { botScheduleState } from './bot/schedule-window';
 export { BOT_REPLY_SCAN_MS, botReplyDelayMs } from './bot/reply-timing';
+
+export * from './membership/commission-year';

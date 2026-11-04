@@ -26,6 +26,7 @@ interface Agent {
   bank: AffiliateBank | null;
 }
 interface Referral {
+  customerYear?: number | undefined;
   userId: string;
   agentId: string;
   row: AffiliateReferrals['items'][number];
@@ -34,8 +35,10 @@ interface Referral {
   plan?: CommissionPlan | undefined;
 }
 interface State {
+  referenceSeeded: boolean;
   agents: Map<string, Agent>;
   referrals: Map<string, Referral>;
+  referenceCommissions: Map<string, Referral>;
   clicks: Map<string, Map<string, number>>;
   seen: Map<string, number>;
   payouts: Map<string, AffiliatePayouts['items']>;
@@ -65,8 +68,10 @@ export function affiliateMockState(): State {
   let state = states.get(db);
   if (!state) {
     state = {
+      referenceSeeded: false,
       agents: new Map(),
       referrals: new Map(),
+      referenceCommissions: new Map(),
       clicks: new Map(),
       seen: new Map(),
       payouts: new Map(),
