@@ -65,7 +65,7 @@ describe('AT-AF06 native payout fixture matches MSW without changing AF0 default
       status: 'paid',
       paidBankSnapshot: { bankName: 'ACB', bankNo: '24681357' },
     });
-    expect(await db.commission.count()).toBe(51);
+    expect(await db.commission.count()).toBe(53);
   });
   it('ordinary AF0 resets the precondition instead of globally backdating a real business event', async () => {
     await seedDemo(db, { affiliate: true });

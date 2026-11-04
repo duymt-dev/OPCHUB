@@ -1,3 +1,4 @@
+import { seedAffiliateRenewals } from './affiliate-renewals';
 import { demoAccounts } from '@opchub/shared/fixtures';
 import { seedProjectDemoFees } from './project-fees';
 import { UNPAID_DEMO } from '@opchub/shared/mock-data';
@@ -96,6 +97,8 @@ export async function seedDemo(
       await seedAuditLog(tx);
       await seedStatsDaily(tx);
       await seedRegionalShares(tx);
+      if (options.affiliate || options.affiliatePaused || options.affiliatePayout)
+        await seedAffiliateRenewals(tx);
     },
     { timeout: 120_000, maxWait: 30_000 },
   );
