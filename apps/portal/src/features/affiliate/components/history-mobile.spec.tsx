@@ -12,6 +12,8 @@ describe('Affiliate mobile history', () => {
         <ReferralCards
           rows={[
             {
+              customerYear: 1,
+              source: 'membership',
               id: 'r1',
               name: 'Đỗ Minh T.',
               plan: 'Phí thành viên 12 tháng',

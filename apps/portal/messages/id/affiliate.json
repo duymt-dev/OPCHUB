@@ -4,13 +4,15 @@
   "program": "PROGRAM AFFILIATE OPC HUB",
   "locked": {
     "title": "Link referensi Anda sedang disiapkan",
-    "description": "Setiap anggota langsung mendapat kode dan link afiliasi sendiri saat mendaftar. Untuk setiap anggota yang Anda rujuk dan membayar (setelah 3 bulan gratis), Anda mendapat komisi <b>{rate}%</b> ({per} (Perorangan) · {biz} (Bisnis) · {fund} (Paket Pendanaan {fundRate}%)).",
+    "description": "Setiap anggota langsung mendapat kode dan link afiliasi sendiri saat mendaftar. Untuk setiap anggota yang Anda rujuk dan membayar (setelah 3 bulan gratis), Anda mendapat komisi <b>{rate}%</b> ({per} (Perorangan) · {biz} (Bisnis) · {fund} (Paket Pendanaan {fundRate}%)). Tahun 1; perpanjangan dari tahun 2 hingga {renewalMaxYear}: {renewalRate}% (hanya referensi).",
     "pay": "Bayar biaya keanggotaan"
   },
   "paused": "Kode sedang dijeda — perpanjang biaya untuk terus menerima komisi",
   "hero": {
     "title": "Ajak anggota baru, dapatkan komisi {rate}%",
-    "description": "Setiap orang yang mendaftar melalui tautan Anda dan membayar biaya keanggotaan 12 bulan, Anda menerima <b>{per} (Pribadi) · {biz} (Bisnis) · {fund} (Penggalangan dana {fundRate}%)</b>. Tautan tercatat selama {days} hari."
+    "description": "Setiap orang yang mendaftar melalui tautan Anda dan membayar biaya keanggotaan 12 bulan, Anda menerima <b>{per} (Pribadi) · {biz} (Bisnis) · {fund} (Penggalangan dana {fundRate}%)</b>. Tautan tercatat selama {days} hari.",
+    "rateBadge": "Komisi <b>{rate}%</b>",
+    "cookieBadge": "Tautan dicatat selama <b>{days} hari</b>"
   },
   "bank": {
     "missing": "Belum ada nomor rekening penerima komisi.",
@@ -95,7 +97,10 @@
       "empty": "Belum ada",
       "paid": "Telah dibayar",
       "waiting": "Menunggu pembayaran pada {date}"
-    }
+    },
+    "year": "Tahun {year}",
+    "renewalYear": "Tahun {year} · perpanjangan",
+    "pendingPlan": "Baru mendaftar · menunggu pembayaran iuran"
   },
   "payouts": {
     "description": "Komisi ditransfer sekali pada hari terakhir setiap bulan",
@@ -111,5 +116,53 @@
       "status": "Status"
     },
     "paid": "Telah ditransfer"
+  },
+  "region": {
+    "tab": "Wilayah saya",
+    "badge": "Direktur Wilayah",
+    "title": "Wilayah saya · Direktur Wilayah {label} · {name}",
+    "provinces": "{label} · {count} provinsi/kota: {provinces}",
+    "readOnly": "Hanya baca",
+    "note": "Hanya anggota yang mendaftar melalui tautan afiliasi wilayah yang dihitung. Media Soft membayar bagian Direktur Wilayah pada akhir bulan ke <b>{bank}</b>. Direktur membagikan kepada ketua grup dan afiliasi di luar sistem.",
+    "revenue": "Pendapatan wilayah",
+    "share": "Bagian direktur",
+    "paid": "Dibayar",
+    "due": "Menunggu pembayaran",
+    "transactions": "{count} transaksi",
+    "yearRule": "Menurut tahun pelanggan",
+    "paidMonths": "{count} bulan dibayar",
+    "dueDate": "Periode pembayaran {month}",
+    "yearsTitle": "Bagian menurut tahun pelanggan",
+    "customerYear": "Tahun pelanggan",
+    "percent": "Persentase direktur",
+    "count": "Transaksi",
+    "revenueShort": "Pendapatan",
+    "shareShort": "Bagian direktur",
+    "fromFourth": "Mulai tahun 4",
+    "firstYear": "Tahun 1",
+    "renewalYear": "Tahun {year} · perpanjangan",
+    "affiliatesTitle": "Afiliasi di wilayah",
+    "affiliate": "Afiliasi",
+    "customers": "Pelanggan",
+    "broughtRevenue": "Pendapatan yang dihasilkan",
+    "regionShare": "Bagian wilayah",
+    "more": "{count} afiliasi lainnya",
+    "empty": "Belum ada pendapatan afiliasi.",
+    "monthsTitle": "Riwayat pembayaran bulanan Media Soft",
+    "month": "Bulan",
+    "amount": "Jumlah",
+    "status": "Status",
+    "paidAt": "Tanggal pembayaran",
+    "emptyMonths": "Belum ada periode pembayaran.",
+    "monthValue": "Bulan {month}",
+    "statusLabels": {
+      "paid": "Dibayar",
+      "pending": "Menunggu pembayaran"
+    }
+  },
+  "banner": {
+    "title": "Anda adalah Direktur Wilayah {label} · {name}",
+    "description": "Lihat pendapatan, bagian dan pembayaran Media Soft untuk wilayah Anda.",
+    "open": "Lihat wilayah saya"
   }
 }

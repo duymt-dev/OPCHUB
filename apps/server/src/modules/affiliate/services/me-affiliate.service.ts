@@ -43,6 +43,8 @@ export class MeAffiliateService {
     ]);
     const rate = row?.rate ?? policy.defaultRate;
     const preview = {
+      renewalRate: policy.renewalRate,
+      renewalMaxYear: policy.renewalMaxYear,
       rate,
       // BR-AFF-REV (v4.2 `perT`): hoa hồng theo gói thực trả — Cá nhân, Doanh nghiệp, Gói Gọi vốn
       perAmount: commissionAmount(prices.per.y, rate),

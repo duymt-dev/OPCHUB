@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 export const AFFILIATE_PAGE_SIZE = 6;
 export const affiliateUrlSchema = z.object({
-  tab: z.enum(['ref', 'hist']).catch('ref'),
+  tab: z.enum(['ref', 'hist', 'reg']).catch('ref'),
   month: affiliateMonthSchema.or(z.literal('')).catch(''),
   page: z.coerce.number().int().min(1).max(100000).catch(1),
 });

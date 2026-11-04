@@ -2229,6 +2229,27 @@
       "role": "admin",
       "name": "Quản trị hệ thống",
       "label": "Quản trị viên (Admin)"
+    },
+    {
+      "email": "bao.tran@solobooks.vn",
+      "pwd": "User@2026",
+      "role": "user",
+      "meId": "m3",
+      "label": "Giám đốc Vùng"
+    },
+    {
+      "email": "hai.lm@mediasoft.vn",
+      "pwd": "User@2026",
+      "role": "user",
+      "meId": "m9",
+      "label": "Giám đốc Vùng"
+    },
+    {
+      "email": "ha.pt@mediasoft.vn",
+      "pwd": "User@2026",
+      "role": "user",
+      "meId": "m10",
+      "label": "Giám đốc Vùng"
     }
   ],
   "FEE_SEED": {

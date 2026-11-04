@@ -6,3 +6,5 @@ export { RegionalProjectionRepository } from './regional/regional-projection.rep
 export { RegionalShareProjectionRepository } from './regional/regional-share-projection.repository';
 
 export { CustomerYearRepository } from './regional/customer-year.repository';
+
+export { MyRegionProjectionRepository } from './regional/my-region-projection.repository';

@@ -4,13 +4,15 @@
   "program": "PROGRAM AFFILIATE OPC HUB",
   "locked": {
     "title": "Pautan rujukan anda sedang disediakan",
-    "description": "Setiap ahli mendapat kod dan pautan afiliasi sendiri sebaik mendaftar. Bagi setiap ahli yang anda rujuk dan membayar (selepas 3 bulan percuma), anda menerima komisen <b>{rate}%</b> ({per} (Individu) · {biz} (Perniagaan) · {fund} (Pakej Pengumpulan Dana {fundRate}%)).",
+    "description": "Setiap ahli mendapat kod dan pautan afiliasi sendiri sebaik mendaftar. Bagi setiap ahli yang anda rujuk dan membayar (selepas 3 bulan percuma), anda menerima komisen <b>{rate}%</b> ({per} (Individu) · {biz} (Perniagaan) · {fund} (Pakej Pengumpulan Dana {fundRate}%)). Tahun 1; pembaharuan dari tahun 2 hingga {renewalMaxYear}: {renewalRate}% (rujukan sahaja).",
     "pay": "Bayar yuran keahlian"
   },
   "paused": "Kod sedang digantung — perbaharui yuran untuk terus menerima komisen",
   "hero": {
     "title": "Rujuk ahli baharu, terima komisen {rate}%",
-    "description": "Bagi setiap orang yang mendaftar melalui pautan anda dan membayar yuran keahlian 12 bulan, anda menerima <b>{per} (Peribadi) · {biz} (Perniagaan) · {fund} (Pengumpulan dana {fundRate}%)</b>. Pautan direkodkan selama {days} hari."
+    "description": "Bagi setiap orang yang mendaftar melalui pautan anda dan membayar yuran keahlian 12 bulan, anda menerima <b>{per} (Peribadi) · {biz} (Perniagaan) · {fund} (Pengumpulan dana {fundRate}%)</b>. Pautan direkodkan selama {days} hari.",
+    "rateBadge": "Komisen <b>{rate}%</b>",
+    "cookieBadge": "Pautan direkod selama <b>{days} hari</b>"
   },
   "bank": {
     "missing": "Belum ada nombor akaun untuk menerima komisen.",
@@ -95,7 +97,10 @@
       "empty": "Belum ada",
       "paid": "Telah dibayar",
       "waiting": "Menunggu bayaran pada {date}"
-    }
+    },
+    "year": "Tahun {year}",
+    "renewalYear": "Tahun {year} · pembaharuan",
+    "pendingPlan": "Baru mendaftar · menunggu bayaran yuran"
   },
   "payouts": {
     "description": "Komisen dipindahkan sekali pada hari terakhir setiap bulan",
@@ -111,5 +116,53 @@
       "status": "Status"
     },
     "paid": "Telah dipindahkan"
+  },
+  "region": {
+    "tab": "Wilayah saya",
+    "badge": "Pengarah Wilayah",
+    "title": "Wilayah saya · Pengarah Wilayah {label} · {name}",
+    "provinces": "{label} · {count} wilayah/bandar: {provinces}",
+    "readOnly": "Baca sahaja",
+    "note": "Hanya ahli yang mendaftar melalui pautan ahli gabungan wilayah dikira. Media Soft membayar bahagian Pengarah Wilayah pada akhir bulan ke <b>{bank}</b>. Pengarah mengagihkan kepada ketua kumpulan dan ahli gabungan di luar sistem.",
+    "revenue": "Hasil wilayah",
+    "share": "Bahagian pengarah",
+    "paid": "Dibayar",
+    "due": "Menunggu bayaran",
+    "transactions": "{count} transaksi",
+    "yearRule": "Mengikut tahun pelanggan",
+    "paidMonths": "{count} bulan dibayar",
+    "dueDate": "Tempoh bayaran {month}",
+    "yearsTitle": "Bahagian mengikut tahun pelanggan",
+    "customerYear": "Tahun pelanggan",
+    "percent": "Kadar pengarah",
+    "count": "Transaksi",
+    "revenueShort": "Hasil",
+    "shareShort": "Bahagian pengarah",
+    "fromFourth": "Tahun 4 dan seterusnya",
+    "firstYear": "Tahun 1",
+    "renewalYear": "Tahun {year} · pembaharuan",
+    "affiliatesTitle": "Ahli gabungan di wilayah",
+    "affiliate": "Ahli gabungan",
+    "customers": "Pelanggan",
+    "broughtRevenue": "Hasil dijana",
+    "regionShare": "Bahagian wilayah",
+    "more": "{count} lagi ahli gabungan",
+    "empty": "Belum ada hasil ahli gabungan.",
+    "monthsTitle": "Sejarah bayaran bulanan Media Soft",
+    "month": "Bulan",
+    "amount": "Amaun",
+    "status": "Status",
+    "paidAt": "Tarikh bayaran",
+    "emptyMonths": "Belum ada tempoh bayaran.",
+    "monthValue": "Bulan {month}",
+    "statusLabels": {
+      "paid": "Dibayar",
+      "pending": "Menunggu bayaran"
+    }
+  },
+  "banner": {
+    "title": "Anda Pengarah Wilayah {label} · {name}",
+    "description": "Lihat hasil, bahagian dan bayaran Media Soft untuk wilayah anda.",
+    "open": "Lihat wilayah saya"
   }
 }

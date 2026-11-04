@@ -17,7 +17,11 @@ export function ReferralCards({ rows }: { rows: ReferralRow[] }) {
         rows.map((r) => (
           <article key={r.id} className={styles.mobileCard}>
             <b>{r.name}</b>
-            <span className={styles.mobilePlan}>{r.plan}</span>
+            <span className={styles.mobilePlan}>
+              {r.status === 'pending' || r.status === 'void'
+                ? t('pendingPlan')
+                : `${r.plan} · ${t(r.customerYear > 1 ? 'renewalYear' : 'year', { year: r.customerYear })}`}
+            </span>
             <div className={styles.mobilePair}>
               <span aria-label={t('columns.date')}>{formatDate(r.date)}</span>
               <span aria-label={t('columns.fee')}>

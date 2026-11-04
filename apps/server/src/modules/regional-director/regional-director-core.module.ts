@@ -1,3 +1,5 @@
+import { MyRegionService } from './services/my-region.service';
+import { MeRegionalController } from './controllers/me-regional.controller';
 import { Module } from '@nestjs/common';
 import { AffiliateCoreModule } from '@/modules/affiliate';
 import { AdminRegionalSharesController } from './controllers/admin-regional-shares.controller';
@@ -20,6 +22,7 @@ import { RegionalDirectorReadService } from './services/regional-director-read.s
 import { RegionalDirectorEventsHandler } from './services/regional-director-events.handler';
 
 const providers = [
+  MyRegionService,
   RegionalShareRepository,
   RegionalPayoutRepository,
   RegionalShareSummaryRepository,
@@ -48,6 +51,10 @@ export class RegionalDirectorCoreModule {}
 
 @Module({
   imports: [RegionalDirectorCoreModule],
-  controllers: [AdminRegionalDirectorsController, AdminRegionalSharesController],
+  controllers: [
+    MeRegionalController,
+    AdminRegionalDirectorsController,
+    AdminRegionalSharesController,
+  ],
 })
 export class RegionalDirectorHttpModule {}

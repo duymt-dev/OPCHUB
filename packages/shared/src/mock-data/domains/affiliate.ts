@@ -190,6 +190,8 @@ export function attachMockAffiliate(me: Me, code?: string): void {
     agentId: a.userId,
     month: monthOf(Date.now()),
     row: {
+      customerYear: 1,
+      source: 'membership',
       id: `ref-${++s.seq}`,
       name: me.fullName,
       plan: '—',
@@ -227,6 +229,8 @@ export function myMockAffiliate(userId: string, origin: string): MyAffiliate {
     rate = a?.rate ?? cfg.defaultRate;
   // BR-AFF-REV (v4.2 `perT`): hoa hồng theo gói thực trả — Cá nhân, Doanh nghiệp, Gói Gọi vốn
   const policy = {
+    renewalRate: cfg.renewalRate,
+    renewalMaxYear: cfg.renewalMaxYear,
     rate,
     perAmount: mockCommissionAmount(prices.per.y, rate),
     bizAmount: mockCommissionAmount(prices.biz.y, rate),
@@ -236,7 +240,7 @@ export function myMockAffiliate(userId: string, origin: string): MyAffiliate {
   };
   if (!a) return { state: 'locked', policy };
   const month = monthOf(Date.now()),
-    refs = [...s.referrals.values()].filter((r) => r.agentId === userId);
+    refs = referenceRows(s, userId);
   const valid = refs.filter((r) => r.row.status === 'recorded' || r.row.status === 'paid');
   const since = new Date(Date.now() + 7 * 3600000 - 29 * 86400000).toISOString().slice(0, 10);
   const clicks30d = [...(s.clicks.get(userId) ?? [])]
@@ -264,11 +268,18 @@ export function myMockAffiliate(userId: string, origin: string): MyAffiliate {
   };
 }
 
+function referenceRows(s: State, userId: string) {
+  const rows = [...s.referrals.values(), ...s.referenceCommissions.values()].filter(
+    (r) => r.agentId === userId,
+  );
+  return [...new Map(rows.map((r) => [r.row.id, r])).values()];
+}
+
 export function mockAffiliateReferrals(userId: string, q: AffiliatePageQuery): AffiliateReferrals {
-  const all = [...syncMockAffiliates().referrals.values()].filter((r) => r.agentId === userId);
+  const all = referenceRows(syncMockAffiliates(), userId);
   const list = all
     .filter((r) => !q.month || r.month === q.month)
-    .sort((a, b) => b.row.date.localeCompare(a.row.date));
+    .sort((a, b) => b.row.date.localeCompare(a.row.date) || b.row.id.localeCompare(a.row.id));
   const items = list.slice((q.page - 1) * q.size, q.page * q.size).map(({ row }) => {
     const words = row.name.trim().split(/\s+/);
     return {

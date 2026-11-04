@@ -4,13 +4,15 @@
   "program": "AFFILIATE PROGRAM NG OPC HUB",
   "locked": {
     "title": "Inihahanda ang iyong referral link",
-    "description": "Bawat miyembro ay may sariling affiliate code at link pagkapag-sign up. Sa bawat miyembrong na-refer mo na magbabayad (pagkatapos ng 3 libreng buwan), kikita ka ng <b>{rate}%</b> na komisyon ({per} (Personal) · {biz} (Negosyo) · {fund} (Fundraising {fundRate}%)).",
+    "description": "Bawat miyembro ay may sariling affiliate code at link pagkapag-sign up. Sa bawat miyembrong na-refer mo na magbabayad (pagkatapos ng 3 libreng buwan), kikita ka ng <b>{rate}%</b> na komisyon ({per} (Personal) · {biz} (Negosyo) · {fund} (Fundraising {fundRate}%)). Taon 1; pag-renew mula taon 2 hanggang {renewalMaxYear}: {renewalRate}% (sanggunian lamang).",
     "pay": "Magbayad ng bayad sa membership"
   },
   "paused": "Naka-pause ang code — i-renew ang membership para patuloy na makatanggap ng komisyon",
   "hero": {
     "title": "Mag-refer ng bagong miyembro, makatanggap ng {rate}% na komisyon",
-    "description": "Sa bawat taong mag-sign up gamit ang link mo at magbayad ng 12-buwang bayad sa membership, makakatanggap ka ng <b>{per} (Personal) · {biz} (Negosyo) · {fund} (Fundraising {fundRate}%)</b>. Itinatala ang link sa loob ng {days} araw."
+    "description": "Sa bawat taong mag-sign up gamit ang link mo at magbayad ng 12-buwang bayad sa membership, makakatanggap ka ng <b>{per} (Personal) · {biz} (Negosyo) · {fund} (Fundraising {fundRate}%)</b>. Itinatala ang link sa loob ng {days} araw.",
+    "rateBadge": "Komisyon <b>{rate}%</b>",
+    "cookieBadge": "Itinatala ang link sa loob ng <b>{days} araw</b>"
   },
   "bank": {
     "missing": "Wala pang bank account para sa komisyon.",
@@ -95,7 +97,10 @@
       "empty": "Wala pa",
       "paid": "Nabayaran na",
       "waiting": "Babayaran sa {date}"
-    }
+    },
+    "year": "Taon {year}",
+    "renewalYear": "Taon {year} · pag-renew",
+    "pendingPlan": "Kakarehistro · naghihintay ng bayad"
   },
   "payouts": {
     "description": "Ang komisyon ay ipinapadala nang isang beses sa huling araw ng bawat buwan",
@@ -111,5 +116,53 @@
       "status": "Status"
     },
     "paid": "Naipadala na"
+  },
+  "region": {
+    "tab": "Aking rehiyon",
+    "badge": "Direktor ng Rehiyon",
+    "title": "Aking rehiyon · Direktor ng Rehiyon {label} · {name}",
+    "provinces": "{label} · {count} lalawigan/lungsod: {provinces}",
+    "readOnly": "Basahin lamang",
+    "note": "Mga miyembrong nagparehistro sa affiliate link ng rehiyon lamang ang binibilang. Binabayaran ng Media Soft ang bahagi ng Direktor ng Rehiyon sa katapusan ng buwan sa <b>{bank}</b>. Ang direktor ang namamahagi sa mga lider ng grupo at affiliate sa labas ng sistema.",
+    "revenue": "Kita ng rehiyon",
+    "share": "Bahagi ng direktor",
+    "paid": "Nabayaran",
+    "due": "Naghihintay ng bayad",
+    "transactions": "{count} transaksyon",
+    "yearRule": "Ayon sa taon ng customer",
+    "paidMonths": "{count} buwang nabayaran",
+    "dueDate": "Panahon ng bayad {month}",
+    "yearsTitle": "Bahagi ayon sa taon ng customer",
+    "customerYear": "Taon ng customer",
+    "percent": "Porsiyento ng direktor",
+    "count": "Mga transaksyon",
+    "revenueShort": "Kita",
+    "shareShort": "Bahagi ng direktor",
+    "fromFourth": "Taon 4 pataas",
+    "firstYear": "Taon 1",
+    "renewalYear": "Taon {year} · pag-renew",
+    "affiliatesTitle": "Mga affiliate sa rehiyon",
+    "affiliate": "Affiliate",
+    "customers": "Mga customer",
+    "broughtRevenue": "Kitang naihatid",
+    "regionShare": "Bahagi ng rehiyon",
+    "more": "{count} pang affiliate",
+    "empty": "Wala pang kita mula sa affiliate.",
+    "monthsTitle": "Buwanang tala ng bayad ng Media Soft",
+    "month": "Buwan",
+    "amount": "Halaga",
+    "status": "Katayuan",
+    "paidAt": "Petsa ng bayad",
+    "emptyMonths": "Wala pang panahon ng bayad.",
+    "monthValue": "Buwan {month}",
+    "statusLabels": {
+      "paid": "Nabayaran",
+      "pending": "Naghihintay ng bayad"
+    }
+  },
+  "banner": {
+    "title": "Ikaw ang Direktor ng Rehiyon {label} · {name}",
+    "description": "Tingnan ang kita, bahagi at mga bayad ng Media Soft para sa iyong rehiyon.",
+    "open": "Tingnan ang aking rehiyon"
   }
 }

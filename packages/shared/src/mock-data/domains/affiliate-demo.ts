@@ -114,6 +114,8 @@ function seedMockScenarioHistory(): void {
       // D-110: gói thực trả (snapshot) như prototype v4.2 C0
       plan: c.plan,
       row: {
+        customerYear: 1,
+        source: 'membership',
         id: `demo-referral-${c.id}`,
         name: c.name,
         plan: COMMISSION_PLAN_LABEL[c.plan],

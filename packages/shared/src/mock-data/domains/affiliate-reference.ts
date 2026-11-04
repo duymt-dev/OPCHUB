@@ -45,6 +45,8 @@ export function recordMockReference(
     month: payoutMonthOf(input.at),
     row: {
       ...ref.row,
+      customerYear,
+      source: input.source,
       id: first ? ref.row.id : key,
       rate,
       commission: mockCommissionAmount(input.baseAmount, rate),

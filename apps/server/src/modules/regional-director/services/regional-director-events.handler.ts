@@ -40,7 +40,7 @@ export class RegionalDirectorEventsHandler {
         type: 'system',
         title: `Bạn được bổ nhiệm làm GĐ Vùng ${REGIONAL_LABELS[p.region]}`,
         body: 'Miễn phí thành viên trong thời gian làm GĐ Vùng. Xem tab Vùng của tôi trong Mạng lưới Affiliate.',
-        link: '/affiliate',
+        link: '/affiliate?tab=reg',
       },
     ]);
   }

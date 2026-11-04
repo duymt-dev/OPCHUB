@@ -1,3 +1,4 @@
+import { REGIONAL_DEMO_AFFILIATES } from './regional-share-demo';
 import { recordMockReference } from './affiliate-reference';
 import {
   customerYearOf,
@@ -244,7 +245,8 @@ export function recordMockRegionalShare(input: {
   s.rows.push({
     id: crypto.randomUUID(),
     ...input,
-    affiliateId: ref.agentId,
+    affiliateId:
+      REGIONAL_DEMO_AFFILIATES.find((a) => a.userId === ref.agentId)?.affiliateId ?? ref.agentId,
     affiliateUserId: ref.agentId,
     region: occupied && slot ? slot.region : null,
     directorUserId: occupied ? (slot?.member?.id ?? null) : null,

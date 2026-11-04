@@ -12,6 +12,7 @@ import {
   mockAffiliatePayouts,
   mockAffiliateReferrals,
   myMockAffiliate,
+  mockMyRegion,
   mockAffiliatePersistenceEnabled,
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
@@ -23,6 +24,10 @@ const authorized = (r: Request) => /^Bearer mock\./.test(r.headers.get('Authoriz
 const denied = () => apiError(401, 'UNAUTHORIZED', 'Vui lòng đăng nhập');
 
 export const affiliateHandlers = [
+  http.get(`${API}/me/gdv`, ({ request }) => {
+    if (!authorized(request)) return denied();
+    return HttpResponse.json(mockMyRegion(userIdOf(request)));
+  }),
   http.get(`${API}/public/affiliate/codes/:code`, ({ params, request }) => {
     const p = affiliateCodeParamsSchema.safeParse({ code: param(params, 'code') });
     if (!p.success) return validationError(p.error);

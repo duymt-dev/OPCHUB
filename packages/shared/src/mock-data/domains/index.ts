@@ -110,3 +110,5 @@ export * from './bot-bulk/save';
 export * from './regional-directors';
 export * from './regional-share-demo';
 export * from './regional-shares';
+
+export { mockMyRegion } from './my-region';

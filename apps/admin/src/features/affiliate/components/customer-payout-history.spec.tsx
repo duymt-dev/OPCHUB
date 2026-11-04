@@ -6,6 +6,8 @@ import { CustomerPayoutHistory } from './customer-payout-history';
 
 afterEach(cleanup);
 const paid: AffiliateCustomer = {
+  customerYear: 1,
+  source: 'membership',
   id: 'history-1',
   name: 'Khách demo',
   plan: 'Thành viên hệ thống',

@@ -13,6 +13,7 @@ export class RegionalDirectorProcessor implements OnApplicationBootstrap {
     private readonly shares: RegionalShareEventsHandler,
   ) {}
   onApplicationBootstrap() {
+    this.relay.registerWithId('regional_share.recorded', (p) => this.shares.recorded(p));
     this.relay.registerWithId('membership_fee.confirmed', (p) => this.shares.membership(p));
     this.relay.registerWithId('fundraising.reviewed', (p) => this.shares.fundraising(p));
     this.relay.registerWithId('regional_share.payout_recorded', (p) => this.shares.payout(p));
