@@ -43,6 +43,24 @@ describe('TIP-V46-804 regional aggregation limits', () => {
       },
     ]);
   });
+  it('retains the financial group when the affiliate account has been deleted', async () => {
+    const f = await regionalShareFixture(t);
+    await f.ledger.record(f.input);
+    await t.prisma.db.user.delete({ where: { id: f.agent.id } });
+    const data = await t.app.get(MyRegionService).read(f.director.id);
+    if (data.state !== 'director') throw new Error('Missing director');
+    expect(data.kpi).toMatchObject({ count: 1, share: 600000 });
+    expect(data.affiliates).toEqual([
+      {
+        id: f.affiliate.id,
+        name: 'Thành viên đã xóa',
+        code: '',
+        customers: 1,
+        revenue: 1200000,
+        share: 600000,
+      },
+    ]);
+  });
   it('60 affiliate groups are capped at 50 with exact more and monthly history at 24', async () => {
     const f = await regionalShareFixture(t);
     const id = await f.ledger.record(f.input);
