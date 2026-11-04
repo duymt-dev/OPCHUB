@@ -14,6 +14,44 @@ async function openRegional(c: StepCtx) {
 
 export const ADMIN_REGIONAL: Scenario[] = [
   {
+    id: 'D-120-GDV',
+    name: 'GĐ Vùng · Sổ chia sẻ',
+    demo: 'affiliate',
+    start: 'admin',
+    fullPage: true,
+    steps: async (c) => {
+      await openAffiliate(c);
+      const tab =
+        c.side === 'app'
+          ? c.page.getByRole('tab', { name: /^GĐ Vùng/ })
+          : c.page.getByText('GĐ Vùng', { exact: true }).filter({ visible: true }).last();
+      await tab.click();
+      await waitText(c, 'Tổng phần GĐ Vùng');
+    },
+  },
+  {
+    id: 'D-120-GDV-OPEN',
+    name: 'GĐ Vùng · Khoản ghi nhận Miền Bắc',
+    demo: 'affiliate',
+    start: 'admin',
+    fullPage: true,
+    steps: async (c) => {
+      await openAffiliate(c);
+      const tab =
+        c.side === 'app'
+          ? c.page.getByRole('tab', { name: /^GĐ Vùng/ })
+          : c.page.getByText('GĐ Vùng', { exact: true }).filter({ visible: true }).last();
+      await tab.click();
+      await waitText(c, 'Tổng phần GĐ Vùng');
+      const name =
+        c.side === 'app'
+          ? c.page.locator('[data-region="north"]').locator('button[aria-expanded]')
+          : c.page.getByText('Trần Quốc Bảo', { exact: true }).filter({ visible: true }).last();
+      await name.click();
+      await waitText(c, 'Khoản ghi nhận cho GĐ Vùng');
+    },
+  },
+  {
     id: 'D-120-GCFG',
     name: 'Cấu hình Giám đốc Vùng',
     demo: 'affiliate',

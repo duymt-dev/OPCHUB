@@ -34,7 +34,11 @@ for (const width of [1440, 390]) {
     // below, next field ≤ 16px under the hint (prototype grid gap 14px). V4-602: hint v4 wraps to
     // two lines at 390px, so the bound is measured from the hint, not from the input.
     const [field, hint, next] = await Promise.all([
-      form.locator('.ant-input-number').first().boundingBox(),
+      form
+        .locator('.ant-form-item')
+        .filter({ has: rate })
+        .locator('.ant-input-number')
+        .boundingBox(),
       form.locator('.ant-form-item-extra').first().boundingBox(),
       // D-70 (V4-602): ô chỉ đọc "Hoa hồng Gói Gọi vốn (%)" nằm giữa như prototype v4
       form.getByRole('group', { name: 'Hoa hồng Gói Gọi vốn (%)' }).boundingBox(),
