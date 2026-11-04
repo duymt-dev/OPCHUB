@@ -6,6 +6,7 @@ import type { DirectorRegion } from '../types';
 import { ReferralsTab, PayoutsTab } from './history-tabs';
 import { MyRegionTab } from './my-region-tab';
 import styles from './affiliate.module.css';
+import regionalStyles from './my-region.module.css';
 
 export function AffiliateHistorySection({
   history: h,
@@ -41,9 +42,10 @@ export function AffiliateHistorySection({
                   {
                     key: 'reg',
                     label: (
-                      <span>
-                        {t('region.tab')} <small>{t('region.badge')}</small>
-                      </span>
+                      <>
+                        {t('region.tab')}{' '}
+                        <span className={regionalStyles.tabCount}>{t('region.badge')}</span>
+                      </>
                     ),
                   },
                 ]
