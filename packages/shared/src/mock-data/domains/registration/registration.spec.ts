@@ -191,6 +191,6 @@ describe('UAT-02/04 REQ-401 P5-MSW-REGISTRATION-01 actual registration records',
     activateMockRegistration(personal().email, NOW);
     restoreCommunitySnapshot(legacy);
     expect(listAdminMembers({ q: personal().email }).items).toEqual([]);
-    expect(listAdminMembers().counts.all).toBe(8);
+    expect(listAdminMembers().counts.all).toBe(10);
   });
 });

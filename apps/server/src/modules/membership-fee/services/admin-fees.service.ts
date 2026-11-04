@@ -56,6 +56,7 @@ const STATUS_LABEL: Record<MembershipFeeStatus, string> = {
   active: 'Đang hiệu lực',
   expiring: 'Sắp hết hạn',
   expired: 'Hết hạn',
+  regional_director: 'Miễn phí · GĐ Vùng',
 };
 const vnDate = (iso: string | null) =>
   iso
@@ -113,6 +114,7 @@ export class AdminFeesService {
       total: [...counts.values()].reduce((a, b) => a + b, 0),
       active: n('active'),
       trial: n('trial'),
+      regional_director: n('regional_director'),
       pending_payment: n('pending_payment'),
       expiring: n('expiring'),
       expired: n('expired'),
@@ -190,10 +192,11 @@ export class AdminFeesService {
     userIds: readonly string[] | 'all',
     now = new Date(),
   ): Promise<number> {
-    const targets: ReminderTarget[] =
+    const candidates: ReminderTarget[] =
       userIds === 'all'
         ? await this.repo.needReminder()
         : await this.repo.byUserIds([...new Set(userIds)]);
+    const targets = candidates.filter((t) => t.status !== 'regional_director');
     if (!targets.length) return 0;
     await this.prisma.db.$transaction(async (tx) => {
       const kinded = targets.map((t) => ({

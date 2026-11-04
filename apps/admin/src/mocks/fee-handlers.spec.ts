@@ -30,15 +30,16 @@ describe('MSW admin — Phí thành viên (Q-G4b-1)', () => {
     const s = await summary();
     // D-94 2A: m6 chưa từng đóng, quá 3 tháng miễn phí → hết hạn (prototype `fst`)
     expect(s).toMatchObject({
-      total: 8,
-      paid: 6,
+      total: 10,
+      paid: 5,
       trial: 0,
       pending_payment: 0,
-      expiring: 1,
+      expiring: 0,
+      regional_director: 3,
       expired: 2,
     });
     // D-68: tổng phí theo gói của 6 TV đã đóng (DN 3.600.000, Cá nhân 1.200.000)
-    expect(s.revenue).toBe(16_800_000);
+    expect(s.revenue).toBe(13_200_000);
     expect(Number.isInteger(s.revenue)).toBe(true);
   });
 
@@ -48,14 +49,14 @@ describe('MSW admin — Phí thành viên (Q-G4b-1)', () => {
     const s = await summary();
     expect(s.pending_payment).toBe(0);
     expect(s.expired).toBe(0);
-    expect(s.paid).toBe(8);
+    expect(s.paid).toBe(7);
     expect((await post('/admin/fees/collect', { userIds: [] })).status).toBe(400);
   });
 
   it('D-63 nhắc tất cả chưa hiệu lực (bỏ TK khoá như server); xuất CSV có BOM + tiêu đề', async () => {
     const all = await post('/admin/fees/remind-all');
     expect(all.status).toBe(202);
-    expect(((await all.json()) as { queued: number }).queued).toBe(2);
+    expect(((await all.json()) as { queued: number }).queued).toBe(1);
     const ex = feeExportResponseSchema.parse(
       await (await post('/admin/fees/export', { userIds: ['m6'] })).json(),
     );

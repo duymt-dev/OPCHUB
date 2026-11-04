@@ -19,3 +19,4 @@ export {
   PermissionCheck,
 } from './permission-check';
 export { PermissionGuard, WRONG_REALM_MESSAGE } from './guards';
+export { usableFeeWhere, usableFeeSql } from './fee-where';

@@ -90,6 +90,7 @@ export class MembershipFeeService {
     const [cur] = await this.fees.lockForUpdate(tx, input.userId);
     if (!cur) throw notFound('Không tìm thấy phí thành viên');
     if (!canTransition(cur.status, 'active')) {
+      if (cur.status === 'regional_director') throw conflict('Thành viên đang Miễn phí · GĐ Vùng');
       throw conflict('Trạng thái phí không cho phép kích hoạt');
     }
     // D-104 §28.1: CK tự động phải ĐÚNG BẰNG giá gói (Cấu hình bảng giá, chốt ở `amount`); thiếu / thừa

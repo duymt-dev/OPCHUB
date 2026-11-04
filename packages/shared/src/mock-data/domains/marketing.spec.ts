@@ -48,11 +48,11 @@ describe('mock Marketing (D-78, D-79)', () => {
   it('D-63 MSW ước tính khớp server: TK active theo loại, trừ đã huỷ nhận', () => {
     // 7 thành viên active (m4 khoá) + 2 nhà đầu tư như bảng users seed demo (TK quản trị ở
     // admin_users không tính, D-52)
-    expect(estimateRecipients('all')).toBe(9);
-    expect(estimateRecipients('business')).toBe(4);
+    expect(estimateRecipients('all')).toBe(11);
+    expect(estimateRecipients('business')).toBe(6);
     expect(estimateRecipients('personal')).toBe(5);
     unsubscribeEmail('an.nguyen@mediasoft.vn');
-    expect(estimateRecipients('business')).toBe(3);
+    expect(estimateRecipients('business')).toBe(5);
     expect(estimateRecipients('groups', ['c1', 'c2'])).toBe(1248 + 1532);
     expect(estimateRecipients('groups', [])).toBe(0);
   });

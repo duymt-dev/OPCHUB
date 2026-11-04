@@ -73,6 +73,21 @@ export class MembershipFeeRepository {
     return r.count === 1;
   }
 
+  async changeRegional(
+    tx: DbTx,
+    userId: string,
+    version: number,
+    status: MembershipFeeStatus,
+    validUntil: Date | null,
+    now: Date,
+  ): Promise<boolean> {
+    const result = await tx.membershipFee.updateMany({
+      where: { userId, version },
+      data: { status, validUntil, version: { increment: 1 }, updatedAt: now },
+    });
+    return result.count === 1;
+  }
+
   /**
    * Scheduler hằng ngày: active → expiring (còn ≤ 30 ngày), trial|active|expiring → expired.
    * Dùng partial index `membership_fees_due (valid_until) WHERE status IN (trial, active, expiring)`.

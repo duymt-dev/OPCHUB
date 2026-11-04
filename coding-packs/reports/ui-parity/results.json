@@ -1,3790 +1,3838 @@
 [
- {
-  "id": "A-01",
-  "name": "Đăng nhập",
-  "viewport": 1440,
-  "diffPct": 0.10362654320987653,
-  "size": "1440×900",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-01",
-  "name": "Đăng nhập",
-  "viewport": 390,
-  "diffPct": 0.18611884516015753,
-  "size": "411×1455",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-02",
-  "name": "Đăng nhập · bỏ trống",
-  "viewport": 1440,
-  "diffPct": 0.14506172839506173,
-  "size": "1440×900",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-02",
-  "name": "Đăng nhập · bỏ trống",
-  "viewport": 390,
-  "diffPct": 0.3026408322622887,
-  "size": "411×1505",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-03",
-  "name": "Đăng nhập · sai thông tin",
-  "viewport": 1440,
-  "diffPct": 0.10594135802469136,
-  "size": "1440×900",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-03",
-  "name": "Đăng nhập · sai thông tin",
-  "viewport": 390,
-  "diffPct": 0.22245394508168229,
-  "size": "411×1505",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-04",
-  "name": "Đăng nhập · hiện mật khẩu",
-  "viewport": 1440,
-  "diffPct": 0.14853395061728394,
-  "size": "1440×900",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-04",
-  "name": "Đăng nhập · hiện mật khẩu",
-  "viewport": 390,
-  "diffPct": 0.19447997926438743,
-  "size": "411×1455",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-06",
-  "name": "Popover ngôn ngữ",
-  "viewport": 1440,
-  "diffPct": 0.21280864197530863,
-  "size": "1440×900",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-06",
-  "name": "Popover ngôn ngữ",
-  "viewport": 390,
-  "diffPct": 0.6765706647223235,
-  "size": "390×844",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-08",
-  "name": "SSO Google · đang chuyển hướng",
-  "viewport": 1440,
-  "diffPct": 0.10362654320987653,
-  "size": "1440×900",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-08",
-  "name": "SSO Google · đang chuyển hướng",
-  "viewport": 390,
-  "diffPct": 0.229596742502153,
-  "size": "411×1455",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-10",
-  "name": "Đăng ký · chọn loại TK",
-  "viewport": 1440,
-  "diffPct": 0.0001534683855125844,
-  "size": "1440×905",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-10",
-  "name": "Đăng ký · chọn loại TK",
-  "viewport": 390,
-  "diffPct": 0.011881331329004397,
-  "size": "411×1413",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-12",
-  "name": "Đăng ký DN · trống",
-  "viewport": 1440,
-  "diffPct": 0.0287659200702679,
-  "size": "1440×1265",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-12",
-  "name": "Đăng ký DN · trống",
-  "viewport": 390,
-  "diffPct": 0.06902473535201976,
-  "size": "411×1907",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-16",
-  "name": "Đăng ký · chọn mã quốc gia SĐT",
-  "viewport": 1440,
-  "diffPct": 0.0013117283950617284,
-  "size": "1440×900",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-16",
-  "name": "Đăng ký · chọn mã quốc gia SĐT",
-  "viewport": 390,
-  "diffPct": 0.00334183983473083,
-  "size": "390×844",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-17",
-  "name": "Đăng ký DN · báo thiếu người đại diện",
-  "viewport": 1440,
-  "diffPct": 0.07570267896354853,
-  "size": "1440×1265",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-17",
-  "name": "Đăng ký DN · báo thiếu người đại diện",
-  "viewport": 390,
-  "diffPct": 0.13230804170063679,
-  "size": "411×1907",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-18",
-  "name": "Đăng ký cá nhân · trống",
-  "viewport": 1440,
-  "diffPct": 0.056383524582517025,
-  "size": "1440×1191",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-18",
-  "name": "Đăng ký cá nhân · trống",
-  "viewport": 390,
-  "diffPct": 0.13180896858486546,
-  "size": "411×1833",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-20",
-  "name": "Đăng ký cá nhân · báo thiếu email",
-  "viewport": 1440,
-  "diffPct": 0.09515813042261405,
-  "size": "1440×1191",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-20",
-  "name": "Đăng ký cá nhân · báo thiếu email",
-  "viewport": 390,
-  "diffPct": 0.17070124229621045,
-  "size": "411×1833",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-21",
-  "name": "OTP",
-  "viewport": 1440,
-  "diffPct": 0.0679783950617284,
-  "size": "1440×900",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-21",
-  "name": "OTP",
-  "viewport": 390,
-  "diffPct": 0.26947381212784055,
-  "size": "390×844",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-22",
-  "name": "OTP · thiếu số",
-  "viewport": 1440,
-  "diffPct": 0.06859567901234569,
-  "size": "1440×900",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-22",
-  "name": "OTP · thiếu số",
-  "viewport": 390,
-  "diffPct": 0.27585368817596306,
-  "size": "390×844",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-23",
-  "name": "OTP · gửi lại",
-  "viewport": 1440,
-  "diffPct": 0.0679783950617284,
-  "size": "1440×900",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-23",
-  "name": "OTP · gửi lại",
-  "viewport": 390,
-  "diffPct": 0.26947381212784055,
-  "size": "390×844",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-25",
-  "name": "Đăng ký · đổi loại",
-  "viewport": 1440,
-  "diffPct": 0.0001534683855125844,
-  "size": "1440×905",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-25",
-  "name": "Đăng ký · đổi loại",
-  "viewport": 390,
-  "diffPct": 0.0020663184920007645,
-  "size": "411×1413",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-26",
-  "name": "Quên mật khẩu",
-  "viewport": 1440,
-  "diffPct": 0.04737654320987654,
-  "size": "1440×900",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-26",
-  "name": "Quên mật khẩu",
-  "viewport": 390,
-  "diffPct": 0.12010673402549482,
-  "size": "411×1179",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-27",
-  "name": "Quên mật khẩu · đã gửi",
-  "viewport": 1440,
-  "diffPct": 0.003472222222222222,
-  "size": "1440×900",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-27",
-  "name": "Quên mật khẩu · đã gửi",
-  "viewport": 390,
-  "diffPct": 0.011796800117968001,
-  "size": "411×1155",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-28",
-  "name": "Quên mật khẩu · về đăng nhập",
-  "viewport": 1440,
-  "diffPct": 0.10362654320987653,
-  "size": "1440×900",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-28",
-  "name": "Quên mật khẩu · về đăng nhập",
-  "viewport": 390,
-  "diffPct": 0.22759007031713782,
-  "size": "411×1455",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-29",
-  "name": "Đăng xuất",
-  "viewport": 1440,
-  "diffPct": 0.1752314814814815,
-  "size": "1440×900",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-29",
-  "name": "Đăng xuất",
-  "viewport": 390,
-  "diffPct": 0.33762259512880327,
-  "size": "411×1455",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-31",
-  "name": "Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …)",
-  "viewport": 1440,
-  "diffPct": 0.07922615778876076,
-  "size": "1440×1214",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-31",
-  "name": "Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …)",
-  "viewport": 390,
-  "diffPct": 0.18248175182481752,
-  "size": "411×1856",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-32",
-  "name": "Đăng ký · mã giới thiệu không tồn tại",
-  "viewport": 1440,
-  "diffPct": 0.055143693941058024,
-  "size": "1440×1214",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "A-32",
-  "name": "Đăng ký · mã giới thiệu không tồn tại",
-  "viewport": 390,
-  "diffPct": 0.13017556003020386,
-  "size": "411×1856",
-  "sha": "1ba4db0b"
- },
- {
-  "id": "P-01",
-  "name": "Dashboard",
-  "viewport": 1440,
-  "diffPct": 0.0023024361259655376,
-  "size": "1440×935",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-01",
-  "name": "Dashboard",
-  "viewport": 390,
-  "diffPct": 0.0011116051578479325,
-  "size": "390×1384",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-05",
-  "name": "Modal mail chào mừng",
-  "viewport": 1440,
-  "diffPct": 0.24818313953488375,
-  "size": "640×860",
-  "sha": "bf02c7c7"
- },
- {
-  "id": "P-05",
-  "name": "Modal mail chào mừng",
-  "viewport": 390,
-  "diffPct": 0.46183019329581604,
-  "size": "366×804",
-  "sha": "bf02c7c7"
- },
- {
-  "id": "P-07",
-  "name": "Thông báo",
-  "viewport": 1440,
-  "diffPct": 0.010262345679012345,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-07",
-  "name": "Thông báo",
-  "viewport": 390,
-  "diffPct": 0.03220318386195164,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-08",
-  "name": "Thông báo · chưa đọc",
-  "viewport": 1440,
-  "diffPct": 0.010262345679012345,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-08",
-  "name": "Thông báo · chưa đọc",
-  "viewport": 390,
-  "diffPct": 0.03220318386195164,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-09",
-  "name": "Thông báo · trống",
-  "viewport": 1440,
-  "diffPct": 0.002391975308641975,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-09",
-  "name": "Thông báo · trống",
-  "viewport": 390,
-  "diffPct": 0.0018228217280349982,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-10",
-  "name": "Thông báo · mở nhắc tên",
-  "viewport": 1440,
-  "diffPct": 1.9204475308641975,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-10",
-  "name": "Thông báo · mở nhắc tên",
-  "viewport": 390,
-  "diffPct": 0.4927694738121278,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-100",
-  "name": "Popup khai báo · Cá nhân · chọn vai trò + OPC",
-  "viewport": 1440,
-  "diffPct": 0.011903344839900012,
-  "size": "620×542",
-  "sha": "bf02c7c7"
- },
- {
-  "id": "P-100",
-  "name": "Popup khai báo · Cá nhân · chọn vai trò + OPC",
-  "viewport": 390,
-  "diffPct": 0.03743886313307525,
-  "size": "366×686",
-  "sha": "bf02c7c7"
- },
- {
-  "id": "P-101",
-  "name": "Popup khai báo · Cá nhân · danh sách OPC theo tỉnh",
-  "viewport": 1440,
-  "diffPct": 0.01094023505876469,
-  "size": "620×516",
-  "sha": "bf02c7c7"
- },
- {
-  "id": "P-101",
-  "name": "Popup khai báo · Cá nhân · danh sách OPC theo tỉnh",
-  "viewport": 390,
-  "diffPct": 0.04305348567643649,
-  "size": "366×660",
-  "sha": "bf02c7c7"
- },
- {
-  "id": "P-102",
-  "name": "Popup khai báo · Doanh nghiệp · MST đã tra + OPC",
-  "viewport": 1440,
-  "diffPct": 0.26235725598066184,
-  "size": "620×774",
-  "sha": "bf02c7c7"
- },
- {
-  "id": "P-102",
-  "name": "Popup khai báo · Doanh nghiệp · MST đã tra + OPC",
-  "viewport": 390,
-  "diffPct": 2.04816083516842,
-  "size": "366×804",
-  "sha": "bf02c7c7"
- },
- {
-  "id": "P-103",
-  "name": "Popup Gói Gọi vốn · chọn dự án (từ Bảng giá)",
-  "viewport": 1440,
-  "diffPct": 1.6133980698200883,
-  "size": "880×763",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-103",
-  "name": "Popup Gói Gọi vốn · chọn dự án (từ Bảng giá)",
-  "viewport": 390,
-  "diffPct": 2.9079330125329634,
-  "size": "366×804",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-104",
-  "name": "Popup Gói Gọi vốn · sau khi gửi dự án có gọi vốn",
-  "viewport": 1440,
-  "diffPct": 1.2806803288454665,
-  "size": "880×763",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-104",
-  "name": "Popup Gói Gọi vốn · sau khi gửi dự án có gọi vốn",
-  "viewport": 390,
-  "diffPct": 2.4545985917407496,
-  "size": "366×804",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-105",
-  "name": "Gian hàng · Khám phá (mặc định)",
-  "viewport": 1440,
-  "diffPct": 0.09728761720793594,
-  "size": "1440×2761",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-105",
-  "name": "Gian hàng · Khám phá (mặc định)",
-  "viewport": 390,
-  "diffPct": 0.14393581878244455,
-  "size": "390×6846",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-106",
-  "name": "Khám phá · lọc ô danh mục Thủy sản",
-  "viewport": 1440,
-  "diffPct": 0.0022345984598459846,
-  "size": "1440×1212",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-106",
-  "name": "Khám phá · lọc ô danh mục Thủy sản",
-  "viewport": 390,
-  "diffPct": 0.001870632407370292,
-  "size": "390×1919",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-107",
-  "name": "Khám phá · không có kết quả",
-  "viewport": 1440,
-  "diffPct": 0.0635428126145948,
-  "size": "1440×1212",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-107",
-  "name": "Khám phá · không có kết quả",
-  "viewport": 390,
-  "diffPct": 0.8498842541395734,
-  "size": "390×1739",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-108",
-  "name": "Chi tiết gian hàng (HTX Cà phê Hòa Phú)",
-  "viewport": 1440,
-  "diffPct": 2.4963734567901232,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-108",
-  "name": "Chi tiết gian hàng (HTX Cà phê Hòa Phú)",
-  "viewport": 390,
-  "diffPct": 0.2558026491675781,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-108-PROJECT-FORM",
-  "name": "Gian hàng của tôi · form đăng dự án điền sẵn",
-  "viewport": 1440,
-  "diffPct": 0.4810956790123457,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-108-PROJECT-FORM",
-  "name": "Gian hàng của tôi · form đăng dự án điền sẵn",
-  "viewport": 390,
-  "diffPct": 2.432251792441366,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-108-PROJECTS",
-  "name": "Gian hàng của tôi · khối Dự án OPC",
-  "viewport": 1440,
-  "diffPct": 0,
-  "size": "1136×202",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-108-PROJECTS",
-  "name": "Gian hàng của tôi · khối Dự án OPC",
-  "viewport": 390,
-  "diffPct": 0.2962181464048044,
-  "size": "366×202",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-109",
-  "name": "Gian hàng của tôi · dashboard số thật (lời chào)",
-  "viewport": 1440,
-  "diffPct": 0,
-  "size": "640×147",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-109",
-  "name": "Gian hàng của tôi · dashboard số thật (lời chào)",
-  "viewport": 390,
-  "diffPct": 0,
-  "size": "366×171",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-11",
-  "name": "Topbar · ngôn ngữ",
-  "viewport": 1440,
-  "diffPct": 0.0024691358024691358,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-11",
-  "name": "Topbar · ngôn ngữ",
-  "viewport": 390,
-  "diffPct": 0.0021266253493741646,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-111",
-  "name": "Nhu cầu · tất cả (mặc định)",
-  "viewport": 1440,
-  "diffPct": 0.0029602696979828375,
-  "size": "1440×1994",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-111",
-  "name": "Nhu cầu · tất cả (mặc định)",
-  "viewport": 390,
-  "diffPct": 0.003250499764338767,
-  "size": "390×4733",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-112",
-  "name": "Nhu cầu · lọc chip \"Cần mua\"",
-  "viewport": 1440,
-  "diffPct": 0.0027056277056277055,
-  "size": "1440×1232",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-112",
-  "name": "Nhu cầu · lọc chip \"Cần mua\"",
-  "viewport": 390,
-  "diffPct": 0.002663701850693721,
-  "size": "390×2214",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-113",
-  "name": "Nhu cầu · không có kết quả",
-  "viewport": 1440,
-  "diffPct": 0.05347222222222223,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-113",
-  "name": "Nhu cầu · không có kết quả",
-  "viewport": 390,
-  "diffPct": 2.019263575046584,
-  "size": "390×977",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-114",
-  "name": "Đăng nhu cầu · form",
-  "viewport": 1440,
-  "diffPct": 0.023677854055428427,
-  "size": "760×828",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-114",
-  "name": "Đăng nhu cầu · form",
-  "viewport": 390,
-  "diffPct": 0,
-  "size": "366×776",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-115",
-  "name": "Nhu cầu của tôi",
-  "viewport": 1440,
-  "diffPct": 0.005324074074074075,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-115",
-  "name": "Nhu cầu của tôi",
-  "viewport": 390,
-  "diffPct": 0.00820269777615749,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-119",
-  "name": "Dashboard · Hướng dẫn bắt đầu (M1 đã phí)",
-  "viewport": 1440,
-  "diffPct": 0,
-  "size": "1136×811",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-119",
-  "name": "Dashboard · Hướng dẫn bắt đầu (M1 đã phí)",
-  "viewport": 390,
-  "diffPct": 0.0012747622568390995,
-  "size": "366×1286",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-12",
-  "name": "Topbar · menu người dùng",
-  "viewport": 1440,
-  "diffPct": 0.002391975308641975,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-12",
-  "name": "Topbar · menu người dùng",
-  "viewport": 390,
-  "diffPct": 0.0021266253493741646,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-121",
-  "name": "Chat · tin đã bị ẩn sau khi báo cáo (V4-612)",
-  "viewport": 1440,
-  "diffPct": 1.221682098765432,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-121",
-  "name": "Chat · tin đã bị ẩn sau khi báo cáo (V4-612)",
-  "viewport": 390,
-  "diffPct": 2.9526673957953578,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-13",
-  "name": "Sidebar thu gọn",
-  "viewport": 1440,
-  "diffPct": 0.057412358882947115,
-  "size": "1440×935",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-14",
-  "name": "Drawer điều hướng",
-  "viewport": 390,
-  "diffPct": 0.007595090533479159,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-15",
-  "name": "Breadcrumb Trang chủ",
-  "viewport": 1440,
-  "diffPct": 0.0023024361259655376,
-  "size": "1440×935",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-17",
-  "name": "Cộng đồng",
-  "viewport": 1440,
-  "diffPct": 0.29865967365967366,
-  "size": "1440×1716",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-17",
-  "name": "Cộng đồng",
-  "viewport": 390,
-  "diffPct": 0.4318427117061929,
-  "size": "390×4395",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-18",
-  "name": "Cộng đồng · tìm kiếm",
-  "viewport": 1440,
-  "diffPct": 0.16938813813813813,
-  "size": "1440×1332",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-18",
-  "name": "Cộng đồng · tìm kiếm",
-  "viewport": 390,
-  "diffPct": 0.33024287279236914,
-  "size": "390×2879",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-19",
-  "name": "Cộng đồng · đã tham gia",
-  "viewport": 1440,
-  "diffPct": 0.25602144866385373,
-  "size": "1440×948",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-19",
-  "name": "Cộng đồng · đã tham gia",
-  "viewport": 390,
-  "diffPct": 0.42532506987483293,
-  "size": "390×2110",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-20",
-  "name": "Cộng đồng · khu vực + sắp xếp",
-  "viewport": 1440,
-  "diffPct": 0.26203541828541826,
-  "size": "1440×1716",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-20",
-  "name": "Cộng đồng · khu vực + sắp xếp",
-  "viewport": 390,
-  "diffPct": 0.37462839093273875,
-  "size": "390×4416",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-21",
-  "name": "Cộng đồng · trống",
-  "viewport": 1440,
-  "diffPct": 0.011342592592592593,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-21",
-  "name": "Cộng đồng · trống",
-  "viewport": 390,
-  "diffPct": 0.14216341755225562,
-  "size": "390×1093",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-22",
-  "name": "Cộng đồng · trang 2",
-  "viewport": 1440,
-  "diffPct": 0.28724747474747475,
-  "size": "1440×1716",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-22",
-  "name": "Cộng đồng · trang 2",
-  "viewport": 390,
-  "diffPct": 1.2954640468227425,
-  "size": "390×4416",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-23",
-  "name": "Tham gia · nhóm công khai",
-  "viewport": 1440,
-  "diffPct": 0.13449074074074074,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-23",
-  "name": "Tham gia · nhóm công khai",
-  "viewport": 390,
-  "diffPct": 0.008506501397496658,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-26",
-  "name": "Cộng đồng · đã tham gia nhóm công khai",
-  "viewport": 1440,
-  "diffPct": 0.29865967365967366,
-  "size": "1440×1716",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-26",
-  "name": "Cộng đồng · đã tham gia nhóm công khai",
-  "viewport": 390,
-  "diffPct": 0.3950876578862927,
-  "size": "390×4395",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-27",
-  "name": "Cộng đồng · rời nhóm",
-  "viewport": 1440,
-  "diffPct": 0.29865967365967366,
-  "size": "1440×1716",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-27",
-  "name": "Cộng đồng · rời nhóm",
-  "viewport": 390,
-  "diffPct": 0.4249000904291007,
-  "size": "390×4395",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-28",
-  "name": "Chat · phòng mặc định",
-  "viewport": 1440,
-  "diffPct": 0.5096450617283951,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-28",
-  "name": "Chat · phòng mặc định",
-  "viewport": 390,
-  "diffPct": 1.1969862680763155,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-29",
-  "name": "Chat · đổi chủ đề",
-  "viewport": 1440,
-  "diffPct": 0.1308641975308642,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-30",
-  "name": "Chat · đổi nhóm",
-  "viewport": 1440,
-  "diffPct": 0.11496913580246913,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-30",
-  "name": "Chat · đổi nhóm",
-  "viewport": 390,
-  "diffPct": 0.5362133916636287,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-34",
-  "name": "Chat · đã gửi tin",
-  "viewport": 1440,
-  "diffPct": 0.7778549382716049,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-34",
-  "name": "Chat · đã gửi tin",
-  "viewport": 390,
-  "diffPct": 2.5385830599100743,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-35",
-  "name": "Chat · gợi ý nhắc tên",
-  "viewport": 1440,
-  "diffPct": 0.14753086419753086,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-35",
-  "name": "Chat · gợi ý nhắc tên",
-  "viewport": 390,
-  "diffPct": 0.5672013610402236,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-36",
-  "name": "Chat · chọn tin",
-  "viewport": 1440,
-  "diffPct": 0.5096450617283951,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-36",
-  "name": "Chat · chọn tin",
-  "viewport": 390,
-  "diffPct": 1.3327864868149228,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-37",
-  "name": "Chat · đang trả lời",
-  "viewport": 1440,
-  "diffPct": 0.38796296296296295,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-37",
-  "name": "Chat · đang trả lời",
-  "viewport": 390,
-  "diffPct": 1.1644792805930246,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-38",
-  "name": "Chat · danh sách ghim",
-  "viewport": 1440,
-  "diffPct": 0.38796296296296295,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-38",
-  "name": "Chat · danh sách ghim",
-  "viewport": 390,
-  "diffPct": 1.1641754769716854,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-39",
-  "name": "Chat · tìm trong phòng",
-  "viewport": 1440,
-  "diffPct": 0.319212962962963,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-39",
-  "name": "Chat · tìm trong phòng",
-  "viewport": 390,
-  "diffPct": 1.0308056872037916,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-40",
-  "name": "Chat · bảng Thành viên",
-  "viewport": 1440,
-  "diffPct": 1.436496913580247,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-40",
-  "name": "Chat · bảng Thành viên",
-  "viewport": 390,
-  "diffPct": 4.314011423016162,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-42",
-  "name": "Chat · bảng File chia sẻ",
-  "viewport": 1440,
-  "diffPct": 1.0979938271604939,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-43",
-  "name": "Chat · bảng Đã ghim",
-  "viewport": 1440,
-  "diffPct": 0.37993827160493826,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-44",
-  "name": "Modal báo cáo tin",
-  "viewport": 1440,
-  "diffPct": 0.18626543209876542,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-44",
-  "name": "Modal báo cáo tin",
-  "viewport": 390,
-  "diffPct": 0.4557054320087495,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-45",
-  "name": "Chat · đã báo cáo tin",
-  "viewport": 1440,
-  "diffPct": 1.221682098765432,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-45",
-  "name": "Chat · đã báo cáo tin",
-  "viewport": 390,
-  "diffPct": 2.9526673957953578,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-46",
-  "name": "Chat · xem trước nhóm chưa tham gia",
-  "viewport": 1440,
-  "diffPct": 0.11728395061728394,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-46",
-  "name": "Chat · xem trước nhóm chưa tham gia",
-  "viewport": 390,
-  "diffPct": 0.44264187629116536,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-47",
-  "name": "Chat · chưa tham gia nhóm nào",
-  "viewport": 1440,
-  "diffPct": 0.7720679012345679,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-47",
-  "name": "Chat · chưa tham gia nhóm nào",
-  "viewport": 390,
-  "diffPct": 2.3089075221776643,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-48",
-  "name": "Chat · tham gia thêm nhóm",
-  "viewport": 1440,
-  "diffPct": 0.29865967365967366,
-  "size": "1440×1716",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-48",
-  "name": "Chat · tham gia thêm nhóm",
-  "viewport": 390,
-  "diffPct": 0.6291531752282605,
-  "size": "390×4395",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-49",
-  "name": "Sự kiện",
-  "viewport": 1440,
-  "diffPct": 0.04435770049680624,
-  "size": "1440×1409",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-49",
-  "name": "Sự kiện",
-  "viewport": 390,
-  "diffPct": 0.07911880523345492,
-  "size": "390×2826",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-50",
-  "name": "Sự kiện · đã đăng ký",
-  "viewport": 1440,
-  "diffPct": 0.02805836139169473,
-  "size": "1440×990",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-50",
-  "name": "Sự kiện · đã đăng ký",
-  "viewport": 390,
-  "diffPct": 0.08110717734148697,
-  "size": "390×1195",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-51",
-  "name": "Sự kiện · trống",
-  "viewport": 1440,
-  "diffPct": 0.06898148148148148,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-51",
-  "name": "Sự kiện · trống",
-  "viewport": 390,
-  "diffPct": 2.165760720364575,
-  "size": "390×934",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-52",
-  "name": "Chi tiết sự kiện",
-  "viewport": 1440,
-  "diffPct": 0.032407407407407406,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-52",
-  "name": "Chi tiết sự kiện",
-  "viewport": 390,
-  "diffPct": 0,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-53",
-  "name": "Sự kiện · đăng ký e1",
-  "viewport": 1440,
-  "diffPct": 0.04435770049680624,
-  "size": "1440×1409",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-53",
-  "name": "Sự kiện · đăng ký e1",
-  "viewport": 390,
-  "diffPct": 0.07911880523345492,
-  "size": "390×2826",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-54",
-  "name": "Sự kiện · hết chỗ",
-  "viewport": 1440,
-  "diffPct": 0.032407407407407406,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-54",
-  "name": "Sự kiện · hết chỗ",
-  "viewport": 390,
-  "diffPct": 0,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-55",
-  "name": "Dự án · khám phá",
-  "viewport": 1440,
-  "diffPct": 5.309194539736993,
-  "size": "1440×2332",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-55",
-  "name": "Dự án · khám phá",
-  "viewport": 390,
-  "diffPct": 16.940373828895464,
-  "size": "390×6656",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-55-RENEWED",
-  "name": "Dự án · khám phá · sau khi Admin ghi nhận phí chủ p4",
-  "viewport": 1440,
-  "diffPct": 0.04407280350676577,
-  "size": "1440×2332",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-55-RENEWED",
-  "name": "Dự án · khám phá · sau khi Admin ghi nhận phí chủ p4",
-  "viewport": 390,
-  "diffPct": 0.5227209689349113,
-  "size": "390×6656",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-55-RENEWED-VIEWS",
-  "name": "Dự án · sau gia hạn · lưới sắp xếp nhiều lượt xem",
-  "viewport": 1440,
-  "diffPct": 0.09645061728395062,
-  "size": "1440×2304",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-55-RENEWED-VIEWS",
-  "name": "Dự án · sau gia hạn · lưới sắp xếp nhiều lượt xem",
-  "viewport": 390,
-  "diffPct": 0.5889808308678501,
-  "size": "390×6656",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-56",
-  "name": "Dự án · dạng bảng",
-  "viewport": 1440,
-  "diffPct": 2.949241463156782,
-  "size": "1440×2102",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-56",
-  "name": "Dự án · dạng bảng",
-  "viewport": 390,
-  "diffPct": 9.053369721732187,
-  "size": "587×5402",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-56-RENEWED",
-  "name": "Dự án · dạng bảng · sau khi Admin ghi nhận phí chủ p4",
-  "viewport": 1440,
-  "diffPct": 0.0469790675547098,
-  "size": "1440×2102",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-56-RENEWED",
-  "name": "Dự án · dạng bảng · sau khi Admin ghi nhận phí chủ p4",
-  "viewport": 390,
-  "diffPct": 0.12891937934527373,
-  "size": "587×5402",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-57",
-  "name": "Dự án · lọc giai đoạn + sắp xếp",
-  "viewport": 1440,
-  "diffPct": 3.2950430806639184,
-  "size": "1440×2102",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-57",
-  "name": "Dự án · lọc giai đoạn + sắp xếp",
-  "viewport": 390,
-  "diffPct": 11.65643020138559,
-  "size": "390×4371",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-57-RENEWED",
-  "name": "Dự án · lọc giai đoạn + sắp xếp · sau khi Admin ghi nhận phí chủ p4",
-  "viewport": 1440,
-  "diffPct": 0.10380325615815625,
-  "size": "1440×2102",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-57-RENEWED",
-  "name": "Dự án · lọc giai đoạn + sắp xếp · sau khi Admin ghi nhận phí chủ p4",
-  "viewport": 390,
-  "diffPct": 0.3797171333204278,
-  "size": "390×4371",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-58",
-  "name": "Dự án · trống",
-  "viewport": 1440,
-  "diffPct": 0.03352876238214584,
-  "size": "1440×1862",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-58",
-  "name": "Dự án · trống",
-  "viewport": 390,
-  "diffPct": 0.052369120336818856,
-  "size": "390×2972",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-59",
-  "name": "Dự án · theo dõi",
-  "viewport": 1440,
-  "diffPct": 2.9264457130774923,
-  "size": "1440×2102",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-59",
-  "name": "Dự án · theo dõi",
-  "viewport": 390,
-  "diffPct": 9.206981829557732,
-  "size": "587×5402",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-59-RENEWED",
-  "name": "Dự án · theo dõi · sau khi Admin ghi nhận phí chủ p4",
-  "viewport": 1440,
-  "diffPct": 0.0469790675547098,
-  "size": "1440×2102",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-59-RENEWED",
-  "name": "Dự án · theo dõi · sau khi Admin ghi nhận phí chủ p4",
-  "viewport": 390,
-  "diffPct": 0.14172301633504406,
-  "size": "587×5402",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-60",
-  "name": "Dự án của tôi",
-  "viewport": 1440,
-  "diffPct": 0.015200617283950618,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-60",
-  "name": "Dự án của tôi",
-  "viewport": 390,
-  "diffPct": 0.053165633734354116,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-62",
-  "name": "Chi tiết dự án · Tổng quan",
-  "viewport": 1440,
-  "diffPct": 0.8933823529411765,
-  "size": "1440×1530",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-62",
-  "name": "Chi tiết dự án · Tổng quan",
-  "viewport": 390,
-  "diffPct": 1.7961329879604568,
-  "size": "390×2643",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-63",
-  "name": "Chi tiết dự án · Cập nhật",
-  "viewport": 1440,
-  "diffPct": 0.3725592747559275,
-  "size": "1440×1195",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-63",
-  "name": "Chi tiết dự án · Cập nhật",
-  "viewport": 390,
-  "diffPct": 1.5823442837660846,
-  "size": "390×1899",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-64",
-  "name": "Chi tiết dự án · Đội ngũ",
-  "viewport": 1440,
-  "diffPct": 0.36953742445374244,
-  "size": "1440×1195",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-64",
-  "name": "Chi tiết dự án · Đội ngũ",
-  "viewport": 390,
-  "diffPct": 1.623885096938989,
-  "size": "390×1837",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-65",
-  "name": "Chi tiết dự án · Góp ý",
-  "viewport": 1440,
-  "diffPct": 0.3377420661217878,
-  "size": "1440×1509",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-65",
-  "name": "Chi tiết dự án · Góp ý",
-  "viewport": 390,
-  "diffPct": 0.9759403592002711,
-  "size": "390×2497",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-66",
-  "name": "Góp ý · ô trả lời",
-  "viewport": 1440,
-  "diffPct": 0.3002095422308188,
-  "size": "1440×1551",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-66",
-  "name": "Góp ý · ô trả lời",
-  "viewport": 390,
-  "diffPct": 0.694398157966492,
-  "size": "390×2539",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-67",
-  "name": "Góp ý · trống",
-  "viewport": 1440,
-  "diffPct": 0.4217450869236584,
-  "size": "1440×1176",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-67",
-  "name": "Góp ý · trống",
-  "viewport": 390,
-  "diffPct": 0.819536536088625,
-  "size": "390×1891",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-68",
-  "name": "Dự án · repo riêng tư, đã xin quyền",
-  "viewport": 1440,
-  "diffPct": 1.805466409927257,
-  "size": "1440×1558",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-68",
-  "name": "Dự án · repo riêng tư, đã xin quyền",
-  "viewport": 390,
-  "diffPct": 2.3321214203238765,
-  "size": "390×2687",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-73",
-  "name": "Form đăng dự án",
-  "viewport": 1440,
-  "diffPct": 0.38410493827160497,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-73",
-  "name": "Form đăng dự án",
-  "viewport": 390,
-  "diffPct": 2.0534086766314257,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-74",
-  "name": "Form dự án · báo thiếu tên",
-  "viewport": 1440,
-  "diffPct": 0.6101080246913579,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-74",
-  "name": "Form dự án · báo thiếu tên",
-  "viewport": 390,
-  "diffPct": 2.4878478551464336,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-75",
-  "name": "Form dự án · mở gọi vốn",
-  "viewport": 1440,
-  "diffPct": 0.1462962962962963,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-75",
-  "name": "Form dự án · mở gọi vốn",
-  "viewport": 390,
-  "diffPct": 2.2836918216065136,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-76",
-  "name": "Form dự án · chỉnh sửa",
-  "viewport": 1440,
-  "diffPct": 0.33603395061728397,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-76",
-  "name": "Form dự án · chỉnh sửa",
-  "viewport": 390,
-  "diffPct": 2.377263336978977,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-77",
-  "name": "Dự án · đã lưu nháp",
-  "viewport": 1440,
-  "diffPct": 0.02330246913580247,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-77",
-  "name": "Dự án · đã lưu nháp",
-  "viewport": 390,
-  "diffPct": 0.0842911877394636,
-  "size": "390×870",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-78",
-  "name": "Modal chia sẻ dự án",
-  "viewport": 1440,
-  "diffPct": 0.032638888888888884,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-78",
-  "name": "Modal chia sẻ dự án",
-  "viewport": 390,
-  "diffPct": 0.7230526187872159,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-79",
-  "name": "Popup Gói dịch vụ",
-  "viewport": 1440,
-  "diffPct": 0.004012345679012346,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-79",
-  "name": "Popup Gói dịch vụ",
-  "viewport": 1366,
-  "diffPct": 0.30674261835041483,
-  "size": "1366×768",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-79",
-  "name": "Popup Gói dịch vụ",
-  "viewport": 390,
-  "diffPct": 0.0030380362133916633,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-80",
-  "name": "Form tư vấn · cá nhân",
-  "viewport": 1440,
-  "diffPct": 0.012972363226170333,
-  "size": "1440×985",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-80",
-  "name": "Form tư vấn · cá nhân",
-  "viewport": 390,
-  "diffPct": 0.04509627855931358,
-  "size": "390×1285",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-81",
-  "name": "Form tư vấn · doanh nghiệp (mặc định)",
-  "viewport": 1440,
-  "diffPct": 0.012235759658440072,
-  "size": "1440×1067",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-81",
-  "name": "Form tư vấn · doanh nghiệp (mặc định)",
-  "viewport": 390,
-  "diffPct": 0.04212454212454213,
-  "size": "390×1400",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-82",
-  "name": "Form tư vấn · báo thiếu",
-  "viewport": 1440,
-  "diffPct": 0.5431896282411747,
-  "size": "1440×1067",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-82",
-  "name": "Form tư vấn · báo thiếu",
-  "viewport": 390,
-  "diffPct": 0.49633699633699635,
-  "size": "390×1400",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-83",
-  "name": "Đã gửi yêu cầu tư vấn",
-  "viewport": 1440,
-  "diffPct": 0.0033179012345679014,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-83",
-  "name": "Đã gửi yêu cầu tư vấn",
-  "viewport": 390,
-  "diffPct": 0.00668367966946166,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-84",
-  "name": "Thông tin chuyển khoản (Điều kiện thanh toán, NR-R01)",
-  "viewport": 1440,
-  "diffPct": 0.5141975308641976,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-84",
-  "name": "Thông tin chuyển khoản (Điều kiện thanh toán, NR-R01)",
-  "viewport": 390,
-  "diffPct": 1.8453031960140964,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-85",
-  "name": "Chuyển khoản · đã sao chép",
-  "viewport": 1440,
-  "diffPct": 0.5141975308641976,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-85",
-  "name": "Chuyển khoản · đã sao chép",
-  "viewport": 390,
-  "diffPct": 1.844391785150079,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-86",
-  "name": "Chuyển khoản · đang đối soát",
-  "viewport": 1440,
-  "diffPct": 0.5141975308641976,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-86",
-  "name": "Chuyển khoản · đang đối soát",
-  "viewport": 390,
-  "diffPct": 0.9973872888564831,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-89",
-  "name": "Hồ sơ · thông tin cá nhân",
-  "viewport": 1440,
-  "diffPct": 0.05570987654320988,
-  "size": "1440×900",
-  "sha": "4edc365c"
- },
- {
-  "id": "P-89",
-  "name": "Hồ sơ · thông tin cá nhân",
-  "viewport": 390,
-  "diffPct": 0.10818277767430311,
-  "size": "390×1652",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-90",
-  "name": "Hồ sơ · báo thiếu họ tên",
-  "viewport": 1440,
-  "diffPct": 0.05570987654320988,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-90",
-  "name": "Hồ sơ · báo thiếu họ tên",
-  "viewport": 390,
-  "diffPct": 0.10818277767430311,
-  "size": "390×1652",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-91",
-  "name": "Hồ sơ · thông tin doanh nghiệp",
-  "viewport": 1440,
-  "diffPct": 0.7084104938271605,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-91",
-  "name": "Hồ sơ · thông tin doanh nghiệp",
-  "viewport": 390,
-  "diffPct": 1.7364881013349722,
-  "size": "390×1502",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-92",
-  "name": "Hồ sơ · nhóm & hoạt động",
-  "viewport": 1440,
-  "diffPct": 0.015354938271604938,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-92",
-  "name": "Hồ sơ · nhóm & hoạt động",
-  "viewport": 390,
-  "diffPct": 0.3333690450682094,
-  "size": "390×1436",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-93",
-  "name": "Hồ sơ · bảo mật",
-  "viewport": 1440,
-  "diffPct": 0.02507716049382716,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-93",
-  "name": "Hồ sơ · bảo mật",
-  "viewport": 390,
-  "diffPct": 0.1494610698266051,
-  "size": "390×1532",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-94",
-  "name": "Đổi mật khẩu · báo thiếu",
-  "viewport": 1440,
-  "diffPct": 0.02507716049382716,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-94",
-  "name": "Đổi mật khẩu · báo thiếu",
-  "viewport": 390,
-  "diffPct": 0.2691303474593292,
-  "size": "390×1532",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-96",
-  "name": "Chi tiết sự kiện · đã đăng ký (link Meet)",
-  "viewport": 1440,
-  "diffPct": 0.029552469135802468,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-96",
-  "name": "Chi tiết sự kiện · đã đăng ký (link Meet)",
-  "viewport": 390,
-  "diffPct": 0.004253250698748329,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-97",
-  "name": "Portal · Affiliate",
-  "viewport": 1440,
-  "diffPct": 0.7875733704046958,
-  "size": "1440×1079",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-97",
-  "name": "Portal · Affiliate",
-  "viewport": 390,
-  "diffPct": 0.6561008861622358,
-  "size": "390×1956",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-98",
-  "name": "Portal · Affiliate · Lịch sử nhận tiền",
-  "viewport": 1440,
-  "diffPct": 0.8656400966183576,
-  "size": "1440×920",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-98",
-  "name": "Portal · Affiliate · Lịch sử nhận tiền",
-  "viewport": 390,
-  "diffPct": 0.9260701577556849,
-  "size": "390×1679",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-99",
-  "name": "Sidebar Portal §27.3 · nhóm menu + thẻ gói",
-  "viewport": 1440,
-  "diffPct": 0.011200716845878136,
-  "size": "248×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "P-99-DRAWER",
-  "name": "Drawer Portal §27.3 · nhóm menu + thẻ gói",
-  "viewport": 390,
-  "diffPct": 0.01089001951491497,
-  "size": "272×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-01",
-  "name": "Admin AppShell · Tổng quan",
-  "viewport": 1440,
-  "diffPct": 0.09112654320987655,
-  "size": "1440×900",
-  "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-01",
-  "name": "Admin AppShell · Tổng quan",
-  "viewport": 390,
-  "diffPct": 0.09174869364442824,
-  "size": "390×844",
-  "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-02",
-  "name": "Admin · menu người dùng",
-  "viewport": 1440,
-  "diffPct": 0.08765432098765433,
-  "size": "1440×900",
-  "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-02",
-  "name": "Admin · menu người dùng",
-  "viewport": 390,
-  "diffPct": 0.08324219224693158,
-  "size": "390×844",
-  "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-03",
-  "name": "Admin · Hồ sơ cá nhân (không đổi màn)",
-  "viewport": 1440,
-  "diffPct": 1.7953606609469337,
-  "size": "1440×1049",
-  "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-03",
-  "name": "Admin · Hồ sơ cá nhân (không đổi màn)",
-  "viewport": 390,
-  "diffPct": 1.106503559333748,
-  "size": "390×1855",
-  "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-04",
-  "name": "Admin · thông báo",
-  "viewport": 1440,
-  "diffPct": 0.08912037037037038,
-  "size": "1440×900",
-  "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-04",
-  "name": "Admin · thông báo",
-  "viewport": 390,
-  "diffPct": 0.004557054320087495,
-  "size": "390×844",
-  "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-05",
-  "name": "Admin · sidebar thu gọn",
-  "viewport": 1440,
-  "diffPct": 1.8913201160541584,
-  "size": "1440×1034",
-  "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-06",
-  "name": "Admin · drawer điều hướng",
-  "viewport": 390,
-  "diffPct": 0.054684651841049946,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-07",
-  "name": "Thành viên · danh sách",
-  "viewport": 1440,
-  "diffPct": 0.04406215867341873,
-  "size": "1440×1119",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-07",
-  "name": "Thành viên · danh sách",
-  "viewport": 390,
-  "diffPct": 0.045994873581080474,
-  "size": "390×2871",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-08",
-  "name": "Thành viên · lưới",
-  "viewport": 1440,
-  "diffPct": 0.14466089466089466,
-  "size": "1440×1155",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-08",
-  "name": "Thành viên · lưới",
-  "viewport": 390,
-  "diffPct": 0.16856740424371847,
-  "size": "390×3386",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-09",
-  "name": "Thành viên · lọc Doanh nghiệp",
-  "viewport": 1440,
-  "diffPct": 0.05416666666666666,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-09",
-  "name": "Thành viên · lọc Doanh nghiệp",
-  "viewport": 390,
-  "diffPct": 0.07275552730098185,
-  "size": "390×1815",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-10",
-  "name": "Thành viên · chọn nhiều",
-  "viewport": 1440,
-  "diffPct": 0.044202592279515354,
-  "size": "1440×1183",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-10",
-  "name": "Thành viên · chọn nhiều",
-  "viewport": 390,
-  "diffPct": 0.4167947010823176,
-  "size": "390×3004",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-100",
-  "name": "Cài đặt · Cấu hình bảng giá",
-  "viewport": 1440,
-  "diffPct": 0.12816358024691357,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-100",
-  "name": "Cài đặt · Cấu hình bảng giá",
-  "viewport": 390,
-  "diffPct": 7.643584299635255,
-  "size": "390×1884",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-11",
-  "name": "Thành viên · khóa hàng loạt",
-  "viewport": 1440,
-  "diffPct": 0.04406215867341873,
-  "size": "1440×1119",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-11",
-  "name": "Thành viên · khóa hàng loạt",
-  "viewport": 390,
-  "diffPct": 0.045994873581080474,
-  "size": "390×2871",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-12",
-  "name": "Modal gán vào nhóm",
-  "viewport": 1440,
-  "diffPct": 0.014274691358024692,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-12",
-  "name": "Modal gán vào nhóm",
-  "viewport": 390,
-  "diffPct": 0.0039494470774091624,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-13",
-  "name": "Thành viên · menu dòng",
-  "viewport": 1440,
-  "diffPct": 0.01828703703703704,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-13",
-  "name": "Thành viên · menu dòng",
-  "viewport": 390,
-  "diffPct": 0.0018228217280349982,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-14",
-  "name": "Thành viên · đã khóa 1 dòng",
-  "viewport": 1440,
-  "diffPct": 0.04406215867341873,
-  "size": "1440×1119",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-14",
-  "name": "Thành viên · đã khóa 1 dòng",
-  "viewport": 390,
-  "diffPct": 0.045994873581080474,
-  "size": "390×2871",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-16",
-  "name": "Drawer hồ sơ đăng ký",
-  "viewport": 1440,
-  "diffPct": 0.013117283950617283,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-16",
-  "name": "Drawer hồ sơ đăng ký",
-  "viewport": 390,
-  "diffPct": 0,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-17",
-  "name": "Thành viên · 6/trang, trang 2",
-  "viewport": 1440,
-  "diffPct": 0.03966049382716049,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-17",
-  "name": "Thành viên · 6/trang, trang 2",
-  "viewport": 390,
-  "diffPct": 0.06481368604981917,
-  "size": "390×1262",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-18",
-  "name": "Phí thành viên",
-  "viewport": 1440,
-  "diffPct": 0.15505485104669886,
-  "size": "1440×1104",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-18",
-  "name": "Phí thành viên",
-  "viewport": 390,
-  "diffPct": 0.2707712346266563,
-  "size": "390×3071",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-19",
-  "name": "Phí · chờ thanh toán",
-  "viewport": 1440,
-  "diffPct": 0.15601851851851853,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-19",
-  "name": "Phí · chờ thanh toán",
-  "viewport": 390,
-  "diffPct": 0.13580021873860734,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-20",
-  "name": "Phí · chọn nhiều",
-  "viewport": 1440,
-  "diffPct": 0.35423801369863017,
-  "size": "1440×1168",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-20",
-  "name": "Phí · chọn nhiều",
-  "viewport": 390,
-  "diffPct": 0.5447002897427827,
-  "size": "390×3177",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-21",
-  "name": "Phí · ghi nhận đã thu",
-  "viewport": 1440,
-  "diffPct": 0.2246880032206119,
-  "size": "1440×1104",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-21",
-  "name": "Phí · ghi nhận đã thu",
-  "viewport": 390,
-  "diffPct": 0.2178360009685311,
-  "size": "390×3071",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-22",
-  "name": "Phí · 6/trang, trang 2",
-  "viewport": 1440,
-  "diffPct": 0.15601851851851853,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-22",
-  "name": "Phí · 6/trang, trang 2",
-  "viewport": 390,
-  "diffPct": 0.06260547661821547,
-  "size": "390×1413",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-23",
-  "name": "Nhóm cộng đồng · lưới",
-  "viewport": 1440,
-  "diffPct": 0.04330014519809168,
-  "size": "1440×1607",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-23",
-  "name": "Nhóm cộng đồng · lưới",
-  "viewport": 390,
-  "diffPct": 0.03703753225741754,
-  "size": "390×5753",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-24",
-  "name": "Nhóm cộng đồng · danh sách",
-  "viewport": 1440,
-  "diffPct": 0.043465505527762335,
-  "size": "1440×1799",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-24",
-  "name": "Nhóm cộng đồng · danh sách",
-  "viewport": 390,
-  "diffPct": 0.06753221038935324,
-  "size": "390×3626",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-25",
-  "name": "Nhóm cộng đồng · Miền Trung",
-  "viewport": 1440,
-  "diffPct": 0.037731339206446765,
-  "size": "1440×1627",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-25",
-  "name": "Nhóm cộng đồng · Miền Trung",
-  "viewport": 390,
-  "diffPct": 0.030779890471558585,
-  "size": "390×5773",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-26",
-  "name": "Nhóm cộng đồng · chọn nhiều",
-  "viewport": 1440,
-  "diffPct": 0.0435751774318602,
-  "size": "1440×1863",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-26",
-  "name": "Nhóm cộng đồng · chọn nhiều",
-  "viewport": 390,
-  "diffPct": 0.060120931322867326,
-  "size": "390×3719",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-27",
-  "name": "Nhóm cộng đồng · trang 2",
-  "viewport": 1440,
-  "diffPct": 0.03959218781623153,
-  "size": "1440×1647",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-27",
-  "name": "Nhóm cộng đồng · trang 2",
-  "viewport": 390,
-  "diffPct": 0.6883502778184919,
-  "size": "390×5773",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-28",
-  "name": "Drawer tạo nhóm",
-  "viewport": 1440,
-  "diffPct": 1.0821759259259258,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-28",
-  "name": "Drawer tạo nhóm",
-  "viewport": 390,
-  "diffPct": 1.347976667881881,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-29",
-  "name": "Tạo nhóm · báo thiếu tên",
-  "viewport": 1440,
-  "diffPct": 1.2646604938271606,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-29",
-  "name": "Tạo nhóm · báo thiếu tên",
-  "viewport": 390,
-  "diffPct": 1.7249969619637866,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-30",
-  "name": "Drawer sửa nhóm",
-  "viewport": 1440,
-  "diffPct": 1.1529320987654321,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-30",
-  "name": "Drawer sửa nhóm",
-  "viewport": 390,
-  "diffPct": 1.4944100133673592,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-31",
-  "name": "Modal xuất danh sách thành viên",
-  "viewport": 1440,
-  "diffPct": 0.019598765432098764,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-31",
-  "name": "Modal xuất danh sách thành viên",
-  "viewport": 390,
-  "diffPct": 0.0003038036213391664,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-33",
-  "name": "Kiểm duyệt tin nhắn",
-  "viewport": 1440,
-  "diffPct": 0.18032407407407408,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-33",
-  "name": "Kiểm duyệt tin nhắn",
-  "viewport": 390,
-  "diffPct": 0.3348561057019365,
-  "size": "390×1667",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-34",
-  "name": "Kiểm duyệt · hết tin",
-  "viewport": 1440,
-  "diffPct": 0.015354938271604938,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-34",
-  "name": "Kiểm duyệt · hết tin",
-  "viewport": 390,
-  "diffPct": 0.007718034473887317,
-  "size": "390×897",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-35",
-  "name": "Kiểm duyệt · thêm từ khóa",
-  "viewport": 1440,
-  "diffPct": 0.18032407407407408,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-35",
-  "name": "Kiểm duyệt · thêm từ khóa",
-  "viewport": 390,
-  "diffPct": 3.1835171427253015,
-  "size": "390×1667",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-36",
-  "name": "Bot · nhật ký tự động",
-  "viewport": 1440,
-  "diffPct": 0.43389724310776945,
-  "size": "1440×931",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-36",
-  "name": "Bot · nhật ký tự động",
-  "viewport": 390,
-  "diffPct": 0.19339554223275154,
-  "size": "390×1591",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-36-REPLIES",
-  "name": "Bot · Trả lời từng tin",
-  "viewport": 1440,
-  "diffPct": 0.9812727335117699,
-  "size": "1440×1619",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-36-REPLIES",
-  "name": "Bot · Trả lời từng tin",
-  "viewport": 390,
-  "diffPct": 1.5004958209378099,
-  "size": "390×2715",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-36-SCHEDULE-CLEAR",
-  "name": "Bot · xóa lịch vẫn tạm dừng",
-  "viewport": 1440,
-  "diffPct": 0.4296455424274973,
-  "size": "1440×931",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-36-SCHEDULE-CLEAR",
-  "name": "Bot · xóa lịch vẫn tạm dừng",
-  "viewport": 390,
-  "diffPct": 0.18630437235088398,
-  "size": "390×1591",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-36-SCHEDULE-END",
-  "name": "Bot · hết lịch",
-  "viewport": 1440,
-  "diffPct": 0.45127700202888177,
-  "size": "1440×931",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-36-SCHEDULE-END",
-  "name": "Bot · hết lịch",
-  "viewport": 390,
-  "diffPct": 0.23953261927945474,
-  "size": "390×1580",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-36-SCHEDULE-PAUSE",
-  "name": "Bot · tạm dừng",
-  "viewport": 1440,
-  "diffPct": 0.4296455424274973,
-  "size": "1440×931",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-36-SCHEDULE-PAUSE",
-  "name": "Bot · tạm dừng",
-  "viewport": 390,
-  "diffPct": 0.18630437235088398,
-  "size": "390×1591",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-36-SCHEDULE-WAIT",
-  "name": "Bot · lịch tương lai",
-  "viewport": 1440,
-  "diffPct": 0.4511278195488722,
-  "size": "1440×931",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-36-SCHEDULE-WAIT",
-  "name": "Bot · lịch tương lai",
-  "viewport": 390,
-  "diffPct": 0.2421379004872287,
-  "size": "390×1563",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-37",
-  "name": "Bot · Persona",
-  "viewport": 1440,
-  "diffPct": 0.28085564789165895,
-  "size": "1440×1444",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-37",
-  "name": "Bot · Persona",
-  "viewport": 390,
-  "diffPct": 0.4705404705404706,
-  "size": "390×3663",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-38",
-  "name": "Drawer persona",
-  "viewport": 1440,
-  "diffPct": 0.08348765432098765,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-38",
-  "name": "Drawer persona",
-  "viewport": 390,
-  "diffPct": 0.12061003767164906,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-39",
-  "name": "Bot · Kịch bản hội thoại",
-  "viewport": 1440,
-  "diffPct": 0.5003714888313681,
-  "size": "1440×1159",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-39",
-  "name": "Bot · Kịch bản hội thoại",
-  "viewport": 390,
-  "diffPct": 0.4050350438183138,
-  "size": "390×2367",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-39-BULK",
-  "name": "Bot · AI tạo hàng loạt",
-  "viewport": 1440,
-  "diffPct": 0.5919753086419753,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-39-BULK",
-  "name": "Bot · AI tạo hàng loạt",
-  "viewport": 390,
-  "diffPct": 0.34542471746263215,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-39-BULK-FORM",
-  "name": "Bot · bulk đã nhập chủ đề/nhóm",
-  "viewport": 1440,
-  "diffPct": 0.5979166666666667,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-39-BULK-FORM",
-  "name": "Bot · bulk đã nhập chủ đề/nhóm",
-  "viewport": 390,
-  "diffPct": 0.6531777858792076,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-39-BULK-RESULT",
-  "name": "Bot · kết quả tạo AI hàng loạt",
-  "viewport": 1440,
-  "diffPct": 5.4954475308641975,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-39-BULK-RESULT",
-  "name": "Bot · kết quả tạo AI hàng loạt",
-  "viewport": 390,
-  "diffPct": 8.009174869364442,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-39-BULK-TYPE",
-  "name": "Bot · thêm loại hội thoại",
-  "viewport": 1440,
-  "diffPct": 0.7084104938271605,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-39-BULK-TYPE",
-  "name": "Bot · thêm loại hội thoại",
-  "viewport": 390,
-  "diffPct": 0.5185927816259569,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-40",
-  "name": "Drawer kịch bản",
-  "viewport": 1440,
-  "diffPct": 0.12260802469135804,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-40",
-  "name": "Drawer kịch bản",
-  "viewport": 390,
-  "diffPct": 0.39615992222627294,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-41",
-  "name": "Bot · Hội thoại",
-  "viewport": 1440,
-  "diffPct": 0.46601003139597214,
-  "size": "1440×1451",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-41",
-  "name": "Bot · Hội thoại",
-  "viewport": 390,
-  "diffPct": 0.4048281200722498,
-  "size": "390×2683",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-42",
-  "name": "Sự kiện · lưới",
-  "viewport": 1440,
-  "diffPct": 0.23326824412282718,
-  "size": "1440×1451",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-42",
-  "name": "Sự kiện · lưới",
-  "viewport": 390,
-  "diffPct": 0.3725393805971744,
-  "size": "390×3599",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-43",
-  "name": "Sự kiện · danh sách",
-  "viewport": 1440,
-  "diffPct": 0.2635118149824032,
-  "size": "1440×1105",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-43",
-  "name": "Sự kiện · danh sách",
-  "viewport": 390,
-  "diffPct": 2.4028970270428127,
-  "size": "390×2634",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-44",
-  "name": "Sự kiện · Đã đầy → chi tiết sự kiện (Demo Day)",
-  "viewport": 1440,
-  "diffPct": 0.24422811853893867,
-  "size": "1440×1451",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-44",
-  "name": "Sự kiện · Đã đầy → chi tiết sự kiện (Demo Day)",
-  "viewport": 390,
-  "diffPct": 0.38073253966557663,
-  "size": "390×3599",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-45",
-  "name": "Sự kiện · 6/trang",
-  "viewport": 1440,
-  "diffPct": 0.23326824412282718,
-  "size": "1440×1451",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-45",
-  "name": "Sự kiện · 6/trang",
-  "viewport": 390,
-  "diffPct": 0.3725393805971744,
-  "size": "390×3599",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-46",
-  "name": "Drawer danh sách đăng ký",
-  "viewport": 1440,
-  "diffPct": 0.08456790123456791,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-46",
-  "name": "Drawer danh sách đăng ký",
-  "viewport": 390,
-  "diffPct": 0.12061003767164906,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-47",
-  "name": "Drawer tạo sự kiện",
-  "viewport": 1440,
-  "diffPct": 0.040200617283950614,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-47",
-  "name": "Drawer tạo sự kiện",
-  "viewport": 390,
-  "diffPct": 0.0039494470774091624,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-48",
-  "name": "Tạo sự kiện · Online",
-  "viewport": 1440,
-  "diffPct": 0.040200617283950614,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-48",
-  "name": "Tạo sự kiện · Online",
-  "viewport": 390,
-  "diffPct": 0.020354842629724146,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-49",
-  "name": "Drawer sửa sự kiện",
-  "viewport": 1440,
-  "diffPct": 0.06327160493827161,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-49",
-  "name": "Drawer sửa sự kiện",
-  "viewport": 390,
-  "diffPct": 0.04283631060882246,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-50",
-  "name": "Sự kiện · chia sẻ",
-  "viewport": 1440,
-  "diffPct": 0.23326824412282718,
-  "size": "1440×1451",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-50",
-  "name": "Sự kiện · chia sẻ",
-  "viewport": 390,
-  "diffPct": 0.3725393805971744,
-  "size": "390×3599",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-51",
-  "name": "Dự án · chờ duyệt",
-  "viewport": 1440,
-  "diffPct": 0.030246913580246913,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-51",
-  "name": "Dự án · chờ duyệt",
-  "viewport": 390,
-  "diffPct": 0.04698269175365113,
-  "size": "390×1157",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-52",
-  "name": "Dự án · Bị từ chối (trống)",
-  "viewport": 1440,
-  "diffPct": 0.06458333333333333,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-52",
-  "name": "Dự án · Bị từ chối (trống)",
-  "viewport": 390,
-  "diffPct": 0.1995989792198323,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-53",
-  "name": "Dự án · danh sách",
-  "viewport": 1440,
-  "diffPct": 0.1555888575458392,
-  "size": "1440×1418",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-53",
-  "name": "Dự án · danh sách",
-  "viewport": 390,
-  "diffPct": 0.10505265964538063,
-  "size": "390×2885",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-54",
-  "name": "Dự án · chọn nhiều",
-  "viewport": 1440,
-  "diffPct": 0.10648148148148148,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-54",
-  "name": "Dự án · chọn nhiều",
-  "viewport": 390,
-  "diffPct": 0.06009615384615385,
-  "size": "390×1088",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-55",
-  "name": "Drawer duyệt dự án",
-  "viewport": 1440,
-  "diffPct": 0.024537037037037034,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-55",
-  "name": "Drawer duyệt dự án",
-  "viewport": 390,
-  "diffPct": 0.04496293595819662,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-56",
-  "name": "Dự án · đã duyệt",
-  "viewport": 1440,
-  "diffPct": 0.029783950617283953,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-56",
-  "name": "Dự án · đã duyệt",
-  "viewport": 390,
-  "diffPct": 0.054684651841049946,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-57",
-  "name": "Dự án · Đang hiển thị",
-  "viewport": 1440,
-  "diffPct": 0.09265901482544238,
-  "size": "1440×1394",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-57",
-  "name": "Dự án · Đang hiển thị",
-  "viewport": 390,
-  "diffPct": 0.05755865219715748,
-  "size": "390×3693",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-58",
-  "name": "Nhà đầu tư",
-  "viewport": 1440,
-  "diffPct": 0.046141975308641975,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-58",
-  "name": "Nhà đầu tư",
-  "viewport": 390,
-  "diffPct": 0.0599865423986027,
-  "size": "390×1791",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-59",
-  "name": "Nhà đầu tư · Quỹ",
-  "viewport": 1440,
-  "diffPct": 0.046141975308641975,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-59",
-  "name": "Nhà đầu tư · Quỹ",
-  "viewport": 390,
-  "diffPct": 0.0599865423986027,
-  "size": "390×1791",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-60",
-  "name": "Drawer nhà đầu tư",
-  "viewport": 1440,
-  "diffPct": 0.3472222222222222,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-60",
-  "name": "Drawer nhà đầu tư",
-  "viewport": 390,
-  "diffPct": 1.2878235508567264,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-61",
-  "name": "Dịch vụ · yêu cầu",
-  "viewport": 1440,
-  "diffPct": 0.032484567901234565,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-61",
-  "name": "Dịch vụ · yêu cầu",
-  "viewport": 390,
-  "diffPct": 0.03586157432311279,
-  "size": "390×1716",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-62",
-  "name": "Dịch vụ · trống",
-  "viewport": 1440,
-  "diffPct": 0.056712962962962965,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-62",
-  "name": "Dịch vụ · trống",
-  "viewport": 390,
-  "diffPct": 0.16982622432859398,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-63",
-  "name": "Drawer yêu cầu YC-1005",
-  "viewport": 1440,
-  "diffPct": 0.765895061728395,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-63",
-  "name": "Drawer yêu cầu YC-1005",
-  "viewport": 390,
-  "diffPct": 1.9707740916271723,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-65",
-  "name": "Dịch vụ · danh mục",
-  "viewport": 1440,
-  "diffPct": 0.048718122014958995,
-  "size": "1440×1233",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-65",
-  "name": "Dịch vụ · danh mục",
-  "viewport": 390,
-  "diffPct": 0.14336036700253954,
-  "size": "390×1252",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-66",
-  "name": "Cài đặt · Chung",
-  "viewport": 1440,
-  "diffPct": 0.2368827160493827,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-66",
-  "name": "Cài đặt · Chung",
-  "viewport": 390,
-  "diffPct": 7.281393819855358,
-  "size": "390×1794",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-67",
-  "name": "Cài đặt · Danh mục lĩnh vực",
-  "viewport": 1440,
-  "diffPct": 0.22570203566049654,
-  "size": "1440×2287",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-67",
-  "name": "Cài đặt · Danh mục lĩnh vực",
-  "viewport": 390,
-  "diffPct": 5.404186105914791,
-  "size": "390×6826",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-68",
-  "name": "Lĩnh vực · đang sửa",
-  "viewport": 1440,
-  "diffPct": 0.2308336977117038,
-  "size": "1440×2287",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-68",
-  "name": "Lĩnh vực · đang sửa",
-  "viewport": 390,
-  "diffPct": 5.387620485774603,
-  "size": "390×6826",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-69",
-  "name": "Cài đặt · Vai trò & phân quyền",
-  "viewport": 1440,
-  "diffPct": 2.652467226979596,
-  "size": "1440×2102",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-69",
-  "name": "Cài đặt · Vai trò & phân quyền",
-  "viewport": 390,
-  "diffPct": 4.820554167478839,
-  "size": "390×8682",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-70",
-  "name": "Cài đặt · Email chào mừng",
-  "viewport": 1440,
-  "diffPct": 0.4409385113268608,
-  "size": "1440×1236",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-70",
-  "name": "Cài đặt · Email chào mừng",
-  "viewport": 390,
-  "diffPct": 11.758987407842369,
-  "size": "390×2751",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-71",
-  "name": "Cài đặt · SMTP",
-  "viewport": 1440,
-  "diffPct": 0.1850935093509351,
-  "size": "1440×1010",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-71",
-  "name": "Cài đặt · SMTP",
-  "viewport": 390,
-  "diffPct": 8.994082840236686,
-  "size": "390×1742",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-72",
-  "name": "SMTP · lỗi xác thực",
-  "viewport": 1440,
-  "diffPct": 0.1850935093509351,
-  "size": "1440×1010",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-72",
-  "name": "SMTP · lỗi xác thực",
-  "viewport": 390,
-  "diffPct": 11.540057753979656,
-  "size": "390×1767",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-73",
-  "name": "Cài đặt · Tài khoản quản trị",
-  "viewport": 1440,
-  "diffPct": 0.30146604938271604,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-73",
-  "name": "Cài đặt · Tài khoản quản trị",
-  "viewport": 390,
-  "diffPct": 7.745645863570391,
-  "size": "390×2120",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-74",
-  "name": "Tài khoản quản trị · hộp thoại tạo TK (§21 RB-R02)",
-  "viewport": 1440,
-  "diffPct": 0.740895061728395,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-74",
-  "name": "Tài khoản quản trị · hộp thoại tạo TK (§21 RB-R02)",
-  "viewport": 390,
-  "diffPct": 1.9516344634828047,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-75",
-  "name": "Cài đặt · Nhật ký hoạt động",
-  "viewport": 1440,
-  "diffPct": 0.3505401234567901,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-75",
-  "name": "Cài đặt · Nhật ký hoạt động",
-  "viewport": 390,
-  "diffPct": 7.579522424883249,
-  "size": "390×1455",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-80",
-  "name": "Toast toàn cục",
-  "viewport": 1440,
-  "diffPct": 0.12445987654320988,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-80",
-  "name": "Toast toàn cục",
-  "viewport": 390,
-  "diffPct": 4.690424109855389,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-81",
-  "name": "Xem thử vai trò Kế toán · menu + dải cam (RB-R09, AT-RB02)",
-  "viewport": 1440,
-  "diffPct": 0.09112654320987655,
-  "size": "1440×900",
-  "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-81",
-  "name": "Xem thử vai trò Kế toán · menu + dải cam (RB-R09, AT-RB02)",
-  "viewport": 390,
-  "diffPct": 0.09174869364442824,
-  "size": "390×844",
-  "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-82",
-  "name": "Chế độ chỉ xem · Giảng viên mở Thành viên (AT-RB03)",
-  "viewport": 1440,
-  "diffPct": 0.02953896914571072,
-  "size": "1440×1246",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-82",
-  "name": "Chế độ chỉ xem · Giảng viên mở Thành viên (AT-RB03)",
-  "viewport": 390,
-  "diffPct": 0.04358128120504358,
-  "size": "390×3030",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-83",
-  "name": "Đổi mật khẩu lần đầu (AT-SEC01, RB-R02)",
-  "viewport": 1440,
-  "diffPct": 1.856172839506173,
-  "size": "1440×900",
-  "mask": "Email TK tạm khác nhau mỗi lần đo trên server (cần duy nhất)",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-84",
-  "name": "Admin · Affiliate",
-  "viewport": 1440,
-  "diffPct": 1.3427436056746402,
-  "size": "1440×1073",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-84",
-  "name": "Admin · Affiliate",
-  "viewport": 390,
-  "diffPct": 2.8217305082976725,
-  "size": "390×2948",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-84-AFF",
-  "name": "Admin · Affiliate · Đại lý mặc định",
-  "viewport": 1440,
-  "diffPct": 5.582293810013717,
-  "size": "1440×1296",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-84-AFF",
-  "name": "Admin · Affiliate · Đại lý mặc định",
-  "viewport": 390,
-  "diffPct": 5.880857304543969,
-  "size": "390×3217",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-84-AFF-BULK",
-  "name": "Admin · Affiliate · Chọn đại lý HAOPC",
-  "viewport": 1440,
-  "diffPct": 1.1179783950617284,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-84-AFF-BULK",
-  "name": "Admin · Affiliate · Chọn đại lý HAOPC",
-  "viewport": 390,
-  "diffPct": 2.008428628927244,
-  "size": "390×1083",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-84-AFF-EMPTY",
-  "name": "Admin · Affiliate · Đại lý không có kết quả",
-  "viewport": 1440,
-  "diffPct": 0.715895061728395,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-84-AFF-EMPTY",
-  "name": "Admin · Affiliate · Đại lý không có kết quả",
-  "viewport": 390,
-  "diffPct": 1.064527889172439,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-84-AFF-Q",
-  "name": "Admin · Affiliate · Tìm đại lý HAOPC",
-  "viewport": 1440,
-  "diffPct": 1.0842592592592593,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-84-AFF-Q",
-  "name": "Admin · Affiliate · Tìm đại lý HAOPC",
-  "viewport": 390,
-  "diffPct": 2.0841166002456326,
-  "size": "390×1023",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-84-COM-BULK",
-  "name": "Admin · Affiliate · Chọn hai khoản hoa hồng",
-  "viewport": 1440,
-  "diffPct": 1.19616610134649,
-  "size": "1440×1081",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-84-COM-BULK",
-  "name": "Admin · Affiliate · Chọn hai khoản hoa hồng",
-  "viewport": 390,
-  "diffPct": 0.8820319667777295,
-  "size": "390×2655",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-84-COM-CANCELLED",
-  "name": "Admin · Affiliate · Hoa hồng đã hủy",
-  "viewport": 1440,
-  "diffPct": 0.5121913580246914,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-84-COM-CANCELLED",
-  "name": "Admin · Affiliate · Hoa hồng đã hủy",
-  "viewport": 390,
-  "diffPct": 1.874243009921402,
-  "size": "390×995",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-84-COM-CANCELLED-MENU",
-  "name": "Admin · Affiliate · Menu khoản đã hủy",
-  "viewport": 1440,
-  "diffPct": 0.5507716049382716,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-84-COM-CANCELLED-MENU",
-  "name": "Admin · Affiliate · Menu khoản đã hủy",
-  "viewport": 390,
-  "diffPct": 2.1530280952015746,
-  "size": "390×1003",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-84-COM-EMPTY",
-  "name": "Admin · Affiliate · Hoa hồng không có kết quả",
-  "viewport": 1440,
-  "diffPct": 0.4140432098765432,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-84-COM-EMPTY",
-  "name": "Admin · Affiliate · Hoa hồng không có kết quả",
-  "viewport": 390,
-  "diffPct": 0.9077652205614292,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-84-COM-PAID",
-  "name": "Admin · Affiliate · Hoa hồng đã chi trả",
-  "viewport": 1440,
-  "diffPct": 1.4715361913637777,
-  "size": "1440×1073",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-84-COM-PAID",
-  "name": "Admin · Affiliate · Hoa hồng đã chi trả",
-  "viewport": 390,
-  "diffPct": 1.257050837203509,
-  "size": "390×2882",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-84-COM-PAID-MENU",
-  "name": "Admin · Affiliate · Menu khoản đã chi trả",
-  "viewport": 1440,
-  "diffPct": 1.5836310448379414,
-  "size": "1440×1073",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-84-COM-PAID-MENU",
-  "name": "Admin · Affiliate · Menu khoản đã chi trả",
-  "viewport": 390,
-  "diffPct": 1.5514510934358263,
-  "size": "390×2882",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-84-COM-RECORDED",
-  "name": "Admin · Affiliate · Hoa hồng đã ghi nhận",
-  "viewport": 1440,
-  "diffPct": 1.299575437506472,
-  "size": "1440×1073",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-84-COM-RECORDED",
-  "name": "Admin · Affiliate · Hoa hồng đã ghi nhận",
-  "viewport": 390,
-  "diffPct": 1.5999395007028596,
-  "size": "390×2882",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-84-COM-RECORDED-MENU",
-  "name": "Admin · Affiliate · Menu khoản đã ghi nhận",
-  "viewport": 1440,
-  "diffPct": 1.459368851610231,
-  "size": "1440×1073",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-84-COM-RECORDED-MENU",
-  "name": "Admin · Affiliate · Menu khoản đã ghi nhận",
-  "viewport": 390,
-  "diffPct": 1.9188063844552394,
-  "size": "390×2882",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-84-POL",
-  "name": "Admin · Affiliate · Chính sách",
-  "viewport": 1440,
-  "diffPct": 1.1924382716049382,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-84-POL",
-  "name": "Admin · Affiliate · Chính sách",
-  "viewport": 390,
-  "diffPct": 4.458383771688493,
-  "size": "390×1398",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-85",
-  "name": "Admin · Affiliate · Chi tiết đại lý",
-  "viewport": 1440,
-  "diffPct": 0.7111882716049382,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-85",
-  "name": "Admin · Affiliate · Chi tiết đại lý",
-  "viewport": 390,
-  "diffPct": 1.7137020910605816,
-  "size": "390×954",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-85-CUS",
-  "name": "Admin · Affiliate · Khách hàng của đại lý",
-  "viewport": 1440,
-  "diffPct": 1.5447737412364564,
-  "size": "1440×1046",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-85-CUS",
-  "name": "Admin · Affiliate · Khách hàng của đại lý",
-  "viewport": 390,
-  "diffPct": 1.3238554624693237,
-  "size": "390×1515",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-85-RATE",
-  "name": "Admin · Affiliate · Sửa tỷ lệ cá nhân",
-  "viewport": 1440,
-  "diffPct": 0.7175925925925926,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-85-RATE",
-  "name": "Admin · Affiliate · Sửa tỷ lệ cá nhân",
-  "viewport": 390,
-  "diffPct": 1.7073750991276764,
-  "size": "390×970",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-86",
-  "name": "Tạo nhóm · + Thêm chủ đề (NA-09, chỉ quản trị tạo)",
-  "viewport": 1440,
-  "diffPct": 2.7268518518518516,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-86",
-  "name": "Tạo nhóm · + Thêm chủ đề (NA-09, chỉ quản trị tạo)",
-  "viewport": 390,
-  "diffPct": 1.897253615263094,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-87",
-  "name": "Sự kiện · khối Sắp diễn ra + Tiếp theo (TIP-V2-303)",
-  "viewport": 1440,
-  "diffPct": 0.35300925925925924,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-87",
-  "name": "Sự kiện · khối Sắp diễn ra + Tiếp theo (TIP-V2-303)",
-  "viewport": 390,
-  "diffPct": 0.18167456556082148,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-88",
-  "name": "Tạo sự kiện · Link Google Meet (D-59)",
-  "viewport": 1440,
-  "diffPct": 0.040200617283950614,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-88",
-  "name": "Tạo sự kiện · Link Google Meet (D-59)",
-  "viewport": 390,
-  "diffPct": 0.020354842629724146,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-89",
-  "name": "Gán vào nhóm · vai trò Giảng viên (GR-R01)",
-  "viewport": 1440,
-  "diffPct": 0.014274691358024692,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-89",
-  "name": "Gán vào nhóm · vai trò Giảng viên (GR-R01)",
-  "viewport": 390,
-  "diffPct": 0.0039494470774091624,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-90",
-  "name": "Sidebar Admin §27.3 · nhóm menu",
-  "viewport": 1440,
-  "diffPct": 0.08064516129032258,
-  "size": "248×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-90-DRAWER",
-  "name": "Drawer Admin §27.3",
-  "viewport": 390,
-  "diffPct": 0.07840814050738779,
-  "size": "272×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-91",
-  "name": "Admin · menu người dùng có Cài đặt hệ thống",
-  "viewport": 1440,
-  "diffPct": 0,
-  "size": "240×188",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-91",
-  "name": "Admin · menu người dùng có Cài đặt hệ thống",
-  "viewport": 390,
-  "diffPct": 0,
-  "size": "240×188",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-92",
-  "name": "Dự án · Gói Gọi vốn chờ duyệt (chip + Duyệt gọi vốn / Từ chối, V4-610)",
-  "viewport": 1440,
-  "diffPct": 0,
-  "size": "263×333",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-92",
-  "name": "Dự án · Gói Gọi vốn chờ duyệt (chip + Duyệt gọi vốn / Từ chối, V4-610)",
-  "viewport": 390,
-  "diffPct": 0,
-  "size": "336×333",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-93",
-  "name": "Admin › Gian hàng (KPI, chip, bảng)",
-  "viewport": 1440,
-  "diffPct": 0.27985902985902983,
-  "size": "1440×1001",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-93",
-  "name": "Admin › Gian hàng (KPI, chip, bảng)",
-  "viewport": 390,
-  "diffPct": 2.871102066148506,
-  "size": "390×3553",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-94",
-  "name": "Admin › Gian hàng · panel chi tiết",
-  "viewport": 1440,
-  "diffPct": 0.1248015873015873,
-  "size": "560×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-94",
-  "name": "Admin › Gian hàng · panel chi tiết",
-  "viewport": 390,
-  "diffPct": 0.18957345971563982,
-  "size": "390×844",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-95",
-  "name": "Admin › Nhu cầu địa phương (KPI, chip, bảng)",
-  "viewport": 1440,
-  "diffPct": 0.07220070990642143,
-  "size": "1440×1033",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-95",
-  "name": "Admin › Nhu cầu địa phương (KPI, chip, bảng)",
-  "viewport": 390,
-  "diffPct": 0.08539746857503867,
-  "size": "390×2354",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-98",
-  "name": "Kiểm duyệt · Thời gian khóa 14 ngày",
-  "viewport": 1440,
-  "diffPct": 0.18063271604938272,
-  "size": "1440×900",
-  "sha": "0b76e98a"
- },
- {
-  "id": "D-98",
-  "name": "Kiểm duyệt · Thời gian khóa 14 ngày",
-  "viewport": 390,
-  "diffPct": 0.2542568409395044,
-  "size": "390×1667",
-  "sha": "0b76e98a"
- }
+  {
+    "id": "A-01",
+    "name": "Đăng nhập",
+    "viewport": 1440,
+    "diffPct": 0.10362654320987653,
+    "size": "1440×900",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-01",
+    "name": "Đăng nhập",
+    "viewport": 390,
+    "diffPct": 0.18611884516015753,
+    "size": "411×1455",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-02",
+    "name": "Đăng nhập · bỏ trống",
+    "viewport": 1440,
+    "diffPct": 0.14506172839506173,
+    "size": "1440×900",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-02",
+    "name": "Đăng nhập · bỏ trống",
+    "viewport": 390,
+    "diffPct": 0.3026408322622887,
+    "size": "411×1505",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-03",
+    "name": "Đăng nhập · sai thông tin",
+    "viewport": 1440,
+    "diffPct": 0.10594135802469136,
+    "size": "1440×900",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-03",
+    "name": "Đăng nhập · sai thông tin",
+    "viewport": 390,
+    "diffPct": 0.22245394508168229,
+    "size": "411×1505",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-04",
+    "name": "Đăng nhập · hiện mật khẩu",
+    "viewport": 1440,
+    "diffPct": 0.14853395061728394,
+    "size": "1440×900",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-04",
+    "name": "Đăng nhập · hiện mật khẩu",
+    "viewport": 390,
+    "diffPct": 0.19447997926438743,
+    "size": "411×1455",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-06",
+    "name": "Popover ngôn ngữ",
+    "viewport": 1440,
+    "diffPct": 0.21280864197530863,
+    "size": "1440×900",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-06",
+    "name": "Popover ngôn ngữ",
+    "viewport": 390,
+    "diffPct": 0.6765706647223235,
+    "size": "390×844",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-08",
+    "name": "SSO Google · đang chuyển hướng",
+    "viewport": 1440,
+    "diffPct": 0.10362654320987653,
+    "size": "1440×900",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-08",
+    "name": "SSO Google · đang chuyển hướng",
+    "viewport": 390,
+    "diffPct": 0.229596742502153,
+    "size": "411×1455",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-10",
+    "name": "Đăng ký · chọn loại TK",
+    "viewport": 1440,
+    "diffPct": 0.0001534683855125844,
+    "size": "1440×905",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-10",
+    "name": "Đăng ký · chọn loại TK",
+    "viewport": 390,
+    "diffPct": 0.011881331329004397,
+    "size": "411×1413",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-12",
+    "name": "Đăng ký DN · trống",
+    "viewport": 1440,
+    "diffPct": 0.0287659200702679,
+    "size": "1440×1265",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-12",
+    "name": "Đăng ký DN · trống",
+    "viewport": 390,
+    "diffPct": 0.06902473535201976,
+    "size": "411×1907",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-16",
+    "name": "Đăng ký · chọn mã quốc gia SĐT",
+    "viewport": 1440,
+    "diffPct": 0.0013117283950617284,
+    "size": "1440×900",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-16",
+    "name": "Đăng ký · chọn mã quốc gia SĐT",
+    "viewport": 390,
+    "diffPct": 0.00334183983473083,
+    "size": "390×844",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-17",
+    "name": "Đăng ký DN · báo thiếu người đại diện",
+    "viewport": 1440,
+    "diffPct": 0.07570267896354853,
+    "size": "1440×1265",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-17",
+    "name": "Đăng ký DN · báo thiếu người đại diện",
+    "viewport": 390,
+    "diffPct": 0.13230804170063679,
+    "size": "411×1907",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-18",
+    "name": "Đăng ký cá nhân · trống",
+    "viewport": 1440,
+    "diffPct": 0.056383524582517025,
+    "size": "1440×1191",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-18",
+    "name": "Đăng ký cá nhân · trống",
+    "viewport": 390,
+    "diffPct": 0.13180896858486546,
+    "size": "411×1833",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-20",
+    "name": "Đăng ký cá nhân · báo thiếu email",
+    "viewport": 1440,
+    "diffPct": 0.09515813042261405,
+    "size": "1440×1191",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-20",
+    "name": "Đăng ký cá nhân · báo thiếu email",
+    "viewport": 390,
+    "diffPct": 0.17070124229621045,
+    "size": "411×1833",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-21",
+    "name": "OTP",
+    "viewport": 1440,
+    "diffPct": 0.0679783950617284,
+    "size": "1440×900",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-21",
+    "name": "OTP",
+    "viewport": 390,
+    "diffPct": 0.26947381212784055,
+    "size": "390×844",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-22",
+    "name": "OTP · thiếu số",
+    "viewport": 1440,
+    "diffPct": 0.06859567901234569,
+    "size": "1440×900",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-22",
+    "name": "OTP · thiếu số",
+    "viewport": 390,
+    "diffPct": 0.27585368817596306,
+    "size": "390×844",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-23",
+    "name": "OTP · gửi lại",
+    "viewport": 1440,
+    "diffPct": 0.0679783950617284,
+    "size": "1440×900",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-23",
+    "name": "OTP · gửi lại",
+    "viewport": 390,
+    "diffPct": 0.26947381212784055,
+    "size": "390×844",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-25",
+    "name": "Đăng ký · đổi loại",
+    "viewport": 1440,
+    "diffPct": 0.0001534683855125844,
+    "size": "1440×905",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-25",
+    "name": "Đăng ký · đổi loại",
+    "viewport": 390,
+    "diffPct": 0.0020663184920007645,
+    "size": "411×1413",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-26",
+    "name": "Quên mật khẩu",
+    "viewport": 1440,
+    "diffPct": 0.04737654320987654,
+    "size": "1440×900",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-26",
+    "name": "Quên mật khẩu",
+    "viewport": 390,
+    "diffPct": 0.12010673402549482,
+    "size": "411×1179",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-27",
+    "name": "Quên mật khẩu · đã gửi",
+    "viewport": 1440,
+    "diffPct": 0.003472222222222222,
+    "size": "1440×900",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-27",
+    "name": "Quên mật khẩu · đã gửi",
+    "viewport": 390,
+    "diffPct": 0.011796800117968001,
+    "size": "411×1155",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-28",
+    "name": "Quên mật khẩu · về đăng nhập",
+    "viewport": 1440,
+    "diffPct": 0.10362654320987653,
+    "size": "1440×900",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-28",
+    "name": "Quên mật khẩu · về đăng nhập",
+    "viewport": 390,
+    "diffPct": 0.22759007031713782,
+    "size": "411×1455",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-29",
+    "name": "Đăng xuất",
+    "viewport": 1440,
+    "diffPct": 0.1752314814814815,
+    "size": "1440×900",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-29",
+    "name": "Đăng xuất",
+    "viewport": 390,
+    "diffPct": 0.33762259512880327,
+    "size": "411×1455",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-31",
+    "name": "Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …)",
+    "viewport": 1440,
+    "diffPct": 0.07922615778876076,
+    "size": "1440×1214",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-31",
+    "name": "Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …)",
+    "viewport": 390,
+    "diffPct": 0.18248175182481752,
+    "size": "411×1856",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-32",
+    "name": "Đăng ký · mã giới thiệu không tồn tại",
+    "viewport": 1440,
+    "diffPct": 0.055143693941058024,
+    "size": "1440×1214",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "A-32",
+    "name": "Đăng ký · mã giới thiệu không tồn tại",
+    "viewport": 390,
+    "diffPct": 0.13017556003020386,
+    "size": "411×1856",
+    "sha": "1ba4db0b"
+  },
+  {
+    "id": "P-01",
+    "name": "Dashboard",
+    "viewport": 1440,
+    "diffPct": 0.0023024361259655376,
+    "size": "1440×935",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-01",
+    "name": "Dashboard",
+    "viewport": 390,
+    "diffPct": 0.0011116051578479325,
+    "size": "390×1384",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-05",
+    "name": "Modal mail chào mừng",
+    "viewport": 1440,
+    "diffPct": 0.24818313953488375,
+    "size": "640×860",
+    "sha": "bf02c7c7"
+  },
+  {
+    "id": "P-05",
+    "name": "Modal mail chào mừng",
+    "viewport": 390,
+    "diffPct": 0.46183019329581604,
+    "size": "366×804",
+    "sha": "bf02c7c7"
+  },
+  {
+    "id": "P-07",
+    "name": "Thông báo",
+    "viewport": 1440,
+    "diffPct": 0.010262345679012345,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-07",
+    "name": "Thông báo",
+    "viewport": 390,
+    "diffPct": 0.03220318386195164,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-08",
+    "name": "Thông báo · chưa đọc",
+    "viewport": 1440,
+    "diffPct": 0.010262345679012345,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-08",
+    "name": "Thông báo · chưa đọc",
+    "viewport": 390,
+    "diffPct": 0.03220318386195164,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-09",
+    "name": "Thông báo · trống",
+    "viewport": 1440,
+    "diffPct": 0.002391975308641975,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-09",
+    "name": "Thông báo · trống",
+    "viewport": 390,
+    "diffPct": 0.0018228217280349982,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-10",
+    "name": "Thông báo · mở nhắc tên",
+    "viewport": 1440,
+    "diffPct": 1.9204475308641975,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-10",
+    "name": "Thông báo · mở nhắc tên",
+    "viewport": 390,
+    "diffPct": 0.4927694738121278,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-100",
+    "name": "Popup khai báo · Cá nhân · chọn vai trò + OPC",
+    "viewport": 1440,
+    "diffPct": 0.011903344839900012,
+    "size": "620×542",
+    "sha": "bf02c7c7"
+  },
+  {
+    "id": "P-100",
+    "name": "Popup khai báo · Cá nhân · chọn vai trò + OPC",
+    "viewport": 390,
+    "diffPct": 0.03743886313307525,
+    "size": "366×686",
+    "sha": "bf02c7c7"
+  },
+  {
+    "id": "P-101",
+    "name": "Popup khai báo · Cá nhân · danh sách OPC theo tỉnh",
+    "viewport": 1440,
+    "diffPct": 0.01094023505876469,
+    "size": "620×516",
+    "sha": "bf02c7c7"
+  },
+  {
+    "id": "P-101",
+    "name": "Popup khai báo · Cá nhân · danh sách OPC theo tỉnh",
+    "viewport": 390,
+    "diffPct": 0.04305348567643649,
+    "size": "366×660",
+    "sha": "bf02c7c7"
+  },
+  {
+    "id": "P-102",
+    "name": "Popup khai báo · Doanh nghiệp · MST đã tra + OPC",
+    "viewport": 1440,
+    "diffPct": 0.26235725598066184,
+    "size": "620×774",
+    "sha": "bf02c7c7"
+  },
+  {
+    "id": "P-102",
+    "name": "Popup khai báo · Doanh nghiệp · MST đã tra + OPC",
+    "viewport": 390,
+    "diffPct": 2.04816083516842,
+    "size": "366×804",
+    "sha": "bf02c7c7"
+  },
+  {
+    "id": "P-103",
+    "name": "Popup Gói Gọi vốn · chọn dự án (từ Bảng giá)",
+    "viewport": 1440,
+    "diffPct": 1.6133980698200883,
+    "size": "880×763",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-103",
+    "name": "Popup Gói Gọi vốn · chọn dự án (từ Bảng giá)",
+    "viewport": 390,
+    "diffPct": 2.9079330125329634,
+    "size": "366×804",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-104",
+    "name": "Popup Gói Gọi vốn · sau khi gửi dự án có gọi vốn",
+    "viewport": 1440,
+    "diffPct": 1.2806803288454665,
+    "size": "880×763",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-104",
+    "name": "Popup Gói Gọi vốn · sau khi gửi dự án có gọi vốn",
+    "viewport": 390,
+    "diffPct": 2.4545985917407496,
+    "size": "366×804",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-105",
+    "name": "Gian hàng · Khám phá (mặc định)",
+    "viewport": 1440,
+    "diffPct": 0.09728761720793594,
+    "size": "1440×2761",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-105",
+    "name": "Gian hàng · Khám phá (mặc định)",
+    "viewport": 390,
+    "diffPct": 0.14393581878244455,
+    "size": "390×6846",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-106",
+    "name": "Khám phá · lọc ô danh mục Thủy sản",
+    "viewport": 1440,
+    "diffPct": 0.0022345984598459846,
+    "size": "1440×1212",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-106",
+    "name": "Khám phá · lọc ô danh mục Thủy sản",
+    "viewport": 390,
+    "diffPct": 0.001870632407370292,
+    "size": "390×1919",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-107",
+    "name": "Khám phá · không có kết quả",
+    "viewport": 1440,
+    "diffPct": 0.0635428126145948,
+    "size": "1440×1212",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-107",
+    "name": "Khám phá · không có kết quả",
+    "viewport": 390,
+    "diffPct": 0.8498842541395734,
+    "size": "390×1739",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-108",
+    "name": "Chi tiết gian hàng (HTX Cà phê Hòa Phú)",
+    "viewport": 1440,
+    "diffPct": 2.4963734567901232,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-108",
+    "name": "Chi tiết gian hàng (HTX Cà phê Hòa Phú)",
+    "viewport": 390,
+    "diffPct": 0.2558026491675781,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-108-PROJECT-FORM",
+    "name": "Gian hàng của tôi · form đăng dự án điền sẵn",
+    "viewport": 1440,
+    "diffPct": 0.4810956790123457,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-108-PROJECT-FORM",
+    "name": "Gian hàng của tôi · form đăng dự án điền sẵn",
+    "viewport": 390,
+    "diffPct": 2.432251792441366,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-108-PROJECTS",
+    "name": "Gian hàng của tôi · khối Dự án OPC",
+    "viewport": 1440,
+    "diffPct": 0,
+    "size": "1136×202",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-108-PROJECTS",
+    "name": "Gian hàng của tôi · khối Dự án OPC",
+    "viewport": 390,
+    "diffPct": 0.2962181464048044,
+    "size": "366×202",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-109",
+    "name": "Gian hàng của tôi · dashboard số thật (lời chào)",
+    "viewport": 1440,
+    "diffPct": 0,
+    "size": "640×147",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-109",
+    "name": "Gian hàng của tôi · dashboard số thật (lời chào)",
+    "viewport": 390,
+    "diffPct": 0,
+    "size": "366×171",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-11",
+    "name": "Topbar · ngôn ngữ",
+    "viewport": 1440,
+    "diffPct": 0.0024691358024691358,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-11",
+    "name": "Topbar · ngôn ngữ",
+    "viewport": 390,
+    "diffPct": 0.0021266253493741646,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-111",
+    "name": "Nhu cầu · tất cả (mặc định)",
+    "viewport": 1440,
+    "diffPct": 0.0029602696979828375,
+    "size": "1440×1994",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-111",
+    "name": "Nhu cầu · tất cả (mặc định)",
+    "viewport": 390,
+    "diffPct": 0.003250499764338767,
+    "size": "390×4733",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-112",
+    "name": "Nhu cầu · lọc chip \"Cần mua\"",
+    "viewport": 1440,
+    "diffPct": 0.0027056277056277055,
+    "size": "1440×1232",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-112",
+    "name": "Nhu cầu · lọc chip \"Cần mua\"",
+    "viewport": 390,
+    "diffPct": 0.002663701850693721,
+    "size": "390×2214",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-113",
+    "name": "Nhu cầu · không có kết quả",
+    "viewport": 1440,
+    "diffPct": 0.05347222222222223,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-113",
+    "name": "Nhu cầu · không có kết quả",
+    "viewport": 390,
+    "diffPct": 2.019263575046584,
+    "size": "390×977",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-114",
+    "name": "Đăng nhu cầu · form",
+    "viewport": 1440,
+    "diffPct": 0.023677854055428427,
+    "size": "760×828",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-114",
+    "name": "Đăng nhu cầu · form",
+    "viewport": 390,
+    "diffPct": 0,
+    "size": "366×776",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-115",
+    "name": "Nhu cầu của tôi",
+    "viewport": 1440,
+    "diffPct": 0.005324074074074075,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-115",
+    "name": "Nhu cầu của tôi",
+    "viewport": 390,
+    "diffPct": 0.00820269777615749,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-119",
+    "name": "Dashboard · Hướng dẫn bắt đầu (M1 đã phí)",
+    "viewport": 1440,
+    "diffPct": 0,
+    "size": "1136×811",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-119",
+    "name": "Dashboard · Hướng dẫn bắt đầu (M1 đã phí)",
+    "viewport": 390,
+    "diffPct": 0.0012747622568390995,
+    "size": "366×1286",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-12",
+    "name": "Topbar · menu người dùng",
+    "viewport": 1440,
+    "diffPct": 0.002391975308641975,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-12",
+    "name": "Topbar · menu người dùng",
+    "viewport": 390,
+    "diffPct": 0.0021266253493741646,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-121",
+    "name": "Chat · tin đã bị ẩn sau khi báo cáo (V4-612)",
+    "viewport": 1440,
+    "diffPct": 1.221682098765432,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-121",
+    "name": "Chat · tin đã bị ẩn sau khi báo cáo (V4-612)",
+    "viewport": 390,
+    "diffPct": 2.9526673957953578,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-13",
+    "name": "Sidebar thu gọn",
+    "viewport": 1440,
+    "diffPct": 0.057412358882947115,
+    "size": "1440×935",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-14",
+    "name": "Drawer điều hướng",
+    "viewport": 390,
+    "diffPct": 0.007595090533479159,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-15",
+    "name": "Breadcrumb Trang chủ",
+    "viewport": 1440,
+    "diffPct": 0.0023024361259655376,
+    "size": "1440×935",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-17",
+    "name": "Cộng đồng",
+    "viewport": 1440,
+    "diffPct": 0.29865967365967366,
+    "size": "1440×1716",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-17",
+    "name": "Cộng đồng",
+    "viewport": 390,
+    "diffPct": 0.4318427117061929,
+    "size": "390×4395",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-18",
+    "name": "Cộng đồng · tìm kiếm",
+    "viewport": 1440,
+    "diffPct": 0.16938813813813813,
+    "size": "1440×1332",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-18",
+    "name": "Cộng đồng · tìm kiếm",
+    "viewport": 390,
+    "diffPct": 0.33024287279236914,
+    "size": "390×2879",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-19",
+    "name": "Cộng đồng · đã tham gia",
+    "viewport": 1440,
+    "diffPct": 0.25602144866385373,
+    "size": "1440×948",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-19",
+    "name": "Cộng đồng · đã tham gia",
+    "viewport": 390,
+    "diffPct": 0.42532506987483293,
+    "size": "390×2110",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-20",
+    "name": "Cộng đồng · khu vực + sắp xếp",
+    "viewport": 1440,
+    "diffPct": 0.26203541828541826,
+    "size": "1440×1716",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-20",
+    "name": "Cộng đồng · khu vực + sắp xếp",
+    "viewport": 390,
+    "diffPct": 0.37462839093273875,
+    "size": "390×4416",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-21",
+    "name": "Cộng đồng · trống",
+    "viewport": 1440,
+    "diffPct": 0.011342592592592593,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-21",
+    "name": "Cộng đồng · trống",
+    "viewport": 390,
+    "diffPct": 0.14216341755225562,
+    "size": "390×1093",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-22",
+    "name": "Cộng đồng · trang 2",
+    "viewport": 1440,
+    "diffPct": 0.28724747474747475,
+    "size": "1440×1716",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-22",
+    "name": "Cộng đồng · trang 2",
+    "viewport": 390,
+    "diffPct": 1.2954640468227425,
+    "size": "390×4416",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-23",
+    "name": "Tham gia · nhóm công khai",
+    "viewport": 1440,
+    "diffPct": 0.13449074074074074,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-23",
+    "name": "Tham gia · nhóm công khai",
+    "viewport": 390,
+    "diffPct": 0.008506501397496658,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-26",
+    "name": "Cộng đồng · đã tham gia nhóm công khai",
+    "viewport": 1440,
+    "diffPct": 0.29865967365967366,
+    "size": "1440×1716",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-26",
+    "name": "Cộng đồng · đã tham gia nhóm công khai",
+    "viewport": 390,
+    "diffPct": 0.3950876578862927,
+    "size": "390×4395",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-27",
+    "name": "Cộng đồng · rời nhóm",
+    "viewport": 1440,
+    "diffPct": 0.29865967365967366,
+    "size": "1440×1716",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-27",
+    "name": "Cộng đồng · rời nhóm",
+    "viewport": 390,
+    "diffPct": 0.4249000904291007,
+    "size": "390×4395",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-28",
+    "name": "Chat · phòng mặc định",
+    "viewport": 1440,
+    "diffPct": 0.5096450617283951,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-28",
+    "name": "Chat · phòng mặc định",
+    "viewport": 390,
+    "diffPct": 1.1969862680763155,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-29",
+    "name": "Chat · đổi chủ đề",
+    "viewport": 1440,
+    "diffPct": 0.1308641975308642,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-30",
+    "name": "Chat · đổi nhóm",
+    "viewport": 1440,
+    "diffPct": 0.11496913580246913,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-30",
+    "name": "Chat · đổi nhóm",
+    "viewport": 390,
+    "diffPct": 0.5362133916636287,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-34",
+    "name": "Chat · đã gửi tin",
+    "viewport": 1440,
+    "diffPct": 0.7778549382716049,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-34",
+    "name": "Chat · đã gửi tin",
+    "viewport": 390,
+    "diffPct": 2.5385830599100743,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-35",
+    "name": "Chat · gợi ý nhắc tên",
+    "viewport": 1440,
+    "diffPct": 0.14753086419753086,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-35",
+    "name": "Chat · gợi ý nhắc tên",
+    "viewport": 390,
+    "diffPct": 0.5672013610402236,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-36",
+    "name": "Chat · chọn tin",
+    "viewport": 1440,
+    "diffPct": 0.5096450617283951,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-36",
+    "name": "Chat · chọn tin",
+    "viewport": 390,
+    "diffPct": 1.3327864868149228,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-37",
+    "name": "Chat · đang trả lời",
+    "viewport": 1440,
+    "diffPct": 0.38796296296296295,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-37",
+    "name": "Chat · đang trả lời",
+    "viewport": 390,
+    "diffPct": 1.1644792805930246,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-38",
+    "name": "Chat · danh sách ghim",
+    "viewport": 1440,
+    "diffPct": 0.38796296296296295,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-38",
+    "name": "Chat · danh sách ghim",
+    "viewport": 390,
+    "diffPct": 1.1641754769716854,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-39",
+    "name": "Chat · tìm trong phòng",
+    "viewport": 1440,
+    "diffPct": 0.319212962962963,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-39",
+    "name": "Chat · tìm trong phòng",
+    "viewport": 390,
+    "diffPct": 1.0308056872037916,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-40",
+    "name": "Chat · bảng Thành viên",
+    "viewport": 1440,
+    "diffPct": 1.436496913580247,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-40",
+    "name": "Chat · bảng Thành viên",
+    "viewport": 390,
+    "diffPct": 4.314011423016162,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-42",
+    "name": "Chat · bảng File chia sẻ",
+    "viewport": 1440,
+    "diffPct": 1.0979938271604939,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-43",
+    "name": "Chat · bảng Đã ghim",
+    "viewport": 1440,
+    "diffPct": 0.37993827160493826,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-44",
+    "name": "Modal báo cáo tin",
+    "viewport": 1440,
+    "diffPct": 0.18626543209876542,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-44",
+    "name": "Modal báo cáo tin",
+    "viewport": 390,
+    "diffPct": 0.4557054320087495,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-45",
+    "name": "Chat · đã báo cáo tin",
+    "viewport": 1440,
+    "diffPct": 1.221682098765432,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-45",
+    "name": "Chat · đã báo cáo tin",
+    "viewport": 390,
+    "diffPct": 2.9526673957953578,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-46",
+    "name": "Chat · xem trước nhóm chưa tham gia",
+    "viewport": 1440,
+    "diffPct": 0.11728395061728394,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-46",
+    "name": "Chat · xem trước nhóm chưa tham gia",
+    "viewport": 390,
+    "diffPct": 0.44264187629116536,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-47",
+    "name": "Chat · chưa tham gia nhóm nào",
+    "viewport": 1440,
+    "diffPct": 0.7720679012345679,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-47",
+    "name": "Chat · chưa tham gia nhóm nào",
+    "viewport": 390,
+    "diffPct": 2.3089075221776643,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-48",
+    "name": "Chat · tham gia thêm nhóm",
+    "viewport": 1440,
+    "diffPct": 0.29865967365967366,
+    "size": "1440×1716",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-48",
+    "name": "Chat · tham gia thêm nhóm",
+    "viewport": 390,
+    "diffPct": 0.6291531752282605,
+    "size": "390×4395",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-49",
+    "name": "Sự kiện",
+    "viewport": 1440,
+    "diffPct": 0.04435770049680624,
+    "size": "1440×1409",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-49",
+    "name": "Sự kiện",
+    "viewport": 390,
+    "diffPct": 0.07911880523345492,
+    "size": "390×2826",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-50",
+    "name": "Sự kiện · đã đăng ký",
+    "viewport": 1440,
+    "diffPct": 0.02805836139169473,
+    "size": "1440×990",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-50",
+    "name": "Sự kiện · đã đăng ký",
+    "viewport": 390,
+    "diffPct": 0.08110717734148697,
+    "size": "390×1195",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-51",
+    "name": "Sự kiện · trống",
+    "viewport": 1440,
+    "diffPct": 0.06898148148148148,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-51",
+    "name": "Sự kiện · trống",
+    "viewport": 390,
+    "diffPct": 2.165760720364575,
+    "size": "390×934",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-52",
+    "name": "Chi tiết sự kiện",
+    "viewport": 1440,
+    "diffPct": 0.032407407407407406,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-52",
+    "name": "Chi tiết sự kiện",
+    "viewport": 390,
+    "diffPct": 0,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-53",
+    "name": "Sự kiện · đăng ký e1",
+    "viewport": 1440,
+    "diffPct": 0.04435770049680624,
+    "size": "1440×1409",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-53",
+    "name": "Sự kiện · đăng ký e1",
+    "viewport": 390,
+    "diffPct": 0.07911880523345492,
+    "size": "390×2826",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-54",
+    "name": "Sự kiện · hết chỗ",
+    "viewport": 1440,
+    "diffPct": 0.032407407407407406,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-54",
+    "name": "Sự kiện · hết chỗ",
+    "viewport": 390,
+    "diffPct": 0,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-55",
+    "name": "Dự án · khám phá",
+    "viewport": 1440,
+    "diffPct": 5.309194539736993,
+    "size": "1440×2332",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-55",
+    "name": "Dự án · khám phá",
+    "viewport": 390,
+    "diffPct": 16.940373828895464,
+    "size": "390×6656",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-55-RENEWED",
+    "name": "Dự án · khám phá · sau khi Admin ghi nhận phí chủ p4",
+    "viewport": 1440,
+    "diffPct": 0.04407280350676577,
+    "size": "1440×2332",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-55-RENEWED",
+    "name": "Dự án · khám phá · sau khi Admin ghi nhận phí chủ p4",
+    "viewport": 390,
+    "diffPct": 0.5227209689349113,
+    "size": "390×6656",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-55-RENEWED-VIEWS",
+    "name": "Dự án · sau gia hạn · lưới sắp xếp nhiều lượt xem",
+    "viewport": 1440,
+    "diffPct": 0.09645061728395062,
+    "size": "1440×2304",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-55-RENEWED-VIEWS",
+    "name": "Dự án · sau gia hạn · lưới sắp xếp nhiều lượt xem",
+    "viewport": 390,
+    "diffPct": 0.5889808308678501,
+    "size": "390×6656",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-56",
+    "name": "Dự án · dạng bảng",
+    "viewport": 1440,
+    "diffPct": 2.949241463156782,
+    "size": "1440×2102",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-56",
+    "name": "Dự án · dạng bảng",
+    "viewport": 390,
+    "diffPct": 9.053369721732187,
+    "size": "587×5402",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-56-RENEWED",
+    "name": "Dự án · dạng bảng · sau khi Admin ghi nhận phí chủ p4",
+    "viewport": 1440,
+    "diffPct": 0.0469790675547098,
+    "size": "1440×2102",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-56-RENEWED",
+    "name": "Dự án · dạng bảng · sau khi Admin ghi nhận phí chủ p4",
+    "viewport": 390,
+    "diffPct": 0.12891937934527373,
+    "size": "587×5402",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-57",
+    "name": "Dự án · lọc giai đoạn + sắp xếp",
+    "viewport": 1440,
+    "diffPct": 3.2950430806639184,
+    "size": "1440×2102",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-57",
+    "name": "Dự án · lọc giai đoạn + sắp xếp",
+    "viewport": 390,
+    "diffPct": 11.65643020138559,
+    "size": "390×4371",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-57-RENEWED",
+    "name": "Dự án · lọc giai đoạn + sắp xếp · sau khi Admin ghi nhận phí chủ p4",
+    "viewport": 1440,
+    "diffPct": 0.10380325615815625,
+    "size": "1440×2102",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-57-RENEWED",
+    "name": "Dự án · lọc giai đoạn + sắp xếp · sau khi Admin ghi nhận phí chủ p4",
+    "viewport": 390,
+    "diffPct": 0.3797171333204278,
+    "size": "390×4371",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-58",
+    "name": "Dự án · trống",
+    "viewport": 1440,
+    "diffPct": 0.03352876238214584,
+    "size": "1440×1862",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-58",
+    "name": "Dự án · trống",
+    "viewport": 390,
+    "diffPct": 0.052369120336818856,
+    "size": "390×2972",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-59",
+    "name": "Dự án · theo dõi",
+    "viewport": 1440,
+    "diffPct": 2.9264457130774923,
+    "size": "1440×2102",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-59",
+    "name": "Dự án · theo dõi",
+    "viewport": 390,
+    "diffPct": 9.206981829557732,
+    "size": "587×5402",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-59-RENEWED",
+    "name": "Dự án · theo dõi · sau khi Admin ghi nhận phí chủ p4",
+    "viewport": 1440,
+    "diffPct": 0.0469790675547098,
+    "size": "1440×2102",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-59-RENEWED",
+    "name": "Dự án · theo dõi · sau khi Admin ghi nhận phí chủ p4",
+    "viewport": 390,
+    "diffPct": 0.14172301633504406,
+    "size": "587×5402",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-60",
+    "name": "Dự án của tôi",
+    "viewport": 1440,
+    "diffPct": 0.015200617283950618,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-60",
+    "name": "Dự án của tôi",
+    "viewport": 390,
+    "diffPct": 0.053165633734354116,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-62",
+    "name": "Chi tiết dự án · Tổng quan",
+    "viewport": 1440,
+    "diffPct": 0.8933823529411765,
+    "size": "1440×1530",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-62",
+    "name": "Chi tiết dự án · Tổng quan",
+    "viewport": 390,
+    "diffPct": 1.7961329879604568,
+    "size": "390×2643",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-63",
+    "name": "Chi tiết dự án · Cập nhật",
+    "viewport": 1440,
+    "diffPct": 0.3725592747559275,
+    "size": "1440×1195",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-63",
+    "name": "Chi tiết dự án · Cập nhật",
+    "viewport": 390,
+    "diffPct": 1.5823442837660846,
+    "size": "390×1899",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-64",
+    "name": "Chi tiết dự án · Đội ngũ",
+    "viewport": 1440,
+    "diffPct": 0.36953742445374244,
+    "size": "1440×1195",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-64",
+    "name": "Chi tiết dự án · Đội ngũ",
+    "viewport": 390,
+    "diffPct": 1.623885096938989,
+    "size": "390×1837",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-65",
+    "name": "Chi tiết dự án · Góp ý",
+    "viewport": 1440,
+    "diffPct": 0.3377420661217878,
+    "size": "1440×1509",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-65",
+    "name": "Chi tiết dự án · Góp ý",
+    "viewport": 390,
+    "diffPct": 0.9759403592002711,
+    "size": "390×2497",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-66",
+    "name": "Góp ý · ô trả lời",
+    "viewport": 1440,
+    "diffPct": 0.3002095422308188,
+    "size": "1440×1551",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-66",
+    "name": "Góp ý · ô trả lời",
+    "viewport": 390,
+    "diffPct": 0.694398157966492,
+    "size": "390×2539",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-67",
+    "name": "Góp ý · trống",
+    "viewport": 1440,
+    "diffPct": 0.4217450869236584,
+    "size": "1440×1176",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-67",
+    "name": "Góp ý · trống",
+    "viewport": 390,
+    "diffPct": 0.819536536088625,
+    "size": "390×1891",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-68",
+    "name": "Dự án · repo riêng tư, đã xin quyền",
+    "viewport": 1440,
+    "diffPct": 1.805466409927257,
+    "size": "1440×1558",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-68",
+    "name": "Dự án · repo riêng tư, đã xin quyền",
+    "viewport": 390,
+    "diffPct": 2.3321214203238765,
+    "size": "390×2687",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-73",
+    "name": "Form đăng dự án",
+    "viewport": 1440,
+    "diffPct": 0.38410493827160497,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-73",
+    "name": "Form đăng dự án",
+    "viewport": 390,
+    "diffPct": 2.0534086766314257,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-74",
+    "name": "Form dự án · báo thiếu tên",
+    "viewport": 1440,
+    "diffPct": 0.6101080246913579,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-74",
+    "name": "Form dự án · báo thiếu tên",
+    "viewport": 390,
+    "diffPct": 2.4878478551464336,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-75",
+    "name": "Form dự án · mở gọi vốn",
+    "viewport": 1440,
+    "diffPct": 0.1462962962962963,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-75",
+    "name": "Form dự án · mở gọi vốn",
+    "viewport": 390,
+    "diffPct": 2.2836918216065136,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-76",
+    "name": "Form dự án · chỉnh sửa",
+    "viewport": 1440,
+    "diffPct": 0.33603395061728397,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-76",
+    "name": "Form dự án · chỉnh sửa",
+    "viewport": 390,
+    "diffPct": 2.377263336978977,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-77",
+    "name": "Dự án · đã lưu nháp",
+    "viewport": 1440,
+    "diffPct": 0.02330246913580247,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-77",
+    "name": "Dự án · đã lưu nháp",
+    "viewport": 390,
+    "diffPct": 0.0842911877394636,
+    "size": "390×870",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-78",
+    "name": "Modal chia sẻ dự án",
+    "viewport": 1440,
+    "diffPct": 0.032638888888888884,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-78",
+    "name": "Modal chia sẻ dự án",
+    "viewport": 390,
+    "diffPct": 0.7230526187872159,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-79",
+    "name": "Popup Gói dịch vụ",
+    "viewport": 1440,
+    "diffPct": 0.004012345679012346,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-79",
+    "name": "Popup Gói dịch vụ",
+    "viewport": 1366,
+    "diffPct": 0.30674261835041483,
+    "size": "1366×768",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-79",
+    "name": "Popup Gói dịch vụ",
+    "viewport": 390,
+    "diffPct": 0.0030380362133916633,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-80",
+    "name": "Form tư vấn · cá nhân",
+    "viewport": 1440,
+    "diffPct": 0.012972363226170333,
+    "size": "1440×985",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-80",
+    "name": "Form tư vấn · cá nhân",
+    "viewport": 390,
+    "diffPct": 0.04509627855931358,
+    "size": "390×1285",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-81",
+    "name": "Form tư vấn · doanh nghiệp (mặc định)",
+    "viewport": 1440,
+    "diffPct": 0.012235759658440072,
+    "size": "1440×1067",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-81",
+    "name": "Form tư vấn · doanh nghiệp (mặc định)",
+    "viewport": 390,
+    "diffPct": 0.04212454212454213,
+    "size": "390×1400",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-82",
+    "name": "Form tư vấn · báo thiếu",
+    "viewport": 1440,
+    "diffPct": 0.5431896282411747,
+    "size": "1440×1067",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-82",
+    "name": "Form tư vấn · báo thiếu",
+    "viewport": 390,
+    "diffPct": 0.49633699633699635,
+    "size": "390×1400",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-83",
+    "name": "Đã gửi yêu cầu tư vấn",
+    "viewport": 1440,
+    "diffPct": 0.0033179012345679014,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-83",
+    "name": "Đã gửi yêu cầu tư vấn",
+    "viewport": 390,
+    "diffPct": 0.00668367966946166,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-84",
+    "name": "Thông tin chuyển khoản (Điều kiện thanh toán, NR-R01)",
+    "viewport": 1440,
+    "diffPct": 0.5141975308641976,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-84",
+    "name": "Thông tin chuyển khoản (Điều kiện thanh toán, NR-R01)",
+    "viewport": 390,
+    "diffPct": 1.8453031960140964,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-85",
+    "name": "Chuyển khoản · đã sao chép",
+    "viewport": 1440,
+    "diffPct": 0.5141975308641976,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-85",
+    "name": "Chuyển khoản · đã sao chép",
+    "viewport": 390,
+    "diffPct": 1.844391785150079,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-86",
+    "name": "Chuyển khoản · đang đối soát",
+    "viewport": 1440,
+    "diffPct": 0.5141975308641976,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-86",
+    "name": "Chuyển khoản · đang đối soát",
+    "viewport": 390,
+    "diffPct": 0.9973872888564831,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-89",
+    "name": "Hồ sơ · thông tin cá nhân",
+    "viewport": 1440,
+    "diffPct": 0.05570987654320988,
+    "size": "1440×900",
+    "sha": "4edc365c"
+  },
+  {
+    "id": "P-89",
+    "name": "Hồ sơ · thông tin cá nhân",
+    "viewport": 390,
+    "diffPct": 0.10818277767430311,
+    "size": "390×1652",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-90",
+    "name": "Hồ sơ · báo thiếu họ tên",
+    "viewport": 1440,
+    "diffPct": 0.05570987654320988,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-90",
+    "name": "Hồ sơ · báo thiếu họ tên",
+    "viewport": 390,
+    "diffPct": 0.10818277767430311,
+    "size": "390×1652",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-91",
+    "name": "Hồ sơ · thông tin doanh nghiệp",
+    "viewport": 1440,
+    "diffPct": 0.7084104938271605,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-91",
+    "name": "Hồ sơ · thông tin doanh nghiệp",
+    "viewport": 390,
+    "diffPct": 1.7364881013349722,
+    "size": "390×1502",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-92",
+    "name": "Hồ sơ · nhóm & hoạt động",
+    "viewport": 1440,
+    "diffPct": 0.015354938271604938,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-92",
+    "name": "Hồ sơ · nhóm & hoạt động",
+    "viewport": 390,
+    "diffPct": 0.3333690450682094,
+    "size": "390×1436",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-93",
+    "name": "Hồ sơ · bảo mật",
+    "viewport": 1440,
+    "diffPct": 0.02507716049382716,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-93",
+    "name": "Hồ sơ · bảo mật",
+    "viewport": 390,
+    "diffPct": 0.1494610698266051,
+    "size": "390×1532",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-94",
+    "name": "Đổi mật khẩu · báo thiếu",
+    "viewport": 1440,
+    "diffPct": 0.02507716049382716,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-94",
+    "name": "Đổi mật khẩu · báo thiếu",
+    "viewport": 390,
+    "diffPct": 0.2691303474593292,
+    "size": "390×1532",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-96",
+    "name": "Chi tiết sự kiện · đã đăng ký (link Meet)",
+    "viewport": 1440,
+    "diffPct": 0.029552469135802468,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-96",
+    "name": "Chi tiết sự kiện · đã đăng ký (link Meet)",
+    "viewport": 390,
+    "diffPct": 0.004253250698748329,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-97",
+    "name": "Portal · Affiliate",
+    "viewport": 1440,
+    "diffPct": 0.7875733704046958,
+    "size": "1440×1079",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-97",
+    "name": "Portal · Affiliate",
+    "viewport": 390,
+    "diffPct": 0.6561008861622358,
+    "size": "390×1956",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-98",
+    "name": "Portal · Affiliate · Lịch sử nhận tiền",
+    "viewport": 1440,
+    "diffPct": 0.8656400966183576,
+    "size": "1440×920",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-98",
+    "name": "Portal · Affiliate · Lịch sử nhận tiền",
+    "viewport": 390,
+    "diffPct": 0.9260701577556849,
+    "size": "390×1679",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-99",
+    "name": "Sidebar Portal §27.3 · nhóm menu + thẻ gói",
+    "viewport": 1440,
+    "diffPct": 0.011200716845878136,
+    "size": "248×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "P-99-DRAWER",
+    "name": "Drawer Portal §27.3 · nhóm menu + thẻ gói",
+    "viewport": 390,
+    "diffPct": 0.01089001951491497,
+    "size": "272×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-01",
+    "name": "Admin AppShell · Tổng quan",
+    "viewport": 1440,
+    "diffPct": 0.09112654320987655,
+    "size": "1440×900",
+    "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-01",
+    "name": "Admin AppShell · Tổng quan",
+    "viewport": 390,
+    "diffPct": 0.09174869364442824,
+    "size": "390×844",
+    "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-02",
+    "name": "Admin · menu người dùng",
+    "viewport": 1440,
+    "diffPct": 0.08765432098765433,
+    "size": "1440×900",
+    "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-02",
+    "name": "Admin · menu người dùng",
+    "viewport": 390,
+    "diffPct": 0.08324219224693158,
+    "size": "390×844",
+    "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-03",
+    "name": "Admin · Hồ sơ cá nhân (không đổi màn)",
+    "viewport": 1440,
+    "diffPct": 1.7953606609469337,
+    "size": "1440×1049",
+    "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-03",
+    "name": "Admin · Hồ sơ cá nhân (không đổi màn)",
+    "viewport": 390,
+    "diffPct": 1.106503559333748,
+    "size": "390×1855",
+    "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-04",
+    "name": "Admin · thông báo",
+    "viewport": 1440,
+    "diffPct": 0.08912037037037038,
+    "size": "1440×900",
+    "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-04",
+    "name": "Admin · thông báo",
+    "viewport": 390,
+    "diffPct": 0.004557054320087495,
+    "size": "390×844",
+    "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-05",
+    "name": "Admin · sidebar thu gọn",
+    "viewport": 1440,
+    "diffPct": 1.8913201160541584,
+    "size": "1440×1034",
+    "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-06",
+    "name": "Admin · drawer điều hướng",
+    "viewport": 390,
+    "diffPct": 0.054684651841049946,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-07",
+    "name": "Thành viên · danh sách",
+    "viewport": 1440,
+    "diffPct": 0.1480421818819609,
+    "size": "1440×1267",
+    "sha": "6a480baa"
+  },
+  {
+    "id": "D-07",
+    "name": "Thành viên · danh sách",
+    "viewport": 390,
+    "diffPct": 0.12536286257835177,
+    "size": "390×3383",
+    "sha": "6a480baa"
+  },
+  {
+    "id": "D-08",
+    "name": "Thành viên · lưới",
+    "viewport": 1440,
+    "diffPct": 0.14466089466089466,
+    "size": "1440×1155",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-08",
+    "name": "Thành viên · lưới",
+    "viewport": 390,
+    "diffPct": 0.16856740424371847,
+    "size": "390×3386",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-09",
+    "name": "Thành viên · lọc Doanh nghiệp",
+    "viewport": 1440,
+    "diffPct": 0.05416666666666666,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-09",
+    "name": "Thành viên · lọc Doanh nghiệp",
+    "viewport": 390,
+    "diffPct": 0.07275552730098185,
+    "size": "390×1815",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-10",
+    "name": "Thành viên · chọn nhiều",
+    "viewport": 1440,
+    "diffPct": 0.044202592279515354,
+    "size": "1440×1183",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-10",
+    "name": "Thành viên · chọn nhiều",
+    "viewport": 390,
+    "diffPct": 0.4167947010823176,
+    "size": "390×3004",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-100",
+    "name": "Cài đặt · Cấu hình bảng giá",
+    "viewport": 1440,
+    "diffPct": 0.12816358024691357,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-100",
+    "name": "Cài đặt · Cấu hình bảng giá",
+    "viewport": 390,
+    "diffPct": 7.643584299635255,
+    "size": "390×1884",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-11",
+    "name": "Thành viên · khóa hàng loạt",
+    "viewport": 1440,
+    "diffPct": 0.04406215867341873,
+    "size": "1440×1119",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-11",
+    "name": "Thành viên · khóa hàng loạt",
+    "viewport": 390,
+    "diffPct": 0.045994873581080474,
+    "size": "390×2871",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-12",
+    "name": "Modal gán vào nhóm",
+    "viewport": 1440,
+    "diffPct": 0.014274691358024692,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-12",
+    "name": "Modal gán vào nhóm",
+    "viewport": 390,
+    "diffPct": 0.0039494470774091624,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-120-GCFG",
+    "name": "Cấu hình Giám đốc Vùng",
+    "viewport": 1440,
+    "diffPct": 7.1861430395913155,
+    "size": "1440×1305",
+    "sha": "6a480baa"
+  },
+  {
+    "id": "D-120-GCFG",
+    "name": "Cấu hình Giám đốc Vùng",
+    "viewport": 390,
+    "diffPct": 10.424735863708026,
+    "size": "390×3269",
+    "sha": "6a480baa"
+  },
+  {
+    "id": "D-120-GCFG-RO",
+    "name": "Cấu hình GĐ Vùng · Kế toán chỉ xem",
+    "viewport": 1440,
+    "diffPct": 10.987351526086304,
+    "size": "1440×1478",
+    "sha": "6a480baa"
+  },
+  {
+    "id": "D-120-GCFG-RO",
+    "name": "Cấu hình GĐ Vùng · Kế toán chỉ xem",
+    "viewport": 390,
+    "diffPct": 9.206223329934671,
+    "size": "390×3395",
+    "sha": "6a480baa"
+  },
+  {
+    "id": "D-13",
+    "name": "Thành viên · menu dòng",
+    "viewport": 1440,
+    "diffPct": 0.01828703703703704,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-13",
+    "name": "Thành viên · menu dòng",
+    "viewport": 390,
+    "diffPct": 0.0018228217280349982,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-14",
+    "name": "Thành viên · đã khóa 1 dòng",
+    "viewport": 1440,
+    "diffPct": 0.04406215867341873,
+    "size": "1440×1119",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-14",
+    "name": "Thành viên · đã khóa 1 dòng",
+    "viewport": 390,
+    "diffPct": 0.045994873581080474,
+    "size": "390×2871",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-16",
+    "name": "Drawer hồ sơ đăng ký",
+    "viewport": 1440,
+    "diffPct": 0.013117283950617283,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-16",
+    "name": "Drawer hồ sơ đăng ký",
+    "viewport": 390,
+    "diffPct": 0,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-17",
+    "name": "Thành viên · 6/trang, trang 2",
+    "viewport": 1440,
+    "diffPct": 0.03966049382716049,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-17",
+    "name": "Thành viên · 6/trang, trang 2",
+    "viewport": 390,
+    "diffPct": 0.06481368604981917,
+    "size": "390×1262",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-18",
+    "name": "Phí thành viên",
+    "viewport": 1440,
+    "diffPct": 0.2719430715723961,
+    "size": "1440×1214",
+    "sha": "6a480baa"
+  },
+  {
+    "id": "D-18",
+    "name": "Phí thành viên",
+    "viewport": 390,
+    "diffPct": 2.14375670171348,
+    "size": "390×3563",
+    "sha": "6a480baa"
+  },
+  {
+    "id": "D-18-GDV",
+    "name": "Phí · Miễn phí GĐ Vùng",
+    "viewport": 1440,
+    "diffPct": 0.3477623456790124,
+    "size": "1440×900",
+    "sha": "6a480baa"
+  },
+  {
+    "id": "D-18-GDV",
+    "name": "Phí · Miễn phí GĐ Vùng",
+    "viewport": 390,
+    "diffPct": 1.6566924536564005,
+    "size": "390×1581",
+    "sha": "6a480baa"
+  },
+  {
+    "id": "D-19",
+    "name": "Phí · chờ thanh toán",
+    "viewport": 1440,
+    "diffPct": 0.15601851851851853,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-19",
+    "name": "Phí · chờ thanh toán",
+    "viewport": 390,
+    "diffPct": 0.13580021873860734,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-20",
+    "name": "Phí · chọn nhiều",
+    "viewport": 1440,
+    "diffPct": 0.35423801369863017,
+    "size": "1440×1168",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-20",
+    "name": "Phí · chọn nhiều",
+    "viewport": 390,
+    "diffPct": 0.5447002897427827,
+    "size": "390×3177",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-21",
+    "name": "Phí · ghi nhận đã thu",
+    "viewport": 1440,
+    "diffPct": 0.2246880032206119,
+    "size": "1440×1104",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-21",
+    "name": "Phí · ghi nhận đã thu",
+    "viewport": 390,
+    "diffPct": 0.2178360009685311,
+    "size": "390×3071",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-22",
+    "name": "Phí · 6/trang, trang 2",
+    "viewport": 1440,
+    "diffPct": 0.15601851851851853,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-22",
+    "name": "Phí · 6/trang, trang 2",
+    "viewport": 390,
+    "diffPct": 0.06260547661821547,
+    "size": "390×1413",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-23",
+    "name": "Nhóm cộng đồng · lưới",
+    "viewport": 1440,
+    "diffPct": 0.04330014519809168,
+    "size": "1440×1607",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-23",
+    "name": "Nhóm cộng đồng · lưới",
+    "viewport": 390,
+    "diffPct": 0.03703753225741754,
+    "size": "390×5753",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-24",
+    "name": "Nhóm cộng đồng · danh sách",
+    "viewport": 1440,
+    "diffPct": 0.043465505527762335,
+    "size": "1440×1799",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-24",
+    "name": "Nhóm cộng đồng · danh sách",
+    "viewport": 390,
+    "diffPct": 0.06753221038935324,
+    "size": "390×3626",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-25",
+    "name": "Nhóm cộng đồng · Miền Trung",
+    "viewport": 1440,
+    "diffPct": 0.037731339206446765,
+    "size": "1440×1627",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-25",
+    "name": "Nhóm cộng đồng · Miền Trung",
+    "viewport": 390,
+    "diffPct": 0.030779890471558585,
+    "size": "390×5773",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-26",
+    "name": "Nhóm cộng đồng · chọn nhiều",
+    "viewport": 1440,
+    "diffPct": 0.0435751774318602,
+    "size": "1440×1863",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-26",
+    "name": "Nhóm cộng đồng · chọn nhiều",
+    "viewport": 390,
+    "diffPct": 0.060120931322867326,
+    "size": "390×3719",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-27",
+    "name": "Nhóm cộng đồng · trang 2",
+    "viewport": 1440,
+    "diffPct": 0.03959218781623153,
+    "size": "1440×1647",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-27",
+    "name": "Nhóm cộng đồng · trang 2",
+    "viewport": 390,
+    "diffPct": 0.6883502778184919,
+    "size": "390×5773",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-28",
+    "name": "Drawer tạo nhóm",
+    "viewport": 1440,
+    "diffPct": 1.0821759259259258,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-28",
+    "name": "Drawer tạo nhóm",
+    "viewport": 390,
+    "diffPct": 1.347976667881881,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-29",
+    "name": "Tạo nhóm · báo thiếu tên",
+    "viewport": 1440,
+    "diffPct": 1.2646604938271606,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-29",
+    "name": "Tạo nhóm · báo thiếu tên",
+    "viewport": 390,
+    "diffPct": 1.7249969619637866,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-30",
+    "name": "Drawer sửa nhóm",
+    "viewport": 1440,
+    "diffPct": 1.1529320987654321,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-30",
+    "name": "Drawer sửa nhóm",
+    "viewport": 390,
+    "diffPct": 1.4944100133673592,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-31",
+    "name": "Modal xuất danh sách thành viên",
+    "viewport": 1440,
+    "diffPct": 0.019598765432098764,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-31",
+    "name": "Modal xuất danh sách thành viên",
+    "viewport": 390,
+    "diffPct": 0.0003038036213391664,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-33",
+    "name": "Kiểm duyệt tin nhắn",
+    "viewport": 1440,
+    "diffPct": 0.18032407407407408,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-33",
+    "name": "Kiểm duyệt tin nhắn",
+    "viewport": 390,
+    "diffPct": 0.3348561057019365,
+    "size": "390×1667",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-34",
+    "name": "Kiểm duyệt · hết tin",
+    "viewport": 1440,
+    "diffPct": 0.015354938271604938,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-34",
+    "name": "Kiểm duyệt · hết tin",
+    "viewport": 390,
+    "diffPct": 0.007718034473887317,
+    "size": "390×897",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-35",
+    "name": "Kiểm duyệt · thêm từ khóa",
+    "viewport": 1440,
+    "diffPct": 0.18032407407407408,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-35",
+    "name": "Kiểm duyệt · thêm từ khóa",
+    "viewport": 390,
+    "diffPct": 3.1835171427253015,
+    "size": "390×1667",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-36",
+    "name": "Bot · nhật ký tự động",
+    "viewport": 1440,
+    "diffPct": 0.43389724310776945,
+    "size": "1440×931",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-36",
+    "name": "Bot · nhật ký tự động",
+    "viewport": 390,
+    "diffPct": 0.19339554223275154,
+    "size": "390×1591",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-36-REPLIES",
+    "name": "Bot · Trả lời từng tin",
+    "viewport": 1440,
+    "diffPct": 0.9812727335117699,
+    "size": "1440×1619",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-36-REPLIES",
+    "name": "Bot · Trả lời từng tin",
+    "viewport": 390,
+    "diffPct": 1.5004958209378099,
+    "size": "390×2715",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-36-SCHEDULE-CLEAR",
+    "name": "Bot · xóa lịch vẫn tạm dừng",
+    "viewport": 1440,
+    "diffPct": 0.4296455424274973,
+    "size": "1440×931",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-36-SCHEDULE-CLEAR",
+    "name": "Bot · xóa lịch vẫn tạm dừng",
+    "viewport": 390,
+    "diffPct": 0.18630437235088398,
+    "size": "390×1591",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-36-SCHEDULE-END",
+    "name": "Bot · hết lịch",
+    "viewport": 1440,
+    "diffPct": 0.45127700202888177,
+    "size": "1440×931",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-36-SCHEDULE-END",
+    "name": "Bot · hết lịch",
+    "viewport": 390,
+    "diffPct": 0.23953261927945474,
+    "size": "390×1580",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-36-SCHEDULE-PAUSE",
+    "name": "Bot · tạm dừng",
+    "viewport": 1440,
+    "diffPct": 0.4296455424274973,
+    "size": "1440×931",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-36-SCHEDULE-PAUSE",
+    "name": "Bot · tạm dừng",
+    "viewport": 390,
+    "diffPct": 0.18630437235088398,
+    "size": "390×1591",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-36-SCHEDULE-WAIT",
+    "name": "Bot · lịch tương lai",
+    "viewport": 1440,
+    "diffPct": 0.4511278195488722,
+    "size": "1440×931",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-36-SCHEDULE-WAIT",
+    "name": "Bot · lịch tương lai",
+    "viewport": 390,
+    "diffPct": 0.2421379004872287,
+    "size": "390×1563",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-37",
+    "name": "Bot · Persona",
+    "viewport": 1440,
+    "diffPct": 0.28085564789165895,
+    "size": "1440×1444",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-37",
+    "name": "Bot · Persona",
+    "viewport": 390,
+    "diffPct": 0.4705404705404706,
+    "size": "390×3663",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-38",
+    "name": "Drawer persona",
+    "viewport": 1440,
+    "diffPct": 0.08348765432098765,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-38",
+    "name": "Drawer persona",
+    "viewport": 390,
+    "diffPct": 0.12061003767164906,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-39",
+    "name": "Bot · Kịch bản hội thoại",
+    "viewport": 1440,
+    "diffPct": 0.5003714888313681,
+    "size": "1440×1159",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-39",
+    "name": "Bot · Kịch bản hội thoại",
+    "viewport": 390,
+    "diffPct": 0.4050350438183138,
+    "size": "390×2367",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-39-BULK",
+    "name": "Bot · AI tạo hàng loạt",
+    "viewport": 1440,
+    "diffPct": 0.5919753086419753,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-39-BULK",
+    "name": "Bot · AI tạo hàng loạt",
+    "viewport": 390,
+    "diffPct": 0.34542471746263215,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-39-BULK-FORM",
+    "name": "Bot · bulk đã nhập chủ đề/nhóm",
+    "viewport": 1440,
+    "diffPct": 0.5979166666666667,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-39-BULK-FORM",
+    "name": "Bot · bulk đã nhập chủ đề/nhóm",
+    "viewport": 390,
+    "diffPct": 0.6531777858792076,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-39-BULK-RESULT",
+    "name": "Bot · kết quả tạo AI hàng loạt",
+    "viewport": 1440,
+    "diffPct": 5.4954475308641975,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-39-BULK-RESULT",
+    "name": "Bot · kết quả tạo AI hàng loạt",
+    "viewport": 390,
+    "diffPct": 8.009174869364442,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-39-BULK-TYPE",
+    "name": "Bot · thêm loại hội thoại",
+    "viewport": 1440,
+    "diffPct": 0.7084104938271605,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-39-BULK-TYPE",
+    "name": "Bot · thêm loại hội thoại",
+    "viewport": 390,
+    "diffPct": 0.5185927816259569,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-40",
+    "name": "Drawer kịch bản",
+    "viewport": 1440,
+    "diffPct": 0.12260802469135804,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-40",
+    "name": "Drawer kịch bản",
+    "viewport": 390,
+    "diffPct": 0.39615992222627294,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-41",
+    "name": "Bot · Hội thoại",
+    "viewport": 1440,
+    "diffPct": 0.46601003139597214,
+    "size": "1440×1451",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-41",
+    "name": "Bot · Hội thoại",
+    "viewport": 390,
+    "diffPct": 0.4048281200722498,
+    "size": "390×2683",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-42",
+    "name": "Sự kiện · lưới",
+    "viewport": 1440,
+    "diffPct": 0.23326824412282718,
+    "size": "1440×1451",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-42",
+    "name": "Sự kiện · lưới",
+    "viewport": 390,
+    "diffPct": 0.3725393805971744,
+    "size": "390×3599",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-43",
+    "name": "Sự kiện · danh sách",
+    "viewport": 1440,
+    "diffPct": 0.2635118149824032,
+    "size": "1440×1105",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-43",
+    "name": "Sự kiện · danh sách",
+    "viewport": 390,
+    "diffPct": 2.4028970270428127,
+    "size": "390×2634",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-44",
+    "name": "Sự kiện · Đã đầy → chi tiết sự kiện (Demo Day)",
+    "viewport": 1440,
+    "diffPct": 0.24422811853893867,
+    "size": "1440×1451",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-44",
+    "name": "Sự kiện · Đã đầy → chi tiết sự kiện (Demo Day)",
+    "viewport": 390,
+    "diffPct": 0.38073253966557663,
+    "size": "390×3599",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-45",
+    "name": "Sự kiện · 6/trang",
+    "viewport": 1440,
+    "diffPct": 0.23326824412282718,
+    "size": "1440×1451",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-45",
+    "name": "Sự kiện · 6/trang",
+    "viewport": 390,
+    "diffPct": 0.3725393805971744,
+    "size": "390×3599",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-46",
+    "name": "Drawer danh sách đăng ký",
+    "viewport": 1440,
+    "diffPct": 0.08456790123456791,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-46",
+    "name": "Drawer danh sách đăng ký",
+    "viewport": 390,
+    "diffPct": 0.12061003767164906,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-47",
+    "name": "Drawer tạo sự kiện",
+    "viewport": 1440,
+    "diffPct": 0.040200617283950614,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-47",
+    "name": "Drawer tạo sự kiện",
+    "viewport": 390,
+    "diffPct": 0.0039494470774091624,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-48",
+    "name": "Tạo sự kiện · Online",
+    "viewport": 1440,
+    "diffPct": 0.040200617283950614,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-48",
+    "name": "Tạo sự kiện · Online",
+    "viewport": 390,
+    "diffPct": 0.020354842629724146,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-49",
+    "name": "Drawer sửa sự kiện",
+    "viewport": 1440,
+    "diffPct": 0.06327160493827161,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-49",
+    "name": "Drawer sửa sự kiện",
+    "viewport": 390,
+    "diffPct": 0.04283631060882246,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-50",
+    "name": "Sự kiện · chia sẻ",
+    "viewport": 1440,
+    "diffPct": 0.23326824412282718,
+    "size": "1440×1451",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-50",
+    "name": "Sự kiện · chia sẻ",
+    "viewport": 390,
+    "diffPct": 0.3725393805971744,
+    "size": "390×3599",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-51",
+    "name": "Dự án · chờ duyệt",
+    "viewport": 1440,
+    "diffPct": 0.030246913580246913,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-51",
+    "name": "Dự án · chờ duyệt",
+    "viewport": 390,
+    "diffPct": 0.04698269175365113,
+    "size": "390×1157",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-52",
+    "name": "Dự án · Bị từ chối (trống)",
+    "viewport": 1440,
+    "diffPct": 0.06458333333333333,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-52",
+    "name": "Dự án · Bị từ chối (trống)",
+    "viewport": 390,
+    "diffPct": 0.1995989792198323,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-53",
+    "name": "Dự án · danh sách",
+    "viewport": 1440,
+    "diffPct": 0.1555888575458392,
+    "size": "1440×1418",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-53",
+    "name": "Dự án · danh sách",
+    "viewport": 390,
+    "diffPct": 0.10505265964538063,
+    "size": "390×2885",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-54",
+    "name": "Dự án · chọn nhiều",
+    "viewport": 1440,
+    "diffPct": 0.10648148148148148,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-54",
+    "name": "Dự án · chọn nhiều",
+    "viewport": 390,
+    "diffPct": 0.06009615384615385,
+    "size": "390×1088",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-55",
+    "name": "Drawer duyệt dự án",
+    "viewport": 1440,
+    "diffPct": 0.024537037037037034,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-55",
+    "name": "Drawer duyệt dự án",
+    "viewport": 390,
+    "diffPct": 0.04496293595819662,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-56",
+    "name": "Dự án · đã duyệt",
+    "viewport": 1440,
+    "diffPct": 0.029783950617283953,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-56",
+    "name": "Dự án · đã duyệt",
+    "viewport": 390,
+    "diffPct": 0.054684651841049946,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-57",
+    "name": "Dự án · Đang hiển thị",
+    "viewport": 1440,
+    "diffPct": 0.09265901482544238,
+    "size": "1440×1394",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-57",
+    "name": "Dự án · Đang hiển thị",
+    "viewport": 390,
+    "diffPct": 0.05755865219715748,
+    "size": "390×3693",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-58",
+    "name": "Nhà đầu tư",
+    "viewport": 1440,
+    "diffPct": 0.046141975308641975,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-58",
+    "name": "Nhà đầu tư",
+    "viewport": 390,
+    "diffPct": 0.0599865423986027,
+    "size": "390×1791",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-59",
+    "name": "Nhà đầu tư · Quỹ",
+    "viewport": 1440,
+    "diffPct": 0.046141975308641975,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-59",
+    "name": "Nhà đầu tư · Quỹ",
+    "viewport": 390,
+    "diffPct": 0.0599865423986027,
+    "size": "390×1791",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-60",
+    "name": "Drawer nhà đầu tư",
+    "viewport": 1440,
+    "diffPct": 0.3472222222222222,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-60",
+    "name": "Drawer nhà đầu tư",
+    "viewport": 390,
+    "diffPct": 1.2878235508567264,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-61",
+    "name": "Dịch vụ · yêu cầu",
+    "viewport": 1440,
+    "diffPct": 0.032484567901234565,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-61",
+    "name": "Dịch vụ · yêu cầu",
+    "viewport": 390,
+    "diffPct": 0.03586157432311279,
+    "size": "390×1716",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-62",
+    "name": "Dịch vụ · trống",
+    "viewport": 1440,
+    "diffPct": 0.056712962962962965,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-62",
+    "name": "Dịch vụ · trống",
+    "viewport": 390,
+    "diffPct": 0.16982622432859398,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-63",
+    "name": "Drawer yêu cầu YC-1005",
+    "viewport": 1440,
+    "diffPct": 0.765895061728395,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-63",
+    "name": "Drawer yêu cầu YC-1005",
+    "viewport": 390,
+    "diffPct": 1.9707740916271723,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-65",
+    "name": "Dịch vụ · danh mục",
+    "viewport": 1440,
+    "diffPct": 0.048718122014958995,
+    "size": "1440×1233",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-65",
+    "name": "Dịch vụ · danh mục",
+    "viewport": 390,
+    "diffPct": 0.14336036700253954,
+    "size": "390×1252",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-66",
+    "name": "Cài đặt · Chung",
+    "viewport": 1440,
+    "diffPct": 0.2368827160493827,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-66",
+    "name": "Cài đặt · Chung",
+    "viewport": 390,
+    "diffPct": 7.281393819855358,
+    "size": "390×1794",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-67",
+    "name": "Cài đặt · Danh mục lĩnh vực",
+    "viewport": 1440,
+    "diffPct": 0.22570203566049654,
+    "size": "1440×2287",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-67",
+    "name": "Cài đặt · Danh mục lĩnh vực",
+    "viewport": 390,
+    "diffPct": 5.404186105914791,
+    "size": "390×6826",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-68",
+    "name": "Lĩnh vực · đang sửa",
+    "viewport": 1440,
+    "diffPct": 0.2308336977117038,
+    "size": "1440×2287",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-68",
+    "name": "Lĩnh vực · đang sửa",
+    "viewport": 390,
+    "diffPct": 5.387620485774603,
+    "size": "390×6826",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-69",
+    "name": "Cài đặt · Vai trò & phân quyền",
+    "viewport": 1440,
+    "diffPct": 2.818172521347855,
+    "size": "1440×2173",
+    "sha": "6a480baa"
+  },
+  {
+    "id": "D-69",
+    "name": "Cài đặt · Vai trò & phân quyền",
+    "viewport": 390,
+    "diffPct": 2.2628721621559578,
+    "size": "390×8936",
+    "sha": "6a480baa"
+  },
+  {
+    "id": "D-70",
+    "name": "Cài đặt · Email chào mừng",
+    "viewport": 1440,
+    "diffPct": 0.4409385113268608,
+    "size": "1440×1236",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-70",
+    "name": "Cài đặt · Email chào mừng",
+    "viewport": 390,
+    "diffPct": 11.758987407842369,
+    "size": "390×2751",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-71",
+    "name": "Cài đặt · SMTP",
+    "viewport": 1440,
+    "diffPct": 0.1850935093509351,
+    "size": "1440×1010",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-71",
+    "name": "Cài đặt · SMTP",
+    "viewport": 390,
+    "diffPct": 8.994082840236686,
+    "size": "390×1742",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-72",
+    "name": "SMTP · lỗi xác thực",
+    "viewport": 1440,
+    "diffPct": 0.1850935093509351,
+    "size": "1440×1010",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-72",
+    "name": "SMTP · lỗi xác thực",
+    "viewport": 390,
+    "diffPct": 11.540057753979656,
+    "size": "390×1767",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-73",
+    "name": "Cài đặt · Tài khoản quản trị",
+    "viewport": 1440,
+    "diffPct": 0.30146604938271604,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-73",
+    "name": "Cài đặt · Tài khoản quản trị",
+    "viewport": 390,
+    "diffPct": 7.745645863570391,
+    "size": "390×2120",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-74",
+    "name": "Tài khoản quản trị · hộp thoại tạo TK (§21 RB-R02)",
+    "viewport": 1440,
+    "diffPct": 0.740895061728395,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-74",
+    "name": "Tài khoản quản trị · hộp thoại tạo TK (§21 RB-R02)",
+    "viewport": 390,
+    "diffPct": 1.9516344634828047,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-75",
+    "name": "Cài đặt · Nhật ký hoạt động",
+    "viewport": 1440,
+    "diffPct": 0.3505401234567901,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-75",
+    "name": "Cài đặt · Nhật ký hoạt động",
+    "viewport": 390,
+    "diffPct": 7.579522424883249,
+    "size": "390×1455",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-80",
+    "name": "Toast toàn cục",
+    "viewport": 1440,
+    "diffPct": 0.12445987654320988,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-80",
+    "name": "Toast toàn cục",
+    "viewport": 390,
+    "diffPct": 4.690424109855389,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-81",
+    "name": "Xem thử vai trò Kế toán · menu + dải cam (RB-R09, AT-RB02)",
+    "viewport": 1440,
+    "diffPct": 0.09112654320987655,
+    "size": "1440×900",
+    "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-81",
+    "name": "Xem thử vai trò Kế toán · menu + dải cam (RB-R09, AT-RB02)",
+    "viewport": 390,
+    "diffPct": 0.09174869364442824,
+    "size": "390×844",
+    "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-82",
+    "name": "Chế độ chỉ xem · Giảng viên mở Thành viên (AT-RB03)",
+    "viewport": 1440,
+    "diffPct": 0.02953896914571072,
+    "size": "1440×1246",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-82",
+    "name": "Chế độ chỉ xem · Giảng viên mở Thành viên (AT-RB03)",
+    "viewport": 390,
+    "diffPct": 0.04358128120504358,
+    "size": "390×3030",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-83",
+    "name": "Đổi mật khẩu lần đầu (AT-SEC01, RB-R02)",
+    "viewport": 1440,
+    "diffPct": 1.856172839506173,
+    "size": "1440×900",
+    "mask": "Email TK tạm khác nhau mỗi lần đo trên server (cần duy nhất)",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-84",
+    "name": "Admin · Affiliate",
+    "viewport": 1440,
+    "diffPct": 15.704509671614936,
+    "size": "1440×1235",
+    "sha": "6a480baa"
+  },
+  {
+    "id": "D-84",
+    "name": "Admin · Affiliate",
+    "viewport": 390,
+    "diffPct": 7.8515739003543885,
+    "size": "390×3075",
+    "sha": "6a480baa"
+  },
+  {
+    "id": "D-84-AFF",
+    "name": "Admin · Affiliate · Đại lý mặc định",
+    "viewport": 1440,
+    "diffPct": 5.944144375857339,
+    "size": "1440×1296",
+    "sha": "6a480baa"
+  },
+  {
+    "id": "D-84-AFF",
+    "name": "Admin · Affiliate · Đại lý mặc định",
+    "viewport": 390,
+    "diffPct": 27.376125711056233,
+    "size": "390×4174",
+    "sha": "6a480baa"
+  },
+  {
+    "id": "D-84-AFF-BULK",
+    "name": "Admin · Affiliate · Chọn đại lý HAOPC",
+    "viewport": 1440,
+    "diffPct": 1.1179783950617284,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-84-AFF-BULK",
+    "name": "Admin · Affiliate · Chọn đại lý HAOPC",
+    "viewport": 390,
+    "diffPct": 2.008428628927244,
+    "size": "390×1083",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-84-AFF-EMPTY",
+    "name": "Admin · Affiliate · Đại lý không có kết quả",
+    "viewport": 1440,
+    "diffPct": 0.715895061728395,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-84-AFF-EMPTY",
+    "name": "Admin · Affiliate · Đại lý không có kết quả",
+    "viewport": 390,
+    "diffPct": 1.064527889172439,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-84-AFF-Q",
+    "name": "Admin · Affiliate · Tìm đại lý HAOPC",
+    "viewport": 1440,
+    "diffPct": 1.0842592592592593,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-84-AFF-Q",
+    "name": "Admin · Affiliate · Tìm đại lý HAOPC",
+    "viewport": 390,
+    "diffPct": 2.0841166002456326,
+    "size": "390×1023",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-84-COM-BULK",
+    "name": "Admin · Affiliate · Chọn hai khoản hoa hồng",
+    "viewport": 1440,
+    "diffPct": 1.19616610134649,
+    "size": "1440×1081",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-84-COM-BULK",
+    "name": "Admin · Affiliate · Chọn hai khoản hoa hồng",
+    "viewport": 390,
+    "diffPct": 0.8820319667777295,
+    "size": "390×2655",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-84-COM-CANCELLED",
+    "name": "Admin · Affiliate · Hoa hồng đã hủy",
+    "viewport": 1440,
+    "diffPct": 0.5121913580246914,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-84-COM-CANCELLED",
+    "name": "Admin · Affiliate · Hoa hồng đã hủy",
+    "viewport": 390,
+    "diffPct": 1.874243009921402,
+    "size": "390×995",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-84-COM-CANCELLED-MENU",
+    "name": "Admin · Affiliate · Menu khoản đã hủy",
+    "viewport": 1440,
+    "diffPct": 0.5507716049382716,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-84-COM-CANCELLED-MENU",
+    "name": "Admin · Affiliate · Menu khoản đã hủy",
+    "viewport": 390,
+    "diffPct": 2.1530280952015746,
+    "size": "390×1003",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-84-COM-EMPTY",
+    "name": "Admin · Affiliate · Hoa hồng không có kết quả",
+    "viewport": 1440,
+    "diffPct": 0.4140432098765432,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-84-COM-EMPTY",
+    "name": "Admin · Affiliate · Hoa hồng không có kết quả",
+    "viewport": 390,
+    "diffPct": 0.9077652205614292,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-84-COM-PAID",
+    "name": "Admin · Affiliate · Hoa hồng đã chi trả",
+    "viewport": 1440,
+    "diffPct": 1.4715361913637777,
+    "size": "1440×1073",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-84-COM-PAID",
+    "name": "Admin · Affiliate · Hoa hồng đã chi trả",
+    "viewport": 390,
+    "diffPct": 1.257050837203509,
+    "size": "390×2882",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-84-COM-PAID-MENU",
+    "name": "Admin · Affiliate · Menu khoản đã chi trả",
+    "viewport": 1440,
+    "diffPct": 1.5836310448379414,
+    "size": "1440×1073",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-84-COM-PAID-MENU",
+    "name": "Admin · Affiliate · Menu khoản đã chi trả",
+    "viewport": 390,
+    "diffPct": 1.5514510934358263,
+    "size": "390×2882",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-84-COM-RECORDED",
+    "name": "Admin · Affiliate · Hoa hồng đã ghi nhận",
+    "viewport": 1440,
+    "diffPct": 1.299575437506472,
+    "size": "1440×1073",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-84-COM-RECORDED",
+    "name": "Admin · Affiliate · Hoa hồng đã ghi nhận",
+    "viewport": 390,
+    "diffPct": 1.5999395007028596,
+    "size": "390×2882",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-84-COM-RECORDED-MENU",
+    "name": "Admin · Affiliate · Menu khoản đã ghi nhận",
+    "viewport": 1440,
+    "diffPct": 1.459368851610231,
+    "size": "1440×1073",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-84-COM-RECORDED-MENU",
+    "name": "Admin · Affiliate · Menu khoản đã ghi nhận",
+    "viewport": 390,
+    "diffPct": 1.9188063844552394,
+    "size": "390×2882",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-84-POL",
+    "name": "Admin · Affiliate · Chính sách",
+    "viewport": 1440,
+    "diffPct": 34.565152818747954,
+    "size": "1440×1356",
+    "sha": "6a480baa"
+  },
+  {
+    "id": "D-84-POL",
+    "name": "Admin · Affiliate · Chính sách",
+    "viewport": 390,
+    "diffPct": 30.833760464718946,
+    "size": "390×1951",
+    "sha": "6a480baa"
+  },
+  {
+    "id": "D-85",
+    "name": "Admin · Affiliate · Chi tiết đại lý",
+    "viewport": 1440,
+    "diffPct": 0.7111882716049382,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-85",
+    "name": "Admin · Affiliate · Chi tiết đại lý",
+    "viewport": 390,
+    "diffPct": 1.7137020910605816,
+    "size": "390×954",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-85-CUS",
+    "name": "Admin · Affiliate · Khách hàng của đại lý",
+    "viewport": 1440,
+    "diffPct": 1.5447737412364564,
+    "size": "1440×1046",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-85-CUS",
+    "name": "Admin · Affiliate · Khách hàng của đại lý",
+    "viewport": 390,
+    "diffPct": 1.3238554624693237,
+    "size": "390×1515",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-85-RATE",
+    "name": "Admin · Affiliate · Sửa tỷ lệ cá nhân",
+    "viewport": 1440,
+    "diffPct": 0.7175925925925926,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-85-RATE",
+    "name": "Admin · Affiliate · Sửa tỷ lệ cá nhân",
+    "viewport": 390,
+    "diffPct": 1.7073750991276764,
+    "size": "390×970",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-86",
+    "name": "Tạo nhóm · + Thêm chủ đề (NA-09, chỉ quản trị tạo)",
+    "viewport": 1440,
+    "diffPct": 2.7268518518518516,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-86",
+    "name": "Tạo nhóm · + Thêm chủ đề (NA-09, chỉ quản trị tạo)",
+    "viewport": 390,
+    "diffPct": 1.897253615263094,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-87",
+    "name": "Sự kiện · khối Sắp diễn ra + Tiếp theo (TIP-V2-303)",
+    "viewport": 1440,
+    "diffPct": 0.35300925925925924,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-87",
+    "name": "Sự kiện · khối Sắp diễn ra + Tiếp theo (TIP-V2-303)",
+    "viewport": 390,
+    "diffPct": 0.18167456556082148,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-88",
+    "name": "Tạo sự kiện · Link Google Meet (D-59)",
+    "viewport": 1440,
+    "diffPct": 0.040200617283950614,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-88",
+    "name": "Tạo sự kiện · Link Google Meet (D-59)",
+    "viewport": 390,
+    "diffPct": 0.020354842629724146,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-89",
+    "name": "Gán vào nhóm · vai trò Giảng viên (GR-R01)",
+    "viewport": 1440,
+    "diffPct": 0.014274691358024692,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-89",
+    "name": "Gán vào nhóm · vai trò Giảng viên (GR-R01)",
+    "viewport": 390,
+    "diffPct": 0.0039494470774091624,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-90",
+    "name": "Sidebar Admin §27.3 · nhóm menu",
+    "viewport": 1440,
+    "diffPct": 0.08064516129032258,
+    "size": "248×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-90-DRAWER",
+    "name": "Drawer Admin §27.3",
+    "viewport": 390,
+    "diffPct": 0.07840814050738779,
+    "size": "272×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-91",
+    "name": "Admin · menu người dùng có Cài đặt hệ thống",
+    "viewport": 1440,
+    "diffPct": 0,
+    "size": "240×188",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-91",
+    "name": "Admin · menu người dùng có Cài đặt hệ thống",
+    "viewport": 390,
+    "diffPct": 0,
+    "size": "240×188",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-92",
+    "name": "Dự án · Gói Gọi vốn chờ duyệt (chip + Duyệt gọi vốn / Từ chối, V4-610)",
+    "viewport": 1440,
+    "diffPct": 0,
+    "size": "263×333",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-92",
+    "name": "Dự án · Gói Gọi vốn chờ duyệt (chip + Duyệt gọi vốn / Từ chối, V4-610)",
+    "viewport": 390,
+    "diffPct": 0,
+    "size": "336×333",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-93",
+    "name": "Admin › Gian hàng (KPI, chip, bảng)",
+    "viewport": 1440,
+    "diffPct": 0.27985902985902983,
+    "size": "1440×1001",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-93",
+    "name": "Admin › Gian hàng (KPI, chip, bảng)",
+    "viewport": 390,
+    "diffPct": 2.871102066148506,
+    "size": "390×3553",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-94",
+    "name": "Admin › Gian hàng · panel chi tiết",
+    "viewport": 1440,
+    "diffPct": 0.1248015873015873,
+    "size": "560×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-94",
+    "name": "Admin › Gian hàng · panel chi tiết",
+    "viewport": 390,
+    "diffPct": 0.18957345971563982,
+    "size": "390×844",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-95",
+    "name": "Admin › Nhu cầu địa phương (KPI, chip, bảng)",
+    "viewport": 1440,
+    "diffPct": 0.07220070990642143,
+    "size": "1440×1033",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-95",
+    "name": "Admin › Nhu cầu địa phương (KPI, chip, bảng)",
+    "viewport": 390,
+    "diffPct": 0.08539746857503867,
+    "size": "390×2354",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-98",
+    "name": "Kiểm duyệt · Thời gian khóa 14 ngày",
+    "viewport": 1440,
+    "diffPct": 0.18063271604938272,
+    "size": "1440×900",
+    "sha": "0b76e98a"
+  },
+  {
+    "id": "D-98",
+    "name": "Kiểm duyệt · Thời gian khóa 14 ngày",
+    "viewport": 390,
+    "diffPct": 0.2542568409395044,
+    "size": "390×1667",
+    "sha": "0b76e98a"
+  }
 ]

@@ -4,6 +4,7 @@ export * from './membership/pricing';
 export * from './membership/transfer-content';
 export * from './membership/vietqr';
 export * from './membership/fee-access';
+export * from './membership/regional-revoke';
 export * from './onboarding';
 export * from './errors';
 export * from './permissions';

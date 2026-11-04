@@ -34,6 +34,8 @@ const snapshot = async () => ({
   admins: await db.adminUser.count({ where: { deletedAt: null } }),
   adminRoles: await db.adminRole.count(),
   adminGrants: await db.adminRolePermission.count(),
+  regionalSlots: await db.regionalDirector.count(),
+  regionalProvinces: await db.regionalDirectorProvince.count(),
 });
 
 describe('seed demo (TIP-B62)', () => {
@@ -64,6 +66,29 @@ describe('seed demo (TIP-B62)', () => {
   it('chạy lần 2 (sau khi dữ liệu bị đổi) cho đúng số dòng như lần 1', async () => {
     expect(await snapshot()).toEqual(first);
     expect(first.audit).toBe(6);
+  });
+
+  it('TIP-V46-801 retains three exempt directors, their previous fee snapshots and 34 provinces', async () => {
+    const slots = await db.regionalDirector.findMany({
+      orderBy: { region: 'asc' },
+      select: { region: true, userId: true, prevFeeStatus: true },
+    });
+    expect(slots).toEqual([
+      { region: 'north', userId: 'm3', prevFeeStatus: 'expiring' },
+      { region: 'central', userId: 'm9', prevFeeStatus: 'trial' },
+      { region: 'south', userId: 'm10', prevFeeStatus: 'trial' },
+    ]);
+    expect(first.regionalSlots).toBe(3);
+    expect(first.regionalProvinces).toBe(34);
+    expect(
+      await db.membershipFee.count({
+        where: {
+          userId: { in: ['m3', 'm9', 'm10'] },
+          status: 'regional_director',
+          validUntil: null,
+        },
+      }),
+    ).toBe(3);
   });
 
   it('90 nhóm còn sống (34 tỉnh + 56 ngành, D-89), member_count theo prototype', async () => {
@@ -97,7 +122,7 @@ describe('seed demo (TIP-B62)', () => {
     expect(rows.map((r) => [r.id, r.membershipFee?.status, r.status])).toEqual([
       ['m1', 'active', 'active'],
       ['m2', 'active', 'active'],
-      ['m3', 'expiring', 'active'],
+      ['m3', 'regional_director', 'active'],
       ['m4', 'expired', 'locked'],
       ['m5', 'active', 'active'],
       // D-94 2A: m6 chưa đóng phí, tham gia > 90 ngày → hết miễn phí 3 tháng
@@ -124,7 +149,7 @@ describe('seed demo (TIP-B62)', () => {
         systemRole: { not: 'super_admin' },
       },
     });
-    expect(n).toBe(8);
+    expect(n).toBe(10);
   });
 
   it('phòng của c1 gồm qa, docs, events + general; tin + ghim', async () => {
@@ -187,7 +212,7 @@ describe('seed demo (TIP-B62)', () => {
     expect(first.adminRoles).toBe(5);
     // 26 + 7 + 12 + 8 (Super Admin không lưu dòng; V4-606: admin + biên tập có thêm stores.*;
     // V4-614: admin + kế toán có thêm reports.view)
-    expect(first.adminGrants).toBe(53);
+    expect(first.adminGrants).toBe(54);
     const rows = await db.adminUser.findMany({
       where: { deletedAt: null },
       select: {

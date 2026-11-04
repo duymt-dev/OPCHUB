@@ -13,6 +13,9 @@ import { resetDemoBotWorkflows } from './bot-workflow-reset';
  * `stats_daily`.
  */
 export async function resetDemoData(tx: DbTx): Promise<void> {
+  await tx.regionalDirectorEvent.deleteMany();
+  await tx.regionalDirectorProvince.deleteMany();
+  await tx.regionalDirector.deleteMany();
   // Affiliate: cascade referral/hoa hồng/lượt nhấp trước khi xoá các kỳ phí.
   await tx.affiliate.deleteMany({});
   // Dự án (cascade: thành viên, chia sẻ, gọi vốn, theo dõi, góp ý, like, repo, quan tâm đầu tư)
@@ -59,7 +62,7 @@ export async function resetDemoData(tx: DbTx): Promise<void> {
 
 /** Mã sinh từ sequence quay về mốc ngay sau dữ liệu demo (id mới e2e tạo ổn định giữa các lần) */
 async function resetSequences(tx: DbTx): Promise<void> {
-  await tx.$executeRaw`SELECT setval('member_code_seq', 9, false)`;
+  await tx.$executeRaw`SELECT setval('member_code_seq', 11, false)`;
   await tx.$executeRaw`SELECT setval('service_request_seq', 1006, false)`;
   await tx.$executeRaw`SELECT setval('persona_seq', 100, false)`;
   await tx.$executeRaw`SELECT setval('bot_script_seq', 100, false)`;

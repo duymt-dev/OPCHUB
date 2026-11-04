@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { regionalSnapshotSchema } from '../regional-snapshot';
 import {
   affiliateBankSchema,
   affiliateCodeSchema,
@@ -50,6 +51,7 @@ const entries = <T extends z.ZodType>(value: T) =>
 export const affiliateSnapshotSchema = z
   .strictObject({
     version: z.literal(1),
+    regional: regionalSnapshotSchema.optional(),
     demoSeeded: z.boolean(),
     // Legacy mock ledgers predate this metadata; retain every financial row on upgrade.
     welcomeSeen: z.array(id).default([]),

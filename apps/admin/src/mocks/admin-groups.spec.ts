@@ -66,13 +66,13 @@ describe('MSW admin — Nhóm cộng đồng (G4c)', () => {
 
   it('thành viên nhóm lọc trạng thái; xuất ghi audit', async () => {
     const all = await get<{ items: { status: string }[] }>('/admin/groups/members?groupIds=c1,c3');
-    expect(all.items).toHaveLength(8);
+    expect(all.items).toHaveLength(9);
     const locked = await get<{ items: unknown[] }>(
       '/admin/groups/members?groupIds=c1,c3&status=locked',
     );
     expect(locked.items).toHaveLength(1);
     const counts = await get<Record<string, number>>('/admin/groups/member-counts');
-    expect(counts.c1).toBe(5);
+    expect(counts.c1).toBe(6);
     const ex = await send('/admin/groups/members/export', 'POST', {
       groupIds: ['c1'],
       fields: ['name'],

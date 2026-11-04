@@ -9,3 +9,4 @@ export {
   type FundraisingPayer,
   type FundraisingPaymentPort,
 } from './ports';
+export { RegionalFeeService } from './services/regional-fee.service';

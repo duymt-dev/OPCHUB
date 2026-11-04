@@ -21,6 +21,12 @@ export class MailService {
     return id;
   }
 
+  async requestOnce(tx: DbTx, id: string, mail: NewMail): Promise<void> {
+    if (await this.repo.createOnce(tx, id, mail)) {
+      await this.outbox.add(tx, 'mail.requested', { mailLogId: id });
+    }
+  }
+
   /** Nhiều thư một lần (nhắc phí hàng loạt): 1 INSERT mail_logs + 1 INSERT outbox */
   async requestMany(tx: DbTx, mails: readonly NewMail[]): Promise<number> {
     const rows = await this.repo.createMany(tx, mails);

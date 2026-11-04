@@ -44,3 +44,4 @@ export * from './bot-schedule';
 export * from './bot-replies';
 export * from './bot-conversation-types';
 export * from './bot-bulk';
+export * from './regional-directors';

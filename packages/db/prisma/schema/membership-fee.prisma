@@ -6,6 +6,7 @@ enum MembershipFeeStatus {
   active
   expiring
   expired
+  regional_director
 
   @@map("membership_fee_status")
 }

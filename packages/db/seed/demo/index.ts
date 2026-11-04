@@ -69,6 +69,7 @@ export async function seedDemo(
       await seedUsers(tx, h);
       await seedAdmins(tx, h.admin);
       await seedFees(tx);
+      await seedRegionalDirectors(tx);
       await seedAffiliates(tx);
       if (options.affiliate || options.affiliatePaused || options.affiliatePayout)
         await seedAffiliateScenario(tx, {
@@ -97,3 +98,4 @@ export async function seedDemo(
     { timeout: 120_000, maxWait: 30_000 },
   );
 }
+import { seedRegionalDirectors } from './regional-directors';

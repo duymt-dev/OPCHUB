@@ -6,6 +6,14 @@ const minus = (ms: number) => new Date(NOW.getTime() - ms).toISOString();
 const plus = (ms: number) => new Date(NOW.getTime() + ms).toISOString();
 
 describe('fee-access (D-57, BUG-018)', () => {
+  it('D-120 regional director is open-ended, usable but never paid', () => {
+    for (const validUntil of [null, minus(1), plus(1)]) {
+      const fee = { status: 'regional_director' as const, validUntil };
+      expect(effectiveFeeStatus(fee, NOW)).toBe('regional_director');
+      expect(isFeeUsable(fee, NOW)).toBe(true);
+      expect(isFeePaid(fee, NOW)).toBe(false);
+    }
+  });
   it('D-57 BUG-018 active quá valid_until → expired', () => {
     const fee = { status: 'active' as const, validUntil: minus(60_000) };
     expect(effectiveFeeStatus(fee, NOW)).toBe('expired');

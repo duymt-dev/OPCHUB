@@ -123,6 +123,7 @@ export const MAIL_LOG_KIND = [
   'onboarding',
   /** V42-704 (D-113 F4): biên nhận phí thành viên / Gói Gọi vốn */
   'receipt',
+  'regional_director',
 ] as const;
 export type MailLogKind = (typeof MAIL_LOG_KIND)[number];
 export const MAIL_LOG_STATUS = ['queued', 'sent', 'failed', 'cancelled'] as const;

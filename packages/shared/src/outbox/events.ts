@@ -22,6 +22,18 @@ const fundraisingRef = z.object({
 });
 
 export const outboxEvents = {
+  'regional_director.appointed': z.object({
+    region: z.enum(['north', 'central', 'south']),
+    userId: z.string(),
+    provinces: z.array(z.string()),
+  }),
+  'regional_director.revoked': z.object({
+    region: z.enum(['north', 'central', 'south']),
+    userId: z.string(),
+    feeStatus: z.enum(MEMBERSHIP_FEE_STATUS),
+    validUntil: z.iso.datetime().nullable(),
+    revokedAt: z.iso.datetime(),
+  }),
   'bot.bulk_due': z.strictObject({
     batchId: z.uuid(),
     cursor: z.number().int().min(0).max(499),

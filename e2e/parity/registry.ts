@@ -3,8 +3,10 @@ import { ADMIN_SCENARIOS } from './scenarios/admin';
 import { AUTH_SCENARIOS } from './scenarios/auth';
 import { PORTAL_SCENARIOS } from './scenarios/portal';
 import type { Scenario } from './types';
+import { ADMIN_REGIONAL } from './scenarios/admin-regional';
 
 export const ALL_SCENARIOS: Scenario[] = [
+  ...ADMIN_REGIONAL,
   ...AUTH_SCENARIOS,
   ...PORTAL_SCENARIOS,
   ...ADMIN_SCENARIOS,

@@ -1,5 +1,5 @@
 import { Prisma } from '@opchub/db';
-import { usableFeeStatuses } from '@opchub/shared';
+import { usableFeeSql } from '@/common/auth';
 import type { ProjectSort } from '@opchub/shared/api-domains';
 import type { ExploreFilter } from './project-feed.types';
 
@@ -16,8 +16,7 @@ function visible(userId: string, now: Date) {
     p.owner_id = ${userId} OR EXISTS (
       SELECT 1 FROM users u JOIN membership_fees f ON f.user_id = u.id
       WHERE u.id = p.owner_id
-        AND f.status IN (${Prisma.join(usableFeeStatuses().map((status) => Prisma.sql`${status}::membership_fee_status`))})
-        AND f.valid_until > ${now}
+        AND ${usableFeeSql('f', now)}
       AND ((p.visibility = 'public' AND u.status = 'active')
     OR EXISTS (SELECT 1 FROM project_members m WHERE m.project_id = p.id AND m.user_id = ${userId})
     OR EXISTS (

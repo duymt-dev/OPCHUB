@@ -42,7 +42,7 @@ export const trialStatusOf = (untilMs: number, now = MOCK_NOW): MembershipFeeSta
  * FEE_SEED + m1 (TK demo): đã đóng tại ngày tham gia (prototype `prBill`); còn lại miễn phí 3 tháng
  * tính từ ngày tham gia (prototype `fst`, D-94 1A/2A) — quá 90 ngày thì hết hạn.
  */
-export function buildFees(): FeeRow[] {
+export function buildFees(regional = true): FeeRow[] {
   const paidSeed = seed.FEE_SEED as Record<string, number>;
   return members.map((m) => {
     const joined = Date.parse(isoFromVnDate(m.date));
@@ -58,9 +58,14 @@ export function buildFees(): FeeRow[] {
       accountType,
       joinedAt: isoFromVnDate(m.date),
       groups: [],
-      status: paidMs === null ? trialStatusOf(until) : feeStatusOf(until),
+      status:
+        regional && ['m3', 'm9', 'm10'].includes(m.id)
+          ? 'regional_director'
+          : paidMs === null
+            ? trialStatusOf(until)
+            : feeStatusOf(until),
       paidAt: paidMs === null ? null : iso(paidMs),
-      validUntil: until === null ? null : iso(until),
+      validUntil: regional && ['m3', 'm9', 'm10'].includes(m.id) ? null : iso(until),
       amount: feeAmountOf(accountType),
     };
   });
