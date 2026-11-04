@@ -13,7 +13,7 @@ export function AffiliateTabs({
 }: {
   tab: AffiliateParams['tab'];
   onTab: (tab: AffiliateParams['tab']) => void;
-  counts: { com: number | undefined; aff: number | undefined };
+  counts: { com: number | undefined; aff: number | undefined; gdv?: number | undefined };
   net: number | undefined;
 }) {
   const t = useTranslations('affiliate');
@@ -30,7 +30,10 @@ export function AffiliateTabs({
             className={`${styles.tab} ${tab === key ? styles.tabOn : ''}`}
             onClick={() => onTab(key)}
           >
-            {t(`tabs.${key}`)}
+            {key === 'gdv' ? t('regional.share.director') : t(`tabs.${key}`)}
+            {key === 'gdv' && counts.gdv !== undefined && (
+              <span className={styles.hint}>{counts.gdv}</span>
+            )}
             {(key === 'com' || key === 'aff') && counts[key] !== undefined ? (
               <span className={styles.hint}>{counts[key]}</span>
             ) : null}

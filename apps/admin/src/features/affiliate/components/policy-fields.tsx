@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { usePrices } from '@/lib/use-prices';
 import { affiliateMoney } from '../format';
 import layout from './policy-layout.module.css';
+import { RegionalPolicyFields } from '../regional/components/regional-policy-fields';
 
 /** D-70 (V4-602): giá gói lấy từ Cấu hình bảng giá (D-94 5A); % Gọi vốn chỉ hiển thị như prototype */
 export function PolicyFields() {
@@ -16,6 +17,7 @@ export function PolicyFields() {
   const money = (n: number | undefined) => (n === undefined ? '—' : affiliateMoney(n));
   return (
     <>
+      <RegionalPolicyFields />
       <div className={layout.fields}>
         <Form.Item
           name="defaultRate"

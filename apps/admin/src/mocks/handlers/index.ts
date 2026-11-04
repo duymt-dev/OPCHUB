@@ -70,3 +70,5 @@ handlers.unshift(...affiliateDemoHandlers);
 handlers.unshift(...memberStatusHandlers);
 handlers.unshift(...regionalDirectorHandlers);
 import { regionalDirectorHandlers } from './regional-directors';
+import { regionalShareHandlers } from './regional-shares';
+handlers.unshift(...regionalShareHandlers);
