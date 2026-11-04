@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 308/390 ảnh.
+> Đạt 305/394 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -198,10 +198,14 @@
 | P-94 | Đổi mật khẩu · báo thiếu | 390 | 0.52% | ✅ đạt | 390×1798 | 25a1eec |
 | P-96 | Chi tiết sự kiện · đã đăng ký (link Meet) | 1440 | 0.11% | ✅ đạt | 1440×900 | 25a1eec |
 | P-96 | Chi tiết sự kiện · đã đăng ký (link Meet) | 390 | 0.00% | ✅ đạt | 390×844 | 25a1eec |
-| P-97 | Portal · Affiliate | 1440 | 0.90% | ✅ đạt | 1440×1057 | 32f6112 |
-| P-97 | Portal · Affiliate | 390 | 0.78% | ✅ đạt | 390×2170 | 32f6112 |
-| P-98 | Portal · Affiliate · Lịch sử nhận tiền | 1440 | 0.87% | ✅ đạt | 1440×900 | 32f6112 |
-| P-98 | Portal · Affiliate · Lịch sử nhận tiền | 390 | 2.45% | ✅ đạt | 390×1917 | 32f6112 |
+| P-97 | Portal · Affiliate | 1440 | 4.21% | ❌ chưa đạt | 1440×1070 | c1fd1625 |
+| P-97 | Portal · Affiliate | 390 | 4.15% | ❌ chưa đạt | 390×1909 | c1fd1625 |
+| P-98 | Portal · Affiliate · Lịch sử nhận tiền | 1440 | 1.24% | ✅ đạt | 1440×900 | c1fd1625 |
+| P-98 | Portal · Affiliate · Lịch sử nhận tiền | 390 | 5.14% | ❌ chưa đạt | 390×1632 | c1fd1625 |
+| P-V46-REG | Portal · Vùng của tôi | 1440 | 7.42% | ❌ chưa đạt | 1440×1944 | c1fd1625 |
+| P-V46-REG | Portal · Vùng của tôi | 390 | 15.23% | ❌ chưa đạt | 390×3067 | c1fd1625 |
+| P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 1440 | 16.65% | ❌ chưa đạt | 1440×1183 | c1fd1625 |
+| P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 390 | 11.01% | ❌ chưa đạt | 390×1819 | c1fd1625 |
 | D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.34% | ✅ đạt | 1440×900 | 25a1eec |
 | D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 0.71% | ✅ đạt | 390×844 | 25a1eec |
 | D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.32% | ✅ đạt | 1440×900 | 25a1eec |

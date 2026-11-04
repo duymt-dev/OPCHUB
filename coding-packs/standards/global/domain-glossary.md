@@ -92,3 +92,6 @@ Nhãn tiếng Việt chỉ đặt trong file messages của next-intl, không vi
 | Doanh thu Media Soft giữ lại | `netRevenue = revenue - regionalTotal` | Sau phần GĐ Vùng cùng phạm vi tháng; hủy hoa hồng không đảo sổ chia sẻ (D-132) |
 | Thuộc vùng (theo tỉnh) | `AffiliateAdminRow.region` | Projection chỉ đọc từ nhóm tỉnh tham gia sớm nhất còn hiệu lực; không phải thao tác gán vùng |
 | GĐ Vùng chi | Nhãn lịch sử tháng affiliate | Media Soft không chi trực tiếp affiliate; GĐ Vùng tự chi ngoài hệ thống (D-119) |
+| Vùng của tôi | `GET /me/gdv`, `/affiliate?tab=reg` | Màn chỉ đọc cho GĐ Vùng hiện tại, chỉ gồm các khoản snapshot ghi cho chính người nhận đó |
+| Phần GĐ Vùng được chia | `kpi.share`, `years[].share` | Tổng `director_amount` đã chụp, không tính lại theo chính sách hiện hành |
+| Chờ chi cuối tháng | `kpi.due` | Tổng phần GĐ Vùng trừ phần đã chi; không phải lệnh chi và không thay quy tắc chỉ chi tháng đã đóng |

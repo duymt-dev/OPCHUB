@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 434/482 ảnh.
+> Đạt 433/486 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -246,12 +246,16 @@
 | P-94 | Đổi mật khẩu · báo thiếu | 390 | 0.27% | ✅ đạt | 390×1532 | 0b76e98a |
 | P-96 | Chi tiết sự kiện · đã đăng ký (link Meet) | 1440 | 0.03% | ✅ đạt | 1440×900 | 0b76e98a |
 | P-96 | Chi tiết sự kiện · đã đăng ký (link Meet) | 390 | 0.00% | ✅ đạt | 390×844 | 0b76e98a |
-| P-97 | Portal · Affiliate | 1440 | 0.79% | ✅ đạt | 1440×1079 | 0b76e98a |
-| P-97 | Portal · Affiliate | 390 | 0.66% | ✅ đạt | 390×1956 | 0b76e98a |
-| P-98 | Portal · Affiliate · Lịch sử nhận tiền | 1440 | 0.87% | ✅ đạt | 1440×920 | 0b76e98a |
-| P-98 | Portal · Affiliate · Lịch sử nhận tiền | 390 | 0.93% | ✅ đạt | 390×1679 | 0b76e98a |
+| P-97 | Portal · Affiliate | 1440 | 4.15% | ❌ chưa đạt | 1440×1070 | c1fd1625 |
+| P-97 | Portal · Affiliate | 390 | 1.20% | ✅ đạt | 390×1893 | c1fd1625 |
+| P-98 | Portal · Affiliate · Lịch sử nhận tiền | 1440 | 1.17% | ✅ đạt | 1440×900 | c1fd1625 |
+| P-98 | Portal · Affiliate · Lịch sử nhận tiền | 390 | 1.56% | ✅ đạt | 390×1616 | c1fd1625 |
 | P-99 | Sidebar Portal §27.3 · nhóm menu + thẻ gói | 1440 | 0.01% | ✅ đạt | 248×900 | 0b76e98a |
 | P-99-DRAWER | Drawer Portal §27.3 · nhóm menu + thẻ gói | 390 | 0.01% | ✅ đạt | 272×844 | 0b76e98a |
+| P-V46-REG | Portal · Vùng của tôi | 1440 | 7.35% | ❌ chưa đạt | 1440×1944 | c1fd1625 |
+| P-V46-REG | Portal · Vùng của tôi | 390 | 15.27% | ❌ chưa đạt | 390×3067 | c1fd1625 |
+| P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 1440 | 16.61% | ❌ chưa đạt | 1440×1183 | c1fd1625 |
+| P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 390 | 10.86% | ❌ chưa đạt | 390×1819 | c1fd1625 |
 | D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.09% | ✅ đạt | 1440×900 | 0b76e98a |
 | D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 0.09% | ✅ đạt | 390×844 | 0b76e98a |
 | D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.09% | ✅ đạt | 1440×900 | 0b76e98a |

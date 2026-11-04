@@ -423,3 +423,12 @@ Trạng thái ver2 đã có sẵn id cũ (không thêm): popup V4 + 6 dịch v�
 Đã đo cả 8 D-84-COM-* substates ở 1440/390; xem bảng baseline → cuối trong
 [TIP-803 completion](../TIP-V46-803-completion.md#com-substates--so-với-baseline-mới).
 Ngưỡng 3% giữ nguyên; đây là PARTIAL, không đánh dấu hoàn tất parity.
+
+## V4.6 — TIP-V46-804
+
+| ID | Khu vực | Trạng thái / thao tác | Route app | Viewport |
+|---|---|---|---|---|
+| P-V46-REG-BANNER | Portal m3 | Đăng nhập GĐ Vùng Bắc → Mạng lưới Affiliate, banner trên cảnh báo STK | /affiliate | 1440, 390 |
+| P-V46-REG | Portal m3 | Banner → Xem Vùng của tôi; bảng vùng chỉ đọc | /affiliate?tab=reg | 1440, 390 |
+
+P-97/P-98 được đo baseline trước thay đổi và đo lại; xem TIP-V46-804-completion.md. Ngưỡng 3% giữ nguyên.
