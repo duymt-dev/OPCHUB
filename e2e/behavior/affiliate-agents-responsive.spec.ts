@@ -10,7 +10,8 @@ for (const width of [360, 390]) {
   }) => {
     await page.setViewportSize({ width, height: 844 });
     await signInAffiliate(page, ADMIN_URL, 'admin@opchub.community', 'Admin@2026');
-    await page.getByRole('tab', { name: /^Affiliate/ }).click();
+    // AF0 money belongs to October, not the wall-clock month of the test runner.
+    await page.goto(`${ADMIN_URL}/affiliate?tab=aff&month=2026-10`);
     await page.getByPlaceholder('Tìm tên, mã giới thiệu, email...').fill('HAOPC');
     const row = page.getByRole('row').filter({ hasText: 'HAOPC' });
     await expect(row).toHaveCount(1);
@@ -21,7 +22,7 @@ for (const width of [360, 390]) {
     await expect(row).toContainText('27.600.000đ');
     await expect(row).toContainText('2.700.000đ');
     const cells = row.getByRole('cell');
-    await expect(cells).toHaveCount(9);
+    await expect(cells).toHaveCount(10);
     for (const cell of await cells.all()) {
       await expect(cell).toBeVisible();
       const box = await cell.boundingBox();
@@ -33,7 +34,7 @@ for (const width of [360, 390]) {
     await expect(row.getByRole('checkbox')).toBeChecked();
     await page.getByRole('button', { name: 'Bỏ chọn', exact: true }).click();
     await expect(row.getByRole('checkbox')).not.toBeChecked();
-    await row.getByRole('link', { name: 'Đối soát & chi trả', exact: true }).click();
+    await row.getByRole('link', { name: 'Xem đối soát', exact: true }).click();
     await expect(page.getByRole('heading', { name: 'Lê Thu Hà', exact: true })).toBeVisible();
     await page.reload();
     await expect(page.getByRole('heading', { name: 'Lê Thu Hà', exact: true })).toBeVisible();

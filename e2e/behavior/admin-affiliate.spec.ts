@@ -28,11 +28,12 @@ test.describe('Affiliate Admin (TIP-V2-404)', () => {
     await page.getByPlaceholder('Tìm thành viên hoặc affiliate...').fill('Do Minh Tuan');
     await expect(page).toHaveURL(/q=Do/);
     // AF0 has three customers with this name, belonging to different agents.
-    await expect(page.getByRole('row').filter({ hasText: 'Đỗ Minh Tuấn' })).toHaveCount(3);
+    await expect(page.getByRole('row').filter({ hasText: 'Đỗ Minh Tuấn' })).toHaveCount(5);
     const row = page
       .getByRole('row')
       .filter({ hasText: 'Đỗ Minh Tuấn' })
-      .filter({ hasText: 'Nguyễn Văn An' });
+      .filter({ hasText: 'Nguyễn Văn An' })
+      .filter({ hasText: '20% · Năm 1' });
     await expect(row).toHaveCount(1);
     await expect(row).toContainText('Nguyễn Văn An');
     // D-110 / BR-AFF-REV: gói thực trả như prototype v4.2 (Cá nhân 1.200.000đ, DN 3.600.000đ)
@@ -42,7 +43,7 @@ test.describe('Affiliate Admin (TIP-V2-404)', () => {
     await expect(page.getByPlaceholder('Tìm thành viên hoặc affiliate...')).toHaveValue(
       'Do Minh Tuan',
     );
-    await expect(page.getByRole('row').filter({ hasText: 'Đỗ Minh Tuấn' })).toHaveCount(3);
+    await expect(page.getByRole('row').filter({ hasText: 'Đỗ Minh Tuấn' })).toHaveCount(5);
     await expect(row).toContainText('720.000đ');
   });
 
@@ -74,9 +75,7 @@ test.describe('Affiliate Admin (TIP-V2-404)', () => {
   }) => {
     await openAffiliate(page);
     await page.getByRole('tab', { name: 'Chính sách', exact: true }).click();
-    await page
-      .getByRole('spinbutton', { name: 'Tỷ lệ hoa hồng mặc định (%)', exact: true })
-      .fill('30');
+    await page.getByLabel('GĐ Vùng năm 1', { exact: true }).fill('60');
     await page
       .getByRole('spinbutton', { name: 'Thời gian ghi nhận link (ngày)', exact: true })
       .fill('45');
@@ -98,9 +97,7 @@ test.describe('Affiliate Admin (TIP-V2-404)', () => {
     ).toBeVisible();
     await page.getByRole('tab', { name: /^Hoa hồng/ }).click();
     await page.getByRole('tab', { name: 'Chính sách', exact: true }).click();
-    await expect(
-      page.getByRole('spinbutton', { name: 'Tỷ lệ hoa hồng mặc định (%)', exact: true }),
-    ).toHaveValue('30');
+    await expect(page.getByLabel('GĐ Vùng năm 1', { exact: true })).toHaveValue('60');
     await expect(
       page.getByRole('spinbutton', { name: 'Thời gian ghi nhận link (ngày)', exact: true }),
     ).toHaveValue('45');
@@ -110,9 +107,7 @@ test.describe('Affiliate Admin (TIP-V2-404)', () => {
       termsDialog.getByRole('textbox', { name: 'Điều khoản chương trình', exact: true }),
     ).toHaveValue('Điều khoản kiểm thử P4');
     await termsDialog.getByRole('button', { name: 'Xong', exact: true }).click();
-    await expect(
-      page.getByRole('spinbutton', { name: 'Tỷ lệ hoa hồng mặc định (%)', exact: true }),
-    ).toHaveValue('30');
+    await expect(page.getByLabel('GĐ Vùng năm 1', { exact: true })).toHaveValue('60');
     await page.getByRole('tab', { name: /^Affiliate/ }).click();
     await page.getByPlaceholder('Tìm tên, mã giới thiệu, email...').fill('HAOPC');
     await page
@@ -129,8 +124,12 @@ test.describe('Affiliate Admin (TIP-V2-404)', () => {
     await openAffiliate(page);
     await page.getByPlaceholder('Tìm thành viên hoặc affiliate...').fill('Nguyễn Văn An');
     // Wait for the filtered AF0 dataset, not the previous page retained while loading.
-    await expect(page.getByRole('row').filter({ hasText: 'Nguyễn Văn An' })).toHaveCount(9);
-    const first = page.getByRole('row').filter({ hasText: 'Đỗ Minh Tuấn' });
+    await page.getByRole('combobox', { name: 'Số dòng mỗi trang' }).selectOption('20');
+    await expect(page.getByRole('row').filter({ hasText: 'Nguyễn Văn An' })).toHaveCount(11);
+    const first = page
+      .getByRole('row')
+      .filter({ hasText: 'Đỗ Minh Tuấn' })
+      .filter({ hasText: '20% · Năm 1' });
     const second = page.getByRole('row').filter({ hasText: 'Đặng Ngọc Ánh' });
     await first.getByRole('checkbox').check();
     await second.getByRole('checkbox').check();
