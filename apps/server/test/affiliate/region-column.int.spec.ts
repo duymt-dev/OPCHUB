@@ -59,7 +59,7 @@ describe('REQ-619 D-128 region column', () => {
         slug: randomUUID(),
         name: 'Industry child',
         kind: 'industry',
-        industry: 'test',
+        industry: randomUUID(),
         province: f.group.province,
         region: 'south',
         parentId: f.group.id,
