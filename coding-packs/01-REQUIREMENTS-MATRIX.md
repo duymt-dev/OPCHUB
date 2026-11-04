@@ -3,7 +3,7 @@
 > Vibecode Kit v5.0 — BƯỚC 2 (RRI) Output
 > Cập nhật: 2026-10-30 (RRI v4.6); 2026-11-04 đồng bộ REQ bị thay, phạm vi, quality gate theo D-118 → D-127
 > Nguồn: `docs/spec/` gói v4.6 (`dac-ta.html` §1–33, prototype `index.html`), `00-PROJECT-CONTEXT.md`, phỏng vấn Chủ nhà.
-> Quyết định mới nhất **D-131**; khi trái nhau số lớn hơn thắng. REQ bị thay ghi `~~gạch~~ → REQ mới`. Phần v4.6: **D17** (REQ-616 → 630, D-118 → D-127).
+> Quyết định mới nhất **D-132**; khi trái nhau số lớn hơn thắng. REQ bị thay ghi `~~gạch~~ → REQ mới`. Phần v4.6: **D17** (REQ-616 → 630, D-118 → D-127).
 
 ---
 
@@ -306,7 +306,7 @@
 | REQ-615 | Sửa lỗi B1 → B6 (D-117) | P0 | Tất cả | TBD |
 
 
-### D17 — Nâng cấp v4.6 (RRI 30/10/2026, D-118 → D-127; bổ sung 04/11/2026 D-128 → D-131)
+### D17 — Nâng cấp v4.6 (RRI 30/10/2026, D-118 → D-127; bổ sung 04/11/2026 D-128 → D-132)
 
 | REQ-ID | Requirement | Priority | Persona | TIP |
 |---|---|---|---|---|
@@ -498,6 +498,7 @@ Index đầy đủ: [standards/README.md](standards/README.md). Tóm tắt bắt
 | D-129 | Tỉnh chưa được GĐ Vùng nào tick (owner, 04/11/2026 — bổ sung D-120, D-121) | Tự theo miền / 100% Media Soft | **Tự tính cho GĐ Vùng của miền chứa tỉnh** (prototype "tự gán theo miền"). Danh sách tỉnh phụ trách chỉ để hiển thị phạm vi, **không** quyết định tiền; màn Cấu hình GĐ Vùng giữ dòng cảnh báo "N tỉnh chưa có GĐ Vùng phụ trách". "Vùng trống → 100% Media Soft" của D-121 chỉ áp khi **cả miền** chưa có GĐ Vùng | Prototype thắng (D-89); mỗi miền đúng 1 GĐ Vùng nên không có người nhận khác; Admin quên tick không làm mất tiền |
 | D-130 | Gọi vốn và năm của khách (owner, 04/11/2026 — làm rõ D-122) | Tính / không tính | **Tính**: năm 1 của khách bắt đầu từ giao dịch thực thu đầu tiên bất kể phí thành viên hay Gọi vốn; phí và Gọi vốn sau đó dùng chung mốc năm. Backfill lấy khoản đã đối soát sớm nhất trong cả hai nguồn | D-122 "mọi loại gói" |
 | D-131 | Hoa hồng affiliate theo năm của khách (owner, 04/11/2026 — thay AF-R05 "gia hạn không sinh"; bổ sung D-119) | Chỉ lần đầu / theo năm như prototype | **Theo prototype v4.6** (`_yrR`): năm 1 của khách = % hiện hành (đại lý với phí thành viên, % Gọi vốn với Gói Gọi vốn); năm 2 → năm tối đa = **% gia hạn**; quá năm tối đa → **không ghi khoản** (BR-463, không tạo 0đ). Năm của khách theo D-122 / D-130 (bảng `customer_years`), chụp vào khoản (`commissions.customer_year`). Hai thông số mới ở Chính sách: `renewalRate` (mặc định 10%), `renewalMaxYear` (mặc định 3), chỉ ở DB / API như `defaultRate` (prototype không có ô). Đổi % đại lý chỉ tính lại khoản năm 1 chưa chi. Vẫn **chỉ để tham khảo, không chi** (D-119); không tính lại khoản đã ghi | Prototype thắng (D-89); Q-V46-803-2 |
+| D-132 | Admin › Affiliate v4.6 — 4 điểm còn lại của TIP-V46-803 (owner, 04/11/2026; Q-V46-803-1, 3, 4, 5) | — | **(1)** Chính sách bỏ ô "% hoa hồng mặc định" và "% Gọi vốn" như prototype; giá trị giữ ở DB / API, % từng đại lý sửa ở chi tiết đại lý ("Sửa (Admin)"); cần ô % mặc định thì mở TIP sau. **(3)** Nhãn quyền `affiliate.payout` đổi thành "Chi trả GĐ Vùng", làm ở TIP-V46-807 (cùng đo lại Cài đặt › Vai trò). **(4)** "Doanh thu Media Soft giữ lại (sau phần GĐ Vùng)" = doanh thu khoản affiliate (đã ghi nhận + đã chi trả) − tổng phần GĐ Vùng của sổ chia sẻ cùng tháng (theo prototype); chấp nhận lệch khi Admin hủy khoản hoa hồng (sổ GĐ Vùng không đảo). **(5)** Bước giảm 0% với mức tối thiểu < năm 1: bảng năm ở Chính sách hiện một dòng "Từ năm 1 trở đi" = % năm 1 (khớp tiền thật), không theo lỗi tính của prototype | Prototype thắng (D-89) trừ (5) vì prototype tính sai |
 
 ### P5-PLAN-01 — Chốt số lượt hội thoại tự sinh (owner, 21/10/2026)
 

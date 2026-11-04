@@ -8,7 +8,7 @@
 - Priority: P0
 - Depends on: TIP-V46-802 (đã merge, PR #80, `dev` `3429b7a7`)
 - Estimated: XL
-- REQ / D: REQ-619, REQ-312, REQ-305 (thay bởi D-131) · D-119, D-121, D-128, D-129, **D-131**, D-122 / D-130 (năm của khách), BR-463 (không tạo khoản 0đ) (+ D-110 làm tròn, D-91 (2) nút "Sửa điều khoản", D-89 / D-93 prototype thắng)
+- REQ / D: REQ-619, REQ-312, REQ-305 (thay bởi D-131) · D-119, D-121, D-128, D-129, **D-131**, **D-132**, D-122 / D-130 (năm của khách), BR-463 (không tạo khoản 0đ) (+ D-110 làm tròn, D-91 (2) nút "Sửa điều khoản", D-89 / D-93 prototype thắng)
 - **Files touched:**
   - DB (D-131)
     - `packages/db/prisma/schema/affiliate.prisma` (modify): `Commission.customerYear Int @default(1)`; `AffiliatePolicy.renewalRate Int @default(10)`, `renewalMaxYear Int @default(3)`
@@ -131,12 +131,12 @@
    8. Nút "Sửa điều khoản" (giữ D-91 (2)) và "Lưu chính sách"
 2. Bảng năm tính **ở client từ giá trị đang nhập** (`Form.useWatch`), dùng `regionalPercent` / `regionalMinYear` của `@opchub/shared` — không công thức thứ hai:
    - `nf = max(2, regionalMinYear(policy))` (năm đầu chạm mức tối thiểu) — khớp prototype `max(2, ceil((g1 − min) / max(1, step)) + 1)` khi `step > 0`; unit so 5 bộ số với công thức prototype (50/10/20, 60/15/25, 20/10/20, 100/30/0, 30/7/20)
-   - **`step = 0` và `min < năm 1`** (`regionalMinYear` = `null`): prototype sinh 30 dòng và dòng cuối sai % (chia cho `max(1, 0)`); app hiện **một dòng** "Từ năm 1 trở đi" = năm 1 (đúng `regionalPercent`, khoản sổ thực tế). Ghi **Q-V46-803-5**
+   - **`step = 0` và `min < năm 1`** (`regionalMinYear` = `null`): prototype sinh 30 dòng và dòng cuối sai % (chia cho `max(1, 0)`); app hiện **một dòng** "Từ năm 1 trở đi" = năm 1 (đúng `regionalPercent`, khoản sổ thực tế). (D-132 (5))
    - Dòng y = 1 … nf − 1: "Năm y · khách mới" (y = 1, phụ "Đăng ký & trả phí lần đầu") / "Năm y · gia hạn" (phụ "Giảm {step}% so với năm trước"); cột MS = `100 − g`, GĐV = `g`, Tỷ lệ = `MS / GĐV`
    - Dòng cuối "Từ năm {nf} trở đi", phụ "Giữ {min}% cho GĐ Vùng để duy trì chi phí vận hành nhân lực"
    - Giá trị không hợp lệ (min > năm 1, ô trống) → bảng hiện "—", không ném lỗi
 3. Bảng gói: 3 dòng Gói Cá nhân (`/ năm`), Gói Doanh nghiệp (`/ năm`), Gói Gọi vốn (`/ dự án`); giá lấy `usePrices()` (D-94, **không** hằng số giá); cột Năm 1, Năm 2, Năm 3, Từ năm 4: số GĐ Vùng (`regionalAmount`) + dòng phụ "MS {phần còn lại}". Giá chưa tải → "—".
-4. Bỏ khỏi UI Chính sách: ô "Tỷ lệ hoa hồng mặc định (%)", khối "Hoa hồng Gói Gọi vốn (%)", `policy.rateHint`. **Giữ trong schema / API / DB** `defaultRate`, `fundraisingRate`, `cookieDays`, `terms` (hoa hồng vẫn tính để tham khảo, D-119). PUT chính sách vẫn gửi đủ trường: lấy `defaultRate` / `fundraisingRate` từ giá trị đã tải (hidden `Form.Item`), không ghi đè thành mặc định. Ghi **Q-V46-803-1** (Admin sửa % mặc định ở đâu).
+4. Bỏ khỏi UI Chính sách: ô "Tỷ lệ hoa hồng mặc định (%)", khối "Hoa hồng Gói Gọi vốn (%)", `policy.rateHint`. **Giữ trong schema / API / DB** `defaultRate`, `fundraisingRate`, `cookieDays`, `terms` (hoa hồng vẫn tính để tham khảo, D-119). PUT chính sách vẫn gửi đủ trường: lấy `defaultRate` / `fundraisingRate` từ giá trị đã tải (hidden `Form.Item`), không ghi đè thành mặc định. % từng đại lý sửa ở chi tiết đại lý; ô % mặc định không có trên UI (D-132 (1)).
 5. Audit `affiliate.policy_update` giữ nguyên (diff chỉ chứa trường đổi).
 
 ### Hoa hồng chỉ tham khảo (P8)
@@ -173,7 +173,7 @@
 
 9. Server: gỡ route `POST /v1/admin/affiliates/:id/payouts` (→ 404 như route không tồn tại), xoá `PayoutService` và provider. Không đổi dữ liệu `commissions.status = 'paid'` cũ, `paid_bank_snapshot` cũ.
    - Outbox `affiliate.payout_recorded`: không còn nơi phát; giữ khai báo event nếu consumer / test M1 yêu cầu, ngược lại gỡ cùng consumer — builder kiểm `packages/shared/src/outbox/events.ts` + test M1 rồi chọn, ghi completion.
-   - Permission `affiliate.payout` **giữ** (802 dùng cho chi trả GĐ Vùng). Đổi `label` thành "Chi trả GĐ Vùng" trong `permissions.ts` → **không** (file ngoài phạm vi; ghi Q-V46-803-3).
+   - Permission `affiliate.payout` **giữ** (802 dùng cho chi trả GĐ Vùng). Đổi nhãn thành "Chi trả GĐ Vùng" làm ở **TIP-V46-807** (D-132 (3)); 803 không sửa `permissions.ts`.
 10. Admin: xoá `payout-dialog.tsx`, mutation `payout`, `api` payouts, handler MSW payouts. Bảng tháng chi tiết đại lý: cột cuối thay nút "Chi trả" bằng chữ xám "GĐ Vùng chi" cho mọi dòng có khoản; tháng không có khoản → "—".
 11. Portal (`me-affiliate`) **không** thuộc TIP này (804).
 12. `affiliateMonthRowSchema.payable` giữ trong contract (Portal / 804 có thể dùng), UI Admin không đọc.
@@ -192,7 +192,7 @@
 ### Header và thẻ (prototype)
 
 18. `affiliate-tabs.tsx` header: nhãn "Doanh thu Media Soft giữ lại (sau phần GĐ Vùng)", số `netRevenue`.
-19. `netRevenue = revenue − regionalTotal`; `regionalTotal = Σ regional_shares.director_amount` (mọi trạng thái, `region IS NOT NULL`) cùng phạm vi tháng (`month_key = month` nếu có). `revenue` giữ như hiện tại (Σ `list_amount` khoản hoa hồng `recorded|paid`) → ghi **Q-V46-803-4** (prototype lấy rev từ khoản affiliate; sổ 802 lấy từ phí thực thu — hai nguồn có thể lệch khi khoản hoa hồng bị hủy).
+19. `netRevenue = revenue − regionalTotal`; `regionalTotal = Σ regional_shares.director_amount` (mọi trạng thái, `region IS NOT NULL`) cùng phạm vi tháng (`month_key = month` nếu có). `revenue` giữ như hiện tại (Σ `list_amount` khoản hoa hồng `recorded|paid`) — chốt D-132 (4): theo prototype, chấp nhận lệch khi Admin hủy khoản hoa hồng (sổ GĐ Vùng không đảo).
 20. 4 thẻ giữ khoá và gợi ý hiện tại (prototype giữ "Hoa hồng phải trả" / "Đã chi trả"); chỉ sửa chữ nếu prototype khác nguyên văn.
 
 ### Validation
@@ -216,7 +216,7 @@
 
 ## ACCEPTANCE CRITERIA
 
-- **Bảng năm** Given 50 / 10 / 20 Then 4 dòng: Năm 1 50/50 · Năm 2 60/40 · Năm 3 70/30 · Từ năm 4 trở đi 80/20. Given 60 / 15 / 25 Then Năm 1 60, Năm 2 45, Năm 3 30, Từ năm 4 25. Given 20 / 10 / 20 Then "Năm 1" 20 + "Từ năm 2 trở đi" 20. Given 50 / 0 / 20 Then một dòng "Từ năm 1 trở đi" 50/50 (Q-V46-803-5) (unit `policy-year-table.spec.tsx` › `rows match prototype nf`, `zero step single row`).
+- **Bảng năm** Given 50 / 10 / 20 Then 4 dòng: Năm 1 50/50 · Năm 2 60/40 · Năm 3 70/30 · Từ năm 4 trở đi 80/20. Given 60 / 15 / 25 Then Năm 1 60, Năm 2 45, Năm 3 30, Từ năm 4 25. Given 20 / 10 / 20 Then "Năm 1" 20 + "Từ năm 2 trở đi" 20. Given 50 / 0 / 20 Then một dòng "Từ năm 1 trở đi" 50/50 (D-132 (5)) (unit `policy-year-table.spec.tsx` › `rows match prototype nf`, `zero step single row`).
 - **Bảng gói** Given giá Cá nhân 1.200.000, DN 3.600.000, Gọi vốn 15.000.000 và 50 / 10 / 20 Then Cá nhân: 600.000 / 480.000 / 360.000 / 240.000, dòng MS 600.000 / 720.000 / 840.000 / 960.000; đổi giá ở Cấu hình bảng giá → bảng đổi theo (unit `policy-plan-table` › `uses configured prices`; e2e `admin-affiliate-reference` › `policy tables`).
 - **Không còn ô %** Given mở Chính sách Then không có "Tỷ lệ hoa hồng mặc định (%)", "Hoa hồng Gói Gọi vốn (%)". When Lưu Then PUT gửi `defaultRate` / `fundraisingRate` bằng giá trị đã tải; audit chỉ diff trường đổi (unit `policy-form.spec.tsx` › `keeps hidden rates`; int `policy.int.spec.ts`).
 - **Banner + Tỷ lệ** Given khoản năm 1 (20%) và khoản gia hạn năm 2 (10%) Then cột hiện "20% · Năm 1" và "10% · Năm 2 · gia hạn"; banner nguyên văn (int `admin-commissions.int.spec.ts` › `customer year`; e2e `admin-affiliate-reference` › `commission reference`).
@@ -261,13 +261,15 @@
   - Vùng ở chi tiết đại lý; CSV cột vùng (807 nếu cần)
   - Tab GĐ Vùng / Cấu hình GĐ Vùng (801 / 802), parity `D-120-*`
 
-## Câu hỏi ghi sẵn (`reports/ui-parity/questions.md` › V4.6, chọn phương án an toàn, không chặn)
+## Câu hỏi đã chốt (owner 04/11/2026)
 
-- **Q-V46-803-1**: Prototype v4.6 bỏ ô "% hoa hồng mặc định" và "% Gọi vốn" khỏi Chính sách nhưng tab Đại lý vẫn ghi "hoa hồng mặc định 20%". Chọn: ẩn khỏi UI, giữ giá trị DB, % từng đại lý vẫn sửa ở chi tiết ("Sửa (Admin)"). Owner muốn chỗ sửa % mặc định thì mở TIP sau.
-- ~~**Q-V46-803-2**~~ → **D-131** (owner 04/11/2026): làm hoa hồng gia hạn theo prototype ngay trong TIP này (SPEC 21 → 29).
-- **Q-V46-803-3**: Nhãn quyền `affiliate.payout` "Chi trả hoa hồng" nay dùng cho chi trả GĐ Vùng. Đề xuất đổi "Chi trả GĐ Vùng" ở TIP sau (file `permissions.ts` ngoài phạm vi).
-- **Q-V46-803-5**: Bước giảm 0% với mức tối thiểu < năm 1: prototype tính `nf` bằng chia cho `max(1, 0)` → 30 dòng, dòng cuối hiện mức tối thiểu dù sổ vẫn ghi % năm 1. Chọn: một dòng "Từ năm 1 trở đi" = % năm 1, đúng tiền thật.
-- **Q-V46-803-4**: "Doanh thu Media Soft giữ lại" = doanh thu khoản affiliate (recorded + paid) − phần GĐ Vùng của sổ 802. Hai nguồn lệch khi Admin hủy khoản hoa hồng (sổ GĐ Vùng không đảo). Chọn theo prototype, ghi lệch.
+- Q-V46-803-1 → **D-132 (1)**: ẩn ô % mặc định / % Gọi vốn khỏi Chính sách, giữ DB / API; % từng đại lý sửa ở chi tiết.
+- Q-V46-803-2 → **D-131**: hoa hồng gia hạn theo năm của khách (SPEC 21 → 29).
+- Q-V46-803-3 → **D-132 (3)**: nhãn `affiliate.payout` → "Chi trả GĐ Vùng" ở TIP-V46-807, không phải 803.
+- Q-V46-803-4 → **D-132 (4)**: "Doanh thu Media Soft giữ lại" theo prototype (SPEC 19).
+- Q-V46-803-5 → **D-132 (5)**: bước giảm 0% → bảng năm một dòng = % năm 1 (SPEC 2).
+
+Ghi vào `reports/ui-parity/questions.md` › V4.6 dạng "đã chốt", trỏ D-131 / D-132.
 
 ## ⚠️ BUILDER-CHECKLIST (agent PHẢI hoàn thành trước khi báo DONE)
 
@@ -287,7 +289,7 @@
 - [ ] Không hằng số giá / tỷ lệ trong code chạy; tiền số nguyên VND, làm tròn `Math.round` (D-110)
 - [ ] File ≤ trần (BE 600, FE 400); không `any` / `@ts-ignore` / `console.*`
 - [ ] Glossary: "Doanh thu Media Soft giữ lại", "Thuộc vùng (theo tỉnh)", "GĐ Vùng chi"
-- [ ] Ghi Q-V46-803-1, 3, 4, 5 (Q-2 đã thành D-131); cập nhật `V4.6-progress.md` dòng #3
+- [ ] Ghi Q-V46-803-1 → 5 đã chốt (D-131, D-132) vào `questions.md`; cập nhật `V4.6-progress.md` dòng #3
 - [ ] Sau khi đo: chạy lại seed demo (native HOLD); không tắt tiến trình HOLD
 - [ ] Commit theo bước `git commit -- <paths>` (cấm `git add -A`); `git status --short` sạch; push; PR `base: dev`, không tự merge; completion report có **git commit SHA**, PR, số test thật, parity từng màn, soát luật cứng 1–14, phần chưa làm
 - [ ] KHÔNG báo DONE nếu còn gate đỏ; ghi trung thực PARTIAL như 801 / 802
@@ -296,7 +298,7 @@
 
 ### Quality Gate — `/vibecode:tip`
 
-- [x] Header đủ (ID, module, priority, depends 802, estimate XL, REQ / D gồm D-131)
+- [x] Header đủ (ID, module, priority, depends 802, estimate XL, REQ / D gồm D-131, D-132)
 - [x] Context: DB đích, delta P7 / P8, § đặc tả, dòng prototype, file đọc trước
 - [x] Task rõ phạm vi + SKIP sang 804 / 807
 - [x] Business rules đánh số 1 → 20, validation, bảng lỗi
@@ -307,6 +309,6 @@
 - [x] BUILDER-CHECKLIST trích luật D-119 / D-121 / D-128 / D-129, luật 3 / 5 / 10
 - ⚠️ Gap:
   - D-131 đổi hành vi đã có test (AT-AF04 "gia hạn không sinh hoa hồng") → sửa test theo D-131, ghi trong completion.
-  - Q-V46-803-1, 3, 4, 5 là phương án an toàn tự chọn, cần owner xác nhận khi review (nhất là Q-2 hoa hồng gia hạn và Q-4 cách tính "giữ lại").
+  - Q-V46-803-1 → 5 đã chốt bằng D-131 / D-132 (owner 04/11/2026).
   - Gỡ event `affiliate.payout_recorded` phụ thuộc test M1 (mọi event có consumer) — builder quyết theo code, ghi completion.
   - `dev` còn gate đỏ từ 801 / 802 (e2e 9 fail baseline, int persona-turn, parity D-120-*): đo baseline trước.
