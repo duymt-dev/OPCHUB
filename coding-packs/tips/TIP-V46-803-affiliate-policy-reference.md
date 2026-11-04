@@ -1,16 +1,21 @@
-# TIP-V46-803: Admin › Affiliate — Chính sách §31, Hoa hồng chỉ tham khảo, bỏ chi trả trực tiếp, "Thuộc vùng (theo tỉnh)"
+# TIP-V46-803: Admin › Affiliate — Chính sách §31, Hoa hồng tham khảo theo năm của khách (D-131), bỏ chi trả trực tiếp, "Thuộc vùng (theo tỉnh)"
 
 ## HEADER
 
 - TIP-ID: TIP-V46-803
 - Project: OPCHUB
-- Module: affiliate (Admin UI + API admin), reporting/regional (projection đọc vùng), shared contract affiliate
+- Module: affiliate (Admin UI + API admin + consumer ghi hoa hồng), reporting/regional (projection vùng + năm của khách), shared contract affiliate, DB `commissions` / `affiliate_policy`
 - Priority: P0
 - Depends on: TIP-V46-802 (đã merge, PR #80, `dev` `3429b7a7`)
-- Estimated: L
-- REQ / D: REQ-619, REQ-312 · D-119, D-121, D-128, D-129 (+ D-110 làm tròn, D-91 (2) nút "Sửa điều khoản", D-89 / D-93 prototype thắng)
+- Estimated: XL
+- REQ / D: REQ-619, REQ-312, REQ-305 (thay bởi D-131) · D-119, D-121, D-128, D-129, **D-131**, D-122 / D-130 (năm của khách), BR-463 (không tạo khoản 0đ) (+ D-110 làm tròn, D-91 (2) nút "Sửa điều khoản", D-89 / D-93 prototype thắng)
 - **Files touched:**
+  - DB (D-131)
+    - `packages/db/prisma/schema/affiliate.prisma` (modify): `Commission.customerYear Int @default(1)`; `AffiliatePolicy.renewalRate Int @default(10)`, `renewalMaxYear Int @default(3)`
+    - `packages/db/prisma/migrations/20261106090000_v46_commission_customer_year/migration.sql` (create): cột + CHECK, bỏ UQ partial `commissions_membership_referred_key`, backfill `customer_year`
   - Shared
+    - `packages/shared/src/api-domains/affiliate.ts` (modify): `affiliatePolicySchema` thêm `renewalRate` (0–50, default 10), `renewalMaxYear` (1–10, default 3)
+    - `packages/shared/src/membership/commission-year.ts` + `.spec.ts` (create): hàm thuần `commissionRateFor(year, { firstYearRate, renewalRate, renewalMaxYear })` → `number | null` (null = không ghi)
     - `packages/shared/src/api-domains/affiliate-admin.ts` (modify):
       - `affiliateSummarySchema`: thêm `regionalTotal` (phần GĐ Vùng cùng phạm vi tháng), `netRevenue` đổi nghĩa = `revenue − regionalTotal`
       - `affiliateCommissionRowSchema`: thêm `customerYear: int ≥ 1`
@@ -18,11 +23,17 @@
       - `affiliateMonthRowSchema`: bỏ `payable` khỏi UI (giữ trường cho tương thích, xem SPEC 12)
     - `packages/shared/src/mock-data/domains/affiliate.ts`, `mock-data/domains/affiliate-policy.ts` (modify): sinh lại theo trường mới; bỏ dữ liệu "đã chi trả trực tiếp" mới (giữ khoản `paid` cũ làm lịch sử)
   - Server
+    - `apps/server/src/modules/reporting/regional/customer-year.repository.ts` (create): chuyển `firstPaid(tx, userId, at, source, sourceId)` (INSERT … ON CONFLICT DO NOTHING + đọc lại) từ `regional-share.repository.ts` sang đây để **affiliate và regional-director dùng chung** một chỗ ghi mốc năm (D-130); `regional-projection.module.ts`, `reporting/index.ts` (modify: export)
+    - `apps/server/src/modules/regional-director/repositories/regional-share.repository.ts`, `services/regional-share-ledger.service.ts` (modify: gọi `CustomerYearRepository.firstPaid`, không đổi hành vi 802)
+    - `apps/server/src/modules/affiliate/services/affiliate-lifecycle.handler.ts`, `services/fundraising-commission.handler.ts` (modify): ghi hoa hồng theo năm của khách (D-131)
+    - `apps/server/src/modules/affiliate/repositories/commission.repository.ts` (modify): `record` / `recordFundraising` nhận `customerYear`; khoản gia hạn dùng `referrerOf` (referral `converted`)
+    - `apps/server/src/modules/affiliate/repositories/affiliate-write.repository.ts` (modify): `rate()` chỉ tính lại khoản `customer_year = 1`
+    - `apps/server/src/modules/affiliate/repositories/policy.repository.ts`, `services/affiliate-policy.service.ts` (modify: 2 trường mới, audit sẵn có)
     - `apps/server/src/modules/reporting/regional/earliest-group.sql.ts` (modify): thêm biến thể trả `province_name` (cùng thứ tự D-128, không định nghĩa lại luật)
     - `apps/server/src/modules/reporting/regional/regional-projection.repository.ts` (modify): `affiliateRegions(userIds[])` một query (lateral), trả `{ userId, region, provinceName }`
     - `apps/server/src/modules/reporting/regional/regional-share-projection.repository.ts` (modify): `directorTotal(month?)` tổng `director_amount` (không tính `region IS NULL`)
     - `apps/server/src/modules/affiliate/repositories/commission-admin.repository.ts` (modify): summary bỏ `netRevenue = revenue − totalCommission`
-    - `apps/server/src/modules/affiliate/repositories/commission-admin.query.ts` (modify): `customerYear` = năm của khách tại `created_at` khoản (JOIN `customer_years`, dùng `customerYearOf` ở service, không SQL tính năm)
+    - `apps/server/src/modules/affiliate/repositories/commission-admin.query.ts` (modify): select `c.customer_year` (cột snapshot, không JOIN)
     - `apps/server/src/modules/affiliate/services/commission-admin.service.ts` (modify): ghép `regionalTotal`, `netRevenue`
     - `apps/server/src/modules/affiliate/services/affiliate-admin.service.ts`, `services/affiliate-list-presentation.ts` (modify): ghép `region` cho trang (1 query cho cả trang, không N+1); tên GĐ Vùng lấy từ `RegionalDirectorReadService.slots()` (đã export)
     - `apps/server/src/modules/affiliate/controllers/admin-affiliates.controller.ts` (modify): **gỡ** `POST /admin/affiliates/:id/payouts`
@@ -43,13 +54,15 @@
     - `apps/admin/src/mocks/handlers/affiliate-write.ts` (modify: bỏ handler payouts), `mocks/handlers/affiliate.ts`, `affiliate-demo.ts` (modify: trường mới)
     - `apps/admin/messages/vi/affiliate.json` (modify: thêm khoá mới; sửa `net`, `policy.ruleText`; xoá `payout*`, `toast.paid`, `policy.rate`, `policy.fundraising*` khi không còn dùng)
   - Seed
-    - `packages/db/seed/demo/affiliate.ts`, `affiliate-scenario.ts`, `affiliate-payout-scenario.ts` (modify): không sinh khoản "đã chi trả trực tiếp" mới sau ngày cắt; giữ fixture cũ cho lịch sử (xem SPEC 13)
+    - `packages/db/seed/demo/affiliate.ts`, `affiliate-scenario.ts`, `affiliate-payout-scenario.ts` (modify): không sinh khoản "đã chi trả trực tiếp" mới sau ngày cắt; giữ fixture cũ cho lịch sử (xem SPEC 13); thêm khoản gia hạn năm 2 / 3 và khách năm 4 không có khoản (D-131)
   - Test
     - `packages/shared/src/api-domains/affiliate-admin.spec.ts`, `apps/admin/src/mocks/affiliate-handlers.spec.ts` (modify)
     - `apps/server/test/affiliate/payout.int.spec.ts` (modify → khẳng định route đã gỡ: 404), `summary-paid.int.spec.ts`, `admin-commissions.int.spec.ts`, `list-presentation.int.spec.ts` (modify)
-    - `apps/server/test/affiliate/region-column.int.spec.ts` (create)
+    - `apps/server/test/affiliate/region-column.int.spec.ts`, `renewal-commission.int.spec.ts`, `customer-year-backfill.int.spec.ts` (create)
+    - `apps/server/test/affiliate/commission.int.spec.ts` (modify: gia hạn **có** khoản theo D-131), `policy.int.spec.ts`, `admin-plan.int.spec.ts` (modify: đổi % chỉ tính lại năm 1)
+    - `apps/server/test/regional-director/share-ledger.int.spec.ts` (chạy lại, không sửa assertion)
     - `apps/admin/src/features/affiliate/components/{policy-form,affiliate-stats,action-dialogs}.spec.tsx`, `hooks/use-affiliate-writes.spec.tsx` (modify), `components/policy-year-table.spec.tsx`, `commission-reference-banner.spec.tsx`, `affiliate-region-cell.spec.tsx` (create)
-    - `e2e/behavior/affiliate-payout.spec.ts` (modify → "không còn nút chi trả, hiện GĐ Vùng chi"), `affiliate-ui-debt-policy.spec.ts`, `affiliate-policy-responsive.spec.ts`, `admin-affiliate.spec.ts`, `affiliate-renewal.spec.ts` (modify nhãn), `e2e/behavior/admin-affiliate-reference.spec.ts` (create)
+    - `e2e/behavior/affiliate-payout.spec.ts` (modify → "không còn nút chi trả, hiện GĐ Vùng chi"), `affiliate-ui-debt-policy.spec.ts`, `affiliate-policy-responsive.spec.ts`, `admin-affiliate.spec.ts` (modify nhãn), `affiliate-renewal.spec.ts` (modify: AT-AF04 đổi thành "gia hạn năm 2 sinh 1 khoản % gia hạn" theo D-131), `e2e/behavior/admin-affiliate-reference.spec.ts` (create)
     - `e2e/parity/scenarios/admin-affiliate.ts`, `admin-affiliate-states.ts` (modify chỉ khi cần đổi bước UI; không nới ngưỡng)
   - Tài liệu
     - `coding-packs/standards/global/domain-glossary.md` (thêm dòng)
@@ -60,11 +73,12 @@
   - Chia `features/affiliate/**`, `api-domains/affiliate*`, `modules/affiliate/**`, `messages/vi/affiliate.json` với V46-802 (đã merge) và V46-804 (Portal "Vùng của tôi" đọc cùng projection).
   - Chia `modules/affiliate/**` (BR-463 hoa hồng 0đ) với V46-807 → 807 chạy sau 803.
   - Chia `reporting/regional/**` với V46-804.
+  - Đụng `modules/regional-director/{repositories/regional-share.repository,services/regional-share-ledger.service}.ts` của 802 (chỉ đổi chỗ gọi `firstPaid`) → 804 chạy sau 803.
 
 ## CONTEXT
 
 - Working dir: `D:\CODING\OPCHUB\CODING`. Nhánh `feature/TIP-V46-803-affiliate-policy-reference` tách từ `dev` `3429b7a7`.
-- **DB:** 801 / 802 chạy trên `opchub_v46_801_dev` / `opchub_v46_801_test` + Redis `127.0.0.1:6381` (owner duyệt). TIP này **không có migration**; builder vẫn hỏi owner DB đích trước khi chạy int / e2e server / seed. Không reset DB native.
+- **DB:** 801 / 802 chạy trên `opchub_v46_801_dev` / `opchub_v46_801_test` + Redis `127.0.0.1:6381` (owner duyệt). TIP này **có 1 migration** (D-131); builder hỏi owner DB đích trước khi `migrate deploy` / int / e2e server / seed. Không reset DB native.
 - Delta `coding-packs/audit/SPEC-V4.6-DELTA.md`:
   - **P7** Chính sách: bảng "Quy tắc chia sẻ Media Soft ↔ GĐ Vùng", phần GĐV theo từng gói năm 1 → từ năm 4; thay % hoa hồng affiliate (D-70, D-110)
   - **P8** Hoa hồng: cột "Thuộc vùng (theo tỉnh)" ("Do vùng quản lý"), "Xem đối soát", "GĐ Vùng chi"; **bỏ nút chi trả trực tiếp**
@@ -97,6 +111,7 @@
 
 - **Chính sách**: dựng lại theo prototype — khối "Quy tắc chia sẻ doanh thu thực thu · Media Soft ↔ GĐ Vùng" (3 ô), bảng năm của khách, bảng phần GĐ Vùng theo từng gói (năm 1 → từ năm 4), thời gian ghi nhận link, chú thích, khối quy tắc mới, "Lưu chính sách". Bỏ ô % hoa hồng mặc định và % Gọi vốn khỏi màn này.
 - **Hoa hồng**: chỉ để tham khảo / đối soát — banner, cột Tỷ lệ kèm năm của khách; vẫn hủy / khôi phục được.
+- **Hoa hồng theo năm của khách (D-131)**: năm 1 theo % hiện hành, năm 2 → năm tối đa theo % gia hạn (mặc định 10% đến năm 3), quá năm tối đa không ghi khoản. Thay AF-R05 "gia hạn không sinh".
 - **Bỏ chi trả trực tiếp**: gỡ nút + hộp thoại + route `POST /admin/affiliates/:id/payouts`; bảng tháng ở chi tiết đại lý hiện "GĐ Vùng chi".
 - **Đại lý**: cột "Thuộc vùng (theo tỉnh)" chỉ hiển thị (D-121, D-128).
 - **Header / thẻ**: "Doanh thu Media Soft giữ lại (sau phần GĐ Vùng)" = doanh thu − phần GĐ Vùng.
@@ -127,8 +142,32 @@
 ### Hoa hồng chỉ tham khảo (P8)
 
 6. Banner info đầu tab Hoa hồng, nguyên văn prototype: "Hoa hồng affiliate do GĐ Vùng tự chi trả từ phần chia sẻ của vùng. Media Soft không chi trực tiếp cho affiliate, chỉ chi cho GĐ Vùng ở tab GĐ Vùng. Số liệu ở đây dùng để GĐ Vùng đối soát."
-7. Cột "Tỷ lệ": `{rate}% · Năm {y}` khi y = 1 hiện "Năm 1"; y ≥ 2 hiện "Năm y · gia hạn". `customerYear` do server tính bằng `customerYearOf(customer_years.first_paid_at, commissions.created_at)`; khách chưa có `customer_years` → 1. **Không** tự đổi % theo năm (prototype `_yrR` r23 / maxY không có D-xx; giữ % đã ghi ở khoản) → ghi **Q-V46-803-2**.
+7. Cột "Tỷ lệ" (prototype `_yrL`): y = 1 → `{rate}% · Năm 1`; 2 ≤ y ≤ năm tối đa → `{rate}% · Năm y · gia hạn`. `rate` và `customerYear` đọc từ cột snapshot của khoản (SPEC 21 → 23), không tính lại. Khoản "hết chia sẻ" không tồn tại (không ghi khoản 0đ, BR-463), nên không có nhãn "Năm y · hết chia sẻ".
 8. Bộ lọc Tất cả / Đã ghi nhận / Đã chi trả / Đã hủy, hủy / khôi phục, xuất CSV: giữ. Trạng thái "Đã chi trả" còn lại chỉ là lịch sử trước D-119.
+
+### Hoa hồng theo năm của khách (D-131, thay AF-R05 / REQ-305)
+
+21. **Dữ liệu** (migration `20261106090000_v46_commission_customer_year`):
+    - `commissions.customer_year int NOT NULL DEFAULT 1 CHECK (customer_year >= 1)`
+    - `affiliate_policy.renewal_rate int NOT NULL DEFAULT 10 CHECK 0..50`, `renewal_max_year int NOT NULL DEFAULT 3 CHECK 1..10`. Mặc định chỉ ở migration / seed / test.
+    - `DROP INDEX commissions_membership_referred_key` (UQ "một khoản phí / khách"); idempotent vẫn giữ bằng UQ `fee_period_id` và `fundraising_id`.
+    - Backfill `customer_year` cho khoản cũ: `customer_years.first_paid_at` so với `commissions.created_at` theo giờ VN, không có mốc → 1. Test so với `customerYearOf` trên fixture (lệch 29/02 nếu có thì ghi completion).
+22. **Năm của khách**: dùng chung bảng `customer_years` của 802 (D-122 / D-130). Consumer affiliate gọi `CustomerYearRepository.firstPaid(tx, userId, at, source, sourceId)` **trong cùng transaction ghi khoản**, nên không phụ thuộc thứ tự với consumer sổ chia sẻ 802 (cả hai `INSERT … ON CONFLICT DO NOTHING`, cùng mốc). `year = customerYearOf(firstPaidAt, at)`.
+23. **% theo năm** (`commissionRateFor`, hàm thuần trong `@opchub/shared`):
+    - y = 1 → % năm 1: phí thành viên = `affiliates.rate` của đại lý; Gói Gọi vốn = `policy.fundraisingRate`
+    - 2 ≤ y ≤ `renewalMaxYear` → `policy.renewalRate` (cả phí thành viên lẫn Gọi vốn)
+    - y > `renewalMaxYear` hoặc `renewalRate = 0` → `null` → **không ghi khoản** (BR-463, không tạo khoản 0đ)
+    - Số tiền `commissionAmount(listAmount, rate)` (làm tròn đến đồng, D-110)
+24. **Phí thành viên** (`AffiliateLifecycleHandler.onFeeConfirmed`):
+    - `isFirst` → giữ luồng hiện tại (`pendingReferral` → `closeReferral('converted')`), thêm `customerYear`
+    - gia hạn (không phải lần đầu) → `referrerOf` (referral `pending | converted`), **không** đổi trạng thái referral; ghi khoản nếu `commissionRateFor` khác `null`
+    - không có referral / tự giới thiệu / `listAmount ≤ 0` → không ghi
+    - outbox `affiliate.commission_recorded` như cũ (thông báo đại lý)
+25. **Gói Gọi vốn** (`FundraisingCommissionHandler.onReviewed`): như cũ, nhưng % theo SPEC 23 và ghi `customerYear`.
+26. **Đổi % đại lý** (`affiliate-write.repository.ts › rate`): chỉ tính lại khoản `source = 'membership' AND status = 'recorded' AND customer_year = 1`. Khoản gia hạn giữ `renewalRate` đã chụp. Đổi `renewalRate` / `renewalMaxYear` ở Chính sách **không** tính lại khoản đã ghi.
+27. **Chính sách**: `renewalRate`, `renewalMaxYear` có trong schema / API / audit nhưng **không có ô** ở UI (prototype không có ô; giống `defaultRate`, SPEC 4). PUT gửi lại giá trị đã tải.
+28. Vẫn **chỉ để tham khảo, không chi** (D-119). Sổ chia sẻ GĐ Vùng 802 không đổi.
+29. Portal giữ nguyên ở TIP này. Khung giới thiệu "năm 2–{maxY} {r23}" của Portal thuộc 804, đọc `renewalRate` / `renewalMaxYear` từ API.
 
 ### Bỏ chi trả trực tiếp (D-119)
 
@@ -158,7 +197,7 @@
 
 ### Validation
 
-- Chính sách: 3 ô 0–100 số nguyên, `min ≤ năm 1`, năm 1 ≥ 1 (802); cookie 1–365. Server zod giữ nguyên.
+- Chính sách: 3 ô 0–100 số nguyên, `min ≤ năm 1`, năm 1 ≥ 1 (802); cookie 1–365; `renewalRate` 0–50, `renewalMaxYear` 1–10 (zod + CHECK DB).
 - `customerYear` int ≥ 1; `region` nullable trong contract.
 
 ### Error Handling
@@ -166,6 +205,9 @@
 | Trường hợp | Kết quả |
 |---|---|
 | Gọi `POST /admin/affiliates/:id/payouts` | 404 |
+| Sự kiện phí / Gọi vốn chạy lại | không ghi thêm (UQ `fee_period_id` / `fundraising_id`), không lỗi |
+| Gia hạn quá năm tối đa / `renewalRate = 0` | không ghi khoản, không lỗi |
+| `renewalRate` ngoài 0–50 / `renewalMaxYear` ngoài 1–10 | 422 `fields.*` |
 | Giá gói chưa tải | bảng gói hiện "—" |
 | Ô chính sách không hợp lệ | bảng năm "—", nút Lưu chặn bởi validator |
 | Đại lý không có nhóm tỉnh | cột vùng "—" + "Chưa thuộc vùng · 100% Media Soft" |
@@ -177,7 +219,14 @@
 - **Bảng năm** Given 50 / 10 / 20 Then 4 dòng: Năm 1 50/50 · Năm 2 60/40 · Năm 3 70/30 · Từ năm 4 trở đi 80/20. Given 60 / 15 / 25 Then Năm 1 60, Năm 2 45, Năm 3 30, Từ năm 4 25. Given 20 / 10 / 20 Then "Năm 1" 20 + "Từ năm 2 trở đi" 20. Given 50 / 0 / 20 Then một dòng "Từ năm 1 trở đi" 50/50 (Q-V46-803-5) (unit `policy-year-table.spec.tsx` › `rows match prototype nf`, `zero step single row`).
 - **Bảng gói** Given giá Cá nhân 1.200.000, DN 3.600.000, Gọi vốn 15.000.000 và 50 / 10 / 20 Then Cá nhân: 600.000 / 480.000 / 360.000 / 240.000, dòng MS 600.000 / 720.000 / 840.000 / 960.000; đổi giá ở Cấu hình bảng giá → bảng đổi theo (unit `policy-plan-table` › `uses configured prices`; e2e `admin-affiliate-reference` › `policy tables`).
 - **Không còn ô %** Given mở Chính sách Then không có "Tỷ lệ hoa hồng mặc định (%)", "Hoa hồng Gói Gọi vốn (%)". When Lưu Then PUT gửi `defaultRate` / `fundraisingRate` bằng giá trị đã tải; audit chỉ diff trường đổi (unit `policy-form.spec.tsx` › `keeps hidden rates`; int `policy.int.spec.ts`).
-- **Banner + Tỷ lệ** Given khách năm 1 và khoản của khách năm 2 Then cột hiện "20% · Năm 1" và "20% · Năm 2 · gia hạn"; banner nguyên văn (int `admin-commissions.int.spec.ts` › `customer year`; e2e `admin-affiliate-reference` › `commission reference`).
+- **Banner + Tỷ lệ** Given khoản năm 1 (20%) và khoản gia hạn năm 2 (10%) Then cột hiện "20% · Năm 1" và "10% · Năm 2 · gia hạn"; banner nguyên văn (int `admin-commissions.int.spec.ts` › `customer year`; e2e `admin-affiliate-reference` › `commission reference`).
+- **D-131 phí thành viên** Given chính sách 10% / năm 3, đại lý 20%, khách qua link đóng Gói Cá nhân 1.200.000 lần đầu 15/03/2026 When gia hạn 15/03/2027, 15/03/2028, 15/03/2029 Then khoản năm 1 = 240.000 (20%), năm 2 = 120.000 (10%), năm 3 = 120.000 (10%), năm 4 **không có khoản**; referral giữ `converted` (int `renewal-commission.int.spec.ts` › `membership years 1..4`; unit `commission-year.spec.ts`).
+- **D-131 Gọi vốn chung năm (D-130)** Given khách đóng phí lần đầu 01/2026, Gói Gọi vốn 15.000.000 được duyệt 02/2027 Then khoản Gọi vốn năm 2 = 1.500.000 (10%), không dùng `fundraisingRate` (int `renewal-commission` › `fundraising uses customer year`).
+- **D-131 thứ tự consumer** Given consumer affiliate chạy trước consumer sổ chia sẻ cho cùng sự kiện đầu tiên Then cả hai thấy cùng `customer_years.first_paid_at`; đảo thứ tự cũng vậy (int `renewal-commission` › `customer year shared`).
+- **D-131 idempotent / bỏ qua** Given cùng `membership_fee.confirmed` relay 2 lần Then 1 khoản; Given `renewalRate = 0` hoặc năm 5 với tối đa 3 Then không có khoản 0đ; tự giới thiệu → không có khoản (int `renewal-commission` › `idempotent and skips`).
+- **D-131 đổi %** Given đại lý có khoản năm 1 và khoản gia hạn năm 2 đều `recorded` When Admin đổi % đại lý 20 → 25 Then chỉ khoản năm 1 đổi; đổi `renewalRate` 10 → 15 Then khoản đã ghi giữ nguyên, khoản ghi sau dùng 15 (int `admin-plan.int.spec.ts` › `rate change year 1 only`; `policy.int.spec.ts` › `renewal policy audit`).
+- **Backfill** Given DB có khoản cũ của khách có / không có `customer_years` When chạy migration Then `customer_year` khớp `customerYearOf` (không mốc → 1); chạy lại không đổi (int `customer-year-backfill.int.spec.ts`).
+- **802 không đổi** Given `share-ledger.int.spec.ts` của 802 Then vẫn PASS sau khi chuyển `firstPaid` sang `CustomerYearRepository`.
 - **Bỏ chi trả** Given Kế toán (có `affiliate.payout`) mở chi tiết đại lý có khoản tháng trước Then không có nút "Chi trả", cột cuối "GĐ Vùng chi"; `POST /v1/admin/affiliates/:id/payouts` → 404; khoản `paid` cũ vẫn hiện "Đã chi trả" (int `payout.int.spec.ts` › `route removed`; e2e `affiliate-payout.spec.ts`).
 - **Thuộc vùng** Given đại lý ở nhóm Đà Nẵng (ngày 1) và Hà Nội (ngày 5), GĐ Vùng Trung "Trần B" Then "Trần B · Miền Trung" / "Đà Nẵng · Do vùng quản lý". Given chỉ ở nhóm ngành con Cần Thơ, ô Nam trống Then "Chưa có GĐ Vùng · Miền Nam" / "Cần Thơ · Do vùng quản lý". Given không nhóm Then "—". Given GĐ Vùng Bắc bỏ tick Lào Cai, đại lý ở Lào Cai Then vẫn GĐ Vùng Bắc (int `region-column.int.spec.ts`).
 - **Không N+1** Given trang 20 đại lý Then số query đọc vùng = 1 (+ 1 cho ô GĐ Vùng), kiểm bằng spy Prisma `$queryRaw` (int `region-column` › `single query per page`).
@@ -193,7 +242,9 @@
   - control đổi vùng / gán GĐ Vùng cho affiliate (D-121); dùng tỉnh tick để tính vùng (D-129)
   - hằng số giá gói, 50 / 10 / 20, 20%, 10% trong code chạy (chỉ seed / test / migration cũ)
   - công thức % thứ hai ở FE (dùng `regionalPercent` / `regionalMinYear` / `regionalAmount`)
-  - đổi % hoa hồng theo năm (r23 / maxY) — chờ Q-V46-803-2
+  - hằng số 10% / năm 3 của D-131 trong code chạy (chỉ migration default / seed / test)
+  - tính lại khoản đã ghi khi đổi `renewalRate` / `renewalMaxYear`; đổi % đại lý tính lại khoản gia hạn
+  - affiliate tự `INSERT customer_years` ngoài `CustomerYearRepository`; tạo khoản hoa hồng 0đ
   - sửa `commissions` cũ, xoá khoản `paid` lịch sử
   - affiliate import `modules/regional-director` (vòng phụ thuộc); đọc bảng khác ngoài `reporting/regional`
   - query trong vòng lặp; select `*`
@@ -213,7 +264,7 @@
 ## Câu hỏi ghi sẵn (`reports/ui-parity/questions.md` › V4.6, chọn phương án an toàn, không chặn)
 
 - **Q-V46-803-1**: Prototype v4.6 bỏ ô "% hoa hồng mặc định" và "% Gọi vốn" khỏi Chính sách nhưng tab Đại lý vẫn ghi "hoa hồng mặc định 20%". Chọn: ẩn khỏi UI, giữ giá trị DB, % từng đại lý vẫn sửa ở chi tiết ("Sửa (Admin)"). Owner muốn chỗ sửa % mặc định thì mở TIP sau.
-- **Q-V46-803-2**: Prototype có r23 = 10% (năm 2–3 gia hạn) và maxY = 3 ("hết chia sẻ" từ năm 4) cho hoa hồng affiliate, không có D-xx và code hiện không ghi hoa hồng gia hạn. Chọn: chỉ hiện nhãn năm, giữ % đã ghi.
+- ~~**Q-V46-803-2**~~ → **D-131** (owner 04/11/2026): làm hoa hồng gia hạn theo prototype ngay trong TIP này (SPEC 21 → 29).
 - **Q-V46-803-3**: Nhãn quyền `affiliate.payout` "Chi trả hoa hồng" nay dùng cho chi trả GĐ Vùng. Đề xuất đổi "Chi trả GĐ Vùng" ở TIP sau (file `permissions.ts` ngoài phạm vi).
 - **Q-V46-803-5**: Bước giảm 0% với mức tối thiểu < năm 1: prototype tính `nf` bằng chia cho `max(1, 0)` → 30 dòng, dòng cuối hiện mức tối thiểu dù sổ vẫn ghi % năm 1. Chọn: một dòng "Từ năm 1 trở đi" = % năm 1, đúng tiền thật.
 - **Q-V46-803-4**: "Doanh thu Media Soft giữ lại" = doanh thu khoản affiliate (recorded + paid) − phần GĐ Vùng của sổ 802. Hai nguồn lệch khi Admin hủy khoản hoa hồng (sổ GĐ Vùng không đảo). Chọn theo prototype, ghi lệch.
@@ -221,20 +272,22 @@
 ## ⚠️ BUILDER-CHECKLIST (agent PHẢI hoàn thành trước khi báo DONE)
 
 - [ ] `pwd` = `D:\CODING\OPCHUB\CODING`, nhánh `feature/TIP-V46-803-affiliate-policy-reference`; chỉ sửa file trong **Files touched** (thêm ngoài danh sách → ghi lý do)
-- [ ] Hỏi owner DB đích trước khi chạy int / e2e server / seed (CONTEXT)
+- [ ] Hỏi owner DB đích trước khi `migrate deploy` / int / e2e server / seed (CONTEXT); migration `--create-only` rồi sửa SQL (bỏ UQ, CHECK, backfill); deploy sạch dev + test; `prisma generate`
+- [ ] EXPLAIN query khoản theo đại lý trên ≥ 10k commissions sau khi bỏ UQ, không Seq Scan
 - [ ] Đo baseline `dev` trước (e2e MSW 341 pass / 9 fail theo 802; int; parity D-84*) để tách lỗi cũ / mới
 - [ ] Mỗi AC có test đúng tên, ghi PASS / FAIL thật từng cái
 - [ ] Chạy và dán tóm tắt output thật: `pnpm lint && pnpm typecheck && pnpm test && pnpm test:int && pnpm depcheck && pnpm build`; `pnpm e2e` MSW không tụt; e2e server cho `admin-affiliate-reference.spec.ts`, `affiliate-payout.spec.ts`
 - [ ] Parity ≤ 3% cả 1440 + 390: D-84, D-84-AFF, D-84-AFF-Q, D-84-POL, D-85, D-85-CUS; `screens.md` cập nhật; không mask / nới
 - [ ] Luật BUILDER-HANDOFF liên quan:
   - **D-119**: không còn đường chi trả trực tiếp affiliate (UI, API, MSW); hoa hồng vẫn tính để tham khảo
+  - **D-131**: năm 1 = % hiện hành, năm 2 → tối đa = % gia hạn, sau đó không ghi; khoản + `customer_years` + outbox cùng transaction (luật 8); không tạo khoản 0đ
   - **D-121 / D-128 / D-129**: vùng tự theo nhóm tỉnh sớm nhất, chỉ hiển thị, không gán tay, tỉnh tick không quyết định
   - **Luật 5**: vùng cả trang 1 query, không N+1; **luật 10**: lưu chính sách vẫn ghi `audit_logs`
   - **Luật 3**: affiliate chỉ đọc projection `reporting/regional`, `pnpm depcheck` sạch, không vòng phụ thuộc
 - [ ] Không hằng số giá / tỷ lệ trong code chạy; tiền số nguyên VND, làm tròn `Math.round` (D-110)
 - [ ] File ≤ trần (BE 600, FE 400); không `any` / `@ts-ignore` / `console.*`
 - [ ] Glossary: "Doanh thu Media Soft giữ lại", "Thuộc vùng (theo tỉnh)", "GĐ Vùng chi"
-- [ ] Ghi Q-V46-803-1 → 5; cập nhật `V4.6-progress.md` dòng #3
+- [ ] Ghi Q-V46-803-1, 3, 4, 5 (Q-2 đã thành D-131); cập nhật `V4.6-progress.md` dòng #3
 - [ ] Sau khi đo: chạy lại seed demo (native HOLD); không tắt tiến trình HOLD
 - [ ] Commit theo bước `git commit -- <paths>` (cấm `git add -A`); `git status --short` sạch; push; PR `base: dev`, không tự merge; completion report có **git commit SHA**, PR, số test thật, parity từng màn, soát luật cứng 1–14, phần chưa làm
 - [ ] KHÔNG báo DONE nếu còn gate đỏ; ghi trung thực PARTIAL như 801 / 802
@@ -243,7 +296,7 @@
 
 ### Quality Gate — `/vibecode:tip`
 
-- [x] Header đủ (ID, module, priority, depends 802, estimate L, REQ / D)
+- [x] Header đủ (ID, module, priority, depends 802, estimate XL, REQ / D gồm D-131)
 - [x] Context: DB đích, delta P7 / P8, § đặc tả, dòng prototype, file đọc trước
 - [x] Task rõ phạm vi + SKIP sang 804 / 807
 - [x] Business rules đánh số 1 → 20, validation, bảng lỗi
@@ -253,6 +306,7 @@
 - [x] Files touched mức file; Parallel-safe: sequential với 804 / 807
 - [x] BUILDER-CHECKLIST trích luật D-119 / D-121 / D-128 / D-129, luật 3 / 5 / 10
 - ⚠️ Gap:
-  - Q-V46-803-1 → 5 là phương án an toàn tự chọn, cần owner xác nhận khi review (nhất là Q-2 hoa hồng gia hạn và Q-4 cách tính "giữ lại").
+  - D-131 đổi hành vi đã có test (AT-AF04 "gia hạn không sinh hoa hồng") → sửa test theo D-131, ghi trong completion.
+  - Q-V46-803-1, 3, 4, 5 là phương án an toàn tự chọn, cần owner xác nhận khi review (nhất là Q-2 hoa hồng gia hạn và Q-4 cách tính "giữ lại").
   - Gỡ event `affiliate.payout_recorded` phụ thuộc test M1 (mọi event có consumer) — builder quyết theo code, ghi completion.
   - `dev` còn gate đỏ từ 801 / 802 (e2e 9 fail baseline, int persona-turn, parity D-120-*): đo baseline trước.
