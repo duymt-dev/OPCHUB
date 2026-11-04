@@ -42,4 +42,6 @@ jobs:
         run: pnpm depcheck
 
       - name: Run Tests
-        run: pnpm test
+        # Each Vitest process already parallelizes files. Avoid competing worker
+        # pools across packages on the shared runner; keep every test and timeout.
+        run: pnpm test --concurrency=1
