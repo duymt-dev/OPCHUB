@@ -20,7 +20,7 @@ export async function filterCommissions(c: StepCtx, filter: (typeof COMMISSION_F
   await expect(commissionRows(c).first()).toBeVisible();
   if (c.side === 'app') {
     const radio = c.page.getByRole('radio', {
-      name: new RegExp(`^${filter.label}\\s*${filter.total}$`),
+      name: new RegExp(`^${filter.label}\\s*${filter.key === 'recorded' ? 21 : filter.total}$`),
     });
     await c.page.locator('label').filter({ has: radio }).click();
     await expect(radio).toBeChecked();

@@ -13,7 +13,8 @@ for (const width of [360, 390]) {
     const search = page.getByPlaceholder('Tìm thành viên hoặc affiliate...');
     await search.fill('Nguyễn Văn An');
     const rows = page.locator('tbody tr[data-row-key]');
-    await expect(rows).toHaveCount(9);
+    await page.getByRole('combobox', { name: 'Số dòng mỗi trang' }).selectOption('20');
+    await expect(rows).toHaveCount(11);
     const paid = rows.filter({ hasText: 'Đinh Thị Mai' });
     await expect(paid).toContainText('Đã chi trả');
     let writes = 0;
@@ -40,7 +41,7 @@ for (const width of [360, 390]) {
     await page.getByRole('heading', { name: 'Mạng lưới Affiliate', exact: true }).click();
     await expect(menu).toBeHidden();
 
-    const recorded = rows.filter({ hasText: 'Đỗ Minh Tuấn' });
+    const recorded = rows.filter({ hasText: 'Đỗ Minh Tuấn' }).filter({ hasText: '20% · Năm 1' });
     await expect(recorded).toContainText('Đã ghi nhận');
     await recorded.getByRole('button', { name: 'Chuyển trạng thái', exact: true }).click();
     await expect(menu.getByRole('menuitem', { name: 'Đã ghi nhận', exact: true })).toBeDisabled();

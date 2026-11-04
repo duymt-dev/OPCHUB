@@ -12,9 +12,13 @@ for (const width of [360, 390]) {
     await page.setViewportSize({ width, height: 844 });
     await signInAffiliate(page, ADMIN_URL, 'admin@opchub.community', 'Admin@2026');
     await page.getByPlaceholder('Tìm thành viên hoặc affiliate...').fill('Nguyễn Văn An');
-    await expect(page.getByRole('row').filter({ hasText: 'Nguyễn Văn An' })).toHaveCount(9);
+    await page.getByRole('combobox', { name: 'Số dòng mỗi trang' }).selectOption('20');
+    await expect(page.getByRole('row').filter({ hasText: 'Nguyễn Văn An' })).toHaveCount(11);
     await expect(page).toHaveURL(/q=/);
-    const first = page.getByRole('row').filter({ hasText: 'Đỗ Minh Tuấn' });
+    const first = page
+      .getByRole('row')
+      .filter({ hasText: 'Đỗ Minh Tuấn' })
+      .filter({ hasText: '20% · Năm 1' });
     const second = page.getByRole('row').filter({ hasText: 'Đặng Ngọc Ánh' });
     const select = async () => {
       await first.getByRole('checkbox').check();
