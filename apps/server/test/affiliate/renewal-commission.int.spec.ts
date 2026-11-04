@@ -16,10 +16,18 @@ import { createUser } from '../factories/user.factory';
 
 describe('D-131 renewal commissions', () => {
   let t: TestApp;
+  let original: { renewalRate: number; renewalMaxYear: number };
   beforeAll(async () => {
     t = await createAffiliateApp();
+    original = await t.prisma.db.affiliatePolicy.findUniqueOrThrow({
+      where: { id: 1 },
+      select: { renewalRate: true, renewalMaxYear: true },
+    });
   });
-  afterAll(() => t.close());
+  afterAll(async () => {
+    await t.prisma.db.affiliatePolicy.update({ where: { id: 1 }, data: original });
+    await t.close();
+  });
   beforeEach(() =>
     t.prisma.db.affiliatePolicy.update({
       where: { id: 1 },

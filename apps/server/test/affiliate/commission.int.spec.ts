@@ -54,6 +54,10 @@ describe('Affiliate hoa hồng lần đầu (TIP-V2-401)', () => {
   });
 
   it('D-131 AT-AF04 gia hạn năm 2 sinh hoa hồng theo chính sách; D-53 tháng VN trước nửa đêm', async () => {
+    await t.prisma.db.affiliatePolicy.update({
+      where: { id: 1 },
+      data: { renewalRate: 10, renewalMaxYear: 3 },
+    });
     const now = new Date('2026-09-30T16:30:00Z');
     const { affiliate } = await createAffiliate(t, now, 23);
     const customer = await createReferral(t, affiliate.id, affiliate.code);
