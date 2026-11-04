@@ -16,7 +16,12 @@ export const mockAffiliatePolicy = readMockAffiliatePolicy;
 
 export function saveMockAffiliatePolicy(actor: string, input: unknown) {
   const parsed = affiliatePolicySchema.safeParse(input);
-  if (!parsed.success) return invalidAffiliateInput(parsed.error);
+  if (!parsed.success)
+    return parsed.error.issues.every(
+      (i) => i.path[0] === 'renewalRate' || i.path[0] === 'renewalMaxYear',
+    )
+      ? { ...invalidAffiliateInput(parsed.error), status: 422 as const }
+      : invalidAffiliateInput(parsed.error);
   if (parsed.data.regionalMin > parsed.data.regionalFirstYear)
     return {
       ok: false as const,
@@ -98,7 +103,12 @@ export function setMockAffiliateRates(actor: string, input: unknown) {
     }
   }
   for (const ref of affiliateCommissionRefs()) {
-    if (ids.includes(ref.agentId) && ref.row.status === 'recorded') {
+    if (
+      ids.includes(ref.agentId) &&
+      ref.row.status === 'recorded' &&
+      (ref.customerYear ?? 1) === 1 &&
+      ref.plan !== 'fundraising'
+    ) {
       ref.row.rate = parsed.data.rate;
       ref.row.commission = mockCommissionAmount(ref.row.feeAmount, parsed.data.rate);
     }

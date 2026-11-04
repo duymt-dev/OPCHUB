@@ -42,7 +42,14 @@ export function paidSnapshot(referral: MockAffiliateReferral): PaidSnapshot {
 }
 
 export function affiliateCommissionRefs() {
-  return [...syncMockAffiliates().referrals.values()].filter(
+  return [
+    ...new Map(
+      [
+        ...syncMockAffiliates().referrals.values(),
+        ...affiliateMockState().referenceCommissions.values(),
+      ].map((r) => [r.row.id, r]),
+    ).values(),
+  ].filter(
     (r) => r.row.status === 'recorded' || r.row.status === 'paid' || r.row.status === 'cancelled',
   );
 }

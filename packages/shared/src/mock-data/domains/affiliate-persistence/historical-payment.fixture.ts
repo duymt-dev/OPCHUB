@@ -2,11 +2,15 @@ import { affiliatePayoutKeySchema, affiliatePayoutRequestSchema } from '../../..
 import { syncMockAffiliates } from '../affiliate';
 import { logSetting } from '../settings-log';
 import { conflict, notFound, ok } from '../util';
-import { affiliateAdminState, affiliateCommissionRefs, paidSnapshot } from './state';
-import { invalidAffiliateInput } from './validation';
-import { mockAffiliateNotice } from './notice';
+import {
+  affiliateAdminState,
+  affiliateCommissionRefs,
+  paidSnapshot,
+} from '../affiliate-admin/state';
+import { invalidAffiliateInput } from '../affiliate-admin/validation';
+import { mockAffiliateNotice } from '../affiliate-admin/notice';
 
-export function payMockAffiliateMonth(
+export function seedHistoricalMockPayment(
   actor: string,
   id: string,
   month: string,

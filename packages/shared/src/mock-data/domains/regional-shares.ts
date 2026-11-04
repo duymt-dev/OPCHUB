@@ -1,3 +1,4 @@
+import { recordMockReference } from './affiliate-reference';
 import {
   customerYearOf,
   payoutMonthOf,
@@ -218,6 +219,7 @@ export function recordMockRegionalShare(input: {
   if (input.baseAmount <= 0) return;
   const s = regionalShareState();
   if (!s.firstPaid.has(input.customerId)) s.firstPaid.set(input.customerId, input.at);
+  recordMockReference(input);
   const state = affiliateMockState();
   const ref = state.referrals.get(input.customerId);
   if (!ref || ref.agentId === input.customerId || ref.row.status === 'void') return;
