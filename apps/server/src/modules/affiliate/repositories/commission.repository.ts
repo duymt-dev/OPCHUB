@@ -22,6 +22,13 @@ export interface CommissionNotice {
 /** Bảng `referrals` + `commissions` (AF-R03 → R06) */
 @Injectable()
 export class CommissionRepository {
+  async referrerForShare(tx: DbTx, referredUserId: string) {
+    const [row] = await tx.$queryRaw<{ affiliateId: string; affiliateUserId: string }[]>`
+      SELECT a.id AS "affiliateId", a.user_id AS "affiliateUserId"
+      FROM referrals r JOIN affiliates a ON a.id = r.affiliate_id
+      WHERE r.referred_user_id = ${referredUserId} AND r.status IN ('pending', 'converted')`;
+    return row ?? null;
+  }
   /** Referral `pending` của người vừa đóng phí + đại lý (1 query, khoá dòng referral) */
   async pendingReferral(tx: DbTx, referredUserId: string): Promise<PendingReferral | null> {
     const rows = await tx.$queryRaw<PendingReferral[]>`

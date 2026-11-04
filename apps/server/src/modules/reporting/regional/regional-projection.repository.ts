@@ -3,6 +3,7 @@ import { type DbTx, Prisma } from '@opchub/db';
 import type { RegionalRegion } from '@opchub/shared/api-domains';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { containsPattern } from '@/common/prisma/like';
+import { earliestRegionalGroup } from './earliest-group.sql';
 
 /** Read-only cross-domain projection: reporting is the approved boundary exception. */
 @Injectable()
@@ -25,16 +26,26 @@ export class RegionalProjectionRepository {
 
   /** D-128/129: earliest live group per affiliate, with industry mapped to its parent. */
   counts() {
-    return this.prisma.db.$queryRaw<{ region: RegionalRegion; count: bigint }[]>`
+    return this.prisma.db.$queryRaw<{ region: RegionalRegion; count: bigint }[]>(Prisma.sql`
       SELECT first_group.region, count(*) AS count FROM affiliates a
-      JOIN LATERAL (
-        SELECT COALESCE(parent.region, g.region) AS region
-        FROM group_members gm JOIN groups g ON g.id = gm.group_id
-        LEFT JOIN groups parent ON parent.id = g.parent_id AND parent.deleted_at IS NULL
-        WHERE gm.user_id = a.user_id AND gm.status = 'member' AND g.deleted_at IS NULL
-          AND (g.kind = 'province' OR parent.kind = 'province')
-        ORDER BY gm.created_at, gm.group_id LIMIT 1
-      ) first_group ON true GROUP BY first_group.region`;
+      JOIN LATERAL (${earliestRegionalGroup(Prisma.sql`a.user_id`)}) first_group ON true
+      GROUP BY first_group.region`);
+  }
+
+  async affiliateRegionAt(tx: DbTx, userId: string) {
+    const [row] = await tx.$queryRaw<{ region: RegionalRegion | null }[]>(
+      earliestRegionalGroup(Prisma.sql`${userId}`),
+    );
+    return row?.region ?? null;
+  }
+
+  async customerFirstPaid(tx: DbTx, userId: string) {
+    // D-130: migration and first-receipt insertion establish the canonical anchor once.
+    const row = await tx.customerYear.findUnique({
+      where: { userId },
+      select: { firstPaidAt: true },
+    });
+    return row?.firstPaidAt ?? null;
   }
 
   member(tx: DbTx, id: string) {

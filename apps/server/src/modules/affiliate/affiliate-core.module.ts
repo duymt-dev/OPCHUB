@@ -12,6 +12,7 @@ import { CommissionAdminRepository } from './repositories/commission-admin.repos
 import { AffiliateNoticeRepository } from './repositories/affiliate-notice.repository';
 import { AffiliateWriteRepository } from './repositories/affiliate-write.repository';
 import { Module } from '@nestjs/common';
+import { AffiliateShareReader } from './services/affiliate-share.reader';
 import { AccountCoreModule } from '../account';
 import { MembershipFeeCoreModule } from '../membership-fee';
 import { NotificationCoreModule } from '../notification';
@@ -33,6 +34,7 @@ import { MeAffiliateController } from './controllers/me-affiliate.controller';
 import { FundraisingCommissionHandler } from './services/fundraising-commission.handler';
 
 const services = [
+  AffiliateShareReader,
   FundraisingCommissionHandler,
   AffiliateWriteRepository,
   AffiliateNoticeRepository,

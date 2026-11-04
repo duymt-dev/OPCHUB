@@ -4,3 +4,4 @@ export { AffiliateNotifyHandler } from './services/affiliate-notify.handler';
 export { AffiliateBackfillService } from './services/affiliate-backfill.service';
 export { AffiliateAdminNotifyHandler } from './services/affiliate-admin-notify.handler';
 export { FundraisingCommissionHandler } from './services/fundraising-commission.handler';
+export { AffiliateShareReader } from './services/affiliate-share.reader';
