@@ -4,6 +4,7 @@
 > Coding workspace: `D:\CODING\OPCHUB\CODING`
 > Scanned: **2026-10-30** trên `dev` `cb29030d` (sau PR #72 — gói đặc tả v4.6)
 > Scan type: **Brownfield + spec-driven delta** (code đã chạy hết v4.2; quét để đón v4.6)
+> Cập nhật **04/11/2026**: đồng bộ D-118 → D-127 (RRI 30/10/2026) và `plans/GOAL-V4.6.md` (V46-801 → 812). Vision cập nhật v4.6 ở cuối file.
 
 ---
 
@@ -83,14 +84,14 @@ docs/adr/     ADR · coding-packs/  TIP, audit, report, standards, product
 ### GAPS_DETECTED (v4.6 so với code — chi tiết `audit/SPEC-V4.6-DELTA.md`)
 
 1. **GĐ Vùng** (§31.4, §32, P5 → P9, P16, P17): chưa có gì — bảng, quyền, API `/admin/gdv`, tab "Vùng của tôi", trạng thái phí miễn phí GĐ Vùng.
-2. **Mô hình chia sẻ §31** đổi hẳn hoa hồng affiliate hiện hành; xung đột D-70 / D-110 / §29.
-3. **Cú pháp CK** `OPC <SĐT> <GÓI>` (§33.3) ≠ `OPCHUB …` (D-104, §28.1).
-4. **Nhắc gia hạn cấu hình được** (mốc / kênh / gửi tay / cột Lần gửi) và **kênh Zalo ZNS** — chưa có adapter.
+2. **Mô hình chia sẻ §31** đổi hẳn hoa hồng affiliate hiện hành; xung đột D-70 / D-110 / §29. → **D-119**: chỉ chi cho GĐ Vùng, hoa hồng affiliate chỉ tham khảo.
+3. **Cú pháp CK** `OPC <SĐT> <GÓI>` (§33.3) ≠ `OPCHUB …` (D-104, §28.1). → **D-123**: giữ `OPCHUB …`.
+4. **Nhắc gia hạn cấu hình được** (mốc / kênh / gửi tay / cột Lần gửi) và **kênh Zalo ZNS** — chưa có adapter. → **D-125**: không làm Zalo, ẩn kênh.
 5. **Trang công khai `/g/<slug>`** + SEO — chưa có route công khai cho gian hàng.
 6. **Tìm kiếm chung** server-side, **gợi ý nhu cầu** chấm điểm (BR-478 → 480), **chuyển đổi theo vùng** (BR-475 → 477).
-7. **PWA + Web Push** — chưa có manifest / service worker / subscription.
-8. **AI nhiều nhà cung cấp** + dự phòng + ngân sách + ẩn PII; dòng "Trợ lý OPC Hub" trái D-92.
-9. Đặc tả tự mâu thuẫn: GDV-R06 "tối thiểu 1 GĐ Vùng / vùng" vs prototype "mỗi vùng 1 GĐ Vùng".
+7. **PWA + Web Push** — chưa có manifest / service worker / subscription. → **D-125**: chỉ màn cấu hình lưu được.
+8. **AI nhiều nhà cung cấp** + dự phòng + ngân sách + ẩn PII; dòng "Trợ lý OPC Hub" trái D-92. → **D-124**: ẩn dòng Trợ lý.
+9. Đặc tả tự mâu thuẫn: GDV-R06 "tối thiểu 1 GĐ Vùng / vùng" vs prototype "mỗi vùng 1 GĐ Vùng". → **D-120**: đúng 1 / vùng.
 
 ### CODE_HEALTH
 
@@ -106,15 +107,17 @@ docs/adr/     ADR · coding-packs/  TIP, audit, report, standards, product
 
 ### ESTIMATED_SIZE (phần v4.6 còn phải làm)
 
+Đã chia thành 12 TIP V46-801 → 812 (`02-TASK-GRAPH.md` › V4.6, thứ tự D-126). Ước lượng ban đầu:
+
 | Hạng mục | Ước lượng |
 |---|---|
 | GĐ Vùng + chia sẻ + chi trả (P5 → P9, P16, P17) | 2–3 TIP lớn · ~5 bảng mới · ~10 endpoint · 3 màn Admin + 1 tab Portal |
-| Nhắc gia hạn + Zalo adapter (P11) | 1 TIP |
-| Đối soát ngân hàng màn cấu hình (P12) | 1 TIP vừa (phụ thuộc Q-V4.6-3) |
+| Nhắc gia hạn (P11; Zalo bỏ theo D-125) | 1 TIP |
+| Đối soát ngân hàng màn cấu hình (P12) | 1 TIP vừa (`OPCHUB`, D-123) |
 | Trang công khai `/g/` (P4) | 1 TIP lớn (route công khai, SEO) |
 | Tìm kiếm chung + gợi ý nhu cầu + chuyển đổi vùng (P2, P3, P10) | 2 TIP vừa |
 | AI nhiều nhà cung cấp (P13) | 1 TIP vừa |
-| PWA + Web Push (P14) | 1 TIP lớn |
+| Màn Ứng dụng & thông báo (P14, chỉ cấu hình, D-125) | gộp vào TIP AI (V46-811) |
 | Copy, nhãn, nhật ký, BR-461/463/465 (P1, P15, nhóm 1) | 1 TIP nhỏ |
 
 ---
@@ -128,33 +131,35 @@ docs/adr/     ADR · coding-packs/  TIP, audit, report, standards, product
 - Quy tắc §32 GDV-R01 → R08, QT-32, máy trạng thái §32.3, AT-GDV01 → 07 — rõ, trừ R06.
 - BR-461 → 495, TC-461 → 494 — rõ về hành vi; còn câu hỏi phạm vi / tích hợp.
 
-## Questions for RRI → đã chốt D-118 → D-127 (RRI 30/10/2026); câu gốc Q-V4.6-1 → 7 ở `audit/SPEC-V4.6-DELTA.md` §4
+## Questions for RRI → **đã chốt** D-118 → D-127 (RRI 30/10/2026); câu gốc Q-V4.6-1 → 7 ở `audit/SPEC-V4.6-DELTA.md` §4
 
-1. Mô hình chia sẻ §31 thay hoa hồng affiliate — số dư hoa hồng cũ, migration.
-2. Mỗi vùng đúng 1 hay tối thiểu 1 GĐ Vùng.
-3. Cú pháp CK `OPC <SĐT> <GÓI>` hay giữ `OPCHUB …`.
-4. Dòng "Trợ lý OPC Hub" ở phân bổ AI (D-92).
-5. Cổng đối soát / Zalo ZNS / Web Push: adapter + fake trước hay chờ hợp đồng.
-6. Phạm vi + thứ tự TIP các mục lớn.
-7. Mốc "năm của khách" cho TK đã đóng phí trước v4.6.
+1. Mô hình chia sẻ §31 thay hoa hồng affiliate — số dư hoa hồng cũ, migration. → **D-119**: theo §31, chỉ chi cho GĐ Vùng; chưa go-live nên không chuyển số dư, seed sinh lại.
+2. Mỗi vùng đúng 1 hay tối thiểu 1 GĐ Vùng. → **D-120**: đúng 1 / vùng, 3 ô cố định.
+3. Cú pháp CK `OPC <SĐT> <GÓI>` hay giữ `OPCHUB …`. → **D-123**: giữ `OPCHUB …`.
+4. Dòng "Trợ lý OPC Hub" ở phân bổ AI (D-92). → **D-124**: ẩn.
+5. Cổng đối soát / Zalo ZNS / Web Push: adapter + fake trước hay chờ hợp đồng. → **D-125**: không Zalo, Web Push chỉ màn cấu hình, đối soát dùng adapter hiện có.
+6. Phạm vi + thứ tự TIP các mục lớn. → **D-126** (= V46-801 → 812).
+7. Mốc "năm của khách" cho TK đã đóng phí trước v4.6. → **D-122**: từ giao dịch thực thu đầu tiên, backfill.
+
+Thêm: gán affiliate theo tỉnh, Admin không đổi tay, vùng trống → 100% Media Soft (**D-121**); thay đổi nhỏ theo prototype (**D-127**).
 
 ## Constraints
 
 - Luật cứng `AGENTS.md` 1 → 14 + global `~/.claude/CLAUDE.md` (trần dòng, PostgreSQL index / deferred join, commit + SHA).
 - Git flow: code trên `dev` / `feature/*` từ `dev`; `dev → main` chỉ qua PR do owner merge.
-- Thay đổi backend / lớn chưa có D-xx → hỏi owner (D-93). v4.6 **chưa có D-xx**.
-- Tiền số nguyên VND; chia sẻ GĐ Vùng phải làm tròn xác định (ghi rõ khi chốt).
-- Dịch vụ ngoài mới (Zalo ZNS, Web Push, cổng đối soát mới) chỉ qua adapter trong `packages/integrations` + fake provider; env mới vào `.env.example` + zod schema.
+- Thay đổi backend / lớn chưa có D-xx → hỏi owner (D-93). v4.6 **đã chốt D-118 → D-127** (30/10/2026); việc ngoài các D này vẫn phải hỏi.
+- Tiền số nguyên VND; chia sẻ GĐ Vùng làm tròn đến đồng (D-119, theo D-110); tỷ lệ chỉ đọc từ Chính sách, không hằng số trong code.
+- Dịch vụ ngoài chỉ qua adapter trong `packages/integrations` + fake provider; env mới vào `.env.example` + zod schema. v4.6 **không làm** Zalo ZNS, Web Push thật (D-125).
 - Mọi thao tác Admin (bổ nhiệm / thu hồi / chi trả / đổi cấu hình) ghi `audit_logs`; hiệu ứng tiền qua outbox.
 
 ## Risks / Tech Debt
 
 | Rủi ro | Mức | Ghi chú |
 |---|---|---|
-| §31 đổi mô hình tiền affiliate đang chạy | Cao | Cần quyết định số dư / khoản chờ chi trước khi migration |
-| Đổi cú pháp CK khi đã phát hành mã QR / nội dung `OPCHUB` | Cao | Có thể phải chấp nhận cả hai cú pháp một thời gian |
+| §31 đổi mô hình tiền affiliate đang chạy | Cao | Đã chốt D-119: chưa go-live, không chuyển số dư; vẫn cần test kỹ backfill năm của khách (D-122) |
+| ~~Đổi cú pháp CK~~ | — | Hết rủi ro: giữ `OPCHUB …` (D-123) |
 | GĐ Vùng miễn phí ảnh hưởng paywall + trial + nhắc phí | Trung bình | Máy trạng thái phí thêm trạng thái; kiểm hồi quy D-94 |
-| Zalo ZNS / Web Push cần duyệt mẫu, hợp đồng (VM-461 → 463) | Trung bình | Làm adapter + fake trước để không chặn |
+| Zalo ZNS / Web Push cần duyệt mẫu, hợp đồng (VM-461 → 463) | Thấp | Để sau (D-125): ẩn Zalo, Web Push chỉ màn cấu hình |
 | Trang `/g/` công khai lộ dữ liệu gian hàng | Trung bình | Chỉ trường công khai, tôn trọng bật/tắt Google (noindex) |
 | Parity v4.6 chưa đo | Thấp | Đo lại sau khi dựng các màn |
 | `stores-seed.ts` 608 dòng | Thấp | Fixture; tách khi đụng tới |
@@ -171,6 +176,7 @@ docs/adr/     ADR · coding-packs/  TIP, audit, report, standards, product
 > Vibecode Kit v5.0 — BƯỚC 3 (VISION)
 > Date: 2026-10-16
 > Inputs: Scan Report (trên), `01-REQUIREMENTS-MATRIX.md` (D-01 → D-25), phỏng vấn Chủ nhà về quy mô (5.000 online)
+> Cập nhật: 27/10/2026 (v4.2), **04/11/2026 (v4.6, D-118 → D-127)** — kiến trúc, stack, quy trình triển khai không đổi
 
 ## 1. Project Type
 
@@ -181,7 +187,9 @@ PUBLIC   : Đăng nhập · Đăng ký (Cá nhân / DN / Nhà đầu tư) · OTP
 PORTAL   : Dashboard · Cộng đồng · Chat nhóm · Sự kiện · Dự án OPC · Hồ sơ · Thông báo
            + Popup Gói dịch vụ (paywall bắt buộc)
 ADMIN    : Tổng quan · Thành viên · Phí · Nhóm (+Kiểm duyệt) · Sự kiện · Dự án · Nhà đầu tư · Cài đặt
-           (Bot, Dịch vụ: sau feature flag)
+           · Bot · Yêu cầu dịch vụ · Gian hàng / Nhu cầu · Affiliate (+ GĐ Vùng, v4.6) · Báo cáo
+PORTAL+  : Gian hàng · Nhu cầu · Affiliate (+ "Vùng của tôi" cho GĐ Vùng, v4.6) · Bảng giá
+PUBLIC+  : Trang công khai gian hàng /g/<slug> (v4.6, SSR + SEO)
 ```
 
 ## 2. Tech Stack (chốt)
@@ -256,7 +264,7 @@ Xem bản đồ repo chuẩn trong `CLAUDE.md` (gốc repo). Tóm tắt: `apps/p
 |---|---|---|
 | S-01 | Presence không fan-out từng sự kiện | Chỉ phát **số** online mỗi phòng, gom 5s; danh sách online tải theo trang khi mở panel |
 | S-02 | Gửi tin: 1 ghi DB, 0 truy vấn/người nhận | Quyền phòng kiểm ở `room.join`, cache trong socket; `message.send` → insert → `io.to(room).emit` |
-| S-03 | Paywall không truy vấn mỗi request | `membershipStatus` + `validUntil` trong JWT claim + Redis; đổi trạng thái → bump version, đẩy `membership.updated`. **v4.2:** trạng thái `trial` (90 ngày) qua cổng như `active` (BR-TRIAL-05, một hàm dùng chung); job hết hạn trial / phí cũng bump version. Giá đọc từ Cấu hình bảng giá có cache Redis, Admin lưu → xoá cache (D-94 5A) |
+| S-03 | Paywall không truy vấn mỗi request | `membershipStatus` + `validUntil` trong JWT claim + Redis; đổi trạng thái → bump version, đẩy `membership.updated`. **v4.2:** trạng thái `trial` (90 ngày) qua cổng như `active` (BR-TRIAL-05, một hàm dùng chung); job hết hạn trial / phí cũng bump version. Giá đọc từ Cấu hình bảng giá có cache Redis, Admin lưu → xoá cache (D-94 5A). **v4.6:** "Miễn phí · GĐ Vùng" cũng qua cổng trong `isFeeUsable`; bổ nhiệm / thu hồi bump version như mọi transition phí (D-120) |
 | S-04 | Thông báo không nhân theo số thành viên | Chỉ tạo notification cho @mention, reply, sự kiện cá nhân; tin chưa đọc dùng `room_read_cursor(user_id, room_id, last_message_id)` |
 | S-05 | Đếm chưa đọc rẻ | Counter Redis theo (user, room), rebuild từ cursor khi miss |
 | S-06 | Reconnect storm an toàn | Client backoff ngẫu nhiên; sync bằng `after=lastMessageId` limit 100; restart từng instance một |
@@ -293,8 +301,22 @@ SePay → POST /webhooks/bank (HMAC) → INSERT payment_txn ON CONFLICT DO NOTHI
      "OPCHUB TVxxxxxx 0xxxxxxxxx"         + đúng bằng giá gói      → kỳ 12 tháng (nối tiếp valid_until) → active
      "OPCHUB TVxxxxxx 0xxxxxxxxx GVxxxxxx" + đúng giá / giá gia hạn → khoản Gọi vốn → chờ Admin thẩm định
      sai nội dung / thiếu / thừa tiền     → hàng "Cần đối soát thủ công" (Admin khớp tay phí hoặc Gọi vốn, audit)
-  → outbox: membership.updated, hoa hồng (plan snapshot, làm tròn đến đồng), email biên nhận
+  → outbox: membership.updated, hoa hồng (plan snapshot, làm tròn đến đồng, chỉ tham khảo từ v4.6), email biên nhận
 poll job 2' → lấy GD từ API nhà cung cấp → cùng đường insert (idempotent)
+```
+
+**GĐ Vùng + chia sẻ doanh thu (v4.6 — D-119 → D-122, §31, §32)**
+```
+Admin bổ nhiệm (permission key riêng, audit) — 3 vùng cố định, mỗi vùng đúng 1, mỗi TV 1 vùng, mỗi tỉnh 1 vùng
+  → fee: <trạng thái hiện tại> → "Miễn phí · GĐ Vùng" (transition, nhớ hạn phí trước bổ nhiệm) + outbox: EM-GDV1, membership.updated
+Admin thu hồi → hạn phí cũ còn → dùng tiếp (kể cả trial); hết → pending_payment (BR-462) + outbox: EM-GDV2
+Phí / Gọi vốn của khách đối soát xong (khách đăng ký qua link affiliate, lần giới thiệu đầu, cookie 30 ngày)
+  → outbox → ghi sổ chia sẻ: vùng = theo tỉnh của affiliate (Admin không đổi tay, D-121)
+     năm của khách y tính từ giao dịch thực thu đầu tiên (D-122)
+     phần GĐ Vùng = max(tối thiểu, năm1 − giảm × (y − 1)) — 3 thông số từ Chính sách, làm tròn đến đồng
+     vùng trống / giao dịch trước ngày bổ nhiệm → 100% Media Soft; trial / 0đ / huỷ → không ghi
+Cuối tháng → kỳ chi từng GĐ Vùng → Admin "Chi trả" (idempotent, audit) → lịch sử chi trả
+Affiliate: hoa hồng % vẫn tính để GĐ Vùng tham khảo; Media Soft không chi trực tiếp
 ```
 ## 6. MVP Scope
 
@@ -312,6 +334,7 @@ poll job 2' → lấy GD từ API nhà cung cấp → cùng đường insert (id
 | Chung | Hỗ trợ qua email, Điều khoản (nội dung tĩnh), lưu đồng ý | P0 |
 | Admin Tổng quan (KPI) | | P1 |
 | v4.2 (D-93 → D-117) | Affiliate cho mọi TV; trình tạo gian hàng 5 bước + media; File chia sẻ nhóm; Bot lịch + trả lời từng tin + AI tạo hàng loạt (AI cấu hình Admin); tự nhắc khởi đầu; sửa lỗi B1 → B6 (REQ-601 → 615) | P0–P2 |
+| v4.6 (D-118 → D-127) | GĐ Vùng + sổ chia sẻ + chi trả + Vùng của tôi; nhắc gia hạn 30 / 7 / 1; đối soát ngân hàng; sửa nhóm 1; nhật ký + CSV; chuyển đổi theo vùng; tìm kiếm chung; gợi ý nhu cầu; trang `/g/<slug>`; AI nhiều nhà cung cấp; màn Ứng dụng & thông báo (REQ-616 → 630) | P0–P3 |
 
 ### OUT
 
@@ -322,6 +345,8 @@ poll job 2' → lấy GD từ API nhà cung cấp → cùng đường insert (id
 | Gọi vốn nhiều dự án / 1 lần CK | Không làm (D-94 4B) |
 | Trợ lý OPC Hub | Đã gỡ (D-92) |
 | Xác thực SĐT (Zalo ZNS) | Sau beta |
+| Kênh Zalo ở Nhắc gia hạn, gửi Web Push thật | Để sau (D-125) |
+| Chi trả hoa hồng trực tiếp cho affiliate; Admin đổi tay vùng của affiliate | Không làm (D-119, D-121) |
 | Hóa đơn điện tử, hoàn tiền tự động, gói tháng | Khi chốt thanh toán |
 | Ngôn ngữ ngoài tiếng Việt | Khi mở ASEAN |
 | HA / nhiều VPS / read replica / K8s | Khi vượt ~5.000 online |
@@ -329,7 +354,7 @@ poll job 2' → lấy GD từ API nhà cung cấp → cùng đường insert (id
 
 ## 7. Style
 
-- Ant Design 5, phẳng, theo prototype: primary `#1677FF`, nền `#F5F5F5`, chữ `#14171F`; font hệ thống + Noto Sans.
+- Ant Design 6, phẳng, theo prototype v4.6 (D-89, D-118): primary `#1677FF`, nền `#F5F5F5`, chữ `#14171F`; font hệ thống + Noto Sans.
 - Admin: sidebar 1 cấp, thu gọn được; bảng → thẻ dưới 768px. Portal: responsive 360px+.
 - Logo `assets/opchub-logo.png`.
 
@@ -352,6 +377,9 @@ poll job 2' → lấy GD từ API nhà cung cấp → cùng đường insert (id
 | V-13 | VietQR sinh ở server (EMVCo), không gọi dịch vụ ngoài | §27.5c; không phụ thuộc bên thứ ba khi thanh toán |
 | V-14 | Cấu hình LLM (endpoint, model, key mã hoá AES-GCM) trong DB như SMTP, adapter đọc lúc chạy; test dùng stub HTTP cục bộ | D-99, D-103, luật 11 |
 | V-15 | File chat / media gian hàng: presigned PUT, GET qua URL ký ngắn hạn sau kiểm quyền; chặn file thực thi theo đuôi + MIME + magic bytes | D-98, D-117 B5, B6 |
+| V-16 | "Miễn phí · GĐ Vùng" là một trạng thái phí, đi qua `isFeeUsable` như trial (không cờ riêng, không `status IN (...)` rải rác) | D-120, V-11 |
+| V-17 | Sổ chia sẻ GĐ Vùng ghi qua outbox khi đối soát; tỷ lệ chỉ đọc từ Chính sách; chi trả idempotent + audit | D-119, D-122, luật 8, 10 |
+| V-18 | Vùng của affiliate suy ra từ tỉnh nhóm cộng đồng, không có thao tác gán tay | D-121 |
 
 ## 9. Quality Gate — `/vibecode:vision`
 
@@ -362,5 +390,6 @@ poll job 2' → lấy GD từ API nhà cung cấp → cùng đường insert (id
 - [x] Key decisions table
 - [x] Appended to `00-PROJECT-CONTEXT.md`
 - [x] **27/10/2026 cập nhật v4.2**: luồng phí (trial → VietQR → đối soát §28.1), S-03 / S-08 / S-11, MVP IN / OUT, V-11 → V-15. Kiến trúc, stack, quy trình triển khai không đổi
+- [x] **04/11/2026 cập nhật v4.6**: luồng GĐ Vùng + chia sẻ, S-03, màn mới, MVP IN / OUT, V-16 → V-18, AntD 6. Kiến trúc, stack, quy trình triển khai không đổi
 - ⚠️ Con số 5.000 online / 8 vCPU là ước tính, phải chứng minh bằng k6 trước khi mở rộng khỏi beta
 - ⚠️ OQ-13 (chủ nhóm ban đầu) và toàn bộ thanh toán (OQ-06) đang chạy theo default

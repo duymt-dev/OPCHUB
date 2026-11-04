@@ -1,13 +1,15 @@
 # OPCHUB — Requirements Matrix (RRI Report)
 
 > Vibecode Kit v5.0 — BƯỚC 2 (RRI) Output
-> Cập nhật: 2026-10-30 (RRI v4.6)
+> Cập nhật: 2026-10-30 (RRI v4.6); 2026-11-04 đồng bộ REQ bị thay, phạm vi, quality gate theo D-118 → D-127
 > Nguồn: `docs/spec/` gói v4.6 (`dac-ta.html` §1–33, prototype `index.html`), `00-PROJECT-CONTEXT.md`, phỏng vấn Chủ nhà.
 > Quyết định mới nhất **D-127**; khi trái nhau số lớn hơn thắng. REQ bị thay ghi `~~gạch~~ → REQ mới`. Phần v4.6: **D17** (REQ-616 → 630, D-118 → D-127).
 
 ---
 
 ## TECH DECISIONS (đã chốt)
+
+> Bảng gốc 16/10/2026, giữ để tra cứu. **Stack hiện hành** ở `AGENTS.md` + `standards/global/tooling.md` (Next.js 16, AntD 6, một app `apps/server` 3 entrypoint, LLM cấu hình trong Admin D-99) — thắng bảng dưới khi khác.
 
 ### Nền tảng
 
@@ -164,7 +166,7 @@
 | REQ-201 | NA-01 Phân tách phiên User/Admin; hai TK độc lập, không nút chuyển khu vực; kiểm quyền ở backend | P0 | Tất cả | TIP-V2-202 |
 | REQ-202 | NA-02 Cổng phí bắt buộc; Quay lại chỉ lùi bước trong popup; Admin không chịu cổng phí | P0 | Thành viên | TIP-V2-108, 301 |
 | REQ-203 | NA-03 Đối soát webhook + quét bù 2'; idempotent; thiếu tiền / sai nội dung không kích hoạt; gia hạn sớm cộng dồn | P0 | Hệ thống | TIP-V2-108, 301 |
-| REQ-204 | NA-04 Job 08:00: Sắp hết hạn / Hết hạn + mail nhắc T-30, T-7, T-0, T+3, mỗi mốc ≤ 1 lần; Admin gửi nhắc tay | P0 | Hệ thống | TIP-V2-301 |
+| REQ-204 | NA-04 Job 08:00: Sắp hết hạn / Hết hạn; ~~mail nhắc T-30, T-7, T-0, T+3~~ → REQ-620 (mốc 30 / 7 / 1 cấu hình được, Email + Thông báo, D-125); mỗi mốc ≤ 1 lần; Admin gửi nhắc tay | P0 | Hệ thống | TIP-V2-301 |
 | REQ-205 | NA-05 Hàng đợi email: nhật ký, thử lại; vượt hạn mức → OTP ưu tiên, chiến dịch dời ngày | P0 | Hệ thống | TIP-V2-114 |
 | REQ-206 | NA-06 Tra cứu MST tự điền; MST đã có TK → báo trùng, gợi ý Đăng nhập; lỗi → nhập tay | P0 | Doanh nghiệp | TIP-V2-306 |
 | REQ-207 | NA-07 Phát hiện tin nhạy cảm ở mỗi tin (cả tin persona) → báo cáo; không tự ẩn | P0 | Hệ thống | TIP-V2-306 |
@@ -199,13 +201,13 @@
 | REQ-303 | AF-R03 Gắn mã khi đăng ký từ `/r/MÃ`, `?ref=` hoặc nhập tay; lưu cùng TK mới | P0 | Thành viên | TIP-V2-402, 403 |
 | REQ-304 | AF-R04 Từ chối mã không tồn tại / của chính mình / đại lý tạm dừng; còn lỗi thì không gửi được form | P0 | Thành viên | TIP-V2-402, 403 |
 | REQ-305 | AF-R05 Hoa hồng chỉ ở lần đóng phí đầu tiên của người được giới thiệu; gia hạn không sinh | P0 | Hệ thống | TIP-V2-401 |
-| REQ-306 | AF-R06 Phí người được giới thiệu được xác nhận → hoa hồng Đã ghi nhận = 600.000 × %; thông báo đại lý | P0 | Hệ thống | TIP-V2-401 |
+| REQ-306 | AF-R06 Phí người được giới thiệu được xác nhận → hoa hồng Đã ghi nhận = ~~600.000~~ phí thực trả × % (D-70); thông báo đại lý — **từ v4.6 chỉ để tham khảo, không chi** (D-119) | P0 | Hệ thống | TIP-V2-401 |
 | REQ-307 | AF-R07 Đại lý hết hạn phí → Tạm dừng (link ngừng ghi nhận, khách đóng phí lúc này không sinh hoa hồng); gia hạn → Hoạt động | P0 | Hệ thống | TIP-V2-401 |
 | REQ-308 | AF-R08 % mặc định ở Chính sách; Admin sửa % riêng (1–50%) hoặc hàng loạt; áp cho khoản chưa chi + khách mới | P0 | Admin | TIP-V2-402, 404 |
-| REQ-309 | AF-R09 Chi trả theo tháng toàn bộ khoản Đã ghi nhận; bắt buộc STK (tên in hoa không dấu); thông báo kèm số tiền, ngân hàng, kỳ | P0 | Kế toán | TIP-V2-402, 404 |
+| REQ-309 | ~~AF-R09 Chi trả theo tháng toàn bộ khoản Đã ghi nhận cho đại lý~~ → REQ-617 (chi trả cuối tháng cho từng GĐ Vùng, D-119) | — | — | TIP-V2-402, 404 |
 | REQ-310 | AF-R10 Hủy hoa hồng Đã ghi nhận khi vi phạm; lý do hiện ở cả hai phía | P0 | Admin | TIP-V2-402, 404 |
 | REQ-311 | Màn Affiliate Portal (§20.6) | P0 | Thành viên | TIP-V2-403 |
-| REQ-312 | Màn Affiliate Admin: Hoa hồng, Đại lý, Chi tiết đại lý, Chính sách (§20.6) | P0 | Admin, Kế toán | TIP-V2-404 |
+| REQ-312 | Màn Affiliate Admin: Hoa hồng, Đại lý, Chi tiết đại lý, Chính sách (§20.6) — Chính sách + Hoa hồng đổi theo REQ-619 (D-119, D-121) | P0 | Admin, Kế toán | TIP-V2-404 |
 
 ### D11 — Tài khoản quản trị, vai trò & phân quyền (SRS-3.6 §21, D-52)
 | REQ-ID | Requirement | Priority | Persona | TIP |
@@ -257,7 +259,7 @@
 | REQ-407 | LK-07 Quan tâm đầu tư → Admin Nhà đầu tư, panel trao đổi | P0 | — | TIP-V2-107, 503 |
 | REQ-408 | LK-08 "Tư vấn →" ở 1 trong 6 dịch vụ → Admin Dịch vụ; Mới → Đang tư vấn → Hoàn tất | P0 | — | TIP-V2-110, 302 |
 | REQ-409 | LK-09 "Đăng ký thành viên ngay" → luồng thanh toán LK-02 | P0 | — | TIP-V2-302 |
-| REQ-410 | LK-10 Link affiliate → Đơn giới thiệu, Chi trả; referral → commission → paid (không có hoàn phí, D-54) | P0 | — | TIP-V2-404, 503 |
+| REQ-410 | LK-10 Link affiliate → Đơn giới thiệu; ~~Chi trả; referral → commission → paid~~ → referral → commission (tham khảo) → sổ chia sẻ GĐ Vùng → chi trả GĐ Vùng (REQ-617, D-119) | P0 | — | TIP-V2-404, 503 |
 | REQ-411 | LK-11 Bot persona tự động 100% theo kịch bản | P0 | — | TIP-V2-502 |
 | REQ-412 | LK-12 Hồ sơ, đổi MK, 2FA → Admin Thành viên chi tiết (chỉ xem) | P0 | — | TIP-V2-503 |
 
@@ -266,7 +268,7 @@
 | REQ-ID | Requirement | Priority | Persona | TIP |
 |---|---|---|---|---|
 | REQ-501 | Phí 3 gói theo loại TK; Bảng giá UP-12 + popup; đối soát khớp số tiền theo gói; chuyển thành viên cũ theo D-69 | P0 | Thành viên, Kế toán | V4-601 |
-| REQ-502 | Hoa hồng Affiliate trên phí thực trả; 10% Gọi vốn khi duyệt (D-70) | P0 | Đại lý, Admin | V4-602 |
+| REQ-502 | Hoa hồng Affiliate trên phí thực trả (chỉ tham khảo từ v4.6); ~~10% Gọi vốn khi duyệt (D-70)~~ → Gọi vốn vào sổ chia sẻ GĐ Vùng (REQ-617, D-119) | P0 | Đại lý, Admin | V4-602 |
 | REQ-503 | Câu xác nhận đăng ký "người đại diện hợp pháp + Điều khoản sử dụng" (UP-01) | P1 | Khách | V4-607 |
 | REQ-504 | Khai báo sau đăng nhập: Cá nhân (bạn là ai, OPC muốn tham gia) / Doanh nghiệp (thông tin DN, MST tự điền) → popup bảng giá (UP-02) | P0 | Thành viên mới | V4-607 |
 | REQ-505 | Onboarding 8 bước (bước 2–8 khóa khi chưa đóng phí), lưu tiến độ theo từng người; Admin cột Khởi đầu x/8, lọc, nút Nhắc → thông báo (UP-04, AD-02, D-76) | P0 | Thành viên, Admin | V4-611 |
@@ -531,7 +533,8 @@ thái “đề xuất/chờ xác nhận” P5-PLAN-01 trong các báo cáo check
 - D8 Bot tự động, Dịch vụ tư vấn; D9 Nghiệp vụ ẩn NA-01→29; D10 Affiliate; D11 TK quản trị & phân quyền; D12 v3.5; D13 popup V4; D14 LK-01→12
 - Hạ tầng native VPS, CI build + deploy script, backup
 - **v4.2 (D-93 → D-103, 27/10/2026)**: D16 REQ-601…609 — trial 3 tháng, affiliate mọi TV, cấu hình bảng giá, VietQR động, trình tạo gian hàng, file nhóm, bot trả lời thật, tự nhắc khởi đầu
-- **v4 (D-74, 23/10/2026)**: D15 REQ-501…517 — phí 3 gói, Gọi vốn, onboarding 8 bước, Gian hàng, Nhu cầu, Trợ lý OPC Hub, kiểm duyệt §26.6, Báo cáo xuất mẫu
+- **v4 (D-74, 23/10/2026)**: D15 REQ-501…517 — phí 3 gói, Gọi vốn, onboarding 8 bước, Gian hàng, Nhu cầu, ~~Trợ lý OPC Hub~~ (D-92), kiểm duyệt §26.6, Báo cáo xuất mẫu
+- **v4.6 (D-118 → D-127, 30/10/2026)**: D17 REQ-616…630 — GĐ Vùng (3 vùng, mỗi vùng đúng 1) + sổ chia sẻ §31 + chi trả GĐ Vùng + Vùng của tôi, nhắc gia hạn 30 / 7 / 1, đối soát ngân hàng, sửa nhóm 1, nhật ký + CSV, chuyển đổi theo vùng, tìm kiếm chung, gợi ý nhu cầu, trang `/g/<slug>`, AI nhiều nhà cung cấp, màn Ứng dụng & thông báo (chỉ cấu hình). Thứ tự D-126, goal `plans/GOAL-V4.6.md`
 
 ### Out of Scope (defer)
 - Kubernetes, OpenSearch, Prometheus/Grafana, Keycloak
@@ -539,7 +542,9 @@ thái “đề xuất/chờ xác nhận” P5-PLAN-01 trong các báo cáo check
 - Cổng thanh toán thẻ/ví, app native, giao dịch đầu tư thực tế
 - Hoàn phí thành viên (D-54); tạo link Google Meet qua API (D-59)
 - Hóa đơn điện tử tự động
-- Cây mạng lưới / Giám đốc vùng / hoa hồng cộng dồn (§24), Quản lý mạng lưới, Portal › Mạng lưới (D-78)
+- Cây mạng lưới / hoa hồng cộng dồn nhiều tầng (§24), Quản lý mạng lưới, Portal › Mạng lưới (D-78). **GĐ Vùng theo §31 / §32 đã vào phạm vi v4.6** (D-120), khác GĐ vùng của §24 cũ
+- Chi trả hoa hồng trực tiếp cho affiliate (D-119); Admin đổi tay vùng của affiliate (D-121)
+- Kênh Zalo ZNS ở Nhắc gia hạn, gửi Web Push thật (D-125); dòng Trợ lý OPC Hub ở phân bổ AI (D-124)
 - Chiến dịch email Marketing (gỡ menu, D-73)
 - Gọi vốn nhiều dự án / 1 lần chuyển khoản, nội dung `GV10-11-12` (D-94 4B)
 
@@ -561,6 +566,8 @@ thái “đề xuất/chờ xác nhận” P5-PLAN-01 trong các báo cáo check
 - ⚠️ Gap: D-96 dữ liệu VietQR (BIN 970436, STK 1203132809) lấy từ env ngân hàng hiện có; đổi STK cần cập nhật env.
 - Confidence P0 v4.2: ~85%.
 - **27/10/2026 (RRI sau rà soát toàn bộ):** `audit/SPEC-V4.2-FULL-AUDIT.md` (5 mảng) → D-104 → D-117, REQ-610 → 615. Không còn câu hỏi owner mở cho v4.2. Confidence P0 v4.2: ~90%.
+- **30/10/2026 (RRI v4.6):** `audit/SPEC-V4.6-DELTA.md` (P1 → P17, Q-V4.6-1 → 7) → D-118 → D-127, REQ-616 → 630 (D17). Owner chốt cả 7 câu ("theo đề xuất"); OQ-22 / OQ-23 không chặn code. REQ bị thay đã gạch (REQ-204, 306, 309, 312, 410, 502 — 04/11/2026). Standards áp dụng: bảng APPLICABLE STANDARDS cho D17. Confidence P0 v4.6: ~85%.
+- ⚠️ Gap: đặc tả §33.3, CS-13, phân bổ AI còn ghi khác D-121 / D-123 / D-124 (OQ-23) — code theo D-xx, không theo đặc tả ở 3 chỗ này.
 
 
 ## Owner amendment ? 2026-10-22: Bot without environment flags
