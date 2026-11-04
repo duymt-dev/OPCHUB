@@ -2209,6 +2209,38 @@
   "sha": "81556c27"
  },
  {
+  "id": "D-120-GDV",
+  "name": "GĐ Vùng · Sổ chia sẻ",
+  "viewport": 1440,
+  "diffPct": 1.9191358024691358,
+  "size": "1440×900",
+  "sha": "d4316aa7"
+ },
+ {
+  "id": "D-120-GDV",
+  "name": "GĐ Vùng · Sổ chia sẻ",
+  "viewport": 390,
+  "diffPct": 5.7846233291624465,
+  "size": "390×1291",
+  "sha": "d4316aa7"
+ },
+ {
+  "id": "D-120-GDV-OPEN",
+  "name": "GĐ Vùng · Khoản ghi nhận Miền Bắc",
+  "viewport": 1440,
+  "diffPct": 10.530722727626157,
+  "size": "1440×1429",
+  "sha": "d4316aa7"
+ },
+ {
+  "id": "D-120-GDV-OPEN",
+  "name": "GĐ Vùng · Khoản ghi nhận Miền Bắc",
+  "viewport": 390,
+  "diffPct": 8.402644230769232,
+  "size": "390×1920",
+  "sha": "d4316aa7"
+ },
+ {
   "id": "D-13",
   "name": "Thành viên · menu dòng",
   "viewport": 1440,
@@ -3599,17 +3631,17 @@
   "id": "D-84-POL",
   "name": "Admin · Affiliate · Chính sách",
   "viewport": 1440,
-  "diffPct": 34.565152818747954,
+  "diffPct": 32.373811864962306,
   "size": "1440×1356",
-  "sha": "81556c27"
+  "sha": "d4316aa7"
  },
  {
   "id": "D-84-POL",
   "name": "Admin · Affiliate · Chính sách",
   "viewport": 390,
-  "diffPct": 32.37169630301358,
+  "diffPct": 15.156855787301712,
   "size": "390×1951",
-  "sha": "81556c27"
+  "sha": "d4316aa7"
  },
  {
   "id": "D-85",

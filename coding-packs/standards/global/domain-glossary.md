@@ -84,3 +84,8 @@ Nhãn tiếng Việt chỉ đặt trong file messages của next-intl, không vi
 | Tỉnh phụ trách | `regional_director_provinces` | Phạm vi hiển thị; không quyết định bên nhận chia sẻ doanh thu (D-129) |
 | Miễn phí · GĐ Vùng | `MembershipFeeStatus.regional_director` | Miễn phí không hạn trong nhiệm kỳ; không tính là khoản phí thực thu |
 | Quyền bổ nhiệm / thu hồi | `affiliate.regional` | Quyền ghi cấu hình GĐ Vùng; `affiliate.view` chỉ cho xem |
+| Sổ chia sẻ | `RegionalShare`, `regional_shares` | Snapshot chia doanh thu cho GĐ Vùng từ giao dịch thực thu; không phải khoản hoa hồng chi trực tiếp cho affiliate |
+| Năm của khách | `CustomerYear`, `customer_years` | Mốc giao dịch thực thu đầu tiên, gồm Gọi vốn; tính năm theo ngày kỷ niệm tại Việt Nam |
+| Kỳ chi | `month_key`, `RegionalPayout.monthKeys` | Tháng Việt Nam của khoản ghi nhận; chỉ chi các tháng đã đóng |
+| Biên lai chi GĐ Vùng | `RegionalPayout`, `regional_payouts` | Tổng VND bigint, người nhận và ngân hàng snapshot; lưu bền vững để chống chi trùng |
+| Quy tắc chia sẻ | `regionalFirstYear`, `regionalStep`, `regionalMin` | Tỷ lệ năm đầu, mức giảm mỗi năm, mức sàn; thay đổi chỉ áp dụng khoản mới |

@@ -706,3 +706,20 @@ Các phương án an toàn dưới đây đã được TIP chỉ định; không
 | Q-V46-801-4 | Prototype cho đổi miền của ô | Miền của ô cố định, chỉ hiển thị theo D-120 |
 | Q-V46-801-5 | Prototype có thể hiện Gửi nhắc cho GĐ Vùng | Không hiện / không gửi theo GDV-R03 |
 | Q-V46-801-6 | Khóa tài khoản đang là GĐ Vùng | Không tự thu hồi; Admin thu hồi tay, chưa bổ sung workflow tự động |
+
+## V4.6 — TIP-V46-802
+
+| ID | Điểm cần ghi nhận | Xử lý |
+|---|---|---|
+| Q-V46-802-1 | Thời điểm ghi Gọi vốn | Ghi khi Admin duyệt, không khi đối soát CK; khoản từ chối không sinh chia sẻ |
+| Q-V46-802-2 | Người cũ còn khoản pending sau thu hồi | Giữ người nhận; lưu snapshot ngân hàng khi thu hồi để chi khoản cũ, không chuyển sang người mới |
+| Q-V46-802-3 | Prototype có thể chi tháng hiện tại | Chỉ chi tháng đã đóng theo TIP; không sửa luật để khớp ảnh |
+| Q-V46-802-4 | Hủy giao dịch đã đối soát | Hiện không có đường hủy nên không tự thêm bút toán đảo; giao dịch chưa kích hoạt không phát sự kiện |
+| Q-V46-802-5 | Tỷ lệ hợp lệ bằng 0 khi có người nhận | Owner chốt giữ vùng/GĐ Vùng với số tiền 0; CHECK không ép region NULL |
+| Q-V46-802-6 | Tổng chi có thể vượt int32 | Owner chốt PostgreSQL bigint cho tổng chi; API kiểm tra số nguyên VND an toàn |
+| Q-V46-802-7 | TIP để consumer regional_share.recorded đến 804 nhưng M1 bắt buộc mọi event có consumer | Owner xác nhận giữ phạm vi 802, ghi PARTIAL; không thêm no-op hoặc nới test M1 |
+
+Parity phải đo dữ liệu seed thật, không chép thuật toán dữ liệu prototype hoặc
+đổi ledger để làm xanh ảnh. Chính sách ngoài ba tham số mới thuộc TIP-803.
+Owner chốt dùng lại opchub_v46_801_dev / opchub_v46_801_test và Memurai 6381;
+giữ nguyên DB và Redis native.
