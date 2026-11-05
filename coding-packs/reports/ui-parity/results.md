@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 433/486 ảnh.
+> Đạt 434/488 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -408,26 +408,26 @@
 | D-63 | Drawer yêu cầu YC-1005 | 390 | 1.97% | ✅ đạt | 390×844 | 0b76e98a |
 | D-65 | Dịch vụ · danh mục | 1440 | 0.05% | ✅ đạt | 1440×1233 | 0b76e98a |
 | D-65 | Dịch vụ · danh mục | 390 | 0.14% | ✅ đạt | 390×1252 | 0b76e98a |
-| D-66 | Cài đặt · Chung | 1440 | 0.24% | ✅ đạt | 1440×900 | 0b76e98a |
-| D-66 | Cài đặt · Chung | 390 | 7.28% | ❌ chưa đạt | 390×1794 | 0b76e98a |
-| D-67 | Cài đặt · Danh mục lĩnh vực | 1440 | 0.23% | ✅ đạt | 1440×2287 | 0b76e98a |
-| D-67 | Cài đặt · Danh mục lĩnh vực | 390 | 5.40% | ❌ chưa đạt | 390×6826 | 0b76e98a |
-| D-68 | Lĩnh vực · đang sửa | 1440 | 0.23% | ✅ đạt | 1440×2287 | 0b76e98a |
-| D-68 | Lĩnh vực · đang sửa | 390 | 5.39% | ❌ chưa đạt | 390×6826 | 0b76e98a |
-| D-69 | Cài đặt · Vai trò & phân quyền | 1440 | 2.82% | ✅ đạt | 1440×2173 | 81556c27 |
-| D-69 | Cài đặt · Vai trò & phân quyền | 390 | 2.26% | ✅ đạt | 390×8936 | 81556c27 |
-| D-70 | Cài đặt · Email chào mừng | 1440 | 0.44% | ✅ đạt | 1440×1236 | 0b76e98a |
-| D-70 | Cài đặt · Email chào mừng | 390 | 11.76% | ❌ chưa đạt | 390×2751 | 0b76e98a |
-| D-71 | Cài đặt · SMTP | 1440 | 0.19% | ✅ đạt | 1440×1010 | 0b76e98a |
-| D-71 | Cài đặt · SMTP | 390 | 8.99% | ❌ chưa đạt | 390×1742 | 0b76e98a |
-| D-72 | SMTP · lỗi xác thực | 1440 | 0.19% | ✅ đạt | 1440×1010 | 0b76e98a |
-| D-72 | SMTP · lỗi xác thực | 390 | 11.54% | ❌ chưa đạt | 390×1767 | 0b76e98a |
-| D-73 | Cài đặt · Tài khoản quản trị | 1440 | 0.30% | ✅ đạt | 1440×900 | 0b76e98a |
-| D-73 | Cài đặt · Tài khoản quản trị | 390 | 7.75% | ❌ chưa đạt | 390×2120 | 0b76e98a |
-| D-74 | Tài khoản quản trị · hộp thoại tạo TK (§21 RB-R02) | 1440 | 0.74% | ✅ đạt | 1440×900 | 0b76e98a |
-| D-74 | Tài khoản quản trị · hộp thoại tạo TK (§21 RB-R02) | 390 | 1.95% | ✅ đạt | 390×844 | 0b76e98a |
-| D-75 | Cài đặt · Nhật ký hoạt động | 1440 | 0.35% | ✅ đạt | 1440×900 | 0b76e98a |
-| D-75 | Cài đặt · Nhật ký hoạt động | 390 | 7.58% | ❌ chưa đạt | 390×1455 | 0b76e98a |
+| D-66 | Cài đặt · Chung | 1440 | 0.70% | ✅ đạt | 1440×947 | f2c364a5 |
+| D-66 | Cài đặt · Chung | 390 | 9.94% | ❌ chưa đạt | 390×1971 | f2c364a5 |
+| D-67 | Cài đặt · Danh mục lĩnh vực | 1440 | 0.42% | ✅ đạt | 1440×2287 | f2c364a5 |
+| D-67 | Cài đặt · Danh mục lĩnh vực | 390 | 5.96% | ❌ chưa đạt | 390×6997 | f2c364a5 |
+| D-68 | Lĩnh vực · đang sửa | 1440 | 0.43% | ✅ đạt | 1440×2287 | f2c364a5 |
+| D-68 | Lĩnh vực · đang sửa | 390 | 5.65% | ❌ chưa đạt | 390×6997 | f2c364a5 |
+| D-69 | Cài đặt · Vai trò & phân quyền | 1440 | 2.84% | ✅ đạt | 1440×2173 | f2c364a5 |
+| D-69 | Cài đặt · Vai trò & phân quyền | 390 | 2.92% | ✅ đạt | 390×8995 | f2c364a5 |
+| D-70 | Cài đặt · Email chào mừng | 1440 | 0.81% | ✅ đạt | 1440×1236 | f2c364a5 |
+| D-70 | Cài đặt · Email chào mừng | 390 | 13.24% | ❌ chưa đạt | 390×2928 | f2c364a5 |
+| D-71 | Cài đặt · SMTP | 1440 | 0.63% | ✅ đạt | 1440×1010 | f2c364a5 |
+| D-71 | Cài đặt · SMTP | 390 | 11.84% | ❌ chưa đạt | 390×1919 | f2c364a5 |
+| D-72 | SMTP · lỗi xác thực | 1440 | 0.63% | ✅ đạt | 1440×1010 | f2c364a5 |
+| D-72 | SMTP · lỗi xác thực | 390 | 14.35% | ❌ chưa đạt | 390×1944 | f2c364a5 |
+| D-73 | Cài đặt · Tài khoản quản trị | 1440 | 0.84% | ✅ đạt | 1440×947 | f2c364a5 |
+| D-73 | Cài đặt · Tài khoản quản trị | 390 | 10.44% | ❌ chưa đạt | 390×2297 | f2c364a5 |
+| D-74 | Tài khoản quản trị · hộp thoại tạo TK (§21 RB-R02) | 1440 | 1.18% | ✅ đạt | 1440×900 | f2c364a5 |
+| D-74 | Tài khoản quản trị · hộp thoại tạo TK (§21 RB-R02) | 390 | 1.72% | ✅ đạt | 390×844 | f2c364a5 |
+| D-75 | Cài đặt · Nhật ký hoạt động | 1440 | 1.94% | ✅ đạt | 1440×947 | f2c364a5 |
+| D-75 | Cài đặt · Nhật ký hoạt động | 390 | 13.54% | ❌ chưa đạt | 390×1680 | f2c364a5 |
 | D-80 | Toast toàn cục | 1440 | 0.12% | ✅ đạt | 1440×900 | 0b76e98a |
 | D-80 | Toast toàn cục | 390 | 4.69% | ❌ chưa đạt | 390×844 | 0b76e98a |
 | D-81 | Xem thử vai trò Kế toán · menu + dải cam (RB-R09, AT-RB02) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.09% | ✅ đạt | 1440×900 | 0b76e98a |
@@ -491,6 +491,8 @@
 | D-95 | Admin › Nhu cầu địa phương (KPI, chip, bảng) | 390 | 0.09% | ✅ đạt | 390×2354 | 0b76e98a |
 | D-98 | Kiểm duyệt · Thời gian khóa 14 ngày | 1440 | 0.18% | ✅ đạt | 1440×900 | 0b76e98a |
 | D-98 | Kiểm duyệt · Thời gian khóa 14 ngày | 390 | 0.25% | ✅ đạt | 390×1667 | 0b76e98a |
+| D-V46-RENEW | Cài đặt · Nhắc gia hạn | 1440 | 2.79% | ✅ đạt | 1440×958 | f2c364a5 |
+| D-V46-RENEW | Cài đặt · Nhắc gia hạn | 390 | 23.53% | ❌ chưa đạt | 390×2012 | f2c364a5 |
 
 ## Không đo được trên prototype (unreachable, 37 màn)
 

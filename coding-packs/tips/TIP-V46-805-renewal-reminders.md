@@ -87,7 +87,7 @@
     12 ngày ở MSW và native; seed thường/ledger không đổi để bắt chước prototype.
   - `coding-packs/reports/TIP-V46-805-query-plans.md`,
     `coding-packs/audit/W1/TEST-GAPS.md`: bằng chứng EXPLAIN và truy vết theo standard.
-  - `coding-packs/reports/ui-parity/{results.json,results.md,diffs/*}`: artifact đo thật,
+  - `coding-packs/reports/ui-parity/{results.json,results.md,diffs/*,server/*,evidence/TIP-V46-805/*}`: artifact đo thật,
     giữ baseline riêng trong test-results trước khi đo final; không sửa harness/tolerance.
   - `e2e/behavior/admin-price-config.spec.ts`: cập nhật adjacency test thành Price →
     Renewal → Admin Accounts theo tab mới; giữ toàn bộ assertion bảng giá khác.

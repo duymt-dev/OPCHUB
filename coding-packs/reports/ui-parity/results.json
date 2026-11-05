@@ -3236,161 +3236,161 @@
   "id": "D-66",
   "name": "Cài đặt · Chung",
   "viewport": 1440,
-  "diffPct": 0.2368827160493827,
-  "size": "1440×900",
-  "sha": "0b76e98a"
+  "diffPct": 0.7011908952246861,
+  "size": "1440×947",
+  "sha": "f2c364a5"
  },
  {
   "id": "D-66",
   "name": "Cài đặt · Chung",
   "viewport": 390,
-  "diffPct": 7.281393819855358,
-  "size": "390×1794",
-  "sha": "0b76e98a"
+  "diffPct": 9.943280125928528,
+  "size": "390×1971",
+  "sha": "f2c364a5"
  },
  {
   "id": "D-67",
   "name": "Cài đặt · Danh mục lĩnh vực",
   "viewport": 1440,
-  "diffPct": 0.22570203566049654,
+  "diffPct": 0.4228307341009571,
   "size": "1440×2287",
-  "sha": "0b76e98a"
+  "sha": "f2c364a5"
  },
  {
   "id": "D-67",
   "name": "Cài đặt · Danh mục lĩnh vực",
   "viewport": 390,
-  "diffPct": 5.404186105914791,
-  "size": "390×6826",
-  "sha": "0b76e98a"
+  "diffPct": 5.964827416878296,
+  "size": "390×6997",
+  "sha": "f2c364a5"
  },
  {
   "id": "D-68",
   "name": "Lĩnh vực · đang sửa",
   "viewport": 1440,
-  "diffPct": 0.2308336977117038,
+  "diffPct": 0.4279623961521644,
   "size": "1440×2287",
-  "sha": "0b76e98a"
+  "sha": "f2c364a5"
  },
  {
   "id": "D-68",
   "name": "Lĩnh vực · đang sửa",
   "viewport": 390,
-  "diffPct": 5.387620485774603,
-  "size": "390×6826",
-  "sha": "0b76e98a"
+  "diffPct": 5.646412565091999,
+  "size": "390×6997",
+  "sha": "f2c364a5"
  },
  {
   "id": "D-69",
   "name": "Cài đặt · Vai trò & phân quyền",
   "viewport": 1440,
-  "diffPct": 2.818172521347855,
+  "diffPct": 2.8410543539397657,
   "size": "1440×2173",
-  "sha": "81556c27"
+  "sha": "f2c364a5"
  },
  {
   "id": "D-69",
   "name": "Cài đặt · Vai trò & phân quyền",
   "viewport": 390,
-  "diffPct": 2.2628721621559578,
-  "size": "390×8936",
-  "sha": "81556c27"
+  "diffPct": 2.9169481620843487,
+  "size": "390×8995",
+  "sha": "f2c364a5"
  },
  {
   "id": "D-70",
   "name": "Cài đặt · Email chào mừng",
   "viewport": 1440,
-  "diffPct": 0.4409385113268608,
+  "diffPct": 0.8056903991370011,
   "size": "1440×1236",
-  "sha": "0b76e98a"
+  "sha": "f2c364a5"
  },
  {
   "id": "D-70",
   "name": "Cài đặt · Email chào mừng",
   "viewport": 390,
-  "diffPct": 11.758987407842369,
-  "size": "390×2751",
-  "sha": "0b76e98a"
+  "diffPct": 13.239543926019337,
+  "size": "390×2928",
+  "sha": "f2c364a5"
  },
  {
   "id": "D-71",
   "name": "Cài đặt · SMTP",
   "viewport": 1440,
-  "diffPct": 0.1850935093509351,
+  "diffPct": 0.6314631463146315,
   "size": "1440×1010",
-  "sha": "0b76e98a"
+  "sha": "f2c364a5"
  },
  {
   "id": "D-71",
   "name": "Cài đặt · SMTP",
   "viewport": 390,
-  "diffPct": 8.994082840236686,
-  "size": "390×1742",
-  "sha": "0b76e98a"
+  "diffPct": 11.844309937066582,
+  "size": "390×1919",
+  "sha": "f2c364a5"
  },
  {
   "id": "D-72",
   "name": "SMTP · lỗi xác thực",
   "viewport": 1440,
-  "diffPct": 0.1850935093509351,
+  "diffPct": 0.6314631463146315,
   "size": "1440×1010",
-  "sha": "0b76e98a"
+  "sha": "f2c364a5"
  },
  {
   "id": "D-72",
   "name": "SMTP · lỗi xác thực",
   "viewport": 390,
-  "diffPct": 11.540057753979656,
-  "size": "390×1767",
-  "sha": "0b76e98a"
+  "diffPct": 14.345916429249764,
+  "size": "390×1944",
+  "sha": "f2c364a5"
  },
  {
   "id": "D-73",
   "name": "Cài đặt · Tài khoản quản trị",
   "viewport": 1440,
-  "diffPct": 0.30146604938271604,
-  "size": "1440×900",
-  "sha": "0b76e98a"
+  "diffPct": 0.8388331573389652,
+  "size": "1440×947",
+  "sha": "f2c364a5"
  },
  {
   "id": "D-73",
   "name": "Cài đặt · Tài khoản quản trị",
   "viewport": 390,
-  "diffPct": 7.745645863570391,
-  "size": "390×2120",
-  "sha": "0b76e98a"
+  "diffPct": 10.44015047497851,
+  "size": "390×2297",
+  "sha": "f2c364a5"
  },
  {
   "id": "D-74",
   "name": "Tài khoản quản trị · hộp thoại tạo TK (§21 RB-R02)",
   "viewport": 1440,
-  "diffPct": 0.740895061728395,
+  "diffPct": 1.1810185185185185,
   "size": "1440×900",
-  "sha": "0b76e98a"
+  "sha": "f2c364a5"
  },
  {
   "id": "D-74",
   "name": "Tài khoản quản trị · hộp thoại tạo TK (§21 RB-R02)",
   "viewport": 390,
-  "diffPct": 1.9516344634828047,
+  "diffPct": 1.7195284967796816,
   "size": "390×844",
-  "sha": "0b76e98a"
+  "sha": "f2c364a5"
  },
  {
   "id": "D-75",
   "name": "Cài đặt · Nhật ký hoạt động",
   "viewport": 1440,
-  "diffPct": 0.3505401234567901,
-  "size": "1440×900",
-  "sha": "0b76e98a"
+  "diffPct": 1.94092455708084,
+  "size": "1440×947",
+  "sha": "f2c364a5"
  },
  {
   "id": "D-75",
   "name": "Cài đặt · Nhật ký hoạt động",
   "viewport": 390,
-  "diffPct": 7.579522424883249,
-  "size": "390×1455",
-  "sha": "0b76e98a"
+  "diffPct": 13.537240537240539,
+  "size": "390×1680",
+  "sha": "f2c364a5"
  },
  {
   "id": "D-80",
@@ -3898,5 +3898,21 @@
   "diffPct": 0.2542568409395044,
   "size": "390×1667",
   "sha": "0b76e98a"
+ },
+ {
+  "id": "D-V46-RENEW",
+  "name": "Cài đặt · Nhắc gia hạn",
+  "viewport": 1440,
+  "diffPct": 2.790825794479239,
+  "size": "1440×958",
+  "sha": "f2c364a5"
+ },
+ {
+  "id": "D-V46-RENEW",
+  "name": "Cài đặt · Nhắc gia hạn",
+  "viewport": 390,
+  "diffPct": 23.527170311464545,
+  "size": "390×2012",
+  "sha": "f2c364a5"
  }
 ]

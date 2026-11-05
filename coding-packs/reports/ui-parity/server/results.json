@@ -3162,5 +3162,21 @@
   "diffPct": 0.7057358123708835,
   "size": "390×844",
   "sha": "25a1eec"
+ },
+ {
+  "id": "D-V46-RENEW",
+  "name": "Cài đặt · Nhắc gia hạn",
+  "viewport": 1440,
+  "diffPct": 2.790825794479239,
+  "size": "1440×958",
+  "sha": "f2c364a5"
+ },
+ {
+  "id": "D-V46-RENEW",
+  "name": "Cài đặt · Nhắc gia hạn",
+  "viewport": 390,
+  "diffPct": 23.527170311464545,
+  "size": "390×2012",
+  "sha": "f2c364a5"
  }
 ]
