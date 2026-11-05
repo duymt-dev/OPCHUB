@@ -18,6 +18,7 @@ const bool = z.enum(['true', 'false']).transform((v) => v === 'true');
 export const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   API_PORT: z.coerce.number().int().positive().default(4000),
+  API_PUBLIC_URL: z.url().default('http://localhost:4000'),
   SOCKET_PORT: z.coerce.number().int().positive().default(4001),
   LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent']).default('info'),
   /** Origin Portal + Admin — CORS và kiểm Origin khi refresh token */

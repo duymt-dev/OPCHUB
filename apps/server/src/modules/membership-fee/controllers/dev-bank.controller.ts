@@ -1,46 +1,17 @@
-import { Controller, HttpCode, Inject, Post } from '@nestjs/common';
-import {
-  type BankWebhookProvider,
-  FakeBankProvider,
-  fakeBankBodySchema,
-} from '@opchub/integrations';
-import { z } from 'zod';
+import { Controller, HttpCode, Post } from '@nestjs/common';
+import { fakeBankBodySchema, type FakeBankBody } from '@opchub/integrations';
 import { Public } from '@/common/auth';
-import { ENV, type Env } from '@/common/config';
-import { notFound } from '@/common/errors';
 import { ZodBody } from '@/common/http/zod';
-import { BANK } from '@/common/integrations';
-import { ReconcileService } from '../services/reconcile.service';
+import { BankSimulationService } from '../services/bank-simulation.service';
 
-type SimulateBody = z.infer<typeof fakeBankBodySchema>;
-
-/**
- * Chỉ dev/test (FakeBank): giả một giao dịch tiền vào rồi đi ĐÚNG đường webhook thật
- * (ký HMAC → verify → lưu → khớp). Production hoặc provider thật → 404.
- */
+/** Existing fake ingress, unchanged response and production404. */
 @Controller('dev/bank')
 export class DevBankController {
-  constructor(
-    private readonly reconcile: ReconcileService,
-    @Inject(BANK) private readonly bank: BankWebhookProvider,
-    @Inject(ENV) private readonly env: Env,
-  ) {}
-
+  constructor(private readonly simulation: BankSimulationService) {}
   @Public()
   @Post('simulate')
   @HttpCode(200)
-  async simulate(
-    @ZodBody(fakeBankBodySchema, { raw: true }) body: SimulateBody,
-  ): Promise<{ received: number }> {
-    if (this.env.NODE_ENV === 'production' || !(this.bank instanceof FakeBankProvider)) {
-      throw notFound();
-    }
-    this.bank.push(body);
-    const signed = this.bank.sign(body);
-    const received = await this.reconcile.ingestWebhook(
-      Buffer.from(signed.rawBody),
-      signed.headers,
-    );
-    return { received };
+  async simulate(@ZodBody(fakeBankBodySchema, { raw: true }) body: FakeBankBody) {
+    return { received: await this.simulation.ingest(body) };
   }
 }

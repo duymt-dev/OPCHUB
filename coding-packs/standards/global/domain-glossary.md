@@ -98,3 +98,7 @@ Nhãn tiếng Việt chỉ đặt trong file messages của next-intl, không vi
 | Nhắc gia hạn | `app_settings.renewal`, `renewal` | Nhắc Gói Cá nhân / Doanh nghiệp, kể cả trial; không GĐ Vùng hoặc Gọi vốn (REQ-620) |
 | Mốc nhắc | `D30`, `D7`, `D1` | Cửa sổ 30 / 7 / 1 ngày lịch VN trước hạn, tự động mỗi kỳ/mốc tối đa một lần |
 | Lần gửi | `max(fee_reminders.sent_at)` | Lần gần nhất của mọi kỳ; gửi tay dùng `M:yyyy-mm-dd` theo ngày VN, không chặn mốc tự động |
+| Đối soát ngân hàng | `bank`, `payment_transactions` | Đối chiếu giao dịch thực thu với thành viên / khoản phí, giữ nguyên cú pháp OPCHUB |
+| Tự kích hoạt khi khớp | `app_settings.bank.autoActivate` | Công tắc lưu ngay có audit; bật lại không replay giao dịch đã chờ (D-135) |
+| Ghi nhận thiếu | `match_status = short`, `short_note` | Ghi chú bắt buộc, không kích hoạt hoặc cộng dồn giao dịch (D-135) |
+| Khóa bí mật webhook | `bank_webhook_keys.key_enc`, `hint` | Mã hóa, chỉ trả rõ một lần khi tạo lại; khóa cũ mất hiệu lực ngay |

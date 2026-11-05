@@ -3164,6 +3164,22 @@
   "sha": "25a1eec"
  },
  {
+  "id": "D-V46-BANK",
+  "name": "Cài đặt · Đối soát ngân hàng",
+  "viewport": 1440,
+  "diffPct": 11.584986772486774,
+  "size": "1440×1050",
+  "sha": "3c4f6f94"
+ },
+ {
+  "id": "D-V46-BANK",
+  "name": "Cài đặt · Đối soát ngân hàng",
+  "viewport": 390,
+  "diffPct": 7.274833266274065,
+  "size": "390×2103",
+  "sha": "3c4f6f94"
+ },
+ {
   "id": "D-V46-RENEW",
   "name": "Cài đặt · Nhắc gia hạn",
   "viewport": 1440,

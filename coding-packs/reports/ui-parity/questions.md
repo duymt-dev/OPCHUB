@@ -764,3 +764,29 @@ Fixture sổ chia sẻ 802/803 có năm tương lai và khác số liệu protot
 - **Đã chốt trực tiếp**: owner duyệt CHECK tương thích mã cũ/mới/manual, DB riêng + Memurai6381,
   rolling restart bộ dịch vụ riêng, và lỗi schema 400 VALIDATION_ERROR + fields theo standard.
   Chỉ lỗi gửi khi không có kênh là 422 RENEWAL_NO_CHANNEL. Không sửa requirements matrix theo constraint TIP.
+
+## V4.6 — TIP-V46-806: đã chốt, không phải câu hỏi đang chờ
+
+| ID | Quyết định owner — D-135 | Triển khai |
+|---|---|---|
+| Q-V46-806-1 | Giữ ba cổng; cổng chưa hỗ trợ làm mờ; đổi qua env | Casso / VCB có nhãn Chưa hỗ trợ; SePay chỉ chọn khi đang chạy; fake có nút dev riêng |
+| Q-V46-806-2 | Khóa mới hiệu lực ngay, không ân hạn | Khóa mã hóa trong DB, cache chỉ ciphertext/hint; khóa cũ bị từ chối, poll không đổi |
+| Q-V46-806-3 | Bật lại không xử lý giao dịch chờ | Marker bền vững giữ giao dịch cho gán tay, cả khi retry job |
+| Q-V46-806-4 | Ghi nhận thiếu không kích hoạt hoặc cộng dồn | Ghi chú bắt buộc, chuyển trạng thái có điều kiện + audit; Thu tay hiện có không đổi |
+| Q-V46-806-5 | Tab cần settings.general | Kế toán dùng API Phí thành viên theo fees.view / fees.action, không thấy tab |
+
+Owner cũng duyệt dùng lại hai DB riêng `opchub_v46_801_dev` / `opchub_v46_801_test`,
+Memurai 6381 và rolling restart API/socket/worker riêng 805 sang 806;
+không reset/restart PostgreSQL 5432 hoặc Redis 6379.
+
+### Gate repair đã được owner duyệt — 05/11/2026
+
+Chỉ `apps/server/test/bot/bot-bulk-lines-v42.int.spec.ts`: fixture 10k vượt
+transaction mặc định5s hai lượt liên tiếp. Owner chọn dựng ngoài interactive
+transaction, dọn đúng prefix trong finally như case kế bên; giữ nguyên mọi assertion
+collision/GIN/không Seq Scan và timeout production. Commit4240c17a, scope4/4 PASS.
+Không mở rộng sửa file reply-scan khác: file đó chạy riêng4/4 PASS, giữ nguyên.
+
+SPEC7 đếm **chưa xử lý**: short đã ghi nhận vẫn hiện lịch sử nhưng không thuộc
+pending. Sửa đồng nhất API/MSW trong3c4f6f94, có assert giảm bộ đếm ở shared/int/E2E;
+không đổi quy tắc không kích hoạt/không cộng dồn D-135.

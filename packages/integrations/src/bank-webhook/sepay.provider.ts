@@ -44,8 +44,12 @@ export class SepayBankProvider implements BankWebhookProvider {
 
   constructor(private readonly cfg: SepayConfig) {}
 
-  verify(rawBody: Buffer, headers: Record<string, string | undefined>): boolean {
-    return verifySignature(this.cfg.webhookSecret, rawBody, headers['x-sepay-signature']);
+  verify(
+    rawBody: Buffer,
+    headers: Record<string, string | undefined>,
+    secret = this.cfg.webhookSecret,
+  ): boolean {
+    return verifySignature(secret, rawBody, headers['x-sepay-signature']);
   }
 
   parse(rawBody: Buffer): BankTxn[] {

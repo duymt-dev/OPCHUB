@@ -73,6 +73,7 @@ export async function seedDemo(
       await seedUsers(tx, h);
       await seedAdmins(tx, h.admin);
       await seedFees(tx);
+      await seedPaymentTransactions(tx);
       if (options.renewal) await seedRenewalDemo(tx);
       await seedRegionalDirectors(tx);
       await seedAffiliates(tx);
@@ -107,3 +108,4 @@ export async function seedDemo(
   );
 }
 import { seedRegionalDirectors } from './regional-directors';
+import { seedPaymentTransactions } from './payment-transactions';

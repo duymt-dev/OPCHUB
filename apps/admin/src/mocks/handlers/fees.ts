@@ -14,6 +14,9 @@ import {
   matchUnmatchedTxnFundraising,
   pendingMockFundraisings,
   remindAllFees,
+  matchMockBankTxn,
+  isMockBankTransaction,
+  mockAdminMeOf,
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
 import { writeFundraisingBridge } from './admin-fundraising';
@@ -51,11 +54,18 @@ export const feeHandlers = [
     const body = await parseBody(request, manualMatchSchema);
     if (!body.ok) return body.res;
     const id = param(params, 'id');
+    if (
+      isMockBankTransaction(id) &&
+      !mockAdminMeOf(userIdOf(request))?.permissions.includes('fees.action')
+    ) {
+      return apiError(403, 'FORBIDDEN', 'Bạn không có quyền thực hiện thao tác này');
+    }
     const fund = body.data.kind === 'fundraising';
     const r =
-      body.data.kind === 'fundraising'
+      matchMockBankTxn(userIdOf(request), id, body.data) ??
+      (body.data.kind === 'fundraising'
         ? matchUnmatchedTxnFundraising(userIdOf(request), id, body.data.fundraisingId)
-        : matchUnmatchedTxn(id, body.data.userId);
+        : matchUnmatchedTxn(id, body.data.userId));
     if (!r.ok) return apiError(r.status, r.code, r.message);
     const res = new HttpResponse(null, { status: 204 });
     // D-113 (F3): khoản Gọi vốn sang "chờ thẩm định" → Portal thấy qua cookie bridge

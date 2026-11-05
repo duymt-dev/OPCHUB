@@ -1,0 +1,1 @@
+DROP INDEX payment_transactions_bank_counts;

@@ -16,6 +16,16 @@ const NO_ENTRY =
 
 export const ADMIN_SETTINGS: Scenario[] = [
   {
+    id: 'D-V46-BANK',
+    name: 'Cài đặt · Đối soát ngân hàng',
+    start: 'admin',
+    fullPage: true,
+    steps: async (c) => {
+      await settingsTab(c, 'Đối soát ngân hàng');
+      await waitText(c, 'Đối soát chuyển khoản ngân hàng');
+    },
+  },
+  {
     id: 'D-V46-RENEW',
     name: 'Cài đặt · Nhắc gia hạn',
     start: 'admin',

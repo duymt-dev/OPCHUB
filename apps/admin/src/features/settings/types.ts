@@ -1,3 +1,4 @@
+import type { useBankReconcile } from './hooks/use-bank-reconcile';
 import type { AdminPermissionKey } from '@opchub/shared';
 import type { ConfirmRequest } from '@opchub/ui';
 /** Tab màn Cài đặt — ghi trên URL `/settings?tab=` (data-state.md) */
@@ -9,6 +10,7 @@ export const SETTINGS_TABS = [
   'smtp',
   'price',
   'renewal',
+  'bank',
   'admins',
   'audit-log',
   'sso',
@@ -31,6 +33,7 @@ export const TAB_KEY: Record<SettingsTab, AdminPermissionKey> = {
   // D-94 5A: prototype `need.price = 'cfg'`
   price: 'settings.general',
   renewal: 'settings.mail',
+  bank: 'settings.general',
   admins: 'settings.admins',
   'audit-log': 'settings.log',
   sso: 'settings.general',
@@ -50,6 +53,7 @@ export interface SettingsParams {
 
 /** Icon nét của danh sách tab (đường vẽ lấy theo prototype TABS) */
 export const TAB_ICON: Record<SettingsTab, string> = {
+  bank: 'M3 10h18L12 3zM5 10v9M10 10v9M14 10v9M19 10v9M2 21h20',
   renewal: 'M12 8v4l3 3M3 12a9 9 0 1018 0 9 9 0 00-18 0',
   general: 'M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1z',
   categories: 'M4 6h16M4 12h10M4 18h6',
@@ -64,6 +68,8 @@ export const TAB_ICON: Record<SettingsTab, string> = {
   sso: 'M6 11h12v9H6zM8 11V8a4 4 0 018 0v3',
   languages: 'M12 2a10 10 0 100 20 10 10 0 000-20zM2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20',
 };
+
+export type BankPanel = ReturnType<typeof useBankReconcile>;
 
 /** Màu chọn cho lĩnh vực (prototype CAT_COLORS) */
 export const CATEGORY_COLORS = [

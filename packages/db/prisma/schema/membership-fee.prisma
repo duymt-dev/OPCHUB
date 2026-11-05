@@ -31,6 +31,7 @@ enum PaymentMatchStatus {
   matched
   manual
   ignored
+  short
 
   @@map("payment_match_status")
 }
@@ -88,6 +89,8 @@ model PaymentTransaction {
   matchStatus   PaymentMatchStatus @default(unmatched) @map("match_status")
   matchedUserId String?            @map("matched_user_id")
   matchedAt     DateTime?          @map("matched_at") @db.Timestamptz(6)
+  shortNote     String?            @map("short_note")
+  shortBy       String?            @map("short_by")
   raw           Json
   createdAt     DateTime           @default(now()) @map("created_at") @db.Timestamptz(6)
 
