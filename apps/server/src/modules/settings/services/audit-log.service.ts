@@ -1,11 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { AUDIT_TAGS, type AuditLogRow, type AuditTag } from '@opchub/shared/api-domains';
+import {
+  AUDIT_TAGS,
+  encodeAuditLogCursor,
+  type AuditLogRow,
+  type AuditTag,
+  type AuditLogPageQuery,
+} from '@opchub/shared/api-domains';
 import { ADMIN_DIRECTORY_PORT, type AdminDirectoryPort } from '@/common/auth';
 import { PrismaService } from '@/common/prisma/prisma.service';
-
-const WINDOW_MS = 90 * 86_400_000;
-/** Màn "Nhật ký" tải một lần (không phân trang) — trần số dòng */
-const LIMIT = 500;
+import { AuditLogRepository } from '../repositories/audit-log.repository';
 const isTag = (t: string): t is AuditTag => (AUDIT_TAGS as readonly string[]).includes(t);
 
 /**
@@ -17,15 +20,13 @@ export class AuditLogService {
   constructor(
     private readonly prisma: PrismaService,
     @Inject(ADMIN_DIRECTORY_PORT) private readonly admins: AdminDirectoryPort,
+    private readonly repo: AuditLogRepository,
   ) {}
 
-  async recent(now = new Date()): Promise<{ items: AuditLogRow[] }> {
-    const rows = await this.prisma.db.auditLog.findMany({
-      where: { createdAt: { gte: new Date(now.getTime() - WINDOW_MS) } },
-      select: { id: true, actorId: true, summary: true, tag: true, createdAt: true },
-      orderBy: [{ createdAt: 'desc' }, { id: 'desc' }],
-      take: LIMIT,
-    });
+  async page(query: AuditLogPageQuery, now = new Date()) {
+    const stored = await this.repo.page(now, query.limit + 1, query.cursor);
+    const rows = stored.slice(0, query.limit);
+    const last = rows.at(-1);
     const ids = [...new Set(rows.flatMap((r) => (r.actorId ? [r.actorId] : [])))];
     // D-52: người thao tác là TK quản trị (`admin_users`, tên hiện hành) hoặc thành viên (`users`)
     const [admins, actors] = ids.length
@@ -39,7 +40,11 @@ export class AuditLogService {
       : [new Map<string, string>(), []];
     const at = new Map(actors.map((a) => [a.id, a]));
     return {
-      items: rows.map((r) => {
+      nextCursor:
+        stored.length > query.limit && last
+          ? encodeAuditLogCursor({ at: last.cursorAt, id: last.id })
+          : null,
+      items: rows.map((r): AuditLogRow => {
         const a = r.actorId ? at.get(r.actorId) : undefined;
         return {
           id: r.id,

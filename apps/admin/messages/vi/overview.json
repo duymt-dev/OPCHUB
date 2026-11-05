@@ -52,5 +52,22 @@
       "sub": "Nhóm tỉnh & nhóm ngành",
       "cta": "Cộng đồng"
     }
+  },
+  "conversion": {
+    "heading": "Chuyển đổi miễn phí → trả phí theo vùng",
+    "sub": "Tỷ lệ = Đã trả phí / (Đã trả phí + Hết hạn chưa trả) · thành viên sau 3 tháng miễn phí",
+    "export": "Xuất CSV",
+    "region": "Vùng",
+    "director": "GĐ Vùng",
+    "trial": "Đang dùng thử",
+    "paid": "Đã trả phí",
+    "expired": "Hết hạn chưa trả",
+    "rate": "Tỷ lệ chuyển đổi",
+    "total": "Toàn quốc",
+    "unappointed": "Chưa bổ nhiệm",
+    "exported": "Đã xuất 3 dòng – chuyen-doi-theo-vung.csv",
+    "failed": "Không tải được số liệu hoặc xuất CSV",
+    "loading": "Đang tải số liệu…",
+    "retry": "Thử lại"
   }
 }

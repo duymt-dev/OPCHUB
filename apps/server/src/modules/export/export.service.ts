@@ -75,7 +75,7 @@ export class ExportService {
       },
     });
     if (!j) throw notFound('Không tìm thấy yêu cầu xuất');
-    const kind = j.kind === 'users' || j.kind === 'report' ? j.kind : 'group_members';
+    const kind = exportParamsSchema.parse(j.params).kind;
     const base = { id: j.id, kind, status: j.status, rowCount: j.rowCount } as const;
     const fileKey = j.status === 'done' && j.expiresAt > new Date() ? j.fileKey : null;
     if (!fileKey) return { ...base, url: null, expiresInSec: null };
@@ -97,7 +97,11 @@ export class ExportService {
     );
     const params = exportParamsSchema.safeParse(j.params);
     const name =
-      params.success && params.data.kind === 'report' ? params.data.file : `${j.kind}.csv`;
+      params.success && params.data.kind === 'report'
+        ? params.data.file
+        : j.kind === 'audit'
+          ? 'nhat-ky-hoat-dong.csv'
+          : `${j.kind}.csv`;
     const url = await this.storage.presignGet(fileKey, ttl, name);
     return { ...base, url, expiresInSec: ttl };
   }
@@ -130,8 +134,8 @@ export class ExportService {
   }
 
   private async build(p: ExportParams): Promise<{ csv: string; rows: number }> {
-    if (p.kind === 'report') {
-      const build = this.builders.of('report');
+    if (p.kind !== 'users' && p.kind !== 'group_members') {
+      const build = this.builders.of(p.kind);
       if (!build) throw new Error('Chưa đăng ký dựng báo cáo');
       return build(p);
     }

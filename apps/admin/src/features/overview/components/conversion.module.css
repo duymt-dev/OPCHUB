@@ -1,0 +1,113 @@
+.card {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.head h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+.head p {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+}
+.button {
+  height: 32px;
+  padding: 0 14px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background: #fff;
+  font: inherit;
+  font-size: 13px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.button:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+.scroll {
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  overflow: auto;
+}
+.table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.table th {
+  background: #fafafa;
+  font-weight: 600;
+  text-align: left;
+  white-space: nowrap;
+}
+.table th,
+.table td {
+  padding: 10px 12px;
+}
+.table td {
+  border-top: 1px solid #f0f0f0;
+  vertical-align: middle;
+}
+.table th:nth-child(n + 3):nth-child(-n + 5),
+.table td:nth-child(n + 3):nth-child(-n + 5) {
+  text-align: right;
+}
+.table th:last-child {
+  width: 220px;
+}
+.table td:first-child {
+  font-weight: 500;
+}
+.rate {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.rate b {
+  min-width: 40px;
+  text-align: right;
+}
+.track {
+  flex: 1;
+  height: 6px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: #f0f0f0;
+}
+.track > span {
+  display: block;
+  height: 100%;
+}
+.green {
+  background: #52c41a;
+}
+.blue {
+  background: #1677ff;
+}
+.orange {
+  background: #fa8c16;
+}
+.total {
+  font-weight: 600;
+  background: #fafafa;
+}
+.total td:last-child {
+  text-align: right;
+}

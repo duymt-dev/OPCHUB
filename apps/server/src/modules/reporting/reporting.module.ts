@@ -7,8 +7,13 @@ import { ReportExportService } from './report-export.service';
 import { ReportMetricsRepository } from './report-metrics.repository';
 import { ReportsController } from './reports.controller';
 import { StatsDailyService } from './stats-daily.service';
+import { ConversionRepository } from './conversion.repository';
+import { ConversionService } from './conversion.service';
+import { ConversionController } from './conversion.controller';
 
 const providers = [
+  ConversionRepository,
+  ConversionService,
   OverviewService,
   OverviewFlowRepository,
   StatsDailyService,
@@ -20,5 +25,8 @@ const providers = [
 @Module({ imports: [ExportCoreModule], providers, exports: providers })
 export class ReportingCoreModule {}
 
-@Module({ imports: [ReportingCoreModule], controllers: [OverviewController, ReportsController] })
+@Module({
+  imports: [ReportingCoreModule],
+  controllers: [OverviewController, ReportsController, ConversionController],
+})
 export class ReportingHttpModule {}

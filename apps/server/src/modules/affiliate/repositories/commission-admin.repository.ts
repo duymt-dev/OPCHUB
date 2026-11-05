@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Prisma, type CommissionPlan, type CommissionStatus, type DbTx } from '@opchub/db';
 import type { AffiliateCommissionQuery } from '@opchub/shared/api-domains';
 import { PrismaService } from '@/common/prisma/prisma.service';
+import { commissionVisible } from './commission-visible.sql';
 import {
   commissionPageQuery,
   commissionWhere,
@@ -40,7 +41,7 @@ export class CommissionAdminRepository {
   }
 
   countIds(tx: DbTx, ids: readonly string[]) {
-    return tx.commission.count({ where: { id: { in: [...new Set(ids)] } } });
+    return tx.commission.count({ where: { id: { in: [...new Set(ids)] }, amount: { gt: 0 } } });
   }
 
   async count(q: AffiliateCommissionQuery, memberIds: readonly string[]) {
@@ -67,7 +68,7 @@ export class CommissionAdminRepository {
         (count(*) FILTER (WHERE plan='business'))::integer AS business,
         (count(*) FILTER (WHERE plan='personal'))::integer AS personal,
         (count(*) FILTER (WHERE plan='fundraising'))::integer AS fundraising
-      FROM commissions WHERE status IN ('recorded','paid') ${month ? Prisma.sql`AND month_key=${month}` : Prisma.empty}`);
+      FROM commissions c WHERE ${commissionVisible} AND status IN ('recorded','paid') ${month ? Prisma.sql`AND month_key=${month}` : Prisma.empty}`);
     const revenue = Number(r?.revenue ?? 0),
       totalCommission = Number(r?.totalCommission ?? 0);
     return {

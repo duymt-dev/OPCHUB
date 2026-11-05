@@ -1,4 +1,5 @@
 import { bankHandlers } from './bank-reconcile';
+import { auditLogHandlers } from './audit-log';
 import type { AdminPermissionKey } from '@opchub/shared';
 import {
   adminAccountCreateSchema,
@@ -27,7 +28,6 @@ import {
   listAdminCategories,
   listMockAdminAccounts,
   listMockAdminRoles,
-  listSettingsLog,
   mockAdminMeOf,
   reorderCategories,
   revokeMockAdmin,
@@ -57,6 +57,7 @@ const forbidden = () => apiError(403, 'FORBIDDEN', 'Bạn không có quyền th�
 const memberEmails = members.map((m) => m.email.toLowerCase());
 
 export const settingsHandlers = [
+  ...auditLogHandlers,
   ...bankHandlers,
   ...renewalHandlers,
   http.get(`${API}/admin/settings/general`, () => HttpResponse.json(getGeneralSettings())),
@@ -133,10 +134,6 @@ export const settingsHandlers = [
   }),
   http.delete(`${API}/admin/admin-accounts/:id`, ({ request, params }) =>
     reply(revokeMockAdmin(userIdOf(request), param(params, 'id'))),
-  ),
-
-  http.get(`${API}/admin/audit-logs`, ({ request }) =>
-    can(request, 'settings.log') ? HttpResponse.json({ items: listSettingsLog() }) : forbidden(),
   ),
 
   http.get(`${API}/admin/settings/security`, () => HttpResponse.json(getSecuritySettings())),

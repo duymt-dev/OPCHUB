@@ -273,7 +273,7 @@
   },
   "log": {
     "heading": "Nhật ký hoạt động quản trị",
-    "headingSub": "Ghi lại mọi thay đổi cấu hình và phân quyền trong 90 ngày.",
+    "headingSub": "Tự động ghi mọi thao tác của quản trị viên (khóa, duyệt, chi trả, đổi cấu hình…) trong 90 ngày.",
     "empty": "Chưa có hoạt động nào",
     "tag": {
       "affiliate": "Affiliate",
@@ -287,7 +287,13 @@
       "content": "Nội dung",
       "report": "Báo cáo",
       "pricing": "Bảng giá"
-    }
+    },
+    "export": "Xuất CSV",
+    "more": "Xem thêm",
+    "loading": "Đang tải nhật ký…",
+    "failed": "Không tải được nhật ký hoặc xuất CSV",
+    "retry": "Thử lại",
+    "exported": "Đã xuất {n} dòng – nhat-ky-hoat-dong.csv"
   },
   "time": {
     "now": "vừa xong",

@@ -1,4 +1,10 @@
-import { notificationReadSchema } from '@opchub/shared/api-domains';
+import {
+  adminConversionSchema,
+  notificationReadSchema,
+  csvFileSchema,
+} from '@opchub/shared/api-domains';
+import { mockConversion, exportMockConversion } from '@opchub/shared/mock-domains';
+import { mockAdminGuard } from './admin-guard';
 import {
   cursorSlice,
   inboxNotifications,
@@ -21,6 +27,18 @@ const notifQuerySchema = z.object({
 
 /** Thông báo topbar Admin theo TK đang đăng nhập (D-04, D-29) */
 export const shellHandlers = [
+  http.get(
+    `${API}/admin/overview/conversion`,
+    ({ request }) =>
+      mockAdminGuard(request, 'overview.view') ??
+      HttpResponse.json(adminConversionSchema.parse(mockConversion())),
+  ),
+  http.post(
+    `${API}/admin/overview/conversion/export`,
+    ({ request }) =>
+      mockAdminGuard(request, 'overview.view') ??
+      HttpResponse.json(csvFileSchema.parse(exportMockConversion(userIdOf(request)))),
+  ),
   http.get(`${API}/notifications`, ({ request }) => {
     const q = parseQuery(request.url, notifQuerySchema);
     if (!q.ok) return q.res;

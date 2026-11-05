@@ -22,7 +22,7 @@ export class AffiliateWriteRepository {
 
   commissions(tx: DbTx, ids: readonly string[]) {
     return tx.commission.findMany({
-      where: { id: { in: [...ids] } },
+      where: { id: { in: [...ids] }, amount: { gt: 0 } },
       select: { id: true, affiliateId: true },
     });
   }
@@ -51,6 +51,7 @@ export class AffiliateWriteRepository {
     // D-110: làm tròn đến đồng (như `commissionAmount`)
     await tx.$executeRaw`
       UPDATE commissions SET rate=${rate},amount=round(list_amount::numeric * ${rate} / 100)::integer
-      WHERE affiliate_id = ANY(${[...ids]}::text[]) AND status='recorded' AND source='membership' AND customer_year=1`;
+      WHERE affiliate_id = ANY(${[...ids]}::text[]) AND status='recorded' AND source='membership' AND customer_year=1
+        AND amount > 0 AND round(list_amount::numeric * ${rate} / 100) > 0`;
   }
 }

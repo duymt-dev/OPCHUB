@@ -102,3 +102,9 @@ Nhãn tiếng Việt chỉ đặt trong file messages của next-intl, không vi
 | Tự kích hoạt khi khớp | `app_settings.bank.autoActivate` | Công tắc lưu ngay có audit; bật lại không replay giao dịch đã chờ (D-135) |
 | Ghi nhận thiếu | `match_status = short`, `short_note` | Ghi chú bắt buộc, không kích hoạt hoặc cộng dồn giao dịch (D-135) |
 | Khóa bí mật webhook | `bank_webhook_keys.key_enc`, `hint` | Mã hóa, chỉ trả rõ một lần khi tạo lại; khóa cũ mất hiệu lực ngay |
+### V4.6 — TIP-V46-807
+
+| Thuật ngữ | Code | Nghĩa |
+|---|---|---|
+| Tỷ lệ chuyển đổi | conversion / ratePct | Đã trả phí / (Đã trả phí + Hết hạn chưa trả), làm tròn %, không tính đang dùng thử vào mẫu số |
+| Nhật ký hoạt động | audit log | Nhật ký Admin chỉ ghi thêm; màn hình và CSV hiển thị90 ngày, DB giữ theo NA-13/REQ-213 |

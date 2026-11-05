@@ -107,7 +107,8 @@ export function setMockAffiliateRates(actor: string, input: unknown) {
       ids.includes(ref.agentId) &&
       ref.row.status === 'recorded' &&
       (ref.customerYear ?? 1) === 1 &&
-      ref.plan !== 'fundraising'
+      ref.plan !== 'fundraising' &&
+      mockCommissionAmount(ref.row.feeAmount, parsed.data.rate) > 0
     ) {
       ref.row.rate = parsed.data.rate;
       ref.row.commission = mockCommissionAmount(ref.row.feeAmount, parsed.data.rate);

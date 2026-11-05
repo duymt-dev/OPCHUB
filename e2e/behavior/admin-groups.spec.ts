@@ -245,7 +245,9 @@ test.describe('Admin · Nhóm cộng đồng', () => {
     await expect(dlg.getByRole('button', { name: /Tải xuống 9 dòng/ })).toBeVisible();
     const download = page.waitForEvent('download');
     await dlg.getByRole('button', { name: /Tải xuống/ }).click();
-    expect((await download).suggestedFilename()).toMatch(/^opchub-thanh-vien-nhom-\d{8}\.csv$/);
+    const file = await download;
+    expect(file.suggestedFilename()).toMatch(/^opchub-thanh-vien-nhom-\d{8}\.csv$/);
+    expect((await csvDownload(file)).charCodeAt(0)).toBe(0xfeff);
     await expect(toast(page)).toContainText('Đã xuất 9 dòng');
 
     await page.getByRole('checkbox', { name: 'Chọn OPC Hà Nội', exact: true }).click();
@@ -318,3 +320,4 @@ test.describe('Admin · Nhóm cộng đồng', () => {
     await expect(page.getByText('8 từ khóa')).toBeVisible();
   });
 });
+import { csvDownload } from './helpers/csv-download';

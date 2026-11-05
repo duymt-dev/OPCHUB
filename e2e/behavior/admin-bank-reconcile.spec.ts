@@ -1,6 +1,7 @@
 import { test, expect, type Page } from '../server/test';
 import { ADMIN_URL } from '../urls';
 import { bankSimulateResultSchema } from '@opchub/shared/api-domains';
+import { csvDownload } from './helpers/csv-download';
 
 async function open(page: Page, email = 'admin@opchub.community') {
   await page.goto(`${ADMIN_URL}/login`);
@@ -140,7 +141,9 @@ test('REQ-621 short note required, recorded status, CSV download', async ({ page
   await expect(row.getByRole('button', { name: 'Ghi nhận thiếu' })).toHaveCount(0);
   const download = page.waitForEvent('download');
   await panel.getByRole('button', { name: 'Xuất CSV' }).click();
-  expect((await download).suggestedFilename()).toBe('doi-soat-ngan-hang.csv');
+  const file = await download;
+  expect(file.suggestedFilename()).toBe('doi-soat-ngan-hang.csv');
+  expect((await csvDownload(file)).charCodeAt(0)).toBe(0xfeff);
 });
 
 test('REQ-621 D-135 lecturer cannot see bank settings tab', async ({ page }) => {

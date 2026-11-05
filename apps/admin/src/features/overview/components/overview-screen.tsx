@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { rangeLabel } from '../data';
 import { useOverview } from '../hooks/use-overview';
 import { GrowthChart } from './growth-chart';
+import { ConversionTable } from './conversion-table';
 import styles from './overview.module.css';
 import { StatCards } from './stat-cards';
 import { SystemFlow } from './system-flow';
@@ -31,6 +32,7 @@ export function OverviewScreen() {
         <SystemFlow />
         <StatCards />
         <GrowthChart />
+        <ConversionTable />
       </div>
     </>
   );

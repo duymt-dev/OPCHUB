@@ -1,4 +1,5 @@
 import { affiliateCustomersQuery, affiliateMonthsQuery } from './affiliate-history.query';
+import { commissionVisible } from './commission-visible.sql';
 import { Injectable } from '@nestjs/common';
 import { Prisma, type AffiliateStatus, type DbTx } from '@opchub/db';
 import type { AffiliatePageQuery, CommissionPlan } from '@opchub/shared/api-domains';
@@ -76,7 +77,7 @@ export class AffiliateAdminRepository {
         sum(list_amount)::bigint AS revenue,sum(amount)::bigint AS commission,
         COALESCE(sum(amount) FILTER (WHERE status='recorded'),0)::bigint AS balance,
         COALESCE(sum(amount) FILTER (WHERE status='paid'),0)::bigint AS paid
-      FROM commissions WHERE affiliate_id=ANY(${[...ids]}::text[]) AND status IN ('recorded','paid')
+      FROM commissions c WHERE ${commissionVisible} AND affiliate_id=ANY(${[...ids]}::text[]) AND status IN ('recorded','paid')
         ${month ? Prisma.sql`AND month_key=${month}` : Prisma.empty} GROUP BY affiliate_id`);
   }
 
@@ -94,8 +95,8 @@ export class AffiliateAdminRepository {
       >(affiliateMonthsQuery(id, q)),
       this.prisma.db.$queryRaw<
         { total: number }[]
-      >`SELECT count(DISTINCT month_key)::integer AS total
-        FROM commissions WHERE affiliate_id=${id}`,
+      >(Prisma.sql`SELECT count(DISTINCT month_key)::integer AS total
+        FROM commissions c WHERE ${commissionVisible} AND affiliate_id=${id}`),
     ]);
     return { items, total: total?.total ?? 0 };
   }
@@ -117,7 +118,7 @@ export class AffiliateAdminRepository {
           plan: CommissionPlan;
         }[]
       >(affiliateCustomersQuery(id, q)),
-      this.prisma.db.commission.count({ where: { affiliateId: id } }),
+      this.prisma.db.commission.count({ where: { affiliateId: id, amount: { gt: 0 } } }),
     ]);
     return { items, total };
   }

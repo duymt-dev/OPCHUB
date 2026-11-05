@@ -1,4 +1,8 @@
-import { adminOverviewSchema } from '@opchub/shared/api-domains';
+import {
+  adminOverviewSchema,
+  adminConversionSchema,
+  csvFileSchema,
+} from '@opchub/shared/api-domains';
 import type { AdminOverview } from '@opchub/shared/api-domains';
 import type { ToneName } from '@opchub/ui';
 import { api } from '@/lib/api-client';
@@ -6,6 +10,10 @@ import { api } from '@/lib/api-client';
 /** D-01 Tổng quan — `GET /admin/overview` (B44) */
 export const overviewKeys = { all: ['admin-overview'] as const };
 export const fetchOverview = () => api('/admin/overview', { schema: adminOverviewSchema });
+export const fetchConversion = () =>
+  api('/admin/overview/conversion', { schema: adminConversionSchema });
+export const exportConversion = () =>
+  api('/admin/overview/conversion/export', { method: 'POST', schema: csvFileSchema });
 
 /** D-89 v4: Thành viên · Cộng đồng · Thành viên mới · Sự kiện */
 export type StatKey = 'members' | 'communities' | 'fresh' | 'events';

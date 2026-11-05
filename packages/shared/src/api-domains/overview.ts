@@ -62,3 +62,21 @@ export const adminBadgesSchema = z.object({
   requests: z.number().int(),
 });
 export type AdminBadges = z.infer<typeof adminBadgesSchema>;
+
+const conversionCountsSchema = z.object({
+  trial: z.number().int().nonnegative(),
+  paid: z.number().int().nonnegative(),
+  expired: z.number().int().nonnegative(),
+  ratePct: z.number().int().min(0).max(100),
+});
+export const conversionRowSchema = conversionCountsSchema.extend({
+  region: z.enum(['north', 'central', 'south']),
+  label: z.string(),
+  directorName: z.string().nullable(),
+});
+export const adminConversionSchema = z.object({
+  rows: z.array(conversionRowSchema).length(3),
+  total: conversionCountsSchema,
+});
+export type AdminConversion = z.infer<typeof adminConversionSchema>;
+export type ConversionRow = z.infer<typeof conversionRowSchema>;

@@ -1,10 +1,11 @@
 import { Prisma } from '@opchub/db';
 import type { AffiliatePageQuery } from '@opchub/shared/api-domains';
+import { commissionVisible } from './commission-visible.sql';
 
 export { referralRowsPage as referralPageQuery } from './referral-rows.query';
 
 export const payoutGroup = (affiliateId: string) => Prisma.sql`
-  FROM commissions WHERE affiliate_id=${affiliateId} AND status='paid'
+  FROM commissions c WHERE ${commissionVisible} AND affiliate_id=${affiliateId} AND status='paid'
   GROUP BY month_key,paid_at,paid_bank_snapshot`;
 
 export const payoutPageQuery = (affiliateId: string, q: AffiliatePageQuery) => Prisma.sql`

@@ -790,3 +790,38 @@ Không mở rộng sửa file reply-scan khác: file đó chạy riêng4/4 PASS,
 SPEC7 đếm **chưa xử lý**: short đã ghi nhận vẫn hiện lịch sử nhưng không thuộc
 pending. Sửa đồng nhất API/MSW trong3c4f6f94, có assert giảm bộ đếm ở shared/int/E2E;
 không đổi quy tắc không kích hoạt/không cộng dồn D-135.
+## TIP-V46-807 — execution defaults and runtime (05/11/2026)
+
+The TIP explicitly authorizes the following defaults while awaiting owner confirmation;
+they are not new D-xx decisions and are not silently presented as owner-approved:
+
+- Q-V46-807-1: screen/CSV90 days; append-only DB retained at least12 months. No purge/trigger relaxation.
+- Q-V46-807-2: earliest current provincial group (industry uses its parent), D-128; groupless only national total.
+- Q-V46-807-3: active+expiring paid, expired+legacy pending_payment overdue; exclude deleted/investor/regional_director fee status; locked included.
+- Q-V46-807-4: CSV absolute `dd/mm/yyyy HH:mm`, Asia/Ho_Chi_Minh, not relative text.
+- Q-V46-807-5: positive commissions only across Admin/Portal list/count/total/CSV; never filter regional-share zero allocations; NOT VALID positive CHECK preserves history.
+
+Owner explicitly approved reusing the private dev/test DB pair and Memurai6381,
+with rolling restart of owned806 services to807; original native5432/6379 untouched.
+
+Migration incident: the generated create-only diff accidentally deployed handwritten
+index/FK drops on the private pair. A compensating migration restored the original
+definitions. No business rows were removed by this correction. Owner approved
+“Dọn đúng hai migration và metadata DB riêng” on 05/11/2026. Removed exactly
+`20261105111454_v46_commission_positive` and `20261110091000_restore_custom_indexes`
+from source and their metadata from both private DBs. Verified all21 indexes and
+the validated `customer_years_user_fk` restored; both metadata counts are zero.
+Prisma reports96 migrations, up to date on both DBs. Only the intended
+`20261110090000_v46_commission_positive` NOT VALID CHECK ships. No fresh-DB replay
+has been performed; original native DB/Redis remain untouched. Incident closed.
+
+### Approved807 regression fixture repair —05/11/2026
+
+Full integration and an isolated rerun reproduced a legacy chat fixture failure:
+93 background groups plus nine cases' accumulated groups exceeded the existing
+first100 community items, so the overview did not contain the current test group.
+Unread/read assertions passed. Owner explicitly chose “Sửa fixture hẹp, giữ nguyên
+assertions”. Only `test/chat/chat-rest.int.spec.ts` changes: afterEach deletes
+exact IDs created by that case, not other background groups. All assertions and
+production API/cap100 remain unchanged. Scoped14/14 and full rerun2050/2050 passed.
+The existing production first100-groups limitation is not fixed or hidden here.
