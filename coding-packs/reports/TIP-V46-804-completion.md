@@ -2,6 +2,10 @@
 
 ## Trạng thái: PARTIAL — chưa DONE
 
+Điều tra bổ sung ngày 05/11: [Nguyên nhân gate đỏ ngoài parity](TIP-V46-804-red-gates-investigation.md).
+Bốn E2E đã kiểm chứng do clock/fixture; Chat do mock bỏ lọt request xuống proxy;
+ngôn ngữ còn xung đột UI; Bot là lựa chọn plan cạnh tranh. Chưa sửa gate gốc.
+
 Nhánh `feature/TIP-V46-804-portal-my-region`, tách từ dev `01de9037`;
 TIP checkpoint `ce6d9427`. Implementation `08fbd7de`, presentation `2167e976`,
 retention follow-up **`c1fd1625`**, test-only cookie assertion `d690a63f`, đã commit và push.
