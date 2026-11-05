@@ -144,8 +144,12 @@ test.describe('Admin · Phân quyền §21', () => {
     await open(page, SUPER);
     await go(page, SETTINGS);
     await tab(page, 'Vai trò & phân quyền').click();
-    await expect(page.getByText('Chi trả GĐ Vùng', { exact: true })).toBeVisible();
-    await expect(page.getByText('Chi trả hoa hồng', { exact: true })).toHaveCount(0);
+    await expect(
+      page.getByRole('rowheader', { name: 'Affiliate Chi trả GĐ Vùng', exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('rowheader', { name: 'Affiliate Chi trả hoa hồng', exact: true }),
+    ).toHaveCount(0);
     await page.getByRole('button', { name: '+ Thêm vai trò' }).click();
     await page.getByLabel('Tên vai trò, VD: Kiểm soát viên').fill('Kiểm soát viên');
     await page.getByRole('button', { name: 'Thêm', exact: true }).click();
