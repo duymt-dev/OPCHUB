@@ -59,13 +59,13 @@ test('Portal BR-491 group target: joined opens chat, unjoined opens join dialog'
   await search.fill('OPC Hà Nội');
   await page
     .getByRole('listbox')
-    .getByRole('option', { name: /^OPC Hà Nội\s/ })
+    .getByRole('option', { name: /^OPC Hà Nội\s+\d+ thành viên$/ })
     .click();
   await expect(page).toHaveURL(/\/chat\/c1$/);
   await search.fill('OPC Đà Nẵng');
   await page
     .getByRole('listbox')
-    .getByRole('option', { name: /^OPC Đà Nẵng\s/ })
+    .getByRole('option', { name: /^OPC Đà Nẵng\s+\d+ thành viên$/ })
     .click();
   await expect(page).toHaveURL(/\/community\?join=c3$/);
   await expect(page.getByRole('dialog', { name: 'OPC Đà Nẵng' })).toBeVisible();

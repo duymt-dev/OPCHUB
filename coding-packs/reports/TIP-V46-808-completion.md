@@ -2,6 +2,8 @@
 
 - Branch: `feature/TIP-V46-808-global-search`, based on `dev`8543728d.
 - TIP commit: c9dc8a69. Implementation not yet finalized; no DONE claim.
+- Source checkpoint b708c15e pushed. Draft PR [#86](https://github.com/duymt-dev/OPCHUB/pull/86)
+  targets `dev`; not ready for merge yet.
 - Scope: indexed global search, permission/visibility-aware aggregation, shared presentation,
   debounced Portal/Admin queries, mock contracts, ten Portal locales, keyboard/outside-click behavior.
 - Owner approved reusing private `opchub_v46_801_dev` / `opchub_v46_801_test`, Memurai6381,
@@ -31,6 +33,23 @@ two-character needs measured78.966ms (advisory50ms target not met in this run).
 Full final unit rerun and integration, final built-asset E2E, commit/push/PR and HOLD
 verification are pending. Full integration has reported legacy failures; these are being
 triaged, not ignored. This document is a work log, not completion approval.
+
+## Final-run triage (ongoing)
+
+- Initial direct server integration ran without required seed groups (`c1`/`c34` absent,
+  total active groups0). Aborted that invalid-precondition run after recording failures
+  in media-refs/chat/projects. Re-seeded private **test** DB only and restarted full root
+  `test:int`; DB126/126 passed, server phase running. No production/test assertions changed.
+- A unit rerun hit the existing audit manifest's5s timeout under heavy parallel load;
+  another attempt hit Vitest fork startup timeouts. Bounded resource rerun uses the same
+  Turbo test graph and assertions, package concurrency1 and `--maxWorkers=2`. Audit manifest
+  then passed in1514ms. No test/production timeouts changed.
+- New group E2E initially used an ambiguous prefix matching province and industry groups.
+  Narrowed its accessible-name pattern to the exact province title + member count;
+  identical MSW/native3/3 passed on final built assets.
+- Full MSW exposed two old Affiliate month selectors that now also match the new accessible
+  topbar combobox. Owner approval requested for a narrow month-label selector repair;
+  no assertions or production behavior will be relaxed.
 
 ## Migration safety
 
