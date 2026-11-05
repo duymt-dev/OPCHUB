@@ -82,6 +82,6 @@ thêm kiểm chứng âm, isolation và hồi quy phân bố dữ liệu.
 
 ## BUILDER-CHECKLIST
 - [x] Kiểm targeted RED/GREEN và các assertions không bị bỏ.
-- [ ] lint/typecheck/unit/test:int/depcheck/build/E2E thực chạy, ghi cache/skips/gaps.
+- [x] lint/typecheck/unit/test:int/depcheck/build/E2E thực chạy, ghi cache/skips/gaps (PARTIAL, không full PASS).
 - [x] Ghi EXPLAIN và phân biệt mixed/all-simulated, không tuyên bố mọi distribution tối ưu.
-- [ ] Commit scoped paths, push PR dev, git status sạch, report Git SHA.
+- [x] Commit scoped paths, push PR dev, ghi Git SHA; kiểm status cuối cùng trong completion handoff.

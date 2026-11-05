@@ -2,9 +2,16 @@
 
 ## Trạng thái: PARTIAL — chưa DONE
 
-Điều tra bổ sung ngày 05/11: [Nguyên nhân gate đỏ ngoài parity](TIP-V46-804-red-gates-investigation.md).
-Bốn E2E đã kiểm chứng do clock/fixture; Chat do mock bỏ lọt request xuống proxy;
-ngôn ngữ còn xung đột UI; Bot là lựa chọn plan cạnh tranh. Chưa sửa gate gốc.
+Follow-up ngày 05/11: [F1 — sửa gate đỏ trước TIP-805](TIP-V46-804-F1-completion.md),
+source **817b22a8 / 596dbacb** đã push. Clock/fixture, mock/proxy, Bot plan fixture,
+cờ theo D-133, E2E listener race và lỗi cache tin bị ẩn native đã sửa.
+Unit mới **1.981 pass + 2 skip**, lint/typecheck/depcheck/build PASS;
+Full integration vẫn FAIL do hai suite hết kết nối PostgreSQL (rerun 2/2 PASS).
+Full E2E cuối 354 pass / 1 fail / 4 skip; race listener thu phí đã sửa ở e6ffe272,
+repeat 3/3 PASS. Chưa chạy lại hai full suite sau các kết quả này, không báo xanh.
+Parity chưa sửa, parent vẫn PARTIAL. Các bảng/dist/HOLD bên dưới là checkpoint
+trước F1; xem report F1 cho artifact và kết quả mới nhất.
+[Điều tra gốc](TIP-V46-804-red-gates-investigation.md) được giữ nguyên lịch sử.
 
 Nhánh `feature/TIP-V46-804-portal-my-region`, tách từ dev `01de9037`;
 TIP checkpoint `ce6d9427`. Implementation `08fbd7de`, presentation `2167e976`,
