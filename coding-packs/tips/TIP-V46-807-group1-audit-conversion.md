@@ -498,3 +498,4 @@ Ghi 5 câu vào `reports/ui-parity/questions.md` › V4.6 (dạng "mặc định
 - Audit keysets preserve PostgreSQL microsecond cursor precision rather than truncating through JS Date; an integration case checks consecutive one-row pages.
 - No new dependency, event, permission key, production timeout or test assertion relaxation.
 - The accidental generated/compensating migration incident and owner-selected resolution must be recorded in completion before handoff.
+- Owner additionally approved narrow isolation in `test/chat/chat-rest.int.spec.ts`: afterEach removes only that case's group IDs; no assertion, production API or100-item cap change. Full and isolated failure both reproduced before the repair.

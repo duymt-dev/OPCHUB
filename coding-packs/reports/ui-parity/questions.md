@@ -814,3 +814,14 @@ the validated `customer_years_user_fk` restored; both metadata counts are zero.
 Prisma reports96 migrations, up to date on both DBs. Only the intended
 `20261110090000_v46_commission_positive` NOT VALID CHECK ships. No fresh-DB replay
 has been performed; original native DB/Redis remain untouched. Incident closed.
+
+### Approved807 regression fixture repair —05/11/2026
+
+Full integration and an isolated rerun reproduced a legacy chat fixture failure:
+93 background groups plus nine cases' accumulated groups exceeded the existing
+first100 community items, so the overview did not contain the current test group.
+Unread/read assertions passed. Owner explicitly chose “Sửa fixture hẹp, giữ nguyên
+assertions”. Only `test/chat/chat-rest.int.spec.ts` changes: afterEach deletes
+exact IDs created by that case, not other background groups. All assertions and
+production API/cap100 remain unchanged. Scoped14/14 passed; full rerun is pending.
+The existing production first100-groups limitation is not fixed or hidden here.
