@@ -4,7 +4,15 @@ Private test DB, PostgreSQL16. Connection-local LIKE INCLUDING ALL tables preser
 
 One unique-owner/product query, then one bounded candidate query. The initial plain payload join chose a needs Seq Scan; production now uses a correlated unique-ID LATERAL lookup (LIMIT1) after LIMIT200. This preserves one SQL and exact result order, no per-row network queries. Cache integration verifies a second call within60s performs no repository SQL.
 
+The product array uses indexed `ARRAY(SELECT ... ORDER BY sort,id)` instead of grouped
+`array_agg`: same ordered names/one SQL, empty array when there are no items, no grouping
+over the uniquely selected store.
+
 Evidence: test-results/v46-809-matches-int-r3.log,2 plan tests +8 API/cache/access tests passed.
+
+Full-root integration subsequently passed2089/2089 (server1963 +DB126), exit0.
+Its store query executed0.132ms and candidate query6.389ms with the same index/bound
+assertions. Log: `test-results/v46-809-full-integration.log`.
 
 ```text
 need matches store:

@@ -287,24 +287,24 @@ Ghi 4 câu vào `reports/ui-parity/questions.md` › V4.6 (dạng "mặc định
 
 ## ⚠️ BUILDER-CHECKLIST (agent PHẢI hoàn thành trước khi báo DONE)
 
-- [ ] `pwd` = `D:\CODING\OPCHUB\CODING`, nhánh `feature/TIP-V46-809-need-suggestions`; chỉ sửa file trong **Files touched** (thêm ngoài danh sách → ghi lý do)
-- [ ] Hỏi owner DB đích trước khi int / e2e server / seed; không migration (cần index → dừng, hỏi)
-- [ ] Đo baseline `dev` trước (e2e MSW, `onboarding.spec.ts`, parity `P-01`) để tách lỗi cũ / mới
-- [ ] Mỗi AC có test đúng tên, ghi PASS / FAIL thật từng cái
-- [ ] Chạy và dán tóm tắt output thật: `pnpm lint && pnpm typecheck && pnpm test && pnpm test:int && pnpm depcheck && pnpm build`; `pnpm e2e` MSW không tụt; e2e server cho `dashboard-need-matches.spec.ts`
-- [ ] EXPLAIN (ANALYZE, BUFFERS) câu 1 + câu 2 trên ≥ 10k nhu cầu → `TIP-V46-809-query-plans.md`
-- [ ] Parity (D-134): `P-01` ở 1440 + 390, ghi % + nguyên nhân; sửa hết lệch giao diện thật
-- [ ] Luật BUILDER-HANDOFF liên quan:
+- [x] `pwd` = `D:\CODING\OPCHUB\CODING`, nhánh `feature/TIP-V46-809-need-suggestions`; chỉ sửa file trong **Files touched** (thêm ngoài danh sách → ghi lý do)
+- [x] Hỏi owner DB đích trước khi int / e2e server / seed; không migration (cần index → dừng, hỏi)
+- [x] Đo baseline `dev` trước (e2e MSW, `onboarding.spec.ts`, parity `P-01`) để tách lỗi cũ / mới
+- [x] Mỗi AC có test đúng tên, ghi PASS / FAIL thật từng cái
+- [x] Chạy và dán tóm tắt output thật: `pnpm lint && pnpm typecheck && pnpm test && pnpm test:int && pnpm depcheck && pnpm build`; `pnpm e2e` MSW không tụt; e2e server cho `dashboard-need-matches.spec.ts`
+- [x] EXPLAIN (ANALYZE, BUFFERS) câu 1 + câu 2 trên ≥ 10k nhu cầu → `TIP-V46-809-query-plans.md`
+- [x] Parity (D-134): `P-01` ở 1440 + 390, ghi % + nguyên nhân; sửa hết lệch giao diện thật
+- [x] Luật BUILDER-HANDOFF liên quan:
   - **Luật 3 / ranh giới domain**: chỉ đọc `stores`, `store_items`, `needs`; hàm chấm điểm thuần trong `packages/shared`, dùng chung server + MSW
   - **Luật 5**: 2 câu SQL cố định, ứng viên ≤ 200 qua index "bằng trước, sort sau", không N+1
   - **Luật 11 / D-124**: không gọi LLM, không adapter mới
   - **D-75 / OQ-12**: chỉ TK Doanh nghiệp có gian hàng; TK Cá nhân / NĐT không có thẻ
-- [ ] File ≤ trần (BE 600, FE 400); không `any` / `@ts-ignore` / `console.*`
-- [ ] D-65: 9 bộ dịch Portal có khối `dashboard.matches`; `messages.spec.ts` PASS
-- [ ] Ghi Q-V46-809-1 → 4 vào `questions.md`; cập nhật `V4.6-progress.md` dòng #9; glossary
-- [ ] Sau khi đo: chạy lại seed demo (native HOLD); không tắt tiến trình HOLD
-- [ ] Commit theo bước `git commit -- <paths>` (cấm `git add -A`); `git status --short` sạch; push; PR `base: dev`, không tự merge; completion report có **git commit SHA**, PR, số test thật, parity (tham khảo), EXPLAIN, soát luật cứng 1–14, phần chưa làm
-- [ ] KHÔNG báo DONE nếu còn gate đỏ (lint / type / unit / int / e2e / depcheck / build); parity theo D-134 không chặn nhưng phải có nguyên nhân
+- [x] File ≤ trần (BE 600, FE 400); không `any` / `@ts-ignore` / `console.*`
+- [x] D-65: 9 bộ dịch Portal có khối `dashboard.matches`; `messages.spec.ts` PASS
+- [x] Ghi Q-V46-809-1 → 4 vào `questions.md`; cập nhật `V4.6-progress.md` dòng #9; glossary
+- [x] Sau khi đo: chạy lại seed demo (native HOLD); không tắt tiến trình HOLD
+- [x] Commit theo bước `git commit -- <paths>` (cấm `git add -A`); `git status --short` sạch; push; PR `base: dev`, không tự merge; completion report có **git commit SHA**, PR, số test thật, parity (tham khảo), EXPLAIN, soát luật cứng 1–14, phần chưa làm
+- [x] KHÔNG báo DONE nếu còn gate đỏ (lint / type / unit / int / e2e / depcheck / build); parity theo D-134 không chặn nhưng phải có nguyên nhân
 
 ---
 
