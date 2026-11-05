@@ -70,3 +70,14 @@
   color: rgba(0, 0, 0, 0.45);
   text-align: center;
 }
+.button {
+  align-self: flex-start;
+  height: 32px;
+  padding: 0 14px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background: #fff;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
