@@ -440,3 +440,12 @@ P-97/P-98 được đo baseline trước thay đổi và đo lại; xem TIP-V46-
 
 Đo baseline D-66 → D-75 trước build 805; lưu số đo trước/sau trong completion.
 Không sinh sáu khoản phí giả để ép bảng giống prototype; fixture opt-in 12 ngày chỉ cho acceptance.
+
+## V4.6 — TIP-V46-806 (D-134, D-135)
+
+| ID | Khu vực | Trạng thái / thao tác | Route app | Viewport |
+|---|---|---|---|---|
+| D-V46-BANK | Admin | Cài đặt → Đối soát ngân hàng; cổng, webhook, tự kích hoạt và năm giao dịch mẫu | /settings?tab=bank | 1440, 390 |
+
+Không mask hoặc nới ngưỡng 3%. Cổng chưa hỗ trợ và nút fake theo D-135,
+cú pháp OPCHUB theo D-123; số liệu giao dịch là fixture, không sửa ledger để khớp ảnh.

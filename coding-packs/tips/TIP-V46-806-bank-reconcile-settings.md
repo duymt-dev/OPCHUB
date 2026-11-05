@@ -260,25 +260,25 @@ Ghi vào `reports/ui-parity/questions.md` › V4.6 dạng "đã chốt", trỏ D
 
 ## ⚠️ BUILDER-CHECKLIST (agent PHẢI hoàn thành trước khi báo DONE)
 
-- [ ] `pwd` = `D:\CODING\OPCHUB\CODING`, nhánh `feature/TIP-V46-806-bank-reconcile-settings`; chỉ sửa file trong **Files touched** (thêm ngoài danh sách → ghi lý do)
-- [ ] Hỏi owner DB đích trước khi `migrate deploy` / int / e2e server / seed; migration `--create-only` rồi sửa SQL, có `down.sql`
-- [ ] Biến env mới `API_PUBLIC_URL` có trong `.env.example` + zod env schema (luật 12); không sửa `.env` thật
-- [ ] Đo baseline `dev` trước (int đối soát, e2e MSW, parity Cài đặt) để tách lỗi cũ / mới
-- [ ] Mỗi AC có test đúng tên, ghi PASS / FAIL thật từng cái
-- [ ] Chạy và dán tóm tắt output thật: `pnpm lint && pnpm typecheck && pnpm test && pnpm test:int && pnpm depcheck && pnpm build`; `pnpm e2e` MSW không tụt; e2e server cho `admin-bank-reconcile.spec.ts`
-- [ ] Parity (D-134): đo `D-V46-BANK` 1440 + 390, ghi % + nguyên nhân; sửa hết lệch giao diện thật
-- [ ] EXPLAIN danh sách giao dịch + counts trên ≥ 10k `payment_transactions`, dán completion
-- [ ] Luật BUILDER-HANDOFF liên quan:
+- [x] `pwd` = `D:\CODING\OPCHUB\CODING`, nhánh `feature/TIP-V46-806-bank-reconcile-settings`; chỉ sửa file trong **Files touched** (thêm ngoài danh sách → ghi lý do)
+- [x] Hỏi owner DB đích trước khi `migrate deploy` / int / e2e server / seed; migration `--create-only` rồi sửa SQL, có `down.sql`
+- [x] Biến env mới `API_PUBLIC_URL` có trong `.env.example` + zod env schema (luật 12); không sửa `.env` thật
+- [x] Đo baseline `dev` trước (int đối soát, e2e MSW, parity Cài đặt) để tách lỗi cũ / mới
+- [x] Mỗi AC có test đúng tên, ghi PASS / FAIL thật từng cái
+- [x] Chạy và dán tóm tắt output thật: `pnpm lint && pnpm typecheck && pnpm test && pnpm test:int && pnpm depcheck && pnpm build`; `pnpm e2e` MSW không tụt; e2e server cho `admin-bank-reconcile.spec.ts`
+- [x] Parity (D-134): đo `D-V46-BANK` 1440 + 390, ghi % + nguyên nhân; sửa hết lệch giao diện thật
+- [x] EXPLAIN danh sách giao dịch + counts trên ≥ 10k `payment_transactions`, dán completion
+- [x] Luật BUILDER-HANDOFF liên quan:
   - **Luật 7 / 8**: đổi trạng thái giao dịch có điều kiện `WHERE match_status = 'unmatched'`; kích hoạt + audit + outbox một transaction
   - **Luật 10**: lưu cấu hình, xoay khóa, gán, ghi nhận thiếu, xuất CSV đều ghi `audit_logs`
   - **Luật 11 / 12**: chỉ adapter `bank-webhook`, fake trong test; khóa mã hoá SecretBox, không secret trong repo / log
   - **D-123**: cú pháp hiển thị và dữ liệu mẫu `OPCHUB …`; **D-104**: tự khớp đúng số tiền
-- [ ] File ≤ trần (BE 600, FE 400); không `any` / `@ts-ignore` / `console.*`
-- [ ] Glossary: "Đối soát ngân hàng", "Tự kích hoạt khi khớp", "Ghi nhận thiếu", "Khóa bí mật webhook"
-- [ ] Ghi Q-V46-806-1 → 5 đã chốt (D-135) vào `questions.md`; cập nhật `V4.6-progress.md` dòng #6
-- [ ] Sau khi đo: chạy lại seed demo (native HOLD); không tắt tiến trình HOLD
-- [ ] Commit theo bước `git commit -- <paths>` (cấm `git add -A`); `git status --short` sạch; push; PR `base: dev`, không tự merge; completion report có **git commit SHA**, PR, số test thật, parity (tham khảo), EXPLAIN, soát luật cứng 1–14, phần chưa làm
-- [ ] KHÔNG báo DONE nếu còn gate đỏ (lint / type / unit / int / e2e / depcheck / build); parity theo D-134 không chặn nhưng phải có nguyên nhân
+- [x] File ≤ trần (BE 600, FE 400); không `any` / `@ts-ignore` / `console.*`
+- [x] Glossary: "Đối soát ngân hàng", "Tự kích hoạt khi khớp", "Ghi nhận thiếu", "Khóa bí mật webhook"
+- [x] Ghi Q-V46-806-1 → 5 đã chốt (D-135) vào `questions.md`; cập nhật `V4.6-progress.md` dòng #6
+- [x] Sau khi đo: chạy lại seed demo (native HOLD); không tắt tiến trình HOLD
+- [x] Commit theo bước `git commit -- <paths>` (cấm `git add -A`); `git status --short` sạch; push; PR `base: dev`, không tự merge; completion report có **git commit SHA**, PR, số test thật, parity (tham khảo), EXPLAIN, soát luật cứng 1–14, phần chưa làm
+- [x] KHÔNG báo DONE nếu còn gate đỏ (lint / type / unit / int / e2e / depcheck / build); parity theo D-134 không chặn nhưng phải có nguyên nhân
 
 ---
 
