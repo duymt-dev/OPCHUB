@@ -1,7 +1,7 @@
 # Vibecode Kit v5.0 — OPCHUB Builder Handoff (Backend)
 
 > Dán file này vào Claude Code **đầu mỗi phiên build**, sau đó dán TIP của phiên (`tips/TIP-<id>-*.md`).
-> **Hiện hành (04/11/2026): v4.6** — goal [plans/GOAL-V4.6.md](plans/GOAL-V4.6.md) (12 TIP V46-801 → 812), quyết định D-118 → D-134,
+> **Hiện hành (04/11/2026): v4.6** — goal [plans/GOAL-V4.6.md](plans/GOAL-V4.6.md) (12 TIP V46-801 → 812), quyết định D-118 → D-135,
 > REQ-616 → 630, đối chiếu đặc tả ↔ code [audit/SPEC-V4.6-DELTA.md](audit/SPEC-V4.6-DELTA.md). Khi file này trái `AGENTS.md` hoặc GOAL, lấy `AGENTS.md` / GOAL.
 > Blueprint gốc 17/10/2026. Phụ lục bắt buộc: [plans/api-contract.md](plans/api-contract.md) (193 endpoint + socket),
 > [plans/data-model.md](plans/data-model.md) (bảng, index, seed). Task graph: [02-TASK-GRAPH.md](02-TASK-GRAPH.md).
@@ -173,6 +173,7 @@ nút no-op vẫn làm nghiệp vụ (D-95). Đối chiếu: `audit/SPEC-V4.6-DEL
 | D-131 | Hoa hồng affiliate theo năm của khách: năm 1 = % hiện hành, năm 2 → `renewalMaxYear` = `renewalRate`, sau đó không ghi khoản; snapshot `commissions.customer_year`; vẫn chỉ tham khảo (D-119) |
 | D-132 | Admin › Affiliate: ẩn ô % mặc định / % Gọi vốn (giữ DB); nhãn `affiliate.payout` → "Chi trả GĐ Vùng" ở 807; "Doanh thu Media Soft giữ lại" = doanh thu affiliate − phần GĐ Vùng (sổ) cùng tháng; bước giảm 0% → bảng năm một dòng = % năm 1 |
 | D-134 | Parity pixel **không chặn DONE**: vẫn đo và ghi %; màn > 3% ghi nguyên nhân (dữ liệu / D-xx / giao diện thật); lệch giao diện thật vẫn phải sửa; owner duyệt cặp ảnh khi review PR; áp ngược 801 → 804 |
+| D-135 | Đối soát ngân hàng: 3 nút cổng như prototype, cổng chưa có adapter làm mờ (đổi cổng qua env); tạo lại khóa có hiệu lực ngay; bật lại tự kích hoạt không xử lý giao dịch chờ; Ghi nhận thiếu không kích hoạt; tab cần `settings.general` |
 
 v4.6 thay ở các bảng bên dưới: D-94 3A / D-110 phần **chi trả hoa hồng** → D-119 (hoa hồng chỉ tham khảo); hoa hồng Gọi vốn 10% (D-70, §29) → D-119;
 nhắc phí T-30 / T-7 / T-0 / T+3 (D-57) → mốc 30 / 7 / 1 ngày cấu hình được (REQ-620).

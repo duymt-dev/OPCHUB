@@ -8,7 +8,7 @@
 - Priority: P1
 - Depends on: none về nghiệp vụ; chạy sau 805 theo thứ tự GOAL (`dev` `1378ed85`)
 - Estimated: M
-- REQ / D: REQ-621 · BR-481 → BR-484, TC-481, TC-482 · D-123 (`OPCHUB …`), D-104 (khớp đúng số tiền), D-81 / OQ-17 / D-125 (adapter hiện có, fake provider), D-105 (Gọi vốn), D-96, D-134 (parity tham khảo)
+- REQ / D: REQ-621 · BR-481 → BR-484, TC-481, TC-482 · D-123 (`OPCHUB …`), D-104 (khớp đúng số tiền), D-81 / OQ-17 / D-125 (adapter hiện có, fake provider), D-105 (Gọi vốn), D-96, D-134 (parity tham khảo), **D-135** (5 điểm đã chốt)
 - **Files touched:**
   - DB
     - `packages/db/prisma/schema/membership-fee.prisma` (modify): enum `PaymentMatchStatus` thêm `short` (Thiếu tiền đã ghi nhận); `PaymentTransaction` thêm `shortNote String? @map("short_note")`, `shortBy String? @map("short_by")`
@@ -98,8 +98,13 @@ Thêm tab **Admin › Cài đặt › Đối soát ngân hàng** theo prototype,
 
 1. `app_settings.bank = { autoActivate: boolean }`, mặc định `true` (migration + seed), đọc qua `AppSettingsService.bank()` (cache 60 giây).
 2. "Cổng nhận giao dịch":
-   - Hiển thị **chỉ đọc** cổng đang chạy theo env `BANK_PROVIDER` (`fake` → "Giả lập (dev)", `sepay` → "SePay").
-   - Không cho chọn Casso / Vietcombank API như prototype (D-81 / D-125 / OQ-17: chưa có adapter). Ghi **Q-V46-806-1**.
+   - **D-135 (1)**: giữ **3 nút** "Casso", "SePay", "Vietcombank API" đúng vị trí / kiểu prototype.
+   - Nút của cổng đang chạy theo env `BANK_PROVIDER` được tô chọn (viền + nền xanh như prototype).
+   - Cổng **chưa có adapter** (Casso, Vietcombank API) → làm mờ (`opacity`), `aria-disabled`, dòng nhỏ / tooltip "Chưa hỗ trợ".
+   - SePay (có adapter) khi không phải cổng đang chạy → không tô chọn, không bấm được, tooltip "Đổi cổng trong cấu hình máy chủ"; không làm mờ.
+   - Không nút nào gọi API khi bấm.
+   - Env `fake` (dev / test) → thêm nút thứ tư "Giả lập (dev)" được tô chọn; production không bao giờ có nút này.
+   - Đổi cổng vẫn qua env + khởi động lại (D-81, OQ-17, VM-461); API không có trường đổi cổng.
 3. "Webhook URL" = `${API_PUBLIC_URL}/v1/webhooks/bank` (route hiện có), có nút "Sao chép".
 4. **Khóa bí mật**:
    - Bảng `bank_webhook_keys` (1 dòng) lưu `key_enc` (SecretBox) + `hint` (4 ký tự cuối).
@@ -111,7 +116,7 @@ Thêm tab **Admin › Cài đặt › Đối soát ngân hàng** theo prototype,
      - trả khóa **một lần** trong response; UI hiện hộp "Sao chép khóa mới", đóng lại thì không xem lại được
      - toast "Đã tạo khóa bí mật mới · cập nhật lại trên cổng {cổng}"
 5. Webhook (`ReconcileService.ingestWebhook`) verify bằng **khóa hiện hành** (`BankKeyService.current()`): cache Redis 60 giây giữ bản đã mã hoá; xoay khóa thì xoá cache ngay. Sai khóa → 401 như hiện tại.
-   - Không có thời gian ân hạn cho khóa cũ → ghi **Q-V46-806-2**.
+   - **D-135 (2)**: không có thời gian ân hạn cho khóa cũ.
    - Quét bù (`poll`) không dùng khóa webhook, giữ nguyên.
 6. Công tắc "Tự kích hoạt khi khớp" lưu ngay khi gạt, như prototype (`togAuto`); audit `settings.bank`. Dòng phụ:
    - bật: "Bật · khớp nội dung và đủ số tiền sẽ kích hoạt ngay"
@@ -128,7 +133,7 @@ Thêm tab **Admin › Cài đặt › Đối soát ngân hàng** theo prototype,
    - Thêm audit hệ thống `fee.auto_activate` (actor `system`, entity `payment_transaction`) để "nhật ký ghi thao tác" (TC-481).
    - Nếu `AuditService` chưa nhận actor hệ thống → dùng mẫu audit hệ thống đang có ở job khác, ghi completion.
 9. Tắt: job `match` **không kích hoạt**, giữ `unmatched`, ghi lý do "Chờ Admin xác nhận (tự kích hoạt tắt)" kèm gợi ý thành viên (Mã TV đọc được). Admin xác nhận qua nút "Gán cho {tên gợi ý}" (SPEC 11).
-   - Bật lại không tự xử lý lại các giao dịch đang chờ → ghi **Q-V46-806-3**.
+   - **D-135 (3)**: bật lại không tự xử lý các giao dịch đang chờ.
 
 ### Trạng thái và thao tác (BR-481, BR-483, TC-482)
 
@@ -146,7 +151,7 @@ Thêm tab **Admin › Cài đặt › Đối soát ngân hàng** theo prototype,
 12. "Thiếu tiền" → "Ghi nhận thiếu":
     - Mở `bank-short-dialog` (ghi chú bắt buộc ≤ 500).
     - `POST /v1/admin/settings/bank/transactions/:id/short` → `UPDATE … SET match_status = 'short', short_note, short_by WHERE id = $1 AND match_status = 'unmatched'`, audit `fee.short_record`.
-    - **Không kích hoạt phí** (BR-483). Kích hoạt tay sau đó vẫn qua Phí thành viên › Thu tay như hiện tại → ghi **Q-V46-806-4**.
+    - **Không kích hoạt phí** (BR-483, **D-135 (4)**). Kích hoạt tay sau đó vẫn qua Phí thành viên › Thu tay như hiện tại; không cộng dồn giao dịch.
 13. API (`/v1/admin/settings/bank/*`):
     - `GET /bank` (`settings.general`): cấu hình + cổng + webhook URL + hint + thông tin tài khoản + counts
     - `PATCH /bank` (`settings.general`): `{ autoActivate }`
@@ -201,13 +206,13 @@ Thêm tab **Admin › Cài đặt › Đối soát ngân hàng** theo prototype,
 - **Thiếu tiền** Given `OPCHUB TV000123 …` với 1.000.000 < giá 1.200.000 Then "Thiếu tiền"; "Ghi nhận thiếu" + ghi chú → "Thiếu tiền · đã ghi nhận", phí không kích hoạt, audit `fee.short_record`; ghi nhận lần 2 → 409 (int `bank-reconcile-admin` › `short record`).
 - **BR-484 xoay khóa** Given khóa env When Admin "Tạo lại" Then response có khóa mới đúng một lần, `GET /bank` chỉ có hint; webhook ký bằng khóa cũ → 401, ký bằng khóa mới → 200; audit `bank.key_rotate` không chứa khóa; log không chứa khóa (int `bank-reconcile-admin` › `key rotation`).
 - **Cú pháp D-123** Given mở tab Then dòng "Cú pháp nội dung" là `OPCHUB <Mã TV> <SĐT>`, không có `OPC <SĐT> <GÓI>`; seed / MSW chỉ dùng nội dung `OPCHUB …` (unit `bank-tab.spec.tsx`).
-- **Cổng** Given `BANK_PROVIDER=fake` Then cổng "Giả lập (dev)" chỉ đọc, không có Casso / Vietcombank API để chọn (unit `bank-tab.spec.tsx`).
+- **Cổng (D-135 (1))** Given `BANK_PROVIDER=fake` Then Casso / Vietcombank API làm mờ có chữ "Chưa hỗ trợ"; SePay không chọn, không làm mờ, có tooltip "Đổi cổng trong cấu hình máy chủ"; bấm cả 3 không đổi gì, không có request; có nút "Giả lập (dev)" được chọn. Given `BANK_PROVIDER=sepay` (production giả lập trong unit) Then "SePay" được chọn, Casso / Vietcombank API làm mờ, không có "Giả lập (dev)" (unit `bank-tab.spec.tsx` › `providers`).
 - **Kiểm tra / mô phỏng** Given fake provider ngoài production When "Mô phỏng giao dịch đến" Then 1 giao dịch mới đầu bảng, toast đúng câu theo trạng thái tự kích hoạt; production → nút ẩn, API 404; "Kiểm tra kết nối" toast "Đã kết nối …" (int + e2e `admin-bank-reconcile` › `simulate`).
-- **Quyền** Given Kế toán (`fees.*`, không `settings.general`) Then không thấy tab Cài đặt › Đối soát ngân hàng nhưng gọi được danh sách / gán / ghi nhận thiếu qua API; Quản trị viên có `settings.general` thấy tab; Giảng viên 403 cả hai nhóm (int `bank-reconcile-admin` › `permissions`). Ghi **Q-V46-806-5**.
+- **Quyền** Given Kế toán (`fees.*`, không `settings.general`) Then không thấy tab Cài đặt › Đối soát ngân hàng nhưng gọi được danh sách / gán / ghi nhận thiếu qua API; Quản trị viên có `settings.general` thấy tab; Giảng viên 403 cả hai nhóm (int `bank-reconcile-admin` › `permissions`). (D-135 (5)).
 - **Danh sách** Given 45 giao dịch đủ 4 trạng thái Then trang đầu 20 dòng mới nhất, đúng nhãn / màu, "Xem thêm" tải tiếp, tên thành viên đúng, EXPLAIN dùng index `(received_at DESC, id DESC)` không Seq Scan trên ≥ 10k dòng (int `bank-reconcile-admin` › `list keyset`).
 - **CSV** Given 5 giao dịch Then "Xuất CSV" tải `doi-soat-ngan-hang.csv` cột Thời gian / Số tiền / Nội dung / Thành viên / Trạng thái, audit `fee.bank_export` (int + e2e).
 - **Không hồi quy** `reconcile.int.spec.ts`, `reconcile-v42.int.spec.ts`, màn Phí thành viên › Giao dịch cần đối soát vẫn PASS.
-- **Parity (D-134, tham khảo)** `D-V46-BANK` ở 1440 + 390: ghi % và nguyên nhân phần > 3% (dữ liệu / D-123 cú pháp / D-81 cổng chỉ đọc / giao diện thật); lệch giao diện thật phải sửa.
+- **Parity (D-134, tham khảo)** `D-V46-BANK` ở 1440 + 390: ghi % và nguyên nhân phần > 3% (dữ liệu / D-123 cú pháp / D-135 (1) cổng làm mờ / giao diện thật); lệch giao diện thật phải sửa.
 
 ## CONSTRAINTS
 
@@ -225,17 +230,19 @@ Thêm tab **Admin › Cài đặt › Đối soát ngân hàng** theo prototype,
   - `SecretBox`, `AppSettingsService` (cache), `AuditService`, `extractMemberCode`, `localPhone`, `transferContentOf`
   - `Switch`, `use-settings-mutation.ts`, mẫu tab 805
 - SKIP:
-  - Chọn cổng Casso / Vietcombank API (VM-461); thời gian ân hạn khóa cũ
+  - Adapter Casso / Vietcombank API và đổi cổng trên màn (VM-461); thời gian ân hạn khóa cũ
   - Xử lý lại giao dịch chờ khi bật lại tự kích hoạt
   - Nhật ký thao tác Admin toàn phủ (807)
 
-## Câu hỏi ghi sẵn (`reports/ui-parity/questions.md` › V4.6, chọn phương án an toàn, không chặn)
+## Câu hỏi đã chốt (owner 05/11/2026 → D-135)
 
-- **Q-V46-806-1**: Prototype cho chọn Casso / SePay / Vietcombank API. Chưa có adapter cho Casso và Vietcombank (VM-461, D-81) → app hiện cổng đang chạy ở dạng chỉ đọc.
-- **Q-V46-806-2**: Xoay khóa có hiệu lực ngay, khóa cũ hỏng luôn, không có thời gian ân hạn. Admin phải cập nhật khóa trên cổng ngay sau khi tạo lại.
-- **Q-V46-806-3**: Bật lại tự kích hoạt không tự xử lý lại các giao dịch đang chờ. Admin gán tay từng giao dịch.
-- **Q-V46-806-4**: "Ghi nhận thiếu" chỉ đánh dấu và ghi chú, không kích hoạt. Muốn kích hoạt thì Admin Thu tay ở Phí thành viên.
-- **Q-V46-806-5**: Tab nằm trong Cài đặt nên cần `settings.general` (prototype `need.bank = 'cfg'`). Kế toán (`fees.*`) không thấy tab, nhưng vẫn xử lý giao dịch ở Phí thành viên › Giao dịch cần đối soát.
+- Q-V46-806-1 → **D-135 (1)** (phương án B): giữ 3 nút cổng như prototype, cổng chưa có adapter làm mờ "Chưa hỗ trợ"; đổi cổng qua env.
+- Q-V46-806-2 → **D-135 (2)**: tạo lại khóa có hiệu lực ngay, không ân hạn; quét bù vẫn lấy giao dịch.
+- Q-V46-806-3 → **D-135 (3)**: bật lại Tự kích hoạt không tự xử lý giao dịch đang chờ.
+- Q-V46-806-4 → **D-135 (4)**: Ghi nhận thiếu không kích hoạt, không cộng dồn; kích hoạt qua Thu tay.
+- Q-V46-806-5 → **D-135 (5)**: tab cần `settings.general`; Kế toán xử lý ở Phí thành viên › Giao dịch cần đối soát.
+
+Ghi vào `reports/ui-parity/questions.md` › V4.6 dạng "đã chốt", trỏ D-135.
 
 ## ⚠️ BUILDER-CHECKLIST (agent PHẢI hoàn thành trước khi báo DONE)
 
@@ -254,7 +261,7 @@ Thêm tab **Admin › Cài đặt › Đối soát ngân hàng** theo prototype,
   - **D-123**: cú pháp hiển thị và dữ liệu mẫu `OPCHUB …`; **D-104**: tự khớp đúng số tiền
 - [ ] File ≤ trần (BE 600, FE 400); không `any` / `@ts-ignore` / `console.*`
 - [ ] Glossary: "Đối soát ngân hàng", "Tự kích hoạt khi khớp", "Ghi nhận thiếu", "Khóa bí mật webhook"
-- [ ] Ghi Q-V46-806-1 → 5; cập nhật `V4.6-progress.md` dòng #6
+- [ ] Ghi Q-V46-806-1 → 5 đã chốt (D-135) vào `questions.md`; cập nhật `V4.6-progress.md` dòng #6
 - [ ] Sau khi đo: chạy lại seed demo (native HOLD); không tắt tiến trình HOLD
 - [ ] Commit theo bước `git commit -- <paths>` (cấm `git add -A`); `git status --short` sạch; push; PR `base: dev`, không tự merge; completion report có **git commit SHA**, PR, số test thật, parity (tham khảo), EXPLAIN, soát luật cứng 1–14, phần chưa làm
 - [ ] KHÔNG báo DONE nếu còn gate đỏ (lint / type / unit / int / e2e / depcheck / build); parity theo D-134 không chặn nhưng phải có nguyên nhân
@@ -275,4 +282,4 @@ Thêm tab **Admin › Cài đặt › Đối soát ngân hàng** theo prototype,
 - ⚠️ Gap:
   - Dùng lại `MatchDialog` của feature `fees` có thể vướng ranh giới import FE (`depcheck`); TIP cho phương án dự phòng là hộp chọn tối giản gọi cùng API.
   - Xoay khóa đổi nguồn khóa từ env sang DB cho mọi provider. SePay thật cần cập nhật khóa trên cổng; chưa có tài khoản SePay (OQ-06) nên chỉ kiểm bằng fake.
-  - Q-V46-806-1 → 5 là phương án an toàn tự chọn, cần owner xác nhận khi review.
+  - Q-V46-806-1 → 5 đã chốt bằng D-135 (owner 05/11/2026).
