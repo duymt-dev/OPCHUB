@@ -340,24 +340,24 @@ Ghi 5 câu vào `reports/ui-parity/questions.md` › V4.6 (dạng "mặc định
 
 ## ⚠️ BUILDER-CHECKLIST (agent PHẢI hoàn thành trước khi báo DONE)
 
-- [ ] `pwd` = `D:\CODING\OPCHUB\CODING`, nhánh `feature/TIP-V46-808-global-search`; chỉ sửa file trong **Files touched** (thêm ngoài danh sách → ghi lý do)
-- [ ] Hỏi owner DB đích trước khi `migrate deploy` / int / e2e server / seed; migration `--create-only` rồi sửa SQL, có `down.sql`
-- [ ] Đo baseline `dev` trước (e2e MSW, `stores.spec.ts`, parity topbar P-11 / P-12 / D-02) để tách lỗi cũ / mới
-- [ ] Mỗi AC có test đúng tên, ghi PASS / FAIL thật từng cái
-- [ ] Chạy và dán tóm tắt output thật: `pnpm lint && pnpm typecheck && pnpm test && pnpm test:int && pnpm depcheck && pnpm build`; `pnpm e2e` MSW không tụt; e2e server cho `global-search.spec.ts`
-- [ ] EXPLAIN (ANALYZE, BUFFERS) 5 câu tìm trên ≥ 10k dòng, `q` 2 ký tự và ≥ 3 ký tự → `TIP-V46-808-query-plans.md`
-- [ ] Parity (D-134): `P-V46-SEARCH`, `D-V46-SEARCH` ở 1440 (+ 390 topbar), ghi % + nguyên nhân; sửa hết lệch giao diện thật
-- [ ] Luật BUILDER-HANDOFF liên quan:
+- [x] `pwd` = `D:\CODING\OPCHUB\CODING`, nhánh `feature/TIP-V46-808-global-search`; chỉ sửa file trong **Files touched** (thêm ngoài danh sách → ghi lý do)
+- [x] Hỏi owner DB đích trước khi `migrate deploy` / int / e2e server / seed; migration `--create-only` rồi sửa SQL, có `down.sql`
+- [x] Đo baseline `dev` trước (e2e MSW, `stores.spec.ts`, parity topbar P-11 / P-12 / D-02) để tách lỗi cũ / mới
+- [x] Mỗi AC có test đúng tên, ghi PASS / FAIL thật từng cái
+- [x] Chạy và dán tóm tắt output thật: `pnpm lint && pnpm typecheck && pnpm test && pnpm test:int && pnpm depcheck && pnpm build`; `pnpm e2e` MSW không tụt; e2e server cho `global-search.spec.ts`
+- [x] EXPLAIN (ANALYZE, BUFFERS) 5 câu tìm trên ≥ 10k dòng, `q` 2 ký tự và ≥ 3 ký tự → `TIP-V46-808-query-plans.md`
+- [x] Parity (D-134): `P-V46-SEARCH`, `D-V46-SEARCH` ở 1440 (+ 390 topbar), ghi % + nguyên nhân; sửa hết lệch giao diện thật
+- [x] Luật BUILDER-HANDOFF liên quan:
   - **Luật 3 / ranh giới domain**: `search` chỉ gọi service export của domain; repository chỉ đọc bảng domain mình; `depcheck` PASS
   - **Luật 4**: Admin lọc nhóm bằng permission key, không check tên vai trò
   - **Luật 5**: index biểu thức khớp câu truy vấn, `LIMIT 4`, `Promise.all` cố định 4–5 câu, không N+1
   - **Luật 2**: `q` parse bằng zod trong `packages/shared`
-- [ ] File ≤ trần (BE 600, FE 400); không `any` / `@ts-ignore` / `console.*`
-- [ ] D-65: 9 bộ dịch Portal có khối `shell.globalSearch`; `messages.spec.ts` PASS
-- [ ] Ghi Q-V46-808-1 → 5 vào `questions.md`; cập nhật `V4.6-progress.md` dòng #8; glossary
-- [ ] Sau khi đo: chạy lại seed demo (native HOLD); không tắt tiến trình HOLD
-- [ ] Commit theo bước `git commit -- <paths>` (cấm `git add -A`); `git status --short` sạch; push; PR `base: dev`, không tự merge; completion report có **git commit SHA**, PR, số test thật, parity (tham khảo), EXPLAIN, soát luật cứng 1–14, phần chưa làm
-- [ ] KHÔNG báo DONE nếu còn gate đỏ (lint / type / unit / int / e2e / depcheck / build); parity theo D-134 không chặn nhưng phải có nguyên nhân
+- [x] File ≤ trần (BE 600, FE 400); không `any` / `@ts-ignore` / `console.*`
+- [x] D-65: 9 bộ dịch Portal có khối `shell.globalSearch`; `messages.spec.ts` PASS
+- [x] Ghi Q-V46-808-1 → 5 vào `questions.md`; cập nhật `V4.6-progress.md` dòng #8; glossary
+- [x] Sau khi đo: chạy lại seed demo (native HOLD); không tắt tiến trình HOLD
+- [x] Commit theo bước `git commit -- <paths>` (cấm `git add -A`); `git status --short` sạch; push; PR `base: dev`, không tự merge; completion report có **git commit SHA**, PR, số test thật, parity (tham khảo), EXPLAIN, soát luật cứng 1–14, phần chưa làm
+- [x] KHÔNG báo DONE nếu còn gate đỏ (lint / type / unit / int / e2e / depcheck / build); parity theo D-134 không chặn nhưng phải có nguyên nhân
 
 ---
 

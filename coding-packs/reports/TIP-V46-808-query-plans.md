@@ -24,6 +24,12 @@ run. These are actual measurements, not guarantees for every query or host load.
 
 ## Two-character needs refinement
 
+The subsequent full-root integration run (same SQL, threaded single worker) also recorded:
+stores0.594/31.427, needs0.508/33.973, projects0.388/34.347,
+groups0.284/27.132, users0.265/34.480ms (>=3 /2 characters). Its search plan suite9/9
+and API suite15/15 passed. Log: `test-results/v46-808-full-integration-r2.log`.
+The full root run subsequently completed2079/2079 (server1953 +DB126), exit0.
+
 Initial needs measurements were78.966ms (isolated run) and101.447ms (loaded full run).
 `need-search-short.query.ts` preserves one SQL and the exact ranking/visibility rules:
 find at most4 eligible prefixes, evaluate fallback only for remaining slots, exclude only

@@ -1,6 +1,6 @@
 # COMPLETION REPORT — TIP-V46-808
 
-**STATUS: IN PROGRESS — final full integration running; not merge approval.**
+**STATUS: DONE — all required execution gates passed; owner review/merge remains manual.**
 
 - Branch `feature/TIP-V46-808-global-search`, from `dev` `8543728d`.
 - Source `69a48634`; checkpoints `b708c15e`, `8f01249a`, `782745ca`.
@@ -35,7 +35,7 @@ Resource flags change concurrency/pool only, not isolation, assertions or timeou
 | typecheck | PASS8/8 tasks | `v46-808-type-query-final.log` |
 | unit | PASS2061 +2 skipped,6/6 tasks | `v46-808-unit-source-final.log`; uncached full `v46-808-unit-threads.log` |
 | scoped integration | PASS38/38 (service14/search15/plans9) | `v46-808-final-scope-int.log` |
-| full integration | RUNNING; no completed count claimed | `v46-808-full-integration-r2.log` |
+| full integration | PASS2079/2079: server1953 (212 files) + DB126 (26 files),2/2 tasks, exit0 | `v46-808-full-integration-r2.log` |
 | depcheck | PASS | `v46-808-depcheck-query-final.log` |
 | build | PASS root MSW, native Portal/Admin, latest server | `v46-808-build-msw-final.log`, `v46-808-build-native-{portal,admin}-final.log`, `v46-808-build-api-final.log` |
 | full MSW E2E | PASS372 +4 skipped; baseline369 +4 skipped | `v46-808-full-msw-r2.log` |
@@ -146,5 +146,8 @@ critical side effects; integer VND/UTC unchanged; read-only search/no new Admin 
 fake adapters; no secrets/deps/new env; separate tests; scoped source commits pushed.
 No unrelated business fixes or PM goal edits.
 
-Remaining: completed full integration footer, final report/progress commit and push, clean
-status, PR readiness. Owner review and merge are manual.
+Full root integration completed in26m38.361s, uncached, exit0. No required red/not-run gate
+remains. Final evidence commit follows source69a48634; obtain its Git SHA via
+`git log -1 --format=%h -- coding-packs/reports/TIP-V46-808-completion.md`.
+Owner review and merge are manual. Deliberate TIP exclusions (mobile search, arrow-key
+selection, see-all, events/services/investors, phone search) remain unimplemented.
