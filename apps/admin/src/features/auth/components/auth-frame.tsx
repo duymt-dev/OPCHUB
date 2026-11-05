@@ -14,12 +14,12 @@ export function AuthFrame({ children }: { children: ReactNode }) {
   const hero: AuthHeroCopy = {
     eyebrow: t('hero.eyebrow'),
     headlineLead: t('hero.headlineLead'),
-    headlinePre: t('hero.headlinePre'),
     headlineAccent: t('hero.headlineAccent'),
     sub: t('hero.sub'),
     values: VALUES.map((icon) => ({
       icon,
-      lines: [t(`hero.values.${icon}.l1`), t(`hero.values.${icon}.l2`)],
+      title: t(`hero.values.${icon}.title`),
+      desc: t(`hero.values.${icon}.desc`),
     })),
   };
   return (
