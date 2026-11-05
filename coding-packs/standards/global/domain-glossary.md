@@ -95,3 +95,6 @@ Nhãn tiếng Việt chỉ đặt trong file messages của next-intl, không vi
 | Vùng của tôi | `GET /me/gdv`, `/affiliate?tab=reg` | Màn chỉ đọc cho GĐ Vùng hiện tại, chỉ gồm các khoản snapshot ghi cho chính người nhận đó |
 | Phần GĐ Vùng được chia | `kpi.share`, `years[].share` | Tổng `director_amount` đã chụp, không tính lại theo chính sách hiện hành |
 | Chờ chi cuối tháng | `kpi.due` | Tổng phần GĐ Vùng trừ phần đã chi; không phải lệnh chi và không thay quy tắc chỉ chi tháng đã đóng |
+| Nhắc gia hạn | `app_settings.renewal`, `renewal` | Nhắc Gói Cá nhân / Doanh nghiệp, kể cả trial; không GĐ Vùng hoặc Gọi vốn (REQ-620) |
+| Mốc nhắc | `D30`, `D7`, `D1` | Cửa sổ 30 / 7 / 1 ngày lịch VN trước hạn, tự động mỗi kỳ/mốc tối đa một lần |
+| Lần gửi | `max(fee_reminders.sent_at)` | Lần gần nhất của mọi kỳ; gửi tay dùng `M:yyyy-mm-dd` theo ngày VN, không chặn mốc tự động |

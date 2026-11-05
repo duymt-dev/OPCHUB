@@ -56,6 +56,42 @@
 
 ## CONTEXT
 
+### Builder clarifications / scoped additions (owner 05/11/2026)
+
+- Owner xác nhận dùng lại `opchub_v46_801_dev` / `opchub_v46_801_test`, Memurai 6381.
+- Owner duyệt ngoại lệ hẹp đổi CHECK `fee_reminders_milestone_check` để nhận D30/D7/D1
+  và `M:yyyy-mm-dd`, giữ mã cũ cho lịch sử. Không thêm/xóa cột, không reset DB native.
+  Thêm migration prerequisite `20261108085900_v46_renewal_milestone_check/{migration,down}.sql`;
+  migration data đã áp ở private dev không bị sửa. Private test đã resolve đúng migration
+  thất bại do CHECK cũ rồi deploy prerequisite + data. Chi tiết bằng chứng ở completion.
+- Owner duyệt rolling restart **bộ dịch vụ riêng** API/socket/worker 804 sang 805,
+  giữ cổng 4300/4301, không chạm PostgreSQL/Redis native; tránh hai worker tranh outbox.
+- Owner chốt lỗi schema trả **400 VALIDATION_ERROR + fields** theo standard, thay câu
+  “key lạ → 422” bên dưới. Tắt mọi kênh rồi gửi vẫn **422 RENEWAL_NO_CHANNEL**.
+- Files touched bổ sung để tách trách nhiệm/giữ trần, không mở nghiệp vụ khác:
+  - `packages/shared/src/{index,errors}.ts`, `apps/server/src/common/errors/app-error.ts`:
+    public export hàm thuần và đăng ký error code đúng hợp đồng.
+  - `apps/server/src/modules/membership-fee/services/renewal-delivery.service.ts`,
+    `repositories/renewal-query.ts`: dùng chung delivery job/manual và đo đúng SQL runtime.
+  - `apps/server/src/modules/mail/templates-renewal.ts` + `.spec.ts`: renderer/test riêng,
+    không sửa renderer nhắc tay cũ trong `templates-fee.ts`.
+  - `apps/server/src/modules/membership-fee/domain/fee-reminder.spec.ts`,
+    `apps/server/test/membership-fee/{trial,renewal-scheduler,renewal-plan}.int.spec.ts`:
+    cập nhật hợp đồng trial đã thay, kênh/mốc, kế hoạch thực trên 10k bản ghi.
+  - `apps/admin/src/features/settings/renewal-api.ts`, `components/renewal-cells.tsx`,
+    `apps/admin/src/mocks/handlers/renewal.ts`: không dồn API/cell/handler vào file chung.
+  - `packages/shared/src/mock-data/domains/{marketing.ts,renewal.spec.ts}`: mail nhắc
+    xuất hiện trong nhật ký đúng kind; test đối tượng/kênh/thông báo/lần gửi.
+  - `packages/db/seed/demo/{renewal,index}.ts`, `packages/db/seed/demo.ts`,
+    `e2e/server/test.ts`: fixture **opt-in** `--renewal`/annotation, cùng một TV còn
+    12 ngày ở MSW và native; seed thường/ledger không đổi để bắt chước prototype.
+  - `coding-packs/reports/TIP-V46-805-query-plans.md`,
+    `coding-packs/audit/W1/TEST-GAPS.md`: bằng chứng EXPLAIN và truy vết theo standard.
+  - `coding-packs/reports/ui-parity/{results.json,results.md,diffs/*}`: artifact đo thật,
+    giữ baseline riêng trong test-results trước khi đo final; không sửa harness/tolerance.
+  - `e2e/behavior/admin-price-config.spec.ts`: cập nhật adjacency test thành Price →
+    Renewal → Admin Accounts theo tab mới; giữ toàn bộ assertion bảng giá khác.
+
 - Working dir: `D:\CODING\OPCHUB\CODING`. Nhánh `feature/TIP-V46-805-renewal-reminders` tách từ `dev` `8deb0dd8`.
 - **DB:** 801 → 804 chạy trên `opchub_v46_801_dev` / `opchub_v46_801_test` + Redis `127.0.0.1:6381` (owner duyệt). Builder hỏi owner DB đích trước khi `migrate deploy` / int / e2e server / seed. Không reset DB native, không tắt tiến trình HOLD.
 - Delta `coding-packs/audit/SPEC-V4.6-DELTA.md` **P11**: Admin › Cài đặt › Nhắc gia hạn (mới) — mốc 30 / 7 / 1, kênh (≥ 1), gửi tay từng người / tất cả, cột Lần gửi (BR-471 → 474). D-125: **ẩn kênh Zalo** (chưa có ZNS, giữ OQ-11).

@@ -11,7 +11,7 @@ export const SCHEDULES = [
     id: 'fee-status-daily',
     queue: QUEUES.scheduler,
     name: 'feeStatus',
-    /** 08:00 giờ Việt Nam: trạng thái phí + nhắc T-30/T-7/T-0/T+3 (D-57, NA-04) */
+    /** 08:00 giờ Việt Nam: trạng thái phí + nhắc D30/D7/D1 (BR-471, TIP-V46-805) */
     repeat: { pattern: '0 8 * * *', tz: 'Asia/Ho_Chi_Minh' },
   },
   {

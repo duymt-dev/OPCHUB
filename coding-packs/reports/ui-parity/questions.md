@@ -751,3 +751,16 @@ Không có client logger đã cài trong Portal: lỗi GET /me/gdv được báo
 Fixture sổ chia sẻ 802/803 có năm tương lai và khác số liệu prototype; không sửa ledger/chính sách để làm xanh ảnh. Đối chiếu số đo trong completion, không mask/nới ngưỡng.
 
 804 follow-up: assert cookie paragraph trong affiliate-cross-app đã đổi sang badge đúng BR-495 (d690a63f). Retest vẫn đỏ tại cancelled row như baseline, không coi 6 failure identity là bằng chứng mọi nguyên nhân dừng đều giống baseline. Parity vùng mới vẫn chưa đạt 3%; chưa DONE.
+# TIP-V46-805 — clarifications for owner review (05/11/2026)
+
+- **Q-V46-805-1 / D-125**: không có Zalo/ZNS trong schema/API/UI; mô tả D7 chỉ Email + thông báo.
+- **Q-V46-805-2**: công tắc đổi draft; Lưu cấu hình mới ghi/audit. Gửi khi draft còn thay đổi
+  yêu cầu lưu trước để UI không hiển thị kênh khác cấu hình server; mọi kênh tắt luôn báo TC-471.
+- **Q-V46-805-3 / BR-474**: trial áp dụng đủ D30/D7/D1, thay phạm vi mốc cũ D-113.
+- **Q-V46-805-4 / §33**: job không nhắc ngày hết hạn hoặc T+3, thay mốc cũ D-57;
+  sweep trạng thái, paywall và nhắc tay ở Phí thành viên không đổi.
+- **QR fallback**: D1 mail chứa chuỗi EMVCo VietQR + STK/chủ TK/số tiền/nội dung OPCHUB,
+  như phương án dự phòng TIP cho phép; không giả là đã nhúng ảnh PNG/CID, không thêm dependency.
+- **Đã chốt trực tiếp**: owner duyệt CHECK tương thích mã cũ/mới/manual, DB riêng + Memurai6381,
+  rolling restart bộ dịch vụ riêng, và lỗi schema 400 VALIDATION_ERROR + fields theo standard.
+  Chỉ lỗi gửi khi không có kênh là 422 RENEWAL_NO_CHANNEL. Không sửa requirements matrix theo constraint TIP.

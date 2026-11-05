@@ -4,6 +4,7 @@ import {
   generalSettingsSchema,
   type WelcomeMail,
   welcomeMailSchema,
+  renewalSettingsSchema,
 } from '@opchub/shared/api-domains';
 import { z } from 'zod';
 import { PrismaService } from '@/common/prisma/prisma.service';
@@ -20,7 +21,7 @@ const securityCoreSchema = z.object({
 });
 export type SecurityCore = z.infer<typeof securityCoreSchema>;
 
-export type SettingKey = 'general' | 'security' | 'languages' | 'welcome_mail' | 'bot';
+export type SettingKey = 'general' | 'security' | 'languages' | 'welcome_mail' | 'bot' | 'renewal';
 
 const CACHE_TTL_SEC = 60;
 const cacheKey = (k: SettingKey) => `settings:${k}`;
@@ -46,6 +47,10 @@ export class AppSettingsService {
 
   welcomeMail(): Promise<WelcomeMail> {
     return this.read('welcome_mail', welcomeMailSchema);
+  }
+
+  renewal() {
+    return this.read('renewal', renewalSettingsSchema);
   }
 
   async invalidate(key: SettingKey): Promise<void> {

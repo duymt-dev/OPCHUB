@@ -174,7 +174,7 @@ export class NotificationEventsHandler {
       p.items.map((i) => ({
         userId: i.userId,
         type: 'membership' as const,
-        title: 'Nhắc phí thành viên',
+        title: i.title ?? 'Nhắc phí thành viên',
         body: i.text,
         link: '/membership/pay',
       })),

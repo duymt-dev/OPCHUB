@@ -8,6 +8,7 @@ export const SETTINGS_TABS = [
   'welcome-mail',
   'smtp',
   'price',
+  'renewal',
   'admins',
   'audit-log',
   'sso',
@@ -29,6 +30,7 @@ export const TAB_KEY: Record<SettingsTab, AdminPermissionKey> = {
   llm: 'settings.general',
   // D-94 5A: prototype `need.price = 'cfg'`
   price: 'settings.general',
+  renewal: 'settings.mail',
   admins: 'settings.admins',
   'audit-log': 'settings.log',
   sso: 'settings.general',
@@ -48,6 +50,7 @@ export interface SettingsParams {
 
 /** Icon nét của danh sách tab (đường vẽ lấy theo prototype TABS) */
 export const TAB_ICON: Record<SettingsTab, string> = {
+  renewal: 'M12 8v4l3 3M3 12a9 9 0 1018 0 9 9 0 00-18 0',
   general: 'M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1z',
   categories: 'M4 6h16M4 12h10M4 18h6',
   roles: 'M12 2l8 4v6c0 5-3.4 8.7-8 10-4.6-1.3-8-5-8-10V6z',

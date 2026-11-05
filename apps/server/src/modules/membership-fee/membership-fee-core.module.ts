@@ -25,6 +25,10 @@ import { FeeWriterService } from './services/fee-writer.service';
 import { MembershipFeeService } from './services/membership-fee.service';
 import { ReconcileService } from './services/reconcile.service';
 import { RegionalFeeService } from './services/regional-fee.service';
+import { RenewalRepository } from './repositories/renewal.repository';
+import { RenewalService } from './services/renewal.service';
+import { RenewalDeliveryService } from './services/renewal-delivery.service';
+import { AdminRenewalController } from './controllers/admin-renewal.controller';
 
 /** Hiện thực cổng FeeReader cho account (dựng `me` + claim JWT) */
 @Injectable()
@@ -37,6 +41,9 @@ export class FeeReaderService implements FeeReader {
 }
 
 const services = [
+  RenewalRepository,
+  RenewalService,
+  RenewalDeliveryService,
   RegionalFeeService,
   PaidMembersRepository,
   MembershipFeeRepository,
@@ -69,6 +76,7 @@ export class MembershipFeeCoreModule {}
 @Module({
   imports: [MembershipFeeCoreModule],
   controllers: [
+    AdminRenewalController,
     MeMembershipController,
     BankWebhookController,
     DevBankController,

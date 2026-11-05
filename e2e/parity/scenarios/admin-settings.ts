@@ -15,6 +15,16 @@ const NO_ENTRY =
   'setPage map tab sso/languages về general và danh sách tab không có mục này (C-05).';
 
 export const ADMIN_SETTINGS: Scenario[] = [
+  {
+    id: 'D-V46-RENEW',
+    name: 'Cài đặt · Nhắc gia hạn',
+    start: 'admin',
+    fullPage: true,
+    steps: async (c) => {
+      await settingsTab(c, 'Nhắc gia hạn');
+      await waitText(c, 'Nhắc gia hạn tự động');
+    },
+  },
   { id: 'D-66', name: 'Cài đặt · Chung', start: 'admin', fullPage: true, steps: toSettings },
   {
     id: 'D-67',

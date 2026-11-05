@@ -432,3 +432,11 @@ Ngưỡng 3% giữ nguyên; đây là PARTIAL, không đánh dấu hoàn tất p
 | P-V46-REG | Portal m3 | Banner → Xem Vùng của tôi; bảng vùng chỉ đọc | /affiliate?tab=reg | 1440, 390 |
 
 P-97/P-98 được đo baseline trước thay đổi và đo lại; xem TIP-V46-804-completion.md. Ngưỡng 3% giữ nguyên.
+# V4.6 — TIP-V46-805 (D-134: reference + owner image review)
+
+| ID | Khu vực | Trạng thái / thao tác | Route app | Viewport |
+|---|---|---|---|---|
+| D-V46-RENEW | Admin | Cài đặt → Nhắc gia hạn; ba mốc, hai kênh D-125, danh sách đúng đối tượng | /settings?tab=renewal | 1440, 390 |
+
+Đo baseline D-66 → D-75 trước build 805; lưu số đo trước/sau trong completion.
+Không sinh sáu khoản phí giả để ép bảng giống prototype; fixture opt-in 12 ngày chỉ cho acceptance.

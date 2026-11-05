@@ -66,6 +66,9 @@ export const test = base.extend<{
           info.annotations.some((a) => a.type === 'demo' && a.description === 'projects')
             ? ['--projects']
             : []),
+          ...(info.annotations.some((a) => a.type === 'demo' && a.description === 'renewal')
+            ? ['--renewal']
+            : []),
         ]);
         run(['--filter', '@opchub/server', 'flush:dev-cache']);
       } else if (affiliate) {
@@ -96,6 +99,17 @@ export const test = base.extend<{
       if (env.E2E_TARGET === 'msw' && botManual)
         await context.addCookies([
           { name: 'opchub-mock-bot-manual', value: '1', url: `http://localhost:${env.ADMIN_PORT}` },
+        ]);
+      if (
+        env.E2E_TARGET === 'msw' &&
+        info.annotations.some((a) => a.type === 'demo' && a.description === 'renewal')
+      )
+        await context.addCookies([
+          {
+            name: 'opchub-mock-renewal-demo',
+            value: '1',
+            url: `http://localhost:${env.ADMIN_PORT}`,
+          },
         ]);
       await use();
     },

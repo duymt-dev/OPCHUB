@@ -14,7 +14,8 @@
     "audit-log": "Nhật ký hoạt động",
     "sso": "Đăng nhập & bảo mật",
     "languages": "Ngôn ngữ",
-    "llm": "Cấu hình AI"
+    "llm": "Cấu hình AI",
+    "renewal": "Nhắc gia hạn"
   },
   "tabSub": {
     "general": "Thông tin & đăng ký",
@@ -27,7 +28,8 @@
     "audit-log": "Lịch sử thay đổi",
     "sso": "SSO, mật khẩu, 2FA",
     "languages": "{n} ngôn ngữ",
-    "llm": "Endpoint, model và khóa API"
+    "llm": "Endpoint, model và khóa API",
+    "renewal": "30 · 7 · 1 ngày trước hạn"
   },
   "common": {
     "cancel": "Huỷ",
@@ -376,6 +378,51 @@
     "unconfigured": "Chưa cấu hình AI",
     "warning": "Khi chưa cấu hình hoặc đang tắt, các chức năng cần AI không chạy. Hệ thống không dùng câu trả lời giả.",
     "loadError": "Không tải được cấu hình AI",
+    "retry": "Thử lại"
+  },
+  "renewal": {
+    "channelEmail": "Email",
+    "channelApp": "thông báo",
+    "heading": "Nhắc gia hạn tự động",
+    "sub": "Hệ thống tự gửi nhắc theo các mốc trước ngày hết hạn gói. Giữ chân thành viên sau 3 tháng miễn phí.",
+    "save": "Lưu cấu hình",
+    "milestones": "Mốc gửi nhắc",
+    "channels": "Kênh gửi",
+    "d30": "30 ngày trước hạn",
+    "d30Sub": "Email nhắc sớm, kèm quyền lợi khi gia hạn",
+    "d7": "7 ngày trước hạn",
+    "d7Sub": "Email + thông báo trong hệ thống",
+    "d1": "1 ngày trước hạn",
+    "d1Sub": "Nhắc lần cuối, kèm mã QR chuyển khoản",
+    "email": "Email (Brevo)",
+    "app": "Thông báo trong hệ thống",
+    "list": "Sắp hết hạn trong 30 ngày · {n} thành viên",
+    "sendAll": "Gửi nhắc tất cả",
+    "send": "Gửi nhắc",
+    "member": "Thành viên",
+    "plan": "Gói",
+    "until": "Hết hạn",
+    "next": "Mốc kế tiếp",
+    "last": "Lần gửi",
+    "actions": "",
+    "personal": "Gói Cá nhân",
+    "business": "Gói Doanh nghiệp",
+    "left": "Còn {n} ngày",
+    "D30": "30 ngày",
+    "D7": "7 ngày",
+    "D1": "1 ngày",
+    "never": "Chưa gửi",
+    "lastSent": "Đã gửi {time}",
+    "justSent": "Đã gửi vài giây trước",
+    "noChannel": "Bật ít nhất 1 kênh gửi",
+    "saved": "Đã lưu cấu hình nhắc gia hạn",
+    "sent": "Đã gửi nhắc gia hạn tới {n} thành viên qua {channels}",
+    "saveFirst": "Lưu cấu hình trước khi gửi nhắc",
+    "more": "Xem thêm",
+    "listLabel": "Thành viên sắp hết hạn",
+    "empty": "Không có thành viên sắp hết hạn trong 30 ngày",
+    "loading": "Đang tải…",
+    "failed": "Không tải được nhắc gia hạn",
     "retry": "Thử lại"
   }
 }
