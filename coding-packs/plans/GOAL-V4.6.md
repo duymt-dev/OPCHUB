@@ -67,7 +67,7 @@ Mốc: sau #4, #7, #12 viết `coding-packs/reports/V4.6-M<n>-completion.md` (s�
      mỗi tỉnh 1, TK bị khóa, chia sẻ đúng tỷ lệ theo năm 1 / 2 / 3 / ≥ 4 + làm tròn đồng, trial / 0đ / huỷ không tạo khoản, vùng trống,
      chi trả idempotent, backfill năm của khách, nhắc mỗi mốc ≤ 1 lần, webhook khóa sai bị chặn.
    - `pnpm e2e` (MSW) không tụt số test so với `dev`; e2e server cho luồng TIP đụng tới.
-   - **Parity**: mọi màn TIP đụng tới đạt **≤ 3% ở 1440 và 390** trên prototype v4.6, có test hành vi riêng trong `e2e/behavior/`.
+   - **Parity (D-134)**: đo mọi màn TIP đụng tới ở 1440 và 390 trên prototype v4.6, ghi % vào completion; **không chặn DONE**. Màn > 3% ghi nguyên nhân (dữ liệu / D-xx khác prototype / lệch giao diện thật); lệch giao diện thật phải sửa. Mỗi màn có test hành vi riêng trong `e2e/behavior/` kiểm chữ + bố cục chính. Owner duyệt ảnh khi review PR.
    - List / query mới: `EXPLAIN (ANALYZE, BUFFERS)` trên ≥ 10k dòng, không Seq Scan bảng lớn.
 4. **Commit + push + PR**, `git status --short` sạch; viết `coding-packs/reports/TIP-V46-8xx-completion.md`
    (SHA, PR, số test, % parity từng màn, EXPLAIN, soát luật cứng 1–14, chưa làm); cập nhật `V4.6-progress.md`.
@@ -96,7 +96,7 @@ Mốc: sau #4, #7, #12 viết `coding-packs/reports/V4.6-M<n>-completion.md` (s�
 
 - Đủ 12 TIP có completion report + SHA + PR mở vào `dev` (hoặc đã merge, hoặc link compare nếu không mở được PR);
   đủ `V4.6-M1` → `V4.6-M3-completion.md`.
-- V46-812: `reports/ui-parity/results.md` đo lại các màn v4.6, mọi màn ≤ 3% ở 1440 + 390 (DV chỉ cho số liệu thật);
+- V46-812: `reports/ui-parity/results.md` đo lại các màn v4.6 ở 1440 + 390, mỗi màn > 3% có nguyên nhân và không còn lệch giao diện thật chưa sửa; owner duyệt ảnh (D-134);
   AT-GDV01 → 07 + TC-461 → 494 100% trên server dev (trừ phần Zalo / Web Push theo D-125), báo cáo `reports/V4.6-acceptance.md`.
 - Báo DONE kèm SHA cuối + bảng tổng hợp (TIP | PR | test | parity | chưa làm).
 

@@ -9,7 +9,7 @@ OPC Hub Community (opchub.community): nền tảng cộng đồng cho doanh nghi
 
 Nguồn sự thật, theo thứ tự ưu tiên khi mâu thuẫn:
 
-1. `coding-packs/01-REQUIREMENTS-MATRIX.md`: REQ-ID, **Decisions Log** (D-xx; số lớn hơn thay số nhỏ hơn khi trái nhau — mới nhất **D-133**), Open Questions (OQ-xx). Đối chiếu đặc tả ↔ code: `coding-packs/audit/SPEC-V4.6-DELTA.md`
+1. `coding-packs/01-REQUIREMENTS-MATRIX.md`: REQ-ID, **Decisions Log** (D-xx; số lớn hơn thay số nhỏ hơn khi trái nhau — mới nhất **D-134**), Open Questions (OQ-xx). Đối chiếu đặc tả ↔ code: `coding-packs/audit/SPEC-V4.6-DELTA.md`
 2. `docs/adr/`: quyết định kiến trúc
 3. `coding-packs/00-PROJECT-CONTEXT.md`: Scan Report + **Vision** (kiến trúc, nguyên tắc scale S-01 → S-12)
 4. Prototype `docs/spec/index.html` (v4.6): **thắng đặc tả khi lệch** về giao diện và hành vi (D-89, D-93). Nút prototype không bấm được vẫn làm đúng nghiệp vụ (D-95). Chỉ tham chiếu, **không copy code**.
@@ -82,7 +82,7 @@ pnpm e2e                                  # Playwright
 
 ## Frontend: đọc thêm trước khi làm màn hình
 
-[nextjs-structure](coding-packs/standards/frontend/nextjs-structure.md) · [routing-auth](coding-packs/standards/frontend/routing-auth.md) · [data-state](coding-packs/standards/frontend/data-state.md) · [antd-ui](coding-packs/standards/frontend/antd-ui.md) · **[ui-parity](coding-packs/standards/frontend/ui-parity.md)** (bắt buộc khi dựng UI theo prototype: ngưỡng chênh ≤ 3%)
+[nextjs-structure](coding-packs/standards/frontend/nextjs-structure.md) · [routing-auth](coding-packs/standards/frontend/routing-auth.md) · [data-state](coding-packs/standards/frontend/data-state.md) · [antd-ui](coding-packs/standards/frontend/antd-ui.md) · **[ui-parity](coding-packs/standards/frontend/ui-parity.md)** (bắt buộc khi dựng UI theo prototype; từ D-134 parity pixel là số đo tham khảo + owner duyệt ảnh, không chặn DONE, nhưng lệch giao diện thật vẫn phải sửa)
 
 ## Làm việc theo team (avenger-assemble)
 

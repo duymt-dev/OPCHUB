@@ -1,7 +1,7 @@
 # Vibecode Kit v5.0 — OPCHUB Builder Handoff (Backend)
 
 > Dán file này vào Claude Code **đầu mỗi phiên build**, sau đó dán TIP của phiên (`tips/TIP-<id>-*.md`).
-> **Hiện hành (04/11/2026): v4.6** — goal [plans/GOAL-V4.6.md](plans/GOAL-V4.6.md) (12 TIP V46-801 → 812), quyết định D-118 → D-132,
+> **Hiện hành (04/11/2026): v4.6** — goal [plans/GOAL-V4.6.md](plans/GOAL-V4.6.md) (12 TIP V46-801 → 812), quyết định D-118 → D-134,
 > REQ-616 → 630, đối chiếu đặc tả ↔ code [audit/SPEC-V4.6-DELTA.md](audit/SPEC-V4.6-DELTA.md). Khi file này trái `AGENTS.md` hoặc GOAL, lấy `AGENTS.md` / GOAL.
 > Blueprint gốc 17/10/2026. Phụ lục bắt buộc: [plans/api-contract.md](plans/api-contract.md) (193 endpoint + socket),
 > [plans/data-model.md](plans/data-model.md) (bảng, index, seed). Task graph: [02-TASK-GRAPH.md](02-TASK-GRAPH.md).
@@ -172,6 +172,7 @@ nút no-op vẫn làm nghiệp vụ (D-95). Đối chiếu: `audit/SPEC-V4.6-DEL
 | D-130 | Năm của khách tính từ giao dịch thực thu đầu tiên **gồm cả Gọi vốn**; backfill lấy khoản đã đối soát sớm nhất của cả phí và Gọi vốn |
 | D-131 | Hoa hồng affiliate theo năm của khách: năm 1 = % hiện hành, năm 2 → `renewalMaxYear` = `renewalRate`, sau đó không ghi khoản; snapshot `commissions.customer_year`; vẫn chỉ tham khảo (D-119) |
 | D-132 | Admin › Affiliate: ẩn ô % mặc định / % Gọi vốn (giữ DB); nhãn `affiliate.payout` → "Chi trả GĐ Vùng" ở 807; "Doanh thu Media Soft giữ lại" = doanh thu affiliate − phần GĐ Vùng (sổ) cùng tháng; bước giảm 0% → bảng năm một dòng = % năm 1 |
+| D-134 | Parity pixel **không chặn DONE**: vẫn đo và ghi %; màn > 3% ghi nguyên nhân (dữ liệu / D-xx / giao diện thật); lệch giao diện thật vẫn phải sửa; owner duyệt cặp ảnh khi review PR; áp ngược 801 → 804 |
 
 v4.6 thay ở các bảng bên dưới: D-94 3A / D-110 phần **chi trả hoa hồng** → D-119 (hoa hồng chỉ tham khảo); hoa hồng Gọi vốn 10% (D-70, §29) → D-119;
 nhắc phí T-30 / T-7 / T-0 / T+3 (D-57) → mốc 30 / 7 / 1 ngày cấu hình được (REQ-620).
@@ -306,8 +307,8 @@ Có thể chạy theo **goal native từng pha** (B1 … B6) giống G2–G6: m�
 ## Test
 - `pnpm --filter @opchub/server test` → <N passed / M failed> (dán tóm tắt output thật)
 - Integration: <N> · Contract: <N> · e2e liên quan: <N>
-## Parity
-- <màn>: <% @1440> / <% @390> (≤ 3%)
+## Parity (D-134: tham khảo, owner duyệt ảnh)
+- <màn>: <% @1440> / <% @390> · > 3% thì ghi nguyên nhân: dữ liệu | D-xx | giao diện thật (đã sửa / chưa)
 ## Query mới
 - <tên query>: index dùng, EXPLAIN (ANALYZE, BUFFERS) tóm tắt (Index Scan / Index Only Scan, thời gian, rows)
 ## Lệch / câu hỏi

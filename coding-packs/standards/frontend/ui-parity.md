@@ -48,7 +48,12 @@ Gồm cả modal, drawer, tab con, trạng thái rỗng/lỗi, menu mở, form b
   - chặn ảnh ngoài (Unsplash, randomuser.me, Google Maps) bằng `page.route` trả ảnh cố định giống nhau ở hai bên;
   - cố định giờ (`page.clock.setFixedTime('2026-10-16T09:00:00+07:00')`), tắt animation/transition, ẩn caret;
   - chờ font tải xong (`document.fonts.ready`).
-- So bằng `pixelmatch` (threshold 0.1). **Đạt khi số pixel khác ≤ 3% tổng pixel**.
+- So bằng `pixelmatch` (threshold 0.1). Mục tiêu **≤ 3% tổng pixel**.
+- **D-134 (05/11/2026)**: parity là **số đo tham khảo, không chặn DONE**. Màn > 3% phải ghi nguyên nhân theo đúng một trong ba loại:
+  - **dữ liệu**: seed / fixture / đồng hồ / persona khác prototype (chấp nhận, không sửa ledger hay nghiệp vụ để bắt chước số);
+  - **D-xx**: quyết định owner khác prototype (ghi số D-xx);
+  - **giao diện thật**: bố cục, thiếu / thừa khối, cỡ chữ, màu, khoảng cách → **phải sửa** trước khi báo DONE.
+  Owner duyệt cặp ảnh prototype / app khi review PR. Vẫn cấm mask, nới assertion, sửa ảnh baseline để che lệch.
 - Kết quả ghi `coding-packs/reports/ui-parity/results.md`: ID | viewport | % chênh | trạng thái | SHA. Ảnh diff lưu `coding-packs/reports/ui-parity/diffs/` (chỉ commit ảnh của dòng chưa đạt hoặc có deviation).
 
 ### Hành vi
@@ -58,4 +63,4 @@ Mỗi hành vi tương tác có test Playwright riêng trong `e2e/behavior/` ch�
 
 1. Nền: monorepo, `packages/ui` theme khớp prototype, `AppShell` Portal + Admin, MSW, fixtures, harness parity.
 2. Auth (A-xx) → Portal (P-xx) → Admin (D-xx).
-3. Mỗi màn: code → chạy parity → sửa tới khi ≤ 3% → test hành vi → commit → màn tiếp.
+3. Mỗi màn: code → chạy parity → sửa hết lệch giao diện thật (mục tiêu ≤ 3%, D-134) → test hành vi → commit → màn tiếp.
