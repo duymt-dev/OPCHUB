@@ -77,8 +77,10 @@ describe('D-112 normalized bulk line indexes on native PostgreSQL', () => {
 
   it('uses a GIN seek over 10000 wide saved scripts', async () => {
     const prefix = randomUUID();
-    await t.prisma.db.$transaction(async (tx) => {
-      await tx.$executeRaw`SAVEPOINT bulk_lines_fixture`;
+    // Bulk fixture preparation is not a production interactive transaction.
+    // Keep the real queries/assertions; clean only this test's uniquely prefixed rows.
+    const tx = t.prisma.db;
+    try {
       await tx.$executeRaw`
         INSERT INTO bot_scripts (id, topic, group_ids, lines, enabled, updated_at)
         SELECT ${prefix} || '-script-' || n, 'Saved fixture', ARRAY[]::text[],
@@ -96,8 +98,9 @@ describe('D-112 normalized bulk line indexes on native PostgreSQL', () => {
       process.stdout.write(`${text}\n`);
       expect(text).toContain('bot_scripts_line_hashes_idx');
       expect(text).not.toMatch(/Seq Scan on bot_scripts/);
-      await tx.$executeRaw`ROLLBACK TO SAVEPOINT bulk_lines_fixture`;
-    });
+    } finally {
+      await tx.botScript.deleteMany({ where: { id: { startsWith: `${prefix}-script-` } } });
+    }
   });
 
   it('uses a GIN seek scoped to the batch over 10000 durable wide results', async () => {
