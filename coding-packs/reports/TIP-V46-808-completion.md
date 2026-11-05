@@ -1,81 +1,150 @@
-# TIP-V46-808 — Completion evidence (IN PROGRESS)
+# COMPLETION REPORT — TIP-V46-808
 
-- Branch: `feature/TIP-V46-808-global-search`, based on `dev`8543728d.
-- TIP commit: c9dc8a69. Implementation not yet finalized; no DONE claim.
-- Source checkpoint b708c15e pushed. Draft PR [#86](https://github.com/duymt-dev/OPCHUB/pull/86)
-  targets `dev`; not ready for merge yet.
-- Scope: indexed global search, permission/visibility-aware aggregation, shared presentation,
-  debounced Portal/Admin queries, mock contracts, ten Portal locales, keyboard/outside-click behavior.
-- Owner approved reusing private `opchub_v46_801_dev` / `opchub_v46_801_test`, Memurai6381,
-  rolling only owned services807→808. Original DB/Redis6379 preserved.
-- Owner approved narrow SQL visibility counterparts with equivalence tests against existing
-  Prisma predicates. No change to business visibility or production fee rules.
-- Q808-1→5 follow explicit TIP defaults, **not new owner decisions**.
-- Standard paywall remains402 `MEMBERSHIP_REQUIRED` (TIP's403 wording is inaccurate);
-  locked403; FE closes silently for401/402/403, retains text and no toast.
+**STATUS: IN PROGRESS — final full integration running; not merge approval.**
 
-## Evidence so far
+- Branch `feature/TIP-V46-808-global-search`, from `dev` `8543728d`.
+- Source `69a48634`; checkpoints `b708c15e`, `8f01249a`, `782745ca`.
+- [PR #86 into dev](https://github.com/duymt-dev/OPCHUB/pull/86). Owner merges; no auto-merge/main changes.
 
-| Gate | Actual evidence |
+## Files / implementation
+
+Exact inventory: TIP **Files touched** and `git diff --name-only 8543728d..69a48634`.
+No new dependencies, stack changes or production environment keys.
+
+- Shared search Zod contract, mock implementation/tests, modular `global-search/` UI,
+  keyboard hook/styles and six UI tests.
+- Portal/Admin shell components, API clients, user/permission-scoped debounced query hooks,
+  standalone mock handlers and labels across all ten Portal locales.
+- Search module orchestrates public domain services only; account/community/project/
+  local-business repositories own queries. One permission checker, fixed parallel calls,
+  max4/group, no total count/N+1. Domain SQL visibility helpers reuse fee rules and have
+  real equivalence tests against Prisma predicates.
+- Three expression GIN indexes plus down.sql. Two-character needs query limits ranked IDs
+  before payload joins, preserving visibility/ranking and one SQL call.
+- Dedicated unit/API/plan/E2E/parity suites. Approved regression repairs narrow old
+  store/month locators and match service outbox by returned commentId; no weakened assertions.
+
+## Final gate evidence
+
+Local logs are ignored under `test-results/`; measured plans/parity are also tracked.
+Resource flags change concurrency/pool only, not isolation, assertions or timeouts.
+
+| Gate | Actual result | Log under `test-results/` |
+|---|---|---|
+| lint | PASS8/8 tasks | `v46-808-lint-query-final.log` |
+| typecheck | PASS8/8 tasks | `v46-808-type-query-final.log` |
+| unit | PASS2061 +2 skipped,6/6 tasks | `v46-808-unit-source-final.log`; uncached full `v46-808-unit-threads.log` |
+| scoped integration | PASS38/38 (service14/search15/plans9) | `v46-808-final-scope-int.log` |
+| full integration | RUNNING; no completed count claimed | `v46-808-full-integration-r2.log` |
+| depcheck | PASS | `v46-808-depcheck-query-final.log` |
+| build | PASS root MSW, native Portal/Admin, latest server | `v46-808-build-msw-final.log`, `v46-808-build-native-{portal,admin}-final.log`, `v46-808-build-api-final.log` |
+| full MSW E2E | PASS372 +4 skipped; baseline369 +4 skipped | `v46-808-full-msw-r2.log` |
+| native search E2E | PASS identical3/3, latest source | `v46-808-native-source-final.log` |
+| focused selector regression | PASS11/11 search/Affiliate/stores | `v46-808-selector-regression.log` |
+| selected parity MSW/native | Each12/12 captures/tests (10 screenshots +2 harness) | `v46-808-parity-final-assets.log`, `v46-808-native-parity.log` |
+| native API smoke | Portal/Admin Me200; literal `%_` empty; Zod valid, no Portal members | `v46-808-native-smoke.log` |
+
+Unit breakdown: server239, integrations105 +2 skipped, UI63, shared677, Admin558, Portal419.
+Final source rerun had5 cached packages and a fresh server run,6/6 successful. Full commands:
+
+```powershell
+node node_modules/turbo/bin/turbo run test --concurrency=1 -- --pool=threads --maxWorkers=2
+# Local runner injects only the approved private DB/Redis environment:
+node test-results/v46-808-run.cjs --node node_modules/turbo/bin/turbo run test:int --concurrency=1 -- --pool=threads --maxWorkers=1
+```
+
+## Acceptance mapping
+
+| Criterion | Evidence / verdict |
 |---|---|
-| Baseline full MSW |369 passed,4 skipped; `test-results/v46-808-baseline-e2e.log` |
-| Baseline parity P11/P12/D02 |8/8 passed including2 capture-harness tests; archived ignored `test-results/v46-808-baseline-parity/` |
-| Scoped real integration |13/13 passed; `test-results/v46-808-search-int.log` |
-| Scoped MSW E2E new search + stores |5/5 passed; `test-results/v46-808-search-msw.log` |
-| Query debounce/stale response unit |4/4 passed; `test-results/v46-808-hook-test.log` |
-| Shared search contract + mock tests |10/10 passed; `test-results/v46-808-shared-test.log` |
+| TC-491 cross-domain search and targets | PASS real API integration, UI route mapping and Portal/Admin behavior |
+| Unaccent | PASS real SQL integration and shared mock tests |
+| Threshold2/debounce250/max4/prefix first | PASS hook/UI and API integration; stale responses/cache isolation covered |
+| Enter/Escape/outside retains/empty | PASS UI tests and identical MSW/native behavior |
+| Portal visibility/private owner | PASS API and SQL/Prisma equivalence across states/fee statuses |
+| Joined/unjoined targets | PASS API joined flag and E2E chat/join dialog |
+| Investor/unpaid/locked | PASS API; no investor groups; canonical unpaid402, locked403 |
+| Admin exact code/status/routes | PASS API, mocks, route mapping and Admin E2E |
+| Admin permission matrix | PASS real integration; no role-name authorization |
+| Wildcard escaping | PASS real integration and native `%_` smoke |
+| Five indexed queries10k/domain | PASS nine plan/equivalence tests, >=3 chars Bitmap Index Scan/no searched-table Seq Scan |
+| Two-character performance | All five measured Ne queries <50ms in final scoped run; not a universal guarantee |
+| Mobile390/1023 hidden,1024 visible | PASS behavior and parity |
+| Existing screen search/non-regression | PASS full MSW372 +4skip, baseline369 +4skip |
+| Parity D-134 | Captured and manually inspected; new states <3%, no masks/tolerance changes |
 
-Additional checkpoints: lint8/8 tasks PASS; typecheck8/8 PASS; initial full units2061 passed
-+2 skipped; latest scope UI6/6 and hook4/4 PASS. Native E2E2/2 PASS. New+regression MSW
-parity12/12 PASS. Five actual production SQL plans on10k/domain passed index/noSeqScan tests;
-two-character needs measured78.966ms (advisory50ms target not met in this run).
+## Plans / parity
 
-Full final unit rerun and integration, final built-asset E2E, commit/push/PR and HOLD
-verification are pending. Full integration has reported legacy failures; these are being
-triaged, not ignored. This document is a work log, not completion approval.
+[Actual SQL plans](TIP-V46-808-query-plans.md): latest scoped milliseconds (>=3 /2 chars)
+stores0.694/33.527, needs0.639/37.967, projects1.949/35.195, groups0.284/29.604,
+users0.315/34.067. Initial needs78.966ms isolated/101.447ms loaded prompted bounded
+prefix/fallback ranking. Old measurements remain documented; two-character GIN may be
+nonselective. No planner flags, forced index, cache tricks or timing assertions changed.
 
-## Final-run triage (ongoing)
+| New state | MSW1440 /390 | Native1440 /390 |
+|---|---|---|
+| Portal search | 0.995% /0.109% | 0.744% /0.109% |
+| Admin search | 0.506% /0.349% | 0.554% /0.349% |
 
-- Initial direct server integration ran without required seed groups (`c1`/`c34` absent,
-  total active groups0). Aborted that invalid-precondition run after recording failures
-  in media-refs/chat/projects. Re-seeded private **test** DB only and restarted full root
-  `test:int`; DB126/126 passed, server phase running. No production/test assertions changed.
-- A unit rerun hit the existing audit manifest's5s timeout under heavy parallel load;
-  another attempt hit Vitest fork startup timeouts. Bounded resource rerun uses the same
-  Turbo test graph and assertions, package concurrency1 and `--maxWorkers=2`. Audit manifest
-  then passed in1514ms. No test/production timeouts changed.
-- New group E2E initially used an ambiguous prefix matching province and industry groups.
-  Narrowed its accessible-name pattern to the exact province title + member count;
-  identical MSW/native3/3 passed on final built assets.
-- Full MSW exposed two old Affiliate month selectors that now also match the new accessible
-  topbar combobox. Owner approved narrowing three actions to the month label;
-  scoped search/Affiliate/stores11/11 passed. Full MSW rerun in progress.
-  No assertions, fixtures or production behavior were changed.
+Tracked `ui-parity/results.{json,md}` and `ui-parity/server/results.{json,md}` retain
+historical rows; only five selected states (new search +P11/P12/D02) were rerun. Final FE
+assets captured; subsequent server-only two-character optimization does not affect these
+longer-query scenarios. Manually inspected desktop Portal/Admin and mobile screenshots.
+Native coffee results differ with eligible demo data, not a visibility leak. Initial Admin
+Overview3.89% included existing chart/data differences; final scenario uses Members on
+both sides. No masking/viewport/threshold changes. Flags retained per prior owner decision.
 
-## Latest checkpoint
+## Issues resolved / authorized deviations
 
-- Full MSW rerun:372 passed,4 skipped, child exit0 (`v46-808-full-msw-r2.log`).
-- Native identical search tests3/3; final-asset MSW/native parity each12/12.
-- Approved service fixture repair adds returned `commentId` to the existing code filter;
-  preserved outbox history and all assertions. First full root run retained an old event
-  with the reused code; stopped that known-red run to validate the approved correction.
-- Needs2-character query now uses a bounded prefix/fallback SQL strategy with visibility
-  before limits and ranked-ID limit before payload join. Same old/new results in8 combinations;
-  complete scope38/38 PASS. Latest measured needs2 chars37.967ms (previous78.966/101.447ms).
-- Latest lint8/8, typecheck8/8, depcheck PASS; server rebuild PASS. Production query semantics,
-  timeout settings, indexes and response contracts are unchanged by this optimization.
-- Full final root integration rerun is in progress with one threaded worker and file
-  parallelism still disabled; same assertions/isolation, no timeout changes. Final root units
-  also use bounded threads after OS-level fork startup failures; final counts pending.
+- Owner approved private DB pair, Memurai6381 and owned rolling807→808; original native
+  DB/Redis6379 and unrelated HOLD services preserved.
+- Owner approved same-domain SQL visibility helpers plus equivalence tests because Prisma
+  filter objects cannot embed directly in the required indexed SQL. Business rules unchanged.
+- Q808-1→5 use explicit TIP defaults, **not new owner decisions**: unaccent; visible Portal
+  records; Admin name/email plus exact member code; nondeleted states per permission;
+  outside retains text and filtered targets. Recorded in `ui-parity/questions.md`.
+- Standard paywall remains402 MEMBERSHIP_REQUIRED, not erroneous TIP403; locked403.
+  FE silently closes on401/402/403, retaining text and no toast.
+- First integration attempt lacked required seed groups: recorded/aborted, seeded private
+  test DB. First root run then found two preserved outbox events with reused YC-1010.
+  Owner approved returned-commentId correlation; history and assertions untouched.
+- New group E2E locator narrowed from ambiguous province/industry prefix to exact province
+  accessible name. Owner approved old Affiliate month-label selectors after new combobox.
+- Early unit reruns hit existing audit5s timeout under load/Windows fork startup failures.
+  Full bounded thread reruns passed without timeout or test changes.
 
-## Migration safety
+### Migration incident closed
 
-Prisma create-only generated a Nov5 diff proposing unrelated drops (existing indexes/FK).
-It was **never deployed**. Removed its SQL and replaced it with the TIP's Nov11 migration,
-containing only three CREATE INDEX statements and matching down.sql. The now-empty Nov5
-directory initially blocked Prisma deploy; filesystem removal was denied by the environment.
-A temporary ignored config deployed an identical migration tree excluding only that empty
-directory; both private DBs applied the three indexes successfully. Owner then explicitly
-asked the agent to delete it: checked the exact absolute path and emptiness and removed it
-non-recursively. Normal migration paths are restored. No accidental Nov5 SQL was applied,
-and no migration metadata or original native data was altered by this incident.
+Create-only Nov5 diff proposed unrelated index/FK drops; **never deployed**. Replaced with
+intended Nov11 three-index migration/down.sql. Empty Nov5 folder initially blocked deploy;
+ignored temporary config deployed the identical tree excluding only that empty folder.
+Owner explicitly requested removal: verified exact literal absolute path/emptiness and
+removed non-recursively. Normal migration path restored, no accidental metadata edits.
+Final read-only checks on both private DBs: preserved21 indexes, new3 indexes, validated
+customer_years_user_fk1, intended migration1, accidental Nov5 migration0. Logs:
+`v46-808-schema-{dev,test}.log`. Original native data untouched.
+
+## Native HOLD / verification
+
+Source69a48634: API4300/socket4301/worker, Portal3700/Admin3701 with
+`.next-v46-808-native-final`; MSW3800/3801, prototype4830 retained. PID/count manifest
+`test-results/v46-808-hold.json`. After native tests two demo seeds produced identical:
+users80/affiliates62/referrals51/commissions53/fee periods65/shares53/payouts1/year anchors50/
+appointed directors3/bank transactions5/unbalanced shares0. Only private6381 DB1 cache
+namespaces flushed, no native6379/queue reset. All providers fake/local.
+
+Verify Portal/Admin demo login, search MediaSoft/ca phe/exact Admin member code; Escape
+clears, outside retains, Enter opens first hit; mobile hides topbar search. Existing
+unconfigured-AI worker warnings remain; no live AI enabled or jobs disabled to hide them.
+No fresh-DB replay or full native E2E suite claimed (TIP requires search native3/3).
+
+## Hard rules / remaining
+
+Rules1–14 reviewed: modular caps; strict shared Zod; public domain boundaries; permission
+keys; bounded indexed repositories; no new per-recipient realtime work; no new transitions/
+critical side effects; integer VND/UTC unchanged; read-only search/no new Admin writes;
+fake adapters; no secrets/deps/new env; separate tests; scoped source commits pushed.
+No unrelated business fixes or PM goal edits.
+
+Remaining: completed full integration footer, final report/progress commit and push, clean
+status, PR readiness. Owner review and merge are manual.

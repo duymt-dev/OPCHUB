@@ -643,17 +643,17 @@
   "id": "P-11",
   "name": "Topbar · ngôn ngữ",
   "viewport": 1440,
-  "diffPct": 0.0024691358024691358,
+  "diffPct": 0.11234567901234568,
   "size": "1440×900",
-  "sha": "0b76e98a"
+  "sha": "8f01249a"
  },
  {
   "id": "P-11",
   "name": "Topbar · ngôn ngữ",
   "viewport": 390,
-  "diffPct": 0.0021266253493741646,
+  "diffPct": 0.11088832178879572,
   "size": "390×844",
-  "sha": "0b76e98a"
+  "sha": "8f01249a"
  },
  {
   "id": "P-111",
@@ -755,17 +755,17 @@
   "id": "P-12",
   "name": "Topbar · menu người dùng",
   "viewport": 1440,
-  "diffPct": 0.002391975308641975,
+  "diffPct": 0.11195987654320988,
   "size": "1440×900",
-  "sha": "0b76e98a"
+  "sha": "8f01249a"
  },
  {
   "id": "P-12",
   "name": "Topbar · menu người dùng",
   "viewport": 390,
-  "diffPct": 0.0021266253493741646,
+  "diffPct": 0.10997691092477822,
   "size": "390×844",
-  "sha": "0b76e98a"
+  "sha": "8f01249a"
  },
  {
   "id": "P-121",
@@ -2008,6 +2008,22 @@
   "sha": "c1fd1625"
  },
  {
+  "id": "P-V46-SEARCH",
+  "name": "Topbar · global search",
+  "viewport": 1440,
+  "diffPct": 0.9951388888888888,
+  "size": "1440×900",
+  "sha": "8f01249a"
+ },
+ {
+  "id": "P-V46-SEARCH",
+  "name": "Topbar · global search",
+  "viewport": 390,
+  "diffPct": 0.10936930368209989,
+  "size": "390×844",
+  "sha": "8f01249a"
+ },
+ {
   "id": "D-01",
   "name": "Admin AppShell · Tổng quan",
   "viewport": 1440,
@@ -2029,19 +2045,19 @@
   "id": "D-02",
   "name": "Admin · menu người dùng",
   "viewport": 1440,
-  "diffPct": 0.08765432098765433,
+  "diffPct": 0.23140432098765432,
   "size": "1440×900",
   "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "0b76e98a"
+  "sha": "8f01249a"
  },
  {
   "id": "D-02",
   "name": "Admin · menu người dùng",
   "viewport": 390,
-  "diffPct": 0.08324219224693158,
+  "diffPct": 0.2169157856361648,
   "size": "390×844",
   "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "0b76e98a"
+  "sha": "8f01249a"
  },
  {
   "id": "D-03",
@@ -3930,5 +3946,21 @@
   "diffPct": 20.599607483305295,
   "size": "390×2012",
   "sha": "3c4f6f94"
+ },
+ {
+  "id": "D-V46-SEARCH",
+  "name": "Topbar · global search Admin",
+  "viewport": 1440,
+  "diffPct": 0.5063271604938272,
+  "size": "1440×900",
+  "sha": "8f01249a"
+ },
+ {
+  "id": "D-V46-SEARCH",
+  "name": "Topbar · global search Admin",
+  "viewport": 390,
+  "diffPct": 0.34907036091870214,
+  "size": "390×844",
+  "sha": "8f01249a"
  }
 ]

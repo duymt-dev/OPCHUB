@@ -842,3 +842,10 @@ The existing production first100-groups limitation is not fixed or hidden here.
   and dataset differences. Final scenario opens the same search from Members on both sides
   (stable baseline D02); no masks, viewport changes or tolerance relaxation. Portal uses
   `cà phê`; Admin uses `MediaSoft`. Native and MSW12/12 passed on final assets.
+- Owner approved the narrow legacy service fixture repair: constrain the reused YC-1010
+  outbox lookup by the commentId returned from the current API request. Recipient,
+  sanitization and notification assertions remain unchanged; historical outbox retained.
+- Two-character needs performance refined with bounded prefix/fallback IDs before payload
+  reads, preserving one query and exact visibility/ranking. Nine plan/equivalence tests pass;
+  latest scoped Ne measurement37.967ms versus initial78.966/101.447ms. No timeout/index or
+  business-rule relaxation; results do not guarantee every query/load below50ms.
