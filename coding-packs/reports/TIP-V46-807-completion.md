@@ -4,8 +4,9 @@
 
 Branch `feature/TIP-V46-807-group1-audit-conversion`, from dev `a7f6e42f`.
 Approved TIP checkpoint `e297a009`. No merge/auto-merge/main push.
-Source `3728288d` is pushed; [draft PR#85 into dev](https://github.com/duymt-dev/OPCHUB/pull/85).
-Implementation, MSW/native builds and scoped E2E are complete; full gates are pending.
+Source `5257db60` is pushed; [draft PR#85 into dev](https://github.com/duymt-dev/OPCHUB/pull/85).
+Implementation, MSW/native builds, full MSW and scoped native E2E are complete;
+only final full integration remains pending.
 
 ## Implementation
 
@@ -87,7 +88,14 @@ Logs are ignored local evidence in `test-results/`.
 | Native parity |5 image pass /3 image fail +2 harness pass | v46-807-parity-native-r1.log |
 | Permission-label exact row-header E2E |1/1,4.2s | v46-807-msw-rbac-final.log |
 | Final E2E lint/type after label selector |2/2 tasks | v46-807-e2e-quality-r3.log |
-| Full integration / full MSW |PENDING | report to be updated |
+| Final full integration R2 |PENDING | v46-807-full-int-r2.log |
+| Full integration R1 server |1923 pass /1 legacy chat-fixture fail,209/210 files; root stopped before DB task | v46-807-full-int-r1.log |
+| DB integration separately |126/126,26 files,123.31s | v46-807-db-int-r1.log |
+| Approved chat fixture isolation |14/14,11.36s, all assertions unchanged | v46-807-chat-regression-r2.log |
+| Full MSW R1 |368 pass /1 label-selector fail +4 existing skips,23.1m | v46-807-msw-full-r1.log |
+| Final full MSW R2 |369 pass +4 existing skips,14.2m,4 workers | v46-807-msw-full-r2.log |
+| Final quality after approved fixture repair |22/22 tasks,19 cached,1m07s; same2041 unit pass +2 existing skips | v46-807-quality-fixture.log |
+| Final dependency boundaries |no violations,2377+1080 modules | v46-807-depcheck-final.log |
 
 Root units: integrations105+2skip, UI57, Admin558, shared667, server239,
 Portal415. The two skips are existing real-S3 tests, not new exclusions.
@@ -102,7 +110,7 @@ planner flags. These are fixture measurements, not production load certification
 
 ## Remaining before completion
 
-- Finish full integration and full MSW.
+- Finish full integration R2 (no other mandatory gate remains pending).
 - Commit/push final evidence, update draft PR/progress#7 and milestone M2 evidence.
   Report final Git SHA and clean working tree.
 
@@ -126,7 +134,14 @@ unmeasured. Nine AI translations still need native-speaker review.
   but the label is a text node inside the combined `Affiliate …` row header.
   Full MSW and an isolated check reproduced it; the exact accessible row-header
   assertion now passes, including absence of the old exact row-header label.
-  Full MSW rerun is still required; this is not silently counted as a full pass.
+  Full MSW rerun subsequently passed369+4skip, not inferred from the isolated case.
+- Full integration and a standalone rerun reproduced the legacy chat fixture's
+  missing `isOwner` group.93 background groups plus nine accumulated case groups
+  exceeded the existing overview's first100 groups; unread/read assertions passed.
+  Owner approved exact-ID per-case afterEach cleanup in that one test file.
+  All assertions remain, scoped14/14 passed, full rerun is running. No background
+  groups, API limit or production query were changed. The pre-existing100-group
+  overview limitation remains an explicit follow-up, not claimed fixed by807.
 - Windows pre-commit failed with100 paths because the command line was too long.
   Source was committed in explicit15-path batches with all hooks enabled, then
   pushed. No hook bypass, new dependency or timeout relaxation.
@@ -146,7 +161,7 @@ unmeasured. Nine AI translations still need native-speaker review.
 | BR-475/47680/70/50/national71, directors, exclusions | conversion integration3/3; UI color unit; actual mobile E2E |
 | BR-475 one SQL/cached60seconds/10k plan | conversion integration/cache spy, production SQL plan above |
 | BR-477 six-column/three-region CSV, audit, denied permission | integration and actual download E2E; denied account has no overview.view (default accountant does have it, grants unchanged) |
-| BR-486 four downloaded BOMs | full MSW Bank/Groups pending; scoped Conversion/Audit passed |
+| BR-486 four downloaded BOMs | Bank/Groups/Conversion/Audit passed in full MSW369+4skip; scoped native Conversion/Audit passed |
 | Permission label | shared unit plus full MSW RBAC label assertion |
 | P1 copy/footer/English,9 translation bundles | AuthHero unit, shared messages tests, scoped auth E2E |
 | D-134 comparison and visual inspection | eight MSW pairs inspected, plus all eight native app images against the same prototype |
