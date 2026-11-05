@@ -8,9 +8,9 @@ test('REQ-630 v4.6 hero exact copy and four title-description blocks on both por
   for (const origin of [PORTAL_URL, ADMIN_URL]) {
     await page.goto(`${origin}/login`, { waitUntil: 'networkidle' });
     await expect(page.getByText('CỘNG ĐỒNG DOANH NGHIỆP MỘT NGƯỜI', { exact: true })).toBeVisible();
-    await expect(page.getByRole('heading', { level: 1 })).toContainText(
-      'Liên kết chuỗi cung ứng, mở rộng thị trường',
-    );
+    await expect(
+      page.getByRole('heading', { level: 1, name: /Kết nối năng lực địa phương/ }),
+    ).toContainText('Liên kết chuỗi cung ứng, mở rộng thị trường');
     for (const text of [
       'Học tập và chuyển đổi OPC',
       'Trang bị kiến thức, kỹ năng và công cụ để phát triển doanh nghiệp một người.',
@@ -84,7 +84,9 @@ test.describe('A-01 Đăng nhập', () => {
     await page.locator('input[type=password]').fill('Admin@2026');
     await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
     await expect(page).toHaveURL(/\/overview$/);
-    await expect(page.getByRole('status')).toHaveText('Đăng nhập Admin Dashboard');
+    await expect(
+      page.getByRole('status').filter({ hasText: 'Đăng nhập Admin Dashboard' }),
+    ).toHaveText('Đăng nhập Admin Dashboard');
     await expect(page.getByRole('link', { name: 'Tổng quan' })).toHaveAttribute(
       'aria-current',
       'page',

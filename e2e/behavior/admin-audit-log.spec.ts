@@ -12,7 +12,7 @@ test('REQ-624 BR-485 audit tab has90-day copy, CSV below heading, async job and 
   await page.locator('input[type=password]').fill('Admin@2026');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await expect(page).toHaveURL(/\/overview$/);
-  await page.goto(`${ADMIN_URL}/settings?tab=log`);
+  await page.goto(`${ADMIN_URL}/settings?tab=audit-log`);
   const heading = page.getByText('Nhật ký hoạt động quản trị', { exact: true });
   await expect(heading).toBeVisible();
   await expect(
