@@ -28,7 +28,7 @@ const fetchUnread = () => api('/me/chat/unread', { schema: chatUnreadSchema });
 export function clearRoomUnread(qc: QueryClient, groupId: string, roomId: string): void {
   qc.setQueryData<ChatUnread>(chatUnreadKey, (old) => {
     const n = old?.byRoom[roomId] ?? 0;
-    return old && n ? bump(old, roomId, groupId, -n) : old;
+    return bump(old ?? { total: 0, byGroup: {}, byRoom: {} }, roomId, groupId, -n);
   });
 }
 

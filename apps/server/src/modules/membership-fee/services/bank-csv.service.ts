@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { bankCursorSchema, type BankTxnQuery } from '@opchub/shared/api-domains';
 import { AuditService } from '@/common/audit';
-import { toCsv } from '@/common/http/csv';
+import { toCsv, csvSafeText as safe } from '@/common/http/csv';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { BankTransactionsRepository } from '../repositories/bank-transactions.repository';
 
@@ -11,7 +11,6 @@ const LABELS = {
   unmatched: 'Không khớp nội dung',
   short: 'Thiếu tiền',
 };
-const safe = (s: string) => (/^[\s]*[=+\-@\t\r]/.test(s) ? `'${s}` : s);
 @Injectable()
 export class BankCsvService {
   constructor(

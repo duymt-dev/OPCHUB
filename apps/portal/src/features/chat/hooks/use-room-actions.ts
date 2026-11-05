@@ -24,12 +24,13 @@ export function useRoomActions(group: ChatGroup | null) {
 
   const read = useMutation({
     mutationFn: markRead,
-    onSuccess: () => {
+    retry: false,
+    onSettled: () => {
       refresh();
       void qc.invalidateQueries({ queryKey: chatUnreadKey });
     },
   });
-  const { mutate: readMutate } = read;
+  const { mutateAsync: readMutate } = read;
   const markRoomRead = useCallback((roomId: string) => readMutate(roomId), [readMutate]);
 
   const report = useMutation({

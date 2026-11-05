@@ -1,6 +1,7 @@
 import { Prisma } from '@opchub/db';
 import type { AffiliateCommissionQuery } from '@opchub/shared/api-domains';
 import { containsPattern } from '@/common/prisma/like';
+import { commissionVisible } from './commission-visible.sql';
 
 export interface CommissionPageOptions {
   ids?: readonly string[];
@@ -21,7 +22,7 @@ export function commissionWhere(
   memberIds: readonly string[],
   options: CommissionPageOptions = {},
 ) {
-  return Prisma.sql`WHERE true
+  return Prisma.sql`WHERE ${commissionVisible}
     ${q.status !== 'all' ? Prisma.sql`AND c.status=${q.status}::commission_status` : Prisma.empty}
     ${q.month ? Prisma.sql`AND c.month_key=${q.month}` : Prisma.empty}
     ${options.ids ? Prisma.sql`AND c.id=ANY(${[...options.ids]}::text[])` : Prisma.empty}
