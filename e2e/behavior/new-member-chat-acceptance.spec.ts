@@ -83,8 +83,10 @@ test('E2E-05 FX-01 new member second keyword violation revokes login and locks e
   await admin.locator('input[type=password]').fill('Admin@2026');
   await admin.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await admin.waitForURL((url) => !url.pathname.startsWith('/login'));
-  await admin.locator('aside').getByText('Nhóm cộng đồng', { exact: true }).click();
+  // GroupsScreen fetches reports for its badge on mount, before the moderation tab opens.
+  // Arm the listener before navigation so a fast cached/MSW response cannot be missed.
   const reporting = admin.waitForResponse((r) => new URL(r.url()).pathname === '/v1/admin/reports');
+  await admin.locator('aside').getByText('Nhóm cộng đồng', { exact: true }).click();
   await admin.getByRole('tab', { name: /Kiểm duyệt tin nhắn/ }).click();
   const reports = z.object({ items: z.array(reportSchema) }).parse(await (await reporting).json());
   const violations = reports.items.filter((row) => row.senderName === member.name);

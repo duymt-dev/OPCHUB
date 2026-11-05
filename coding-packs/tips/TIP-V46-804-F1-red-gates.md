@@ -19,6 +19,9 @@
   - modify `coding-packs/reports/TIP-V46-804-completion.md`
   - modify `coding-packs/01-REQUIREMENTS-MATRIX.md`, `coding-packs/reports/ui-parity/deviations.md`, `AGENTS.md`
   - modify `e2e/behavior/portal-shell.spec.ts` (D-133 giữ cờ; UI/unit không đổi)
+  - modify `e2e/behavior/new-member-chat-acceptance.spec.ts` (race lộ ở full E2E R1)
+  - modify `apps/portal/src/features/chat/transport.ts`, `socket-transport.ts`, `hooks/use-message-actions.ts`
+  - create `apps/portal/src/features/chat/hooks/hidden-message-delivery.spec.ts`, `apps/portal/src/features/chat/socket-transport.spec.ts`
 - Parallel-safe with: none; serial follow-up trên nhánh 804 từ dev, PR #82 base dev.
 
 ## CONTEXT
@@ -45,6 +48,14 @@ thêm kiểm chứng âm, isolation và hồi quy phân bố dữ liệu.
    partial index có tính chọn lọc. Giữ nguyên assertions index/PK/no Seq Scan/count;
    thêm case all-simulated gốc kiểm kết quả và không Seq Scan, không ép tên index.
 5. Icon: owner đã chọn giữ cờ (D-133); E2E kiểm chính xác cờ Việt Nam, giữ UI/unit.
+6. Full E2E R1 lộ race E2E-05: GroupsScreen gọi reports ngay lúc mount cho badge.
+   Đăng ký waitForResponse trước navigation, không sau click; giữ nguyên assertions
+   hai vi phạm/khóa đúng bảy ngày và timeout, không tự fetch thay cho luồng UI.
+7. Native E2E-05 phát hiện D-77/D-117: DB đã ẩn tin trước publish nhưng cache bỏ
+   tin thành viên mới chưa có trong cache. Phân biệt message.new với message.updated;
+   tin mới/ack thành viên ẩn chỉ chèn placeholder ở luồng thường, không ở search.
+   Bot ẩn và update/replay tin ẩn chưa thấy vẫn không chèn; ack + event không trùng.
+   Không đổi socket wire contract hoặc backend; thêm RED/GREEN unit và native E2E.
 
 ## ACCEPTANCE CRITERIA
 - Given fixture 10/2026, When browser ở tháng khác, Then lịch sử/hủy vẫn kiểm đúng
