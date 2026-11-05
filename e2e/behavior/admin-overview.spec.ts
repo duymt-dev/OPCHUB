@@ -60,7 +60,9 @@ async function openOverview(page: Page): Promise<Flow> {
     .locator('input[autocomplete=username], input[type=email]')
     .fill('admin@opchub.community');
   await page.locator('input[type=password]').fill('Admin@2026');
-  const res = page.waitForResponse((r) => r.url().includes('/v1/admin/overview') && r.ok());
+  const res = page.waitForResponse(
+    (r) => new URL(r.url()).pathname === '/v1/admin/overview' && r.ok(),
+  );
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   return ((await (await res).json()) as { flow: Flow }).flow;
 }
