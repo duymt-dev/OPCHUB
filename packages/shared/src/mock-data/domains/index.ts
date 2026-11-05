@@ -112,3 +112,4 @@ export * from './regional-share-demo';
 export * from './regional-shares';
 
 export { mockMyRegion } from './my-region';
+export * from './renewal';

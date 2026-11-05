@@ -124,7 +124,9 @@ export const outboxEvents = {
   }),
   /** Nhắc phí (NA-04, D-57): mốc tự động hoặc `manual` khi Admin nhắc tay → thông báo chuông */
   'membership_fee.reminded': z.object({
-    items: z.array(z.object({ userId: z.string(), text: z.string() })).max(500),
+    items: z
+      .array(z.object({ userId: z.string(), text: z.string(), title: z.string().optional() }))
+      .max(500),
   }),
   'user.locked': z.object({ userId: z.string(), reason: z.string().nullable() }),
   'user.session_revoked': z.object({

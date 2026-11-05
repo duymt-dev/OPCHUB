@@ -32,6 +32,7 @@ try {
     botHistory: process.argv.includes('--bot-history'),
     stores: process.argv.includes('--stores'),
     projects: process.argv.includes('--projects'),
+    renewal: process.argv.includes('--renewal'),
   });
   process.stdout.write(`Seed demo xong trên ${dbName} (${Date.now() - started} ms)\n`);
 } finally {

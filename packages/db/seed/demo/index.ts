@@ -1,4 +1,5 @@
 import { seedAffiliateRenewals } from './affiliate-renewals';
+import { seedRenewalDemo } from './renewal';
 import { demoAccounts } from '@opchub/shared/fixtures';
 import { seedProjectDemoFees } from './project-fees';
 import { UNPAID_DEMO } from '@opchub/shared/mock-data';
@@ -58,6 +59,7 @@ export async function seedDemo(
     botHistory?: boolean;
     stores?: boolean;
     projects?: boolean;
+    renewal?: boolean;
   } = {},
 ): Promise<void> {
   // TK `admin` có thể chưa có → seed bắt buộc tạo bằng mật khẩu demo (sau đó account.ts ghi lại hash)
@@ -71,6 +73,7 @@ export async function seedDemo(
       await seedUsers(tx, h);
       await seedAdmins(tx, h.admin);
       await seedFees(tx);
+      if (options.renewal) await seedRenewalDemo(tx);
       await seedRegionalDirectors(tx);
       await seedAffiliates(tx);
       if (options.affiliate || options.affiliatePaused || options.affiliatePayout)

@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 305/394 ảnh.
+> Đạt 306/396 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -399,6 +399,8 @@
 | D-88 | Tạo sự kiện · Link Google Meet (D-59) | 390 | 0.02% | ✅ đạt | 390×844 | 25a1eec |
 | D-89 | Gán vào nhóm · vai trò Giảng viên (GR-R01) | 1440 | 0.98% | ✅ đạt | 1440×900 | 25a1eec |
 | D-89 | Gán vào nhóm · vai trò Giảng viên (GR-R01) | 390 | 0.71% | ✅ đạt | 390×844 | 25a1eec |
+| D-V46-RENEW | Cài đặt · Nhắc gia hạn | 1440 | 2.79% | ✅ đạt | 1440×958 | f2c364a5 |
+| D-V46-RENEW | Cài đặt · Nhắc gia hạn | 390 | 23.53% | ❌ chưa đạt | 390×2012 | f2c364a5 |
 
 ## Không đo được trên prototype (unreachable, 37 màn)
 

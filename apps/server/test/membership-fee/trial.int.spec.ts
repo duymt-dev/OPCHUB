@@ -141,15 +141,15 @@ describe('Miễn phí 3 tháng (TIP-V42-702)', () => {
     expect(Math.abs(fee.validUntil!.getTime() - expected.getTime())).toBeLessThan(2 * DAY);
   });
 
-  it('D-113 trial còn 7 / 0 ngày → 1 mail + 1 thông báo câu miễn phí; chạy lại không gửi lại', async () => {
+  it('REQ-620 BR-474 trial còn 7 / 1 ngày → mail trial + thông báo gia hạn; không gửi lại', async () => {
     const now = new Date();
     const a = await trialMember(7, now);
-    const b = await trialMember(0.01, now);
+    const b = await trialMember(1, now);
     await sched.remind(now);
     await sched.remind(now);
     const cases = [
-      { u: a, m: 'T-7' },
-      { u: b, m: 'T-0' },
+      { u: a, m: 'D7' },
+      { u: b, m: 'D1' },
     ];
     for (const { u, m } of cases) {
       const mails = await t.prisma.db.mailLog.findMany({
@@ -181,10 +181,10 @@ describe('Miễn phí 3 tháng (TIP-V42-702)', () => {
       select: { body: true },
     });
     expect(notes).toHaveLength(1);
-    expect(notes[0]!.body).toContain('3 tháng miễn phí');
+    expect(notes[0]!.body).toContain('Gói Cá nhân hết hạn ngày');
   });
 
-  it('D-113 trial còn 30 ngày / hết trial 3 ngày trước → không nhắc T-30 / T+3', async () => {
+  it('REQ-620 BR-474 trial D30 enabled; expired excluded', async () => {
     const now = new Date();
     const a = await trialMember(30, now);
     const b = await trialMember(-3, now);
@@ -197,6 +197,6 @@ describe('Miễn phí 3 tháng (TIP-V42-702)', () => {
       where: { userId: { in: [a.id, b.id] } },
       select: { userId: true, milestone: true },
     });
-    expect(sent).toEqual([]);
+    expect(sent).toEqual([{ userId: a.id, milestone: 'D30' }]);
   });
 });

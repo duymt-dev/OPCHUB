@@ -1,5 +1,6 @@
 /** Mã lỗi API — coding-packs/standards/backend/api-conventions.md */
 export const ERROR_CODES = [
+  'RENEWAL_NO_CHANNEL',
   'VALIDATION_ERROR',
   'UNAUTHORIZED',
   'MEMBERSHIP_REQUIRED',

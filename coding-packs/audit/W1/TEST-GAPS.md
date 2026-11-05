@@ -798,3 +798,11 @@ root 1496 passed + 2 skipped, lint/typecheck/depcheck pass. Browser layout check
 (360px/800px). MSW reset E2E 0/2 (UAT-11 login selector timeout; D-62 missing confirmation),
 native E2E and real mailbox-client verification remain open. No full E2E acceptance claim.
 See `coding-packs/reports/branded-html-emails-completion.md` and its linked evidence.
+## TIP-V46-805 — REQ-620 / REQ-204 trace (05/11/2026)
+
+BR-471–474 / TC-471–472: `renewal-milestone.spec.ts`, `api-domains/renewal.spec.ts`,
+`mock-data/domains/renewal.spec.ts`, `templates-renewal.spec.ts`, `renewal-tab.spec.tsx`,
+`membership-fee/{renewal-admin,renewal-scheduler,renewal-plan}.int.spec.ts`,
+`e2e/behavior/admin-renewal.spec.ts`. Existing fee/trial tests follow the approved new mốc;
+old manual fee behavior stays asserted. Final gate counts and native/MSW evidence:
+`coding-packs/reports/TIP-V46-805-completion.md` (status there is authoritative; no inferred full PASS).

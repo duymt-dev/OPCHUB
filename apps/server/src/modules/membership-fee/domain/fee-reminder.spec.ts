@@ -1,46 +1,24 @@
 import { describe, expect, it } from 'vitest';
 import { daysLeft, dueMilestone } from './fee-reminder';
-
-const DAY = 86_400_000;
-/** 08:00 giờ VN ngày 19/10/2026 */
 const NOW = new Date('2026-10-19T01:00:00Z');
-const inDays = (d: number) => new Date(NOW.getTime() + d * DAY);
-
-describe('mốc nhắc phí (NA-04, D-57)', () => {
-  it('REQ-204 chọn mốc muộn nhất chưa gửi', () => {
+const inDays = (d: number) => new Date(NOW.getTime() + d * 86_400_000);
+describe('REQ-204 REQ-620 BR-471 renewal policy', () => {
+  it('latest current window without replay or catch-up bursts', () => {
     expect(dueMilestone(inDays(31), NOW)).toBeNull();
-    expect(dueMilestone(inDays(30), NOW)).toBe('T-30');
-    expect(dueMilestone(inDays(30), NOW, new Set(['T-30']))).toBeNull();
-    expect(dueMilestone(inDays(7), NOW, new Set(['T-30']))).toBe('T-7');
-    // job nghỉ 2 ngày: d nhảy 8 → 6 vẫn nhận T-7 một lần
-    expect(dueMilestone(inDays(6), NOW, new Set(['T-30']))).toBe('T-7');
-    expect(dueMilestone(inDays(6), NOW, new Set(['T-30', 'T-7']))).toBeNull();
-    // chưa nhận T-30 nhưng đã tới T-7 → chỉ T-7, không gửi dồn
-    expect(dueMilestone(inDays(5), NOW)).toBe('T-7');
-    expect(dueMilestone(inDays(0), NOW, new Set(['T-30', 'T-7']))).toBe('T-0');
-    expect(dueMilestone(inDays(-3), NOW, new Set(['T-0']))).toBe('T+3');
-    expect(dueMilestone(inDays(-2), NOW, new Set(['T-0']))).toBeNull();
+    expect(dueMilestone(inDays(30), NOW)).toBe('D30');
+    expect(dueMilestone(inDays(7), NOW, new Set(['D30']))).toBe('D7');
+    expect(dueMilestone(inDays(6), NOW, new Set(['D7']))).toBeNull();
+    expect(dueMilestone(inDays(1), NOW, new Set(['D7']))).toBe('D1');
   });
-
-  it('REQ-204 ranh giới ngày theo giờ VN (23:30 VN vs 00:30 VN)', () => {
-    const until = new Date('2026-10-25T17:30:00Z'); // 00:30 VN 26/10
-    expect(daysLeft(until, new Date('2026-10-18T16:30:00Z'))).toBe(8); // 23:30 VN 18/10
-    expect(daysLeft(until, new Date('2026-10-18T17:30:00Z'))).toBe(7); // 00:30 VN 19/10
-    expect(dueMilestone(until, new Date('2026-10-18T16:30:00Z'), new Set(['T-30']))).toBeNull();
-    expect(dueMilestone(until, new Date('2026-10-18T17:30:00Z'), new Set(['T-30']))).toBe('T-7');
+  it('VN calendar boundary', () => {
+    const until = new Date('2026-10-25T17:30:00Z');
+    expect(daysLeft(until, new Date('2026-10-18T16:30:00Z'))).toBe(8);
+    expect(daysLeft(until, new Date('2026-10-18T17:30:00Z'))).toBe(7);
   });
-
-  it('REQ-204 quá 10 ngày không nhắc', () => {
-    expect(dueMilestone(inDays(-10), NOW)).toBe('T+3');
-    expect(dueMilestone(inDays(-11), NOW)).toBeNull();
+  it('BR-471 no automatic day-zero or post-expiry reminder', () => {
+    for (const d of [0, -1, -3, -10, -11]) expect(dueMilestone(inDays(d), NOW)).toBeNull();
   });
-
-  it('D-113 trial chỉ nhắc T-7 và T-0, không T-30 / T+3, không bù sau ngày hết', () => {
-    expect(dueMilestone(inDays(30), NOW, new Set(), true)).toBeNull();
-    expect(dueMilestone(inDays(7), NOW, new Set(), true)).toBe('T-7');
-    expect(dueMilestone(inDays(7), NOW, new Set(['T-7']), true)).toBeNull();
-    expect(dueMilestone(inDays(0), NOW, new Set(['T-7']), true)).toBe('T-0');
-    expect(dueMilestone(inDays(-1), NOW, new Set(), true)).toBeNull();
-    expect(dueMilestone(inDays(-3), NOW, new Set(['T-0']), true)).toBeNull();
+  it('disabled D7 does not fall back to D30', () => {
+    expect(dueMilestone(inDays(7), NOW, new Set(), { d30: true, d7: false, d1: true })).toBeNull();
   });
 });

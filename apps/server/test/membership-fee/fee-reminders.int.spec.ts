@@ -7,7 +7,7 @@ import { createTestApp, type TestApp } from '../setup/test-app';
 
 const DAY = 86_400_000;
 
-describe('nhắc phí T-30 / T-7 / T-0 / T+3 lúc 08:00 (TIP-V2-301, NA-04, D-57)', () => {
+describe('REQ-620 nhắc gia hạn D30 / D7 / D1 lúc 08:00', () => {
   let t: TestApp;
   let sched: FeeSchedulerService;
 
@@ -62,7 +62,7 @@ describe('nhắc phí T-30 / T-7 / T-0 / T+3 lúc 08:00 (TIP-V2-301, NA-04, D-57
     });
   }
 
-  it('REQ-204 T-30 gửi 1 lần + thông báo; chạy lại cùng ngày không thêm', async () => {
+  it('REQ-204 D30 gửi 1 lần + thông báo; chạy lại cùng ngày không thêm', async () => {
     const now = new Date();
     const u = await member(30, now);
     await sched.run(now);
@@ -78,38 +78,33 @@ describe('nhắc phí T-30 / T-7 / T-0 / T+3 lúc 08:00 (TIP-V2-301, NA-04, D-57
     expect(n[0]!.link).toBe('/membership/pay');
   });
 
-  it('REQ-204 bù mốc khi lỡ job: d 8 → 6 vẫn nhận T-7 đúng 1 lần', async () => {
+  it('REQ-204 bù mốc khi lỡ job: d 8 → 6 vẫn nhận D7 đúng 1 lần', async () => {
     const now = new Date();
     const u = await member(8, now);
     await sched.remind(new Date(now.getTime() - 22 * DAY));
-    expect(await sentMilestones(u.id)).toEqual(['T-30']);
+    expect(await sentMilestones(u.id)).toEqual(['D30']);
     await sched.remind(now);
-    expect(await sentMilestones(u.id)).toEqual(['T-30']);
+    expect(await sentMilestones(u.id)).toEqual(['D30']);
     await sched.remind(new Date(now.getTime() + 2 * DAY));
     await sched.remind(new Date(now.getTime() + 3 * DAY));
-    expect(await sentMilestones(u.id)).toEqual(['T-30', 'T-7']);
+    expect(await sentMilestones(u.id)).toEqual(['D30', 'D7']);
     expect(await mails(u.email)).toHaveLength(2);
   });
 
-  it('REQ-204 T-0 và T+3 kèm expired; quá hạn 11 ngày không mail', async () => {
+  it('REQ-204 REQ-620 D1 final reminder; zero and expired never remind', async () => {
     const now = new Date();
-    const a = await member(0, now);
-    await t.prisma.db.membershipFee.update({
-      where: { userId: a.id },
-      data: { validUntil: new Date(now.getTime() + 60_000) },
-    });
-    const b = await member(-3, now);
-    const c = await member(-11, now);
+    const a = await member(1, now),
+      b = await member(0, now),
+      c = await member(-3, now);
     await sched.run(now);
-    expect(await sentMilestones(a.id)).toEqual(['T-0']);
-    expect((await mails(a.email))[0]!.bodyHtml).toContain('hết hạn hôm nay');
-    expect(await sentMilestones(b.id)).toEqual(['T+3']);
-    expect((await mails(b.email))[0]!.bodyHtml).toContain('đã hết hạn');
-    expect(await statusOf(b.id)).toBe('expired');
+    expect(await sentMilestones(a.id)).toEqual(['D1']);
+    expect((await mails(a.email))[0]!.bodyHtml).toContain('Nhắc lần cuối');
+    expect(await mails(b.email)).toHaveLength(0);
     expect(await mails(c.email)).toHaveLength(0);
+    expect(await statusOf(c.id)).toBe('expired');
   });
 
-  it('REQ-204 NR-R03 gia hạn reset mốc: kỳ mới nhận lại T-30', async () => {
+  it('REQ-204 NR-R03 gia hạn reset mốc: kỳ mới nhận lại D30', async () => {
     const now = new Date();
     const u = await member(30, now);
     await sched.remind(now);
@@ -118,7 +113,7 @@ describe('nhắc phí T-30 / T-7 / T-0 / T+3 lúc 08:00 (TIP-V2-301, NA-04, D-57
       data: { status: 'active', validUntil: new Date(now.getTime() + 395 * DAY) },
     });
     await sched.remind(new Date(now.getTime() + 365 * DAY));
-    expect(await sentMilestones(u.id)).toEqual(['T-30', 'T-30']);
+    expect(await sentMilestones(u.id)).toEqual(['D30', 'D30']);
     expect(await mails(u.email)).toHaveLength(2);
   });
 
@@ -127,7 +122,7 @@ describe('nhắc phí T-30 / T-7 / T-0 / T+3 lúc 08:00 (TIP-V2-301, NA-04, D-57
     const u = await member(7, now);
     await Promise.all([sched.remind(now), sched.remind(now)]);
     expect(await mails(u.email)).toHaveLength(1);
-    expect(await sentMilestones(u.id)).toEqual(['T-7']);
+    expect(await sentMilestones(u.id)).toEqual(['D7']);
   });
 
   it('REQ-204 pending_payment không nhắc tự động; Admin nhắc tay 2 lần → 2 mail + 2 thông báo', async () => {

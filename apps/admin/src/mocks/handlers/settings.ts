@@ -43,6 +43,7 @@ import {
 import { http, HttpResponse } from 'msw/http';
 import { param, parseBody, reply, userIdOf } from './domain-util';
 import { API, apiError } from './util';
+import { renewalHandlers } from './renewal';
 
 /**
  * Admin "Cài đặt & Phân quyền" (G6a, §21). Đặt trước admin-system để thay bản cơ bản của
@@ -55,6 +56,7 @@ const forbidden = () => apiError(403, 'FORBIDDEN', 'Bạn không có quyền th�
 const memberEmails = members.map((m) => m.email.toLowerCase());
 
 export const settingsHandlers = [
+  ...renewalHandlers,
   http.get(`${API}/admin/settings/general`, () => HttpResponse.json(getGeneralSettings())),
   http.patch(`${API}/admin/settings/general`, async ({ request }) => {
     if (!can(request, 'settings.general')) return forbidden();
