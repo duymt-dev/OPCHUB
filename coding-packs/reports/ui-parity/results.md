@@ -1,12 +1,12 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 429/490 ảnh.
+> Đạt 427/490 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
-| A-01 | Đăng nhập | 1440 | 0.10% | ✅ đạt | 1440×900 | 1ba4db0b |
-| A-01 | Đăng nhập | 390 | 0.19% | ✅ đạt | 411×1455 | 1ba4db0b |
+| A-01 | Đăng nhập | 1440 | 4.61% | ❌ chưa đạt | 1440×900 | e297a009 |
+| A-01 | Đăng nhập | 390 | 56.72% | ❌ chưa đạt | 411×1747 | e297a009 |
 | A-02 | Đăng nhập · bỏ trống | 1440 | 0.15% | ✅ đạt | 1440×900 | 1ba4db0b |
 | A-02 | Đăng nhập · bỏ trống | 390 | 0.30% | ✅ đạt | 411×1505 | 1ba4db0b |
 | A-03 | Đăng nhập · sai thông tin | 1440 | 0.11% | ✅ đạt | 1440×900 | 1ba4db0b |
@@ -256,8 +256,8 @@
 | P-V46-REG | Portal · Vùng của tôi | 390 | 15.27% | ❌ chưa đạt | 390×3067 | c1fd1625 |
 | P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 1440 | 16.61% | ❌ chưa đạt | 1440×1183 | c1fd1625 |
 | P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 390 | 10.86% | ❌ chưa đạt | 390×1819 | c1fd1625 |
-| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.09% | ✅ đạt | 1440×900 | 0b76e98a |
-| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 0.09% | ✅ đạt | 390×844 | 0b76e98a |
+| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.18% | ✅ đạt | 1440×900 | e297a009 |
+| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 0.23% | ✅ đạt | 390×844 | e297a009 |
 | D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.09% | ✅ đạt | 1440×900 | 0b76e98a |
 | D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 0.08% | ✅ đạt | 390×844 | 0b76e98a |
 | D-03 | Admin · Hồ sơ cá nhân (không đổi màn) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 1.80% | ✅ đạt | 1440×1049 | 0b76e98a |
@@ -414,8 +414,8 @@
 | D-67 | Cài đặt · Danh mục lĩnh vực | 390 | 5.33% | ❌ chưa đạt | 390×6997 | 3c4f6f94 |
 | D-68 | Lĩnh vực · đang sửa | 1440 | 0.44% | ✅ đạt | 1440×2287 | 3c4f6f94 |
 | D-68 | Lĩnh vực · đang sửa | 390 | 4.93% | ❌ chưa đạt | 390×6997 | 3c4f6f94 |
-| D-69 | Cài đặt · Vai trò & phân quyền | 1440 | 2.85% | ✅ đạt | 1440×2173 | 3c4f6f94 |
-| D-69 | Cài đặt · Vai trò & phân quyền | 390 | 3.56% | ❌ chưa đạt | 390×9054 | 3c4f6f94 |
+| D-69 | Cài đặt · Vai trò & phân quyền | 1440 | 2.85% | ✅ đạt | 1440×2173 | e297a009 |
+| D-69 | Cài đặt · Vai trò & phân quyền | 390 | 3.56% | ❌ chưa đạt | 390×9054 | e297a009 |
 | D-70 | Cài đặt · Email chào mừng | 1440 | 0.82% | ✅ đạt | 1440×1236 | 3c4f6f94 |
 | D-70 | Cài đặt · Email chào mừng | 390 | 11.62% | ❌ chưa đạt | 390×2928 | 3c4f6f94 |
 | D-71 | Cài đặt · SMTP | 1440 | 0.65% | ✅ đạt | 1440×1010 | 3c4f6f94 |
@@ -426,8 +426,8 @@
 | D-73 | Cài đặt · Tài khoản quản trị | 390 | 7.96% | ❌ chưa đạt | 390×2297 | 3c4f6f94 |
 | D-74 | Tài khoản quản trị · hộp thoại tạo TK (§21 RB-R02) | 1440 | 1.18% | ✅ đạt | 1440×900 | 3c4f6f94 |
 | D-74 | Tài khoản quản trị · hộp thoại tạo TK (§21 RB-R02) | 390 | 1.72% | ✅ đạt | 390×844 | 3c4f6f94 |
-| D-75 | Cài đặt · Nhật ký hoạt động | 1440 | 7.72% | ❌ chưa đạt | 1440×1006 | 3c4f6f94 |
-| D-75 | Cài đặt · Nhật ký hoạt động | 390 | 10.32% | ❌ chưa đạt | 390×1680 | 3c4f6f94 |
+| D-75 | Cài đặt · Nhật ký hoạt động | 1440 | 7.72% | ❌ chưa đạt | 1440×1006 | e297a009 |
+| D-75 | Cài đặt · Nhật ký hoạt động | 390 | 10.32% | ❌ chưa đạt | 390×1680 | e297a009 |
 | D-80 | Toast toàn cục | 1440 | 0.12% | ✅ đạt | 1440×900 | 0b76e98a |
 | D-80 | Toast toàn cục | 390 | 4.69% | ❌ chưa đạt | 390×844 | 0b76e98a |
 | D-81 | Xem thử vai trò Kế toán · menu + dải cam (RB-R09, AT-RB02) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.09% | ✅ đạt | 1440×900 | 0b76e98a |

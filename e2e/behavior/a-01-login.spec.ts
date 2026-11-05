@@ -1,5 +1,36 @@
 import { expect, test } from '../server/test';
 import { ADMIN_URL, PORTAL_URL } from '../urls';
+import { setLocale } from './helpers/i18n';
+
+test('REQ-630 v4.6 hero exact copy and four title-description blocks on both portals; English translated', async ({
+  page,
+}) => {
+  for (const origin of [PORTAL_URL, ADMIN_URL]) {
+    await page.goto(`${origin}/login`, { waitUntil: 'networkidle' });
+    await expect(page.getByText('CỘNG ĐỒNG DOANH NGHIỆP MỘT NGƯỜI', { exact: true })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1 })).toContainText(
+      'Liên kết chuỗi cung ứng, mở rộng thị trường',
+    );
+    for (const text of [
+      'Học tập và chuyển đổi OPC',
+      'Trang bị kiến thức, kỹ năng và công cụ để phát triển doanh nghiệp một người.',
+      'Kết nối cộng đồng và chuyên gia',
+      'Kết nối cá nhân, doanh nghiệp, chuyên gia và đối tác.',
+      'Liên kết chuỗi cung ứng địa phương',
+      'Kết nối nguồn cung, nhu cầu, sản phẩm, dịch vụ và cơ hội hợp tác.',
+      'Mở rộng thị trường quốc tế',
+      'Tìm kiếm khách hàng, đối tác và cơ hội kinh doanh xuyên biên giới.',
+      'Kết nối địa phương · Kiến tạo chuỗi cung ứng quốc tế',
+    ])
+      await expect(page.getByText(text, { exact: true })).toBeVisible();
+  }
+  await setLocale(page, 'en');
+  await page.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
+  await expect(page.getByText('Link supply chains, expand markets', { exact: true })).toBeVisible();
+  await expect(
+    page.getByText('Connect with the community and experts', { exact: true }),
+  ).toBeVisible();
+});
 
 /** A-01 — hành vi đăng nhập trên app mới (MSW) */
 test.describe('A-01 Đăng nhập', () => {

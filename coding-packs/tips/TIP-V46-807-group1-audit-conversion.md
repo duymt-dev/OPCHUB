@@ -485,3 +485,16 @@ Ghi 5 câu vào `reports/ui-parity/questions.md` › V4.6 (dạng "mặc định
   - Manifest audit dựa trên chuỗi action xuất hiện trong mã nguồn. Cách này bắt được route mới chưa phân loại, nhưng không chứng minh được service gọi audit ở mọi nhánh. Các nhánh lỗi / sớm vẫn dựa vào int test từng domain.
   - Bảng chuyển đổi dùng LATERAL trên toàn bộ users. Ở quy mô lớn cần đo EXPLAIN; cache 60 giây giảm tải nhưng không thay được việc đo.
   - Dịch 9 bộ ngôn ngữ do AI (D-65), người bản xứ soát sau.
+## Execution file refinements (builder)
+
+- Shared audit pagination/cursor/time schemas are isolated in `packages/shared/src/api-domains/audit-log-page.ts` (+ spec), exported by the API barrel instead of expanding settings-admin; no contract change beyond TIP.
+- `settings/repositories/audit-log.repository.ts` owns keyset SQL; `settings/settings-audit.module.ts` registers API/worker export builders without making SettingsCore depend on ExportCore.
+- `reporting/conversion.ts` owns pure row/rate assembly; `reporting/transparency-plan.int.spec.ts` covers the three runtime queries with deployed-index clones.
+- `overview/components/conversion-grid.tsx` extracts the table from its orchestration component.
+- Shared mock pagination, CSV formatting and conversion are split into `mock-data/domains/{audit-log-page,transparency-csv,overview-conversion}.ts`; Admin handlers split into `mocks/handlers/audit-log.ts`.
+- Existing `affiliate-admin/{state,write}.ts` centralize positive-only mock reads and preserve amounts when a new rate rounds to zero. Portal converted zero-only referrals map back to pending without rewriting history.
+- `common/http/csv.ts` exports existing Bank formula defence for the two new CSV builders; Bank only swaps its local helper for that export.
+- `e2e/behavior/helpers/csv-download.ts` reads actual downloads for BOM assertions on all four required CSV screens; `admin-rbac.spec.ts` asserts the new label.
+- Audit keysets preserve PostgreSQL microsecond cursor precision rather than truncating through JS Date; an integration case checks consecutive one-row pages.
+- No new dependency, event, permission key, production timeout or test assertion relaxation.
+- The accidental generated/compensating migration incident and owner-selected resolution must be recorded in completion before handoff.

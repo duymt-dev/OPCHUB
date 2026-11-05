@@ -142,6 +142,7 @@ export const ADMIN_SETTINGS: Scenario[] = [
     steps: async (c) => {
       await settingsTab(c, 'Nhật ký hoạt động');
       await waitText(c, 'Nhật ký hoạt động quản trị');
+      await waitText(c, 'Xuất CSV');
     },
   },
   { id: 'D-76', name: 'Cài đặt · SSO', start: 'admin', unreachable: `Panel SSO: ${NO_ENTRY}` },
