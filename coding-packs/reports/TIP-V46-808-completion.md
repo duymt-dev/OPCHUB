@@ -52,6 +52,22 @@ triaged, not ignored. This document is a work log, not completion approval.
   scoped search/Affiliate/stores11/11 passed. Full MSW rerun in progress.
   No assertions, fixtures or production behavior were changed.
 
+## Latest checkpoint
+
+- Full MSW rerun:372 passed,4 skipped, child exit0 (`v46-808-full-msw-r2.log`).
+- Native identical search tests3/3; final-asset MSW/native parity each12/12.
+- Approved service fixture repair adds returned `commentId` to the existing code filter;
+  preserved outbox history and all assertions. First full root run retained an old event
+  with the reused code; stopped that known-red run to validate the approved correction.
+- Needs2-character query now uses a bounded prefix/fallback SQL strategy with visibility
+  before limits and ranked-ID limit before payload join. Same old/new results in8 combinations;
+  complete scope38/38 PASS. Latest measured needs2 chars37.967ms (previous78.966/101.447ms).
+- Latest lint8/8, typecheck8/8, depcheck PASS; server rebuild PASS. Production query semantics,
+  timeout settings, indexes and response contracts are unchanged by this optimization.
+- Full final root integration rerun is in progress with one threaded worker and file
+  parallelism still disabled; same assertions/isolation, no timeout changes. Final root units
+  also use bounded threads after OS-level fork startup failures; final counts pending.
+
 ## Migration safety
 
 Prisma create-only generated a Nov5 diff proposing unrelated drops (existing indexes/FK).

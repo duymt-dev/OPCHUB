@@ -269,7 +269,11 @@ describe('Dịch vụ + phiếu yêu cầu (B46)', () => {
     const cm = adminServiceCommentSchema.parse(await c.json());
     expect(cm.body).not.toContain('<script>');
     const ev = await t.prisma.db.outboxEvent.findFirstOrThrow({
-      where: { type: 'service_request.mentioned', payload: { path: ['code'], equals: r.code } },
+      where: {
+        type: 'service_request.mentioned',
+        payload: { path: ['code'], equals: r.code },
+        AND: { payload: { path: ['commentId'], equals: cm.id } },
+      },
       select: { payload: true },
     });
     const payload = ev.payload as {

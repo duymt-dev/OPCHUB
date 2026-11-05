@@ -4,6 +4,17 @@
 
 ### Execution refinements (05/11/2026)
 
+- Performance refinement within SPEC12: `local-business/repositories/need-search-short.query.ts`
+  handles2-character needs queries with one SQL, visibility applied before each limit,
+  prefix-first bounded CTE and fallback excluding only the already selected IDs. No new
+  indexes, cache or business filters. Exact old/new result equivalence covers prefix-full,
+  fallback-only, escaped patterns and Portal/Admin scopes on10k fixtures.
+
+- Owner approved `apps/server/test/service/service.int.spec.ts` regression fixture repair:
+  correlate the mentioned outbox event with the newly returned comment ID as well as the
+  business code (which demo reset reuses). Preserve all recipient/sanitize/notification
+  assertions, production logic and historical outbox rows.
+
 - Owner additionally approved a narrow regression-selector repair in
   `e2e/behavior/affiliate-screen.spec.ts`: three month-select actions now identify the
   `Tháng …` combobox, avoiding the new topbar combobox. All assertions and production

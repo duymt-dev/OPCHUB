@@ -77,6 +77,7 @@ describe('TIP-V46-808 global search real HTTP + visibility equivalence', () => {
       joined: true,
     });
     expect(await get('zqx ca phe')).toEqual(await get('Zqx cà phê'));
+    expect(await get('Zq')).toEqual(await get('zqx'));
     expect(result.groups.every((g) => g.items.length <= 4)).toBe(true);
   });
   it.each(['%_', '\\%', "' OR 1=1 --", 'unmatched-zzqqxx'])(

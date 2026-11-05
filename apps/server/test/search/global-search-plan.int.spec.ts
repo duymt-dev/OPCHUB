@@ -2,7 +2,10 @@ import { createPrismaClient, Prisma, type DbClient } from '@opchub/db';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { loadEnv } from '@/common/config';
 import { storeSearchQuery } from '@/modules/local-business/repositories/store-search.query';
-import { needSearchQuery } from '@/modules/local-business/repositories/need-search.query';
+import {
+  containsNeedSearchQuery,
+  needSearchQuery,
+} from '@/modules/local-business/repositories/need-search.query';
 import { projectSearchQuery } from '@/modules/project/repositories/project-search.query';
 import { groupSearchQuery } from '@/modules/community/repositories/group-search.query';
 import { memberGlobalSearchQuery } from '@/modules/account/repositories/member-global-search.query';
@@ -43,6 +46,15 @@ describe('TIP-V46-808 actual production search SQL / 10000 rows per domain', () 
       process.stdout.write(
         `\n${table} 2 chars (target <50ms):\n${short.map((r) => r['QUERY PLAN']).join('\n')}\n`,
       );
+    },
+  );
+  it.each(['Ne', 'Ot', 'fe', '%_'])(
+    'two-character prefix/fallback keeps exact contains ordering: %s',
+    async (q) => {
+      for (const admin of [false, true]) {
+        const original = await db.$queryRaw(containsNeedSearchQuery(q, admin, now));
+        expect(await db.$queryRaw(needSearchQuery(q, admin, now))).toEqual(original);
+      }
     },
   );
 });
