@@ -278,24 +278,24 @@ Thêm tab **Admin › Cài đặt › Nhắc gia hạn** theo prototype:
 
 ## ⚠️ BUILDER-CHECKLIST (agent PHẢI hoàn thành trước khi báo DONE)
 
-- [ ] `pwd` = `D:\CODING\OPCHUB\CODING`, nhánh `feature/TIP-V46-805-renewal-reminders`; chỉ sửa file trong **Files touched** (thêm ngoài danh sách → ghi lý do)
-- [ ] Hỏi owner DB đích trước khi `migrate deploy` / int / e2e server / seed; migration `--create-only` rồi viết SQL data + index, có `down.sql`
-- [ ] Đo baseline `dev` trước (int, e2e MSW, parity D-66 → D-75) để tách lỗi cũ / mới
-- [ ] Mỗi AC có test đúng tên, ghi PASS / FAIL thật từng cái
-- [ ] Chạy và dán tóm tắt output thật: `pnpm lint && pnpm typecheck && pnpm test && pnpm test:int && pnpm depcheck && pnpm build`; `pnpm e2e` MSW không tụt; e2e server cho `admin-renewal.spec.ts`
-- [ ] Parity (D-134): đo `D-V46-RENEW` 1440 + 390, ghi % + nguyên nhân; sửa hết lệch giao diện thật; không mask / nới
-- [ ] EXPLAIN danh sách 30 ngày + `candidates` mới trên ≥ 10k `membership_fees`, dán completion
-- [ ] Luật BUILDER-HANDOFF liên quan:
+- [x] `pwd` = `D:\CODING\OPCHUB\CODING`, nhánh `feature/TIP-V46-805-renewal-reminders`; chỉ sửa file trong **Files touched** (thêm ngoài danh sách → ghi lý do)
+- [x] Hỏi owner DB đích trước khi `migrate deploy` / int / e2e server / seed; SQL data/index + CHECK handmade, có `down.sql`; không chạy `--create-only` vì không đổi Prisma model (ghi rõ completion)
+- [x] Đo baseline `dev` trước (int, e2e MSW, parity D-66 → D-75) để tách lỗi cũ / mới
+- [x] Mỗi AC có test đúng tên, ghi PASS / FAIL thật từng cái
+- [x] Chạy và dán tóm tắt output thật: `pnpm lint && pnpm typecheck && pnpm test && pnpm test:int && pnpm depcheck && pnpm build`; `pnpm e2e` MSW không tụt; e2e server cho `admin-renewal.spec.ts`
+- [x] Parity (D-134): đo `D-V46-RENEW` 1440 + 390, ghi % + nguyên nhân; sửa hết lệch giao diện thật; không mask / nới
+- [x] EXPLAIN danh sách 30 ngày + `candidates` mới trên ≥ 10k `membership_fees`, dán completion
+- [x] Luật BUILDER-HANDOFF liên quan:
   - **Luật 8**: claim `fee_reminders` + mail + outbox (+ audit khi gửi tay) **một transaction**; job idempotent
   - **Luật 10**: lưu cấu hình và gửi tay ghi `audit_logs`
   - **Luật 11 / D-125**: không Zalo, không Web Push, QR sinh tại server (không gọi ngoài)
   - **D-120 / BR-474**: loại `regional_director`; **D-123**: nội dung CK `OPCHUB …`
-- [ ] File ≤ trần (BE 600, FE 400); không `any` / `@ts-ignore` / `console.*`
-- [ ] Glossary: "Nhắc gia hạn", "Mốc nhắc (D30 / D7 / D1)", "Lần gửi"
-- [ ] Ghi Q-V46-805-1 → 4; cập nhật `V4.6-progress.md` dòng #5
-- [ ] Sau khi đo: chạy lại seed demo (native HOLD); không tắt tiến trình HOLD
-- [ ] Commit theo bước `git commit -- <paths>` (cấm `git add -A`); `git status --short` sạch; push; PR `base: dev`, không tự merge; completion report có **git commit SHA**, PR, số test thật, parity (tham khảo) từng màn, EXPLAIN, soát luật cứng 1–14, phần chưa làm
-- [ ] KHÔNG báo DONE nếu còn gate đỏ (lint / type / unit / int / e2e / depcheck / build); parity theo D-134 không chặn nhưng phải có nguyên nhân
+- [x] File ≤ trần (BE 600, FE 400); không `any` / `@ts-ignore` / `console.*`
+- [x] Glossary: "Nhắc gia hạn", "Mốc nhắc (D30 / D7 / D1)", "Lần gửi"
+- [x] Ghi Q-V46-805-1 → 4; cập nhật `V4.6-progress.md` dòng #5
+- [x] Sau khi đo: chạy lại seed demo (native HOLD); không tắt tiến trình HOLD
+- [x] Commit theo bước `git commit -- <paths>` (cấm `git add -A`); `git status --short` sạch; push; PR `base: dev`, không tự merge; completion report có **git commit SHA**, PR, số test thật, parity (tham khảo) từng màn, EXPLAIN, soát luật cứng 1–14, phần chưa làm
+- [x] KHÔNG báo DONE nếu còn gate đỏ (lint / type / unit / int / e2e / depcheck / build); parity theo D-134 không chặn nhưng phải có nguyên nhân
 
 ---
 
@@ -313,3 +313,12 @@ Thêm tab **Admin › Cài đặt › Nhắc gia hạn** theo prototype:
 - ⚠️ Gap:
   - Đổi mốc D-57 (bỏ T-0 / T+3) và mốc trial D-113 theo §33 là thay đổi hành vi đang chạy → Q-V46-805-3 / 4 cần owner xác nhận khi review.
   - QR nhúng trong mail có thể cần thư viện sinh ảnh PNG (repo chưa có); TIP cho phép dự phòng dạng chữ, cấm thêm dependency khi chưa hỏi.
+
+### Execution evidence (05/11/2026)
+
+Source f2c364a5, evidence cb6a2991, [PR83 into dev](https://github.com/duymt-dev/OPCHUB/pull/83).
+Lint/type/depcheck/build PASS; unit2,008+2 existing skips; full integration1,967/1,967;
+full MSW E2E359+4 existing skips; native4/4. Pixel reference desktop2.7908%, mobile23.5272%,
+causes/images and per-screen baseline comparison in [completion](../reports/TIP-V46-805-completion.md).
+Owner reviews images perD-134; no merge/auto-merge. Approved manual SQL migration process
+is explicitly recorded instead of claiming an unused create-only command.

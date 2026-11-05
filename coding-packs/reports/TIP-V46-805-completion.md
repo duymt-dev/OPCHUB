@@ -1,11 +1,13 @@
 # TIP-V46-805 — Completion report
 
-## Status: IN-PROGRESS — final full-suite evidence pending
+## Status: DONE — all non-pixel gates PASS; owner image review per D-134
 
 Branch `feature/TIP-V46-805-renewal-reminders`, from dev `8deb0dd8`;
 TIP checkpoint `97f792bb`. REQ-620 / REQ-204, BR-471–474, TC-471/472.
-No merge, auto-merge or main push. Source **f2c364a5** committed and pushed; [draft PR #83 into dev](https://github.com/duymt-dev/OPCHUB/pull/83).
-Final gate totals are updated only after the corresponding commands finish.
+No merge, auto-merge or main push. Source **f2c364a5** committed and pushed; [PR #83 into dev](https://github.com/duymt-dev/OPCHUB/pull/83).
+Final verification completed 05/11/2026, approximately 12:53 +07. Source remains f2c364a5;
+cb6a2991 records the earlier evidence checkpoint. This report and final checklist are
+committed/pushed in the final documentation checkpoint; no uncommitted source is HOLD.
 
 ## Implementation
 
@@ -60,18 +62,18 @@ All log names below are local ignored files under `test-results/`.
 
 | Gate | Actual result | Log |
 |---|---|---|
-| lint | PASS 8/8; 7 cached + Admin fresh; existing img warnings only | v46-805-lint-final2.log |
-| typecheck | PASS 8/8; 7 cached + Admin fresh | v46-805-type-final2.log |
+| lint final committed source | PASS 8/8; 6 cached +2 fresh; 3m5.956s, existing img warnings only | v46-805-lint-committed.log |
+| typecheck final committed source | PASS 8/8; 6 cached +2 fresh; 47.109s | v46-805-type-committed.log |
 | depcheck | PASS both FE/shared/E2E and backend graphs | v46-805-depcheck.log |
 | root unit R1 | PASS **2,008 + 2 existing skips**, 6/6 tasks | v46-805-unit-r1.log |
 | root unit final R1 | FAIL: Admin532 passed, seven fork-worker startup timeouts; no assertion failure | v46-805-unit-final.log |
-| root unit final R2 | RUNNING complete root suite again after build/parity/native load ended | v46-805-unit-final-r2.log |
+| root unit final R2 | PASS **2,008 +2 existing skips**, 6/6 tasks, 5 cached + Admin fresh; 10m31.87s | v46-805-unit-final-r2.log |
 | root build MSW final | PASS 3/3 forced tasks | v46-805-build-msw-final.log |
 | native FE build final | PASS 2/2 forced tasks | v46-805-build-native-final.log |
 | affected integration final | PASS **29/29**, five files | v46-805-int-scope-r4.log |
-| full integration | RUNNING, pool4 / one test worker | v46-805-int-full.log |
+| full integration | PASS **1,967/1,967**: DB126/26 files + server1,841/203 files; 2/2 fresh tasks, 55m57.454s | v46-805-int-full.log |
 | new MSW scope R2 | PASS **4/4**, before final visual polish | v46-805-e2e-msw-scope-r2.log |
-| full MSW E2E final R2 | RUNNING complete suite after price-tab assertion update | v46-805-e2e-msw-final-r2.log |
+| full MSW E2E final R2 | PASS **359 +4 existing skips**, 363 total, 15.8m | v46-805-e2e-msw-final-r2.log |
 | native E2E final | PASS **4/4**, same assertions as MSW, final build | v46-805-e2e-native-final.log |
 | final parity MSW R1 | 22 images: 12 passed / 10 above3%; two harness passed | v46-805-parity-msw-final.log |
 | final parity native | New screen desktop2.79%, mobile23.53%; two harness passed | v46-805-parity-native-final.log |
@@ -97,10 +99,18 @@ API4300/socket4301. Builds are separate `.next-v46-805-msw-v2` and
 - Final full MSW R1 found the old price test asserting Admin Accounts immediately after
   Price. TIP805 deliberately inserts Renewal there. Test now requires **Price → Renewal →
   Admin Accounts**; price fields and every other assertion remain unchanged. R1 was
-  explicitly interrupted after this known failure, not reported as a full pass; R2 starts
-  from the beginning on the unchanged final build.
+  explicitly interrupted after this known failure, not reported as a full pass; R2 ran
+  from the beginning on the unchanged final build and passed359/4skip.
 - Final visual polish corrected switch size, list heading size and visible mobile empty
   state. React purity lint was corrected with `useNow`, not disabled/suppressed.
+
+Unit final R1 had seven **fork-worker startup timeouts**, not failed assertions.
+The complete root suite was run again unchanged after build/native/parity load ended;
+Admin115/115 files and548/548 tests passed, no worker errors. No timeout, isolation,
+assertion or skip was changed. Final unit breakdown: shared657, server237, Portal407,
+Admin548, UI56, integrations103 +2 existing skips. Full integration used pool4 to stay
+within the native server connection budget; all203 server files completed in one run.
+E2E baseline355/4skip became359/4skip through four new acceptance cases; no test removed.
 
 ## Acceptance trace
 
@@ -193,7 +203,8 @@ owner review, not permission to leave genuine new UI defects unfixed.
 11. Fake mail/provider adapters; local QR payload only; no external API/dependency.
 12. No secret/new env variable committed; local runtime helpers remain ignored.
 13. Tests are independent files.
-14. Source f2c364a5 committed/pushed; final report/artifacts and clean status pending.
+14. Source f2c364a5 committed/pushed, evidence cb6a2991; final docs committed/pushed and
+    clean worktree checked before the final DONE message. PR targets dev, owner merges.
 
 ## Native HOLD / remaining work
 
@@ -204,7 +215,16 @@ These are **private DEV** counts only; test DB was not seeded or counted as HOLD
 Only dev cache6381 DB1 was flushed. Manifest `test-results/v46-805-hold.json` records
 sourcef2c364a5, API/socket/worker PIDs26648/4984/26292, native Next4820/4208 and dist.
 Original native PID5932 PostgreSQL and PID1244 Memurai remain live with their original
-04/11 startup time. Owned services remain running, original native DB/cache untouched. No DONE
-until all non-pixel gates are green, final report/PR updated and working tree clean.
+04/11 startup time. Owned services remain running, original native DB/cache untouched.
+Native browser endpoints: Portal `http://localhost:3500`, Admin `http://localhost:3501`;
+API `http://127.0.0.1:4300/v1/health`, socket4301. MSW endpoints3600/3601 also remain live.
+All non-pixel gates are green. Owner reviews the linked images and merges PR into dev;
+agent has not merged or enabled auto-merge.
 Not implemented: QR PNG/CID, Zalo, Web Push, fundraising renewal flow, TIP806 bank settings,
 TIP807 audit-wide work, TIP811 PWA; no dependency added.
+
+Verification boundary: full MSW suite plus the four TIP805 native behavior cases, not
+a claim of a full all-features native browser suite. Concurrent automatic job claims
+and sequential repeated manual sending are tested; overlapping Admin manual requests
+are not separately stress-tested. Mail-log persistence is proven by API/integration and
+page navigation; existing marketing query-cache behavior is unchanged.
