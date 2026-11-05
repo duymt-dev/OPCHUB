@@ -6,7 +6,7 @@ import { reportParamsSchema } from './reports';
  * FE hỏi `GET /admin/exports/:id` tới khi `done` → `url` tải (presign 1 giờ, NA-14);
  * mỗi lần trả `url` server ghi audit `export.download`.
  */
-export const EXPORT_KINDS = ['users', 'group_members', 'report'] as const;
+export const EXPORT_KINDS = ['users', 'group_members', 'report', 'audit'] as const;
 export type ExportKind = (typeof EXPORT_KINDS)[number];
 
 export const EXPORT_JOB_STATUS = ['queued', 'running', 'done', 'failed'] as const;
@@ -37,6 +37,7 @@ export const GROUP_EXPORT_FIELDS = [
 
 /** Tham số job lưu trong `export_jobs.params` — worker parse lại */
 export const exportParamsSchema = z.discriminatedUnion('kind', [
+  z.object({ kind: z.literal('audit') }).strict(),
   z.object({ kind: z.literal('users'), userIds: z.array(z.string()).optional() }),
   z.object({
     kind: z.literal('group_members'),

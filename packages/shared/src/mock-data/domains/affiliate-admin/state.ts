@@ -50,7 +50,9 @@ export function affiliateCommissionRefs() {
       ].map((r) => [r.row.id, r]),
     ).values(),
   ].filter(
-    (r) => r.row.status === 'recorded' || r.row.status === 'paid' || r.row.status === 'cancelled',
+    (r) =>
+      r.row.commission > 0 &&
+      (r.row.status === 'recorded' || r.row.status === 'paid' || r.row.status === 'cancelled'),
   );
 }
 

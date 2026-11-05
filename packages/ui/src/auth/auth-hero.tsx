@@ -10,7 +10,7 @@ export function AuthHero({ copy }: AuthHeroProps) {
       <h1 className={styles.headline}>
         {copy.headlineLead}
         <br />
-        {copy.headlinePre} <span className={styles.accent}>{copy.headlineAccent}</span>
+        <span className={styles.accent}>{copy.headlineAccent}</span>
       </h1>
       <p className={styles.sub}>{copy.sub}</p>
       <div className={styles.values}>
@@ -20,8 +20,8 @@ export function AuthHero({ copy }: AuthHeroProps) {
               <ValueIcon name={v.icon} />
             </span>
             <span className={styles.valueText}>
-              <span>{v.lines[0]}</span>
-              <span>{v.lines[1]}</span>
+              <span className={styles.valueTitle}>{v.title}</span>
+              <span className={styles.valueDesc}>{v.desc}</span>
             </span>
           </div>
         ))}

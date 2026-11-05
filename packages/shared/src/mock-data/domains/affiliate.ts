@@ -119,6 +119,8 @@ export function syncMockAffiliates() {
   for (const r of s.referrals.values()) {
     const fee = mockDb().fees.find((f) => f.userId === r.userId);
     if (r.row.status !== 'pending' || !fee?.paidAt) continue;
+    const rate = s.agents.get(r.agentId)?.rate ?? readMockAffiliatePolicy().defaultRate;
+    if (mockCommissionAmount(fee.amount, rate) <= 0) continue;
     // D-110: mã luôn hoạt động — không void theo phí của đại lý
     r.row.status = 'recorded';
     r.row.rate = s.agents.get(r.agentId)?.rate ?? readMockAffiliatePolicy().defaultRate;
@@ -272,7 +274,27 @@ function referenceRows(s: State, userId: string) {
   const rows = [...s.referrals.values(), ...s.referenceCommissions.values()].filter(
     (r) => r.agentId === userId,
   );
-  return [...new Map(rows.map((r) => [r.row.id, r])).values()];
+  const unique = [...new Map(rows.map((r) => [r.row.id, r])).values()];
+  const positive = unique.filter((r) => r.row.commission > 0);
+  const paidCustomers = new Set(positive.map((r) => r.userId));
+  const pending = [...s.referrals.values()].filter(
+    (r) => r.agentId === userId && r.row.commission <= 0 && !paidCustomers.has(r.userId),
+  );
+  return [
+    ...positive,
+    ...pending.map((r) => ({
+      ...r,
+      row: {
+        ...r.row,
+        status: r.row.status === 'void' ? ('void' as const) : ('pending' as const),
+        plan: '—',
+        feeAmount: 0,
+        commission: 0,
+        rate: 0,
+        cancelReason: null,
+      },
+    })),
+  ];
 }
 
 export function mockAffiliateReferrals(userId: string, q: AffiliatePageQuery): AffiliateReferrals {
@@ -316,7 +338,7 @@ export function mockAffiliateBank(userId: string, bank: AffiliateBank): MockResu
 }
 
 export function mockAffiliatePayouts(userId: string, q: AffiliatePageQuery): AffiliatePayouts {
-  const rows = affiliateMockState().payouts.get(userId) ?? [];
+  const rows = (affiliateMockState().payouts.get(userId) ?? []).filter((r) => r.amount > 0);
   return {
     items: rows.slice((q.page - 1) * q.size, q.page * q.size),
     page: q.page,

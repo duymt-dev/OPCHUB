@@ -3,12 +3,11 @@ export interface AuthHeroCopy {
   eyebrow: string;
   /** Dòng 1 tiêu đề */
   headlineLead: string;
-  /** Dòng 2: phần thường + phần nhấn màu */
-  headlinePre: string;
+  /** Dòng 2: toàn bộ là phần nhấn màu */
   headlineAccent: string;
   sub: string;
-  /** 4 giá trị, mỗi giá trị 2 dòng */
-  values: { icon: 'learn' | 'people' | 'supply' | 'globe'; lines: [string, string] }[];
+  /** 4 giá trị: tiêu đề và mô tả */
+  values: { icon: 'learn' | 'people' | 'supply' | 'globe'; title: string; desc: string }[];
 }
 
 export interface AuthHeroProps {

@@ -14,6 +14,11 @@ import {
 } from './permissions';
 
 describe('RBAC Admin 28 khoá (TIP-V2-201, V4-606, V4-614)', () => {
+  it('D-132 affiliate.payout is labelled Chi trả GĐ Vùng, without changing permission key', () => {
+    expect(ADMIN_PERMISSIONS.find((p) => p.key === 'affiliate.payout')?.label).toBe(
+      'Chi trả GĐ Vùng',
+    );
+  });
   it('REQ-325 REQ-514 REQ-516 28 khoá, đúng 13 menu, mỗi menu có .view', () => {
     expect(ADMIN_PERMISSIONS).toHaveLength(29);
     expect(new Set(ADMIN_PERMISSION_KEYS).size).toBe(29);
