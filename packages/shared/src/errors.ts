@@ -1,5 +1,6 @@
 /** Mã lỗi API — coding-packs/standards/backend/api-conventions.md */
 export const ERROR_CODES = [
+  'INTEGRATION_ERROR',
   'RENEWAL_NO_CHANNEL',
   'VALIDATION_ERROR',
   'UNAUTHORIZED',

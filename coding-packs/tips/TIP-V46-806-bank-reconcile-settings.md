@@ -44,6 +44,18 @@
     - `e2e/behavior/admin-bank-reconcile.spec.ts` (create); `e2e/parity/scenarios/admin-settings.ts` (modify: thêm `D-V46-BANK`)
   - Tài liệu
     - `coding-packs/standards/global/domain-glossary.md`, `coding-packs/reports/V4.6-progress.md` (dòng #6), `coding-packs/reports/ui-parity/{screens,questions}.md`, `coding-packs/reports/TIP-V46-806-completion.md` (create)
+- **Execution file refinements (same scope, no new business behavior):**
+  - `packages/db/prisma/migrations/20261109091000_v46_bank_status_counts/{migration,down}.sql` (create): actual EXPLAIN exposed a counts Seq Scan; compact partial status index fixes the runtime query without planner flags.
+  - `apps/server/src/modules/membership-fee/repositories/bank-transactions.{repository,query}.ts` (create): isolate keyset/list/count/short logic instead of expanding the existing payment repository.
+  - `apps/server/src/modules/membership-fee/services/bank-{csv,simulation}.service.ts` (create), `controllers/dev-bank.controller.ts` (modify): split export and shared fake ingress; keep existing dev endpoint through a facade.
+  - `packages/shared/src/errors.ts`, `apps/server/src/common/errors/app-error.ts` (modify): sanitized adapter failure maps to 502 INTEGRATION_ERROR.
+  - `apps/admin/src/features/settings/bank-api.ts` (create instead of expanding api.ts); `hooks/use-bank-key.ts`, `components/bank-copy-button.tsx`, `bank-transactions.tsx`, `bank-txn-cells.tsx` (create): isolate one-time secrets, clipboard and table/dialog orchestration under function/file caps.
+  - `apps/admin/src/features/fees/index.ts` (modify, one public export): reuse MatchDialog through the feature facade; depcheck passes, no feature-internal import.
+  - `apps/admin/src/mocks/handlers/bank-reconcile.ts` (create), `handlers/fees.ts` (modify): isolated handlers and existing manual-match delegation.
+  - `packages/shared/src/mock-data/domains/bank-reconcile-seed.ts`, `bank-reconcile.spec.ts`, `packages/integrations/src/bank-webhook/dynamic-secret.spec.ts`, `apps/server/test/membership-fee/bank-reconcile-plan.int.spec.ts` (create): shared five-row fixture, dynamic-key contracts, real 10k-row query plans.
+  - `e2e/behavior/admin-price-config.spec.ts` (modify): preserve assertions and update the ordered settings tabs to include Bank.
+  - `coding-packs/reports/TIP-V46-806-query-plans.md` (create), `ui-parity/results.{json,md}` and generated scoped diff PNGs (modify/create): actual EXPLAIN and image evidence.
+  - `seed/demo/settings.ts` and `reconcile-v42.int.spec.ts` need no changes. Existing reconcile test narrows its own two fixture contents rather than matching unrelated accumulated test rows.
 - **Parallel-safe with:** sequential.
   - Chia `admin/features/settings/**`, `messages/vi/settings.json`, `mocks/handlers/settings.ts`, `e2e/parity/scenarios/admin-settings.ts`, `settings/app-settings.service.ts` với V46-805 (đã merge), V46-807, V46-811 → 807, 811 chạy sau.
   - Chia `modules/membership-fee/**`, `membership-fee.prisma` với V46-805 (đã merge).

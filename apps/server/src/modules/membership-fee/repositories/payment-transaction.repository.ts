@@ -54,8 +54,15 @@ export class PaymentTransactionRepository {
   async noteUnmatched(tx: DbTx, id: string, reason: string): Promise<void> {
     await tx.$executeRaw`
       UPDATE payment_transactions
-      SET raw = raw || jsonb_build_object('_unmatchedReason', ${reason}::text)
+      SET raw = raw || jsonb_build_object('_unmatchedReason', ${reason}::text,
+        '_unmatchedCode', ${reason === 'Số tiền nhỏ hơn phí thành viên' ? 'short_amount' : 'unmatched'}::text)
       WHERE id = ${id} AND match_status = 'unmatched'`;
+  }
+
+  async deferActivation(tx: DbTx, id: string, reason: string): Promise<void> {
+    await tx.$executeRaw`UPDATE payment_transactions
+      SET raw=raw||jsonb_build_object('_unmatchedReason',${reason}::text,'_autoActivationDeferred',true)
+      WHERE id=${id} AND match_status='unmatched'`;
   }
 
   /** Trả id kỳ + có phải kỳ đầu tiên của người này (AF-R05) — đếm trong tx sau khoá dòng phí */

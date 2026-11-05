@@ -5,6 +5,7 @@ import {
   type WelcomeMail,
   welcomeMailSchema,
   renewalSettingsSchema,
+  bankSettingsPatchSchema,
 } from '@opchub/shared/api-domains';
 import { z } from 'zod';
 import { PrismaService } from '@/common/prisma/prisma.service';
@@ -21,10 +22,12 @@ const securityCoreSchema = z.object({
 });
 export type SecurityCore = z.infer<typeof securityCoreSchema>;
 
-export type SettingKey = 'general' | 'security' | 'languages' | 'welcome_mail' | 'bot' | 'renewal';
+export type SettingKey =
+  'general' | 'security' | 'languages' | 'welcome_mail' | 'bot' | 'renewal' | 'bank';
 
 const CACHE_TTL_SEC = 60;
 const cacheKey = (k: SettingKey) => `settings:${k}`;
+const BANK_EPOCH = 'settings:bank:epoch';
 
 /**
  * Đọc `app_settings` (S-03: không query DB mỗi request — cache Redis 60 giây).
@@ -52,8 +55,15 @@ export class AppSettingsService {
   renewal() {
     return this.read('renewal', renewalSettingsSchema);
   }
+  bank() {
+    return this.read('bank', bankSettingsPatchSchema);
+  }
 
   async invalidate(key: SettingKey): Promise<void> {
+    if (key === 'bank') {
+      await this.redis.client.multi().incr(BANK_EPOCH).del(cacheKey(key)).exec();
+      return;
+    }
     await this.redis.client.del(cacheKey(key));
   }
 
@@ -63,6 +73,7 @@ export class AppSettingsService {
   }
 
   private async read<T>(key: SettingKey, schema: z.ZodType<T>): Promise<T> {
+    const epoch = key === 'bank' ? ((await this.redis.client.get(BANK_EPOCH)) ?? '0') : null;
     const cached = await this.redis.client.get(cacheKey(key));
     if (cached) {
       const hit = schema.safeParse(JSON.parse(cached));
@@ -74,7 +85,16 @@ export class AppSettingsService {
     });
     if (!row) throw new Error(`Thiếu app_settings.${key} — chạy seed bắt buộc`);
     const value = schema.parse(row.value);
-    await this.redis.client.set(cacheKey(key), JSON.stringify(value), 'EX', CACHE_TTL_SEC);
+    if (epoch !== null)
+      await this.redis.client.eval(
+        "if (redis.call('GET',KEYS[1]) or '0')==ARGV[1] then return redis.call('SET',KEYS[2],ARGV[2],'EX',60) end return 0",
+        2,
+        BANK_EPOCH,
+        cacheKey(key),
+        epoch,
+        JSON.stringify(value),
+      );
+    else await this.redis.client.set(cacheKey(key), JSON.stringify(value), 'EX', CACHE_TTL_SEC);
     return value;
   }
 }

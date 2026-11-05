@@ -1,0 +1,163 @@
+.card {
+  composes: card from './renewal.module.css';
+}
+.head {
+  composes: head from './renewal.module.css';
+}
+.configHead {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+.title {
+  composes: title from './renewal.module.css';
+}
+.primary {
+  composes: primary from './renewal.module.css';
+}
+.button {
+  composes: secondary from './renewal.module.css';
+}
+.send {
+  composes: send from './renewal.module.css';
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+  gap: 16px;
+}
+.panel {
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.muted {
+  display: block;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.55);
+}
+.field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.field input {
+  min-width: 0;
+  flex: 1;
+  font: 12px monospace;
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background: #fafafa;
+}
+.unsupported {
+  opacity: 0.45;
+  height: auto;
+  min-height: 32px;
+}
+.unsupported small {
+  display: block;
+  font-size: 10px;
+  line-height: 12px;
+}
+.selected {
+  color: #1677ff;
+  border-color: #1677ff;
+  background: #e6f4ff;
+}
+.toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.toggle b {
+  font-size: 13px;
+}
+.toggle small {
+  display: block;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+.info {
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.info > * {
+  padding: 12px;
+}
+.info > :nth-child(odd) {
+  border-right: 1px solid #f0f0f0;
+}
+.info > :nth-child(-n + 2) {
+  border-bottom: 1px solid #f0f0f0;
+}
+.infoRow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow-wrap: anywhere;
+}
+.infoRow small {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.55);
+}
+.infoRow span {
+  font-size: 13px;
+}
+.tableWrap {
+  min-width: 0;
+  overflow-x: auto;
+}
+.tableWrap > div {
+  padding: 0 !important;
+  overflow: hidden;
+}
+.tableWrap :global(table) {
+  table-layout: fixed !important;
+  width: 100% !important;
+  min-width: 818px;
+}
+.tableWrap :global(.ant-table-cell) {
+  font-size: 13px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  vertical-align: top;
+  padding: 10px 12px !important;
+}
+.tableWrap :global(.ant-tag) {
+  font-size: 11px;
+}
+.tableWrap button {
+  font-size: 12px;
+  padding: 0 10px;
+}
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.note {
+  display: block;
+  width: 100%;
+  min-height: 96px;
+  margin: 8px 0 16px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+}

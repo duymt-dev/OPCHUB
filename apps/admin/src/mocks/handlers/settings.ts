@@ -1,3 +1,4 @@
+import { bankHandlers } from './bank-reconcile';
 import type { AdminPermissionKey } from '@opchub/shared';
 import {
   adminAccountCreateSchema,
@@ -56,6 +57,7 @@ const forbidden = () => apiError(403, 'FORBIDDEN', 'Bạn không có quyền th�
 const memberEmails = members.map((m) => m.email.toLowerCase());
 
 export const settingsHandlers = [
+  ...bankHandlers,
   ...renewalHandlers,
   http.get(`${API}/admin/settings/general`, () => HttpResponse.json(getGeneralSettings())),
   http.patch(`${API}/admin/settings/general`, async ({ request }) => {
