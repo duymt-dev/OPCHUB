@@ -5,8 +5,8 @@
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
-| A-01 | Đăng nhập | 1440 | 0.16% | ✅ đạt | 1440×944 | 25a1eec |
-| A-01 | Đăng nhập | 390 | 0.42% | ✅ đạt | 390×947 | 25a1eec |
+| A-01 | Đăng nhập | 1440 | 0.10% | ✅ đạt | 1440×900 | 53c9b308 |
+| A-01 | Đăng nhập | 390 | 0.14% | ✅ đạt | 390×1747 | 53c9b308 |
 | A-02 | Đăng nhập · bỏ trống | 1440 | 0.19% | ✅ đạt | 1440×944 | 25a1eec |
 | A-02 | Đăng nhập · bỏ trống | 390 | 0.50% | ✅ đạt | 390×996 | 25a1eec |
 | A-03 | Đăng nhập · sai thông tin | 1440 | 0.15% | ✅ đạt | 1440×944 | 25a1eec |
@@ -206,8 +206,8 @@
 | P-V46-REG | Portal · Vùng của tôi | 390 | 15.23% | ❌ chưa đạt | 390×3067 | c1fd1625 |
 | P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 1440 | 16.65% | ❌ chưa đạt | 1440×1183 | c1fd1625 |
 | P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 390 | 11.01% | ❌ chưa đạt | 390×1819 | c1fd1625 |
-| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.34% | ✅ đạt | 1440×900 | 25a1eec |
-| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 0.71% | ✅ đạt | 390×844 | 25a1eec |
+| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 2.41% | ✅ đạt | 1440×1344 | 53c9b308 |
+| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 2.31% | ✅ đạt | 390×2279 | 53c9b308 |
 | D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.32% | ✅ đạt | 1440×900 | 25a1eec |
 | D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 0.60% | ✅ đạt | 390×844 | 25a1eec |
 | D-03 | Admin · Hồ sơ cá nhân (không đổi màn) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.34% | ✅ đạt | 1440×900 | 25a1eec |
@@ -336,8 +336,8 @@
 | D-67 | Cài đặt · Danh mục lĩnh vực | 390 | 5.40% | ❌ chưa đạt | 390×6826 | b1238e4c |
 | D-68 | Lĩnh vực · đang sửa | 1440 | 0.23% | ✅ đạt | 1440×2287 | b1238e4c |
 | D-68 | Lĩnh vực · đang sửa | 390 | 5.39% | ❌ chưa đạt | 390×6826 | b1238e4c |
-| D-69 | Cài đặt · Vai trò & phân quyền | 1440 | 2.65% | ✅ đạt | 1440×2102 | b1238e4c |
-| D-69 | Cài đặt · Vai trò & phân quyền | 390 | 4.82% | ❌ chưa đạt | 390×8682 | b1238e4c |
+| D-69 | Cài đặt · Vai trò & phân quyền | 1440 | 2.86% | ✅ đạt | 1440×2173 | 53c9b308 |
+| D-69 | Cài đặt · Vai trò & phân quyền | 390 | 3.56% | ❌ chưa đạt | 390×9054 | 53c9b308 |
 | D-70 | Cài đặt · Email chào mừng | 1440 | 0.44% | ✅ đạt | 1440×1236 | b1238e4c |
 | D-70 | Cài đặt · Email chào mừng | 390 | 11.76% | ❌ chưa đạt | 390×2751 | b1238e4c |
 | D-71 | Cài đặt · SMTP | 1440 | 0.19% | ✅ đạt | 1440×1010 | b1238e4c |
@@ -348,8 +348,8 @@
 | D-73 | Cài đặt · Tài khoản quản trị | 390 | 7.74% | ❌ chưa đạt | 390×2120 | b1238e4c |
 | D-74 | Tài khoản quản trị · hộp thoại tạo TK (§21 RB-R02) | 1440 | 0.76% | ✅ đạt | 1440×900 | b1238e4c |
 | D-74 | Tài khoản quản trị · hộp thoại tạo TK (§21 RB-R02) | 390 | 1.94% | ✅ đạt | 390×844 | b1238e4c |
-| D-75 | Cài đặt · Nhật ký hoạt động | 1440 | 95.59% | ❌ chưa đạt | 1440×27814 | b1238e4c |
-| D-75 | Cài đặt · Nhật ký hoạt động | 390 | 93.76% | ❌ chưa đạt | 390×42050 | b1238e4c |
+| D-75 | Cài đặt · Nhật ký hoạt động | 1440 | 69.65% | ❌ chưa đạt | 1440×3151 | 53c9b308 |
+| D-75 | Cài đặt · Nhật ký hoạt động | 390 | 68.74% | ❌ chưa đạt | 390×5519 | 53c9b308 |
 | D-80 | Toast toàn cục | 1440 | 0.16% | ✅ đạt | 1440×900 | 25a1eec |
 | D-80 | Toast toàn cục | 390 | 5.25% | ❌ chưa đạt | 390×844 | 25a1eec |
 | D-81 | Xem thử vai trò Kế toán · menu + dải cam (RB-R09, AT-RB02) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.74% | ✅ đạt | 1440×900 | 25a1eec |

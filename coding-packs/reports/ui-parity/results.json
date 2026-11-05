@@ -5,15 +5,15 @@
   "viewport": 1440,
   "diffPct": 0.10362654320987653,
   "size": "1440×900",
-  "sha": "1ba4db0b"
+  "sha": "53c9b308"
  },
  {
   "id": "A-01",
   "name": "Đăng nhập",
   "viewport": 390,
-  "diffPct": 0.18611884516015753,
-  "size": "411×1455",
-  "sha": "1ba4db0b"
+  "diffPct": 0.13752513466308544,
+  "size": "390×1747",
+  "sha": "53c9b308"
  },
  {
   "id": "A-02",
@@ -2011,19 +2011,19 @@
   "id": "D-01",
   "name": "Admin AppShell · Tổng quan",
   "viewport": 1440,
-  "diffPct": 0.09112654320987655,
-  "size": "1440×900",
+  "diffPct": 2.257616154100529,
+  "size": "1440×1344",
   "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "0b76e98a"
+  "sha": "53c9b308"
  },
  {
   "id": "D-01",
   "name": "Admin AppShell · Tổng quan",
   "viewport": 390,
-  "diffPct": 0.09174869364442824,
-  "size": "390×844",
+  "diffPct": 1.9023188307962333,
+  "size": "390×2279",
   "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "0b76e98a"
+  "sha": "53c9b308"
  },
  {
   "id": "D-02",
@@ -3284,17 +3284,17 @@
   "id": "D-69",
   "name": "Cài đặt · Vai trò & phân quyền",
   "viewport": 1440,
-  "diffPct": 2.851344787032776,
+  "diffPct": 2.8583755177174415,
   "size": "1440×2173",
-  "sha": "3c4f6f94"
+  "sha": "53c9b308"
  },
  {
   "id": "D-69",
   "name": "Cài đặt · Vai trò & phân quyền",
   "viewport": 390,
-  "diffPct": 3.5642271725770733,
+  "diffPct": 3.564283812792759,
   "size": "390×9054",
-  "sha": "3c4f6f94"
+  "sha": "53c9b308"
  },
  {
   "id": "D-70",
@@ -3380,17 +3380,17 @@
   "id": "D-75",
   "name": "Cài đặt · Nhật ký hoạt động",
   "viewport": 1440,
-  "diffPct": 7.720827810912303,
+  "diffPct": 6.7287248729843165,
   "size": "1440×1006",
-  "sha": "3c4f6f94"
+  "sha": "53c9b308"
  },
  {
   "id": "D-75",
   "name": "Cài đặt · Nhật ký hoạt động",
   "viewport": 390,
-  "diffPct": 10.320360195360195,
+  "diffPct": 7.9677960927960925,
   "size": "390×1680",
-  "sha": "3c4f6f94"
+  "sha": "53c9b308"
  },
  {
   "id": "D-80",

@@ -1,4 +1,4 @@
-# TIP-V46-807 ? actual query plans
+# TIP-V46-807 — actual query plans
 
 Measured on the approved private test DB on 05/11/2026 using PostgreSQL EXPLAIN (ANALYZE, BUFFERS), current production query builders and temporary tables cloned INCLUDING ALL from the deployed schema. Single connection,10,000 rows, ANALYZE; no planner flags. The temporary commission clone alone permits5% historical zero amounts; no public constraint is relaxed by this plan test.
 
