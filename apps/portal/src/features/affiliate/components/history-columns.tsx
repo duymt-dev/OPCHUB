@@ -21,7 +21,21 @@ export function useReferralColumns(): AdminTableProps<ReferralRow>['columns'] {
   const t = useTranslations('affiliate.referrals');
   return [
     { title: t('columns.name'), dataIndex: 'name', width: 160, render: (v: string) => <b>{v}</b> },
-    { title: t('columns.plan'), dataIndex: 'plan', width: 170 },
+    {
+      title: t('columns.plan'),
+      key: 'plan',
+      width: 170,
+      render: (_, r) => (
+        <span>
+          {r.status === 'pending' || r.status === 'void' ? t('pendingPlan') : r.plan}
+          <small style={{ display: 'block' }}>
+            {r.status !== 'pending' && r.status !== 'void'
+              ? t(r.customerYear > 1 ? 'renewalYear' : 'year', { year: r.customerYear })
+              : null}
+          </small>
+        </span>
+      ),
+    },
     {
       title: t('columns.date'),
       dataIndex: 'date',

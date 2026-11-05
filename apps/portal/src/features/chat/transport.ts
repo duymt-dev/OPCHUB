@@ -13,7 +13,10 @@ export interface ChatTransport {
   react(messageId: string, emoji: string): Promise<ChatMessage>;
   pin(messageId: string, pinned: boolean): Promise<ChatMessage>;
   /** S-02: vào/rời phòng; trả hàm huỷ đăng ký `message.new` */
-  join(roomId: string, onMessage: (m: ChatMessage) => void): () => void;
+  join(
+    roomId: string,
+    onMessage: (m: ChatMessage, event?: 'message.new' | 'message.updated') => void,
+  ): () => void;
 }
 
 export const restTransport: ChatTransport = {

@@ -736,3 +736,18 @@ giữ nguyên DB và Redis native.
 | Q-V46-803-6 | Reporting chỉ đọc nhưng TIP đặt firstPaid tại đây | Owner chấp thuận ngoại lệ hẹp đúng TIP/D-131: chỉ CustomerYearRepository.firstPaid ghi mốc chung trong transaction của consumer |
 
 Owner xác nhận tiếp tục hai DB riêng và Memurai 6381; không reset DB/cache native.
+
+## V4.6 — TIP-V46-804
+
+| ID | Điểm cần ghi nhận | Cách xử lý đúng TIP |
+|---|---|---|
+| Q-V46-804-1 | Sau thu hồi vẫn còn pending của người cũ | Portal trả none; Admin vẫn chi theo snapshot, không gán sang người mới |
+| Q-V46-804-2 | Tỷ lệ hiện hành khác snapshot cũ | Cột tỷ lệ dùng policy hiện hành; mọi tổng tiền cộng snapshot, không tính lại |
+| Q-V46-804-3 | Một tháng có nhiều batch chi, hoặc vừa paid vừa pending | Nhóm theo tháng khoản, paid khi tất cả đã paid; paidAt là max của đúng biên lai được nối |
+
+Owner xác nhận tái sử dụng opchub_v46_801_dev / opchub_v46_801_test và Memurai 6381; giữ nguyên DB/Redis native.
+Không có client logger đã cài trong Portal: lỗi GET /me/gdv được báo qua browser reportError (sanitized, không PII), không dùng console và không thay màn affiliate thường bằng lỗi.
+
+Fixture sổ chia sẻ 802/803 có năm tương lai và khác số liệu prototype; không sửa ledger/chính sách để làm xanh ảnh. Đối chiếu số đo trong completion, không mask/nới ngưỡng.
+
+804 follow-up: assert cookie paragraph trong affiliate-cross-app đã đổi sang badge đúng BR-495 (d690a63f). Retest vẫn đỏ tại cancelled row như baseline, không coi 6 failure identity là bằng chứng mọi nguyên nhân dừng đều giống baseline. Parity vùng mới vẫn chưa đạt 3%; chưa DONE.

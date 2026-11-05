@@ -1547,33 +1547,65 @@
   "id": "P-97",
   "name": "Portal · Affiliate",
   "viewport": 1440,
-  "diffPct": 0.9008724902764639,
-  "size": "1440×1057",
-  "sha": "32f6112"
+  "diffPct": 4.20606178608515,
+  "size": "1440×1070",
+  "sha": "c1fd1625"
  },
  {
   "id": "P-97",
   "name": "Portal · Affiliate",
   "viewport": 390,
-  "diffPct": 0.7766749379652605,
-  "size": "390×2170",
-  "sha": "32f6112"
+  "diffPct": 4.154275966743227,
+  "size": "390×1909",
+  "sha": "c1fd1625"
  },
  {
   "id": "P-98",
   "name": "Portal · Affiliate · Lịch sử nhận tiền",
   "viewport": 1440,
-  "diffPct": 0.8739197530864197,
+  "diffPct": 1.2395833333333333,
   "size": "1440×900",
-  "sha": "32f6112"
+  "sha": "c1fd1625"
  },
  {
   "id": "P-98",
   "name": "Portal · Affiliate · Lịch sử nhận tiền",
   "viewport": 390,
-  "diffPct": 2.4498749381378486,
-  "size": "390×1917",
-  "sha": "32f6112"
+  "diffPct": 5.142031171442936,
+  "size": "390×1632",
+  "sha": "c1fd1625"
+ },
+ {
+  "id": "P-V46-REG",
+  "name": "Portal · Vùng của tôi",
+  "viewport": 1440,
+  "diffPct": 7.420374657064471,
+  "size": "1440×1944",
+  "sha": "c1fd1625"
+ },
+ {
+  "id": "P-V46-REG",
+  "name": "Portal · Vùng của tôi",
+  "viewport": 390,
+  "diffPct": 15.23396286356834,
+  "size": "390×3067",
+  "sha": "c1fd1625"
+ },
+ {
+  "id": "P-V46-REG-BANNER",
+  "name": "Portal · GĐ Vùng · Banner",
+  "viewport": 1440,
+  "diffPct": 16.653282614821077,
+  "size": "1440×1183",
+  "sha": "c1fd1625"
+ },
+ {
+  "id": "P-V46-REG-BANNER",
+  "name": "Portal · GĐ Vùng · Banner",
+  "viewport": 390,
+  "diffPct": 11.008020749637023,
+  "size": "390×1819",
+  "sha": "c1fd1625"
  },
  {
   "id": "D-01",

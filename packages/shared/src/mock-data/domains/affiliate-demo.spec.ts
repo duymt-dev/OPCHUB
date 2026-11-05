@@ -50,8 +50,8 @@ describe('Affiliate AF0 mock scenario', () => {
       state: 'active',
       stats: {
         clicks30d: 412,
-        paidCount: 9,
-        conversionPct: 2.2,
+        paidCount: 11,
+        conversionPct: 2.7,
         // D-110 / BR-AFF-REV: gói thực trả như prototype v4.2 (20% × Cá nhân 1,2tr / DN 3,6tr)
         thisMonth: 1200000,
         carryOver: 0,
@@ -59,8 +59,8 @@ describe('Affiliate AF0 mock scenario', () => {
       },
     });
     const refs = mockAffiliateReferrals('m1', { page: 2, size: 6 });
-    expect(refs.total).toBe(9);
-    expect(refs.items).toHaveLength(3);
+    expect(refs.total).toBe(11);
+    expect(refs.items).toHaveLength(5);
     expect(refs.items.every((r) => r.name.endsWith('.'))).toBe(true);
     const payouts = mockAffiliatePayouts('m1', { page: 1, size: 6 });
     expect(payouts.total).toBe(2);

@@ -4,13 +4,15 @@
   "program": "OPC HUB AFFILIATE PROGRAMME",
   "locked": {
     "title": "Your referral link is being set up",
-    "description": "Every member gets their own affiliate code and link right at sign-up. For each member you refer who pays (after the 3 free months), you earn <b>{rate}%</b> commission ({per} (Personal) · {biz} (Business) · {fund} (Fundraising {fundRate}%)).",
+    "description": "Every member gets their own affiliate code and link right at sign-up. For each member you refer who pays (after the 3 free months), you earn <b>{rate}%</b> commission ({per} (Personal) · {biz} (Business) · {fund} (Fundraising {fundRate}%)). Year 1; renewal from year 2 through {renewalMaxYear}: {renewalRate}% (reference only).",
     "pay": "Pay membership fee"
   },
   "paused": "Code paused — renew your fee to keep earning commission",
   "hero": {
     "title": "Refer new members, earn {rate}% commission",
-    "description": "For everyone who signs up via your link and pays the 12-month membership fee, you earn <b>{per} (Personal) · {biz} (Business) · {fund} (Fundraising {fundRate}%)</b>. Your link is tracked for {days} days."
+    "description": "For everyone who signs up via your link and pays the 12-month membership fee, you earn <b>{per} (Personal) · {biz} (Business) · {fund} (Fundraising {fundRate}%)</b>. Your link is tracked for {days} days.",
+    "rateBadge": "Commission <b>{rate}%</b>",
+    "cookieBadge": "Link recorded for <b>{days} days</b>"
   },
   "bank": {
     "missing": "No commission payout account yet.",
@@ -95,7 +97,10 @@
       "empty": "None yet",
       "paid": "Paid out",
       "waiting": "Awaiting payout on {date}"
-    }
+    },
+    "year": "Year {year}",
+    "renewalYear": "Year {year} · renewal",
+    "pendingPlan": "Just registered · awaiting fee payment"
   },
   "payouts": {
     "description": "Commission is transferred once, on the last day of each month",
@@ -111,5 +116,53 @@
       "status": "Status"
     },
     "paid": "Transferred"
+  },
+  "region": {
+    "tab": "My region",
+    "badge": "Regional Director",
+    "title": "My region · Regional Director {label} · {name}",
+    "provinces": "{label} · {count} provinces/cities: {provinces}",
+    "readOnly": "Read only",
+    "note": "Only members registered through affiliate links in the region are counted. Media Soft pays the Regional Director share at month-end to <b>{bank}</b>. The Regional Director distributes to group leaders and affiliates outside the system.",
+    "revenue": "Regional revenue",
+    "share": "Director share",
+    "paid": "Paid",
+    "due": "Awaiting payment",
+    "transactions": "{count} transactions",
+    "yearRule": "By customer year",
+    "paidMonths": "{count} months paid",
+    "dueDate": "Payment period {month}",
+    "yearsTitle": "Share by customer year",
+    "customerYear": "Customer year",
+    "percent": "Director rate",
+    "count": "Transactions",
+    "revenueShort": "Revenue",
+    "shareShort": "Director share",
+    "fromFourth": "Year 4 onwards",
+    "firstYear": "Year 1",
+    "renewalYear": "Year {year} · renewal",
+    "affiliatesTitle": "Affiliates in the region",
+    "affiliate": "Affiliate",
+    "customers": "Customers",
+    "broughtRevenue": "Revenue generated",
+    "regionShare": "Region share",
+    "more": "{count} more affiliates",
+    "empty": "No affiliate revenue yet.",
+    "monthsTitle": "Media Soft monthly payment history",
+    "month": "Month",
+    "amount": "Amount",
+    "status": "Status",
+    "paidAt": "Payment date",
+    "emptyMonths": "No payment periods yet.",
+    "monthValue": "Month {month}",
+    "statusLabels": {
+      "paid": "Paid",
+      "pending": "Awaiting payment"
+    }
+  },
+  "banner": {
+    "title": "You are the Regional Director {label} · {name}",
+    "description": "View revenue, shares and Media Soft payments for your region.",
+    "open": "View my region"
   }
 }

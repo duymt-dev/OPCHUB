@@ -42,6 +42,8 @@ describe('Affiliate Portal API (TIP-V2-402)', () => {
       state: 'locked',
       // BR-AFF-REV (TIP-V42-707): mức theo từng gói — 20% Cá nhân / DN, % Gói Gọi vốn riêng (10)
       policy: {
+        renewalRate: 10,
+        renewalMaxYear: 3,
         rate: 20,
         perAmount: Math.round(planAmount('personal') * 0.2),
         bizAmount: Math.round(planAmount('business') * 0.2),

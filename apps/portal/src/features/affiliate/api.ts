@@ -3,6 +3,7 @@ import {
   affiliatePayoutsSchema,
   affiliateReferralsSchema,
   myAffiliateSchema,
+  myRegionSchema,
   type AffiliateBank,
   type AffiliatePageQuery,
 } from '@opchub/shared/api-domains';
@@ -10,6 +11,7 @@ import { api } from '@/lib/api-client';
 
 export const affiliateKeys = {
   all: ['me', 'affiliate'] as const,
+  region: ['me', 'gdv'] as const,
   mine: ['me', 'affiliate', 'mine'] as const,
   referrals: (q: AffiliatePageQuery) => ['me', 'affiliate', 'referrals', q] as const,
   payouts: (q: AffiliatePageQuery) => ['me', 'affiliate', 'payouts', q] as const,
@@ -26,3 +28,5 @@ export const fetchPayouts = (q: AffiliatePageQuery) =>
   api(`/me/affiliate/payouts?${query(q)}`, { schema: affiliatePayoutsSchema });
 export const saveBank = (body: AffiliateBank) =>
   api('/me/affiliate/bank', { method: 'PUT', body, schema: affiliateBankSchema });
+
+export const fetchMyRegion = () => api('/me/gdv', { schema: myRegionSchema });

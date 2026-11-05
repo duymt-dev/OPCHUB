@@ -13,22 +13,28 @@ import { newClientMsgId, type ChatTransport } from '../transport';
 type Pages = InfiniteData<ChatMessagePage, string | null>;
 
 /** Chèn / thay tin trong mọi trang cache của phòng (không giữ bản sao danh sách riêng) */
-export function upsertMessage(qc: QueryClient, m: ChatMessage) {
+export function upsertMessage(qc: QueryClient, m: ChatMessage, isNew = false) {
   for (const [key, old] of qc.getQueriesData<Pages>({
     queryKey: chatKeys.roomMessages(m.roomId),
   })) {
-    qc.setQueryData<Pages>(key, upsertInto(old, m, key[3] === '' || key[3] === undefined));
+    qc.setQueryData<Pages>(key, upsertInto(old, m, key[3] === '' || key[3] === undefined, isNew));
   }
 }
 
 /**
  * V4-612 (D-77): tin thành viên bị ẩn giữ chỗ (câu "đã bị ẩn") trong luồng thường; tin bot ẩn và
- * kết quả tìm kiếm bỏ hẳn (như server). Tin ẩn chưa có trong cache không chèn thêm.
+ * kết quả tìm kiếm bỏ hẳn (như server). Chỉ first delivery/ack thành viên được chèn
+ * placeholder mới; update/replay tin ẩn chưa có trong cache không chèn thêm.
  */
-function upsertInto(old: Pages | undefined, m: ChatMessage, plain: boolean): Pages | undefined {
+function upsertInto(
+  old: Pages | undefined,
+  m: ChatMessage,
+  plain: boolean,
+  isNew: boolean,
+): Pages | undefined {
   if (!old) return old;
   const exists = old.pages.some((p) => p.items.some((x) => x.id === m.id));
-  if (m.hiddenAt && !exists) return old;
+  if (m.hiddenAt && !exists && (!isNew || !plain || !m.senderId)) return old;
   if (exists) {
     const drop = Boolean(m.hiddenAt) && (!plain || !m.senderId);
     const pages = old.pages.map((p) => ({
@@ -63,7 +69,7 @@ export function useMessageActions(
 
   useEffect(() => {
     if (!roomId) return undefined;
-    return transport.join(roomId, (m) => upsertMessage(qc, m));
+    return transport.join(roomId, (m, event) => upsertMessage(qc, m, event === 'message.new'));
   }, [qc, roomId, transport]);
 
   const refreshRoom = useCallback(() => {
@@ -77,7 +83,7 @@ export function useMessageActions(
     mutationFn: (a: SendArgs) =>
       transport.send(roomId ?? '', { clientMsgId: newClientMsgId(), mentions: [], ...a }),
     onSuccess: (m) => {
-      upsertMessage(qc, m);
+      upsertMessage(qc, m, true);
       if (m.kind !== 'text') void qc.invalidateQueries({ queryKey: chatKeys.groupFilesAll() });
       refreshRoom();
     },

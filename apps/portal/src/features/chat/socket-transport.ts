@@ -28,18 +28,20 @@ export const socketTransport: ChatTransport = {
   pin: (messageId, pinned) => call('message.pin', { messageId, pinned }),
   join: (roomId, onMessage) => {
     const s = getSocket();
-    const onEvent = (raw: unknown) => {
-      const parsed = serverEvents['message.new'].safeParse(raw);
-      if (parsed.success && parsed.data.roomId === roomId) onMessage(parsed.data);
+    const onEvent = (event: 'message.new' | 'message.updated', raw: unknown) => {
+      const parsed = serverEvents[event].safeParse(raw);
+      if (parsed.success && parsed.data.roomId === roomId) onMessage(parsed.data, event);
     };
+    const onNew = (raw: unknown) => onEvent('message.new', raw);
+    const onUpdated = (raw: unknown) => onEvent('message.updated', raw);
     const doJoin = () => void call('room.join', { roomId }).catch(() => undefined);
-    s.on('message.new', onEvent);
-    s.on('message.updated', onEvent);
+    s.on('message.new', onNew);
+    s.on('message.updated', onUpdated);
     s.on('connect', doJoin);
     if (s.connected) doJoin();
     return () => {
-      s.off('message.new', onEvent);
-      s.off('message.updated', onEvent);
+      s.off('message.new', onNew);
+      s.off('message.updated', onUpdated);
       s.off('connect', doJoin);
       void call('room.leave', { roomId }).catch(() => undefined);
     };

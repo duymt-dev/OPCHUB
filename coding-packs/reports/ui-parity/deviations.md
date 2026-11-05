@@ -4,6 +4,13 @@
 > Mỗi dòng chờ PM duyệt. Lệch không ảnh hưởng % parity vẫn ghi để biết.
 > Kết quả đo: `results.md` (MSW) và `server/results.md` (stack server, seed:demo).
 
+## D-133 — Topbar language flag, owner APPROVED 05/11/2026
+
+Owner chọn **giữ cờ quốc gia** theo commit `6d500837` ở Portal/Admin thay globe
+trong prototype v4.6 (ghi đè kỳ vọng TIP-V4-615 cho riêng biểu tượng này).
+E2E kiểm đúng cờ Việt Nam; unit test giữ nguyên. Không sửa prototype hoặc mask ảnh;
+approval này không biến bất kỳ ảnh parity >3% nào thành PASS. Các số đo cũ giữ nguyên.
+
 ## TIP-V2-558 P4 Affiliate debt remeasure — 2026-10-22, PENDING owner review
 
 Source `fb79c54c`, native (API 4020 / Admin 3282, opchub_dev) and MSW lanes, same
