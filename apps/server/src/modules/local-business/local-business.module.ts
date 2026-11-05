@@ -1,3 +1,7 @@
+import { NeedSearchService } from './services/need-search.service';
+import { StoreSearchService } from './services/store-search.service';
+import { NeedSearchRepository } from './repositories/need-search.query';
+import { StoreSearchRepository } from './repositories/store-search.query';
 import { Module } from '@nestjs/common';
 import { AccountCoreModule } from '../account';
 import { UploadsCoreModule } from '../uploads';
@@ -20,6 +24,10 @@ import { StoreMediaService } from './services/store-media.service';
 import { StoreOwnerService } from './services/store-owner.service';
 
 const services = [
+  StoreSearchRepository,
+  NeedSearchRepository,
+  StoreSearchService,
+  NeedSearchService,
   StoreRepository,
   StoreExploreRepository,
   StoreExploreService,

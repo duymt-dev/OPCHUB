@@ -12,7 +12,20 @@
     "logout": "Đăng xuất",
     "upcoming": "Sự kiện sắp tới",
     "viewAll": "Xem tất cả",
-    "memberSub": "Thành viên OPC"
+    "memberSub": "Thành viên OPC",
+    "globalSearch": {
+      "placeholder": "Tìm gian hàng, nhu cầu, dự án, nhóm…",
+      "empty": "Không tìm thấy kết quả",
+      "clear": "Xóa tìm kiếm",
+      "groups": {
+        "store": "Gian hàng",
+        "need": "Nhu cầu địa phương",
+        "project": "Dự án OPC",
+        "group": "Nhóm cộng đồng",
+        "member": "Thành viên"
+      },
+      "members": "{n} thành viên"
+    }
   },
   "nav": {
     "dashboard": "Dashboard",

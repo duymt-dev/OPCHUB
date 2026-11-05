@@ -1,3 +1,5 @@
+import { ProjectSearchRepository } from './repositories/project-search.query';
+import { ProjectSearchService } from './services/project-search.service';
 import { Global, Module } from '@nestjs/common';
 import { AccountCoreModule } from '../account';
 import { ChatCoreModule } from '../chat';
@@ -29,6 +31,8 @@ import { ProjectWriteService } from './services/project-write.service';
 import { ProjectProfileStats } from './services/profile-stats.provider';
 
 const services = [
+  ProjectSearchRepository,
+  ProjectSearchService,
   ProjectRepository,
   ProjectWriteRepository,
   ProjectSocialRepository,

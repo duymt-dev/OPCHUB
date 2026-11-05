@@ -1,8 +1,9 @@
 'use client';
 
+import { AdminSearch } from './admin-search';
 import { AppShell, LanguageSwitch, useToast } from '@opchub/ui';
 import { useLocale, useTranslations } from 'next-intl';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { languageOptions, LOCALE_COOKIE } from '@opchub/shared/fixtures';
 import { logout } from '@/features/auth';
@@ -30,23 +31,6 @@ const SHELL_KEYS = [
   'logout',
   'settings',
 ] as const;
-
-function executeAdminSearch(query: string, pathname: string, router: ReturnType<typeof useRouter>) {
-  const q = query.trim();
-  const params = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
-  if (q) {
-    params.set('q', q);
-    params.set('page', '1');
-  } else {
-    params.delete('q');
-  }
-  const qs = params.toString();
-  if (pathname === '/overview' || pathname === '/settings' || pathname === '/') {
-    router.push(`/members?q=${encodeURIComponent(q)}`);
-  } else {
-    router.push(qs ? `${pathname}?${qs}` : pathname);
-  }
-}
 
 function AdminShellBody({
   allowed,
@@ -85,7 +69,6 @@ export function AdminShell({ children }: { children: ReactNode }) {
   const tAuth = useTranslations('auth');
   const locale = useLocale();
   const router = useRouter();
-  const pathname = usePathname();
   const me = useAuthStore((s) => s.me);
   const signOut = useAuthStore((s) => s.signOut);
   const toast = useToast();
@@ -136,7 +119,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
           variant="topbar"
         />
       }
-      onSearch={(q) => executeAdminSearch(q, pathname, router)}
+      search={<AdminSearch />}
       onNavigate={(href) => router.push(href)}
       {...(canSettings ? { onSettings: () => router.push('/settings') } : {})}
       onBack={() => router.push('/overview')}

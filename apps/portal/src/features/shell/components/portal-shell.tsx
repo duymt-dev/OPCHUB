@@ -1,6 +1,7 @@
 'use client';
 
 import { languageOptions, LOCALE_COOKIE } from '@opchub/shared/fixtures';
+import { PortalSearch } from './portal-search';
 import { AppShell, LanguageSwitch, useToast } from '@opchub/ui';
 import { useLocale, useTranslations } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
@@ -32,27 +33,6 @@ const SHELL_KEYS = [
   'profile',
   'logout',
 ] as const;
-
-function executePortalSearch(
-  query: string,
-  pathname: string,
-  router: ReturnType<typeof useRouter>,
-) {
-  const q = query.trim();
-  const params = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
-  if (q) {
-    params.set('q', q);
-    params.set('page', '1');
-  } else {
-    params.delete('q');
-  }
-  const qs = params.toString();
-  if (pathname === '/dashboard' || pathname === '/profile' || pathname === '/') {
-    router.push(`/community?q=${encodeURIComponent(q)}`);
-  } else {
-    router.push(qs ? `${pathname}?${qs}` : pathname);
-  }
-}
 
 /** Khung User Portal: thông báo theo người (D-29), ngôn ngữ, menu người dùng, mail chào mừng (P-05) */
 export function PortalShell({ children }: { children: ReactNode }) {
@@ -117,7 +97,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
         />
       }
       sidebarExtra={<PlanBadge />}
-      onSearch={(q) => executePortalSearch(q, pathname, router)}
+      search={<PortalSearch />}
       onNavigate={(href) => openInPlace(href) || router.push(href)}
       onBack={() => router.push('/dashboard')}
       onProfile={() => router.push('/profile')}

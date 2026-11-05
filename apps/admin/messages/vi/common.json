@@ -13,7 +13,20 @@
     "brandTag": "ADMIN",
     "upcoming": "Sự kiện sắp tới",
     "viewAll": "Xem tất cả",
-    "settings": "Cài đặt hệ thống"
+    "settings": "Cài đặt hệ thống",
+    "globalSearch": {
+      "placeholder": "Tìm thành viên, gian hàng, nhu cầu, dự án, nhóm…",
+      "empty": "Không tìm thấy kết quả",
+      "clear": "Xóa tìm kiếm",
+      "groups": {
+        "store": "Gian hàng",
+        "need": "Nhu cầu địa phương",
+        "project": "Dự án OPC",
+        "group": "Nhóm cộng đồng",
+        "member": "Thành viên"
+      },
+      "members": "{n} thành viên"
+    }
   },
   "nav": {
     "overview": "Tổng quan",

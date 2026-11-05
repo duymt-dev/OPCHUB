@@ -12,7 +12,20 @@
     "logout": "Sign out",
     "upcoming": "Upcoming events",
     "viewAll": "View all",
-    "memberSub": "OPC Member"
+    "memberSub": "OPC Member",
+    "globalSearch": {
+      "placeholder": "Search stores, needs, projects, groups…",
+      "empty": "No results found",
+      "clear": "Clear search",
+      "groups": {
+        "store": "Stores",
+        "need": "Local needs",
+        "project": "OPC projects",
+        "group": "Community groups",
+        "member": "Members"
+      },
+      "members": "{n} members"
+    }
   },
   "nav": {
     "dashboard": "Dashboard",

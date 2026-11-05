@@ -11,7 +11,7 @@ const ORDER: Record<ProjectSort, string> = {
 };
 
 /** EXISTS keeps fee predicates inside the eligible-owner lookup, rather than OR over LEFT JOINs. */
-function visible(userId: string, now: Date) {
+export function visible(userId: string, now: Date) {
   return Prisma.sql`p.status = 'published' AND p.deleted_at IS NULL AND (
     p.owner_id = ${userId} OR EXISTS (
       SELECT 1 FROM users u JOIN membership_fees f ON f.user_id = u.id

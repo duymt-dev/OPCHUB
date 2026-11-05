@@ -2,6 +2,24 @@
 
 ## HEADER
 
+### Execution refinements (05/11/2026)
+
+- Owner re-confirmed private DB pair/Memurai6381 and owned rolling restart; native untouched.
+- Owner approved `local-business/repositories/search-visibility.query.ts` SQL counterparts
+  tested against original Prisma filters. Existing fee helpers remain the source of fee rules.
+- Additional SRP paths: account `repositories/member-global-search.query.ts`, domain search
+  repository providers, `project-feed.query.ts` export of existing `visible`, local-business
+  `services/{store,need}-search.service.ts`, and `search/index.ts` public facade.
+- UI results extracted to `packages/ui/src/global-search/search-results.tsx`; hook unit test
+  `apps/portal/src/features/shell/hooks/use-global-search.spec.tsx`; plan fixture isolated in
+  `apps/server/test/search/search-plan.fixture.ts` (connection-local temp tables).
+- Mock HTTP handlers isolated in `apps/{portal,admin}/src/mocks/handlers/search.ts`, registered
+  via handlers/index.ts, instead of expanding shell handlers. Parity scenarios isolated in
+  `e2e/parity/scenarios/global-search.ts`, registered in parity/registry.ts, rather than expanding
+  unrelated scenario files. No behavior/assertion/tolerance relaxations.
+- Standard paywall402 `MEMBERSHIP_REQUIRED` preserved; not TIP's erroneous403 wording.
+- Five Q808 business choices use TIP-authorized defaults pending confirmation, not owner decisions.
+
 - TIP-ID: TIP-V46-808
 - Project: OPCHUB
 - Module: search (mới, gom kết quả), local-business / project / community / account (mỗi domain một hàm tìm trên bảng của mình), packages/ui (ô tìm + dropdown), shell Portal / Admin

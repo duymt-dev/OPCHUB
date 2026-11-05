@@ -1,4 +1,5 @@
 import {
+  globalSearchResultSchema,
   notificationListSchema,
   notificationReadResultSchema,
   welcomeMailPreviewSchema,
@@ -27,3 +28,6 @@ export const markRead = (ids?: string[]) =>
 /** 204 (null) khi không có mail chào mừng chưa xem */
 export const fetchWelcomeMail = () =>
   api('/me/welcome-mail', { schema: welcomeMailPreviewSchema.nullable() });
+
+export const fetchGlobalSearch = (q: string) =>
+  api(`/search?q=${encodeURIComponent(q)}`, { schema: globalSearchResultSchema });

@@ -12,7 +12,20 @@
     "logout": "ອອກຈາກລະບົບ",
     "upcoming": "ກິດຈະກຳທີ່ຈະມາເຖິງ",
     "viewAll": "ເບິ່ງທັງໝົດ",
-    "memberSub": "ສະມາຊິກ OPC"
+    "memberSub": "ສະມາຊິກ OPC",
+    "globalSearch": {
+      "placeholder": "ຄົ້ນຫາຮ້ານຄ້າ ຄວາມຕ້ອງການ ໂຄງການ ກຸ່ມ…",
+      "empty": "ບໍ່ພົບຜົນການຄົ້ນຫາ",
+      "clear": "ລ້າງການຄົ້ນຫາ",
+      "groups": {
+        "store": "ຮ້ານຄ້າ",
+        "need": "ຄວາມຕ້ອງການໃນທ້ອງຖິ່ນ",
+        "project": "ໂຄງການ OPC",
+        "group": "ກຸ່ມຊຸມຊົນ",
+        "member": "ສະມາຊິກ"
+      },
+      "members": "ສະມາຊິກ {n} ຄົນ"
+    }
   },
   "nav": {
     "dashboard": "Dashboard",
