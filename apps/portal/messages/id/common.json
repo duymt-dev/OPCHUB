@@ -12,7 +12,20 @@
     "logout": "Keluar",
     "upcoming": "Acara mendatang",
     "viewAll": "Lihat semua",
-    "memberSub": "Anggota OPC"
+    "memberSub": "Anggota OPC",
+    "globalSearch": {
+      "placeholder": "Cari toko, kebutuhan, proyek, grup…",
+      "empty": "Tidak ada hasil",
+      "clear": "Hapus pencarian",
+      "groups": {
+        "store": "Toko",
+        "need": "Kebutuhan lokal",
+        "project": "Proyek OPC",
+        "group": "Grup komunitas",
+        "member": "Anggota"
+      },
+      "members": "{n} anggota"
+    }
   },
   "nav": {
     "dashboard": "Dashboard",

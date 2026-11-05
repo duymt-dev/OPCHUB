@@ -108,3 +108,9 @@ Nhãn tiếng Việt chỉ đặt trong file messages của next-intl, không vi
 |---|---|---|
 | Tỷ lệ chuyển đổi | conversion / ratePct | Đã trả phí / (Đã trả phí + Hết hạn chưa trả), làm tròn %, không tính đang dùng thử vào mẫu số |
 | Nhật ký hoạt động | audit log | Nhật ký Admin chỉ ghi thêm; màn hình và CSV hiển thị90 ngày, DB giữ theo NA-13/REQ-213 |
+
+### V4.6 — TIP-V46-808
+
+| Thuật ngữ | Code | Nghĩa |
+|---|---|---|
+| Tìm kiếm chung | global search | Ô topbar tìm gian hàng, nhu cầu, dự án, nhóm và thành viên (chỉ Admin), theo quyền/visibility; tối đa4 mỗi nhóm |

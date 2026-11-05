@@ -1,3 +1,5 @@
+import { GroupSearchRepository } from './repositories/group-search.query';
+import { GroupSearchService } from './services/group-search.service';
 import { GroupTargetsRepository } from './repositories/group-targets.repository';
 import { GroupTargetsService } from './services/group-targets.service';
 import { ExportCoreModule } from '@/modules/export';
@@ -22,6 +24,8 @@ import { GroupTopicsService } from './services/group-topics.service';
 import { CommunityProfileStats } from './services/profile-stats.provider';
 
 const services = [
+  GroupSearchRepository,
+  GroupSearchService,
   GroupTargetsRepository,
   GroupTargetsService,
   GroupRepository,

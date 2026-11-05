@@ -825,3 +825,27 @@ assertions”. Only `test/chat/chat-rest.int.spec.ts` changes: afterEach deletes
 exact IDs created by that case, not other background groups. All assertions and
 production API/cap100 remain unchanged. Scoped14/14 and full rerun2050/2050 passed.
 The existing production first100-groups limitation is not fixed or hidden here.
+
+### TIP-V46-808 decisions and execution exceptions —05/11/2026
+
+- Owner explicitly approved private DB pair `opchub_v46_801_dev` / `opchub_v46_801_test`,
+  Memurai6381 and owned rolling807→808. Original DB/Redis6379 untouched.
+- Owner approved same-domain SQL visibility counterparts plus real equivalence tests;
+  Prisma filters and existing fee helpers retain their business meaning.
+- Q808-1→5 use the TIP-authorized defaults pending confirmation; do not record these as
+  new owner decisions: accent-insensitive search, Portal visible rows only, Admin name/email
+  plus exact member code, all nondeleted Admin states per permission, outside click keeps text.
+- Owner approved narrowing only three Affiliate month-select actions to their accessible
+  `Tháng …` label. Two old strict-mode failures were caused by the newly accessible topbar
+  combobox; no assertion, fixture data, API or production behavior was weakened.
+- First Admin search parity setup on Overview measured3.89%, including pre-existing chart
+  and dataset differences. Final scenario opens the same search from Members on both sides
+  (stable baseline D02); no masks, viewport changes or tolerance relaxation. Portal uses
+  `cà phê`; Admin uses `MediaSoft`. Native and MSW12/12 passed on final assets.
+- Owner approved the narrow legacy service fixture repair: constrain the reused YC-1010
+  outbox lookup by the commentId returned from the current API request. Recipient,
+  sanitization and notification assertions remain unchanged; historical outbox retained.
+- Two-character needs performance refined with bounded prefix/fallback IDs before payload
+  reads, preserving one query and exact visibility/ranking. Nine plan/equivalence tests pass;
+  latest scoped Ne measurement37.967ms versus initial78.966/101.447ms. No timeout/index or
+  business-rule relaxation; results do not guarantee every query/load below50ms.

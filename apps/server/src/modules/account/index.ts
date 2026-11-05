@@ -43,3 +43,5 @@ export {
   setRefreshCookie,
 } from './controllers/session-cookie';
 export { RefreshTokenRepository } from './repositories/refresh-token.repository';
+
+export { MemberSearchService } from './services/member-search.service';

@@ -12,7 +12,20 @@
     "logout": "Log keluar",
     "upcoming": "Acara akan datang",
     "viewAll": "Lihat semua",
-    "memberSub": "Ahli OPC"
+    "memberSub": "Ahli OPC",
+    "globalSearch": {
+      "placeholder": "Cari kedai, keperluan, projek, kumpulan…",
+      "empty": "Tiada hasil ditemui",
+      "clear": "Kosongkan carian",
+      "groups": {
+        "store": "Kedai",
+        "need": "Keperluan setempat",
+        "project": "Projek OPC",
+        "group": "Kumpulan komuniti",
+        "member": "Ahli"
+      },
+      "members": "{n} ahli"
+    }
   },
   "nav": {
     "dashboard": "Dashboard",

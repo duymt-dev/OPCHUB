@@ -451,33 +451,33 @@
   "id": "P-11",
   "name": "Topbar · ngôn ngữ",
   "viewport": 1440,
-  "diffPct": 2.6763117283950617,
+  "diffPct": 0.11674382716049382,
   "size": "1440×900",
-  "sha": "25a1eec"
+  "sha": "8f01249a"
  },
  {
   "id": "P-11",
   "name": "Topbar · ngôn ngữ",
   "viewport": 390,
-  "diffPct": 0.028861344027220803,
+  "diffPct": 0.11058451816745657,
   "size": "390×844",
-  "sha": "25a1eec"
+  "sha": "8f01249a"
  },
  {
   "id": "P-12",
   "name": "Topbar · menu người dùng",
   "viewport": 1440,
-  "diffPct": 2.9799382716049383,
+  "diffPct": 0.11635802469135803,
   "size": "1440×900",
-  "sha": "25a1eec"
+  "sha": "8f01249a"
  },
  {
   "id": "P-12",
   "name": "Topbar · menu người dùng",
   "viewport": 390,
-  "diffPct": 0.5948474905820877,
+  "diffPct": 0.10967310730343904,
   "size": "390×844",
-  "sha": "25a1eec"
+  "sha": "8f01249a"
  },
  {
   "id": "P-13",
@@ -1608,6 +1608,22 @@
   "sha": "c1fd1625"
  },
  {
+  "id": "P-V46-SEARCH",
+  "name": "Topbar · global search",
+  "viewport": 1440,
+  "diffPct": 0.7437499999999999,
+  "size": "1440×900",
+  "sha": "8f01249a"
+ },
+ {
+  "id": "P-V46-SEARCH",
+  "name": "Topbar · global search",
+  "viewport": 390,
+  "diffPct": 0.10906550006076074,
+  "size": "390×844",
+  "sha": "8f01249a"
+ },
+ {
   "id": "D-01",
   "name": "Admin AppShell · Tổng quan",
   "viewport": 1440,
@@ -1629,19 +1645,19 @@
   "id": "D-02",
   "name": "Admin · menu người dùng",
   "viewport": 1440,
-  "diffPct": 0.32330246913580246,
+  "diffPct": 0.43873456790123455,
   "size": "1440×900",
   "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "25a1eec"
+  "sha": "8f01249a"
  },
  {
   "id": "D-02",
   "name": "Admin · menu người dùng",
   "viewport": 390,
-  "diffPct": 0.6027463847369061,
+  "diffPct": 0.30137319236845306,
   "size": "390×844",
   "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "25a1eec"
+  "sha": "8f01249a"
  },
  {
   "id": "D-03",
@@ -3194,5 +3210,21 @@
   "diffPct": 23.527170311464545,
   "size": "390×2012",
   "sha": "f2c364a5"
+ },
+ {
+  "id": "D-V46-SEARCH",
+  "name": "Topbar · global search Admin",
+  "viewport": 1440,
+  "diffPct": 0.5542438271604938,
+  "size": "1440×900",
+  "sha": "8f01249a"
+ },
+ {
+  "id": "D-V46-SEARCH",
+  "name": "Topbar · global search Admin",
+  "viewport": 390,
+  "diffPct": 0.34907036091870214,
+  "size": "390×844",
+  "sha": "8f01249a"
  }
 ]

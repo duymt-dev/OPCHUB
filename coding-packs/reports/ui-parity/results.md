@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 429/490 ảnh.
+> Đạt 433/494 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -85,8 +85,8 @@
 | P-108-PROJECTS | Gian hàng của tôi · khối Dự án OPC | 390 | 0.30% | ✅ đạt | 366×202 | 0b76e98a |
 | P-109 | Gian hàng của tôi · dashboard số thật (lời chào) | 1440 | 0.00% | ✅ đạt | 640×147 | 0b76e98a |
 | P-109 | Gian hàng của tôi · dashboard số thật (lời chào) | 390 | 0.00% | ✅ đạt | 366×171 | 0b76e98a |
-| P-11 | Topbar · ngôn ngữ | 1440 | 0.00% | ✅ đạt | 1440×900 | 0b76e98a |
-| P-11 | Topbar · ngôn ngữ | 390 | 0.00% | ✅ đạt | 390×844 | 0b76e98a |
+| P-11 | Topbar · ngôn ngữ | 1440 | 0.11% | ✅ đạt | 1440×900 | 8f01249a |
+| P-11 | Topbar · ngôn ngữ | 390 | 0.11% | ✅ đạt | 390×844 | 8f01249a |
 | P-111 | Nhu cầu · tất cả (mặc định) | 1440 | 0.00% | ✅ đạt | 1440×1994 | 0b76e98a |
 | P-111 | Nhu cầu · tất cả (mặc định) | 390 | 0.00% | ✅ đạt | 390×4733 | 0b76e98a |
 | P-112 | Nhu cầu · lọc chip "Cần mua" | 1440 | 0.00% | ✅ đạt | 1440×1232 | 0b76e98a |
@@ -99,8 +99,8 @@
 | P-115 | Nhu cầu của tôi | 390 | 0.01% | ✅ đạt | 390×844 | 0b76e98a |
 | P-119 | Dashboard · Hướng dẫn bắt đầu (M1 đã phí) | 1440 | 0.00% | ✅ đạt | 1136×811 | 0b76e98a |
 | P-119 | Dashboard · Hướng dẫn bắt đầu (M1 đã phí) | 390 | 0.00% | ✅ đạt | 366×1286 | 0b76e98a |
-| P-12 | Topbar · menu người dùng | 1440 | 0.00% | ✅ đạt | 1440×900 | 0b76e98a |
-| P-12 | Topbar · menu người dùng | 390 | 0.00% | ✅ đạt | 390×844 | 0b76e98a |
+| P-12 | Topbar · menu người dùng | 1440 | 0.11% | ✅ đạt | 1440×900 | 8f01249a |
+| P-12 | Topbar · menu người dùng | 390 | 0.11% | ✅ đạt | 390×844 | 8f01249a |
 | P-121 | Chat · tin đã bị ẩn sau khi báo cáo (V4-612) | 1440 | 1.22% | ✅ đạt | 1440×900 | 0b76e98a |
 | P-121 | Chat · tin đã bị ẩn sau khi báo cáo (V4-612) | 390 | 2.95% | ✅ đạt | 390×844 | 0b76e98a |
 | P-13 | Sidebar thu gọn | 1440 | 0.06% | ✅ đạt | 1440×935 | 0b76e98a |
@@ -256,10 +256,12 @@
 | P-V46-REG | Portal · Vùng của tôi | 390 | 15.27% | ❌ chưa đạt | 390×3067 | c1fd1625 |
 | P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 1440 | 16.61% | ❌ chưa đạt | 1440×1183 | c1fd1625 |
 | P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 390 | 10.86% | ❌ chưa đạt | 390×1819 | c1fd1625 |
+| P-V46-SEARCH | Topbar · global search | 1440 | 1.00% | ✅ đạt | 1440×900 | 8f01249a |
+| P-V46-SEARCH | Topbar · global search | 390 | 0.11% | ✅ đạt | 390×844 | 8f01249a |
 | D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 2.26% | ✅ đạt | 1440×1344 | 53c9b308 |
 | D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 1.90% | ✅ đạt | 390×2279 | 53c9b308 |
-| D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.09% | ✅ đạt | 1440×900 | 0b76e98a |
-| D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 0.08% | ✅ đạt | 390×844 | 0b76e98a |
+| D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.23% | ✅ đạt | 1440×900 | 8f01249a |
+| D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 0.22% | ✅ đạt | 390×844 | 8f01249a |
 | D-03 | Admin · Hồ sơ cá nhân (không đổi màn) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 1.80% | ✅ đạt | 1440×1049 | 0b76e98a |
 | D-03 | Admin · Hồ sơ cá nhân (không đổi màn) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 1.11% | ✅ đạt | 390×1855 | 0b76e98a |
 | D-04 | Admin · thông báo (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.09% | ✅ đạt | 1440×900 | 0b76e98a |
@@ -495,6 +497,8 @@
 | D-V46-BANK | Cài đặt · Đối soát ngân hàng | 390 | 7.28% | ❌ chưa đạt | 390×2103 | 3c4f6f94 |
 | D-V46-RENEW | Cài đặt · Nhắc gia hạn | 1440 | 6.36% | ❌ chưa đạt | 1440×1006 | 3c4f6f94 |
 | D-V46-RENEW | Cài đặt · Nhắc gia hạn | 390 | 20.60% | ❌ chưa đạt | 390×2012 | 3c4f6f94 |
+| D-V46-SEARCH | Topbar · global search Admin | 1440 | 0.51% | ✅ đạt | 1440×900 | 8f01249a |
+| D-V46-SEARCH | Topbar · global search Admin | 390 | 0.35% | ✅ đạt | 390×844 | 8f01249a |
 
 ## Không đo được trên prototype (unreachable, 37 màn)
 

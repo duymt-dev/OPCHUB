@@ -449,3 +449,12 @@ Không sinh sáu khoản phí giả để ép bảng giống prototype; fixture 
 
 Không mask hoặc nới ngưỡng 3%. Cổng chưa hỗ trợ và nút fake theo D-135,
 cú pháp OPCHUB theo D-123; số liệu giao dịch là fixture, không sửa ledger để khớp ảnh.
+
+### TIP-V46-808 — Tìm kiếm chung
+
+| ID | App | Trạng thái | Route | Viewport |
+|---|---|---|---|---|
+| P-V46-SEARCH | Portal | Topbar gõ MediaSoft; mobile ẩn ô | /dashboard |1440,390 |
+| D-V46-SEARCH | Admin | Topbar gõ MediaSoft; mobile ẩn ô | /overview |1440,390 |
+
+Không mask, không nới ngưỡng. Visibility/quyền theo TIP; không lộ dữ liệu ẩn để khớp prototype.
