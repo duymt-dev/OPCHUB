@@ -33,12 +33,12 @@ test('AT-LK02 UAT-10 REQ-402 LK-02 D-94 accountant collection turns the new tria
   const collected = admin.waitForResponse(
     (r) => new URL(r.url()).pathname === '/v1/admin/fees/collect',
   );
-  const requestedAt = Date.now();
-  await bar.getByRole('button', { name: 'Ghi nhận đã thu', exact: true }).click();
-  // Danh sách tải lại sau khi thu (invalidate) — lắng nghe từ sau phản hồi thu
+  // Arm before clicking: collection can invalidate/refetch before click resolves.
   const reloaded = admin.waitForResponse(
     (r) => new URL(r.url()).pathname === '/v1/admin/fees' && r.request().method() === 'GET',
   );
+  const requestedAt = Date.now();
+  await bar.getByRole('button', { name: 'Ghi nhận đã thu', exact: true }).click();
   const response = await collected;
   expect(response.status()).toBe(200);
   expect(await response.json()).toEqual({ updated: 1 });

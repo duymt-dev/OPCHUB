@@ -17,9 +17,11 @@
   - create `apps/server/test/bot/persona-plan-fixture.ts`
   - create `coding-packs/reports/TIP-V46-804-F1-completion.md`
   - modify `coding-packs/reports/TIP-V46-804-completion.md`
+  - modify `coding-packs/reports/V4.6-progress.md` (chỉ dòng TIP-804)
   - modify `coding-packs/01-REQUIREMENTS-MATRIX.md`, `coding-packs/reports/ui-parity/deviations.md`, `AGENTS.md`
   - modify `e2e/behavior/portal-shell.spec.ts` (D-133 giữ cờ; UI/unit không đổi)
   - modify `e2e/behavior/new-member-chat-acceptance.spec.ts` (race lộ ở full E2E R1)
+  - modify `e2e/behavior/accountant-fee-link.spec.ts` (race listener tương tự lộ ở full E2E cuối)
   - modify `apps/portal/src/features/chat/transport.ts`, `socket-transport.ts`, `hooks/use-message-actions.ts`
   - create `apps/portal/src/features/chat/hooks/hidden-message-delivery.spec.ts`, `apps/portal/src/features/chat/socket-transport.spec.ts`
 - Parallel-safe with: none; serial follow-up trên nhánh 804 từ dev, PR #82 base dev.
@@ -56,6 +58,8 @@ thêm kiểm chứng âm, isolation và hồi quy phân bố dữ liệu.
    tin mới/ack thành viên ẩn chỉ chèn placeholder ở luồng thường, không ở search.
    Bot ẩn và update/replay tin ẩn chưa thấy vẫn không chèn; ack + event không trùng.
    Không đổi socket wire contract hoặc backend; thêm RED/GREEN unit và native E2E.
+8. Full E2E cuối lộ listener reload phí đăng ký sau click: đăng ký trước click,
+   giữ nguyên kiểm API, 12 tháng, cập nhật Portal không reload và thời hạn test.
 
 ## ACCEPTANCE CRITERIA
 - Given fixture 10/2026, When browser ở tháng khác, Then lịch sử/hủy vẫn kiểm đúng
@@ -77,7 +81,7 @@ thêm kiểm chứng âm, isolation và hồi quy phân bố dữ liệu.
 - SKIP: parity, TIP-805, main merge, auto-merge; report rõ icon nếu chưa chốt.
 
 ## BUILDER-CHECKLIST
-- [ ] Kiểm targeted RED/GREEN và các assertions không bị bỏ.
+- [x] Kiểm targeted RED/GREEN và các assertions không bị bỏ.
 - [ ] lint/typecheck/unit/test:int/depcheck/build/E2E thực chạy, ghi cache/skips/gaps.
-- [ ] Ghi EXPLAIN và phân biệt mixed/all-simulated, không tuyên bố mọi distribution tối ưu.
+- [x] Ghi EXPLAIN và phân biệt mixed/all-simulated, không tuyên bố mọi distribution tối ưu.
 - [ ] Commit scoped paths, push PR dev, git status sạch, report Git SHA.
