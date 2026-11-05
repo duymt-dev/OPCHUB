@@ -825,3 +825,20 @@ assertions”. Only `test/chat/chat-rest.int.spec.ts` changes: afterEach deletes
 exact IDs created by that case, not other background groups. All assertions and
 production API/cap100 remain unchanged. Scoped14/14 and full rerun2050/2050 passed.
 The existing production first100-groups limitation is not fixed or hidden here.
+
+### TIP-V46-808 decisions and execution exceptions —05/11/2026
+
+- Owner explicitly approved private DB pair `opchub_v46_801_dev` / `opchub_v46_801_test`,
+  Memurai6381 and owned rolling807→808. Original DB/Redis6379 untouched.
+- Owner approved same-domain SQL visibility counterparts plus real equivalence tests;
+  Prisma filters and existing fee helpers retain their business meaning.
+- Q808-1→5 use the TIP-authorized defaults pending confirmation; do not record these as
+  new owner decisions: accent-insensitive search, Portal visible rows only, Admin name/email
+  plus exact member code, all nondeleted Admin states per permission, outside click keeps text.
+- Owner approved narrowing only three Affiliate month-select actions to their accessible
+  `Tháng …` label. Two old strict-mode failures were caused by the newly accessible topbar
+  combobox; no assertion, fixture data, API or production behavior was weakened.
+- First Admin search parity setup on Overview measured3.89%, including pre-existing chart
+  and dataset differences. Final scenario opens the same search from Members on both sides
+  (stable baseline D02); no masks, viewport changes or tolerance relaxation. Portal uses
+  `cà phê`; Admin uses `MediaSoft`. Native and MSW12/12 passed on final assets.

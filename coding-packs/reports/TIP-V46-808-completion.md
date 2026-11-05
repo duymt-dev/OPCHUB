@@ -48,8 +48,9 @@ triaged, not ignored. This document is a work log, not completion approval.
   Narrowed its accessible-name pattern to the exact province title + member count;
   identical MSW/native3/3 passed on final built assets.
 - Full MSW exposed two old Affiliate month selectors that now also match the new accessible
-  topbar combobox. Owner approval requested for a narrow month-label selector repair;
-  no assertions or production behavior will be relaxed.
+  topbar combobox. Owner approved narrowing three actions to the month label;
+  scoped search/Affiliate/stores11/11 passed. Full MSW rerun in progress.
+  No assertions, fixtures or production behavior were changed.
 
 ## Migration safety
 

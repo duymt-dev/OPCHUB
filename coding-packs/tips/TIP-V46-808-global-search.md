@@ -4,6 +4,11 @@
 
 ### Execution refinements (05/11/2026)
 
+- Owner additionally approved a narrow regression-selector repair in
+  `e2e/behavior/affiliate-screen.spec.ts`: three month-select actions now identify the
+  `Tháng …` combobox, avoiding the new topbar combobox. All assertions and production
+  behavior remain unchanged. Scoped search/Affiliate/stores11/11 passed.
+
 - Owner re-confirmed private DB pair/Memurai6381 and owned rolling restart; native untouched.
 - Owner approved `local-business/repositories/search-visibility.query.ts` SQL counterparts
   tested against original Prisma filters. Existing fee helpers remain the source of fee rules.
