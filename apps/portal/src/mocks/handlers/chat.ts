@@ -26,7 +26,7 @@ import {
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
 import { param, parseBody, parseQuery, reply, userIdOf } from './domain-util';
-import { API } from './util';
+import { API, apiError } from './util';
 
 /**
  * SRS §13 Chat (Portal · Chat nhóm). Đặt TRƯỚC communityHandlers (unshift) để trả DTO đầy đủ
@@ -35,6 +35,9 @@ import { API } from './util';
  * NA-09: không có route tạo chủ đề ở Portal (như server → 404); D-111 đổi tên / xoá ở Admin.
  */
 export const chatHandlers = [
+  // REQ-209 / D-61: explicitly model absent native routes, never proxy to a real API.
+  http.post(`${API}/groups/:id/rooms`, () => apiError(404, 'NOT_FOUND', 'Không tìm thấy')),
+  http.delete(`${API}/rooms/:id`, () => apiError(404, 'NOT_FOUND', 'Không tìm thấy')),
   http.get(`${API}/me/chat`, ({ request }) => HttpResponse.json(chatOverview(userIdOf(request)))),
   http.get(`${API}/me/chat/unread`, ({ request }) =>
     HttpResponse.json(chatUnread(userIdOf(request))),

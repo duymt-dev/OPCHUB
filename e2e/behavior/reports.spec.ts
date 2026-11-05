@@ -35,6 +35,10 @@ const pick = async (page: Page, label: string, option: string) => {
 
 test.describe('Admin › Báo cáo B1 / B2 / B3 (V4-614)', () => {
   test.skip(onServer, 'Số liệu mock MSW; bản server: test:int reporting/report-export');
+  test.beforeEach(async ({ page }) => {
+    // This suite asserts the fixed reporting fixture, including the previous-month default.
+    await page.clock.setFixedTime(new Date('2026-10-16T08:30:00Z'));
+  });
 
   test('B1 mặc định: tháng trước, nhóm đầu; thẻ số liệu + bảng chỉ số, ô chưa có dữ liệu "—"', async ({
     page,

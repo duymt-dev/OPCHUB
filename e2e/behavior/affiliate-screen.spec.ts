@@ -17,6 +17,8 @@ test.describe('Affiliate Portal — màn và tài khoản nhận', () => {
   test('REQ-311 AF0 lịch sử có dữ liệu và ngân hàng nhận tiền giữ snapshot', async ({ page }) => {
     await signIn(page, 'an.nguyen@mediasoft.vn');
     await expect(page.getByText('412', { exact: true })).toBeVisible();
+    // Historical fixture, not the app's live current-month default.
+    await page.getByRole('combobox').filter({ visible: true }).selectOption('2026-10');
     await expect(page.getByRole('cell', { name: 'Đỗ Minh T.', exact: true })).toBeVisible();
     await expect(page.getByText('3 khách', { exact: true })).toBeVisible();
     await page.getByRole('tab', { name: /Lịch sử nhận tiền/ }).click();

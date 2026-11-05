@@ -66,9 +66,10 @@ test.describe('Khung app', () => {
 
   test('ngôn ngữ, menu người dùng, Trang chủ, sự kiện sắp tới', async ({ page }) => {
     await login(page);
-    // TIP-V4-615: thanh trên cùng v4 = quả địa cầu + tên ngôn ngữ, không cờ (cờ chỉ ở màn đăng nhập)
+    // D-133 (owner 05/11/2026): keep the selected country's flag, overriding the globe prototype.
     const lang = page.getByRole('button', { name: 'Tiếng Việt' });
-    await expect(lang.locator('img')).toHaveCount(0);
+    await expect(lang.locator('img')).toHaveCount(1);
+    await expect(lang.locator('img')).toHaveAttribute('src', 'https://flagcdn.com/w80/vn.png');
     await expect(lang.locator('svg').first()).toBeVisible();
     await lang.click();
     await expect(page.getByText('CHỌN QUỐC GIA & NGÔN NGỮ')).toBeVisible();

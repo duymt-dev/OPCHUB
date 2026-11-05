@@ -78,7 +78,8 @@ test('REQ-308 REQ-309 REQ-310 REQ-410 bank/rate/policy cross Portal and Admin or
   await cancel.getByLabel('Lý do hủy', { exact: true }).fill('Kiểm tra đồng bộ hai ứng dụng');
   await cancel.getByRole('button', { name: 'Xác nhận', exact: true }).click();
   await expect(cancel).toHaveCount(0);
-  await page.goto(`${PORTAL_URL}/affiliate`);
+  // This AF0 commission belongs to October, independently of the browser's current month.
+  await page.goto(`${PORTAL_URL}/affiliate?month=2026-10`);
   const cancelled = page.getByRole('row').filter({ hasText: 'Kiều Văn S.' });
   await expect(cancelled).toContainText('Đã hủy');
   await expect(cancelled.locator('[title="Kiểm tra đồng bộ hai ứng dụng"]')).toBeVisible();
