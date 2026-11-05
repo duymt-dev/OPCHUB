@@ -355,17 +355,17 @@
   "id": "P-01",
   "name": "Dashboard",
   "viewport": 1440,
-  "diffPct": 23.794508995502248,
-  "size": "1440×2668",
-  "sha": "ecc1b687"
+  "diffPct": 1.010968852949985,
+  "size": "1440×1113",
+  "sha": "d6442cee"
  },
  {
   "id": "P-01",
   "name": "Dashboard",
   "viewport": 390,
-  "diffPct": 19.92154727645122,
-  "size": "390×4945",
-  "sha": "ecc1b687"
+  "diffPct": 2.967118103666622,
+  "size": "390×1721",
+  "sha": "d6442cee"
  },
  {
   "id": "P-05",

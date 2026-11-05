@@ -1,7 +1,8 @@
 # TIP-V46-809 — Dashboard need matches — IN PROGRESS
 
 - Branch: `feature/TIP-V46-809-need-suggestions`, based on `dev`4dcb6818; TIP commitf99d8fff.
-- Implementation checkpoint/PR pending. No DONE claim while full gates run.
+- Source checkpointd6442cee pushed; [draft PR87 into dev](https://github.com/duymt-dev/OPCHUB/pull/87).
+  No DONE claim while full gates run.
 - Scope: deterministic recommendations for business members, shared scorer, private-aware
   bounded repositories, Redis60s cache, dashboard card, ten locales, identical MSW/native E2E.
 - Owner approved private `opchub_v46_801_dev` / `opchub_v46_801_test`, Memurai6381 and owned
@@ -59,6 +60,20 @@
   assertions. No new seed data/business behavior.
 
 ## Remaining
+
+### Final-asset checkpoint
+
+- First full unit graph:2082 passed +2 skipped,6/6 tasks; server239/shared687/UI63/Admin558/
+  Portal430/integrations105 +2skip. Final-source cached graph rerun pending footer.
+- First full MSW:375 passed +4 skipped. Final2 CSS specificity build full rerun is running;
+  no baseline Affiliate failure reproduced in the first full feature run.
+- Final2 native combined run7/7 PASS: behavior3 +screens2 +harness2. MSW final2 parity4/4 PASS.
+  P01 MSW1.005% @1440 /2.967% @390; native1.011% /2.967%. Both manual pairs inspected;
+  genuine spacing/button injection-order defects fixed, no masks/threshold changes.
+- Root MSW build and final2 Portal MSW/native builds PASS; native Admin build PASS.
+- Post-native-test HOLD seed twice with `--affiliate --stores`: identical users96, affiliates62,
+  referrals51, commissions53, fee periods65, shares53, payouts1, year anchors50, directors3,
+  bank transactions5, unbalanced0. Manifest `test-results/v46-809-hold.json`, source d6442cee.
 
 Latest native behavior3/3 PASS (`v46-809-native-matches-r2.log`). MSW final first assets
 P01 captures1.007%/2.967%; native1.055%/3.751%. Native mobile revealed AntD injection-order

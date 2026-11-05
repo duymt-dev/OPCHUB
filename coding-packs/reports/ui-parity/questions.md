@@ -868,3 +868,9 @@ The existing production first100-groups limitation is not fixed or hidden here.
   Unmodified isolated repeat3 of that entire file passed9/9. No unrelated repair made.
   Baseline P01 before adding the missing card measured15.396% desktop/17.825% mobile;
   recorded as baseline, not masked or accepted as a new UI defect.
+- Final card spacing accounts for the shell's16px sibling gap; card buttons use scoped
+  specificity to beat AntD insertion order equally on MSW/native. Final P01 captures:
+  MSW1.005%/2.967%, native1.011%/2.967% (1440/390). Remaining differences are intended
+  accent-folded product reason/37% versus prototype30%, required specific need-type label
+  versus generic prototype label, and previously approved topbar flags. No new UI defect
+  left knowingly; owner reviews full screenshot pairs in PR87.
