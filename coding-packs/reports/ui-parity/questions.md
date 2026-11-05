@@ -823,5 +823,5 @@ first100 community items, so the overview did not contain the current test group
 Unread/read assertions passed. Owner explicitly chose “Sửa fixture hẹp, giữ nguyên
 assertions”. Only `test/chat/chat-rest.int.spec.ts` changes: afterEach deletes
 exact IDs created by that case, not other background groups. All assertions and
-production API/cap100 remain unchanged. Scoped14/14 passed; full rerun is pending.
+production API/cap100 remain unchanged. Scoped14/14 and full rerun2050/2050 passed.
 The existing production first100-groups limitation is not fixed or hidden here.

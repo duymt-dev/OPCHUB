@@ -1,12 +1,14 @@
 # TIP-V46-807 — Completion report
 
-## Status: IN-PROGRESS — not ready to merge
+## Status: DONE — ready for owner review and merge into dev
 
 Branch `feature/TIP-V46-807-group1-audit-conversion`, from dev `a7f6e42f`.
 Approved TIP checkpoint `e297a009`. No merge/auto-merge/main push.
-Source `5257db60` is pushed; [draft PR#85 into dev](https://github.com/duymt-dev/OPCHUB/pull/85).
-Implementation, MSW/native builds, full MSW and scoped native E2E are complete;
-only final full integration remains pending.
+Source `5257db60` is pushed; [PR#85 into dev](https://github.com/duymt-dev/OPCHUB/pull/85).
+All mandatory non-pixel gates passed. Final full integration is2050/2050,
+full MSW369+4 existing skips, native5/5. Pixel assertions remain reference per D-134.
+The final evidence-only commit SHA is reported in the PR history and final reply;
+no uncommitted production source is held. No merge, auto-merge or main push.
 
 ## Implementation
 
@@ -88,7 +90,7 @@ Logs are ignored local evidence in `test-results/`.
 | Native parity |5 image pass /3 image fail +2 harness pass | v46-807-parity-native-r1.log |
 | Permission-label exact row-header E2E |1/1,4.2s | v46-807-msw-rbac-final.log |
 | Final E2E lint/type after label selector |2/2 tasks | v46-807-e2e-quality-r3.log |
-| Final full integration R2 |PENDING | v46-807-full-int-r2.log |
+| Final full integration R2 |2050/2050: server1924/1924 (210 files), DB126/126 (26 files);2/2 tasks,22m24s | v46-807-full-int-r2.log |
 | Full integration R1 server |1923 pass /1 legacy chat-fixture fail,209/210 files; root stopped before DB task | v46-807-full-int-r1.log |
 | DB integration separately |126/126,26 files,123.31s | v46-807-db-int-r1.log |
 | Approved chat fixture isolation |14/14,11.36s, all assertions unchanged | v46-807-chat-regression-r2.log |
@@ -108,14 +110,16 @@ conversion159.820ms with indexed membership probes. One-pass population scans
 and tiny catalog scans are intentional; no repeated membership Seq Scan or
 planner flags. These are fixture measurements, not production load certification.
 
-## Remaining before completion
+## Remaining / owner review — not silently claimed complete
 
-- Finish full integration R2 (no other mandatory gate remains pending).
-- Commit/push final evidence, update draft PR/progress#7 and milestone M2 evidence.
-  Report final Git SHA and clean working tree.
+- Owner reviews D-134 image differences and TIP's five explicitly permitted defaults.
+- Nine AI translations need native-speaker review; no live provider/load certification.
+- Fresh-DB replay and HOLD rollback were not executed; down.sql is supplied.
+- Existing100-group overview cap and legacy settings navigation are outside this TIP.
+- BR-462/464,15-second chat interval, audit filters/purge and808–812 are not implemented here.
 
-No DONE or merge-ready claim while any mandatory non-pixel gate remains red or
-unmeasured. Nine AI translations still need native-speaker review.
+No mandatory non-pixel gate remains red or unmeasured. Historical failed attempts
+are retained below rather than relabelled as passing.
 
 ## Issues corrected without weakening assertions
 
@@ -139,7 +143,7 @@ unmeasured. Nine AI translations still need native-speaker review.
   missing `isOwner` group.93 background groups plus nine accumulated case groups
   exceeded the existing overview's first100 groups; unread/read assertions passed.
   Owner approved exact-ID per-case afterEach cleanup in that one test file.
-  All assertions remain, scoped14/14 passed, full rerun is running. No background
+  All assertions remain, scoped14/14 and full rerun2050/2050 passed. No background
   groups, API limit or production query were changed. The pre-existing100-group
   overview limitation remains an explicit follow-up, not claimed fixed by807.
 - Windows pre-commit failed with100 paths because the command line was too long.
@@ -152,12 +156,12 @@ unmeasured. Nine AI translations still need native-speaker review.
 |---|---|
 | TC-461, bursts/stale refetch/own messages/403 | mark-read unit8/8; identical MSW/native room-switch E2E |
 | BR-463 list/count/summary/CSV/Portal fallback/CHECK/recalculation | zero-commission-hidden integration5/5 |
-| Regional-share zero rows remain visible | production regional modules unchanged; full regression pending |
+| Regional-share zero rows remain visible | production regional modules unchanged; share-ledger/my-region regressions passed in full integration |
 | BR-465 login/sweep/idempotency/refresh/retained locks | auto-unlock integration2/2; no production unlock changes |
-| BR-485 manifest and negative route | admin-audit-coverage unit2/2; exemption AdminBankReconcileController.test is read-only; no previously unaudited service found |
+| BR-485 manifest and negative route | admin-audit-coverage unit2/2; exempt POST /admin/settings/bank/test (AdminBankReconcileController.test) is read-only; no previously unaudited service found |
 | BR-48550/50/20 pages,90days, exact cursor | audit-log-page integration6/6 including microseconds; UI unit load-more/error/empty |
 | BR-485 job/header120-row builder/BOM/date/formula/audit/403 | audit integration plus actual MSW/native download E2E |
-| Audit retention and old domain regressions | baseline111/111; final full integration pending |
+| Audit retention and old domain regressions | baseline111/111; final full integration2050/2050 |
 | BR-475/47680/70/50/national71, directors, exclusions | conversion integration3/3; UI color unit; actual mobile E2E |
 | BR-475 one SQL/cached60seconds/10k plan | conversion integration/cache spy, production SQL plan above |
 | BR-477 six-column/three-region CSV, audit, denied permission | integration and actual download E2E; denied account has no overview.view (default accountant does have it, grants unchanged) |
@@ -188,8 +192,8 @@ provider/PWA entries), real avatars/fallbacks, shell search and approved flag.
 Those navigation features belong to later TIPs; no blind prototype copy/removal.
 All16 MSW app/prototype images were visually inspected. No masks/tolerances added.
 
-Native reference on the same UI: A-010.10%/0.14%; D-012.41%/2.31%; D-692.86%/3.56%;
-D-7569.65%/68.74%. Native audit correctly shows the first50 real append-only rows
+Native reference on the same UI: A-01 **0.10%/0.14%**; D-01 **2.41%/2.31%**;
+D-69 **2.86%/3.56%**; D-75 **69.65%/68.74%**. Native audit correctly shows the first50 real append-only rows
 and “Xem thêm”, compared with six static prototype rows: full-page3151/5519px
 instead of1006/1680px. It is a fixture/history-length difference, not a failed CSV
 job or hidden pagination; no audit deletion, capture truncation or new mask used
@@ -213,6 +217,19 @@ was cleared by the existing guarded script. Original PostgreSQL5432 PID5932,
 Redis6379 PID1244 and Memurai6381 PID20340 remain listening. Evidence:
 `v46-807-hold-{seed,counts}-{1,2}.log`, `v46-807-hold-final.log`/`hold.json`.
 
+Final read-only preflight after all integration suites: both private DBs retain
+the intended migration, zero incident metadata, validated customer-year FK,
+NOT VALID positive CHECK and zero unbalanced shares. API4300 and both native
+frontend health proxies return200 JSON; original service PIDs/ports are unchanged.
+Evidence: `v46-807-final-preflight.{log,json}`. No production source changed after
+the successful builds; later commits only changed tests/docs/evidence.
+
+Known native dev warning: scheduled demo bot jobs report
+`[admin-configured-llm] Chưa cấu hình AI`. The same warning exists in806's worker
+log. No AI credential/provider or bot schedule was changed to hide it. It does
+not affect the tested audit export worker or807 native cases; full native bot
+acceptance/live AI configuration is not claimed here.
+
 ## Hard rules review
 
 1/13: small domain files and dedicated tests; file caps checked. 2: strict typed
@@ -224,5 +241,152 @@ transitions retained. 8: export outbox/request audit share one transaction. 9:
 integer VND and timestamptz UTC, explicit VN display. 10: conversion/export writes
 audited; manifest limitations stated. 11: existing integration adapters/fakes,
 local storage only for private dev runtime. 12: no secrets/new env variable or
-console logging added. 14: source committed/pushed with hooks; final evidence and
-clean-status check still pending. PM GOAL/handoff and historical TIP rows unchanged.
+console logging added. 14: source committed/pushed with hooks; final evidence-only
+commit follows, with clean status checked before completion. PM GOAL/handoff and
+historical TIP rows unchanged.
+
+## Verification commands
+
+Use approved private DB URLs and Memurai6381 only; do not point these commands
+at the original native application databases/cache. Local ignored runner loads
+credentials without printing them and guards the chosen DB names.
+
+```text
+node test-results/v46-807-run.cjs --node node_modules/turbo/bin/turbo run lint typecheck test --concurrency=1
+node test-results/v46-807-run.cjs depcheck
+V46_DB_TARGET=test node test-results/v46-807-run.cjs test:int
+PORTAL_PORT=3800 ADMIN_PORT=3801 PROTO_PORT=4830 PARITY_WORKERS=4 node test-results/v46-807-run.cjs e2e
+SERVER_PORTAL_PORT=3700 SERVER_ADMIN_PORT=3701 API_PROXY_URL=http://127.0.0.1:4300 node test-results/v46-807-run.cjs --filter @opchub/e2e e2e:server --project=behavior admin-audit-log.spec.ts admin-overview.spec.ts portal-chat-read.spec.ts
+PORTAL_PORT=3800 ADMIN_PORT=3801 PROTO_PORT=4830 PARITY_IDS=A-01,D-01,D-69,D-75 node test-results/v46-807-run.cjs parity
+```
+
+The env-prefix lines above are notation; in PowerShell set `$env:NAME` separately.
+Native commands also use the approved private runner, SOCKET_PUBLIC_URL4301,
+PROTO_PORT4830/DLPL_STUB_PORT4831 and1 worker, as recorded in the logs. Build
+outputs are separate `.next-v46-807-msw` / `.next-v46-807-native`, with explicit
+mocking flags; native API_PROXY_URL4300 forwarded using Turbo `--env-mode=loose`.
+The successful root MSW/native build commands ran3/3 tasks each; neither overwrote
+older HOLD output. Strict-mode omission of custom proxy env was avoided.
+
+## Changed file inventory
+
+A = created, M = modified. No source deletion ships; the two accidental migration folders were never committed.
+
+| Change | Path | Purpose |
+|---|---|---|
+| M | `apps/admin/messages/vi/auth.json` | Localized hero or transparency copy |
+| M | `apps/admin/messages/vi/overview.json` | Localized hero or transparency copy |
+| M | `apps/admin/messages/vi/settings.json` | Localized hero or transparency copy |
+| M | `apps/admin/src/features/auth/components/auth-frame.tsx` | Auth hero presentation/contracts |
+| A | `apps/admin/src/features/overview/components/conversion-grid.tsx` | Regional conversion SQL/service/API/UI |
+| A | `apps/admin/src/features/overview/components/conversion-table.spec.tsx` | Acceptance/regression fixtures or audit inventory |
+| A | `apps/admin/src/features/overview/components/conversion-table.tsx` | Regional conversion SQL/service/API/UI |
+| A | `apps/admin/src/features/overview/components/conversion.module.css` | Regional conversion SQL/service/API/UI |
+| M | `apps/admin/src/features/overview/components/overview-screen.tsx` | Regional conversion SQL/service/API/UI |
+| M | `apps/admin/src/features/overview/data.ts` | Regional conversion SQL/service/API/UI |
+| A | `apps/admin/src/features/overview/hooks/use-conversion.ts` | Regional conversion SQL/service/API/UI |
+| M | `apps/admin/src/features/settings/api.ts` | Audit pagination/export/API/UI wiring |
+| A | `apps/admin/src/features/settings/components/audit-log-tab.spec.tsx` | Acceptance/regression fixtures or audit inventory |
+| M | `apps/admin/src/features/settings/components/audit-log-tab.tsx` | Audit pagination/export/API/UI wiring |
+| M | `apps/admin/src/features/settings/components/audit-log.module.css` | Audit pagination/export/API/UI wiring |
+| A | `apps/admin/src/features/settings/hooks/use-audit-log.ts` | Audit pagination/export/API/UI wiring |
+| A | `apps/admin/src/mocks/handlers/audit-log.ts` | Mock contract and positive-only/aggregate parity |
+| M | `apps/admin/src/mocks/handlers/settings.ts` | Mock contract and positive-only/aggregate parity |
+| M | `apps/admin/src/mocks/handlers/shell.ts` | Mock contract and positive-only/aggregate parity |
+| M | `apps/portal/messages/en/auth.json` | Localized hero or transparency copy |
+| M | `apps/portal/messages/fil/auth.json` | Localized hero or transparency copy |
+| M | `apps/portal/messages/id/auth.json` | Localized hero or transparency copy |
+| M | `apps/portal/messages/km/auth.json` | Localized hero or transparency copy |
+| M | `apps/portal/messages/lo/auth.json` | Localized hero or transparency copy |
+| M | `apps/portal/messages/ms/auth.json` | Localized hero or transparency copy |
+| M | `apps/portal/messages/my/auth.json` | Localized hero or transparency copy |
+| M | `apps/portal/messages/th/auth.json` | Localized hero or transparency copy |
+| M | `apps/portal/messages/vi/auth.json` | Localized hero or transparency copy |
+| M | `apps/portal/messages/zh/auth.json` | Localized hero or transparency copy |
+| M | `apps/portal/src/features/auth/components/auth-frame.tsx` | Auth hero presentation/contracts |
+| M | `apps/portal/src/features/chat/components/chat-screen.tsx` | Read deduplication and unread cache |
+| A | `apps/portal/src/features/chat/hooks/use-mark-read.spec.tsx` | Acceptance/regression fixtures or audit inventory |
+| A | `apps/portal/src/features/chat/hooks/use-mark-read.ts` | Read deduplication and unread cache |
+| M | `apps/portal/src/features/chat/hooks/use-room-actions.ts` | Read deduplication and unread cache |
+| M | `apps/portal/src/lib/chat-unread.ts` | Read deduplication and unread cache |
+| M | `apps/server/src/common/http/csv.ts` | Shared CSV/export integration |
+| M | `apps/server/src/modules/affiliate/repositories/affiliate-admin.repository.ts` | Positive-only commission query/write semantics |
+| M | `apps/server/src/modules/affiliate/repositories/affiliate-history.query.ts` | Positive-only commission query/write semantics |
+| M | `apps/server/src/modules/affiliate/repositories/affiliate-write.repository.ts` | Positive-only commission query/write semantics |
+| M | `apps/server/src/modules/affiliate/repositories/commission-admin.query.ts` | Positive-only commission query/write semantics |
+| M | `apps/server/src/modules/affiliate/repositories/commission-admin.repository.ts` | Positive-only commission query/write semantics |
+| A | `apps/server/src/modules/affiliate/repositories/commission-visible.sql.ts` | Positive-only commission query/write semantics |
+| M | `apps/server/src/modules/affiliate/repositories/me-affiliate.query.ts` | Positive-only commission query/write semantics |
+| M | `apps/server/src/modules/affiliate/repositories/me-affiliate.repository.ts` | Positive-only commission query/write semantics |
+| M | `apps/server/src/modules/affiliate/repositories/referral-rows.query.ts` | Positive-only commission query/write semantics |
+| M | `apps/server/src/modules/export/export.service.ts` | Shared CSV/export integration |
+| M | `apps/server/src/modules/membership-fee/services/bank-csv.service.ts` | Shared CSV/export integration |
+| A | `apps/server/src/modules/reporting/conversion.controller.ts` | Regional conversion SQL/service/API/UI |
+| A | `apps/server/src/modules/reporting/conversion.repository.ts` | Regional conversion SQL/service/API/UI |
+| A | `apps/server/src/modules/reporting/conversion.service.ts` | Regional conversion SQL/service/API/UI |
+| A | `apps/server/src/modules/reporting/conversion.ts` | Regional conversion SQL/service/API/UI |
+| M | `apps/server/src/modules/reporting/reporting.module.ts` | Regional conversion SQL/service/API/UI |
+| M | `apps/server/src/modules/settings/controllers/roles.controller.ts` | Audit pagination/export/API/UI wiring |
+| M | `apps/server/src/modules/settings/index.ts` | Audit pagination/export/API/UI wiring |
+| A | `apps/server/src/modules/settings/repositories/audit-log.repository.ts` | Audit pagination/export/API/UI wiring |
+| A | `apps/server/src/modules/settings/services/audit-log-export.service.ts` | Audit pagination/export/API/UI wiring |
+| M | `apps/server/src/modules/settings/services/audit-log.service.ts` | Audit pagination/export/API/UI wiring |
+| A | `apps/server/src/modules/settings/settings-audit.module.ts` | Audit pagination/export/API/UI wiring |
+| M | `apps/server/src/modules/settings/settings-http.module.ts` | Audit pagination/export/API/UI wiring |
+| M | `apps/server/src/worker/worker-app.module.ts` | Register audit export builder in worker |
+| A | `apps/server/test/account/auto-unlock.int.spec.ts` | Acceptance/regression fixtures or audit inventory |
+| A | `apps/server/test/affiliate/zero-commission-hidden.int.spec.ts` | Acceptance/regression fixtures or audit inventory |
+| A | `apps/server/test/audit/admin-audit-coverage.spec.ts` | Acceptance/regression fixtures or audit inventory |
+| A | `apps/server/test/audit/admin-audit-manifest.ts` | Acceptance/regression fixtures or audit inventory |
+| M | `apps/server/test/chat/chat-rest.int.spec.ts` | Acceptance/regression fixtures or audit inventory |
+| A | `apps/server/test/reporting/conversion.int.spec.ts` | Acceptance/regression fixtures or audit inventory |
+| A | `apps/server/test/reporting/transparency-plan.int.spec.ts` | Acceptance/regression fixtures or audit inventory |
+| A | `apps/server/test/settings/audit-log-page.int.spec.ts` | Acceptance/regression fixtures or audit inventory |
+| M | `coding-packs/02-TASK-GRAPH.md` | Completion/decisions/progress evidence |
+| A | `coding-packs/reports/TIP-V46-807-completion.md` | Completion/decisions/progress evidence |
+| A | `coding-packs/reports/TIP-V46-807-query-plans.md` | Completion/decisions/progress evidence |
+| A | `coding-packs/reports/V4.6-M2-completion.md` | Completion/decisions/progress evidence |
+| M | `coding-packs/reports/V4.6-progress.md` | Completion/decisions/progress evidence |
+| M | `coding-packs/reports/ui-parity/diffs/D-69-390.png` | Measured pixel evidence |
+| M | `coding-packs/reports/ui-parity/diffs/D-75-1440.png` | Measured pixel evidence |
+| M | `coding-packs/reports/ui-parity/diffs/D-75-390.png` | Measured pixel evidence |
+| M | `coding-packs/reports/ui-parity/questions.md` | Completion/decisions/progress evidence |
+| M | `coding-packs/reports/ui-parity/results.json` | Measured pixel evidence |
+| M | `coding-packs/reports/ui-parity/results.md` | Measured pixel evidence |
+| M | `coding-packs/reports/ui-parity/server/diffs/D-69-390.png` | Measured pixel evidence |
+| M | `coding-packs/reports/ui-parity/server/diffs/D-75-1440.png` | Measured pixel evidence |
+| M | `coding-packs/reports/ui-parity/server/diffs/D-75-390.png` | Measured pixel evidence |
+| M | `coding-packs/reports/ui-parity/server/results.json` | Measured pixel evidence |
+| M | `coding-packs/reports/ui-parity/server/results.md` | Measured pixel evidence |
+| M | `coding-packs/standards/global/domain-glossary.md` | Domain terminology |
+| A | `coding-packs/tips/TIP-V46-807-group1-audit-conversion.md` | Approved TIP and execution refinements |
+| M | `e2e/behavior/a-01-login.spec.ts` | Acceptance/regression fixtures or audit inventory |
+| A | `e2e/behavior/admin-audit-log.spec.ts` | Acceptance/regression fixtures or audit inventory |
+| M | `e2e/behavior/admin-bank-reconcile.spec.ts` | Acceptance/regression fixtures or audit inventory |
+| M | `e2e/behavior/admin-groups.spec.ts` | Acceptance/regression fixtures or audit inventory |
+| M | `e2e/behavior/admin-overview.spec.ts` | Acceptance/regression fixtures or audit inventory |
+| M | `e2e/behavior/admin-rbac.spec.ts` | Acceptance/regression fixtures or audit inventory |
+| A | `e2e/behavior/helpers/csv-download.ts` | Behavior/BOM/parity acceptance |
+| A | `e2e/behavior/portal-chat-read.spec.ts` | Acceptance/regression fixtures or audit inventory |
+| M | `e2e/parity/scenarios/admin-settings.ts` | Behavior/BOM/parity acceptance |
+| M | `e2e/parity/scenarios/admin.ts` | Behavior/BOM/parity acceptance |
+| A | `packages/db/prisma/migrations/20261110090000_v46_commission_positive/down.sql` | Positive commission CHECK / rollback SQL |
+| A | `packages/db/prisma/migrations/20261110090000_v46_commission_positive/migration.sql` | Positive commission CHECK / rollback SQL |
+| A | `packages/shared/src/api-domains/audit-log-page.spec.ts` | Acceptance/regression fixtures or audit inventory |
+| A | `packages/shared/src/api-domains/audit-log-page.ts` | Shared validated API/export contracts |
+| M | `packages/shared/src/api-domains/export.ts` | Shared validated API/export contracts |
+| M | `packages/shared/src/api-domains/index.ts` | Shared validated API/export contracts |
+| M | `packages/shared/src/api-domains/overview.ts` | Shared validated API/export contracts |
+| M | `packages/shared/src/mock-data/domains/affiliate-admin/state.ts` | Mock contract and positive-only/aggregate parity |
+| M | `packages/shared/src/mock-data/domains/affiliate-admin/write.ts` | Mock contract and positive-only/aggregate parity |
+| M | `packages/shared/src/mock-data/domains/affiliate.ts` | Mock contract and positive-only/aggregate parity |
+| A | `packages/shared/src/mock-data/domains/audit-log-page.ts` | Mock contract and positive-only/aggregate parity |
+| M | `packages/shared/src/mock-data/domains/index.ts` | Mock contract and positive-only/aggregate parity |
+| A | `packages/shared/src/mock-data/domains/overview-conversion.ts` | Mock contract and positive-only/aggregate parity |
+| A | `packages/shared/src/mock-data/domains/transparency-csv.ts` | Mock contract and positive-only/aggregate parity |
+| M | `packages/shared/src/permissions.spec.ts` | Acceptance/regression fixtures or audit inventory |
+| M | `packages/shared/src/permissions.ts` | Regional-director payout label |
+| M | `packages/ui/src/auth/auth-hero.module.css` | Auth hero presentation/contracts |
+| A | `packages/ui/src/auth/auth-hero.spec.tsx` | Acceptance/regression fixtures or audit inventory |
+| M | `packages/ui/src/auth/auth-hero.tsx` | Auth hero presentation/contracts |
+| M | `packages/ui/src/auth/types.ts` | Auth hero presentation/contracts |

@@ -448,24 +448,24 @@ Ghi 5 câu vào `reports/ui-parity/questions.md` › V4.6 (dạng "mặc định
 
 ## ⚠️ BUILDER-CHECKLIST (agent PHẢI hoàn thành trước khi báo DONE)
 
-- [ ] `pwd` = `D:\CODING\OPCHUB\CODING`, nhánh `feature/TIP-V46-807-group1-audit-conversion`; chỉ sửa file trong **Files touched** (thêm ngoài danh sách → ghi lý do)
-- [ ] Hỏi owner DB đích trước khi `migrate deploy` / int / e2e server / seed; migration `--create-only` rồi sửa SQL, có `down.sql`
-- [ ] Đo baseline `dev` trước (int affiliate / chat / reporting / settings, e2e MSW, parity A-01 / D-01 / D-69 / D-75) để tách lỗi cũ / mới
-- [ ] Mỗi AC có test đúng tên, ghi PASS / FAIL thật từng cái
-- [ ] Chạy và dán tóm tắt output thật: `pnpm lint && pnpm typecheck && pnpm test && pnpm test:int && pnpm depcheck && pnpm build`; `pnpm e2e` MSW không tụt; e2e server cho `admin-audit-log`, `admin-overview` (conversion), `portal-chat-read`
-- [ ] EXPLAIN (ANALYZE, BUFFERS) ≥ 10k dòng: danh sách hoa hồng có `amount > 0`, trang nhật ký, câu tổng hợp chuyển đổi → `TIP-V46-807-query-plans.md`
-- [ ] Parity (D-134): đo A-01, D-01, D-69, D-75 ở 1440 + 390, ghi % + nguyên nhân; sửa hết lệch giao diện thật
-- [ ] Luật BUILDER-HANDOFF liên quan:
+- [x] `pwd` = `D:\CODING\OPCHUB\CODING`, nhánh `feature/TIP-V46-807-group1-audit-conversion`; chỉ sửa file trong **Files touched** (thêm ngoài danh sách → ghi lý do)
+- [x] Hỏi owner DB đích trước khi `migrate deploy` / int / e2e server / seed; migration `--create-only` rồi sửa SQL, có `down.sql`
+- [x] Đo baseline `dev` trước (int affiliate / chat / reporting / settings, e2e MSW, parity A-01 / D-01 / D-69 / D-75) để tách lỗi cũ / mới
+- [x] Mỗi AC có test đúng tên, ghi PASS / FAIL thật từng cái
+- [x] Chạy và dán tóm tắt output thật: `pnpm lint && pnpm typecheck && pnpm test && pnpm test:int && pnpm depcheck && pnpm build`; `pnpm e2e` MSW không tụt; e2e server cho `admin-audit-log`, `admin-overview` (conversion), `portal-chat-read`
+- [x] EXPLAIN (ANALYZE, BUFFERS) ≥ 10k dòng: danh sách hoa hồng có `amount > 0`, trang nhật ký, câu tổng hợp chuyển đổi → `TIP-V46-807-query-plans.md`
+- [x] Parity (D-134): đo A-01, D-01, D-69, D-75 ở 1440 + 390, ghi % + nguyên nhân; sửa hết lệch giao diện thật
+- [x] Luật BUILDER-HANDOFF liên quan:
   - **Luật 6 (S-01 → S-12)**: đánh dấu đã đọc không tạo vòng REST theo socket, không query theo người nhận
   - **Luật 10**: audit trong **cùng transaction**; xuất nhật ký / chuyển đổi đều ghi audit; manifest phủ mọi route Admin ghi
   - **Luật 5**: chuyển đổi 1 câu SQL (LATERAL + FILTER), nhật ký keyset, hoa hồng lọc trong SQL — không lọc trong JS sau khi đọc
   - **D-128 / D-132 (3) / D-119**: vùng theo nhóm tỉnh sớm nhất; nhãn "Chi trả GĐ Vùng"; không đụng sổ chia sẻ GĐ Vùng khi ẩn 0đ
-- [ ] File ≤ trần (BE 600, FE 400); không `any` / `@ts-ignore` / `console.*`
-- [ ] D-65: 9 bộ dịch Portal có khối `hero` mới; `messages.spec.ts` PASS
-- [ ] Ghi Q-V46-807-1 → 5 vào `questions.md`; cập nhật `V4.6-progress.md` dòng #7; glossary
-- [ ] Sau khi đo: chạy lại seed demo (native HOLD); không tắt tiến trình HOLD
-- [ ] Commit theo bước `git commit -- <paths>` (cấm `git add -A`); `git status --short` sạch; push; PR `base: dev`, không tự merge; completion report có **git commit SHA**, PR, số test thật, parity (tham khảo), EXPLAIN, soát luật cứng 1–14, phần chưa làm
-- [ ] KHÔNG báo DONE nếu còn gate đỏ (lint / type / unit / int / e2e / depcheck / build); parity theo D-134 không chặn nhưng phải có nguyên nhân
+- [x] File ≤ trần (BE 600, FE 400); không `any` / `@ts-ignore` / `console.*`
+- [x] D-65: 9 bộ dịch Portal có khối `hero` mới; `messages.spec.ts` PASS
+- [x] Ghi Q-V46-807-1 → 5 vào `questions.md`; cập nhật `V4.6-progress.md` dòng #7; glossary
+- [x] Sau khi đo: chạy lại seed demo (native HOLD); không tắt tiến trình HOLD
+- [x] Commit theo bước `git commit -- <paths>` (cấm `git add -A`); `git status --short` sạch; push; PR `base: dev`, không tự merge; completion report có **git commit SHA**, PR, số test thật, parity (tham khảo), EXPLAIN, soát luật cứng 1–14, phần chưa làm
+- [x] KHÔNG báo DONE nếu còn gate đỏ (lint / type / unit / int / e2e / depcheck / build); parity theo D-134 không chặn nhưng phải có nguyên nhân
 
 ---
 
