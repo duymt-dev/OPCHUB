@@ -44,8 +44,10 @@ it('off simulation waits, enabling does not replay; manual endpoint updates fee 
 });
 it('short record never activates, conflict on repeat, rotation persists only hint and audit', () => {
   const before = mockDb().fees.map((f) => f.validUntil);
+  expect(mockBankConfig().counts.pending).toBe(2);
   expect(shortMockBank('admin', 'bank-demo-5', 'Awaiting top up')).toBe(true);
   expect(shortMockBank('admin', 'bank-demo-5', 'Again')).toBe(false);
+  expect(mockBankConfig().counts.pending).toBe(1);
   expect(mockDb().fees.map((f) => f.validUntil)).toEqual(before);
   const rotated = rotateMockBank('admin');
   expect(mockBankConfig().keyHint).toBe(rotated.hint);

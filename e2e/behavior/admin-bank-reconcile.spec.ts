@@ -136,6 +136,7 @@ test('REQ-621 short note required, recorded status, CSV download', async ({ page
     .fill('Đã liên hệ, không kích hoạt');
   await submit.click();
   await expect(row).toContainText('Thiếu tiền · đã ghi nhận');
+  await expect(panel.getByText('2 / 1', { exact: true })).toBeVisible();
   await expect(row.getByRole('button', { name: 'Ghi nhận thiếu' })).toHaveCount(0);
   const download = page.waitForEvent('download');
   await panel.getByRole('button', { name: 'Xuất CSV' }).click();

@@ -27,4 +27,4 @@ export function bankTransactionsQuery(cursor: BankTxnQuery['cursor'], limit: num
 }
 export const bankCountsQuery = Prisma.sql`
   SELECT (SELECT count(*) FROM payment_transactions WHERE match_status='matched') AS matched,
-    (SELECT count(*) FROM payment_transactions WHERE match_status IN ('unmatched','short')) AS pending`;
+    (SELECT count(*) FROM payment_transactions WHERE match_status='unmatched') AS pending`;

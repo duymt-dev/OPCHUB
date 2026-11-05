@@ -45,6 +45,7 @@
   - Tài liệu
     - `coding-packs/standards/global/domain-glossary.md`, `coding-packs/reports/V4.6-progress.md` (dòng #6), `coding-packs/reports/ui-parity/{screens,questions}.md`, `coding-packs/reports/TIP-V46-806-completion.md` (create)
 - **Execution file refinements (same scope, no new business behavior):**
+  - Final SPEC 7 correction: pending counts exclude acknowledged database status `short`; unprocessed short-amount rows are database `unmatched` (display `short`, `shortRecorded=false`). Keep both API and MSW counts consistent, assert decrement in integration/shared/E2E. The already-applied status index still covers both equality counts; do not rewrite migration history.
   - Owner-approved gate repair (05/11/2026): `apps/server/test/bot/bot-bulk-lines-v42.int.spec.ts` (modify only the 10k saved-script fixture): prepare outside the default 5s interactive transaction, clean only its unique prefix in finally, following the adjacent durable-result case. Preserve collision/GIN/no-Seq-Scan assertions and all production timeouts; no Bot production changes.
   - `packages/db/prisma/migrations/20261109091000_v46_bank_status_counts/{migration,down}.sql` (create): actual EXPLAIN exposed a counts Seq Scan; compact partial status index fixes the runtime query without planner flags.
   - `apps/server/src/modules/membership-fee/repositories/bank-transactions.{repository,query}.ts` (create): isolate keyset/list/count/short logic instead of expanding the existing payment repository.

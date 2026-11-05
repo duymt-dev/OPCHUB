@@ -148,7 +148,9 @@ describe('REQ-621 bank reconciliation admin D-135', () => {
         method: 'POST',
         json: { note: 'Đã liên hệ, không cộng dồn' },
       });
+    const pending = (await config()).counts.pending;
     expect((await record()).status).toBe(204);
+    expect((await config()).counts.pending).toBe(pending - 1);
     expect((await record()).status).toBe(409);
     expect(
       (await t.prisma.db.membershipFee.findUniqueOrThrow({ where: { userId: u.id } })).status,

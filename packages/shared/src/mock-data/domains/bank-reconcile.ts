@@ -51,7 +51,9 @@ export function mockBankConfig() {
     canSimulate: true,
     counts: {
       matched: s.rows.filter((r) => r.status === 'matched').length,
-      pending: s.rows.filter((r) => r.status === 'unmatched' || r.status === 'short').length,
+      pending: s.rows.filter(
+        (r) => !r.shortRecorded && (r.status === 'unmatched' || r.status === 'short'),
+      ).length,
     },
   };
 }
