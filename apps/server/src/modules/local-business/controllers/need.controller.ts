@@ -9,12 +9,15 @@ import {
   needListQuerySchema,
   needListSchema,
   needSchema,
+  needMatchesSchema,
+  type NeedMatches,
 } from '@opchub/shared/api-domains';
 import type { z } from 'zod';
 import { type AccessClaims, AllowAccountTypes, CurrentUser } from '@/common/auth';
 import { respond, ZodBody, ZodQuery } from '@/common/http/zod';
 import { NeedExploreService } from '../services/need-explore.service';
 import { NeedOwnerService } from '../services/need-owner.service';
+import { NeedMatchService } from '../services/need-match.service';
 
 const owner = (u: AccessClaims) => ({ id: u.sub, accountType: u.accountType });
 
@@ -27,6 +30,7 @@ export class NeedController {
   constructor(
     private readonly explore: NeedExploreService,
     private readonly owner: NeedOwnerService,
+    private readonly matches: NeedMatchService,
   ) {}
 
   @AllowAccountTypes('investor')
@@ -41,6 +45,11 @@ export class NeedController {
   @Get('me/needs')
   async mine(@CurrentUser() user: AccessClaims): Promise<MyNeeds> {
     return respond(myNeedsSchema, await this.owner.mine(owner(user)));
+  }
+
+  @Get('me/needs/matches')
+  async matched(@CurrentUser() user: AccessClaims): Promise<NeedMatches> {
+    return respond(needMatchesSchema, await this.matches.matches(owner(user)));
   }
 
   @Post('me/needs')

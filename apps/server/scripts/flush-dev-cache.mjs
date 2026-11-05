@@ -23,6 +23,7 @@ const PATTERNS = [
   'opchub:reporting:*',
   'opchub:admin:*',
   'opchub:dashboard:*',
+  'opchub:need-matches:*',
   'opchub:welcome:*',
   'opchub:biz:*',
   'opchub:pwreset:*',

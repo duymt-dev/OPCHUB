@@ -114,3 +114,10 @@ Nhãn tiếng Việt chỉ đặt trong file messages của next-intl, không vi
 | Thuật ngữ | Code | Nghĩa |
 |---|---|---|
 | Tìm kiếm chung | global search | Ô topbar tìm gian hàng, nhu cầu, dự án, nhóm và thành viên (chỉ Admin), theo quyền/visibility; tối đa4 mỗi nhóm |
+
+### V4.6 — TIP-V46-809
+
+| Thuật ngữ | Code | Nghĩa |
+|---|---|---|
+| Nhu cầu phù hợp | need matches | Top3 nhu cầu công khai đang mở của người khác, chấm điểm theo gian hàng của chính TV Doanh nghiệp; không gọi LLM |
+| Mức phù hợp | pct | Ngành50 + tỉnh30 + từ khóa7/từ (tối đa20), lọc từ30; hiển thị trần98%, không phải xác suất AI |

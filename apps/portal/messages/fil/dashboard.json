@@ -2,5 +2,20 @@
   "page": {
     "title": "Dashboard",
     "sub": "Subaybayan ang aktibidad ng mga miyembro at komunidad nang real-time"
+  },
+  "matches": {
+    "title": "Mga pangangailangang tugma sa iyong tindahan",
+    "sub": "Mga mungkahi ng AI batay sa industriya, lalawigan at produkto · {n, plural, one {# pangangailangan} other {# pangangailangan}}",
+    "all": "Tingnan lahat ng pangangailangan",
+    "view": "Tingnan at makipag-ugnayan",
+    "fit": "antas ng pagtugma",
+    "none": "Wala pang tugmang pangangailangan. Idagdag ang industriya, lalawigan at mga produkto para sa mas tumpak na mungkahi ng AI.",
+    "reason": {
+      "field": "Parehong industriya",
+      "province": "Parehong lalawigan",
+      "product": "Tugmang produkto"
+    },
+    "error": "Hindi ma-load ang mga tugmang pangangailangan.",
+    "retry": "Subukang muli"
   }
 }

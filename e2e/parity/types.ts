@@ -12,7 +12,7 @@ export interface StepCtx {
 
 export interface Scenario {
   /** Explicit dataset precondition, identical native and MSW; never changes assertions. */
-  demo?: 'affiliate' | 'bot-history' | 'projects';
+  demo?: 'affiliate' | 'bot-history' | 'projects' | 'stores';
   id: string;
   name: string;
   /** Mặc định cả 1440 và 390 */

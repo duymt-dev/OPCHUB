@@ -2,6 +2,18 @@
 
 ## HEADER
 
+### Execution refinements
+
+- Additional narrow test infrastructure: `e2e/server/test.ts` and `e2e/parity/types.ts`
+  expose existing `seed:demo --stores` via an explicit annotation; P01/new behavior cases
+  use the same full store seed as MSW. `apps/server/scripts/flush-dev-cache.mjs` adds only
+  the new cache namespace to post-demo reset, not production write invalidation.
+- Candidate late join uses a correlated LATERAL payload lookup limited to the unique ID.
+  A plain join let PostgreSQL choose a needs payload Seq Scan on10k fixtures. The bounded
+  lookup preserves one SQL and exact200-candidate semantics without new indexes/planner flags.
+- Shared `selectNeedMatches` additionally centralizes ranking/projection for mock/server.
+- Standard unpaid402 MEMBERSHIP_REQUIRED wins erroneous TIP403 wording; locked/investor403.
+
 - TIP-ID: TIP-V46-809
 - Project: OPCHUB
 - Module: local-business (chấm điểm nhu cầu cho gian hàng của chính TV), Portal dashboard (thẻ mới)

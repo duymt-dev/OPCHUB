@@ -66,6 +66,9 @@ export const test = base.extend<{
           info.annotations.some((a) => a.type === 'demo' && a.description === 'projects')
             ? ['--projects']
             : []),
+          ...(info.annotations.some((a) => a.type === 'demo' && a.description === 'stores')
+            ? ['--stores']
+            : []),
           ...(info.annotations.some((a) => a.type === 'demo' && a.description === 'renewal')
             ? ['--renewal']
             : []),
