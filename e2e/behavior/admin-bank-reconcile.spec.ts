@@ -43,6 +43,12 @@ test('REQ-621 D-135 providers read-only, OPCHUB syntax, immediate toggle persist
   );
   await page.setViewportSize({ width: 390, height: 844 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  const account = await panel.getByText('Tài khoản nhận', { exact: true }).boundingBox();
+  const owner = await panel.getByText('Chủ tài khoản', { exact: true }).boundingBox();
+  expect(account).not.toBeNull();
+  expect(owner).not.toBeNull();
+  expect(owner?.x).toBe(account?.x);
+  expect(owner?.y ?? 0).toBeGreaterThan(account?.y ?? 0);
   await expect(panel.getByRole('region', { name: 'Giao dịch gần đây', exact: true })).toBeVisible();
 });
 
