@@ -90,6 +90,9 @@ export class RenewalService {
     if (!channels.length) throw new AppError('RENEWAL_NO_CHANNEL', 'Bật ít nhất 1 kênh gửi');
     const { from, to } = renewalWindow(now);
     return this.prisma.db.$transaction(async (tx) => {
+      if (!(await this.repo.tryManualLock(tx))) {
+        throw new AppError('RENEWAL_SEND_BUSY', 'Đang gửi nhắc gia hạn, vui lòng thử lại sau');
+      }
       let cursor: RenewalCursor | undefined;
       let sent = 0;
       const milestones: Record<string, number> = {};

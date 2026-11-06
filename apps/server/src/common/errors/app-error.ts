@@ -24,6 +24,7 @@ export const HTTP_STATUS: Record<ErrorCode, number> = {
   GONE: 410,
   FILE_REJECTED: 422,
   RENEWAL_NO_CHANNEL: 422,
+  RENEWAL_SEND_BUSY: 409,
   INTEGRATION_ERROR: 502,
 };
 

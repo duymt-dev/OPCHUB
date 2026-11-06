@@ -2,6 +2,7 @@
 export const ERROR_CODES = [
   'INTEGRATION_ERROR',
   'RENEWAL_NO_CHANNEL',
+  'RENEWAL_SEND_BUSY',
   'VALIDATION_ERROR',
   'UNAUTHORIZED',
   'MEMBERSHIP_REQUIRED',
@@ -29,6 +30,10 @@ export const ERROR_CODES = [
 /** RB-R07 câu chữ prototype */
 export const viewOnlyMessage = (roleName: string): string =>
   `Vai trò ${roleName} chỉ có quyền xem mục này`;
+
+/** TIP813 A4: only regional appointment/revocation/update writes override the generic denial. */
+export const regionalDirectorDeniedMessage = (roleName: string): string =>
+  `Vai trò ${roleName} không có quyền bổ nhiệm / thu hồi GĐ Vùng`;
 
 export type ErrorCode = (typeof ERROR_CODES)[number];
 
