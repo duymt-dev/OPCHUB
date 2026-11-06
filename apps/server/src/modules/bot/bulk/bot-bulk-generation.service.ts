@@ -1,15 +1,15 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { IntegrationError, type LlmProvider } from '@opchub/integrations';
+import { IntegrationError } from '@opchub/integrations';
 import { botBulkPrompt, validateBotBulkCompletion } from '@opchub/shared';
 import { botBulkCompletionSchema } from '@opchub/shared/api-domains';
-import { LLM } from '@/common/integrations';
+import { LLM_ROUTER, type LlmRouter } from '@/modules/llm-config';
 import { parseClean } from '@/common/html/sanitize-input';
 import { BotBulkFlowService } from './bot-bulk-flow.service';
 
 @Injectable()
 export class BotBulkGenerationService {
   constructor(
-    @Inject(LLM) private readonly llm: LlmProvider,
+    @Inject(LLM_ROUTER) private readonly router: LlmRouter,
     private readonly flow: BotBulkFlowService,
   ) {}
 
@@ -19,9 +19,11 @@ export class BotBulkGenerationService {
     if (!claim) return;
     let response: string;
     try {
-      response = await this.llm.complete(botBulkPrompt({ ...claim, ordinal: cursor }), {
-        maxTokens: 1024,
-      });
+      response = await this.router
+        .forPurpose('script')
+        .complete(botBulkPrompt({ ...claim, ordinal: cursor }), {
+          maxTokens: 1024,
+        });
     } catch (error) {
       await this.flow.reject(
         claim,

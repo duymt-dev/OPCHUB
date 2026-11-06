@@ -1,0 +1,309 @@
+﻿.stack {
+  display: grid;
+  gap: 18px;
+}
+.card {
+  background: white;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 20px;
+}
+.card h2 {
+  font-size: 16px;
+  margin: 0;
+  font-weight: 600;
+}
+.card p {
+  color: rgba(0, 0, 0, 0.45);
+  margin: 6px 0 18px;
+  font-size: 12px;
+}
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+}
+.row:first-child {
+  padding-top: 0;
+}
+.row b {
+  font-weight: 500;
+}
+.card small {
+  display: block;
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 12px;
+  margin-top: 4px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.provider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #d9d9d9;
+  padding: 12px;
+  border-radius: 8px;
+  text-align: left;
+  background: white;
+  cursor: pointer;
+  min-width: 0;
+}
+.provider b {
+  font-size: 13px;
+}
+.provider small {
+  font-size: 11px;
+}
+.provider i {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-right: 4px;
+}
+.selected {
+  border-color: #1677ff;
+  background: #f0f7ff;
+}
+.initials {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  color: white;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.detail {
+  background: #fafafa;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 16px;
+}
+.fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.fields label,
+.limits label {
+  display: grid;
+  gap: 6px;
+  font-size: 12px;
+  min-width: 0;
+}
+.full {
+  grid-column: 1 / -1;
+}
+.card input,
+.card select {
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background: white;
+  padding: 7px 10px;
+  width: 100%;
+  min-width: 0;
+  font: inherit;
+  color: rgba(0, 0, 0, 0.88);
+}
+.row select {
+  max-width: 240px;
+}
+.key {
+  display: flex;
+}
+.key input {
+  border-radius: 6px 0 0 6px;
+}
+.key button {
+  border-radius: 0 6px 6px 0;
+}
+.card button,
+.primary {
+  font: inherit;
+}
+.row button:not([role='switch']),
+.key button {
+  background: white;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.limits {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 18px 0;
+}
+.track {
+  height: 8px;
+  background: #f0f0f0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.track div {
+  height: 100%;
+}
+.primary {
+  border: 0;
+  background: #1677ff;
+  color: white;
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+.stack button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+@media (max-width: 767px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .card {
+    padding: 16px;
+  }
+  .fields,
+  .limits {
+    grid-template-columns: 1fr 1fr;
+  }
+  .row select {
+    max-width: 45%;
+  }
+}
+@media (max-width: 420px) {
+  .provider {
+    padding: 10px;
+    gap: 6px;
+  }
+  .initials {
+    width: 28px;
+    height: 28px;
+  }
+  .provider b {
+    font-size: 12px;
+  }
+  .fields {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  nav.mobileNav {
+    position: static;
+  }
+}
+
+.row select[aria-invalid='true'] {
+  border-color: #faad14;
+}
+
+.card {
+  font-size: 13px;
+}
+.row:first-child {
+  padding-bottom: 0;
+}
+.provider b {
+  font-weight: 500;
+}
+.fields {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.grow {
+  flex: 1;
+}
+.row {
+  font-size: 13px;
+}
+.row select {
+  font-size: 13px;
+  padding: 6px 10px;
+}
+.table {
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 14px;
+}
+.table .row {
+  padding: 12px 14px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.table .row:last-child {
+  border: 0;
+  background: #fafafa;
+}
+.row small {
+  margin-top: 0;
+}
+.saveRow {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 14px;
+}
+.card p {
+  margin-bottom: 16px;
+}
+@media (max-width: 767px) {
+  .fields {
+    grid-template-columns: 1fr;
+  }
+}
+
+.grid {
+  margin-bottom: 0;
+}
+.provider {
+  padding: 13px;
+}
+.detailFooter {
+  flex-wrap: wrap;
+  border-top: 1px solid #f0f0f0;
+  margin-top: 14px;
+  padding-top: 12px;
+}
+.detailFooter button:not([role='switch']) {
+  border-color: #1677ff;
+  color: #1677ff;
+}
+.card .providerHeading {
+  padding-bottom: 14px;
+}
+@media (max-width: 767px) {
+  .grid,
+  .limits {
+    grid-template-columns: 1fr;
+  }
+  .table .row {
+    display: block;
+  }
+  .table .row select {
+    display: block;
+    width: 100%;
+    max-width: 240px;
+    margin-top: 8px;
+  }
+  .providerHeading {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+  .providerHeading .grow {
+    flex: 1 1 calc(100% - 60px);
+  }
+  .providerHeading .initials {
+    width: 40px;
+    height: 40px;
+  }
+}

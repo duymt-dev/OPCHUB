@@ -1,48 +1,48 @@
-import { Controller, Get, Post, Put, Req } from '@nestjs/common';
+import { Controller, Get, Post, Put, Req, Param, HttpCode } from '@nestjs/common';
 import {
-  llmConfigSchema,
-  llmConfigUpdateSchema,
-  llmConfigVerifySchema,
-  llmConfigVerifyResultSchema,
-  type LlmConfigUpdate,
+  aiSettingsResponseSchema,
+  aiSettingsUpdateSchema,
+  aiVerifySchema,
+  aiVerifyResultSchema,
+  aiProviderIdSchema,
+  type AiSettingsUpdate,
+  type AiVerify,
 } from '@opchub/shared/api-domains';
 import type { Request } from 'express';
 import { CurrentUser, RequireAdmin, type AccessClaims } from '@/common/auth';
 import { respond, ZodBody } from '@/common/http/zod';
-import { LlmConfigService } from './llm-config.service';
-
-@Controller('admin/settings/llm')
+import { notFound } from '@/common/errors';
+import { AiSettingsService } from './services/ai-settings.service';
+@Controller('admin/settings/ai')
 @RequireAdmin('settings.general')
 export class LlmConfigController {
-  constructor(private readonly config: LlmConfigService) {}
-
-  @Get()
-  async get() {
-    return respond(llmConfigSchema, await this.config.get());
+  constructor(private readonly config: AiSettingsService) {}
+  @Get() async get() {
+    return respond(aiSettingsResponseSchema, await this.config.get());
   }
-
-  @Put()
-  async save(
+  @Put() async save(
     @CurrentUser() user: AccessClaims,
     @Req() req: Request,
-    // Technical secret input must not be HTML-normalized after schema validation.
-    @ZodBody(llmConfigUpdateSchema, { raw: true }) body: LlmConfigUpdate,
+    @ZodBody(aiSettingsUpdateSchema, { raw: true }) body: AiSettingsUpdate,
   ) {
     return respond(
-      llmConfigSchema,
+      aiSettingsResponseSchema,
       await this.config.save({ id: user.sub, ip: req.ip ?? null }, body),
     );
   }
-
-  @Post('verify')
+  @Post('providers/:id/verify')
+  @HttpCode(200)
   async verify(
     @CurrentUser() user: AccessClaims,
     @Req() req: Request,
-    @ZodBody(llmConfigVerifySchema, { raw: true }) body: LlmConfigUpdate,
+    @Param('id') id: string,
+    @ZodBody(aiVerifySchema, { raw: true }) body: AiVerify,
   ) {
+    const parsed = aiProviderIdSchema.safeParse(id);
+    if (!parsed.success) throw notFound();
     return respond(
-      llmConfigVerifyResultSchema,
-      await this.config.verify({ id: user.sub, ip: req.ip ?? null }, body),
+      aiVerifyResultSchema,
+      await this.config.verify({ id: user.sub, ip: req.ip ?? null }, parsed.data, body),
     );
   }
 }

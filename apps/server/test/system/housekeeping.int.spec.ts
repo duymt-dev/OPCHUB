@@ -182,4 +182,30 @@ describe('Dọn dữ liệu 02:00 (NA-13)', () => {
     expect(r.simulated).toBe(0);
     expect(r.exports).toBe(0);
   });
+  it('REQ-628 aiCalls retains89-day records and deletes older than90 days idempotently', async () => {
+    const now = new Date();
+    const model = 'TIP811-housekeeping-' + randomUUID();
+    try {
+      await t.prisma.db.llmCall.createMany({
+        data: [89, 91].map((age) => ({
+          id: randomUUID(),
+          model,
+          provider: 'custom',
+          purpose: 'bot',
+          latencyMs: 1,
+          status: 'ok',
+          createdAt: new Date(now.getTime() - age * DAY),
+        })),
+      });
+      expect((await run(now)).aiCalls).toBeGreaterThanOrEqual(1);
+      const left = await t.prisma.db.llmCall.findMany({
+        where: { model },
+        select: { createdAt: true },
+      });
+      expect(left).toEqual([{ createdAt: new Date(now.getTime() - 89 * DAY) }]);
+      expect((await run(now)).aiCalls).toBe(0);
+    } finally {
+      await t.prisma.db.llmCall.deleteMany({ where: { model } });
+    }
+  });
 });

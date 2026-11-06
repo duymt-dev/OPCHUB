@@ -1,3 +1,4 @@
+import type { useAppNotify } from './hooks/use-app-notify';
 import type { useBankReconcile } from './hooks/use-bank-reconcile';
 import type { AdminPermissionKey } from '@opchub/shared';
 import type { ConfirmRequest } from '@opchub/ui';
@@ -8,14 +9,15 @@ export const SETTINGS_TABS = [
   'roles',
   'welcome-mail',
   'smtp',
+  'llm',
   'price',
   'renewal',
   'bank',
+  'app',
   'admins',
   'audit-log',
   'sso',
   'languages',
-  'llm',
 ] as const;
 export type SettingsTab = (typeof SETTINGS_TABS)[number];
 
@@ -30,6 +32,7 @@ export const TAB_KEY: Record<SettingsTab, AdminPermissionKey> = {
   'welcome-mail': 'settings.mail',
   smtp: 'settings.mail',
   llm: 'settings.general',
+  app: 'settings.general',
   // D-94 5A: prototype `need.price = 'cfg'`
   price: 'settings.general',
   renewal: 'settings.mail',
@@ -53,6 +56,7 @@ export interface SettingsParams {
 
 /** Icon nét của danh sách tab (đường vẽ lấy theo prototype TABS) */
 export const TAB_ICON: Record<SettingsTab, string> = {
+  app: 'M7 2h10v20H7zM10 18h4',
   bank: 'M3 10h18L12 3zM5 10v9M10 10v9M14 10v9M19 10v9M2 21h20',
   renewal: 'M12 8v4l3 3M3 12a9 9 0 1018 0 9 9 0 00-18 0',
   general: 'M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1z',
@@ -60,7 +64,7 @@ export const TAB_ICON: Record<SettingsTab, string> = {
   roles: 'M12 2l8 4v6c0 5-3.4 8.7-8 10-4.6-1.3-8-5-8-10V6z',
   'welcome-mail': 'M4 4h16v16H4zM4 8l8 5 8-5',
   smtp: 'M3 5h18v14H3zM3 7l9 6 9-6',
-  llm: 'M4 4h16v12H4zM8 20h8M12 16v4M9 9h.01M15 9h.01M9 12h6',
+  llm: 'M9 8V6a3 3 0 016 0v2h2a3 3 0 010 6h-2v3a3 3 0 01-6 0v-3H7a3 3 0 010-6zM10 11h4M12 9v4',
   price: 'M20.6 13.4l-7.2 7.2a2 2 0 01-2.8 0L2 12V2h10l8.6 8.6a2 2 0 010 2.8zM7 7h.01',
   admins:
     'M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75',
@@ -105,3 +109,5 @@ export const EMPTY_CATEGORY: CategoryDraft = {
 export type { ConfirmRequest };
 
 export type AskConfirm = (req: ConfirmRequest) => void;
+
+export type AppNotifyPanel = ReturnType<typeof useAppNotify>;

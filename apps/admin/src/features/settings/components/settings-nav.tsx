@@ -3,7 +3,9 @@
 import { useTranslations } from 'next-intl';
 import { TAB_ICON, type SettingsTab } from '../types';
 import styles from './settings.module.css';
-import llmStyles from './llm.module.css';
+import { useQuery } from '@tanstack/react-query';
+import { aiKey, fetchAiSettings } from '../ai-api';
+import llmStyles from './ai/ai.module.css';
 
 /**
  * D-33 SSO + Ngôn ngữ: ngoài 7 mục của prototype v4. Ở điện thoại ẩn như v4 (D-89); màn rộng
@@ -24,6 +26,7 @@ export function SettingsNav({
   onTab: (t: SettingsTab) => void;
 }) {
   const t = useTranslations('settings');
+  const ai = useQuery({ queryKey: aiKey, queryFn: fetchAiSettings, enabled: tabs.includes('llm') });
   return (
     <nav
       className={`${styles.nav} ${tab === 'llm' ? llmStyles.mobileNav : ''}`}
@@ -57,11 +60,13 @@ export function SettingsNav({
               <span className={styles.navSub}>
                 {t(`tabSub.${k}`, {
                   n:
-                    k === 'languages'
-                      ? counts.languages
-                      : k === 'roles'
-                        ? counts.roles
-                        : counts.categories,
+                    k === 'llm'
+                      ? (ai.data?.providers.filter((p) => p.enabled).length ?? 0)
+                      : k === 'languages'
+                        ? counts.languages
+                        : k === 'roles'
+                          ? counts.roles
+                          : counts.categories,
                 })}
               </span>
             </span>

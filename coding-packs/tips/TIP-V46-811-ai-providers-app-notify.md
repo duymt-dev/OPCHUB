@@ -461,3 +461,19 @@ Ghi 7 câu vào `reports/ui-parity/questions.md` › V4.6 (dạng "mặc định
   - Endpoint tương thích OpenAI của Claude / Gemini mới chỉ dựa trên tài liệu của họ, chưa kiểm bằng key thật. `@live` chỉ chạy được khi owner cấp key.
   - Danh sách model lấy từ prototype có thể cũ. Admin chọn trong danh sách, riêng "Tùy chỉnh" gõ tự do. Thêm model mới phải sửa `AI_PROVIDER_CATALOG`.
   - Q-V46-811-1 → 7 chưa chốt. Mặc định giữ an toàn: không fake, không lộ key / nội dung, giá 0 = không chặn bot.
+
+## Execution refinements (builder,06/11/2026)
+
+- Owner explicitly confirmed private801 DB pair, Memurai6381 and private810→811 rolling restart. Native original DBs/Redis6379 are not targets.
+- ai-provider-catalog.ts separates immutable catalog from contracts. aiKeyLast4 redacts an entire credential of length≤4 rather than disclose it in the last-four label.
+- ai-config-cache.ts owns multi-provider snapshot/decryption; legacy llm-config-cache/service files are1-line compatibility facades, never read llm_configs. Runtime always reads a repeatable configuration revision so missed pub/sub cannot preserve a disabled key.
+- Ai provider repository writes six records in one parameterized statement. Call repository exports exact production retention/upsert SQL for plan tests; bigint aggregate money/tokens/calls follow database standard.
+- Added ai-migration.int.spec.ts and ai-plans.int.spec.ts separately, plus helpers/ai-config.ts and additive HTTP stub usage/503/429 modes; existing worker assertions retained.
+- AI provider fields/key subview and AppNotifyPwa are extracted to independent components/types to preserve80-line function and400-line FE caps.
+- settings/index.ts no longer exports HTTP bootstrap; api/api-app.module.ts imports SettingsHttpModule directly. This removes the newly exposed settings→notification→mail→settings cycle without forwardRef or internal service imports across domains.
+- Existing MSW llm-config-handlers.spec.ts migrates its security/permission/retention assertions to the new contract rather than deleting coverage. Old /llm handlers/UI API/hooks are removed; old shared schema remains deprecated for imports.
+- e2e/llm/settings-session.ts provides identical API-backed prerequisites to both modes. Bulk provider setup migrates endpoint/contracts; disabling test generation clears allocation while retaining an unused enabled provider, as the new API forbids all-off.
+- Native original AI/App settings are backed up in an ignored local fixture (encrypted bytes only), to restore after native browser tests. Native bot regression will use an actual local HTTP stub through the development runtime router, not fake runtime or changed assertions.
+- W1/TEST-GAPS.md receives an additive REQ628/629 traceability entry; no historic finding status changed.
+
+- Canonical API provider ordering matches the six-card catalog in both modes; physical fallback requests also consume the shared60/min counter. New fallback tests assert no extra network request once the shared ceiling is exhausted.

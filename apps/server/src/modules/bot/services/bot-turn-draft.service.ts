@@ -2,12 +2,12 @@ import { BotReplyProgressService } from '../replies/bot-reply-progress.service';
 import { BotScheduleService } from '../control/bot-schedule.service';
 import { randomUUID } from 'node:crypto';
 import { Inject, Injectable } from '@nestjs/common';
-import { IntegrationError, type LlmProvider, type LlmTurnContext } from '@opchub/integrations';
+import { IntegrationError, type LlmTurnContext } from '@opchub/integrations';
 import { llmTurnTextSchema } from '@opchub/shared';
 import { botSettingsSchema, botStoredLinesSchema } from '@opchub/shared/api-domains';
 import type { DbTx, Prisma } from '@opchub/db';
 
-import { LLM } from '@/common/integrations';
+import { LLM_ROUTER, type LlmRouter } from '@/modules/llm-config';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { parseClean } from '@/common/html/sanitize-input';
 import { botDayStart, isBotActiveHour } from '../domain/active-hours';
@@ -29,7 +29,7 @@ export class BotTurnDraftService {
     private readonly replyProgress: BotReplyProgressService,
     private readonly schedule: BotScheduleService,
     private readonly prisma: PrismaService,
-    @Inject(LLM) private readonly llm: LlmProvider,
+    @Inject(LLM_ROUTER) private readonly router: LlmRouter,
     private readonly replies: PersonaReplyContextService,
   ) {}
 
@@ -37,7 +37,7 @@ export class BotTurnDraftService {
     const claim = await this.claim(threadId, turn, now);
     if (claim.kind !== 'generate') return claim.kind === 'ready';
     try {
-      const response = await this.llm.generateTurn(claim.context);
+      const response = await this.router.forPurpose('bot').generateTurn(claim.context);
       let body: string;
       try {
         body = parseClean(llmTurnTextSchema, response);

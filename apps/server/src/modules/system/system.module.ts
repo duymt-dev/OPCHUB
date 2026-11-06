@@ -1,3 +1,4 @@
+import { LlmConfigCoreModule } from '@/modules/llm-config';
 import { Module } from '@nestjs/common';
 import { AccountCoreModule } from '@/modules/account';
 import { AdminAccountCoreModule } from '@/modules/admin-account';
@@ -9,6 +10,7 @@ import { HousekeepingService } from './housekeeping.service';
 /** Việc hệ thống định kỳ (NA-13) — chỉ điều phối, mỗi domain tự dọn bảng của mình */
 @Module({
   imports: [
+    LlmConfigCoreModule,
     AccountCoreModule,
     AdminAccountCoreModule,
     ChatCoreModule,
