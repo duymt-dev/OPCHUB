@@ -1,7 +1,7 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { ADMIN_URL, PORTAL_URL } from '../urls';
-import { otherSends, otherSubmitsProject } from '../server/api';
+import { otherSends, addHistoricalPendingProject } from '../server/api';
 
 /**
  * TIP-V2-305 — NA-24 số liệu realtime + NA-25 số đỏ chưa đọc (server: socket đẩy; MSW: làm mới
@@ -48,7 +48,7 @@ test('REQ-225 NA-25 BUG-028 số đỏ menu Chat tăng khi người khác nhắn
   await expect.poll(() => badgeOf(page), { timeout: 6_000 }).toBe(before + 2 - qaUnread);
 });
 
-test('REQ-224 NA-24 số đỏ menu Dự án ở Admin tăng khi có dự án chờ duyệt (không thao tác)', async ({
+test('REQ-224 NA-24 historical pending_review fixture: số đỏ menu Dự án ở Admin tăng khi có dự án chờ duyệt (không thao tác)', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
@@ -63,7 +63,7 @@ test('REQ-224 NA-24 số đỏ menu Dự án ở Admin tăng khi có dự án ch
   const link = page.locator('aside').getByRole('link', { name: /^Dự án/ });
   const count = async () => Number(/(\d+)$/.exec((await link.textContent()) ?? '')?.[1] ?? 0);
   await expect.poll(count).toBe(before);
-  await otherSubmitsProject(page);
+  await addHistoricalPendingProject(page);
   await expect.poll(count, { timeout: 6_000 }).toBe(before + 1);
 });
 

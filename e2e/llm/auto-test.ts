@@ -1,5 +1,6 @@
 import { test as base } from '../server/test';
 import { nativeReplyProvider } from './reply-provider-setup';
+import { isolateNativeAutoTopics } from './auto-provider-setup';
 
 export { expect } from '../server/test';
 
@@ -10,6 +11,7 @@ export const test = base.extend<{ nativeAutoProvider: void }>({
       void demoReset;
       const provider = await nativeReplyProvider(page);
       try {
+        await isolateNativeAutoTopics(page);
         await use();
       } finally {
         await provider.close();

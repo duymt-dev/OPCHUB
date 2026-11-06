@@ -8,6 +8,7 @@ const mocks = vi.hoisted(() => ({
   sql: vi.fn(),
   events: vi.fn(),
   deliveries: vi.fn(),
+  project: vi.fn(),
   disconnect: vi.fn(),
 }));
 
@@ -26,6 +27,7 @@ async function run(mode: string, target = isolated) {
       $transaction: async (fn: (value: typeof tx) => Promise<void>) => fn(tx),
       event: { updateMany: mocks.events },
       mailLog: { updateMany: mocks.deliveries },
+      project: { create: mocks.project },
       $disconnect: mocks.disconnect,
     }),
   }));
@@ -40,6 +42,19 @@ afterEach(() => {
 });
 
 describe('isolated acceptance prerequisites', () => {
+  it('creates historical pending data without changing the direct-publication API', async () => {
+    await run('pending-project');
+    expect(mocks.project).toHaveBeenCalledExactlyOnceWith({
+      data: {
+        ownerId: 'm2',
+        name: 'Historical pending review fixture',
+        summary: 'Legacy moderation queue badge prerequisite',
+        status: 'pending_review',
+      },
+      select: { id: true },
+    });
+    expect(mocks.disconnect).toHaveBeenCalledTimes(1);
+  });
   it('materializes391 real registrations before updating aggregate counts', async () => {
     await run('events-list');
     const rows = mocks.registrations.mock.calls[0]?.[0] as {

@@ -84,3 +84,11 @@ Build-operation correction: root Turbo cache does not track custom NEXT_DIST_DIR
 - Mocked DB regressions8/8 across two separate files PASS; current root lint8/8 (26.611s), typecheck8/8 (15.938s) PASS. Source checkpoint to be committed immediately; native focused validation follows first exploratory full completion.
 - Exploratory native now has actual PASS for all15 required AT/TC rows, including TC461 case324 and TC494 case380. This does NOT make its full gate green: unrelated fixture/runtime failures remain recorded, and the corrected final full replay is still required.
 - Master acceptance/case coverage/M1/M3 drafts and progress row12 added as IN PROGRESS/NOT ACCEPTED; historical rows1–11 not changed. Final parity/cause ledger/restoration/clean Git evidence still pending.
+# Latest verification checkpoint — 2026-11-06 17:05 ICT
+
+- Owner approved historical `pending_review` data for the badge case. The fixture is guarded to exact private812 DB; regression7/7 PASS. Badge+1 and existing timeout remain unchanged, D108 production direct publication untouched.
+- Long auto/emergency native replay exposed competing seeded script executions, not missing credentials alone. Native-only prerequisite now defers scripts through real Admin APIs and stops active seeded executions through the domain stop endpoint before the original automatic-topic assertions. Focused native replay is running; not yet PASS.
+- Latest root lint8/8 (11.475s), typecheck8/8 (8.855s) PASS. Additional full root unit/depcheck rerun is running.
+- Full integration r2 completed PASS: DB142 + server2006 =2148 tests; root2/2 tasks,36m1.758s. Earlier full failure and unchanged isolated replay remain recorded, not erased.
+- Full MSW replay r2 completed PASS:387 tests,4 existing skips,44.9m at one worker. Source was not frozen throughout this exploratory replay; final same-source evidence remains outstanding.
+- PR91 remains DRAFT / NOT MERGE-READY. Final full native, same-SHA parity/cause ledger and final restoration/reports are still required. No new production scheduler logic, assertion/timeout relaxation, skip or queue purge.

@@ -912,6 +912,7 @@ Infrastructure explicitly confirmed in execute thread: private801 DB pair, Memur
 - Infrastructure follow-up explicitly approved: separate opchub_v46_812_dev + Memurai6381 DB3 + API/socket4310/4311, keeping all HOLD. Exact new DB name may be added to seed guard; no broad allowlist. Native baseline parity currently uses unchanged811 runtime; final measurements/behavior use isolated812 runtime with correct mail origins.
 
 ### TIP812 owner-approved execute follow-ups
+- Historical project badge: owner chose a legacy `pending_review` fixture in the exact private812 DB, keeping badge+1. New projects still publish directly under D108; no production moderation behavior is changed.
 - Separate812dev/Redis3/runtime approved; original HOLD preserved.
 - Narrow auto-unlock stale session projection fix + regression approved and committed.
 - Event/Marketing/Fees fixture/MSW/test repairs approved; then additional fixture/cache/runtime repairs approved, with assertions/business behavior preserved. Root DEMO-only normalization now addresses missing unpaid affiliates and retained edited tariffs; required/production seed unchanged. Initial '20% changed' hypothesis was corrected by actual snapshot: missing unpaid affiliate identity, not changed percentage.

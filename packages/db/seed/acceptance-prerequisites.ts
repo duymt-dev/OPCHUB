@@ -13,11 +13,29 @@ if (
 )
   throw new Error('Acceptance prerequisites require the exact isolated TIP-812 database');
 const mode = z
-  .enum(['events-list', 'events-portal', 'events-open', 'events-upcoming', 'marketing-summary'])
+  .enum([
+    'events-list',
+    'events-portal',
+    'events-open',
+    'events-upcoming',
+    'marketing-summary',
+    'pending-project',
+  ])
   .parse(process.argv[2]);
 const db = createPrismaClient(env.DIRECT_URL, { max: 1 });
 try {
-  if (mode === 'events-list' || mode === 'events-portal') {
+  if (mode === 'pending-project') {
+    // Historical queue data only: new projects publish directly under D108.
+    await db.project.create({
+      data: {
+        ownerId: 'm2',
+        name: 'Historical pending review fixture',
+        summary: 'Legacy moderation queue badge prerequisite',
+        status: 'pending_review',
+      },
+      select: { id: true },
+    });
+  } else if (mode === 'events-list' || mode === 'events-portal') {
     const events = buildEvents();
     const ids = events.map((e) => e.id);
     const max = Math.max(...events.map((e) => e.registered));

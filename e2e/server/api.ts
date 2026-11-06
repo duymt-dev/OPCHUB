@@ -203,26 +203,7 @@ export async function otherSends(page: Page, roomId: string, body: string): Prom
   );
 }
 
-/** NA-24: thành viên gửi dự án mới chờ duyệt (server: API Portal của m2; MSW: route giả của Admin) */
-export async function otherSubmitsProject(page: Page): Promise<void> {
-  if (onServer) {
-    const r = (await call('/auth/login', { method: 'POST', body: JSON.stringify(OTHER) })) as {
-      accessToken: string;
-    };
-    const body = {
-      name: `Dự án chờ duyệt ${Date.now()}`,
-      category: 'SaaS',
-      summary: 'Dự án mới gửi duyệt để kiểm tra số đỏ',
-      testUrl: 'https://demo.opchub.vn',
-      submit: true,
-    };
-    await call('/projects', { method: 'POST', body: JSON.stringify(body) }, r.accessToken);
-    return;
-  }
-  await page.evaluate(async () => {
-    await fetch('/v1/__mock/projects/submit', { method: 'POST' });
-  });
-}
+export { addHistoricalPendingProject } from './historical-project';
 
 /** Server: tạo một "thảo luận" thật trong 24h — m2 hỏi, TV demo m1 trả lời (khối Thảo luận nổi bật) */
 export async function threadWithReply(roomId: string): Promise<void> {
