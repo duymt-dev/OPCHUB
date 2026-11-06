@@ -423,25 +423,25 @@ Ghi 7 câu vào `reports/ui-parity/questions.md` › V4.6 (dạng "mặc định
 
 ## ⚠️ BUILDER-CHECKLIST (agent PHẢI hoàn thành trước khi báo DONE)
 
-- [ ] `pwd` = `D:\CODING\OPCHUB\CODING`, nhánh `feature/TIP-V46-811-ai-providers-app-notify`; chỉ sửa file trong **Files touched** (thêm ngoài danh sách → ghi lý do)
-- [ ] Hỏi owner DB đích trước khi `migrate deploy` / int / e2e server / seed; migration `--create-only` rồi sửa SQL (chuyển `llm_configs`), có `down.sql`; thử migrate trên bản sao có `llm_configs` đang bật
-- [ ] Viết `docs/adr/0009-multi-ai-providers.md` (đổi kiến trúc so với ADR-0008)
-- [ ] Đo baseline `dev` trước (int bot + settings, e2e MSW, `llm-config.spec.ts`, `bot-*`) để tách lỗi cũ / mới
-- [ ] Mỗi AC có test đúng tên, ghi PASS / FAIL thật từng cái
-- [ ] Chạy và dán tóm tắt output thật: `pnpm lint && pnpm typecheck && pnpm test && pnpm test:int && pnpm depcheck && pnpm build`; `pnpm e2e` MSW không tụt; e2e server cho `ai-providers.spec.ts`, `app-notify.spec.ts`, `bot-replies.spec.ts`; `@live` nếu có key (không có → ghi "chưa chạy")
-- [ ] EXPLAIN xóa `llm_calls` theo lô + cập nhật `llm_usage_months` → `TIP-V46-811-query-plans.md`
-- [ ] Parity (D-134): `D-V46-AI`, `D-V46-APP` 1440 + 390, ghi % + nguyên nhân; sửa hết lệch giao diện thật
-- [ ] Luật BUILDER-HANDOFF liên quan:
+- [x] `pwd` = `D:\CODING\OPCHUB\CODING`, nhánh `feature/TIP-V46-811-ai-providers-app-notify`; chỉ sửa file trong **Files touched** (thêm ngoài danh sách → ghi lý do)
+- [x] Hỏi owner DB đích trước khi `migrate deploy` / int / e2e server / seed; migration `--create-only` rồi sửa SQL (chuyển `llm_configs`), có `down.sql`; thử migrate trên bản sao có `llm_configs` đang bật
+- [x] Viết `docs/adr/0009-multi-ai-providers.md` (đổi kiến trúc so với ADR-0008)
+- [x] Đo baseline `dev` trước (int bot + settings, e2e MSW, `llm-config.spec.ts`, `bot-*`) để tách lỗi cũ / mới
+- [x] Mỗi AC có test đúng tên, ghi PASS / FAIL thật từng cái
+- [x] Chạy và dán tóm tắt output thật: `pnpm lint && pnpm typecheck && pnpm test && pnpm test:int && pnpm depcheck && pnpm build`; `pnpm e2e` MSW không tụt; e2e server cho `ai-providers.spec.ts`, `app-notify.spec.ts`, `bot-replies.spec.ts`; `@live` nếu có key (không có → ghi "chưa chạy")
+- [x] EXPLAIN xóa `llm_calls` theo lô + cập nhật `llm_usage_months` → `TIP-V46-811-query-plans.md`
+- [x] Parity (D-134): `D-V46-AI`, `D-V46-APP` 1440 + 390, ghi % + nguyên nhân; sửa hết lệch giao diện thật
+- [x] Luật BUILDER-HANDOFF liên quan:
   - **Luật 11 / ADR-0008**: mọi nhà cung cấp qua adapter OpenAI-compatible; test chỉ stub HTTP; không fake ở runtime
   - **Luật 12 / bảo mật**: key SecretBox, không trả / log / audit key; ẩn PII trước khi gửi; nhật ký không lưu nội dung
   - **Luật 10**: lưu cấu hình AI, kiểm tra kết nối, lưu cấu hình app, gửi thử đều ghi `audit_logs`
   - **D-124 / D-125**: không dòng Trợ lý; không Web Push / manifest
   - **Luật 9**: ngân sách / giá / chi phí là số nguyên VND; tháng theo `Asia/Ho_Chi_Minh`
-- [ ] File ≤ trần (BE 600, FE 400); không `any` / `@ts-ignore` / `console.*`
-- [ ] Ghi Q-V46-811-1 → 7 vào `questions.md`; cập nhật `V4.6-progress.md` dòng #11; glossary
-- [ ] Sau khi đo: chạy lại seed demo (native HOLD); không tắt tiến trình HOLD
-- [ ] Commit theo bước `git commit -- <paths>` (cấm `git add -A`); `git status --short` sạch; push; PR `base: dev`, không tự merge; completion report có **git commit SHA**, PR, số test thật, parity (tham khảo), EXPLAIN, soát luật cứng 1–14, phần chưa làm
-- [ ] KHÔNG báo DONE nếu còn gate đỏ (lint / type / unit / int / e2e / depcheck / build); parity theo D-134 không chặn nhưng phải có nguyên nhân
+- [x] File ≤ trần (BE 600, FE 400); không `any` / `@ts-ignore` / `console.*`
+- [x] Ghi Q-V46-811-1 → 7 vào `questions.md`; cập nhật `V4.6-progress.md` dòng #11; glossary
+- [x] Sau khi đo: chạy lại seed demo (native HOLD); không tắt tiến trình HOLD
+- [x] Commit theo bước `git commit -- <paths>` (cấm `git add -A`); `git status --short` sạch; push; PR `base: dev`, không tự merge; completion report có **git commit SHA**, PR, số test thật, parity (tham khảo), EXPLAIN, soát luật cứng 1–14, phần chưa làm
+- [x] KHÔNG báo DONE nếu còn gate đỏ (lint / type / unit / int / e2e / depcheck / build); parity theo D-134 không chặn nhưng phải có nguyên nhân
 
 ---
 

@@ -3196,6 +3196,38 @@
   "sha": "25a1eec"
  },
  {
+  "id": "D-V46-AI",
+  "name": "Cài đặt · AI Provider",
+  "viewport": 1440,
+  "diffPct": 3.5028233726150395,
+  "size": "1440×1584",
+  "sha": "39390b53"
+ },
+ {
+  "id": "D-V46-AI",
+  "name": "Cài đặt · AI Provider",
+  "viewport": 390,
+  "diffPct": 8.54322407513897,
+  "size": "390×3478",
+  "sha": "39390b53"
+ },
+ {
+  "id": "D-V46-APP",
+  "name": "Cài đặt · Ứng dụng & thông báo",
+  "viewport": 1440,
+  "diffPct": 11.979394887845592,
+  "size": "1440×1065",
+  "sha": "39390b53"
+ },
+ {
+  "id": "D-V46-APP",
+  "name": "Cài đặt · Ứng dụng & thông báo",
+  "viewport": 390,
+  "diffPct": 3.5641505510501146,
+  "size": "390×1603",
+  "sha": "39390b53"
+ },
+ {
   "id": "D-V46-BANK",
   "name": "Cài đặt · Đối soát ngân hàng",
   "viewport": 1440,

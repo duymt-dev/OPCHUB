@@ -1,0 +1,41 @@
+{
+  "source": "39390b53",
+  "at": "2026-11-06T04:35:51.062Z",
+  "databases": [
+    "opchub_v46_801_dev",
+    "opchub_v46_801_test"
+  ],
+  "redis": {
+    "port": 6381,
+    "devDb": 1,
+    "testDb": 2
+  },
+  "counts": {
+    "users": 96,
+    "affiliates": 62,
+    "referrals": 51,
+    "commissions": 53,
+    "periods": 65,
+    "shares": 53,
+    "payouts": 1,
+    "anchors": 50,
+    "directors": 3,
+    "bankTransactions": 5,
+    "stores": 17,
+    "missingSlugs": 0,
+    "unbalanced": 0
+  },
+  "serverPids": [
+    30056,
+    31508,
+    29416
+  ],
+  "nativeNextPids": [
+    31548,
+    8664
+  ],
+  "nativeDist": {
+    "portal": ".next-v46-811-native",
+    "admin": ".next-v46-811-native-mobile"
+  }
+}
