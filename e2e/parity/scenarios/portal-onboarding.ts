@@ -7,15 +7,13 @@ export const PORTAL_ONBOARDING: Scenario[] = [
     id: 'P-119',
     name: 'Dashboard · Hướng dẫn bắt đầu (M1 đã phí)',
     start: 'user',
-    capture: {
-      selector: (c) =>
-        c.side === 'app'
-          ? c.page.locator('[data-screen="onboarding"]')
-          : c.page.locator('[data-screen-label="Portal · Dashboard"]'),
-      reason:
-        'Prototype v4 Dashboard chỉ có lời chào + thẻ; app giữ khối LIVE (REQ-224) phía dưới (Q-V4-611-1) — so vùng lời chào + thẻ',
+    demo: 'stores',
+    fullPage: true,
+    note: 'Same complete Dashboard scope as P01, including need matches; no asymmetric region crop.',
+    steps: async (c) => {
+      await waitText(c, /Đã xong \d\/8 bước/);
+      if (c.side === 'app') await waitText(c, 'Nhu cầu phù hợp với gian hàng của bạn');
     },
-    steps: (c) => waitText(c, /Đã xong \d\/8 bước/),
   },
   {
     id: 'P-120',

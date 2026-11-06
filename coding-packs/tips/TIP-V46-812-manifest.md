@@ -1,5 +1,13 @@
 # TIP-V46-812 — execution manifest
 
+## Owner-approved closure pass — 2026-11-06
+
+Owner explicitly accepted disregarding the14 old capture cases and approved the closure proposal: correct Dashboard capture scope, stabilize MyRegion scroll without changing assertions, review Chat/project/store residuals, rerun same-source parity and mark PR ready only after evidence is complete. The14 original results remain visible and are treated as acceptance exceptions, never changed to PASS or newly skipped. Intentional D-xx/data differences are not app defects.
+
+Report-only addition: coding-packs/reports/ui-parity/deviations.md records the explicitly approved14-case acceptance exception and references existing D91 Chat/P40 exception, rather than inventing a new D-number or relabeling raw results. Closure review proof: P30 app message scroller88px vs prototype0, intro boxes identical x105/height24 and y difference exactly88; P40 missing approval block and lecturer label are already accepted under D71/D56/D91. Projects10vs11 is D109, store drawer public link is REQ627/TIP810. D93 mobile date-header wrap is a genuine older geometry difference; owner question sent before any production edit.
+
+Before edits: P119 uses asymmetric element locators (app onboarding only, prototype entire Dashboard); MyRegion beforeCapture reads scrollY immediately after canceling smooth scroll and fails intermittently at98. Modify e2e/parity/scenarios/portal-onboarding.ts to use the same full-page scope as P01 (including existing stores prerequisite), and e2e/parity/scenarios/portal-my-region.ts to reuse a measured render/scroll barrier. Create e2e/parity/scroll-position.ts and e2e/parity/measurement-readiness.spec.ts with real-browser paused-clock/smooth-scroll and full-page scope regressions. No new crop/mask, threshold/retry/timeout, production CSS/business logic or changed seed data. Add P119 to the native affected selection for evidence of the corrected scope. Review other residual pairs before deciding any additional code changes; list exact paths here first if a real in-scope UI defect is found.
+
 Status: stage1 baseline; no application source edited.
 Baseline source: 8a33b3f1 (TIP only), dev682a4b9e; TIP811 PR90 merged.
 Owner explicitly approved private opchub_v46_801_dev/test + Memurai6381, keeping all current HOLD processes. Original DBs/Redis6379 are not targets. No migration/schema/API/business change permitted. New Next-only ports planned MSW3930/3931 and native3710/3711 after free-port checks; existing API4300/socket4301/worker remain HOLD. No .env edits.
