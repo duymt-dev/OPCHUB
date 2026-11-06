@@ -5,6 +5,16 @@ export interface AuditBranchContext {
   targetId: string;
   targetEmail: string;
 }
+export interface RollbackFixture {
+  invoke: () => Promise<unknown>;
+  state: () => Promise<unknown>;
+  close?: () => Promise<unknown>;
+  auditMethod?: 'log' | 'logMany';
+}
+export interface RollbackCase {
+  name: string;
+  prepare: (t: TestApp, actor: { id: string; ip: null; role: string }) => Promise<RollbackFixture>;
+}
 export interface AuditDenialCase {
   domain: string;
   controller: string;

@@ -5,7 +5,7 @@ import { RegionalDirectorService, RegionalPayoutService } from '@/modules/region
 import { affiliateEarning } from '../factories/affiliate-admin.factory';
 import { regionalShareFixture } from '../factories/regional-share.factory';
 import { createUser } from '../factories/user.factory';
-import type { RollbackCase } from './admin-audit-branches.rollback';
+import type { RollbackCase } from './admin-audit-branches.cases';
 
 export const financialRollbackCases: readonly RollbackCase[] = [
   {

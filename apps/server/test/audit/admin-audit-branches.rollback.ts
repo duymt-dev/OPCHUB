@@ -8,19 +8,8 @@ import { AdminModerationService } from '@/modules/moderation/services/admin-mode
 import { createUser } from '../factories/user.factory';
 import { createGroup, tokenOf } from '../factories/group.factory';
 import { createProject } from '../factories/project.factory';
-import type { TestApp } from '../setup/test-app';
 import { financialRollbackCases } from './admin-audit-branches.money';
-
-export interface RollbackFixture {
-  invoke: () => Promise<unknown>;
-  state: () => Promise<unknown>;
-  close?: () => Promise<unknown>;
-  auditMethod?: 'log' | 'logMany';
-}
-export interface RollbackCase {
-  name: string;
-  prepare: (t: TestApp, actor: { id: string; ip: null; role: string }) => Promise<RollbackFixture>;
-}
+import type { RollbackCase } from './admin-audit-branches.cases';
 
 export const auditRollbackCases: readonly RollbackCase[] = [
   {
