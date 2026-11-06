@@ -48,6 +48,16 @@ Tổng: 4 M · 6 L · 1 XL (+ 812 L). Mốc: **M1 = 801 → 804**, **M2 = 805 �
 Cổng mỗi TIP: `pnpm lint && pnpm typecheck && pnpm test && pnpm test:int && pnpm depcheck && pnpm build`; e2e MSW không tụt so với `dev` + e2e server
 cho luồng TIP đụng tới; **parity ≤ 3% (1440 + 390) cho mọi màn TIP đụng tới**; query mới có `EXPLAIN (ANALYZE, BUFFERS)` ≥ 10k dòng; migration sạch trên `opchub_dev` + `opchub_test`.
 
+## V4.6 — TRẢ NỢ (sau 812, danh sách ở [`plans/V4.6-DEBT.md`](plans/V4.6-DEBT.md))
+
+| TIP | Tên | Nguồn nợ | Phụ thuộc | Ước lượng | Vùng file dự kiến (chốt trong TIP) |
+|---|---|---|---|---|---|
+| V46-813 | Nợ code nhóm A (A1 → A12): Tổng quan chat > 100 nhóm, xóa `llm_configs` + `BOT_LLM_PROVIDER`, chữ 403 GĐ Vùng, log "Chưa cấu hình AI", lint `<img>`, test thiếu 801 / 802 / 803 / 805 / 807 | 801 → 811 completion | 812 | L | `srv/chat/**`, `llm-config.prisma`, `srv/llm-config/**`, `common/config/env.schema.ts`, `common/integrations/llm-provider.ts`, `test/{regional-director,affiliate,audit}/**`, `e2e/behavior/**` |
+| V46-814 | Ổn định test + parity nhóm A (A13 → A22): flake bot, timeout audit / Vitest fork, plan persona-turn, native 147, 14 ảnh miễn, nhiễu chụp, chuỗi migration DB trắng + `down.sql`, một lượt full gate xanh | 804 / 806 / 808 / 809 / 812 | 813 | L | `e2e/{parity,behavior}/**`, `apps/server/test/**`, `vitest` config, `reports/ui-parity/**` |
+| V46-815 → 818 | Nhóm B (AI, tiền + GĐ Vùng, tìm kiếm / SEO / Cài đặt, Web Push) — **chờ owner chốt D-137**, chưa lên kế hoạch | `V4.6-DEBT.md` › B | 814 + D-137 | — | — |
+
+Chạy tuần tự 813 → 814. TIP viết lúc tới bước, dựa trên `dev` lúc ấy.
+
 ## V4.6 — GIT (nhánh xếp chồng, không tự merge)
 
 - TIP #1 tách từ `dev`. TIP #k: PR #k-1 đã merge → tách từ `dev` mới; chưa merge → tách từ nhánh TIP #k-1 (PR `base` = nhánh đó, ghi "Stacked on #…").
