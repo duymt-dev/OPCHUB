@@ -86,6 +86,8 @@ Build-operation correction: root Turbo cache does not track custom NEXT_DIST_DIR
 - Master acceptance/case coverage/M1/M3 drafts and progress row12 added as IN PROGRESS/NOT ACCEPTED; historical rows1–11 not changed. Final parity/cause ledger/restoration/clean Git evidence still pending.
 # Latest verification checkpoint — 2026-11-06 17:05 ICT
 
+- 17:10 follow-up: latest full integration at f4df98ec stopped on DB141 PASS/2 FAIL, precisely obsolete agent counts62/6 after the DEMO-only D94 fix. Owner approved66/10 plus relational invariant proving no eligible user lacks an affiliate. Real private-test-DB focused5/5 PASS30.68s, all money/period/referral/payout/idempotency assertions unchanged. Earlier2148 PASS is not represented as the final source gate. In-flight MSW parity f4df98ec was interrupted before completion because the approved regression creates a new source checkpoint; retain raw log as INVALID/intermediate, rerun both final parity lanes on the later frozen HEAD.
+
 - Owner approved historical `pending_review` data for the badge case. The fixture is guarded to exact private812 DB; regression7/7 PASS. Badge+1 and existing timeout remain unchanged, D108 production direct publication untouched.
 - Long auto/emergency native replay exposed competing seeded script executions, not missing credentials alone. Native-only prerequisite now defers scripts through real Admin APIs and stops active seeded executions through the domain stop endpoint before the original automatic-topic assertions. Focused native replay is running; not yet PASS.
 - Latest root lint8/8 (11.475s), typecheck8/8 (8.855s) PASS. Additional full root unit/depcheck rerun is running.

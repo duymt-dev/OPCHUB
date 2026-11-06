@@ -912,6 +912,7 @@ Infrastructure explicitly confirmed in execute thread: private801 DB pair, Memur
 - Infrastructure follow-up explicitly approved: separate opchub_v46_812_dev + Memurai6381 DB3 + API/socket4310/4311, keeping all HOLD. Exact new DB name may be added to seed guard; no broad allowlist. Native baseline parity currently uses unchanged811 runtime; final measurements/behavior use isolated812 runtime with correct mail origins.
 
 ### TIP812 owner-approved execute follow-ups
+- D94 seed counts: owner approved exact66/10 instead of obsolete62/6, plus real every-eligible-member affiliate invariant; monetary/commission/idempotency assertions unchanged. Focused real DB5/5 PASS, final full integration replay required.
 - Historical project badge: owner chose a legacy `pending_review` fixture in the exact private812 DB, keeping badge+1. New projects still publish directly under D108; no production moderation behavior is changed.
 - Separate812dev/Redis3/runtime approved; original HOLD preserved.
 - Narrow auto-unlock stale session projection fix + regression approved and committed.
