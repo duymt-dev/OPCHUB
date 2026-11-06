@@ -14,7 +14,7 @@ export function useCustomerColumns(): NonNullable<TableProps<AffiliateCustomer>[
     {
       title: t('tabs.customers'),
       key: 'name',
-      width: 'calc((100% - 348px) * 13 / 27)',
+      width: 'calc((100% - 382px) * 13 / 27)',
       render: (_, row) => <b>{row.name}</b>,
     },
     {
@@ -23,7 +23,16 @@ export function useCustomerColumns(): NonNullable<TableProps<AffiliateCustomer>[
       width: 92,
       render: (_, row) => affiliateHistoryDate(row.date),
     },
-    { title: t('columns.rateShort'), key: 'rate', width: 56, render: (_, row) => `${row.rate}%` },
+    {
+      title: t('columns.rateShort'),
+      key: 'rate',
+      width: 90,
+      render: (_, row) =>
+        t(row.customerYear === 1 ? 'commissionFirstYear' : 'commissionRenewalYear', {
+          rate: row.rate,
+          year: row.customerYear,
+        }),
+    },
     {
       title: t('columns.commission'),
       key: 'commission',
@@ -39,7 +48,7 @@ export function useCustomerColumns(): NonNullable<TableProps<AffiliateCustomer>[
     {
       title: t('columns.payoutHistory'),
       key: 'history',
-      width: 'calc((100% - 348px) * 14 / 27)',
+      width: 'calc((100% - 382px) * 14 / 27)',
       render: (_, row) => <CustomerPayoutHistory row={row} />,
     },
   ];

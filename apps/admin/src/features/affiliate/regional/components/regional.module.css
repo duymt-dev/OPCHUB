@@ -288,6 +288,10 @@
 }
 .bankGrid :global(.ant-form-item-label) {
   padding-bottom: 6px;
+  line-height: 16px;
+}
+.bankGrid :global(.ant-form-item-control-input) {
+  min-height: 34px !important;
 }
 .bankGrid {
   row-gap: 10px;

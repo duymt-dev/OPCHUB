@@ -74,7 +74,7 @@ test('REQ-621 BR-484 key rotation confirms no grace, displayed once and masked a
   await expect(page.locator('#bank-new-key')).toHaveCount(0);
 });
 
-test('REQ-621 simulate and connection; off waits, enabling does not replay, on activates new transaction', async ({
+test('REQ-621 TC-481 simulate and connection; off waits, enabling does not replay, on activates new transaction', async ({
   page,
 }) => {
   await open(page);

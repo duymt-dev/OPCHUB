@@ -27,17 +27,17 @@ export function MyRegionAffiliates({ data }: { data: DirectorRegion }) {
                 </div>
               ),
             },
-            { title: t('customers'), dataIndex: 'customers', width: 100 },
+            { title: t('customers'), dataIndex: 'customers', width: 102 },
             {
               title: t('broughtRevenue'),
               key: 'revenue',
-              width: 170,
+              width: 152,
               render: (_, r) => formatVnd(r.revenue),
             },
             {
               title: t('regionShare'),
               key: 'share',
-              width: 160,
+              width: 162,
               render: (_, r) => <b className={styles.money}>{formatVnd(r.share)}</b>,
             },
           ]}

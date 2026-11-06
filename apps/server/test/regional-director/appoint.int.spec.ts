@@ -2,6 +2,7 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { regionalDirectorsSchema, regionalCandidatesSchema } from '@opchub/shared/api-domains';
 import { RegionalDirectorEventsHandler } from '@/modules/regional-director';
 import { isFeeUsable } from '@opchub/shared';
+import { outboxEvents } from '@opchub/shared/outbox';
 import { tokenOf } from '../factories/group.factory';
 import { createUser, flushAuthState } from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
@@ -153,12 +154,13 @@ describe('TIP-V46-801 regional director lifecycle', () => {
     const event = await t.prisma.db.outboxEvent.findFirstOrThrow({
       where: { type: 'regional_director.revoked', payload: { path: ['userId'], equals: u.id } },
     });
-    const payload = {
-      region: 'south' as const,
+    const payload = outboxEvents['regional_director.revoked'].parse(event.payload);
+    expect(payload).toMatchObject({
+      region: 'south',
       userId: u.id,
+      feeStatus: 'active',
       validUntil: until.toISOString(),
-      revokedAt: event.createdAt.toISOString(),
-    };
+    });
     const handler = t.app.get(RegionalDirectorEventsHandler);
     await handler.revoked(payload, String(event.id));
     await handler.revoked(payload, String(event.id));

@@ -1,5 +1,13 @@
 import type { Scenario } from '../types';
 import { nav, tick, waitText } from '../steps';
+import { expect } from '@playwright/test';
+import type { StepCtx } from '../types';
+
+async function settleRegionScroll(c: StepCtx) {
+  // Cancel the tab's smooth scroll before the paused-clock full-page capture.
+  await c.page.evaluate(() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' }));
+  expect(await c.page.evaluate(() => window.scrollY)).toBe(0);
+}
 
 export const PORTAL_MY_REGION: Scenario[] = [
   {
@@ -8,9 +16,7 @@ export const PORTAL_MY_REGION: Scenario[] = [
     start: 'director',
     demo: 'affiliate',
     fullPage: true,
-    beforeCapture: async (c) => {
-      await c.page.evaluate(() => window.scrollTo(0, 0));
-    },
+    beforeCapture: settleRegionScroll,
     steps: async (c) => {
       await nav(c, 'Mạng lưới Affiliate');
       await c.page.waitForLoadState('networkidle');
@@ -20,9 +26,7 @@ export const PORTAL_MY_REGION: Scenario[] = [
   },
   {
     id: 'P-V46-REG',
-    beforeCapture: async (c) => {
-      await c.page.evaluate(() => window.scrollTo(0, 0));
-    },
+    beforeCapture: settleRegionScroll,
     name: 'Portal · Vùng của tôi',
     start: 'director',
     demo: 'affiliate',

@@ -11,7 +11,7 @@ export function MyRegionMonths({ rows }: { rows: DirectorRegion['months'] }) {
   return (
     <section>
       <h3>{t('monthsTitle')}</h3>
-      <div className={styles.table}>
+      <div className={`${styles.table} ${styles.months}`}>
         <AdminTable
           rowKey="monthKey"
           data={rows}
@@ -26,13 +26,13 @@ export function MyRegionMonths({ rows }: { rows: DirectorRegion['months'] }) {
             {
               title: t('amount'),
               key: 'amount',
-              width: 170,
+              width: 162,
               render: (_, r) => <b className={styles.money}>{formatVnd(r.amount)}</b>,
             },
             {
               title: t('status'),
               key: 'status',
-              width: 130,
+              width: 132,
               render: (_, r) => (
                 <StatusTag tone={r.status === 'paid' ? 'green' : 'amber'}>
                   {t(`statusLabels.${r.status}`)}
@@ -42,7 +42,7 @@ export function MyRegionMonths({ rows }: { rows: DirectorRegion['months'] }) {
             {
               title: t('paidAt'),
               key: 'paidAt',
-              width: 150,
+              width: 142,
               render: (_, r) => (r.paidAt ? formatDate(r.paidAt) : '—'),
             },
           ]}

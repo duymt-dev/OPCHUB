@@ -422,3 +422,8 @@ Owner explicitly approved fixing stale auto-unlock session plus regression. Nati
 - apps/server/test/account/auto-unlock.int.spec.ts: strengthen existing successful-login regression with active response, authenticated /me and refresh; retain audit/outbox/dedup/revoked-old-session assertions.
 
 Exact policy browser-test path confirmed: e2e/behavior/affiliate-policy-responsive.spec.ts. Add scoped mobile two-column input geometry and selected-tab visibility checks; retain every existing validation/save/hidden-value assertion. No admin-affiliate-policy.spec.ts exists or will be created.
+
+### D85-CUS paired review before edit
+D85-CUS desktop8.50/mobile16.52% baseline: detail header geometry already matches; much of the row-height/content mismatch is the rate cell dropping existing customerYear (API already exposes it) and showing only percent. Prototype shows year1 / renewal text. D131 changes amounts/renewal horizon, so no snapshot values will be changed to match prototype.
+- apps/admin/src/features/affiliate/components/customer-table-columns.tsx: render existing commissionFirstYear/commissionRenewalYear translations with actual API year; widen rate column56→90 while retaining total table width via existing flexible-column formula. No business calculation/API/fixture changes.
+- apps/admin/src/features/affiliate/components/customer-table-columns.spec.tsx (create): actual year1/2/4 labels and snapshot percentage retained, same table component.

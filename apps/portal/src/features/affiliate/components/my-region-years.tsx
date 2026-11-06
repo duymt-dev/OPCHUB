@@ -24,18 +24,18 @@ export function MyRegionYears({ rows }: { rows: DirectorRegion['years'] }) {
                   year: r.year,
                 }),
             },
-            { title: t('percent'), key: 'percent', width: 110, render: (_, r) => `${r.percent}%` },
-            { title: t('count'), dataIndex: 'count', width: 100 },
+            { title: t('percent'), key: 'percent', width: 102, render: (_, r) => `${r.percent}%` },
+            { title: t('count'), dataIndex: 'count', width: 102 },
             {
               title: t('revenueShort'),
               key: 'revenue',
-              width: 150,
+              width: 142,
               render: (_, r) => formatVnd(r.revenue),
             },
             {
               title: t('shareShort'),
               key: 'share',
-              width: 140,
+              width: 152,
               render: (_, r) => <b className={styles.money}>{formatVnd(r.share)}</b>,
             },
           ]}

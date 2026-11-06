@@ -56,6 +56,12 @@
 .kpi small,
 .table small {
   color: rgba(0, 0, 0, 0.45);
+}
+.kpi > span {
+  font-size: 13px;
+}
+.kpi small,
+.table small {
   font-size: 12px;
 }
 .kpi b {
@@ -76,11 +82,23 @@
   overflow-x: auto;
 }
 .table :global(table) {
-  min-width: 680px;
+  min-width: 560px !important;
+  width: 100% !important;
+  table-layout: fixed !important;
+}
+.months :global(table) {
+  min-width: 480px !important;
 }
 .table :global(.ant-table-wrapper) :global(.ant-table-cell) {
-  padding: 8px 16px;
+  padding: 10px 6px;
   font-size: 13px;
+  line-height: normal;
+}
+.table :global(.ant-table-wrapper) :global(.ant-table-cell:first-child) {
+  padding-left: 16px;
+}
+.table :global(.ant-table-wrapper) :global(.ant-table-cell:last-child) {
+  padding-right: 16px;
 }
 .table :global(.ant-table-thead) > tr > th {
   background: #fafafa;
@@ -140,15 +158,6 @@
 @media (max-width: 767px) {
   .kpis {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .kpi {
-    padding: 12px;
-  }
-  .kpi b {
-    font-size: 18px;
-  }
-  .panel {
-    padding: 16px;
   }
   .banner {
     align-items: flex-start;
