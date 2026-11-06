@@ -16,6 +16,7 @@ try {
 }
 const redis = new Redis(get('REDIS_URL') || 'redis://127.0.0.1:6379', { db });
 const PATTERNS = [
+  'opchub:pricing:*',
   'opchub:chat:*',
   'opchub:auth:*',
   'opchub:settings:*',

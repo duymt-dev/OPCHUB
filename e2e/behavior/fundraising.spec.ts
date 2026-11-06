@@ -3,6 +3,7 @@ import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { ADMIN_URL, PORTAL_URL } from '../urls';
 import { onServer, simulateTransfer } from '../server/api';
+import { acceptancePrerequisite } from './helpers/acceptance-prerequisites';
 
 /** V4-610 UP-11 · AD-06 (D-82 → D-88): Gói Gọi vốn — Bảng giá / sau đăng dự án → CK → Admin duyệt */
 
@@ -21,6 +22,7 @@ async function login(page: Page, origin: string, email: string, password: string
 const member = (page: Page) => login(page, PORTAL_URL, 'an.nguyen@mediasoft.vn', 'User@2026');
 
 test.describe('Gói Gọi vốn', () => {
+  test.beforeEach(() => acceptancePrerequisite('default-prices'));
   test('Bảng giá → chọn dự án → mã GV → CK → webhook → Admin duyệt → tab Gọi vốn', async ({
     page,
     context,

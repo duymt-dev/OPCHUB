@@ -99,7 +99,6 @@ test.describe('Admin · Nội dung & Sự kiện', () => {
   });
 
   test('tạo sự kiện online + sửa sự kiện offline', async ({ page }) => {
-    acceptancePrerequisite('events-open');
     await openEvents(page);
     await page.getByRole('button', { name: /^\+?\s*Tạo sự kiện$/ }).click();
     const form = sheet(page);
@@ -123,6 +122,7 @@ test.describe('Admin · Nội dung & Sự kiện', () => {
     await expect(form.getByText('Chỉnh sửa sự kiện')).toBeVisible();
     await expect(form.getByText('Hiện tại: T5, 22/10')).toBeVisible();
     await form.getByPlaceholder('VD: OPC Meetup #13').fill('OPC Meetup #12 (dời giờ)');
+    await form.getByRole('switch').setChecked(true);
     await form.getByRole('switch').click();
     await form.getByRole('button', { name: 'Lưu sự kiện' }).click();
     await expect(toast(page)).toHaveText('Đã cập nhật sự kiện');

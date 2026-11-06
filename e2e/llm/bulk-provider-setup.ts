@@ -8,6 +8,21 @@ import {
 } from '@opchub/shared/api-domains';
 import { env } from '../env';
 
+/** Exact model/key contract accepted by startBulkStub, shared with its HTTP regression. */
+export function bulkProviderFixture(baseUrl: string) {
+  const fixture = aiBrowserFixture(baseUrl);
+  return aiSettingsUpdateSchema.parse({
+    ...fixture,
+    providers: fixture.providers.map((provider) =>
+      provider.id === 'custom'
+        ? { ...provider, model: 'browser-bulk-model', key: 'browser-bulk-test-key' }
+        : provider,
+    ),
+    maxTokens: 1024,
+    timeoutMs: 2000,
+  });
+}
+
 /** Native prerequisite only: real login/configuration endpoints, no intercepted browser API. */
 export async function configureBulkProvider(request: APIRequestContext, baseUrl: string) {
   const api = `${env.API_PROXY_URL}/v1`;
@@ -33,7 +48,7 @@ export async function configureBulkProvider(request: APIRequestContext, baseUrl:
     const response = await request.put(`${api}/admin/settings/ai`, {
       headers,
       data: aiSettingsUpdateSchema.parse({
-        ...aiBrowserFixture(baseUrl),
+        ...bulkProviderFixture(baseUrl),
         use: {
           bot: enabled ? 'custom' : '',
           script: enabled ? 'custom' : '',

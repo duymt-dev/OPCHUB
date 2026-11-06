@@ -1,5 +1,6 @@
 import { z } from 'zod';
-import { buildEvents } from '@opchub/shared/mock-domains';
+import { buildEvents, MY_EVENT_REGS } from '@opchub/shared/mock-domains';
+import { PRICE_DEFAULTS as prices } from '@opchub/shared/fixtures';
 import { createPrismaClient } from '../src/client';
 
 /** Case-local prerequisites, never run against native/HOLD or integration databases. */
@@ -13,11 +14,19 @@ if (
 )
   throw new Error('Acceptance prerequisites require the exact isolated TIP-812 database');
 const mode = z
-  .enum(['events-list', 'events-open', 'events-upcoming', 'marketing-summary'])
+  .enum([
+    'events-list',
+    'events-portal',
+    'events-open',
+    'events-upcoming',
+    'marketing-summary',
+    'unpaid-affiliate',
+    'default-prices',
+  ])
   .parse(process.argv[2]);
 const db = createPrismaClient(env.DIRECT_URL, { max: 1 });
 try {
-  if (mode === 'events-list') {
+  if (mode === 'events-list' || mode === 'events-portal') {
     const events = buildEvents();
     const ids = events.map((e) => e.id);
     const max = Math.max(...events.map((e) => e.registered));
@@ -33,9 +42,9 @@ try {
       await tx.eventRegistration.deleteMany({ where: { eventId: { in: ids } } });
       await tx.eventRegistration.createMany({
         data: events.flatMap((e) =>
-          users.slice(0, e.registered).map((u) => ({
+          users.slice(0, e.registered).map((u, i) => ({
             eventId: e.id,
-            userId: u.id,
+            userId: i === 0 && MY_EVENT_REGS.includes(e.id) ? 'm1' : u.id,
           })),
         ),
       });
@@ -45,6 +54,16 @@ try {
         FROM unnest(${ids}::text[], ${events.map((e) => e.registered)}::int[]) AS v(id, n)
         WHERE e.id = v.id`;
     });
+    if (mode === 'events-portal')
+      await db.event.updateMany({
+        where: { id: { in: ['e1', 'e4'] } },
+        data: {
+          startsAt: new Date(Date.now() + 86400000),
+          endsAt: null,
+          registrationOpen: true,
+          closedAt: null,
+        },
+      });
   } else if (mode === 'events-open') {
     const changed = await db.event.updateMany({
       where: { id: 'e1' },
@@ -58,6 +77,35 @@ try {
       FROM unnest(${['e2', 'e3']}::text[],
         ${[new Date(now + 86400000), new Date(now + 2 * 86400000)]}::timestamptz[]) AS v(id, at)
       WHERE e.id = v.id`;
+  } else if (mode === 'unpaid-affiliate') {
+    const user = await db.user.findUniqueOrThrow({
+      where: { email: 'do.haiyen@opchub.vn' },
+      select: { id: true },
+    });
+    await db.affiliate.upsert({
+      where: { userId: user.id },
+      create: {
+        id: 'v46-812-unpaid-affiliate',
+        userId: user.id,
+        code: 'YENOPC812',
+        rate: 20,
+        status: 'active',
+      },
+      update: {},
+    });
+  } else if (mode === 'default-prices') {
+    await db.priceConfig.update({
+      where: { id: 1 },
+      data: {
+        perList: prices.per.list,
+        perYear: prices.per.y,
+        bizList: prices.biz.list,
+        bizYear: prices.biz.y,
+        fundPrice: prices.fund.p,
+        fundRenew: prices.fund.r,
+        fundMonths: prices.fund.mo,
+      },
+    });
   } else {
     // Delivery date is independent of the historical campaign scheduling date shown in the table.
     const changed = await db.mailLog.updateMany({

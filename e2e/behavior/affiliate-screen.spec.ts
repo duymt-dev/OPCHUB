@@ -1,4 +1,5 @@
 import { test, expect } from '../server/test';
+import { acceptancePrerequisite } from './helpers/acceptance-prerequisites';
 import type { Page } from '@playwright/test';
 import { PORTAL_URL } from '../urls';
 
@@ -89,6 +90,7 @@ test.describe('Affiliate Portal — màn và tài khoản nhận', () => {
   test('REQ-602 chưa đóng phí vẫn có link giới thiệu, không màn khoá, không overlay che', async ({
     page,
   }) => {
+    acceptancePrerequisite('unpaid-affiliate');
     await signIn(page, 'do.haiyen@opchub.vn');
     await expect(
       page.getByRole('heading', { name: 'Giới thiệu thành viên mới, nhận 20% hoa hồng' }),

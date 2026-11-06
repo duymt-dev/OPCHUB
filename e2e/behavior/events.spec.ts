@@ -1,6 +1,7 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { PORTAL_URL } from '../urls';
+import { acceptancePrerequisite } from './helpers/acceptance-prerequisites';
 
 /** G3a — P-49 → P-54, P-16: Sự kiện sắp tới (app mới, MSW) */
 
@@ -51,6 +52,7 @@ test.describe('Sự kiện', () => {
   });
 
   test('đăng ký → toast + số chỗ tăng + thông báo; huỷ → về như cũ', async ({ page }) => {
+    acceptancePrerequisite('events-portal');
     await openEvents(page);
     const c = card(page, MEETUP);
     await c.getByRole('button', { name: 'Đăng ký tham gia' }).click();
@@ -87,6 +89,7 @@ test.describe('Sự kiện', () => {
   test('EV-R01 AT-EV01 AT-EV02 REQ-344 link Meet chỉ hiện sau khi đăng ký; đăng ký xong thấy ngay', async ({
     page,
   }) => {
+    acceptancePrerequisite('events-portal');
     await openEvents(page);
     // An đã đăng ký Workshop (e2) → thấy phòng họp
     await card(page, 'Workshop: Tự động hoá bán hàng bằng AI')
@@ -127,6 +130,7 @@ test.describe('Sự kiện', () => {
   });
 
   test('hết chỗ: nút "Hết chỗ" không đăng ký được (P-54)', async ({ page }) => {
+    acceptancePrerequisite('events-portal');
     await openEvents(page);
     const c = card(page, 'Demo Day – Dự án cộng đồng Q4');
     // aria-disabled: bấm vẫn nhận sự kiện nhưng không đăng ký

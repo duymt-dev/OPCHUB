@@ -2,6 +2,7 @@ import { expect, test } from '@playwright/test';
 import { botBulkPrompt, validateBotBulkCompletion } from '@opchub/shared';
 import { z } from 'zod';
 import { startBulkStub } from '../llm/bulk-stub';
+import { bulkProviderFixture } from '../llm/bulk-provider-setup';
 
 const responseSchema = z.object({
   choices: z.array(z.object({ message: z.object({ content: z.string() }) })).length(1),
@@ -40,11 +41,17 @@ test('D-112 local bulk HTTP fixture accepts the actual shared prompt and produce
 }) => {
   const stub = await startBulkStub();
   try {
+    const configured = bulkProviderFixture(stub.url).providers.find((p) => p.id === 'custom');
+    expect(configured).toMatchObject({
+      enabled: true,
+      baseUrl: stub.url,
+      model: 'browser-bulk-model',
+    });
     const lines: string[] = [];
     for (const ordinal of [0, 1]) {
       const response = await request.post(`${stub.url}/chat/completions`, {
-        headers,
-        data: body(ordinal),
+        headers: { ...headers, authorization: `Bearer ${configured?.key}` },
+        data: { ...body(ordinal), model: configured?.model },
       });
       expect(response.status()).toBe(200);
       const payload = responseSchema.parse(await response.json());
