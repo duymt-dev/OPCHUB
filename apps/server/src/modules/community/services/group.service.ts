@@ -21,6 +21,13 @@ export class GroupService {
     private readonly live: LiveCountersService,
   ) {}
 
+  /** Membership-first overview, with a single avatar batch for all joined groups. */
+  async joined(userId: string): Promise<GroupItem[]> {
+    const rows = await this.groups.joinedBy(userId);
+    const avatars = await this.groups.avatarsOf(rows.map((g) => g.id));
+    return rows.map((g) => toGroupItem(g, 'member', avatars.get(g.id)));
+  }
+
   async page(
     userId: string | null,
     q: { region?: string | undefined; q?: string | undefined; page: number; size: number },
