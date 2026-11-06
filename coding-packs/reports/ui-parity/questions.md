@@ -924,3 +924,7 @@ Infrastructure explicitly confirmed in execute thread: private801 DB pair, Memur
 Approved scope complete:486 MSW /110 native fresh captures (same source, paired artifacts preserved). Whole MSW568 tests excludes14 owner-approved legacy cases explicitly;78 unchanged/unreachable skips. Native118 tests includes4 harness cases/4 unreachable skips/110 captures. Whole failures and focused completion are recorded separately, never relabeled full PASS. No new mask/crop/threshold/timeout/retry/skip. D78-GDV alone newly unreachable under originalTIP. D93 mobile header fixed and actual calendar behavior PASS both lanes. Dashboard complete scope fixed; exact-zero scroll regression PASS. All remaining >3% measurements have data/decision causes, not app failure labels.
 
 [Causes](V4.6-causes.md), [acceptance](../V4.6-acceptance.md), [completion](../TIP-V46-812-completion.md). PR91 ready for owner review, no merge.
+
+## V4.6 — D-136 (owner, 06/11/2026)
+
+Owner chốt toàn bộ phương án mặc định Q-V46-807-1 → 5, Q808-1 → 5, Q-V46-809-1 → 4, Q-V46-810-1 → 6, Q-V46-811-1 → 7, Q812-1 → 6. Các dòng ghi "pending owner" / "awaiting owner" ở trên nay là quyết định D-136 trong `01-REQUIREMENTS-MATRIX.md`. Không đổi code. Riêng Q812-4: owner chọn chuyển 801 → 804 thành DONE theo M1 lượt 812, giữ ghi chú PARTIAL cũ làm lịch sử.
