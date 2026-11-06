@@ -1,4 +1,4 @@
-import type { LlmConfigModel } from '@opchub/db';
+import { aiDraft, snapshotAi, restoreAi } from '../helpers/ai-config';
 import type { LlmProvider } from '@opchub/integrations';
 import { Queue } from 'bullmq';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
@@ -19,22 +19,25 @@ describe('D-112 bulk outbox and actual worker use committed Admin LLM configurat
   let t: TestApp;
   let f: BulkFixture;
   let stub: Awaited<ReturnType<typeof llmHttpStub>>;
-  let snapshot: LlmConfigModel | null;
+  let snapshot: Awaited<ReturnType<typeof snapshotAi>>;
   let settingsToken: string;
   let relay: OutboxRelayService;
   let queue: Queue;
   const batchIds: string[] = [];
   const saveConfig = (enabled: boolean) =>
-    t.call('/admin/settings/llm', {
+    t.call('/admin/settings/ai', {
       method: 'PUT',
       token: settingsToken,
       json: {
-        baseUrl: stub.url,
-        enabled,
-        model: 'bulk-worker-test',
-        key: 'test-bulk-key',
-        maxTokens: 1024,
-        timeoutMs: 1000,
+        ...aiDraft(stub.url, 'test-bulk-key', 'bulk-worker-test'),
+        ...(!enabled ? { use: { bot: '', script: '', content: '', mod: '' } } : {}),
+        providers: aiDraft(stub.url, 'test-bulk-key', 'bulk-worker-test').providers.map((p) =>
+          p.id === 'custom'
+            ? { ...p, enabled }
+            : p.id === 'openai' && !enabled
+              ? { ...p, enabled: true, baseUrl: stub.url, model: 'unused', key: 'test-bulk-key' }
+              : p,
+        ),
       },
     });
   const row = (id: string) => t.prisma.db.botBulkBatch.findUniqueOrThrow({ where: { id } });
@@ -47,7 +50,7 @@ describe('D-112 bulk outbox and actual worker use committed Admin LLM configurat
     });
     f = new BulkFixture(t);
     await f.start();
-    snapshot = await t.prisma.db.llmConfig.findUnique({ where: { id: 1 } });
+    snapshot = await snapshotAi(t);
     settingsToken = await tokenOf(
       t,
       await createUser(t, { adminPermissions: ['settings.general'] }),
@@ -69,8 +72,7 @@ describe('D-112 bulk outbox and actual worker use committed Admin LLM configurat
       if (batchIds.some((id) => job.id?.startsWith(`bot-bulk-${id}-`))) await job.remove();
     await queue.close();
     await f.close();
-    await t.prisma.db.llmConfig.deleteMany();
-    if (snapshot) await t.prisma.db.llmConfig.create({ data: snapshot });
+    await restoreAi(t, snapshot);
     await t.redis.client.del('llm:requests:minute');
     await t.close();
     await stub.close();

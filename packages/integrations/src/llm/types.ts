@@ -18,3 +18,12 @@ export interface LlmProvider {
   complete(prompt: string, opts?: { maxTokens?: number }): Promise<string>;
   generateTurn(context: LlmTurnContext): Promise<string>;
 }
+
+export interface LlmUsage {
+  promptTokens: number;
+  completionTokens: number;
+}
+export interface LlmRequestHooks {
+  transform?: (text: string) => string;
+  onUsage?: (usage: LlmUsage, latencyMs: number) => void;
+}

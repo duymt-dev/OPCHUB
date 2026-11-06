@@ -5,6 +5,8 @@ export const ALLOWED_DATABASES: readonly string[] = [
   // Owner-authorized isolated TIP-801 databases; native HOLD must remain untouched.
   'opchub_v46_801_dev',
   'opchub_v46_801_test',
+  // Owner-authorized TIP-812 runtime; keep the existing 811 HOLD isolated.
+  'opchub_v46_812_dev',
 ];
 
 /** Tên DB trong URL Postgres (`postgresql://u:p@h:5432/<db>?…`) */

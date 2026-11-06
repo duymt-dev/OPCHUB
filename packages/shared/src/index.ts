@@ -38,3 +38,5 @@ export { BOT_REPLY_SCAN_MS, botReplyDelayMs } from './bot/reply-timing';
 export * from './membership/commission-year';
 export * from './membership/renewal-milestone';
 export * from './needs/need-match';
+
+export * from './ai/mask-pii';

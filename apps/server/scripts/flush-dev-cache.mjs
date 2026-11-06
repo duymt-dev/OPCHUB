@@ -3,16 +3,20 @@
 // Không in giá trị env nào. Chạy: `pnpm --filter @opchub/server flush:dev-cache`
 import { existsSync, readFileSync } from 'node:fs';
 import { Redis } from 'ioredis';
+import { assertDevCacheTarget } from './dev-cache-target.mjs';
 
 const file = existsSync('.env') ? readFileSync('.env', 'utf8') : '';
 const get = (k) => (process.env[k] ?? file.match(new RegExp(`^${k}=(.*)$`, 'm'))?.[1] ?? '').trim();
 const db = Number(get('REDIS_DB'));
-if (db !== 1) {
-  process.stderr.write('flush:dev-cache chỉ chạy trên Redis db 1 (dev) — dừng\n');
+try {
+  assertDevCacheTarget(db, get('REDIS_URL'), get('DATABASE_URL'));
+} catch {
+  process.stderr.write('flush:dev-cache từ chối đích ngoài dev được cho phép — dừng\n');
   process.exit(1);
 }
 const redis = new Redis(get('REDIS_URL') || 'redis://127.0.0.1:6379', { db });
 const PATTERNS = [
+  'opchub:pricing:*',
   'opchub:chat:*',
   'opchub:auth:*',
   'opchub:settings:*',

@@ -461,3 +461,14 @@ Không mask, không nới ngưỡng. Visibility/quyền theo TIP; không lộ d�
 
 | P-V46-PUBLIC-CARD | Portal | Trang công khai in edit wizard | Gian hàng địa phương → Gian hàng của tôi → Chỉnh sửa gian hàng | `/stores/mine` edit | 1440,390 |
 | P-V46-GUEST | Portal | Anonymous business page, no prototype counterpart | Actual guest URL only; owner reviews images | `/g/htx-ca-phe-hoa-phu` | 1440,390 |
+
+### TIP-V46-811
+
+- D-V46-AI — AI Provider,1440/390; D124 no assistant; Q811 price fields, real inactive providers/spend.
+- D-V46-APP — App & notifications,1440/390; configuration only perD125, in-app Admin test.
+
+### TIP-V46-812 — final inventory / source055d862a
+
+Approved scope complete:486 MSW /110 native fresh captures (same source, paired artifacts preserved). Whole MSW568 tests excludes14 owner-approved legacy cases explicitly;78 unchanged/unreachable skips. Native118 tests includes4 harness cases/4 unreachable skips/110 captures. Whole failures and focused completion are recorded separately, never relabeled full PASS. No new mask/crop/threshold/timeout/retry/skip. D78-GDV alone newly unreachable under originalTIP. D93 mobile header fixed and actual calendar behavior PASS both lanes. Dashboard complete scope fixed; exact-zero scroll regression PASS. All remaining >3% measurements have data/decision causes, not app failure labels.
+
+[Causes](V4.6-causes.md), [acceptance](../V4.6-acceptance.md), [completion](../TIP-V46-812-completion.md). PR91 ready for owner review, no merge.

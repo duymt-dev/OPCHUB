@@ -36,18 +36,25 @@ function AdminShellBody({
   allowed,
   readOnly,
   roleName,
+  showReadOnlyNotice,
   home,
   children,
 }: {
   allowed: boolean;
   readOnly: boolean;
   roleName: string;
+  showReadOnlyNotice: boolean;
   home: string;
   children: ReactNode;
 }) {
   if (allowed) {
     return (
-      <ViewOnlyZone readOnly={readOnly} role={roleName} banner={<PreviewBanner />}>
+      <ViewOnlyZone
+        readOnly={readOnly}
+        role={roleName}
+        showNotice={showReadOnlyNotice}
+        banner={<PreviewBanner />}
+      >
         {children}
       </ViewOnlyZone>
     );
@@ -131,7 +138,13 @@ export function AdminShell({ children }: { children: ReactNode }) {
         toast(tAuth('login.loggedOut'));
       }}
     >
-      <AdminShellBody allowed={allowed} readOnly={readOnly} roleName={grants.roleName} home={home}>
+      <AdminShellBody
+        allowed={allowed}
+        readOnly={readOnly}
+        roleName={grants.roleName}
+        home={home}
+        showReadOnlyNotice={!grants.previewing || current?.key !== 'affiliate'}
+      >
         {children}
       </AdminShellBody>
     </AppShell>

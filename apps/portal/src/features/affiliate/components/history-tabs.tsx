@@ -76,17 +76,17 @@ export function ReferralsTab({ history: h }: { history: History }) {
           </StatusTag>
         </span>
       </div>
-      <div className={styles.table}>
+      <div className={`${styles.table} ${data.items.length ? '' : styles.emptyReferrals}`}>
         <AdminTable
           rowKey="id"
           columns={columns}
           data={data.items}
           loading={q.isFetching}
           pagination={false}
-          empty={<EmptyState title={t('referrals.empty')} description={t('referrals.emptyHint')} />}
+          empty={<></>}
         />
       </div>
-      <ReferralCards rows={data.items} />
+      {data.items.length > 0 && <ReferralCards rows={data.items} />}
       <HistoryPager h={h} total={data.total} unit={t('referrals.unit')} />
     </div>
   );

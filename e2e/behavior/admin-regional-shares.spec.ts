@@ -29,12 +29,22 @@ test.describe('TIP-V46-802 regional share ledger UI', () => {
     await page.getByRole('button', { name: /^\+ \d+ khoản khác$/ }).click();
     await expect(items.getByRole('row')).toHaveCount(17);
   });
-  test('payout confirms closed months, shows exact receipt toast and reduces due KPI', async ({
+  test('AT-GDV04 revoked director retains recorded shares, snapshot bank and payout', async ({
     page,
   }) => {
     const data = await open(page);
     const north = data.rows.find((r) => r.region === 'north');
     expect(north?.due).toBeGreaterThan(0);
+    await page.getByRole('tab', { name: 'Cấu hình GĐ Vùng', exact: true }).click();
+    const slot = page.locator('#regional-north');
+    await slot.getByRole('button', { name: 'Thu hồi', exact: true }).click();
+    await page
+      .getByRole('dialog')
+      .getByRole('button', { name: /OK|Đồng ý|Xác nhận/ })
+      .click();
+    await expect(slot.getByText('Chưa bổ nhiệm', { exact: true })).toBeVisible();
+    await page.getByRole('tab', { name: /^GĐ Vùng\s*2$/ }).click();
+    await expect(page.getByTestId('regional-kpi-due')).toHaveText(money(data.kpi.due));
     await page
       .locator('[data-region="north"]')
       .getByRole('button', { name: /^Chi trả cho GĐ Vùng/ })

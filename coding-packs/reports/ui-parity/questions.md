@@ -885,3 +885,46 @@ The existing production first100-groups limitation is not fixed or hidden here.
 - Q-V46-810-6: read-only link/copy in Admin drawer; default, awaiting owner.
 - Owner text inputs use empty saved values with default placeholders (TIP); unlike filled prototype defaults. View-as-guest opens actual `/g/` in a new tab (TIP/D-95). Neither is a fabricated D-xx decision.
 - Infra810 confirmed by owner in this thread: private801 dev/test + Memurai6381 and rolling private809 services. Only these targets are used; original native DB/Redis remain intact.
+
+## TIP-V46-811 — explicit TIP defaults (owner decisions not fabricated)
+
+- Q-V46-811-1: Per-provider input/output token prices default0; integer VND budget. **TIP default, pending owner override.**
+- Q-V46-811-2: Existing OpenAI-compatible HTTP adapter; Gemini compatibility URL, no SDK. **TIP default, pending owner override.**
+- Q-V46-811-3: content/mod allocations saved; no feature consumers yet. **TIP default, pending owner override.**
+- Q-V46-811-4: Warning color only; exhausted bot stops, other purposes use fallback and still account. **TIP default, pending owner override.**
+- Q-V46-811-5: Metadata journal90days, no viewer/export screen. **TIP default, pending owner override.**
+- Q-V46-811-6: PWA/push configuration only; test is in-app notification for acting Admin. **TIP default, pending owner override.**
+- Q-V46-811-7: Both settings tabs are drafts until explicit Save. **TIP default, pending owner override.**
+
+Infrastructure explicitly confirmed in execute thread: private801 DB pair, Memurai6381, private rolling restart.
+
+## TIP-V46-812 — defaults explicitly supplied by TIP (not invented owner approvals)
+
+- Q812-1: exactly8 TC rows plus7 AT rows, BR461–495 traceability; no invented TC IDs.
+- Q812-2: D-78-GDV unreachable (prototype missing Marketing), existing mail behavior/int replace parity, owner reviews app.
+- Q812-3: when old fee still usable, revoke mail subject states expiry date; otherwise original payment request wording. Narrow text-only default, no flow change. Not implemented before baseline.
+- Q812-4: historical801–811 rows preserved; current M1 findings reported separately at812.
+- Q812-5: native real lists/data differences preserved and paired, not emptied for screenshot matching.
+- Infrastructure: owner confirmed private801 DB pair, Memurai6381, keep existing HOLD; new Next-only ports separate.
+
+- Q812-6 (traceability clarification): raw dac-ta.html contains26 BR definitions in461�495. BR466�470 and487�490 do not exist (raw-text grep, not only stripped HTML). Report those9 slots as 'not defined in source spec', not invented PASS tests or D124/D125 exceptions; cover all26 actual BRs plus REQ628/629. Business scope/behavior unchanged.
+
+- Infrastructure follow-up explicitly approved: separate opchub_v46_812_dev + Memurai6381 DB3 + API/socket4310/4311, keeping all HOLD. Exact new DB name may be added to seed guard; no broad allowlist. Native baseline parity currently uses unchanged811 runtime; final measurements/behavior use isolated812 runtime with correct mail origins.
+
+### TIP812 owner-approved execute follow-ups
+- D94 seed counts: owner approved exact66/10 instead of obsolete62/6, plus real every-eligible-member affiliate invariant; monetary/commission/idempotency assertions unchanged. Focused real DB5/5 PASS, final full integration replay required.
+- Historical project badge: owner chose a legacy `pending_review` fixture in the exact private812 DB, keeping badge+1. New projects still publish directly under D108; no production moderation behavior is changed.
+- Separate812dev/Redis3/runtime approved; original HOLD preserved.
+- Narrow auto-unlock stale session projection fix + regression approved and committed.
+- Event/Marketing/Fees fixture/MSW/test repairs approved; then additional fixture/cache/runtime repairs approved, with assertions/business behavior preserved. Root DEMO-only normalization now addresses missing unpaid affiliates and retained edited tariffs; required/production seed unchanged. Initial '20% changed' hypothesis was corrected by actual snapshot: missing unpaid affiliate identity, not changed percentage.
+- No new business decision, timeout/threshold waiver, fake auth response or automatic merge approved.
+
+### TIP812 final disposition / source055d862a
+
+Approved scope complete:486 MSW /110 native fresh captures (same source, paired artifacts preserved). Whole MSW568 tests excludes14 owner-approved legacy cases explicitly;78 unchanged/unreachable skips. Native118 tests includes4 harness cases/4 unreachable skips/110 captures. Whole failures and focused completion are recorded separately, never relabeled full PASS. No new mask/crop/threshold/timeout/retry/skip. D78-GDV alone newly unreachable under originalTIP. D93 mobile header fixed and actual calendar behavior PASS both lanes. Dashboard complete scope fixed; exact-zero scroll regression PASS. All remaining >3% measurements have data/decision causes, not app failure labels.
+
+[Causes](V4.6-causes.md), [acceptance](../V4.6-acceptance.md), [completion](../TIP-V46-812-completion.md). PR91 ready for owner review, no merge.
+
+## V4.6 — D-136 (owner, 06/11/2026)
+
+Owner chốt toàn bộ phương án mặc định Q-V46-807-1 → 5, Q808-1 → 5, Q-V46-809-1 → 4, Q-V46-810-1 → 6, Q-V46-811-1 → 7, Q812-1 → 6. Các dòng ghi "pending owner" / "awaiting owner" ở trên nay là quyết định D-136 trong `01-REQUIREMENTS-MATRIX.md`. Không đổi code. Riêng Q812-4: owner chọn chuyển 801 → 804 thành DONE theo M1 lượt 812, giữ ghi chú PARTIAL cũ làm lịch sử.

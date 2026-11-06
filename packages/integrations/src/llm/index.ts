@@ -1,6 +1,6 @@
 import type { LlmProvider, LlmTurnContext } from './types';
 
-export type { LlmProvider, LlmTurnContext } from './types';
+export type { LlmProvider, LlmTurnContext, LlmUsage, LlmRequestHooks } from './types';
 export { LocalLlmProvider } from './local.provider';
 
 /** Trả câu cố định có dấu vết prompt — đủ để test luồng bot mà không gọi mạng */

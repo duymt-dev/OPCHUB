@@ -13,6 +13,21 @@ for (const width of [1440, 390])
       cookie = page.getByLabel('Thời gian ghi nhận link (ngày)', { exact: true });
     await expect(page.getByRole('table', { name: 'Năm của khách' })).toBeVisible();
     await expect(page.getByRole('table', { name: 'Phần GĐ Vùng theo từng gói' })).toBeVisible();
+    if (width === 390) {
+      const first = await rate.boundingBox();
+      const step = await page.getByLabel('Giảm mỗi năm từ năm 2', { exact: true }).boundingBox();
+      expect(first).not.toBeNull();
+      expect(step?.y).toBe(first?.y);
+      expect(step?.x ?? 0).toBeGreaterThan(first?.x ?? 0);
+      const list = await page.getByRole('tablist').boundingBox();
+      const selected = await page
+        .getByRole('tab', { name: 'Chính sách', exact: true })
+        .boundingBox();
+      expect(selected?.x ?? -1).toBeGreaterThanOrEqual(list?.x ?? 0);
+      expect((selected?.x ?? 0) + (selected?.width ?? 0)).toBeLessThanOrEqual(
+        (list?.x ?? 0) + (list?.width ?? 0) + 1,
+      );
+    }
     await expect(page.getByRole('spinbutton', { name: 'Tỷ lệ hoa hồng mặc định (%)' })).toHaveCount(
       0,
     );

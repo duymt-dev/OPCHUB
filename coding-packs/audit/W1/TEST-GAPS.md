@@ -806,3 +806,8 @@ BR-471–474 / TC-471–472: `renewal-milestone.spec.ts`, `api-domains/renewal.s
 `e2e/behavior/admin-renewal.spec.ts`. Existing fee/trial tests follow the approved new mốc;
 old manual fee behavior stays asserted. Final gate counts and native/MSW evidence:
 `coding-packs/reports/TIP-V46-805-completion.md` (status there is authoritative; no inferred full PASS).
+
+## TIP-V46-811 additive traceability
+
+REQ-628: shared ai-providers/mask-pii specs, adapter local.spec, settings ai-settings/ai-router/ai-migration/ai-plans integration, retained llm-config/runtime and bot-bulk-worker checks, housekeeping aiCalls, Admin ai-tab/MSW tests and identical ai-providers E2E. Full/native gates tracked in TIP-V46-811-completion.md until finalization.
+REQ-629: app-notify shared/API/UI specs and identical app-notify E2E, permission/input/413/audit and acting-Admin notification tests. D125 configuration only, no Web Push delivery claimed.

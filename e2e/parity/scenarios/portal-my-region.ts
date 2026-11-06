@@ -1,5 +1,6 @@
 import type { Scenario } from '../types';
 import { nav, tick, waitText } from '../steps';
+import { settleScrollAtTop } from '../scroll-position';
 
 export const PORTAL_MY_REGION: Scenario[] = [
   {
@@ -8,9 +9,7 @@ export const PORTAL_MY_REGION: Scenario[] = [
     start: 'director',
     demo: 'affiliate',
     fullPage: true,
-    beforeCapture: async (c) => {
-      await c.page.evaluate(() => window.scrollTo(0, 0));
-    },
+    beforeCapture: ({ page }) => settleScrollAtTop(page),
     steps: async (c) => {
       await nav(c, 'Mạng lưới Affiliate');
       await c.page.waitForLoadState('networkidle');
@@ -20,9 +19,7 @@ export const PORTAL_MY_REGION: Scenario[] = [
   },
   {
     id: 'P-V46-REG',
-    beforeCapture: async (c) => {
-      await c.page.evaluate(() => window.scrollTo(0, 0));
-    },
+    beforeCapture: ({ page }) => settleScrollAtTop(page),
     name: 'Portal · Vùng của tôi',
     start: 'director',
     demo: 'affiliate',

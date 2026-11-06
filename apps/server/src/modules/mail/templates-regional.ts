@@ -31,7 +31,10 @@ export function regionalRevokedMail(
   validUntil: string | null,
   revokedAt: string,
 ): RenderedMail {
-  const subject = `[OPC Hub] Kết thúc vai trò GĐ Vùng ${REGIONAL_LABELS[region]} · vui lòng đóng phí thành viên`;
+  const fee = validUntil
+    ? `phí thành viên còn hiệu lực đến ${new Date(validUntil).toLocaleDateString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })}`
+    : 'vui lòng đóng phí thành viên';
+  const subject = `[OPC Hub] Kết thúc vai trò GĐ Vùng ${REGIONAL_LABELS[region]} · ${fee}`;
   const at = new Date(revokedAt).toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
   const text = `Kết thúc vai trò GĐ Vùng ${REGIONAL_LABELS[region]} lúc ${at}. ${regionalRevokeText(validUntil)}`;
   return { subject, text, html: layout('Kết thúc vai trò Giám đốc Vùng', `<p>${esc(text)}</p>`) };

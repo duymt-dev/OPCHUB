@@ -57,6 +57,8 @@ export const adminAuditManifest: Readonly<Record<string, AdminAuditEntry>> = {
   'AdminEventsController.checkIn': ['event.check_in', 'event.check_in_undo'],
   'AdminEventsController.export': 'event.registrants_export',
   'AdminInvestorsController.export': 'investor.export',
+  'AdminAppNotifyController.patch': 'settings.app',
+  'AdminAppNotifyController.test': 'settings.app_test',
   'LlmConfigController.save': 'llm.update',
   'LlmConfigController.verify': 'llm.verify',
   'AdminNeedController.hide': 'need.${action}',

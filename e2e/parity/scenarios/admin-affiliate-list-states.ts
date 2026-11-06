@@ -28,7 +28,11 @@ async function filtered(c: StepCtx, kind: 'com' | 'aff', query: string) {
 async function select(c: StepCtx, kind: 'com' | 'aff', text: string) {
   const candidates = rows(c, kind).filter({ hasText: text });
   const row =
-    c.side === 'app' && kind === 'com' ? candidates.filter({ hasText: '20% · Năm 1' }) : candidates;
+    kind === 'aff'
+      ? candidates.filter({ has: c.page.getByText(text, { exact: true }) })
+      : c.side === 'app'
+        ? candidates.filter({ hasText: '20% · Năm 1' })
+        : candidates;
   await expect(row).toHaveCount(1);
   if (c.side === 'app') await row.getByRole('checkbox').check();
   else await row.locator(':scope > div').first().click();

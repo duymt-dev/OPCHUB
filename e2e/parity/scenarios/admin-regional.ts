@@ -82,6 +82,8 @@ export const ADMIN_REGIONAL: Scenario[] = [
   },
   {
     id: 'D-78-GDV',
+    unreachable:
+      'Q-V46-812-2: prototype has no Marketing entry (C-05). Regional mail is verified by admin-regional-mail behavior and regional-director integration tests; no invented prototype image.',
     name: 'Marketing · Email hệ thống GĐ Vùng',
     start: 'admin',
     fullPage: true,

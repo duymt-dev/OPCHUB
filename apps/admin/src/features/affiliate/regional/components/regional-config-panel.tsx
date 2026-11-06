@@ -53,7 +53,7 @@ export function RegionalConfigPanel({ list = false }: { list?: boolean }) {
         ))}
       </div>
       {!canManage && (
-        <div className={styles.notice}>{t('readonly', { role: grants.roleName })}</div>
+        <div className={styles.readonlyNotice}>{t('readonly', { role: grants.roleName })}</div>
       )}
       <div className={styles.notice}>
         {q.data.unassignedProvinces
