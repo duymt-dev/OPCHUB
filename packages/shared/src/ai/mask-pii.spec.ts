@@ -8,5 +8,7 @@ describe('REQ-628 outbound PII masking', () => {
   });
   it('does not damage UUIDs, short numbers or letters embedded in identifiers', () => {
     expect(maskPii('TV000123 item123456789 2026 123')).toBe('TV000123 item123456789 2026 123');
+    const id = '00000000-0000-4000-8000-123456789012';
+    expect(maskPii(`${id} 1203132809 a.b@x.vn`)).toBe(`${id} [STK] [email]`);
   });
 });

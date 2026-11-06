@@ -47,7 +47,7 @@ export const AI_PROVIDER_CATALOG = {
   usgate: {
     name: 'USGate (AI Gateway)',
     initials: 'U',
-    color: '#722ED1',
+    color: '#0958D9',
     baseUrl: 'https://gateway.usgate.vn/v1',
     models: ['auto', 'claude-sonnet-4-5', 'gpt-4.1-mini', 'gemini-2.5-flash'],
     keyHint: 'usg_…',
@@ -55,8 +55,8 @@ export const AI_PROVIDER_CATALOG = {
   },
   custom: {
     name: 'Tùy chỉnh (OpenAI-compatible)',
-    initials: 'C',
-    color: '#8C8C8C',
+    initials: '+',
+    color: '#595959',
     baseUrl: '',
     models: [],
     keyHint: 'API key',

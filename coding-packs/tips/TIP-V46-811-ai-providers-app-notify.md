@@ -477,3 +477,7 @@ Ghi 7 câu vào `reports/ui-parity/questions.md` › V4.6 (dạng "mặc định
 - W1/TEST-GAPS.md receives an additive REQ628/629 traceability entry; no historic finding status changed.
 
 - Canonical API provider ordering matches the six-card catalog in both modes; physical fallback requests also consume the shared60/min counter. New fallback tests assert no extra network request once the shared ceiling is exhausted.
+
+- Final native evidence refinements: ai-call.repository.ts + schema/llm-config.prisma use the shared UUIDv7 client default (no SQL migration rewrite). mask-pii.ts/spec.ts preserve complete resource UUIDs rather than masking numeric UUID tails as bank accounts.
+- ai-migration.int.spec.ts additionally sends an actual HTTP request with the migrated/decrypted key, exact URL/model. e2e/llm/reply-provider-setup.ts supplies a native-only HTTP prerequisite after demoReset; bot-replies.spec.ts retains every original assertion/timeout and closes the stub in finally. No fake development runtime.
+- Catalog visual correction follows the inspected prototype USGate blue #0958D9 and custom + / #595959. No prototype implementation code copied.

@@ -1,4 +1,3 @@
-import { randomUUID } from 'node:crypto';
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@opchub/db';
 import type { AiPurpose, AiProviderId } from '@opchub/shared/api-domains';
@@ -33,7 +32,7 @@ export class AiCallRepository {
   async record(month: string, row: AiCallRecord, log: boolean): Promise<void> {
     await this.prisma.db.$transaction(async (tx) => {
       await tx.$executeRaw(aiUsageQuery(month, row));
-      if (log) await tx.llmCall.create({ data: { id: randomUUID(), ...row } });
+      if (log) await tx.llmCall.create({ data: row });
     });
   }
   async cost(month: string): Promise<number> {
