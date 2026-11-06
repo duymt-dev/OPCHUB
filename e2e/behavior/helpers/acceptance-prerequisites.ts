@@ -1,6 +1,6 @@
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { onServer } from '../../server/api';
+import { env } from '../../env';
 
 export function acceptancePrerequisite(
   mode:
@@ -11,7 +11,7 @@ export function acceptancePrerequisite(
     | 'marketing-summary'
     | 'pending-project',
 ) {
-  if (!onServer) return;
+  if (env.E2E_TARGET !== 'server') return;
   const result = spawnSync(
     'pnpm',
     ['--filter', '@opchub/db', 'exec', 'tsx', 'seed/acceptance-prerequisites.ts', mode],

@@ -512,6 +512,8 @@ Notification diagnosis is now proven, not cache/queue speculation: fresh seed AP
 - e2e/behavior/portal-shell.spec.ts: call this prerequisite before original login in the inbox-read case; retain every count/mark-read/F5/deep-link assertion.
 # Approved final native prerequisites (before edits)
 
+- Latest depcheck found a circular test-helper import: behavior prerequisite→server/api→historical fixture→behavior prerequisite. Modify e2e/behavior/helpers/acceptance-prerequisites.ts to read the existing parsed env directly instead of importing server/api.onServer; no behavior/target guard change. Final parity source freeze moves after this graph correction; previous interrupted runs remain intermediate, not final evidence.
+
 - Owner additionally approved packages/db/test/affiliate-demo.int.spec.ts only: update exact agent counts62→66 and6→10 to reflect D94 unpaid-member identities already seeded; add real relational invariant for every eligible member, retaining all monetary/commission/referral/period/idempotency assertions. Latest full integration records141pass/2fail on these exact old counts. No production or fixture change in this repair. Parity running at f4df98ec is an intermediate measurement if source HEAD changes; final two lanes must share the later frozen source.
 
 - Owner approved historical pending_review data for the badge test; D108 direct publication stays unchanged. Modify packages/db/seed/acceptance-prerequisites.ts, packages/db/test/acceptance-prerequisites.int.spec.ts, e2e/behavior/helpers/acceptance-prerequisites.ts, e2e/server/api.ts and e2e/behavior/realtime-metrics.spec.ts. Create e2e/server/historical-project.ts. Keep badge +1 and timeout unchanged; exact812 DB guard remains mandatory.
