@@ -263,6 +263,16 @@ export function reviewMockFundraising(
   r.reviewNote = note?.trim() || null;
   r.rev = (r.rev ?? 0) + 1;
   if (decision === 'approve') {
+    const customerId = userIdOfName(r.ownerName);
+    if (customerId && !r.legacy)
+      recordMockRegionalShare({
+        source: 'fundraising',
+        sourceId: r.id,
+        customerId,
+        baseAmount: r.amount,
+        plan: 'fundraising',
+        at: iso(Date.now()),
+      });
     r.status = 'active';
     r.endsAt = iso(Date.now() + SIX_MONTHS_MS);
     notifyOwner(
@@ -341,3 +351,4 @@ export function fundraisingBridgeCookie(raw: string | undefined): string {
   }
   return `${FUNDRAISING_BRIDGE_COOKIE}=${v}; Path=/`;
 }
+import { recordMockRegionalShare } from './regional-shares';

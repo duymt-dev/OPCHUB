@@ -1,4 +1,6 @@
 import { z } from 'zod';
+import { regionalSnapshotSchema } from '../regional-snapshot';
+import { regionalShareSnapshotSchema } from '../regional-share-state';
 import {
   affiliateBankSchema,
   affiliateCodeSchema,
@@ -23,6 +25,7 @@ const agent = z.strictObject({
   bank: affiliateBankSchema.nullable(),
 });
 const referral = z.strictObject({
+  customerYear: z.number().int().min(1).optional(),
   userId: id,
   agentId: id,
   row: affiliateReferralSchema,
@@ -50,13 +53,17 @@ const entries = <T extends z.ZodType>(value: T) =>
 export const affiliateSnapshotSchema = z
   .strictObject({
     version: z.literal(1),
+    regional: regionalSnapshotSchema.optional(),
+    regionalShares: regionalShareSnapshotSchema.optional(),
     demoSeeded: z.boolean(),
+    referenceSeeded: z.boolean().default(false),
     // Legacy mock ledgers predate this metadata; retain every financial row on upgrade.
     welcomeSeen: z.array(id).default([]),
     webhooks: entries(integer),
     fees: z.array(feeRowSchema),
     agents: entries(agent),
     referrals: entries(referral),
+    referenceCommissions: entries(referral).default([]),
     payouts: entries(z.array(affiliatePayoutRowSchema)),
     knownFees: entries(z.string().nullable()),
     clicks: entries(entries(integer)),
@@ -86,6 +93,9 @@ export const affiliateSnapshotSchema = z
         invalid('Invalid persisted referral owner');
     if (new Set(value.referrals.map(([, r]) => r.row.id)).size !== value.referrals.length)
       invalid('Duplicate persisted commission id');
+    for (const [, r] of value.referenceCommissions)
+      if (!fees.has(r.userId) || !agents.has(r.agentId))
+        invalid('Invalid persisted reference owner');
     for (const [key] of value.payouts)
       if (!agents.has(key)) invalid('Invalid persisted payout owner');
   });

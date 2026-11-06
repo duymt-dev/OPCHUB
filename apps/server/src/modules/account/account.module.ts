@@ -1,3 +1,5 @@
+import { MemberSearchRepository } from './repositories/member-global-search.query';
+import { MemberSearchService } from './services/member-search.service';
 import { ExportCoreModule } from '@/modules/export';
 import { Module } from '@nestjs/common';
 import { UploadsCoreModule } from '../uploads';
@@ -48,6 +50,8 @@ import { ReferralRegistry } from './services/referral.registry';
 import { REFERRAL_PORT } from './ports';
 
 const providers = [
+  MemberSearchRepository,
+  MemberSearchService,
   ReferralRegistry,
   UserRepository,
   RefreshTokenRepository,

@@ -11,6 +11,7 @@ import {
 } from '../api';
 import type { AffiliateParams } from '../types';
 import { useAffiliateCounts } from './use-affiliate-counts';
+import { useRegionalDirectors } from '../regional/hooks/use-regional-directors';
 
 export function useAffiliateQueries(params: AffiliateParams) {
   const allowed = useCan('affiliate.view');
@@ -45,11 +46,12 @@ export function useAffiliateQueries(params: AffiliateParams) {
     enabled: allowed && (params.tab === 'cfg' || params.tab === 'aff'),
   });
   const counts = useAffiliateCounts(allowed);
+  const regional = useRegionalDirectors();
   return {
     commissions,
     agents,
     summary,
     policy,
-    counts,
+    counts: { ...counts, gdv: regional.data?.items.filter((s) => s.member).length },
   };
 }

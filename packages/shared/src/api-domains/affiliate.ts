@@ -60,6 +60,11 @@ export const affiliateBankSchema = z.object({
 });
 export type AffiliateBank = z.infer<typeof affiliateBankSchema>;
 export const affiliatePolicySchema = z.object({
+  renewalRate: z.number().int().min(0).max(50).default(10),
+  renewalMaxYear: z.number().int().min(1).max(10).default(3),
+  regionalFirstYear: z.number().int().min(1).max(100).default(50),
+  regionalStep: z.number().int().min(0).max(100).default(10),
+  regionalMin: z.number().int().min(0).max(100).default(20),
   defaultRate: z.number().int().min(1).max(50),
   cookieDays: z.number().int().min(1).max(365),
   /** D-70: % hoa hồng Gói Gọi vốn, ghi khi Admin duyệt */
@@ -76,6 +81,8 @@ export const affiliateStatsSchema = z.object({
   received: z.number().int().min(0),
 });
 const affiliatePolicyPreviewSchema = z.object({
+  renewalRate: z.number().int().min(0).max(50).default(10),
+  renewalMaxYear: z.number().int().min(1).max(10).default(3),
   rate: z.number().int(),
   perAmount: z.number().int(),
   /** BR-AFF-REV (v4.2 `perT`): hoa hồng theo gói thực trả — Doanh nghiệp, Gói Gọi vốn (% riêng) */
@@ -109,6 +116,8 @@ export const affiliateCustomerStatusSchema = z.enum([
   'cancelled',
 ]);
 export const affiliateReferralSchema = z.object({
+  customerYear: z.number().int().positive().default(1),
+  source: z.enum(['membership', 'fundraising']).default('membership'),
   id: z.string(),
   name: z.string(),
   plan: z.string(),

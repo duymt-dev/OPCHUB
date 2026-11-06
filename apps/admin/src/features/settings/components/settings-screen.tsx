@@ -21,6 +21,8 @@ import { CategoriesTab } from './categories-tab';
 import { GeneralTab } from './general-tab';
 import { LanguagesTab } from './languages-tab';
 import { PriceTab } from './price-tab';
+import { RenewalTab } from './renewal-tab';
+import { BankTab } from './bank-tab';
 import { RolesTab } from './roles-tab';
 import { SettingsNav } from './settings-nav';
 import { SmtpTab } from './smtp-tab';
@@ -31,6 +33,10 @@ import styles from './settings.module.css';
 
 function TabBody({ tab, ask }: { tab: SettingsTab; ask: AskConfirm }) {
   switch (tab) {
+    case 'bank':
+      return <BankTab />;
+    case 'renewal':
+      return <RenewalTab />;
     case 'categories':
       return <CategoriesTab ask={ask} />;
     case 'roles':

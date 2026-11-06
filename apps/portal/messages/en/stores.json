@@ -343,5 +343,31 @@
     "empty": "No projects yet. OPC projects posted by this business will appear here and on the OPC Projects page.",
     "view": "View project →",
     "more": "Show more"
+  },
+  "publicPage": {
+    "title": "Public page",
+    "subtitle": "Customers can view without signing in · share on Zalo, Facebook or business cards",
+    "view": "View as guest",
+    "copy": "Copy link",
+    "link": "Public page link",
+    "google": "Show on Google",
+    "googleOn": "Google and other search engines can find your store",
+    "googleOff": "Only people with the link can view",
+    "seoTitle": "Google title",
+    "desc": "Short description",
+    "copied": "Public page link copied",
+    "saveError": "Unable to save settings. Please try again",
+    "copyError": "Unable to copy. Copy the selected link manually",
+    "draft": "The public page is available only after publishing",
+    "hidden": "Your store is hidden by an administrator",
+    "loadError": "Unable to load public page settings",
+    "retry": "Retry"
+  },
+  "guest": {
+    "login": "Sign in",
+    "join": "Join OPC Hub",
+    "notFound": "Store not found",
+    "home": "Back to OPC Hub",
+    "footer": "Created on OPC Hub — the community for one-person businesses"
   }
 }

@@ -85,12 +85,13 @@ model Referral {
 }
 
 /**
- * AF-R05/R06: hoa hồng lần đóng phí đầu tiên — một khoản phí thành viên / người được giới thiệu
- * (UQ partial `commissions_membership_referred_key` WHERE source = membership, viết tay).
+ * D-131: hoa hồng tham khảo theo năm của khách; từng kỳ phí có một khoản (fee_period_id UQ).
+ * Không còn UQ theo referred_user_id; gia hạn có snapshot tỷ lệ riêng.
  * V4-610 (D-70): Gói Gọi vốn được duyệt — một khoản / lần mua (`fundraising_id` UQ).
  * CHECK: membership ↔ fee_period_id, fundraising ↔ fundraising_id.
  */
 model Commission {
+  customerYear Int @default(1) @map("customer_year")
   id               String           @id @default(uuid(7))
   affiliateId      String           @map("affiliate_id")
   referredUserId   String           @map("referred_user_id")
@@ -125,6 +126,11 @@ model Commission {
 
 /// Chính sách chung — một dòng id = 1
 model AffiliatePolicy {
+  renewalRate Int @default(10) @map("renewal_rate")
+  renewalMaxYear Int @default(3) @map("renewal_max_year")
+  regionalFirstYear Int @default(50) @map("regional_first_year")
+  regionalStep      Int @default(10) @map("regional_step")
+  regionalMin       Int @default(20) @map("regional_min")
   id              Int      @id @default(1)
   defaultRate     Int      @default(20) @map("default_rate")
   cookieDays      Int      @default(30) @map("cookie_days")

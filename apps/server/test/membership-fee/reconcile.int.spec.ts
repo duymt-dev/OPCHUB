@@ -123,7 +123,9 @@ describe('đối soát + scheduler phí (TIP-B14)', () => {
     await webhook({ amount: FEE, content: `${u.code} 0912345678` });
     await matchAll();
     const rows = await t.prisma.db.paymentTransaction.findMany({
-      where: { content: { contains: u.code.slice(2) } },
+      where: {
+        content: { in: [`ck opchub${u.code.toLowerCase()} 0912345678`, `${u.code} 0912345678`] },
+      },
       select: { matchStatus: true, raw: true },
     });
     expect(rows).toHaveLength(2);

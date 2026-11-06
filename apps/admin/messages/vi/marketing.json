@@ -1,4 +1,15 @@
 {
+  "regional": {
+    "title": "Email hệ thống · GĐ Vùng",
+    "description": "Gửi tự động khi Admin bổ nhiệm / thu hồi tại Mạng lưới Affiliate › Cấu hình GĐ Vùng. Không gửi mật khẩu.",
+    "on": "Đang bật",
+    "appointName": "Thông báo bổ nhiệm GĐ Vùng",
+    "appointWhen": "Admin bổ nhiệm thành viên làm GĐ Vùng",
+    "appointSubject": "[OPC Hub] Bạn được bổ nhiệm GĐ Vùng {vùng} · miễn phí thành viên",
+    "revokeName": "Thông báo thu hồi GĐ Vùng",
+    "revokeWhen": "Admin thu hồi / đổi người phụ trách vùng",
+    "revokeSubject": "[OPC Hub] Kết thúc vai trò GĐ Vùng {vùng} · vui lòng đóng phí thành viên"
+  },
   "title": "Marketing",
   "sub": "Gửi email hàng loạt theo nhóm, loại thành viên và quản lý email tự động",
   "dateRange": "01/10/2026 – 15/10/2026",
@@ -47,13 +58,14 @@
     "sent": "✓ Đã gửi",
     "otp": "Mã OTP",
     "password_reset": "Đặt lại mật khẩu",
-    "fee_reminder": "Nhắc phí",
+    "fee_reminder": "Nhắc gia hạn",
     "event": "Sự kiện",
     "test": "Thử",
     "service": "Phiếu dịch vụ",
     "fundraising": "Gói Gọi vốn",
     "onboarding": "Nhắc khởi đầu",
     "receipt": "Biên nhận thanh toán",
+    "regional_director": "GĐ Vùng",
     "st": {
       "queued": "Đang chờ",
       "sent": "✓ Đã gửi",

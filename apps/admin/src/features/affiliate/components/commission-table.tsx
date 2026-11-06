@@ -1,4 +1,5 @@
 'use client';
+import { CommissionReferenceBanner } from './commission-reference-banner';
 
 import { AdminTable, useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
@@ -56,6 +57,7 @@ export function CommissionTable({
         }}
         toolbar={
           <div className={`${styles.wrap} ${bulkLayout.stack}`}>
+            <CommissionReferenceBanner />
             {toolbar}
             <CommissionBulkBar
               count={selected.length}

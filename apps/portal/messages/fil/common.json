@@ -12,7 +12,20 @@
     "logout": "Mag-sign out",
     "upcoming": "Mga paparating na event",
     "viewAll": "Tingnan lahat",
-    "memberSub": "Miyembro ng OPC"
+    "memberSub": "Miyembro ng OPC",
+    "globalSearch": {
+      "placeholder": "Maghanap ng tindahan, pangangailangan, proyekto, grupo…",
+      "empty": "Walang nakitang resulta",
+      "clear": "Burahin ang paghahanap",
+      "groups": {
+        "store": "Mga tindahan",
+        "need": "Lokal na pangangailangan",
+        "project": "Mga proyekto ng OPC",
+        "group": "Mga grupo ng komunidad",
+        "member": "Mga miyembro"
+      },
+      "members": "{n} miyembro"
+    }
   },
   "nav": {
     "dashboard": "Dashboard",

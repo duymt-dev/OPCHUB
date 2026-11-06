@@ -4,13 +4,15 @@
   "program": "OPC HUB 推广联盟计划",
   "locked": {
     "title": "您的推荐链接正在生成",
-    "description": "每位会员注册后即拥有专属推广码和链接。您推荐的会员付费后（3 个月免费期之后），您可获得 <b>{rate}%</b> 佣金（{per}（个人）· {biz}（企业）· {fund}（融资套餐 {fundRate}%））。",
+    "description": "每位会员注册后即拥有专属推广码和链接。您推荐的会员付费后（3 个月免费期之后），您可获得 <b>{rate}%</b> 佣金（{per}（个人）· {biz}（企业）· {fund}（融资套餐 {fundRate}%））。 第1年; 第2年起续费，直至第 {renewalMaxYear}: {renewalRate}% (仅供参考).",
     "pay": "支付会员费"
   },
   "paused": "推荐码已暂停 — 续费后可继续获得佣金",
   "hero": {
     "title": "推荐新会员，获得 {rate}% 佣金",
-    "description": "每有一人通过你的链接注册并支付 12 个月会员费，你即可获得 <b>{per}（个人）· {biz}（企业）· {fund}（融资套餐 {fundRate}%）</b>。链接记录有效期为 {days} 天。"
+    "description": "每有一人通过你的链接注册并支付 12 个月会员费，你即可获得 <b>{per}（个人）· {biz}（企业）· {fund}（融资套餐 {fundRate}%）</b>。链接记录有效期为 {days} 天。",
+    "rateBadge": "佣金 <b>{rate}%</b>",
+    "cookieBadge": "链接有效期 <b>{days} 天</b>"
   },
   "bank": {
     "missing": "尚未设置佣金收款账户。",
@@ -95,7 +97,10 @@
       "empty": "暂无",
       "paid": "已支付",
       "waiting": "待 {date} 支付"
-    }
+    },
+    "year": "年 {year}",
+    "renewalYear": "年 {year} · 续费",
+    "pendingPlan": "刚注册 · 等待缴费"
   },
   "payouts": {
     "description": "佣金于每月最后一天一次性转账",
@@ -111,5 +116,53 @@
       "status": "状态"
     },
     "paid": "已转账"
+  },
+  "region": {
+    "tab": "我的区域",
+    "badge": "区域总监",
+    "title": "我的区域 · 区域总监 {label} · {name}",
+    "provinces": "{label} · {count} 省/市: {provinces}",
+    "readOnly": "只读",
+    "note": "仅统计通过本区域推广链接注册的成员。Media Soft 于月底将区域总监分成支付至 <b>{bank}</b>。总监自行在系统外分配给组长及推广者。",
+    "revenue": "区域收入",
+    "share": "总监分成",
+    "paid": "已支付",
+    "due": "待支付",
+    "transactions": "{count} 笔交易",
+    "yearRule": "按客户年份",
+    "paidMonths": "{count} 个月已支付",
+    "dueDate": "付款期 {month}",
+    "yearsTitle": "按客户年份分成",
+    "customerYear": "客户年份",
+    "percent": "总监比例",
+    "count": "交易数",
+    "revenueShort": "收入",
+    "shareShort": "总监分成",
+    "fromFourth": "第4年起",
+    "firstYear": "第1年",
+    "renewalYear": "年 {year} · 续费",
+    "affiliatesTitle": "区域内推广者",
+    "affiliate": "推广者",
+    "customers": "客户数",
+    "broughtRevenue": "带来的收入",
+    "regionShare": "区域分成",
+    "more": "{count} 位其他推广者",
+    "empty": "暂无推广收入。",
+    "monthsTitle": "Media Soft 每月付款记录",
+    "month": "月份",
+    "amount": "金额",
+    "status": "状态",
+    "paidAt": "付款日期",
+    "emptyMonths": "暂无付款期。",
+    "monthValue": "月份 {month}",
+    "statusLabels": {
+      "paid": "已支付",
+      "pending": "待支付"
+    }
+  },
+  "banner": {
+    "title": "您是区域总监 {label} · {name}",
+    "description": "查看您所在区域的收入、分成及 Media Soft 付款记录。",
+    "open": "查看我的区域"
   }
 }

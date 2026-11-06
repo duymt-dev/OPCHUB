@@ -1,0 +1,68 @@
+enum RegionalShareSource {
+  membership
+  fundraising
+
+  @@map("regional_share_source")
+}
+
+enum RegionalShareStatus {
+  pending
+  paid
+
+  @@map("regional_share_status")
+}
+
+model CustomerYear {
+  userId      String              @id @map("user_id")
+  firstPaidAt DateTime            @map("first_paid_at") @db.Timestamptz(6)
+  source      RegionalShareSource
+  sourceId    String              @map("source_id")
+
+  @@map("customer_years")
+}
+
+model RegionalShare {
+  id              String              @id @default(uuid(7))
+  source          RegionalShareSource
+  sourceId        String              @map("source_id")
+  customerId      String              @map("customer_id")
+  affiliateId     String              @map("affiliate_id")
+  affiliateUserId String              @map("affiliate_user_id")
+  region          Region?
+  directorUserId  String?             @map("director_user_id")
+  plan            CommissionPlan
+  baseAmount      Int                 @map("base_amount")
+  customerYear    Int                 @map("customer_year")
+  percent         Int
+  directorAmount  Int                 @map("director_amount")
+  mediaSoftAmount Int                 @map("media_soft_amount")
+  monthKey        String              @map("month_key") @db.Char(7)
+  recordedAt      DateTime            @map("recorded_at") @db.Timestamptz(6)
+  status          RegionalShareStatus @default(pending)
+  payoutId        String?             @map("payout_id")
+  createdAt       DateTime            @default(now()) @map("created_at") @db.Timestamptz(6)
+  director        RegionalDirector?   @relation(fields: [region], references: [region])
+  payout          RegionalPayout?     @relation(fields: [payoutId], references: [id])
+
+  @@unique([source, sourceId])
+  @@index([region, recordedAt(sort: Desc), id(sort: Desc)])
+  @@map("regional_shares")
+}
+
+model RegionalPayout {
+  id             String           @id
+  region         Region
+  directorUserId String           @map("director_user_id")
+  monthKeys      String[]         @map("month_keys")
+  amount         BigInt
+  count          Int
+  bankSnapshot   Json             @map("bank_snapshot")
+  paidBy         String           @map("paid_by")
+  paidAt         DateTime         @default(now()) @map("paid_at") @db.Timestamptz(6)
+  director       RegionalDirector @relation(fields: [region], references: [region])
+  shares         RegionalShare[]
+
+  @@index([region, paidAt(sort: Desc), id(sort: Desc)])
+  @@index([region, directorUserId, paidAt(sort: Desc), id(sort: Desc)])
+  @@map("regional_payouts")
+}

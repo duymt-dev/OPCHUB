@@ -3,6 +3,7 @@ import { ADMIN_URL, PORTAL_URL, PROTO_URL } from '../urls';
 import type { Scenario, StepCtx } from './types';
 
 export const ACCOUNTS = {
+  director: { email: 'bao.tran@solobooks.vn', pwd: 'User@2026' },
   user: { email: 'an.nguyen@mediasoft.vn', pwd: 'User@2026' },
   admin: { email: 'admin@opchub.community', pwd: 'Admin@2026' },
   /** D-28: TK demo chưa đóng phí — chỉ có ở MSW của app mới */
@@ -10,6 +11,7 @@ export const ACCOUNTS = {
 } as const;
 
 const DEFAULT_APP_PATH = {
+  director: '/dashboard',
   auth: '/login',
   user: '/dashboard',
   admin: '/overview',
@@ -84,6 +86,7 @@ export async function begin(c: StepCtx, s: Scenario) {
     await page.goto(`${PROTO_URL}/`, { waitUntil: 'load' });
     await page.evaluate(() => localStorage.removeItem('opc-sb-mini'));
     await page.getByText('Chào mừng trở lại').waitFor({ timeout: 20_000 });
+    if (s.start === 'director') await login(page, ACCOUNTS.director.email, ACCOUNTS.director.pwd);
     if (s.start === 'user' || s.start === 'unpaid')
       await login(page, ACCOUNTS.user.email, ACCOUNTS.user.pwd);
     if (s.start === 'admin') await login(page, ACCOUNTS.admin.email, ACCOUNTS.admin.pwd);

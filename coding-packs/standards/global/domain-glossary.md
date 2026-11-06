@@ -74,3 +74,57 @@ Một khái niệm chỉ có một tên trong code. UI hiển thị tiếng Vi�
 | `ProjectFundraising.status` | `pending_payment`, `pending_review`, `active`, `rejected` (→ `pending_review` khi bổ sung, D-113), `expired` | Chờ thanh toán, Chờ duyệt, Đang gọi vốn, Từ chối, Hết hạn |
 
 Nhãn tiếng Việt chỉ đặt trong file messages của next-intl, không viết cứng trong component.
+
+## GĐ Vùng (D-120, D-128, D-129)
+
+| Thuật ngữ | Code / dữ liệu | Ý nghĩa |
+|---|---|---|
+| Giám đốc Vùng (GĐ Vùng) | `RegionalDirector`, `regional_directors` | Thành viên được bổ nhiệm phụ trách một trong ba miền |
+| Ô vùng | `RegionalDirector.region` | Ba ô cố định Bắc, Trung & Tây Nguyên, Nam; thu hồi chỉ làm trống ô |
+| Tỉnh phụ trách | `regional_director_provinces` | Phạm vi hiển thị; không quyết định bên nhận chia sẻ doanh thu (D-129) |
+| Miễn phí · GĐ Vùng | `MembershipFeeStatus.regional_director` | Miễn phí không hạn trong nhiệm kỳ; không tính là khoản phí thực thu |
+| Quyền bổ nhiệm / thu hồi | `affiliate.regional` | Quyền ghi cấu hình GĐ Vùng; `affiliate.view` chỉ cho xem |
+| Sổ chia sẻ | `RegionalShare`, `regional_shares` | Snapshot chia doanh thu cho GĐ Vùng từ giao dịch thực thu; không phải khoản hoa hồng chi trực tiếp cho affiliate |
+| Năm của khách | `CustomerYear`, `customer_years` | Mốc giao dịch thực thu đầu tiên, gồm Gọi vốn; tính năm theo ngày kỷ niệm tại Việt Nam |
+| Kỳ chi | `month_key`, `RegionalPayout.monthKeys` | Tháng Việt Nam của khoản ghi nhận; chỉ chi các tháng đã đóng |
+| Biên lai chi GĐ Vùng | `RegionalPayout`, `regional_payouts` | Tổng VND bigint, người nhận và ngân hàng snapshot; lưu bền vững để chống chi trùng |
+| Quy tắc chia sẻ | `regionalFirstYear`, `regionalStep`, `regionalMin` | Tỷ lệ năm đầu, mức giảm mỗi năm, mức sàn; thay đổi chỉ áp dụng khoản mới |
+| Doanh thu Media Soft giữ lại | `netRevenue = revenue - regionalTotal` | Sau phần GĐ Vùng cùng phạm vi tháng; hủy hoa hồng không đảo sổ chia sẻ (D-132) |
+| Thuộc vùng (theo tỉnh) | `AffiliateAdminRow.region` | Projection chỉ đọc từ nhóm tỉnh tham gia sớm nhất còn hiệu lực; không phải thao tác gán vùng |
+| GĐ Vùng chi | Nhãn lịch sử tháng affiliate | Media Soft không chi trực tiếp affiliate; GĐ Vùng tự chi ngoài hệ thống (D-119) |
+| Vùng của tôi | `GET /me/gdv`, `/affiliate?tab=reg` | Màn chỉ đọc cho GĐ Vùng hiện tại, chỉ gồm các khoản snapshot ghi cho chính người nhận đó |
+| Phần GĐ Vùng được chia | `kpi.share`, `years[].share` | Tổng `director_amount` đã chụp, không tính lại theo chính sách hiện hành |
+| Chờ chi cuối tháng | `kpi.due` | Tổng phần GĐ Vùng trừ phần đã chi; không phải lệnh chi và không thay quy tắc chỉ chi tháng đã đóng |
+| Nhắc gia hạn | `app_settings.renewal`, `renewal` | Nhắc Gói Cá nhân / Doanh nghiệp, kể cả trial; không GĐ Vùng hoặc Gọi vốn (REQ-620) |
+| Mốc nhắc | `D30`, `D7`, `D1` | Cửa sổ 30 / 7 / 1 ngày lịch VN trước hạn, tự động mỗi kỳ/mốc tối đa một lần |
+| Lần gửi | `max(fee_reminders.sent_at)` | Lần gần nhất của mọi kỳ; gửi tay dùng `M:yyyy-mm-dd` theo ngày VN, không chặn mốc tự động |
+| Đối soát ngân hàng | `bank`, `payment_transactions` | Đối chiếu giao dịch thực thu với thành viên / khoản phí, giữ nguyên cú pháp OPCHUB |
+| Tự kích hoạt khi khớp | `app_settings.bank.autoActivate` | Công tắc lưu ngay có audit; bật lại không replay giao dịch đã chờ (D-135) |
+| Ghi nhận thiếu | `match_status = short`, `short_note` | Ghi chú bắt buộc, không kích hoạt hoặc cộng dồn giao dịch (D-135) |
+| Khóa bí mật webhook | `bank_webhook_keys.key_enc`, `hint` | Mã hóa, chỉ trả rõ một lần khi tạo lại; khóa cũ mất hiệu lực ngay |
+### V4.6 — TIP-V46-807
+
+| Thuật ngữ | Code | Nghĩa |
+|---|---|---|
+| Tỷ lệ chuyển đổi | conversion / ratePct | Đã trả phí / (Đã trả phí + Hết hạn chưa trả), làm tròn %, không tính đang dùng thử vào mẫu số |
+| Nhật ký hoạt động | audit log | Nhật ký Admin chỉ ghi thêm; màn hình và CSV hiển thị90 ngày, DB giữ theo NA-13/REQ-213 |
+
+### V4.6 — TIP-V46-808
+
+| Thuật ngữ | Code | Nghĩa |
+|---|---|---|
+| Tìm kiếm chung | global search | Ô topbar tìm gian hàng, nhu cầu, dự án, nhóm và thành viên (chỉ Admin), theo quyền/visibility; tối đa4 mỗi nhóm |
+
+### V4.6 — TIP-V46-809
+
+| Thuật ngữ | Code | Nghĩa |
+|---|---|---|
+| Nhu cầu phù hợp | need matches | Top3 nhu cầu công khai đang mở của người khác, chấm điểm theo gian hàng của chính TV Doanh nghiệp; không gọi LLM |
+| Mức phù hợp | pct | Ngành50 + tỉnh30 + từ khóa7/từ (tối đa20), lọc từ30; hiển thị trần98%, không phải xác suất AI |
+
+### V4.6 — TIP-V46-810
+
+| Thuật ngữ | Code | Nghĩa |
+|---|---|---|
+| Trang công khai | public store page | `/g/<slug>` xem không cần đăng nhập; chỉ gian hàng đã xuất bản, chủ còn phí, DTO công khai riêng; không tính KPI lượt xem |
+| Hiển thị trên Google | seoIndex | Cho phép công cụ tìm kiếm lập chỉ mục; tắt thêm noindex/nofollow, không chặn người có link |

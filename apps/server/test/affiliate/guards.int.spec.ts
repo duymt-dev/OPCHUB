@@ -75,7 +75,6 @@ describe('Affiliate guards and error envelopes (TIP-V2-402)', () => {
       ['POST', '/admin/affiliate/commissions/cancel', { ids: [owner.commission.id], reason: '' }],
       ['POST', '/admin/affiliate/commissions/export', { ids: [] }],
       ['POST', '/admin/affiliates/export', { ids: [] }],
-      ['POST', `/admin/affiliates/${owner.affiliate.id}/payouts`, { monthKey: '2026-13' }],
       [
         'PUT',
         '/admin/affiliate/policy',

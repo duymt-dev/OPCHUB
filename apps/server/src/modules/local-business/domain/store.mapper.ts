@@ -32,6 +32,7 @@ export const STORE_CARD_SELECT = {
 export const STORE_DETAIL_SELECT = {
   ...STORE_CARD_SELECT,
   ownerId: true,
+  slug: true,
   intro: true,
   website: true,
   phone: true,
@@ -125,6 +126,7 @@ export const toStoreBuilder = (r: StoreDetailRow) => ({
 export const toAdminStore = (r: StoreDetailRow): AdminStore => ({
   ...toStoreBuilder(r),
   id: r.id,
+  slug: r.slug,
   name: r.name,
   slogan: r.slogan,
   field: r.field,

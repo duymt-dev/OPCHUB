@@ -1,15 +1,14 @@
-import {
-  payoutGroup,
-  payoutPageQuery,
-  referralPageQuery,
-  referralWhere,
-} from './me-affiliate.query';
+import { payoutGroup, payoutPageQuery, referralPageQuery } from './me-affiliate.query';
+import { referralRowsSummary } from './referral-rows.query';
+import { commissionVisible } from './commission-visible.sql';
 import { Injectable } from '@nestjs/common';
 import { Prisma, type AffiliateStatus } from '@opchub/db';
 import type { AffiliateBank, AffiliatePageQuery, CommissionPlan } from '@opchub/shared/api-domains';
 import { PrismaService } from '@/common/prisma/prisma.service';
 
 interface ReferralRow {
+  customerYear: number;
+  source: 'membership' | 'fundraising';
   id: string;
   customerId: string;
   date: Date;
@@ -57,12 +56,12 @@ export class MeAffiliateRepository {
       }),
       this.prisma.db.$queryRaw<
         { paidCount: number; thisMonth: bigint; carryOver: bigint; received: bigint }[]
-      >`
+      >(Prisma.sql`
         SELECT count(*) FILTER (WHERE status <> 'cancelled')::integer AS "paidCount",
           COALESCE(sum(amount) FILTER (WHERE month_key = ${month} AND status <> 'cancelled'),0)::bigint AS "thisMonth",
           COALESCE(sum(amount) FILTER (WHERE month_key < ${month} AND status = 'recorded'),0)::bigint AS "carryOver",
           COALESCE(sum(amount) FILTER (WHERE status = 'paid'),0)::bigint AS received
-        FROM commissions WHERE affiliate_id = ${affiliateId}`,
+        FROM commissions c WHERE ${commissionVisible} AND affiliate_id = ${affiliateId}`),
     ]);
     const clicks30d = clicks._sum.count ?? 0;
     const paidCount = r?.paidCount ?? 0;
@@ -77,22 +76,16 @@ export class MeAffiliateRepository {
   }
 
   async referrals(affiliateId: string, q: AffiliatePageQuery) {
-    const where = referralWhere(affiliateId, q);
     const [items, [summary], months] = await Promise.all([
       this.prisma.db.$queryRaw<ReferralRow[]>(referralPageQuery(affiliateId, q)),
       this.prisma.db.$queryRaw<
         { count: number; commission: bigint; recorded: number; paid: number }[]
-      >(Prisma.sql`
-        SELECT count(*)::integer AS count,
-          COALESCE(sum(c.amount) FILTER (WHERE c.status <> 'cancelled'),0)::bigint AS commission,
-          count(*) FILTER (WHERE c.status = 'recorded')::integer AS recorded,
-          count(*) FILTER (WHERE c.status = 'paid')::integer AS paid
-        FROM referrals r LEFT JOIN commissions c ON c.referred_user_id = r.referred_user_id
-          AND c.source = 'membership' WHERE ${where}`),
-      this.prisma.db.$queryRaw<{ month: string }[]>`
-        SELECT month_key AS month FROM commissions WHERE affiliate_id = ${affiliateId}
-        UNION SELECT month_key AS month FROM referrals WHERE affiliate_id = ${affiliateId}
-          AND status IN ('pending','void') ORDER BY month DESC`,
+      >(referralRowsSummary(affiliateId, q)),
+      this.prisma.db.$queryRaw<{ month: string }[]>(Prisma.sql`
+        SELECT month_key AS month FROM commissions c WHERE ${commissionVisible} AND affiliate_id = ${affiliateId}
+        UNION SELECT r.month_key AS month FROM referrals r WHERE r.affiliate_id = ${affiliateId}
+          AND (r.status IN ('pending','void') OR NOT EXISTS (SELECT 1 FROM commissions c
+            WHERE ${commissionVisible} AND c.affiliate_id=${affiliateId} AND c.referred_user_id=r.referred_user_id)) ORDER BY month DESC`),
     ]);
     return {
       items,

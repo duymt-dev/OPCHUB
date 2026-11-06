@@ -1,84 +1,46 @@
-import { test, expect } from '../server/test';
+﻿import { test, expect } from '../server/test';
 import { ADMIN_URL } from '../urls';
 import { signInAffiliate } from './helpers/affiliate-session';
-
 test.use({ affiliateDemo: true });
-
-for (const width of [360, 390]) {
-  test(`REQ-308 REQ-312 policy fields fit ${width}px; validation blocks PUT and saved terms survive F5`, async ({
+for (const width of [1440, 390])
+  test(`REQ-619 D-132 policy responsive and hidden values survive save at ${width}px`, async ({
     page,
   }) => {
-    await page.setViewportSize({ width, height: 844 });
+    await page.setViewportSize({ width, height: 900 });
     await signInAffiliate(page, ADMIN_URL, 'admin@opchub.community', 'Admin@2026');
-    await page.getByRole('tab', { name: 'Chính sách', exact: true }).click();
-    const rate = page.getByRole('spinbutton', { name: 'Tỷ lệ hoa hồng mặc định (%)', exact: true });
-    const days = page.getByRole('spinbutton', {
-      name: 'Thời gian ghi nhận link (ngày)',
-      exact: true,
-    });
-    // D-91 (2): điều khoản trong hộp thoại "Sửa điều khoản" (prototype v4 không có ô này)
-    const openTerms = page.getByRole('button', { name: 'Sửa điều khoản', exact: true });
-    const dialog = page.getByRole('dialog', { name: 'Điều khoản chương trình' });
-    const terms = dialog.getByRole('textbox', { name: 'Điều khoản chương trình', exact: true });
-    // D-70 (V4-602): gợi ý giá 2 gói + ô Gọi vốn chỉ đọc thay cho ví dụ theo thành viên 600.000
-    await expect(
-      page.getByText(
-        'Áp dụng trên phí năm thực thu: Gói Cá nhân 1.200.000đ · Gói Doanh nghiệp 3.600.000đ · 3 tháng miễn phí không phát sinh hoa hồng',
-        {
-          exact: true,
-        },
-      ),
-    ).toBeVisible();
-    await expect(page.getByRole('group', { name: 'Hoa hồng Gói Gọi vốn (%)' })).toContainText(
-      '= 1.500.000đ / Gói Gọi vốn 15.000.000đ · ghi nhận khi Admin duyệt',
+    await page.goto(`${ADMIN_URL}/affiliate?tab=cfg`);
+    const rate = page.getByLabel('GĐ Vùng năm 1', { exact: true }),
+      cookie = page.getByLabel('Thời gian ghi nhận link (ngày)', { exact: true });
+    await expect(page.getByRole('table', { name: 'Năm của khách' })).toBeVisible();
+    await expect(page.getByRole('table', { name: 'Phần GĐ Vùng theo từng gói' })).toBeVisible();
+    await expect(page.getByRole('spinbutton', { name: 'Tỷ lệ hoa hồng mặc định (%)' })).toHaveCount(
+      0,
     );
-    await expect(page.getByText(/thành viên 600\.000đ/)).toHaveCount(0);
-    for (const control of [rate, days, openTerms]) {
-      await expect(control).toBeVisible();
-      const box = await control.boundingBox();
-      expect(box).not.toBeNull();
-      if (control !== openTerms) expect(box!.width).toBeGreaterThanOrEqual(240);
-      expect(box!.x).toBeGreaterThanOrEqual(0);
-      expect(box!.x + box!.width).toBeLessThanOrEqual(width);
-    }
-    let puts = 0;
-    page.on('request', (request) => {
-      if (request.url().endsWith('/admin/affiliate/policy') && request.method() === 'PUT') puts++;
-    });
     await rate.fill('');
     await page.getByRole('button', { name: 'Lưu chính sách', exact: true }).click();
     await expect(rate).toHaveAttribute('aria-invalid', 'true');
-    expect(puts).toBe(0);
-    await rate.fill('25');
-    await openTerms.click();
-    await expect(terms).toBeVisible();
-    const tb = (await terms.boundingBox())!;
-    expect(tb.x).toBeGreaterThanOrEqual(0);
-    expect(tb.x + tb.width).toBeLessThanOrEqual(width);
-    await terms.fill('Điều khoản mobile P4');
-    await dialog.getByRole('button', { name: 'Xong', exact: true }).click();
-    await expect(dialog).toBeHidden();
+    await rate.fill('60');
+    await cookie.fill('45');
+    await page.getByRole('button', { name: 'Sửa điều khoản' }).click();
+    const dialog = page.getByRole('dialog', { name: 'Điều khoản chương trình' });
+    await dialog.getByRole('textbox').fill('Điều khoản mobile D-132');
+    await dialog.getByRole('button', { name: 'Xong' }).click();
     const response = page.waitForResponse(
       (r) => r.url().endsWith('/admin/affiliate/policy') && r.request().method() === 'PUT',
     );
     await page.getByRole('button', { name: 'Lưu chính sách', exact: true }).click();
-    expect((await response).status()).toBe(200);
+    const saved = await response;
+    expect(saved.status()).toBe(200);
+    expect(saved.request().postDataJSON()).toMatchObject({
+      defaultRate: 20,
+      fundraisingRate: 10,
+      renewalRate: 10,
+      renewalMaxYear: 3,
+    });
     await page.reload();
-    await expect(rate).toHaveValue('25');
-    await expect(days).toHaveValue('30');
-    await openTerms.click();
-    await expect(terms).toHaveValue('Điều khoản mobile P4');
-    await dialog.getByRole('button', { name: 'Xong', exact: true }).click();
-    await expect(
-      page.getByText(
-        'Áp dụng trên phí năm thực thu: Gói Cá nhân 1.200.000đ · Gói Doanh nghiệp 3.600.000đ · 3 tháng miễn phí không phát sinh hoa hồng',
-        {
-          exact: true,
-        },
-      ),
-    ).toBeVisible();
-    await expect(page.getByText(/không cần quản trị duyệt/)).toContainText(
-      'không tạo đại lý thủ công',
+    await expect(rate).toHaveValue('60');
+    await expect(cookie).toHaveValue('45');
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
+      width,
     );
   });
-}

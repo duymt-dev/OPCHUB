@@ -23,6 +23,8 @@ export const HTTP_STATUS: Record<ErrorCode, number> = {
   VIEW_ONLY: 403,
   GONE: 410,
   FILE_REJECTED: 422,
+  RENEWAL_NO_CHANNEL: 422,
+  INTEGRATION_ERROR: 502,
 };
 
 /** Mã đầu tiên của mỗi status (403 → FORBIDDEN, không phải mã 403 riêng thêm sau) */

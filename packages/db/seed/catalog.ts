@@ -121,6 +121,8 @@ const w = welcomeTemplate as typeof welcomeTemplate & {
 
 /** Giá trị `app_settings` mặc định; `userCount` của SSO do server tính, không lưu */
 export const APP_SETTINGS = {
+  renewal: { milestones: { d30: true, d7: true, d1: true }, channels: { email: true, app: true } },
+  bank: { autoActivate: true },
   general: {
     platformName: 'OPC Hub Community',
     domain: 'community.opchub.vn',

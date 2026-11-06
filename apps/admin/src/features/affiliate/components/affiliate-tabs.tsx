@@ -13,14 +13,14 @@ export function AffiliateTabs({
 }: {
   tab: AffiliateParams['tab'];
   onTab: (tab: AffiliateParams['tab']) => void;
-  counts: { com: number | undefined; aff: number | undefined };
+  counts: { com: number | undefined; aff: number | undefined; gdv?: number | undefined };
   net: number | undefined;
 }) {
   const t = useTranslations('affiliate');
   return (
     <div className={styles.head}>
       <div className={styles.tabs} role="tablist" aria-label={t('title')}>
-        {(['com', 'aff', 'cfg'] as const).map((key) => (
+        {(['com', 'aff', 'gdv', 'gcfg', 'cfg'] as const).map((key) => (
           <button
             key={key}
             type="button"
@@ -30,8 +30,11 @@ export function AffiliateTabs({
             className={`${styles.tab} ${tab === key ? styles.tabOn : ''}`}
             onClick={() => onTab(key)}
           >
-            {t(`tabs.${key}`)}
-            {key !== 'cfg' && counts[key] !== undefined ? (
+            {key === 'gdv' ? t('regional.share.director') : t(`tabs.${key}`)}
+            {key === 'gdv' && counts.gdv !== undefined && (
+              <span className={styles.hint}>{counts.gdv}</span>
+            )}
+            {(key === 'com' || key === 'aff') && counts[key] !== undefined ? (
               <span className={styles.hint}>{counts[key]}</span>
             ) : null}
           </button>

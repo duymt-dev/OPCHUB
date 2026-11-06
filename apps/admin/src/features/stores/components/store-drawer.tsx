@@ -1,5 +1,6 @@
 'use client';
 
+import { StorePublicLink } from './store-public-link';
 import type { AdminStore } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
@@ -83,6 +84,7 @@ export function StoreDrawer({ x, canAct, onClose, onHide, onShow, onFeature }: P
             </span>
             <span className={styles.intro}>{x.intro}</span>
             <span className={styles.contact}>{contact}</span>
+            <StorePublicLink slug={x.slug} />
           </div>
           <div className={styles.section}>{t('items')}</div>
           <DrawerItems x={x} />

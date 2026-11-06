@@ -1,3 +1,4 @@
+import { affiliatePolicyInputSchema } from '../services/affiliate-policy-input';
 import { Controller, Get, Put, Req } from '@nestjs/common';
 import type { Request } from 'express';
 import { affiliatePolicySchema, type AffiliatePolicy } from '@opchub/shared/api-domains';
@@ -21,7 +22,7 @@ export class AdminAffiliatePolicyController {
   async put(
     @CurrentUser() user: AccessClaims,
     @Req() req: Request,
-    @ZodBody(affiliatePolicySchema) body: AffiliatePolicy,
+    @ZodBody(affiliatePolicyInputSchema) body: AffiliatePolicy,
   ) {
     return respond(
       affiliatePolicySchema,

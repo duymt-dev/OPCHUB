@@ -12,7 +12,20 @@
     "logout": "退出登录",
     "upcoming": "即将举行的活动",
     "viewAll": "查看全部",
-    "memberSub": "OPC 会员"
+    "memberSub": "OPC 会员",
+    "globalSearch": {
+      "placeholder": "搜索店铺、需求、项目、群组…",
+      "empty": "未找到结果",
+      "clear": "清除搜索",
+      "groups": {
+        "store": "店铺",
+        "need": "本地需求",
+        "project": "OPC 项目",
+        "group": "社区群组",
+        "member": "成员"
+      },
+      "members": "{n} 位成员"
+    }
   },
   "nav": {
     "dashboard": "仪表板",

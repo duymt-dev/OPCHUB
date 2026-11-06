@@ -1,38 +1,32 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
-import { feeReminderLine, feeReminderMail, MailService } from '../../mail';
-import { dueMilestone, REMIND_LOOKAHEAD_DAYS, REMIND_STOP_DAYS } from '../domain/fee-reminder';
+import { AppSettingsService } from '../../settings';
+import { dueMilestone } from '../domain/fee-reminder';
 import { EXPIRING_DAYS } from '../domain/membership-fee.state';
 import { FeeReminderRepository } from '../repositories/fee-reminder.repository';
 import { MembershipFeeRepository } from '../repositories/membership-fee.repository';
-
-const DAY_MS = 86_400_000;
+import { renewalWindow, type RenewalCursor } from '../repositories/renewal.repository';
+import { RenewalDeliveryService } from './renewal-delivery.service';
 const BATCH = 500;
-
-/**
- * Job hằng ngày 08:00 Asia/Ho_Chi_Minh (D-57): active → expiring → expired, rồi nhắc phí theo mốc
- * T-30 / T-7 / T-0 / T+3 (NA-04). Đổi trạng thái, mail và outbox ghi trong CÙNG transaction.
- */
+/** Existing 08:00 VN job; state sweep unchanged, new BR-471 D30 / D7 / D1 policy. */
 @Injectable()
 export class FeeSchedulerService {
+  private readonly logger = new Logger(FeeSchedulerService.name);
   constructor(
     private readonly prisma: PrismaService,
     private readonly fees: MembershipFeeRepository,
     private readonly reminders: FeeReminderRepository,
-    private readonly mail: MailService,
+    private readonly delivery: RenewalDeliveryService,
     private readonly outbox: OutboxService,
+    private readonly settings: AppSettingsService,
   ) {}
-
-  /** Lượt đầy đủ của job: số dòng đổi trạng thái + số mail nhắc */
   async run(now = new Date()): Promise<{ changed: number; reminded: number }> {
     const changed = await this.sweep(now);
-    const reminded = await this.remind(now);
-    return { changed, reminded };
+    return { changed, reminded: await this.remind(now) };
   }
-
   async sweep(now = new Date()): Promise<number> {
-    const expiringAt = new Date(now.getTime() + EXPIRING_DAYS * DAY_MS);
+    const expiringAt = new Date(now.getTime() + EXPIRING_DAYS * 86_400_000);
     return this.prisma.db.$transaction(async (tx) => {
       const changed = await this.fees.sweepStatuses(tx, now, expiringAt);
       await this.outbox.addMany(
@@ -47,23 +41,27 @@ export class FeeSchedulerService {
       return changed.length;
     });
   }
-
-  /** Nhắc theo mốc, mỗi lô một transaction; lỗi lô → ném lại để BullMQ thử lại (PK chống trùng) */
   async remind(now = new Date()): Promise<number> {
-    const from = new Date(now.getTime() - (REMIND_STOP_DAYS + 1) * DAY_MS);
-    const to = new Date(now.getTime() + REMIND_LOOKAHEAD_DAYS * DAY_MS);
-    let after = '';
+    const config = await this.settings.renewal();
+    if (!config.channels.email && !config.channels.app) {
+      this.logger.log('Renewal channels disabled; milestones not claimed');
+      return 0;
+    }
+    if (!Object.values(config.milestones).some(Boolean)) return 0;
+    const { from, to } = renewalWindow(now);
+    let cursor: RenewalCursor | undefined;
     let sent = 0;
+    // Bounded keyset batch loop mandated by BR-472; no per-recipient queries.
     for (;;) {
-      const rows = await this.reminders.candidates(from, to, after, BATCH);
+      const rows = await this.reminders.candidates(from, to, cursor, BATCH);
       const last = rows.at(-1);
       if (!last) return sent;
-      after = last.user_id;
-      const due = rows.flatMap((r) => {
-        const m = dueMilestone(r.valid_until, now, new Set(r.sent), r.trial);
-        return m ? [{ row: r, milestone: m }] : [];
+      cursor = { validUntil: last.valid_until.toISOString(), userId: last.user_id };
+      const due = rows.flatMap((row) => {
+        const milestone = dueMilestone(row.valid_until, now, new Set(row.sent), config.milestones);
+        return milestone ? [{ row, milestone }] : [];
       });
-      if (due.length) {
+      if (due.length)
         sent += await this.prisma.db.$transaction(async (tx) => {
           const claimed = await this.reminders.claim(
             tx,
@@ -73,36 +71,11 @@ export class FeeSchedulerService {
               milestone: d.milestone,
             })),
           );
-          const ok = new Set(claimed.map((c) => c.userId));
-          const go = due.filter((d) => ok.has(d.row.user_id));
-          await this.mail.requestMany(
-            tx,
-            go.map((d) => {
-              const m = feeReminderMail(
-                d.row.full_name,
-                d.milestone,
-                d.row.valid_until,
-                d.row.amount,
-                d.row.trial,
-              );
-              return {
-                to: d.row.email,
-                kind: 'fee_reminder' as const,
-                subject: m.subject,
-                html: m.html,
-              };
-            }),
-          );
-          if (go.length)
-            await this.outbox.add(tx, 'membership_fee.reminded', {
-              items: go.map((d) => ({
-                userId: d.row.user_id,
-                text: feeReminderLine(d.milestone, d.row.valid_until, d.row.trial),
-              })),
-            });
+          const ids = new Set(claimed.map((c) => c.userId));
+          const go = due.filter((d) => ids.has(d.row.user_id));
+          await this.delivery.deliver(tx, go, config.channels, now);
           return go.length;
         });
-      }
       if (rows.length < BATCH) return sent;
     }
   }

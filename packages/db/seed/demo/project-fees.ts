@@ -9,7 +9,7 @@ export function projectDemoFees(now: Date) {
   const guests = [...new Set(buildProjects().map((p) => requireUserId(p.ownerName)))].filter((id) =>
     id.startsWith('g-'),
   );
-  const expiring = buildFees().find((f) => f.userId === 'm3');
+  const expiring = buildFees(false).find((f) => f.userId === 'm3');
   if (!expiring?.validUntil) throw new Error('Missing expiring demo fee');
   return {
     guests: guests.map((userId) => ({

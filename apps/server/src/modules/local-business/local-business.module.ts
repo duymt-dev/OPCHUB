@@ -1,4 +1,13 @@
+import { NeedSearchService } from './services/need-search.service';
+import { StoreSearchService } from './services/store-search.service';
+import { NeedSearchRepository } from './repositories/need-search.query';
+import { StoreSearchRepository } from './repositories/store-search.query';
+import { StorePublicController } from './controllers/store-public.controller';
+import { StorePublicService } from './services/store-public.service';
+import { StorePublicRepository } from './repositories/store-public.repository';
 import { Module } from '@nestjs/common';
+import { NeedMatchRepository } from './repositories/need-match.query';
+import { NeedMatchService } from './services/need-match.service';
 import { AccountCoreModule } from '../account';
 import { UploadsCoreModule } from '../uploads';
 import { AdminNeedController } from './controllers/admin-need.controller';
@@ -20,6 +29,14 @@ import { StoreMediaService } from './services/store-media.service';
 import { StoreOwnerService } from './services/store-owner.service';
 
 const services = [
+  StorePublicService,
+  StorePublicRepository,
+  NeedMatchRepository,
+  NeedMatchService,
+  StoreSearchRepository,
+  NeedSearchRepository,
+  StoreSearchService,
+  NeedSearchService,
   StoreRepository,
   StoreExploreRepository,
   StoreExploreService,
@@ -41,6 +58,12 @@ export class LocalBusinessCoreModule {}
 
 @Module({
   imports: [LocalBusinessCoreModule],
-  controllers: [StoreController, AdminStoreController, NeedController, AdminNeedController],
+  controllers: [
+    StorePublicController,
+    StoreController,
+    AdminStoreController,
+    NeedController,
+    AdminNeedController,
+  ],
 })
 export class LocalBusinessHttpModule {}

@@ -4,6 +4,7 @@ import { STORE_STEPS, type StoreDetail, type StoreStep } from '@opchub/shared/ap
 import { useTranslations } from 'next-intl';
 import { useStoreMedia } from '../../hooks/use-store-media';
 import { type StoreWizard as Wz, useStoreWizard } from '../../hooks/use-store-wizard';
+import { PublicPageCard } from '../dashboard/public-page-card';
 import { WizardPreview } from './preview';
 import { StepContact } from './step-contact';
 import { StepInfo } from './step-info';
@@ -102,6 +103,7 @@ export function StoreWizard({ store, edit, initialStep, onExit }: Props) {
       {store.status === 'hidden' ? (
         <div className={`${w.banner} ${w.bannerHidden}`}>{t('hiddenBanner')}</div>
       ) : null}
+      {edit ? <PublicPageCard /> : null}
       <div className={w.head}>
         <div className={w.headTop}>
           <div className={w.headText}>

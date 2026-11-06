@@ -16,7 +16,20 @@ export const mockAffiliatePolicy = readMockAffiliatePolicy;
 
 export function saveMockAffiliatePolicy(actor: string, input: unknown) {
   const parsed = affiliatePolicySchema.safeParse(input);
-  if (!parsed.success) return invalidAffiliateInput(parsed.error);
+  if (!parsed.success)
+    return parsed.error.issues.every(
+      (i) => i.path[0] === 'renewalRate' || i.path[0] === 'renewalMaxYear',
+    )
+      ? { ...invalidAffiliateInput(parsed.error), status: 422 as const }
+      : invalidAffiliateInput(parsed.error);
+  if (parsed.data.regionalMin > parsed.data.regionalFirstYear)
+    return {
+      ok: false as const,
+      status: 422 as const,
+      code: 'VALIDATION_ERROR' as const,
+      message: 'Mức tối thiểu không được vượt năm đầu',
+      fields: [{ path: 'regionalMin', message: 'Mức tối thiểu không được vượt năm đầu' }],
+    };
   replaceMockAffiliatePolicy(parsed.data);
   logSetting(actor, 'affiliate.policy_update', '1', 'Cập nhật chính sách Affiliate', 'affiliate');
   return ok(mockAffiliatePolicy());
@@ -90,7 +103,13 @@ export function setMockAffiliateRates(actor: string, input: unknown) {
     }
   }
   for (const ref of affiliateCommissionRefs()) {
-    if (ids.includes(ref.agentId) && ref.row.status === 'recorded') {
+    if (
+      ids.includes(ref.agentId) &&
+      ref.row.status === 'recorded' &&
+      (ref.customerYear ?? 1) === 1 &&
+      ref.plan !== 'fundraising' &&
+      mockCommissionAmount(ref.row.feeAmount, parsed.data.rate) > 0
+    ) {
       ref.row.rate = parsed.data.rate;
       ref.row.commission = mockCommissionAmount(ref.row.feeAmount, parsed.data.rate);
     }

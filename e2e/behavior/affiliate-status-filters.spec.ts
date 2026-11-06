@@ -13,7 +13,7 @@ for (const width of [1440, 390]) {
     const rows = page.locator('tbody tr[data-row-key]');
     await expect(rows).toHaveCount(10);
     for (const { key, label, total } of [
-      { key: 'recorded', label: 'Đã ghi nhận', total: 19 },
+      { key: 'recorded', label: 'Đã ghi nhận', total: 21 },
       { key: 'paid', label: 'Đã chi trả', total: 31 },
       { key: 'cancelled', label: 'Đã hủy', total: 1 },
     ]) {

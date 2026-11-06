@@ -1,4 +1,6 @@
+import { SearchModule } from '@/modules/search';
 import { Module } from '@nestjs/common';
+import { RegionalDirectorHttpModule } from '@/modules/regional-director';
 import { AuthGuardsModule } from '@/common/auth';
 import { CoreModule } from '@/common/core.module';
 import { whenFeature } from '@/common/feature/feature.module';
@@ -32,6 +34,8 @@ import { LlmConfigHttpModule } from '@/modules/llm-config';
 /** Process REST `/v1` — import `<Domain>HttpModule` (chỉ thêm dòng) */
 @Module({
   imports: [
+    SearchModule,
+    RegionalDirectorHttpModule,
     CoreModule,
     LlmConfigHttpModule,
     ThrottleModule,

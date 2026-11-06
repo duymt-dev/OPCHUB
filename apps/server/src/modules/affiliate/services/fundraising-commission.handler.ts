@@ -1,3 +1,5 @@
+import { commissionRateFor, customerYearOf } from '@opchub/shared';
+import { CustomerYearRepository } from '../../reporting';
 import { Injectable } from '@nestjs/common';
 import type { OutboxPayload } from '@opchub/shared/outbox';
 import { OutboxService } from '@/common/outbox';
@@ -15,6 +17,7 @@ import { PolicyRepository } from '../repositories/policy.repository';
 @Injectable()
 export class FundraisingCommissionHandler {
   constructor(
+    private readonly years: CustomerYearRepository,
     private readonly prisma: PrismaService,
     private readonly commissions: CommissionRepository,
     private readonly policy: PolicyRepository,
@@ -24,17 +27,28 @@ export class FundraisingCommissionHandler {
   async onReviewed(p: OutboxPayload<'fundraising.reviewed'>): Promise<void> {
     if (p.decision !== 'approve' || p.amount <= 0) return;
     await this.prisma.db.$transaction(async (tx) => {
+      const at = new Date(p.reviewedAt);
+      const anchor = await this.years.firstPaid(tx, p.ownerId, at, 'fundraising', p.fundraisingId);
       const ref = await this.commissions.referrerOf(tx, p.ownerId);
       // D-110: mã luôn hoạt động — không bỏ qua theo trạng thái phí của đại lý
       if (!ref || ref.affiliateUserId === p.ownerId) return;
-      const { fundraisingRate } = await this.policy.get(tx);
+      const policy = await this.policy.get(tx);
+      const customerYear = customerYearOf(anchor.firstPaidAt, at);
+      const rate = commissionRateFor(customerYear, {
+        ...policy,
+        firstYearRate: policy.fundraisingRate,
+      });
+      if (rate === null) return;
+      const amount = commissionAmount(p.amount, rate);
+      if (amount <= 0) return;
       const id = await this.commissions.recordFundraising(tx, {
         affiliateId: ref.affiliateId,
         referredUserId: p.ownerId,
         fundraisingId: p.fundraisingId,
         listAmount: p.amount,
-        amount: commissionAmount(p.amount, fundraisingRate),
-        rate: fundraisingRate,
+        amount,
+        rate,
+        customerYear,
         monthKey: monthKey(new Date(p.reviewedAt)),
       });
       if (id) await this.outbox.add(tx, 'affiliate.commission_recorded', { commissionId: id });

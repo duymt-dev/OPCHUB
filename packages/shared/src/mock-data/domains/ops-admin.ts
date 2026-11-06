@@ -20,6 +20,7 @@ import { services } from '../../fixtures';
 import { feeStatusOf } from './admin';
 import { feePeriodEnd } from './fee-period';
 import { FEE_BANK, mockQr } from './extras';
+import { recordMockRegionalShare } from './regional-shares';
 import { setAssignedRole } from './group-admin';
 import { mockDb, nextId } from './store';
 import { conflict, includesText, iso, MOCK_NOW, notFound, ok, type MockResult } from './util';
@@ -79,6 +80,9 @@ export function listFees(status?: MembershipFeeStatus, q?: string): FeeRow[] {
 
 /** BR-05: gia hạn nối tiếp ngày hết hạn hiện tại nếu còn hiệu lực */
 export function feeAction(userId: string, action: FeeAction, now = MOCK_NOW): MockResult<FeeRow> {
+  if (mockDb().fees.some((f) => f.userId === userId && f.status === 'regional_director')) {
+    return conflict('Thành viên đang Miễn phí · GĐ Vùng');
+  }
   const f = mockDb().fees.find((x) => x.userId === userId);
   if (!f) return notFound('Không tìm thấy thành viên');
   if (action === 'remind') return ok(f);
@@ -90,6 +94,14 @@ export function feeAction(userId: string, action: FeeAction, now = MOCK_NOW): Mo
   const until = feePeriodEnd(from);
   f.validUntil = iso(until);
   f.status = feeStatusOf(until, now);
+  recordMockRegionalShare({
+    source: 'membership',
+    sourceId: `fee-${userId}-${now}`,
+    customerId: userId,
+    baseAmount: f.amount,
+    plan: f.accountType === 'business' ? 'business' : 'personal',
+    at: iso(now),
+  });
   return ok(f);
 }
 

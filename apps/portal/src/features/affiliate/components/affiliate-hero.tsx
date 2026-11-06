@@ -8,6 +8,7 @@ import type { ActiveAffiliate } from '../types';
 import { BankAccountCard } from './bank-account-card';
 import { ShareBar } from './share-bar';
 import styles from './affiliate.module.css';
+import regionalStyles from './my-region.module.css';
 
 export function AffiliateLocked({ policy }: { policy: MyAffiliate['policy'] }) {
   const t = useTranslations('affiliate');
@@ -18,6 +19,8 @@ export function AffiliateLocked({ policy }: { policy: MyAffiliate['policy'] }) {
       <p className={styles.description}>
         {t.rich('locked.description', {
           rate: policy.rate,
+          renewalRate: policy.renewalRate,
+          renewalMaxYear: policy.renewalMaxYear,
           per: formatVnd(policy.perAmount),
           biz: formatVnd(policy.bizAmount),
           fund: formatVnd(policy.fundAmount),
@@ -49,16 +52,20 @@ export function AffiliateHero({
       <div className={styles.heroColumn}>
         <span className={styles.eyebrow}>{t('program')}</span>
         <h2 className={styles.headline}>{t('hero.title', { rate: data.policy.rate })}</h2>
-        <p className={styles.description}>
-          {t.rich('hero.description', {
-            per: formatVnd(data.policy.perAmount),
-            biz: formatVnd(data.policy.bizAmount),
-            fund: formatVnd(data.policy.fundAmount),
-            fundRate: data.policy.fundRate,
-            days: data.policy.cookieDays,
-            b: (children) => <b>{children}</b>,
-          })}
-        </p>
+        <div className={regionalStyles.badges}>
+          <span>
+            {t.rich('hero.rateBadge', {
+              rate: data.policy.rate,
+              b: (children) => <b>{children}</b>,
+            })}
+          </span>
+          <span>
+            {t.rich('hero.cookieBadge', {
+              days: data.policy.cookieDays,
+              b: (children) => <b>{children}</b>,
+            })}
+          </span>
+        </div>
         <BankAccountCard bank={data.bank} form={bank} />
       </div>
       <ShareBar link={data.link} code={data.code} />

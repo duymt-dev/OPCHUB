@@ -12,7 +12,20 @@
     "logout": "ออกจากระบบ",
     "upcoming": "กิจกรรมที่กำลังจะมาถึง",
     "viewAll": "ดูทั้งหมด",
-    "memberSub": "สมาชิก OPC"
+    "memberSub": "สมาชิก OPC",
+    "globalSearch": {
+      "placeholder": "ค้นหาร้านค้า ความต้องการ โครงการ กลุ่ม…",
+      "empty": "ไม่พบผลลัพธ์",
+      "clear": "ล้างการค้นหา",
+      "groups": {
+        "store": "ร้านค้า",
+        "need": "ความต้องการในพื้นที่",
+        "project": "โครงการ OPC",
+        "group": "กลุ่มชุมชน",
+        "member": "สมาชิก"
+      },
+      "members": "สมาชิก {n} คน"
+    }
   },
   "nav": {
     "dashboard": "Dashboard",

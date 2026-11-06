@@ -34,6 +34,7 @@ export const affiliateSummarySchema = z.object({
   payable: z.number().int(),
   paid: z.number().int().min(0),
   netRevenue: z.number().int(),
+  regionalTotal: z.number().int().default(0),
   /** BR-AFF-REV (v4.2): số khoản hợp lệ theo gói thực trả — phụ đề thẻ doanh thu */
   plans: z
     .object({
@@ -51,6 +52,7 @@ export const affiliateCommissionRowSchema = z.object({
   customerName: z.string(),
   date: z.string(),
   feeAmount: z.number().int(),
+  customerYear: z.number().int().min(1).default(1),
   rate: z.number().int(),
   amount: z.number().int(),
   status: affiliateCommissionStatusSchema,
@@ -77,6 +79,14 @@ export const affiliateAdminRowSchema = z.object({
 });
 export type AffiliateAdminRow = z.infer<typeof affiliateAdminRowSchema>;
 export const affiliateAdminListRowSchema = affiliateAdminRowSchema.extend({
+  region: z
+    .object({
+      region: z.enum(['north', 'central', 'south']),
+      provinceName: z.string(),
+      directorName: z.string().nullable(),
+    })
+    .nullable()
+    .default(null),
   bank: affiliateBankSchema.nullable(),
   lifetime: z.object({ customers: z.number().int().min(0), revenue: z.number().int().min(0) }),
   period: z.object({

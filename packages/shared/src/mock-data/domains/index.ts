@@ -64,7 +64,6 @@ export * from './affiliate-demo';
 export { seedManualMockBotScenario } from './bot-demo-scenario';
 export * from './affiliate-admin/read';
 export * from './affiliate-admin/write';
-export * from './affiliate-admin/payout';
 export * from './affiliate-admin/csv';
 export * from './affiliate-persistence/schema';
 export * from './affiliate-persistence/snapshot';
@@ -108,3 +107,18 @@ export * from './bot-bulk/state';
 export * from './bot-bulk/worker';
 export * from './bot-bulk/selection';
 export * from './bot-bulk/save';
+export * from './regional-directors';
+export * from './regional-share-demo';
+export * from './regional-shares';
+
+export { mockMyRegion } from './my-region';
+export * from './renewal';
+export * from './bank-reconcile-seed';
+export * from './bank-reconcile';
+export * from './overview-conversion';
+export * from './audit-log-page';
+
+export * from './search';
+export * from './need-matches';
+
+export * from './store-public';

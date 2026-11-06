@@ -51,7 +51,7 @@ export type MockResult<T> =
   | { ok: true; data: T }
   | {
       ok: false;
-      status: 400 | 403 | 404 | 409 | 429;
+      status: 400 | 403 | 404 | 409 | 422 | 429;
       code: MockErrorCode;
       message: string;
       /** Lỗi tại ô (BUG-022) — như `error.fields` của server */

@@ -29,8 +29,14 @@ export {
 } from './templates-fee';
 export { WelcomeService } from './welcome.service';
 export { serviceRequestMail } from './templates-service';
+export { renewalMail } from './templates-renewal';
 export {
   type FundraisingMailKind,
   fundraisingLine,
   fundraisingMail,
 } from './templates-fundraising';
+export {
+  regionalAppointedMail,
+  regionalRevokedMail,
+  regionalRevokeText,
+} from './templates-regional';

@@ -54,9 +54,15 @@ beforeEach(() => {
     payable: 0,
     paid: 0,
     netRevenue: 0,
+    regionalTotal: 0,
     plans: { business: 0, personal: 0, fundraising: 0 },
   });
   vi.mocked(api.fetchAffiliatePolicy).mockResolvedValue({
+    renewalRate: 10,
+    renewalMaxYear: 3,
+    regionalFirstYear: 50,
+    regionalStep: 10,
+    regionalMin: 20,
     defaultRate: 20,
     fundraisingRate: 10,
     cookieDays: 30,
@@ -199,6 +205,11 @@ describe('REQ-312 permission-gated Affiliate query orchestration', () => {
 
   it('uses the shared policy query for actual attribution days and refreshes after invalidation', async () => {
     vi.mocked(api.fetchAffiliatePolicy).mockResolvedValue({
+      renewalRate: 10,
+      renewalMaxYear: 3,
+      regionalFirstYear: 50,
+      regionalStep: 10,
+      regionalMin: 20,
       defaultRate: 20,
       fundraisingRate: 10,
       cookieDays: 45,
@@ -212,6 +223,11 @@ describe('REQ-312 permission-gated Affiliate query orchestration', () => {
     await waitFor(() => expect(result.current.policy.data?.cookieDays).toBe(45));
     expect(api.fetchAffiliatePolicy).toHaveBeenCalledTimes(1);
     vi.mocked(api.fetchAffiliatePolicy).mockResolvedValue({
+      renewalRate: 10,
+      renewalMaxYear: 3,
+      regionalFirstYear: 50,
+      regionalStep: 10,
+      regionalMin: 20,
       defaultRate: 20,
       fundraisingRate: 10,
       cookieDays: 17,

@@ -404,7 +404,7 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | GET | `/admin/affiliates/:id` | affiliate.view | SRS-3.6 section 20 | affiliate.ts (TIP-V2-404) |
 | GET | `/admin/affiliates/:id/months` | affiliate.view | SRS-3.6 section 20 | affiliate.ts (TIP-V2-404) |
 | GET | `/admin/affiliates/:id/customers` | affiliate.view | SRS-3.6 section 20 | affiliate.ts (TIP-V2-404) |
-| POST | `/admin/affiliates/:id/payouts` | affiliate.payout | SRS-3.6 section 20 | affiliate.ts (TIP-V2-404) |
+| POST | `/admin/affiliates/:id/payouts` | — (removed) | D-119 / TIP-V46-803: always 404, error envelope; historical inventory only | no client write |
 | POST | `/admin/affiliates/export` | affiliate.action | SRS-3.6 section 20 | affiliate.ts (TIP-V2-404) |
 | GET | `/admin/affiliate/policy` | affiliate.view | SRS-3.6 section 20; D-70 thêm `fundraisingRate` | affiliate.ts (TIP-V2-404) |
 | PUT | `/admin/affiliate/policy` | affiliate.action | SRS-3.6 section 20; D-70 thêm `fundraisingRate` | affiliate.ts (TIP-V2-404) |

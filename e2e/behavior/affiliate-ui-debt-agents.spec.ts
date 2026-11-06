@@ -16,15 +16,15 @@ for (const width of [1440, 390]) {
   });
 }
 
-test('D-84-AFF TD-P4-UI-01 default agents table fits its card without clipped status or action at 1440px', async ({
+test('D-84-AFF D-121 region table keeps readable columns and scrollable actions at 1440px', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await signInAffiliate(page, ADMIN_URL, 'admin@opchub.community', 'Admin@2026');
   await page.goto(`${ADMIN_URL}/affiliate?tab=aff`);
   const rows = page.locator('tbody tr[data-row-key]');
-  // D-94 3A: every member (64 in AF0, paid or not) is an automatic agent; default page shows ten.
-  await expect(page.getByRole('tab', { name: /^Affiliate\s*64$/ })).toBeVisible();
+  // D-94 3A: every member (66 in AF0, paid or not) is an automatic agent; default page shows ten.
+  await expect(page.getByRole('tab', { name: /^Affiliate\s*66$/ })).toBeVisible();
   await expect(rows).toHaveCount(10);
   const fit = await page.evaluate(() => {
     const content = document.querySelector('.ant-table-content');
@@ -37,11 +37,15 @@ test('D-84-AFF TD-P4-UI-01 default agents table fits its card without clipped st
     }).length;
     return { overflow: content.scrollWidth - content.clientWidth, clipped };
   });
-  expect(fit).toEqual({ overflow: 0, clipped: 0 });
+  expect(fit?.clipped).toBe(0);
+  expect(fit?.overflow).toBeGreaterThan(0);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(1440);
   const first = rows.first();
-  await expect(first.getByRole('link', { name: 'Đối soát & chi trả' })).toBeVisible();
+  const action = first.getByRole('link', { name: 'Xem đối soát', exact: true });
+  await action.scrollIntoViewIfNeeded();
+  await expect(action).toBeInViewport();
   await expect(first.getByText('Tự động', { exact: true })).toBeVisible();
   await expect(
-    page.getByRole('navigation', { name: 'Hiển thị 1–10 / 64 affiliate' }),
+    page.getByRole('navigation', { name: 'Hiển thị 1–10 / 66 affiliate' }),
   ).toBeVisible();
 });

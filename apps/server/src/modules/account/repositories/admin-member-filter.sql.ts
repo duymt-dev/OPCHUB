@@ -1,5 +1,5 @@
 import type { AdminMemberFilter } from '@opchub/shared/api-domains';
-import { PAID_FEE_STATUS } from '@opchub/shared';
+import { PAID_FEE_STATUS, USABLE_FEE_STATUS } from '@opchub/shared';
 import { Prisma } from '@opchub/db';
 import { containsPattern } from '@/common/prisma/like';
 
@@ -45,7 +45,7 @@ export function adminMemberWhere(f: AdminMemberFilter, now: Date): Prisma.Sql {
       WHERE mf.user_id = users.id AND mf.status = ANY(${[...s]}::membership_fee_status[]))`;
     if (f.fee === 'paid') conds.push(has(PAID_FEE_STATUS));
     else if (f.fee === 'trial') conds.push(has(['trial']));
-    else conds.push(Prisma.sql`NOT ${has([...PAID_FEE_STATUS, 'trial'])}`);
+    else conds.push(Prisma.sql`NOT ${has(USABLE_FEE_STATUS)}`);
   }
   if (f.status) conds.push(Prisma.sql`status = ${f.status}::user_status`);
   // Hồ sơ chưa khai báo (V4-607): chưa qua popup khai báo, hoặc DN chưa có MST

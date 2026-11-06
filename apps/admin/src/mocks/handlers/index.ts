@@ -1,3 +1,4 @@
+import { searchHandlers } from './search';
 import { memberStatusHandlers } from './member-status';
 import { adminProjectHandlers } from './admin-projects';
 import { adminEventHandlers } from './admin-events';
@@ -68,3 +69,9 @@ handlers.push(...affiliateReadHandlers, ...affiliateWriteHandlers);
 handlers.unshift(...affiliateDemoHandlers);
 
 handlers.unshift(...memberStatusHandlers);
+handlers.unshift(...regionalDirectorHandlers);
+import { regionalDirectorHandlers } from './regional-directors';
+import { regionalShareHandlers } from './regional-shares';
+handlers.unshift(...regionalShareHandlers);
+
+handlers.push(...searchHandlers);

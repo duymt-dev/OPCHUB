@@ -22,6 +22,24 @@ const fundraisingRef = z.object({
 });
 
 export const outboxEvents = {
+  'regional_share.recorded': z.object({ shareId: z.string() }),
+  'regional_share.payout_recorded': z.object({
+    payoutId: z.string(),
+    region: z.enum(['north', 'central', 'south']),
+    directorUserId: z.string(),
+  }),
+  'regional_director.appointed': z.object({
+    region: z.enum(['north', 'central', 'south']),
+    userId: z.string(),
+    provinces: z.array(z.string()),
+  }),
+  'regional_director.revoked': z.object({
+    region: z.enum(['north', 'central', 'south']),
+    userId: z.string(),
+    feeStatus: z.enum(MEMBERSHIP_FEE_STATUS),
+    validUntil: z.iso.datetime().nullable(),
+    revokedAt: z.iso.datetime(),
+  }),
   'bot.bulk_due': z.strictObject({
     batchId: z.uuid(),
     cursor: z.number().int().min(0).max(499),
@@ -106,7 +124,9 @@ export const outboxEvents = {
   }),
   /** Nhắc phí (NA-04, D-57): mốc tự động hoặc `manual` khi Admin nhắc tay → thông báo chuông */
   'membership_fee.reminded': z.object({
-    items: z.array(z.object({ userId: z.string(), text: z.string() })).max(500),
+    items: z
+      .array(z.object({ userId: z.string(), text: z.string(), title: z.string().optional() }))
+      .max(500),
   }),
   'user.locked': z.object({ userId: z.string(), reason: z.string().nullable() }),
   'user.session_revoked': z.object({

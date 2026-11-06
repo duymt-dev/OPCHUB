@@ -2,7 +2,7 @@ import type { Locator, Page } from '@playwright/test';
 
 export type Side = 'proto' | 'app';
 export type Viewport = 1440 | 1366 | 390;
-export type Start = 'auth' | 'user' | 'admin' | 'unpaid';
+export type Start = 'auth' | 'user' | 'admin' | 'unpaid' | 'director';
 
 export interface StepCtx {
   page: Page;
@@ -12,7 +12,7 @@ export interface StepCtx {
 
 export interface Scenario {
   /** Explicit dataset precondition, identical native and MSW; never changes assertions. */
-  demo?: 'affiliate' | 'bot-history' | 'projects';
+  demo?: 'affiliate' | 'bot-history' | 'projects' | 'stores';
   id: string;
   name: string;
   /** Mặc định cả 1440 và 390 */

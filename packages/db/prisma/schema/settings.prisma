@@ -28,6 +28,17 @@ model AppSetting {
   @@map("app_settings")
 }
 
+/// Singleton encrypted webhook credential; plaintext returned only at rotation.
+model BankWebhookKey {
+  id        Int      @id @default(1)
+  keyEnc    Bytes    @map("key_enc")
+  hint      String
+  rotatedBy String?  @map("rotated_by")
+  rotatedAt DateTime @default(now()) @map("rotated_at") @db.Timestamptz(6)
+
+  @@map("bank_webhook_keys")
+}
+
 /// Một dòng; key mã hoá AES-256-GCM, không bao giờ trả ra ngoài
 model SmtpConfig {
   id         Int      @id @default(1)

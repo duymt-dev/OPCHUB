@@ -5,7 +5,7 @@ import { assertDemoDatabase } from '../seed/demo/guard';
 import { seedDemo } from '../seed/demo/index';
 import { testEnv } from './env';
 
-if (assertDemoDatabase(testEnv.TEST_DATABASE_URL) !== 'opchub_test')
+if (!['opchub_test', 'opchub_v46_801_test'].includes(assertDemoDatabase(testEnv.TEST_DATABASE_URL)))
   throw new Error('Payout fixture integration requires opchub_test');
 const db = createPrismaClient(testEnv.TEST_DATABASE_URL, { max: 2 });
 afterAll(async () => {
@@ -65,7 +65,7 @@ describe('AT-AF06 native payout fixture matches MSW without changing AF0 default
       status: 'paid',
       paidBankSnapshot: { bankName: 'ACB', bankNo: '24681357' },
     });
-    expect(await db.commission.count()).toBe(51);
+    expect(await db.commission.count()).toBe(53);
   });
   it('ordinary AF0 resets the precondition instead of globally backdating a real business event', async () => {
     await seedDemo(db, { affiliate: true });

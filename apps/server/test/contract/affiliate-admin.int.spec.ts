@@ -1,4 +1,5 @@
 import { afterAll, beforeAll, describe, it } from 'vitest';
+import { apiErrorSchema } from '@opchub/shared/api';
 import {
   affiliateAdminCustomersSchema,
   affiliateAdminPageSchema,
@@ -6,7 +7,6 @@ import {
   affiliateCommissionsSchema,
   affiliateDetailSchema,
   affiliateMonthsSchema,
-  affiliatePayoutResultSchema,
   affiliatePolicySchema,
   affiliateRateResultSchema,
   affiliateSummarySchema,
@@ -32,7 +32,7 @@ describe('Contract: Affiliate Admin (TIP-V2-402)', () => {
     await t.close();
   });
 
-  it('14 Admin endpoints parse đúng schema shared trên app thật', async () => {
+  it('13 Admin endpoints parse shared schemas; retired affiliate payout returns 404', async () => {
     const owner = await affiliateEarning(t);
     const cancelled = await affiliateEarning(t, owner);
     await t.prisma.db.affiliate.update({ where: { id: owner.affiliate.id }, data: AFFILIATE_BANK });
@@ -121,8 +121,9 @@ describe('Contract: Affiliate Admin (TIP-V2-402)', () => {
       'POST',
       '/admin/affiliates/:id/payouts',
       `/admin/affiliates/${owner.affiliate.id}/payouts`,
-      affiliatePayoutResultSchema,
+      apiErrorSchema,
       { token, json: { monthKey: '2026-09' } },
+      404,
     );
     const policy = await ep(
       t,

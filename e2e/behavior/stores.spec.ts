@@ -34,7 +34,7 @@ test.describe('Gian hàng địa phương', () => {
     const all = onServer ? 1 : 17;
     await expect(results(page)).toHaveText(`${all} kết quả`);
 
-    await page.getByRole('search').getByRole('textbox').fill('khongtontai');
+    await explore(page).getByRole('search').getByRole('textbox').fill('khongtontai');
     await page.getByRole('button', { name: 'Tìm kiếm', exact: true }).click();
     await expect(explore(page)).toContainText('Không tìm thấy giải pháp phù hợp.');
     await page.getByRole('button', { name: '↻ Đặt lại' }).click();

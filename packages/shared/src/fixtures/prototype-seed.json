@@ -1460,6 +1460,46 @@
       "date": "19/08/2026",
       "persona": "Kỹ sư",
       "groups": ["c3", "c6", "c2", "c5"]
+    },
+    {
+      "id": "m9",
+      "type": "biz",
+      "name": "Lê Minh Hải",
+      "email": "hai.lm@mediasoft.vn",
+      "cc": "vn",
+      "phone": "+84 905 312 668",
+      "org": "Media Soft",
+      "company": "Công ty CP Tập đoàn Media Soft",
+      "tax": "0401234567",
+      "field": "Phát triển mạng lưới",
+      "size": "1 người (OPC)",
+      "bizCountry": "Việt Nam",
+      "position": "Giám đốc Vùng Miền Trung & Tây Nguyên",
+      "verify": "verified",
+      "role": "Thành viên",
+      "date": "01/10/2026",
+      "persona": "Doanh nghiệp",
+      "groups": ["c4"]
+    },
+    {
+      "id": "m10",
+      "type": "biz",
+      "name": "Phạm Thu Hà",
+      "email": "ha.pt@mediasoft.vn",
+      "cc": "vn",
+      "phone": "+84 909 527 314",
+      "org": "Media Soft",
+      "company": "Công ty CP Tập đoàn Media Soft",
+      "tax": "0312345678",
+      "field": "Phát triển mạng lưới",
+      "size": "1 người (OPC)",
+      "bizCountry": "Việt Nam",
+      "position": "Giám đốc Vùng Miền Nam",
+      "verify": "verified",
+      "role": "Thành viên",
+      "date": "01/10/2026",
+      "persona": "Doanh nghiệp",
+      "groups": ["c1"]
     }
   ],
   "PROVINCES": [
@@ -2189,6 +2229,27 @@
       "role": "admin",
       "name": "Quản trị hệ thống",
       "label": "Quản trị viên (Admin)"
+    },
+    {
+      "email": "bao.tran@solobooks.vn",
+      "pwd": "User@2026",
+      "role": "user",
+      "meId": "m3",
+      "label": "Giám đốc Vùng"
+    },
+    {
+      "email": "hai.lm@mediasoft.vn",
+      "pwd": "User@2026",
+      "role": "user",
+      "meId": "m9",
+      "label": "Giám đốc Vùng"
+    },
+    {
+      "email": "ha.pt@mediasoft.vn",
+      "pwd": "User@2026",
+      "role": "user",
+      "meId": "m10",
+      "label": "Giám đốc Vùng"
     }
   ],
   "FEE_SEED": {

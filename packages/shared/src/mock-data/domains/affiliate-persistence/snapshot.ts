@@ -1,4 +1,6 @@
 import { affiliateMockState, syncMockAffiliates } from '../affiliate';
+import { captureMockRegionalSnapshot, restoreMockRegionalSnapshot } from '../regional-directors';
+import { captureRegionalShareState, restoreRegionalShareState } from '../regional-share-state';
 import { affiliateAdminState, paidSnapshot } from '../affiliate-admin/state';
 import {
   isMockAffiliateScenarioSeeded,
@@ -21,12 +23,16 @@ export function captureMockAffiliateSnapshot(): AffiliateSnapshot {
   const extra = affiliateAdminState();
   return affiliateSnapshotSchema.parse({
     version: 1,
+    referenceSeeded: state.referenceSeeded,
+    regional: captureMockRegionalSnapshot(),
+    regionalShares: captureRegionalShareState(),
     demoSeeded: isMockAffiliateScenarioSeeded(),
     welcomeSeen: captureMockWelcomeSeen(),
     webhooks: captureMockAffiliateWebhooks(),
     fees: db.fees,
     agents: [...state.agents],
     referrals: [...state.referrals],
+    referenceCommissions: [...state.referenceCommissions],
     payouts: [...state.payouts],
     knownFees: [...state.knownFees],
     clicks: [...state.clicks].map(([key, days]) => [key, [...days]]),
@@ -52,14 +58,18 @@ export function restoreMockAffiliateSnapshot(input: unknown): void {
   const state = affiliateMockState();
   const extra = affiliateAdminState();
   db.fees = data.fees;
+  restoreMockRegionalSnapshot(data.regional);
+  restoreRegionalShareState(data.regionalShares);
   db.seq = Math.max(db.seq, data.dbSeq);
   state.agents = new Map(data.agents);
   state.referrals = new Map(data.referrals);
+  state.referenceCommissions = new Map(data.referenceCommissions);
   state.payouts = new Map(data.payouts);
   state.knownFees = new Map(data.knownFees);
   state.clicks = new Map(data.clicks.map(([key, days]) => [key, new Map(days)]));
   state.seen = new Map(data.seen);
   state.seq = data.seq;
+  state.referenceSeeded = data.referenceSeeded;
   extra.snapshots = new Map(data.snapshots);
   extra.receipts = new Map(data.receipts);
   replaceMockAffiliatePolicy(data.policy);

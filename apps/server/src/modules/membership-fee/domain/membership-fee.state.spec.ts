@@ -1,11 +1,25 @@
 import { describe, expect, it } from 'vitest';
 import { addMonths, localPhone, nextPeriod } from './fee-period';
-import { canTransition, statusByValidUntil } from './membership-fee.state';
+import { canTransition, statusByValidUntil, statusAfterRevoke } from './membership-fee.state';
 
 const now = new Date('2026-10-17T00:00:00Z');
 const days = (n: number) => new Date(now.getTime() + n * 86_400_000);
 
 describe('máy trạng thái phí', () => {
+  it('D-120 only explicit revocation restores a fee; payment cannot remove exemption', () => {
+    for (const s of ['trial', 'pending_payment', 'active', 'expiring', 'expired'] as const) {
+      expect(canTransition(s, 'regional_director')).toBe(true);
+    }
+    expect(canTransition('regional_director', 'active')).toBe(false);
+    expect(canTransition('regional_director', 'active', 'revoke')).toBe(true);
+    expect(canTransition('regional_director', 'expired', 'revoke')).toBe(false);
+  });
+  it('statusAfterRevoke preserves trial/active, recalculates expiring, otherwise pending', () => {
+    expect(statusAfterRevoke('trial', days(20), now)).toBe('trial');
+    expect(statusAfterRevoke('active', days(40), now)).toBe('active');
+    expect(statusAfterRevoke('active', days(10), now)).toBe('expiring');
+    expect(statusAfterRevoke('active', days(0), now)).toBe('pending_payment');
+  });
   it('chỉ cho chuyển hợp lệ', () => {
     expect(canTransition('pending_payment', 'active')).toBe(true);
     expect(canTransition('pending_payment', 'expired')).toBe(false);

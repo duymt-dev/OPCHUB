@@ -102,10 +102,10 @@ const onboardingMatches = (m: AdminMember, f: AdminMemberFilter['onboarding']) =
  * D-107 lọc phí (như server): Đã đóng phí = active / expiring; Miễn phí 3 tháng = trial;
  * Chưa đóng / Hết hạn = còn lại (gồm TV chưa có dòng phí)
  */
-const feeGroupOf = (id: string): 'paid' | 'trial' | 'unpaid' => {
+const feeGroupOf = (id: string): 'paid' | 'trial' | 'unpaid' | 'regional_director' => {
   const s = mockDb().fees.find((f) => f.userId === id)?.status;
   if (s === 'active' || s === 'expiring') return 'paid';
-  return s === 'trial' ? 'trial' : 'unpaid';
+  return s === 'regional_director' ? s : s === 'trial' ? 'trial' : 'unpaid';
 };
 
 /** Vai trò đăng ký của seed: id (expert…) từ nhãn "Bạn là"; DN = `business` */

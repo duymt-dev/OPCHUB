@@ -1,5 +1,7 @@
+import { StorePublicService } from './store-public.service';
 import { Injectable } from '@nestjs/common';
-import type { AccountType } from '@opchub/shared';
+import type { StoreOwner } from '../domain/store-owner.types';
+export type { StoreOwner } from '../domain/store-owner.types';
 import {
   firstStoreNeed,
   type StoreDetail,
@@ -31,11 +33,6 @@ function assertSteps(s: StoreNeedInput): void {
   if (n) throw invalid(`step.${n.step}`, STORE_NEED_MESSAGES[n.key]);
 }
 
-export interface StoreOwner {
-  id: string;
-  accountType: AccountType;
-}
-
 /**
  * Gian hàng của tôi (UT-09, D-97): trình tạo 5 bước, Xuất bản / về nháp — không qua duyệt (D-75).
  * D-114 S8: gian hàng đang hiển thị "Lưu thay đổi" giữ hiển thị nên phải đủ 5 bước như Xuất bản.
@@ -48,6 +45,7 @@ export class StoreOwnerService {
     private readonly media: StoreMediaService,
     private readonly gc: MediaGcService,
     private readonly explore: StoreExploreService,
+    private readonly publicPage: StorePublicService,
     private readonly outbox: OutboxService,
     private readonly needs: NeedExploreRepository,
   ) {}
@@ -83,6 +81,7 @@ export class StoreOwnerService {
       await this.repo.replace(tx, cur.id, next);
       await this.gc.enqueueRemoved(tx, removed, 'store-media');
     });
+    await this.publicPage.invalidate(cur.slug);
     if (cur.status === 'published') await this.explore.invalidate();
     return this.mine(u);
   }
@@ -104,6 +103,7 @@ export class StoreOwnerService {
       });
       if (!ok) throw conflict('Gian hàng đã thay đổi, vui lòng tải lại');
       await this.explore.invalidate();
+      await this.publicPage.invalidate(cur.slug);
     }
     return this.mine(u);
   }
@@ -116,6 +116,7 @@ export class StoreOwnerService {
         this.repo.step(tx, cur.id, 'unpublish', new Date()),
       );
       await this.explore.invalidate();
+      await this.publicPage.invalidate(cur.slug);
     }
     return this.mine(u);
   }

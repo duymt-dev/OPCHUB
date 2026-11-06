@@ -68,7 +68,7 @@ Method: a static scan of every `data-screen-label`, `sc-if` flag (298 flags) and
 
 | ID | Area | Screen / state | Reproducible action sequence | Suggested route | Viewports |
 |---|---|---|---|---|---|
-| P-01 | Portal | Dashboard ("LIVE HOẠT ĐỘNG CỘNG ĐỒNG · OPC HUB", "Thành viên đang tham gia hoạt động", "Đang trực tuyến", "Hoạt động trực tiếp realtime", "Quốc gia", "Danh sách thành viên tham gia hoạt động LIVE", "Tỉ lệ thành viên hoạt động hôm nay", "Tin nhắn mới nhất", "Hoạt động trong ngày", "Thảo luận mới trong cộng đồng"). Live sim ticks every 3 s; freeze or mask it for parity | LOGIN-USER | `/dashboard` | 1440, 390 |
+| P-01 | Portal | Dashboard v4.6: greeting, onboarding and rule-based store need matches (0-3 rows); full-page capture, no masks. | LOGIN-USER; native demo: stores | /dashboard | 1440, 390 |
 | P-02 | Portal | Dashboard: member picked (member highlighted in the table/grid) | P-01 → click an avatar in "Đang trực tuyến" or a seat tile in the LIVE grid | `/dashboard` | 1440, 390 |
 | P-03 | Portal | Dashboard: country expanded / "Xem thêm N tỉnh/thành" / "Thu gọn" | P-01 → under "Quốc gia" click "Việt Nam" (VN is open by default; click another country to expand it) → "Xem thêm … tỉnh/thành" | `/dashboard` | 1440, 390 |
 | P-04 | Portal | Dashboard: LIVE legend filter (Tất cả / chat / online / event / off) + pagination ("8 / trang"…"24 / trang") | P-01 → click a legend chip above the LIVE grid; change the page-size select; click page numbers | `/dashboard?live=chat&page=2` | 1440, 390 |
@@ -397,3 +397,67 @@ Trạng thái ver2 đã có sẵn id cũ (không thêm): popup V4 + 6 dịch v�
 | D-39-BULK-TYPE | Admin | Custom-type editor | Open bulk > add conversation type | /bots/scripts | 1440, 390 |
 | D-39-BULK-FORM | Admin | Populated form | Open bulk > one topic, one script, Hanoi group | /bots/scripts | 1440, 390 |
 | D-39-BULK-RESULT | Admin | Generated results | Populated form > generate > reveal results | /bots/scripts | 1440, 390 |
+
+### TIP-V46-801 — GĐ Vùng
+
+| ID | Area | State | Prototype actions | App route | Viewports |
+|---|---|---|---|---|---|
+| D-120-GCFG | Admin | Cấu hình GĐ Vùng | Affiliate > Cấu hình GĐ Vùng | /affiliate?tab=gcfg | 1440, 390 |
+| D-120-GCFG-RO | Admin | Kế toán chỉ xem | Cài đặt > xem thử Kế toán > Affiliate > Cấu hình GĐ Vùng | /affiliate?tab=gcfg | 1440, 390 |
+| D-120-GDV | Admin | Danh sách GĐ Vùng / sổ chia sẻ | Affiliate > GĐ Vùng | /affiliate?tab=gdv | 1440, 390 — 802 đã đo, chưa đạt cả hai |
+| D-120-GDV-OPEN | Admin | Khoản ghi nhận Miền Bắc + lịch sử | Affiliate > GĐ Vùng > mở Miền Bắc | /affiliate?tab=gdv | 1440, 390 — 802 đã đo, chưa đạt |
+| D-18-GDV | Admin | Miễn phí · GĐ Vùng | Phí thành viên > Miễn phí · GĐ Vùng | /fees?status=gdv | 1440, 390 |
+| D-78-GDV | Admin | Email hệ thống GĐ Vùng | Marketing > Email tự động | /marketing?tab=auto | 1440, 390 |
+
+### TIP-V46-803 — đo ở source 87253d95
+
+| ID | Route/state | 1440 | 390 |
+|---|---|---|---|
+| D-84 | /affiliate?tab=com | 6.614% FAIL | 3.662% FAIL |
+| D-84-AFF | /affiliate?tab=aff | 5.871% FAIL | 9.611% FAIL |
+| D-84-AFF-Q | /affiliate?tab=aff&q=HAOPC | 1.702% PASS | 24.587% FAIL |
+| D-84-POL | /affiliate?tab=cfg | 3.917% FAIL | 10.151% FAIL |
+| D-85 | /affiliate/:id | 1.089% PASS | 7.488% FAIL |
+| D-85-CUS | /affiliate/:id?tab=customers | 8.453% FAIL | 16.518% FAIL |
+
+Đã đo cả 8 D-84-COM-* substates ở 1440/390; xem bảng baseline → cuối trong
+[TIP-803 completion](../TIP-V46-803-completion.md#com-substates--so-với-baseline-mới).
+Ngưỡng 3% giữ nguyên; đây là PARTIAL, không đánh dấu hoàn tất parity.
+
+## V4.6 — TIP-V46-804
+
+| ID | Khu vực | Trạng thái / thao tác | Route app | Viewport |
+|---|---|---|---|---|
+| P-V46-REG-BANNER | Portal m3 | Đăng nhập GĐ Vùng Bắc → Mạng lưới Affiliate, banner trên cảnh báo STK | /affiliate | 1440, 390 |
+| P-V46-REG | Portal m3 | Banner → Xem Vùng của tôi; bảng vùng chỉ đọc | /affiliate?tab=reg | 1440, 390 |
+
+P-97/P-98 được đo baseline trước thay đổi và đo lại; xem TIP-V46-804-completion.md. Ngưỡng 3% giữ nguyên.
+# V4.6 — TIP-V46-805 (D-134: reference + owner image review)
+
+| ID | Khu vực | Trạng thái / thao tác | Route app | Viewport |
+|---|---|---|---|---|
+| D-V46-RENEW | Admin | Cài đặt → Nhắc gia hạn; ba mốc, hai kênh D-125, danh sách đúng đối tượng | /settings?tab=renewal | 1440, 390 |
+
+Đo baseline D-66 → D-75 trước build 805; lưu số đo trước/sau trong completion.
+Không sinh sáu khoản phí giả để ép bảng giống prototype; fixture opt-in 12 ngày chỉ cho acceptance.
+
+## V4.6 — TIP-V46-806 (D-134, D-135)
+
+| ID | Khu vực | Trạng thái / thao tác | Route app | Viewport |
+|---|---|---|---|---|
+| D-V46-BANK | Admin | Cài đặt → Đối soát ngân hàng; cổng, webhook, tự kích hoạt và năm giao dịch mẫu | /settings?tab=bank | 1440, 390 |
+
+Không mask hoặc nới ngưỡng 3%. Cổng chưa hỗ trợ và nút fake theo D-135,
+cú pháp OPCHUB theo D-123; số liệu giao dịch là fixture, không sửa ledger để khớp ảnh.
+
+### TIP-V46-808 — Tìm kiếm chung
+
+| ID | App | Trạng thái | Route | Viewport |
+|---|---|---|---|---|
+| P-V46-SEARCH | Portal | Topbar gõ MediaSoft; mobile ẩn ô | /dashboard |1440,390 |
+| D-V46-SEARCH | Admin | Topbar gõ MediaSoft; mobile ẩn ô | /overview |1440,390 |
+
+Không mask, không nới ngưỡng. Visibility/quyền theo TIP; không lộ dữ liệu ẩn để khớp prototype.
+
+| P-V46-PUBLIC-CARD | Portal | Trang công khai in edit wizard | Gian hàng địa phương → Gian hàng của tôi → Chỉnh sửa gian hàng | `/stores/mine` edit | 1440,390 |
+| P-V46-GUEST | Portal | Anonymous business page, no prototype counterpart | Actual guest URL only; owner reviews images | `/g/htx-ca-phe-hoa-phu` | 1440,390 |

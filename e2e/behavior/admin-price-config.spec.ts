@@ -33,7 +33,9 @@ test.describe('Admin · Cấu hình bảng giá', () => {
     const names = await nav.allInnerTexts();
     const i = names.findIndex((n) => n.includes('Cấu hình bảng giá'));
     expect(names[i - 1]).toContain('Gửi email (SMTP)');
-    expect(names[i + 1]).toContain('Tài khoản quản trị');
+    expect(names[i + 1]).toContain('Nhắc gia hạn');
+    expect(names[i + 2]).toContain('Đối soát ngân hàng');
+    expect(names[i + 3]).toContain('Tài khoản quản trị');
     const per = box(page, 'Gói Cá nhân');
     await expect(per.getByLabel('Giá niêm yết / tháng (đ)')).toHaveValue('200000');
     await expect(per.getByLabel('Giá bán / năm (đ)')).toHaveValue('1200000');

@@ -26,6 +26,7 @@ interface Agent {
   bank: AffiliateBank | null;
 }
 interface Referral {
+  customerYear?: number | undefined;
   userId: string;
   agentId: string;
   row: AffiliateReferrals['items'][number];
@@ -34,8 +35,10 @@ interface Referral {
   plan?: CommissionPlan | undefined;
 }
 interface State {
+  referenceSeeded: boolean;
   agents: Map<string, Agent>;
   referrals: Map<string, Referral>;
+  referenceCommissions: Map<string, Referral>;
   clicks: Map<string, Map<string, number>>;
   seen: Map<string, number>;
   payouts: Map<string, AffiliatePayouts['items']>;
@@ -65,8 +68,10 @@ export function affiliateMockState(): State {
   let state = states.get(db);
   if (!state) {
     state = {
+      referenceSeeded: false,
       agents: new Map(),
       referrals: new Map(),
+      referenceCommissions: new Map(),
       clicks: new Map(),
       seen: new Map(),
       payouts: new Map(),
@@ -114,6 +119,8 @@ export function syncMockAffiliates() {
   for (const r of s.referrals.values()) {
     const fee = mockDb().fees.find((f) => f.userId === r.userId);
     if (r.row.status !== 'pending' || !fee?.paidAt) continue;
+    const rate = s.agents.get(r.agentId)?.rate ?? readMockAffiliatePolicy().defaultRate;
+    if (mockCommissionAmount(fee.amount, rate) <= 0) continue;
     // D-110: mã luôn hoạt động — không void theo phí của đại lý
     r.row.status = 'recorded';
     r.row.rate = s.agents.get(r.agentId)?.rate ?? readMockAffiliatePolicy().defaultRate;
@@ -185,6 +192,8 @@ export function attachMockAffiliate(me: Me, code?: string): void {
     agentId: a.userId,
     month: monthOf(Date.now()),
     row: {
+      customerYear: 1,
+      source: 'membership',
       id: `ref-${++s.seq}`,
       name: me.fullName,
       plan: '—',
@@ -222,6 +231,8 @@ export function myMockAffiliate(userId: string, origin: string): MyAffiliate {
     rate = a?.rate ?? cfg.defaultRate;
   // BR-AFF-REV (v4.2 `perT`): hoa hồng theo gói thực trả — Cá nhân, Doanh nghiệp, Gói Gọi vốn
   const policy = {
+    renewalRate: cfg.renewalRate,
+    renewalMaxYear: cfg.renewalMaxYear,
     rate,
     perAmount: mockCommissionAmount(prices.per.y, rate),
     bizAmount: mockCommissionAmount(prices.biz.y, rate),
@@ -231,7 +242,7 @@ export function myMockAffiliate(userId: string, origin: string): MyAffiliate {
   };
   if (!a) return { state: 'locked', policy };
   const month = monthOf(Date.now()),
-    refs = [...s.referrals.values()].filter((r) => r.agentId === userId);
+    refs = referenceRows(s, userId);
   const valid = refs.filter((r) => r.row.status === 'recorded' || r.row.status === 'paid');
   const since = new Date(Date.now() + 7 * 3600000 - 29 * 86400000).toISOString().slice(0, 10);
   const clicks30d = [...(s.clicks.get(userId) ?? [])]
@@ -259,11 +270,38 @@ export function myMockAffiliate(userId: string, origin: string): MyAffiliate {
   };
 }
 
+function referenceRows(s: State, userId: string) {
+  const rows = [...s.referrals.values(), ...s.referenceCommissions.values()].filter(
+    (r) => r.agentId === userId,
+  );
+  const unique = [...new Map(rows.map((r) => [r.row.id, r])).values()];
+  const positive = unique.filter((r) => r.row.commission > 0);
+  const paidCustomers = new Set(positive.map((r) => r.userId));
+  const pending = [...s.referrals.values()].filter(
+    (r) => r.agentId === userId && r.row.commission <= 0 && !paidCustomers.has(r.userId),
+  );
+  return [
+    ...positive,
+    ...pending.map((r) => ({
+      ...r,
+      row: {
+        ...r.row,
+        status: r.row.status === 'void' ? ('void' as const) : ('pending' as const),
+        plan: '—',
+        feeAmount: 0,
+        commission: 0,
+        rate: 0,
+        cancelReason: null,
+      },
+    })),
+  ];
+}
+
 export function mockAffiliateReferrals(userId: string, q: AffiliatePageQuery): AffiliateReferrals {
-  const all = [...syncMockAffiliates().referrals.values()].filter((r) => r.agentId === userId);
+  const all = referenceRows(syncMockAffiliates(), userId);
   const list = all
     .filter((r) => !q.month || r.month === q.month)
-    .sort((a, b) => b.row.date.localeCompare(a.row.date));
+    .sort((a, b) => b.row.date.localeCompare(a.row.date) || b.row.id.localeCompare(a.row.id));
   const items = list.slice((q.page - 1) * q.size, q.page * q.size).map(({ row }) => {
     const words = row.name.trim().split(/\s+/);
     return {
@@ -300,7 +338,7 @@ export function mockAffiliateBank(userId: string, bank: AffiliateBank): MockResu
 }
 
 export function mockAffiliatePayouts(userId: string, q: AffiliatePageQuery): AffiliatePayouts {
-  const rows = affiliateMockState().payouts.get(userId) ?? [];
+  const rows = (affiliateMockState().payouts.get(userId) ?? []).filter((r) => r.amount > 0);
   return {
     items: rows.slice((q.page - 1) * q.size, q.page * q.size),
     page: q.page,

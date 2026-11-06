@@ -16,6 +16,7 @@ describe('REQ-312 Affiliate Admin presentation', () => {
           totalCommission: 120000,
           payable: 100,
           paid: 200,
+          regionalTotal: 0,
           netRevenue: 480000,
           plans: { business: 0, personal: 1, fundraising: 0 },
         }}
@@ -45,6 +46,7 @@ describe('REQ-312 Affiliate Admin presentation', () => {
           totalCommission: 1234,
           payable: 33,
           paid: 777,
+          regionalTotal: 0,
           netRevenue: 123,
           plans: { business: 2, personal: 5, fundraising: 1 },
         }}

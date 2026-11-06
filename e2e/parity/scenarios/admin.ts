@@ -63,6 +63,8 @@ export const ADMIN_SCENARIOS: Scenario[] = [
     name: 'Admin AppShell · Tổng quan',
     start: 'admin',
     mask: OVERVIEW_CHART_MASK,
+    fullPage: true,
+    steps: (c) => waitText(c, 'Chuyển đổi miễn phí → trả phí theo vùng'),
   },
   ...ADMIN_MEMBERS,
   ...ADMIN_GROUPS,

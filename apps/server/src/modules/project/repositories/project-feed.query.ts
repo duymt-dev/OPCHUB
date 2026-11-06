@@ -1,5 +1,5 @@
 import { Prisma } from '@opchub/db';
-import { usableFeeStatuses } from '@opchub/shared';
+import { usableFeeSql } from '@/common/auth';
 import type { ProjectSort } from '@opchub/shared/api-domains';
 import type { ExploreFilter } from './project-feed.types';
 
@@ -11,13 +11,12 @@ const ORDER: Record<ProjectSort, string> = {
 };
 
 /** EXISTS keeps fee predicates inside the eligible-owner lookup, rather than OR over LEFT JOINs. */
-function visible(userId: string, now: Date) {
+export function visible(userId: string, now: Date) {
   return Prisma.sql`p.status = 'published' AND p.deleted_at IS NULL AND (
     p.owner_id = ${userId} OR EXISTS (
       SELECT 1 FROM users u JOIN membership_fees f ON f.user_id = u.id
       WHERE u.id = p.owner_id
-        AND f.status IN (${Prisma.join(usableFeeStatuses().map((status) => Prisma.sql`${status}::membership_fee_status`))})
-        AND f.valid_until > ${now}
+        AND ${usableFeeSql('f', now)}
       AND ((p.visibility = 'public' AND u.status = 'active')
     OR EXISTS (SELECT 1 FROM project_members m WHERE m.project_id = p.id AND m.user_id = ${userId})
     OR EXISTS (

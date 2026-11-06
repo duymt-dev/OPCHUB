@@ -33,6 +33,6 @@ export async function affiliateDetail(c: StepCtx) {
   await tap(c, 'Lê Thu Hà');
   await c.page.waitForLoadState('networkidle');
   await tick(c, 1000);
-  await waitText(c, 'Đối soát & chi trả theo tháng');
+  await waitText(c, c.side === 'app' ? 'Đối soát & chi trả theo tháng' : 'Đối soát theo tháng');
   await resetScroll(c);
 }

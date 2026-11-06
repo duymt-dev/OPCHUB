@@ -1,9 +1,8 @@
 'use client';
 
 import { UserAvatar } from '@opchub/ui';
-import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
-import { fetchAuditLog, settingsKeys } from '../api';
+import { useAuditLog } from '../hooks/use-audit-log';
 import { useRelTime } from '../hooks/use-rel-time';
 import styles from './audit-log.module.css';
 import ui from './settings.module.css';
@@ -12,8 +11,7 @@ import ui from './settings.module.css';
 export function AuditLogTab() {
   const t = useTranslations('settings.log');
   const rel = useRelTime();
-  const q = useQuery({ queryKey: settingsKeys.log, queryFn: fetchAuditLog });
-  const rows = q.data ?? [];
+  const { query: q, csv, rows } = useAuditLog();
 
   return (
     <section className={ui.card}>
@@ -21,6 +19,23 @@ export function AuditLogTab() {
         <div className={ui.h18}>{t('heading')}</div>
         <div className={ui.muted}>{t('headingSub')}</div>
       </div>
+      <button
+        className={styles.button}
+        type="button"
+        disabled={csv.isPending || !q.isSuccess}
+        onClick={() => csv.mutate()}
+      >
+        {t('export')}
+      </button>
+      {q.isPending ? <div role="status">{t('loading')}</div> : null}
+      {q.isError ? (
+        <div role="alert">
+          {t('failed')}{' '}
+          <button type="button" onClick={() => void q.refetch()}>
+            {t('retry')}
+          </button>
+        </div>
+      ) : null}
       <ul className={styles.list} aria-label={t('heading')}>
         {rows.map((l) => (
           <li key={l.id} className={styles.row}>
@@ -34,6 +49,16 @@ export function AuditLogTab() {
         ))}
         {q.isSuccess && !rows.length ? <li className={styles.empty}>{t('empty')}</li> : null}
       </ul>
+      {q.hasNextPage ? (
+        <button
+          className={styles.button}
+          type="button"
+          disabled={q.isFetchingNextPage}
+          onClick={() => void q.fetchNextPage()}
+        >
+          {t('more')}
+        </button>
+      ) : null}
     </section>
   );
 }

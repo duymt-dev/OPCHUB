@@ -22,6 +22,13 @@ export interface CommissionNotice {
 /** Bảng `referrals` + `commissions` (AF-R03 → R06) */
 @Injectable()
 export class CommissionRepository {
+  async referrerForShare(tx: DbTx, referredUserId: string) {
+    const [row] = await tx.$queryRaw<{ affiliateId: string; affiliateUserId: string }[]>`
+      SELECT a.id AS "affiliateId", a.user_id AS "affiliateUserId"
+      FROM referrals r JOIN affiliates a ON a.id = r.affiliate_id
+      WHERE r.referred_user_id = ${referredUserId} AND r.status IN ('pending', 'converted')`;
+    return row ?? null;
+  }
   /** Referral `pending` của người vừa đóng phí + đại lý (1 query, khoá dòng referral) */
   async pendingReferral(tx: DbTx, referredUserId: string): Promise<PendingReferral | null> {
     const rows = await tx.$queryRaw<PendingReferral[]>`
@@ -55,7 +62,7 @@ export class CommissionRepository {
     return r.count > 0;
   }
 
-  /** UQ referred_user_id + fee_period_id: chạy lại không ghi khoản thứ hai */
+  /** UQ fee_period_id: chạy lại cùng kỳ không ghi khoản thứ hai (D-131) */
   async record(
     tx: DbTx,
     row: {
@@ -66,15 +73,16 @@ export class CommissionRepository {
       plan: 'personal' | 'business';
       amount: number;
       rate: number;
+      customerYear: number;
       monthKey: string;
     },
   ): Promise<string | null> {
     const rows = await tx.$queryRaw<{ id: string }[]>`
       INSERT INTO commissions (id, affiliate_id, referred_user_id, fee_period_id, list_amount, plan,
-                               amount, rate, status, month_key)
+                               amount, rate, status, month_key, customer_year)
       VALUES (gen_random_uuid()::text, ${row.affiliateId}, ${row.referredUserId}, ${row.feePeriodId},
               ${row.listAmount}, ${row.plan}::commission_plan, ${row.amount}, ${row.rate}, 'recorded',
-              ${row.monthKey})
+              ${row.monthKey}, ${row.customerYear})
       ON CONFLICT DO NOTHING
       RETURNING id`;
     return rows[0]?.id ?? null;
@@ -104,15 +112,16 @@ export class CommissionRepository {
       listAmount: number;
       amount: number;
       rate: number;
+      customerYear: number;
       monthKey: string;
     },
   ): Promise<string | null> {
     const rows = await tx.$queryRaw<{ id: string }[]>`
       INSERT INTO commissions (id, affiliate_id, referred_user_id, fundraising_id, source, plan,
-                               list_amount, amount, rate, status, month_key)
+                               list_amount, amount, rate, status, month_key, customer_year)
       VALUES (gen_random_uuid()::text, ${row.affiliateId}, ${row.referredUserId},
               ${row.fundraisingId}, 'fundraising', 'fundraising', ${row.listAmount}, ${row.amount},
-              ${row.rate}, 'recorded', ${row.monthKey})
+              ${row.rate}, 'recorded', ${row.monthKey}, ${row.customerYear})
       ON CONFLICT DO NOTHING
       RETURNING id`;
     return rows[0]?.id ?? null;

@@ -4,13 +4,15 @@
   "program": "CHƯƠNG TRÌNH AFFILIATE OPC HUB",
   "locked": {
     "title": "Link giới thiệu của bạn đang được khởi tạo",
-    "description": "Mọi thành viên đều có mã và link affiliate riêng ngay khi đăng ký. Mỗi thành viên bạn giới thiệu trả phí (sau 3 tháng miễn phí), bạn nhận <b>{rate}%</b> hoa hồng ({per} (Cá nhân) · {biz} (Doanh nghiệp) · {fund} (Gói Gọi vốn {fundRate}%)).",
+    "description": "Mọi thành viên đều có mã và link affiliate riêng ngay khi đăng ký. Mỗi thành viên bạn giới thiệu trả phí (sau 3 tháng miễn phí), bạn nhận <b>{rate}%</b> hoa hồng ({per} (Cá nhân) · {biz} (Doanh nghiệp) · {fund} (Gói Gọi vốn {fundRate}%)) ở năm 1, {renewalRate}% ở năm 2–{renewalMaxYear} khi khách gia hạn.",
     "pay": "Thanh toán phí thành viên"
   },
   "paused": "Mã đang tạm dừng — gia hạn phí để tiếp tục nhận hoa hồng",
   "hero": {
     "title": "Giới thiệu thành viên mới, nhận {rate}% hoa hồng",
-    "description": "Mỗi người đăng ký qua link của bạn và thanh toán phí thành viên 12 tháng, bạn nhận <b>{per} (Cá nhân) · {biz} (Doanh nghiệp) · {fund} (Gói Gọi vốn {fundRate}%)</b>. Link được ghi nhận trong {days} ngày."
+    "description": "Mỗi người đăng ký qua link của bạn và thanh toán phí thành viên 12 tháng, bạn nhận <b>{per} (Cá nhân) · {biz} (Doanh nghiệp) · {fund} (Gói Gọi vốn {fundRate}%)</b>. Link được ghi nhận trong {days} ngày.",
+    "rateBadge": "Hoa hồng <b>{rate}%</b>",
+    "cookieBadge": "Link ghi nhận <b>{days} ngày</b>"
   },
   "bank": {
     "missing": "Chưa có số tài khoản nhận hoa hồng.",
@@ -95,7 +97,10 @@
       "empty": "Chưa phát sinh",
       "paid": "Đã chi trả",
       "waiting": "Chờ chi trả ngày {date}"
-    }
+    },
+    "year": "Năm {year}",
+    "pendingPlan": "Vừa đăng ký · chờ thanh toán phí",
+    "renewalYear": "Năm {year} · gia hạn"
   },
   "payouts": {
     "description": "Hoa hồng được chuyển khoản 1 lần vào ngày cuối mỗi tháng",
@@ -111,5 +116,53 @@
       "status": "Trạng thái"
     },
     "paid": "Đã chuyển khoản"
+  },
+  "banner": {
+    "title": "Bạn là Giám đốc Vùng {label} · {name}",
+    "description": "xem doanh thu vùng, phần được chia và lịch sử Media Soft chi trả.",
+    "open": "Xem Vùng của tôi"
+  },
+  "region": {
+    "tab": "Vùng của tôi",
+    "badge": "GĐ Vùng",
+    "title": "Vùng của tôi · GĐ Vùng {label} · {name}",
+    "provinces": "{label} · {count} tỉnh/thành: {provinces}",
+    "readOnly": "Chỉ xem",
+    "note": "Chỉ tính thành viên đăng ký qua link affiliate thuộc vùng. Media Soft chi trả phần GĐ Vùng vào ngày cuối tháng tới tài khoản <b>{bank}</b>. GĐ Vùng tự chia cho Trưởng nhóm & Affiliate ngoài hệ thống.",
+    "revenue": "Doanh thu thực thu của vùng",
+    "share": "Phần GĐ Vùng được chia",
+    "paid": "Media Soft đã chi trả",
+    "due": "Chờ chi cuối tháng",
+    "transactions": "{count} giao dịch qua link affiliate",
+    "yearRule": "Theo tỷ lệ năm của khách",
+    "paidMonths": "{count} tháng",
+    "dueDate": "Ngày cuối tháng {month}",
+    "yearsTitle": "Phần được chia theo năm của khách",
+    "customerYear": "Năm của khách",
+    "percent": "Tỷ lệ GĐV",
+    "count": "Giao dịch",
+    "revenueShort": "Doanh thu",
+    "shareShort": "Phần GĐ Vùng",
+    "fromFourth": "Từ năm 4 trở đi",
+    "firstYear": "Năm 1 · khách mới",
+    "renewalYear": "Năm {year} · gia hạn",
+    "affiliatesTitle": "Affiliate trong vùng · căn cứ để chia cho cấp dưới",
+    "affiliate": "Affiliate",
+    "customers": "Khách",
+    "broughtRevenue": "Doanh thu mang về",
+    "regionShare": "Phần vùng nhận",
+    "more": "+ {count} affiliate khác",
+    "empty": "Chưa có giao dịch qua link affiliate trong vùng.",
+    "monthsTitle": "Lịch sử Media Soft chi trả theo tháng",
+    "month": "Tháng",
+    "amount": "Số tiền",
+    "status": "Trạng thái",
+    "paidAt": "Ngày chi trả",
+    "emptyMonths": "Chưa có kỳ chi trả nào.",
+    "monthValue": "Tháng {month}",
+    "statusLabels": {
+      "paid": "Đã chi trả",
+      "pending": "Chờ chi"
+    }
   }
 }

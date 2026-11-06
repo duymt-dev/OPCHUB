@@ -1,3 +1,4 @@
+import { searchHandlers } from './search';
 import { accountHandlers } from './account';
 import { affiliateHandlers } from './affiliate';
 import { authHandlers } from './auth';
@@ -44,3 +45,5 @@ handlers.unshift(...investorBridgeHandlers);
 handlers.unshift(...sessionHandlers);
 import { affiliateDemoHandlers } from './affiliate-demo';
 handlers.unshift(...affiliateDemoHandlers);
+
+handlers.push(...searchHandlers);

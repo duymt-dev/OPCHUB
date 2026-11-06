@@ -4,6 +4,7 @@ import type { StoreDetail } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
 import { useMyStoreDashboard } from '../../hooks/use-stores';
 import { storeShortName } from '../../model';
+import { PublicPageCard } from './public-page-card';
 import { DashChart } from './dash-chart';
 import { DashInfo, DashItems } from './dash-cards';
 import d from './dashboard.module.css';
@@ -115,6 +116,7 @@ export function StoreDashboard({ store, onEdit, onView }: Props) {
         <DashInfo store={store} onEdit={() => onEdit()} onView={onView} />
         <DashChart days={s?.days ?? []} />
       </div>
+      <PublicPageCard />
       <div className={d.row}>
         <DashItems store={store} onManage={() => onEdit(4)} />
       </div>

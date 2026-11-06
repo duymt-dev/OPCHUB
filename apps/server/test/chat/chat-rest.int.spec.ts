@@ -10,7 +10,7 @@ import {
   roomMembersSchema,
 } from '@opchub/shared/api-domains';
 import { randomUUID } from 'node:crypto';
-import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { z } from 'zod';
 import { addMember, createGroup, removeTestGroups, tokenOf } from '../factories/group.factory';
 import { AuthStateService } from '@/common/auth';
@@ -30,6 +30,7 @@ const rooms = z.object({ items: z.array(chatRoomSchema) });
 describe('Chat REST (TIP-B23)', () => {
   let t: TestApp;
   let store: TempStorage;
+  const caseGroupIds: string[] = [];
 
   beforeAll(async () => {
     // TIP-V2-111: tệp/ảnh chat đi presign → storage local tạm (không cần MinIO)
@@ -44,9 +45,15 @@ describe('Chat REST (TIP-B23)', () => {
   beforeEach(async () => {
     await flushAuthState(t);
   });
+  afterEach(async () => {
+    // Isolate this case without deleting other suites' groups or changing the100-row API.
+    await t.prisma.db.group.deleteMany({ where: { id: { in: caseGroupIds } } });
+    caseGroupIds.length = 0;
+  });
 
   async function setup() {
     const g = await createGroup(t);
+    caseGroupIds.push(g.id);
     const owner = await createUser(t, { fee: 'active' });
     const mem = await createUser(t, { fee: 'active' });
     await addMember(t, g.id, owner.id, 'owner');

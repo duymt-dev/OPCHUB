@@ -12,7 +12,20 @@
     "logout": "ចាកចេញ",
     "upcoming": "ព្រឹត្តិការណ៍ខាងមុខ",
     "viewAll": "មើលទាំងអស់",
-    "memberSub": "សមាជិក OPC"
+    "memberSub": "សមាជិក OPC",
+    "globalSearch": {
+      "placeholder": "ស្វែងរកហាង តម្រូវការ គម្រោង ក្រុម…",
+      "empty": "រកមិនឃើញលទ្ធផល",
+      "clear": "សម្អាតការស្វែងរក",
+      "groups": {
+        "store": "ហាង",
+        "need": "តម្រូវការក្នុងតំបន់",
+        "project": "គម្រោង OPC",
+        "group": "ក្រុមសហគមន៍",
+        "member": "សមាជិក"
+      },
+      "members": "សមាជិក {n} នាក់"
+    }
   },
   "nav": {
     "dashboard": "Dashboard",

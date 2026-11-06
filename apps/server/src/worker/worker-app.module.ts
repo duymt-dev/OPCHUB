@@ -1,4 +1,6 @@
 import { Module } from '@nestjs/common';
+import { RegionalDirectorCoreModule } from '@/modules/regional-director';
+import { RegionalDirectorProcessor } from './processors/regional-director.processor';
 import { CoreModule } from '@/common/core.module';
 import { AccountCoreModule } from '@/modules/account';
 import { AffiliateCoreModule } from '@/modules/affiliate';
@@ -13,7 +15,7 @@ import { ModerationCoreModule } from '@/modules/moderation';
 import { ReportingCoreModule } from '@/modules/reporting';
 import { NotificationCoreModule } from '@/modules/notification';
 import { PricingCoreModule } from '@/modules/pricing';
-import { SettingsCoreModule } from '@/modules/settings';
+import { SettingsCoreModule, SettingsAuditModule } from '@/modules/settings';
 import { UploadsCoreModule } from '@/modules/uploads';
 import { SystemCoreModule } from '@/modules/system';
 import { AccountLockProcessor } from './processors/account-lock.processor';
@@ -47,8 +49,10 @@ import { OnboardingProcessor } from './processors/onboarding.processor';
 /** Process BullMQ worker — processor thêm theo từng TIP (chỉ thêm dòng) */
 @Module({
   imports: [
+    RegionalDirectorCoreModule,
     CoreModule,
     SettingsCoreModule,
+    SettingsAuditModule,
     PricingCoreModule,
     MailCoreModule,
     CommunityCoreModule,
@@ -72,6 +76,7 @@ import { OnboardingProcessor } from './processors/onboarding.processor';
     FundraisingPaymentModule,
   ],
   providers: [
+    RegionalDirectorProcessor,
     OutboxRelayProcessor,
     MailProcessor,
     FeeProcessor,

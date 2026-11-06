@@ -1,6 +1,46 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { ADMIN_URL } from '../urls';
+import { csvDownload } from './helpers/csv-download';
+import { adminConversionSchema } from '@opchub/shared/api-domains';
+
+test('REQ-623 BR-475-477 conversion table matches API, CSV3 regions has BOM and mobile scroll stays contained', async ({
+  page,
+}) => {
+  const loaded = page.waitForResponse(
+    (r) => new URL(r.url()).pathname === '/v1/admin/overview/conversion' && r.ok(),
+  );
+  await openOverview(page);
+  const data = adminConversionSchema.parse(await (await loaded).json());
+  const section = page.locator('section').filter({
+    has: page.getByRole('heading', {
+      name: 'Chuyển đổi miễn phí → trả phí theo vùng',
+      exact: true,
+    }),
+  });
+  await expect(section).toBeVisible();
+  await expect(section.getByRole('columnheader')).toHaveCount(6);
+  await expect(section.getByRole('row')).toHaveCount(5);
+  for (const row of data.rows) {
+    const rendered = section.getByRole('row').filter({ hasText: row.label });
+    await expect(rendered).toContainText(row.directorName ?? 'Chưa bổ nhiệm');
+    await expect(rendered).toContainText(`${row.ratePct}%`);
+  }
+  await expect(section.getByRole('row').filter({ hasText: 'Toàn quốc' })).toContainText(
+    `${data.total.ratePct}%`,
+  );
+  const download = page.waitForEvent('download');
+  await section.getByRole('button', { name: 'Xuất CSV' }).click();
+  const file = await download;
+  expect(file.suggestedFilename()).toBe('chuyen-doi-theo-vung.csv');
+  const csv = await csvDownload(file);
+  expect(csv.charCodeAt(0)).toBe(0xfeff);
+  expect(csv.split('\n')).toHaveLength(4);
+  await page.setViewportSize({ width: 390, height: 844 });
+  const scroll = section.getByRole('region', { name: 'Chuyển đổi miễn phí → trả phí theo vùng' });
+  expect(await scroll.evaluate((el) => el.scrollWidth > el.clientWidth)).toBe(true);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+});
 
 /** D-89 (TIP-V4-621) — Admin Tổng quan v4: "Luồng hệ thống" đếm từ các module, bấm thẻ mở module */
 
@@ -20,7 +60,9 @@ async function openOverview(page: Page): Promise<Flow> {
     .locator('input[autocomplete=username], input[type=email]')
     .fill('admin@opchub.community');
   await page.locator('input[type=password]').fill('Admin@2026');
-  const res = page.waitForResponse((r) => r.url().includes('/v1/admin/overview') && r.ok());
+  const res = page.waitForResponse(
+    (r) => new URL(r.url()).pathname === '/v1/admin/overview' && r.ok(),
+  );
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   return ((await (await res).json()) as { flow: Flow }).flow;
 }

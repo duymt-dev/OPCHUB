@@ -15,7 +15,7 @@ export type BankTxn = z.infer<typeof bankTxnSchema>;
 export interface BankWebhookProvider {
   readonly name: string;
   /** Kiểm chữ ký trên raw body; không ném — sai trả false */
-  verify(rawBody: Buffer, headers: Record<string, string | undefined>): boolean;
+  verify(rawBody: Buffer, headers: Record<string, string | undefined>, secret?: string): boolean;
   /** Parse body webhook → giao dịch tiền vào (bỏ giao dịch tiền ra) */
   parse(rawBody: Buffer): BankTxn[];
   /** Quét bù 2 phút (đề phòng mất webhook) */

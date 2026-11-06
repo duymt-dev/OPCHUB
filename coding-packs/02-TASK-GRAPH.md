@@ -1,13 +1,79 @@
 # OPCHUB — Task Graph
 
-> **Cập nhật 23/10/2026 — V4 (SRS-4.0, D15).** Phần **V4** ngay dưới là đồ thị sắp chạy (16 TIP, 5 pha). Thiết kế kỹ thuật: `plans/V4-BLUEPRINT.md`.
-> Nguồn REQ: `01-REQUIREMENTS-MATRIX.md` D15 (REQ-501 → 517) + D-67 → D-88. Phần **V2** (đã xong, PR #9 → #15) và **B1 → B6** giữ bên dưới để tra cứu.
-> Git flow (owner 21/10/2026): mỗi TIP nhánh `feature/TIP-V4-6xx-<slug>` từ `dev` mới nhất → PR vào `dev`, **không tự merge**; `dev → main` chỉ qua PR do owner merge.
+> **Đồ thị hiện hành: V4.6** (ngay dưới). V4.2, V4, V2, B1 → B6 đã xong, giữ để tra cứu.
+> (Lịch sử 23/10/2026 — V4 (SRS-4.0, D15): 16 TIP, 5 pha, thiết kế `plans/V4-BLUEPRINT.md`; nguồn REQ D15 (REQ-501 → 517) + D-67 → D-88.)
+> Git flow (owner 21/10/2026): mỗi TIP nhánh `feature/TIP-<id>-<slug>` từ `dev` mới nhất (hoặc xếp chồng theo GOAL) → PR vào `dev`, **không tự merge**; `dev → main` chỉ qua PR do owner merge.
 
-> **Cập nhật 27/10/2026 — V4.2 (D16, D-93 → D-117).** Phần **V4.2** ngay dưới là đồ thị sắp chạy (14 TIP, tuần tự theo `plans/GOAL-V4.2.md`).
+> **Cập nhật 27/10/2026 — V4.2 (D16, D-93 → D-117).** 14 TIP tuần tự theo `plans/GOAL-V4.2.md` — **đã xong** (V42-701 → 714, PR #65; `reports/V4.2-progress.md`, `V4.2-M1` → `M4-completion.md`). Giữ để tra cứu.
 > Phần V4 bên dưới đã xong (V4-601 → 624), giữ để tra cứu.
 
-## V4.2 — DEPENDENCY GRAPH
+> **Cập nhật 04/11/2026 — V4.6 (D17, D-118 → D-127).** Phần **V4.6** ngay dưới là đồ thị đang chạy (12 TIP, **tuần tự** theo `plans/GOAL-V4.6.md`, thứ tự D-126).
+> Nguồn REQ: `01-REQUIREMENTS-MATRIX.md` D17 (REQ-616 → 630); đối chiếu đặc tả ↔ code: `audit/SPEC-V4.6-DELTA.md` (P1 → P17).
+> **TIP viết đến đâu làm đến đấy**: chưa có file TIP nào cho v4.6; cột "Vùng file" dưới đây chỉ là dự kiến, chốt trong từng TIP theo code `dev` lúc viết.
+> Tiến độ: `reports/V4.6-progress.md` (agent tạo khi bắt đầu V46-801).
+
+## V4.6 — DEPENDENCY GRAPH
+
+```
+801 gdv-appoint ── 802 gdv-revenue-share ──┬─ 803 admin-affiliate-policy
+   (nền)              (nền)                └─ 804 portal-my-region
+805 renewal-reminders        (sau 801: bỏ qua GĐ Vùng đương nhiệm)
+806 bank-reconcile-settings  (dùng adapter bank-webhook hiện có, D-123 / D-125)
+807 group1-audit-conversion  (sau 801: chuyển đổi theo vùng; sau 803: BR-463 hoa hồng 0đ)
+808 global-search ── 809 need-suggestions ── 810 store-public-page
+811 ai-providers + app-notify-settings (mở rộng llm-config của V42-712)
+812 parity-v4.6 + acceptance (cuối, sau tất cả)
+```
+
+Chạy **một TIP một lúc** theo số thứ tự 801 → 812 (GOAL-V4.6), dù đồ thị cho phép song song. Tên slug chốt khi viết TIP.
+
+## V4.6 — TIP SUMMARY TABLE
+
+| TIP | Tên | REQ / D | Phụ thuộc | P# (`SPEC-V4.6-DELTA`) | Ước lượng | Vùng file dự kiến (chốt trong TIP) |
+|---|---|---|---|---|---|---|
+| V46-801 | [TIP](tips/TIP-V46-801-gdv-appoint.md) · nhánh `feature/TIP-V46-801-gdv-appoint` · **TIP viết, chưa code** — GĐ Vùng — dữ liệu + bổ nhiệm / thu hồi: 3 vùng cố định, mỗi vùng đúng 1, mỗi TV 1 vùng, mỗi tỉnh 1 vùng; tỉnh phụ trách, tài khoản nhận, lịch sử; trạng thái phí "Miễn phí · GĐ Vùng" (transition + `isFeeUsable` + paywall + nhắc phí bỏ qua); thu hồi giữ hạn phí cũ (BR-462); EM-GDV1/2; permission key; audit; Admin › Affiliate › Cấu hình GĐ Vùng | REQ-616, D-120, D-121 | — | P6, P9, P16, P17 | L | schema mới GĐ Vùng + `membership-fee.prisma` (enum), `shared/{permissions.ts,membership/**}`, `srv/membership-fee/**`, `srv/affiliate/**` hoặc module mới, mail template, `admin/features/{affiliate,fees,settings}/**`, MSW + seed |
+| V46-802 | [TIP](tips/TIP-V46-802-gdv-revenue-share.md) · nhánh `feature/TIP-V46-802-gdv-revenue-share` · **TIP viết, chưa code** — Sổ chia sẻ Media Soft ↔ GĐ Vùng: 3 thông số Chính sách, năm của khách (backfill), ghi khi phí / Gọi vốn được đối soát (outbox), gán theo tỉnh, vùng trống → Media Soft, kỳ chi cuối tháng, Chi trả từng GĐ Vùng (idempotent), lịch sử chi trả; Admin › Affiliate › GĐ Vùng | REQ-617, D-119, D-121, D-122 | 801 | P6 | XL | schema sổ chia sẻ + kỳ chi, migration backfill, `srv/affiliate/**` (hoặc module GĐ Vùng), outbox consumer đối soát, worker chốt kỳ, `admin/features/affiliate/**` |
+| V46-803 | [TIP](tips/TIP-V46-803-affiliate-policy-reference.md) · nhánh `feature/TIP-V46-803-affiliate-policy-reference` · **TIP viết, chưa code** — Admin › Affiliate: Chính sách theo §31, Hoa hồng chỉ tham khảo (bỏ chi trả trực tiếp, "Xem đối soát", "GĐ Vùng chi"), cột "Thuộc vùng (theo tỉnh)" chỉ hiển thị; hoa hồng theo năm của khách (năm 2 → tối đa % gia hạn, D-131); seed / MSW sinh lại | REQ-619, D-119, D-121, D-131 | 802 | P7, P8 | XL | `srv/affiliate/**`, `shared/api-domains/affiliate*`, `admin/features/affiliate/**`, seed + mock affiliate |
+| V46-804 | [TIP](tips/TIP-V46-804-portal-my-region.md) · nhánh `feature/TIP-V46-804-portal-my-region` · **TIP viết, chưa code** — Portal › Affiliate › tab "Vùng của tôi" (chỉ xem) + banner GĐ Vùng; consumer `regional_share.recorded` (thông báo khoản mới, đóng M1); nhãn affiliate gọn (BR-495); danh sách giới thiệu theo khoản (D-131) | REQ-618, REQ-630 | 803 | P5 | M | `srv/affiliate/controllers/me*`, `shared/api-domains/affiliate*`, `portal/features/affiliate/**`, `messages/vi/*.json` |
+| V46-805 | [TIP](tips/TIP-V46-805-renewal-reminders.md) · nhánh `feature/TIP-V46-805-renewal-reminders` · **TIP viết, chưa code** — Nhắc gia hạn: Cài đặt › Nhắc gia hạn (mốc 30 / 7 / 1, Email + Thông báo, **không Zalo**), job hằng ngày dùng `FeeReminder`, gửi tay từng người / tất cả, cột Lần gửi; bỏ qua GĐ Vùng đương nhiệm | REQ-620, D-125 | 801 | P11 | M | `membership-fee.prisma` (`FeeReminder`), `srv/membership-fee/**`, `srv/settings/**`, worker `fee.processor`, `admin/features/settings/**` |
+| V46-806 | [TIP](tips/TIP-V46-806-bank-reconcile-settings.md) · nhánh `feature/TIP-V46-806-bank-reconcile-settings` · **TIP viết, chưa code** — Cài đặt › Đối soát ngân hàng: webhook URL, khóa bí mật + tạo lại, bật / tắt tự kích hoạt, giao dịch gần đây 4 trạng thái, Gán / Ghi nhận thiếu, cú pháp hiển thị `OPCHUB …` | REQ-621, D-123 | — | P12 | M | `integrations/bank-webhook/**`, `srv/membership-fee/services/reconcile*`, `srv/settings/**`, `admin/features/settings/**` |
+| V46-807 | [TIP](tips/TIP-V46-807-group1-audit-conversion.md) · nhánh `feature/TIP-V46-807-group1-audit-conversion` · **TIP viết, chưa code** — Nhóm 1 + minh bạch: BR-461, BR-463, BR-465; nhãn quyền `affiliate.payout` → "Chi trả GĐ Vùng" (D-132); nhật ký thao tác Admin đủ phủ + Xuất CSV 4 màn; chuyển đổi theo vùng ở Tổng quan; copy đăng nhập / chào | REQ-622 → 624, REQ-630, D-127 | 801, 803 | P1, P10, P15 | L | `portal/features/{chat,auth}/**`, `srv/affiliate/**` (0đ), `srv/account/**` + worker `account-lock`, audit interceptor, `srv/export/**`, `srv/dashboard/**`, `admin/features/{overview,settings}/**` |
+| V46-808 | [TIP](tips/TIP-V46-808-global-search.md) · nhánh `feature/TIP-V46-808-global-search` · **TIP viết, chưa code** — Tìm kiếm chung topbar Portal / Admin (server, 4 kết quả / nhóm, index phù hợp) | REQ-625 | — | P2 | M | module search mới, migration index (`pg_trgm` / `unaccent`), `shared/api-domains/search*`, `{portal,admin}/features/shell/**` |
+| V46-809 | [TIP](tips/TIP-V46-809-need-suggestions.md) · nhánh `feature/TIP-V46-809-need-suggestions` · **TIP viết, chưa code** — Gợi ý nhu cầu phù hợp gian hàng trên Dashboard (chấm điểm BR-478 → 480, không gọi LLM) | REQ-626 | — | P3 | M | `srv/local-business/need*`, `shared/api-domains/needs.ts`, `portal/features/dashboard/**` |
+| V46-810 | [TIP](tips/TIP-V46-810-store-public-page.md) · nhánh `feature/TIP-V46-810-store-public-page` · **TIP viết, chưa code** — Trang công khai gian hàng `/g/<slug>` (SSR, chỉ trường công khai, bật / tắt Google = `noindex`, tiêu đề, mô tả ≤ 160, sao chép link, xem như khách) | REQ-627 | — | P4 | L | `local-business.prisma` (slug, SEO), `srv/local-business/store*` + controller public, `portal/app/g/[slug]/**`, `portal/features/stores/**` |
+| V46-811 | Nhà cung cấp AI nhiều bên: phân bổ theo chức năng + dự phòng, hạn mức / ngân sách / cảnh báo, nhật ký gọi AI 90 ngày, ẩn PII; **ẩn dòng Trợ lý**; màn Ứng dụng & thông báo chỉ lưu cấu hình (không Web Push) | REQ-628, REQ-629, D-124, D-125 | — | P13, P14 | L | `llm-config.prisma`, `srv/llm-config/**`, `integrations/llm/**`, `srv/settings/**`, `admin/features/settings/**` |
+| V46-812 | Đo parity lại toàn bộ màn đổi ở v4.6 (P1 → P17) + nghiệm thu AT-GDV01 → 07, TC-461 → 494 trên server dev | D-118 | tất cả | P1 → P17 | L | `e2e/{parity,behavior,server}/**`, `reports/{ui-parity/**,V4.6-acceptance.md}` |
+
+Tổng: 4 M · 6 L · 1 XL (+ 812 L). Mốc: **M1 = 801 → 804**, **M2 = 805 → 807**, **M3 = 808 → 812** → `reports/V4.6-M<n>-completion.md` (số thật, SHA).
+Cổng mỗi TIP: `pnpm lint && pnpm typecheck && pnpm test && pnpm test:int && pnpm depcheck && pnpm build`; e2e MSW không tụt so với `dev` + e2e server
+cho luồng TIP đụng tới; **parity ≤ 3% (1440 + 390) cho mọi màn TIP đụng tới**; query mới có `EXPLAIN (ANALYZE, BUFFERS)` ≥ 10k dòng; migration sạch trên `opchub_dev` + `opchub_test`.
+
+## V4.6 — GIT (nhánh xếp chồng, không tự merge)
+
+- TIP #1 tách từ `dev`. TIP #k: PR #k-1 đã merge → tách từ `dev` mới; chưa merge → tách từ nhánh TIP #k-1 (PR `base` = nhánh đó, ghi "Stacked on #…").
+- Nhánh `feature/TIP-V46-8xx-<slug>`; commit đường dẫn cụ thể, cấm `git add -A`; cấm tự merge, auto-merge, push `main`, force-push nhánh đã có PR.
+- Mỗi TIP một thư mục migration riêng (`--create-only` rồi sửa SQL).
+
+## V4.6 — PARITY UI (prototype `docs/spec/index.html` v4.6, chuẩn `standards/frontend/ui-parity.md`)
+
+| TIP | Màn phải đo (P# trong `SPEC-V4.6-DELTA.md` §2) |
+|---|---|
+| V46-801 | Admin › Affiliate › Cấu hình GĐ Vùng (P6), Admin › Phí trạng thái "Miễn phí · GĐ Vùng" (P9), Marketing › Email EM-GDV1/2 (P16), Cài đặt › Vai trò quyền GĐ Vùng (P17) |
+| V46-802 | Admin › Affiliate › GĐ Vùng: khoản ghi nhận, "Phải chi cuối tháng", Chi trả, lịch sử (P6) |
+| V46-803 | Admin › Affiliate › Chính sách (P7), › Hoa hồng (P8) |
+| V46-804 | Portal › Affiliate › Vùng của tôi + banner (P5) |
+| V46-805 | Admin › Cài đặt › Nhắc gia hạn (P11) |
+| V46-806 | Admin › Cài đặt › Đối soát ngân hàng (P12) |
+| V46-807 | Đăng nhập / trang chào (P1), Admin › Tổng quan bảng chuyển đổi (P10), Nhật ký hoạt động (P15) |
+| V46-808 | Topbar Portal + Admin, dropdown kết quả (P2) |
+| V46-809 | Dashboard Portal thẻ "Nhu cầu phù hợp" (P3) |
+| V46-810 | Gian hàng của tôi › Trang công khai + trang `/g/<slug>` (P4) |
+| V46-811 | Admin › Cài đặt › Nhà cung cấp AI (P13, không có dòng Trợ lý), › Ứng dụng & thông báo (P14) |
+| V46-812 | Đo lại toàn bộ P1 → P17 + màn cũ bị ảnh hưởng; tổng hợp `reports/ui-parity/results.md` |
+
+---
+
+## V4.2 — DEPENDENCY GRAPH (đã xong)
 
 ```
 701 bugs-b1-b6 ── 702 trial-fee-gate ── 703 price-config ──┬─ 704 reconcile-28-1 ── 705 vietqr ── 706 fundraising-renew-review
@@ -19,7 +85,7 @@
 714 parity-v4.2 + acceptance (cuối)
 ```
 
-## V4.2 — TIP SUMMARY TABLE
+## V4.2 — TIP SUMMARY TABLE (đã xong)
 
 | TIP | Tên | REQ / D | Phụ thuộc | Ước lượng | Vùng file chính (chi tiết trong TIP) |
 |---|---|---|---|---|---|

@@ -1,3 +1,4 @@
+import { RegionalProjectionModule } from '../reporting';
 import { AdminAffiliatePolicyController } from './controllers/admin-affiliate-policy.controller';
 import { AdminAffiliatesController } from './controllers/admin-affiliates.controller';
 import { AdminAffiliateCommissionsController } from './controllers/admin-affiliate-commissions.controller';
@@ -5,13 +6,13 @@ import { AffiliateCsvService } from './services/affiliate-csv.service';
 import { AffiliateAdminService } from './services/affiliate-admin.service';
 import { AffiliateAdminNotifyHandler } from './services/affiliate-admin-notify.handler';
 import { AffiliatePolicyService } from './services/affiliate-policy.service';
-import { PayoutService } from './services/payout.service';
 import { CommissionAdminService } from './services/commission-admin.service';
 import { AffiliateAdminRepository } from './repositories/affiliate-admin.repository';
 import { CommissionAdminRepository } from './repositories/commission-admin.repository';
 import { AffiliateNoticeRepository } from './repositories/affiliate-notice.repository';
 import { AffiliateWriteRepository } from './repositories/affiliate-write.repository';
 import { Module } from '@nestjs/common';
+import { AffiliateShareReader } from './services/affiliate-share.reader';
 import { AccountCoreModule } from '../account';
 import { MembershipFeeCoreModule } from '../membership-fee';
 import { NotificationCoreModule } from '../notification';
@@ -33,13 +34,13 @@ import { MeAffiliateController } from './controllers/me-affiliate.controller';
 import { FundraisingCommissionHandler } from './services/fundraising-commission.handler';
 
 const services = [
+  AffiliateShareReader,
   FundraisingCommissionHandler,
   AffiliateWriteRepository,
   AffiliateNoticeRepository,
   CommissionAdminRepository,
   AffiliateAdminRepository,
   CommissionAdminService,
-  PayoutService,
   AffiliatePolicyService,
   AffiliateAdminNotifyHandler,
   AffiliateAdminService,
@@ -60,7 +61,12 @@ const services = [
 
 /** Affiliate §20: đại lý, referral, hoa hồng (TIP-V2-401) */
 @Module({
-  imports: [AccountCoreModule, MembershipFeeCoreModule, NotificationCoreModule],
+  imports: [
+    RegionalProjectionModule,
+    AccountCoreModule,
+    MembershipFeeCoreModule,
+    NotificationCoreModule,
+  ],
   providers: services,
   exports: services,
 })

@@ -17,19 +17,19 @@ describe('mock Thành viên (admin)', () => {
 
   it('liệt kê theo seed, đếm theo loại, đúng schema', () => {
     const r = listAdminMembers();
-    expect(r.items).toHaveLength(8);
-    expect(r.counts).toEqual({ all: 8, business: 4, personal: 4 });
+    expect(r.items).toHaveLength(10);
+    expect(r.counts).toEqual({ all: 10, business: 6, personal: 4 });
     r.items.forEach((m) => adminMemberSchema.parse(m));
     expect(r.items.find((m) => m.id === 'm4')).toMatchObject({ status: 'locked' });
   });
 
   it('D-90 MSW sắp xếp khớp server: mã TV tăng dần như prototype v4 (m1 → m8)', () => {
     const ids = listAdminMembers().items.map((m) => m.id);
-    expect(ids).toEqual(['m1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7', 'm8']);
+    expect(ids).toEqual(['m1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7', 'm8', 'm9', 'm10']);
   });
 
   it('lọc loại + tìm theo tên/email/công ty', () => {
-    expect(listAdminMembers({ type: 'business' }).items).toHaveLength(4);
+    expect(listAdminMembers({ type: 'business' }).items).toHaveLength(6);
     expect(listAdminMembers({ q: 'solobooks' }).items.map((m) => m.id)).toEqual(['m3']);
     expect(listAdminMembers({ q: 'zzzz' }).items).toHaveLength(0);
   });
@@ -39,7 +39,7 @@ describe('mock Thành viên (admin)', () => {
       listAdminMembers(f)
         .items.map((m) => m.id)
         .sort();
-    expect(ids({ role: 'business' })).toEqual(['m1', 'm3', 'm5', 'm7']);
+    expect(ids({ role: 'business' })).toEqual(['m1', 'm10', 'm3', 'm5', 'm7', 'm9']);
     expect(ids({ role: 'expert' })).toEqual(['m2']);
     // FEE_SEED m2, m3, m4, m5, m7, m8 + TK demo m1, đóng từ ngày tham gia: m4 (01/09/2025) đã hết
     // hạn, m3 (20/10/2025) còn hiệu lực đến 20/10/2026 (sắp hết hạn = vẫn đã đóng)

@@ -2,18 +2,14 @@ import { z } from 'zod';
 import { test, expect } from '../server/test';
 import { onServer, payFee } from '../server/api';
 import { ADMIN_URL, PORTAL_URL } from '../urls';
-import {
-  registerReferral,
-  payAndOpenAffiliate,
-  ownerSignIn,
-} from './helpers/affiliate-registration';
+import { registerReferral, payAndOpenAffiliate } from './helpers/affiliate-registration';
 import { signInAffiliate } from './helpers/affiliate-session';
 
 test.use({ affiliateDemo: true });
 
 const membership = z.object({ status: z.string(), validUntil: z.string().datetime() });
 
-test('AT-AF04 REQ-306 renewal extends membership without another commission in Admin or Portal', async ({
+test('AT-AF04 D-131 another paid receipt within customer year one keeps the first-year reference rate', async ({
   page,
   context,
 }) => {
@@ -33,7 +29,7 @@ test('AT-AF04 REQ-306 renewal extends membership without another commission in A
   await page.goto(`${PORTAL_URL}/membership/pay`);
   const before = membership.parse(await (await current).json());
   await page.getByRole('button', { name: 'Tôi đã chuyển khoản', exact: true }).click();
-  // Only the bank-event source differs; both modes must really renew before asserting no new money.
+  // Only the bank-event source differs; customer year follows receipt time, not prepaid expiry.
   if (onServer) await payFee(page, { reload: false });
   // Native pushes the new expiry into cache via socket; only MSW polls this endpoint.
   // Require reactive completion in both modes, then verify the persisted expiry after F5.
@@ -48,14 +44,11 @@ test('AT-AF04 REQ-306 renewal extends membership without another commission in A
   );
   await expect(page.getByRole('dialog')).toHaveCount(0, { timeout: 20_000 });
   await admin.reload();
-  await expect(commission).toHaveCount(1);
-  await expect(commission).toContainText('300.000đ');
-  await expect(commission).toContainText('Đã ghi nhận');
-  await ownerSignIn(page);
-  const customer = page.getByRole('row').filter({ hasText: 'Nguyễn Affiliate Trà M.' });
-  await expect(customer).toHaveCount(1);
-  await expect(customer.getByRole('cell', { name: '300.000đ', exact: true })).toBeVisible();
-  await page.reload();
-  await expect(customer).toHaveCount(1);
-  await expect(customer.getByRole('cell', { name: '300.000đ', exact: true })).toBeVisible();
+  await expect(commission).toHaveCount(2);
+  for (const row of await commission.all()) {
+    await expect(row).toContainText('300.000đ');
+    await expect(row).toContainText('25% · Năm 1');
+    await expect(row).toContainText('Đã ghi nhận');
+  }
+  // Portal renewal-history presentation belongs to TIP-804; do not assert the retired one-row rule.
 });

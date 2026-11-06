@@ -1,7 +1,9 @@
 # Vibecode Kit v5.0 — OPCHUB Builder Handoff (Backend)
 
-> Dán file này vào Claude Code **đầu mỗi phiên build**, sau đó dán TIP của phiên (`tips/TIP-Bxx-*.md`).
-> Blueprint 17/10/2026. Phụ lục bắt buộc: [plans/api-contract.md](plans/api-contract.md) (193 endpoint + socket),
+> Dán file này vào Claude Code **đầu mỗi phiên build**, sau đó dán TIP của phiên (`tips/TIP-<id>-*.md`).
+> **Hiện hành (04/11/2026): v4.6** — goal [plans/GOAL-V4.6.md](plans/GOAL-V4.6.md) (12 TIP V46-801 → 812), quyết định D-118 → D-135,
+> REQ-616 → 630, đối chiếu đặc tả ↔ code [audit/SPEC-V4.6-DELTA.md](audit/SPEC-V4.6-DELTA.md). Khi file này trái `AGENTS.md` hoặc GOAL, lấy `AGENTS.md` / GOAL.
+> Blueprint gốc 17/10/2026. Phụ lục bắt buộc: [plans/api-contract.md](plans/api-contract.md) (193 endpoint + socket),
 > [plans/data-model.md](plans/data-model.md) (bảng, index, seed). Task graph: [02-TASK-GRAPH.md](02-TASK-GRAPH.md).
 
 ---
@@ -62,7 +64,7 @@ apps/
       modules/
         account/  membership-fee/  community/  chat/  moderation/  notification/
         event/  project/  investor/  settings/  mail/  marketing/  storage/
-        audit/  export/  reporting/  bot/ (flag)  service-request/ (flag)
+        audit/  export/  reporting/  bot/  service-request/ (FEATURE_SERVICES)
     test/  **/*.int.spec.ts   factories/   setup (schema test riêng)
 packages/
   shared/      zod api-domains (hợp đồng) · enums · permissions · errors · socket/ (B05) · queues/ (B05) · mock-data (giữ cho seed:demo)
@@ -98,7 +100,8 @@ Secret local **ngoài repo** ở `D:\opchub-local\` (`db.env`: `DATABASE_URL`, `
 - Rate limit `@nestjs/throttler` + Redis theo bảng ở `security.md`.
 - Guard theo thứ tự `JwtAuth → AccountStatus → MembershipFee → Permission → GroupRole`; decorator `@Public`,
   `@RequiresMembershipFee` (mặc định bật cho route Portal), `@AllowAccountTypes('investor')`, `@RequirePermission`, `@RequireGroupRole`.
-- Feature flag D-05: `FEATURE_BOTS`, `FEATURE_SERVICES` (env server) — tắt thì module không đăng ký route (404).
+- Feature flag: chỉ còn `FEATURE_SERVICES` (env server, mặc định bật) — tắt thì module không đăng ký route (404). **Bot không còn flag env**
+  (owner amendment 22/10/2026): luôn đăng ký, kiểm bằng permission key + cài đặt `bot.enabled` / tắt khẩn cấp có audit.
 - OpenAPI từ zod tại `/v1/docs` (dev/staging).
 
 ### Product Mission
@@ -109,9 +112,10 @@ nhà đầu tư (miễn phí, D-14), chủ nhóm, ban quản trị. TK mới **m
 
 ### Roadmap Priorities
 
-Go-live = GĐ1 + GĐ2 (D-05): xác thực, phí + đối soát, cộng đồng, chat + kiểm duyệt, sự kiện, dự án + nhà đầu tư, cài đặt,
-Dashboard. **Sau go-live, sau feature flag:** Bot (D-04/D-48), Dịch vụ tư vấn (D-21). Ngoài phạm vi: thanh toán thẻ/ví,
-app native, ngôn ngữ ngoài tiếng Việt, HA nhiều máy. Beta nhóm nhỏ trước (D-23). (`product/roadmap.md`, Vision §6)
+Go-live = GĐ1 + GĐ2 + Bot + Dịch vụ + Affiliate (D-51), cộng phạm vi v4 (D-74), v4.2 (D16) và **v4.6 (D17)**: GĐ Vùng + chia sẻ
+doanh thu §31, nhắc gia hạn, đối soát ngân hàng, tìm kiếm chung, gợi ý nhu cầu, trang công khai gian hàng, nhà cung cấp AI nhiều bên.
+Ngoài phạm vi: thanh toán thẻ/ví, app native, HA nhiều máy, **Zalo ZNS và gửi Web Push thật** (D-125), chi trả trực tiếp cho affiliate (D-119).
+Beta nhóm nhỏ trước (D-23). (`product/roadmap.md`, Vision §6)
 
 ### Applicable Standards
 
@@ -137,17 +141,44 @@ app native, ngôn ngữ ngoài tiếng Việt, HA nhiều máy. Beta nhóm nhỏ
 | D-10, D-47 | Không bao giờ gửi mật khẩu qua email; mẫu chào mừng không có khối mật khẩu |
 | D-14 | TK `investor` bỏ qua paywall, chỉ vào route `@AllowAccountTypes('investor')` |
 | D-15 | Hết phí: mất quyền tương tác, giữ dữ liệu. Bị khoá: dự án → `hidden`, yêu cầu nhóm họ làm chủ chuyển Admin |
-| D-18 | Sửa dự án bất kỳ trường nào → `pending_review` |
+| ~~D-18~~ → D-108 | ~~Sửa dự án → `pending_review`~~ Dự án hiện ngay, Admin hậu kiểm, sửa không duyệt lại |
 | D-26 | Admin không vào Portal; "Xem chat" = endpoint đọc tin chỉ đọc cho `c.room`/`c.mod` |
 | D-30, D-45 | Sau OTP/SSO vào thẳng `/community`; SSO email mới → form bổ sung, không OTP |
 | D-40 | DN dùng ngay; huy hiệu "Đã xác minh" tự gắn khi tra MST khớp, không khớp → `pending` Admin duyệt |
-| D-41 | Đối soát chỉ theo **Mã TV** (`TV`+6 số); thu tay bắt buộc lý do |
-| D-42, D-46 | Đổi system role chỉ ở Cài đặt, cần `s.role`, xác nhận + audit; ma trận 14 key |
-| D-43 | Chủ nhóm theo `group_members.group_role`; điều phối viên hệ thống (`c.mod`) kiểm duyệt mọi nhóm |
+| ~~D-41~~ → D-104, D-123 | ~~Đối soát chỉ theo Mã TV~~ Tiền tố `OPCHUB`, số tiền đúng bằng giá gói; thu tay vẫn bắt buộc lý do |
+| ~~D-42, D-46~~ → D-52 | Đổi vai trò quản trị chỉ ở Cài đặt, xác nhận + audit; permission key `<menu>.view` / `<menu>.action` (`packages/shared/src/permissions.ts`) |
+| D-43 | Chủ nhóm theo `group_members.group_role`; điều phối viên hệ thống kiểm duyệt mọi nhóm (phần duyệt vào nhóm bỏ theo D-71) |
 | D-44 | Sai 5 lần → khoá 15' theo TK + IP; TK bị khoá → 403 có thông báo |
-| D-48 | Bot luôn duyệt; tin persona không lộ `isSimulated`/vai trò bot ra Portal |
+| ~~D-48~~ → D-50, D-99 | Bot **tự động, không duyệt**; tin persona không lộ `isSimulated` / vai trò bot ra Portal, không gắn nhãn |
 
-### Quyết định v4.2 (27/10/2026) — HIỆN HÀNH, thắng các bảng bên dưới khi trái nhau
+### Quyết định v4.6 (30/10/2026) — HIỆN HÀNH, thắng mọi bảng bên dưới khi trái nhau
+
+Nguồn: `docs/spec/` v4.6 (§33 > §32 > §31 > §29 > §28 > §27 > §1–26; §30 bị §31 thay), prototype v4.6 thắng đặc tả (D-89, D-93, D-118),
+nút no-op vẫn làm nghiệp vụ (D-95). Đối chiếu: `audit/SPEC-V4.6-DELTA.md`. Câu hỏi đội đặc tả (không chặn code): OQ-22, OQ-23.
+
+| D-xx | Ảnh hưởng server / FE |
+|---|---|
+| D-119 | Chia sẻ doanh thu §31: Media Soft **chỉ chi cho GĐ Vùng**; phần GĐ Vùng năm y = `max(tối thiểu, năm1 − giảm × (y − 1))`, mặc định 50 / 10 / 20 → 50 / 40 / 30 / 20%, **3 thông số đọc từ Chính sách** (không hằng số trong code). Áp cho Cá nhân, DN, Gọi vốn; chỉ phí thực thu đã đối soát của TV đăng ký qua link affiliate (cookie 30 ngày, lần giới thiệu đầu); trial / 0đ / huỷ không tính; làm tròn đến đồng. Hoa hồng affiliate **vẫn tính %** để tham khảo, **bỏ chi trả trực tiếp**. Chưa go-live → không chuyển số dư; seed / MSW sinh lại |
+| D-120 | GĐ Vùng: **3 vùng cố định** (Bắc / Trung & Tây Nguyên / Nam), **mỗi vùng đúng 1**, mỗi TV 1 vùng, mỗi tỉnh 1 vùng; chỉ TV đã đăng ký, không bị khoá. Trạng thái phí mới **"Miễn phí · GĐ Vùng"** qua `isFeeUsable` (V-11), paywall + nhắc phí bỏ qua; thu hồi → hạn phí trước bổ nhiệm còn thì dùng tiếp (kể cả trial), hết → `pending_payment` (BR-462). EM-GDV1/2 không mật khẩu; permission key riêng (Super Admin, Quản trị viên có mặc định); audit; phần đã ghi nhận trước thu hồi vẫn chi (GDV-R05) |
+| D-121 | Affiliate thuộc GĐ Vùng **tự theo tỉnh** nhóm cộng đồng; **Admin không đổi tay**; vùng trống → **100% Media Soft**; bổ nhiệm mới chỉ tính giao dịch từ ngày bổ nhiệm, không truy thu |
+| D-122 | Năm của khách tính từ **giao dịch thực thu đầu tiên** (mọi loại gói); năm 1 = 12 tháng từ ngày đó; backfill từ khoản đầu đã đối soát |
+| D-123 | Nội dung CK **giữ `OPCHUB …`** (D-104, D-105) dù §33.3 ghi `OPC <SĐT> <GÓI>`; màn Đối soát ngân hàng hiển thị cú pháp `OPCHUB` |
+| D-124 | Nhà cung cấp AI: **ẩn dòng "Trợ lý OPC Hub (widget)"** (giữ D-92) |
+| D-125 | **Không Zalo ZNS** (ẩn kênh Zalo ở Nhắc gia hạn); **PWA / Web Push**: chỉ màn cấu hình lưu được, không gửi đẩy thật; cổng đối soát dùng adapter `bank-webhook` hiện có |
+| D-126 | Thứ tự: GĐ Vùng + chia sẻ + Vùng của tôi → Nhắc gia hạn + Đối soát ngân hàng → Nhóm 1 + chuyển đổi vùng + nhật ký / CSV + copy → Tìm kiếm + gợi ý nhu cầu → `/g/` → AI → PWA (= V46-801 → 812) |
+| D-127 | Theo prototype: copy đăng nhập / chào; BR-461 đếm đã đọc chỉ khi đổi phòng / có tin mới; BR-463 không tạo hoa hồng 0đ, ẩn khoản 0đ cũ; BR-465 tự mở khoá lúc đăng nhập + job; BR-495 nhãn affiliate gọn |
+| D-128 | Affiliate nhiều nhóm tỉnh → tỉnh của **nhóm tham gia sớm nhất còn là thành viên** (nhóm ngành lấy tỉnh nhóm cha); vùng chụp vào từng khoản lúc đối soát, không tính lại khoản cũ; không còn nhóm → 100% Media Soft |
+| D-129 | Tỉnh chưa được tick → tính cho **GĐ Vùng của miền**; tỉnh phụ trách chỉ hiển thị, không quyết định tiền; "vùng trống → Media Soft" chỉ khi cả miền chưa có GĐ Vùng |
+| D-130 | Năm của khách tính từ giao dịch thực thu đầu tiên **gồm cả Gọi vốn**; backfill lấy khoản đã đối soát sớm nhất của cả phí và Gọi vốn |
+| D-131 | Hoa hồng affiliate theo năm của khách: năm 1 = % hiện hành, năm 2 → `renewalMaxYear` = `renewalRate`, sau đó không ghi khoản; snapshot `commissions.customer_year`; vẫn chỉ tham khảo (D-119) |
+| D-132 | Admin › Affiliate: ẩn ô % mặc định / % Gọi vốn (giữ DB); nhãn `affiliate.payout` → "Chi trả GĐ Vùng" ở 807; "Doanh thu Media Soft giữ lại" = doanh thu affiliate − phần GĐ Vùng (sổ) cùng tháng; bước giảm 0% → bảng năm một dòng = % năm 1 |
+| D-134 | Parity pixel **không chặn DONE**: vẫn đo và ghi %; màn > 3% ghi nguyên nhân (dữ liệu / D-xx / giao diện thật); lệch giao diện thật vẫn phải sửa; owner duyệt cặp ảnh khi review PR; áp ngược 801 → 804 |
+| D-135 | Đối soát ngân hàng: 3 nút cổng như prototype, cổng chưa có adapter làm mờ (đổi cổng qua env); tạo lại khóa có hiệu lực ngay; bật lại tự kích hoạt không xử lý giao dịch chờ; Ghi nhận thiếu không kích hoạt; tab cần `settings.general` |
+
+v4.6 thay ở các bảng bên dưới: D-94 3A / D-110 phần **chi trả hoa hồng** → D-119 (hoa hồng chỉ tham khảo); hoa hồng Gọi vốn 10% (D-70, §29) → D-119;
+nhắc phí T-30 / T-7 / T-0 / T+3 (D-57) → mốc 30 / 7 / 1 ngày cấu hình được (REQ-620).
+
+### Quyết định v4.2 (27/10/2026) — còn hiệu lực trừ chỗ v4.6 thay
 
 Nguồn: `docs/spec/` v4.2 (§29 > §28 > §27), prototype thắng đặc tả (D-93), nút no-op vẫn làm nghiệp vụ (D-95).
 Rà soát + bằng chứng file:dòng: `audit/SPEC-V4.2-FULL-AUDIT.md`. Vision cập nhật: `00-PROJECT-CONTEXT.md` §5, S-03 / S-08 / S-11, V-11 → V-15.
@@ -189,7 +220,28 @@ Rà soát + bằng chứng file:dòng: `audit/SPEC-V4.2-FULL-AUDIT.md`. Vision c
 
 ## EXECUTION ORDER
 
-### V4.2 (đề xuất, 27/10/2026 — TIP chưa lập)
+### V4.6 (hiện hành — `plans/GOAL-V4.6.md`, đồ thị ở `02-TASK-GRAPH.md` › V4.6)
+
+Tuần tự **một TIP một lúc**, TIP viết ngay trước khi code bước đó (`/vibecode:tip`), nhánh xếp chồng, PR vào `dev`, không tự merge.
+
+| # | TIP | Nội dung | Mốc |
+|---|---|---|---|
+| 1 | V46-801 | GĐ Vùng — dữ liệu + bổ nhiệm / thu hồi, trạng thái phí "Miễn phí · GĐ Vùng" | |
+| 2 | V46-802 | Sổ chia sẻ Media Soft ↔ GĐ Vùng, năm của khách, kỳ chi, Chi trả | |
+| 3 | V46-803 | Admin › Affiliate: Chính sách §31, Hoa hồng chỉ tham khảo, cột vùng | |
+| 4 | V46-804 | Portal › Affiliate › Vùng của tôi + banner, nhãn gọn | **M1** |
+| 5 | V46-805 | Nhắc gia hạn 30 / 7 / 1 (Email + Thông báo) | |
+| 6 | V46-806 | Cài đặt › Đối soát ngân hàng | |
+| 7 | V46-807 | Nhóm 1 (BR-461 / 463 / 465) + nhật ký / CSV + chuyển đổi vùng + copy | **M2** |
+| 8 | V46-808 | Tìm kiếm chung topbar | |
+| 9 | V46-809 | Gợi ý nhu cầu phù hợp gian hàng | |
+| 10 | V46-810 | Trang công khai `/g/<slug>` | |
+| 11 | V46-811 | Nhà cung cấp AI nhiều bên + màn Ứng dụng & thông báo | |
+| 12 | V46-812 | Parity v4.6 + nghiệm thu AT-GDV01 → 07, TC-461 → 494 | **M3** |
+
+Tiến độ: `reports/V4.6-progress.md`; mốc `reports/V4.6-M<n>-completion.md`.
+
+### V4.2 (27/10/2026, đã xong — V42-701 → 714, `reports/V4.2-progress.md`)
 
 1. Sửa lỗi B1 → B6 (D-117)
 2. Trial + cổng quyền dùng chung + Cấu hình bảng giá (D-94 1A/2A/5A, D-107, D-116) — các phần sau phụ thuộc
@@ -231,46 +283,53 @@ Có thể chạy theo **goal native từng pha** (B1 … B6) giống G2–G6: m�
 
 ## HOW TO USE TIPs
 
-1. Agent chính sinh TIP của pha bằng `/vibecode:tip TIP-Bxx` (file `tips/TIP-Bxx-<slug>.md`, đủ Files touched + Parallel-safe).
-2. Mỗi TIP chạy trong worktree riêng, nhánh `feature/TIP-Bxx-<slug>` từ `main` mới nhất; đọc file này + TIP + standards được trích.
+1. Sinh TIP **ngay trước khi code bước đó** bằng `/vibecode:tip` (file `tips/TIP-<id>-<slug>.md`, khung mẫu `TIP-V42-701-bugs-b1-b6.md`:
+   HEADER đủ Files touched + Parallel-safe, CONTEXT trích P# `SPEC-V4.6-DELTA`, ACCEPTANCE Given / When / Then, BUILDER-CHECKLIST). Commit TIP trong nhánh TIP.
+2. Nhánh `feature/TIP-<id>-<slug>` từ **`dev`** mới nhất (hoặc xếp chồng lên nhánh TIP trước theo GOAL) — **không tách từ `main`**;
+   đọc `AGENTS.md` + file này + TIP + standards được trích.
 3. Thợ: kiểm `pwd` + nhánh → đọc handler MSW + zod schema liên quan → viết test trước cho transition/guard/idempotency →
-   code → `pnpm lint && pnpm typecheck && pnpm test && pnpm depcheck` → commit (đường dẫn cụ thể) → completion report.
-4. Thợ **không push**, không tạo migration (trừ khi TIP ghi rõ), không sửa file ngoài *Files touched*. Gặp mơ hồ → ghi `questions.md`, chọn phương án an toàn.
-5. Agent chính gộp nhánh, tạo migration, chạy cổng kiểm của pha, push, viết `reports/B<n>-completion.md`.
+   code → `pnpm lint && pnpm typecheck && pnpm test && pnpm test:int && pnpm depcheck && pnpm build` (+ e2e, parity theo TIP) →
+   commit (đường dẫn cụ thể, cấm `git add -A`) → completion report.
+4. Migration: `--create-only` rồi sửa SQL, mỗi TIP một thư mục migration, `migrate deploy` trên `opchub_dev` + `opchub_test`.
+   Không sửa file ngoài *Files touched*. Gặp mơ hồ → ghi `reports/ui-parity/questions.md` (mục V4.6, `Q-V46-8xx-n`), chọn phương án an toàn theo D-xx gần nhất.
+5. Push nhánh, mở PR vào `dev` (hoặc base = nhánh TIP trước nếu xếp chồng); **không tự merge**, không auto-merge, không push `main`.
+   Cập nhật `reports/V4.6-progress.md`.
 
 ## COMPLETION REPORT FORMAT
 
-`coding-packs/reports/TIP-Bxx-completion.md`:
+`coding-packs/reports/TIP-<id>-completion.md`:
 
 ```markdown
-# TIP-Bxx — <tên> — DONE | PARTIAL | BLOCKED
-- Nhánh / SHA: feature/TIP-Bxx-… @ <git sha>
+# TIP-<id> — <tên> — DONE | PARTIAL | BLOCKED
+- Nhánh / SHA / PR: feature/TIP-<id>-… @ <git commit sha> · PR #<n>
 - Files: <created / modified / deleted, đúng Files touched>
 ## Acceptance criteria
 | AC | Kết quả | Bằng chứng (test name / lệnh) |
 ## Test
 - `pnpm --filter @opchub/server test` → <N passed / M failed> (dán tóm tắt output thật)
 - Integration: <N> · Contract: <N> · e2e liên quan: <N>
+## Parity (D-134: tham khảo, owner duyệt ảnh)
+- <màn>: <% @1440> / <% @390> · > 3% thì ghi nguyên nhân: dữ liệu | D-xx | giao diện thật (đã sửa / chưa)
 ## Query mới
 - <tên query>: index dùng, EXPLAIN (ANALYZE, BUFFERS) tóm tắt (Index Scan / Index Only Scan, thời gian, rows)
 ## Lệch / câu hỏi
 - Thêm trường vào schema zod (tương thích ngược)? — liệt kê
 - Q-Bxx-n mới (đã ghi `questions.md`, chọn phương án …)
+## Soát luật cứng 1–14 (`AGENTS.md`)
 ## Chưa làm
 ```
 
-Báo PM một dòng: `TIP-Bxx-DONE <sha> — <N> test passed` hoặc `TIP-Bxx-BLOCKED: <lý do>`.
+Báo PM một dòng: `TIP-<id>-DONE <git sha> — <N> test passed` hoặc `TIP-<id>-BLOCKED: <lý do>`.
 
 ## ESCALATION RULES
 
 | Mức | Khi nào | Làm gì |
 |---|---|---|
 | L1 — Tự xử | Lỗi code, test đỏ, thiếu trường zod (thêm được, tương thích ngược), index chưa tối ưu | Sửa, ghi vào completion report |
-| L2 — Ghi câu hỏi, làm phương án an toàn | Mơ hồ nghiệp vụ nhỏ, endpoint FE gọi mà SRS không có, hành vi MSW mâu thuẫn standard | Ghi `Q-Bxx-n` trong `reports/ui-parity/questions.md` (mục Backend), chọn phương án an toàn nhất, làm tiếp |
-| L3 — Dừng, hỏi Chủ nhà | Đổi kiến trúc/stack/ranh giới module, đổi hợp đồng phá FE, quyết định tiền/pháp lý/bảo mật, cần secret thật | Báo `TIP-Bxx-BLOCKED`, agent chính hỏi Chủ nhà |
+| L2 — Ghi câu hỏi, làm phương án an toàn | Mơ hồ nghiệp vụ nhỏ, endpoint FE gọi mà SRS không có, hành vi MSW mâu thuẫn standard | Ghi `Q-<id>-n` trong `reports/ui-parity/questions.md` (mục V4.6), chọn phương án an toàn nhất, làm tiếp |
+| L3 — Dừng, hỏi Chủ nhà | Đổi kiến trúc/stack/ranh giới module, đổi hợp đồng phá FE, quyết định tiền/pháp lý/bảo mật, cần secret thật | Báo `TIP-<id>-BLOCKED`, agent chính hỏi Chủ nhà. V4.6: tiền / pháp lý / bảo mật **chưa có D-xx** (ngoài D-118 → D-127) cũng là L3 |
 
-**Câu hỏi đang mở cần Chủ nhà trước/trong B2–B6** (không chặn B1):
-- OQ-04 thông tin app SSO Google/Facebook/LinkedIn (B11 dùng fake cho tới khi có).
-- OQ-06 nhà cung cấp webhook ngân hàng + secret (B14 dùng FakeBank).
-- OQ-01 VPS (B64). OQ-12 nhiều người cùng MST (đang cho phép). OQ-13 chủ nhóm ban đầu (đang: Admin duyệt thay).
-- Điểm 1 hoãn: vị trí tab SSO/Ngôn ngữ trên mobile (FE, không chặn backend).
+**Câu hỏi còn mở (không chặn v4.6)** — đầy đủ ở `01-REQUIREMENTS-MATRIX.md` › OPEN QUESTIONS:
+- OQ-22 endpoint / key "Media Soft cấp · tương thích OpenAI" cho Nhà cung cấp AI — Admin tự nhập; test dùng stub (D-103).
+- OQ-23 đội đặc tả sửa §33.3 (`OPC …` → `OPCHUB …`), CS-13 (đổi tay GĐ Vùng), dòng Trợ lý ở phân bổ AI — code theo D-121 / D-123 / D-124.
+- OQ-17 kênh đối soát thật (fake provider, D-81); OQ-11 Zalo ZNS (để sau, D-125); OQ-01 VPS.

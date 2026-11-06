@@ -89,8 +89,12 @@ test('REQ-312 REQ-410 CSV contains only selected commissions and writes an audit
 }) => {
   await openAffiliate(page);
   await page.getByPlaceholder('Tìm thành viên hoặc affiliate...').fill('Nguyễn Văn An');
-  await expect(page.getByRole('row').filter({ hasText: 'Nguyễn Văn An' })).toHaveCount(9);
-  const first = page.getByRole('row').filter({ hasText: 'Đỗ Minh Tuấn' });
+  await page.getByRole('combobox', { name: 'Số dòng mỗi trang' }).selectOption('20');
+  await expect(page.getByRole('row').filter({ hasText: 'Nguyễn Văn An' })).toHaveCount(11);
+  const first = page
+    .getByRole('row')
+    .filter({ hasText: 'Đỗ Minh Tuấn' })
+    .filter({ hasText: '20% · Năm 1' });
   const second = page.getByRole('row').filter({ hasText: 'Đặng Ngọc Ánh' });
   await first.getByRole('checkbox').check();
   await second.getByRole('checkbox').check();

@@ -15,6 +15,26 @@ const NO_ENTRY =
   'setPage map tab sso/languages về general và danh sách tab không có mục này (C-05).';
 
 export const ADMIN_SETTINGS: Scenario[] = [
+  {
+    id: 'D-V46-BANK',
+    name: 'Cài đặt · Đối soát ngân hàng',
+    start: 'admin',
+    fullPage: true,
+    steps: async (c) => {
+      await settingsTab(c, 'Đối soát ngân hàng');
+      await waitText(c, 'Đối soát chuyển khoản ngân hàng');
+    },
+  },
+  {
+    id: 'D-V46-RENEW',
+    name: 'Cài đặt · Nhắc gia hạn',
+    start: 'admin',
+    fullPage: true,
+    steps: async (c) => {
+      await settingsTab(c, 'Nhắc gia hạn');
+      await waitText(c, 'Nhắc gia hạn tự động');
+    },
+  },
   { id: 'D-66', name: 'Cài đặt · Chung', start: 'admin', fullPage: true, steps: toSettings },
   {
     id: 'D-67',
@@ -122,6 +142,7 @@ export const ADMIN_SETTINGS: Scenario[] = [
     steps: async (c) => {
       await settingsTab(c, 'Nhật ký hoạt động');
       await waitText(c, 'Nhật ký hoạt động quản trị');
+      await waitText(c, 'Xuất CSV');
     },
   },
   { id: 'D-76', name: 'Cài đặt · SSO', start: 'admin', unreachable: `Panel SSO: ${NO_ENTRY}` },

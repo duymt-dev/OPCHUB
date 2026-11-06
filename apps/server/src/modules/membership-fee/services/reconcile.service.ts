@@ -6,6 +6,9 @@ import { BANK } from '@/common/integrations';
 import { AppError, unauthorized } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { QueueService } from '@/common/queue';
+import { AuditService } from '@/common/audit';
+import { AppSettingsService } from '../../settings';
+import { BankKeyService } from './bank-key.service';
 import { MemberDirectory } from '../../account';
 import {
   FUNDRAISING_PAYMENT_PORT,
@@ -37,6 +40,9 @@ export class ReconcileService {
     private readonly members: MemberDirectory,
     private readonly fees: MembershipFeeService,
     private readonly queue: QueueService,
+    private readonly keys: BankKeyService,
+    private readonly settings: AppSettingsService,
+    private readonly audit: AuditService,
     @Inject(BANK) private readonly bank: BankWebhookProvider,
     @Optional()
     @Inject(FUNDRAISING_PAYMENT_PORT)
@@ -48,7 +54,13 @@ export class ReconcileService {
     rawBody: Buffer | undefined,
     headers: Record<string, string | undefined>,
   ): Promise<number> {
-    if (!rawBody || !this.bank.verify(rawBody, headers)) {
+    let secret: string;
+    try {
+      secret = await this.keys.current();
+    } catch {
+      throw unauthorized('Chữ ký webhook không hợp lệ');
+    }
+    if (!rawBody || !this.bank.verify(rawBody, headers, secret)) {
       throw unauthorized('Chữ ký webhook không hợp lệ');
     }
     let list: BankTxn[];
@@ -83,9 +95,25 @@ export class ReconcileService {
   async match(transactionId: string, now = new Date()): Promise<MatchOutcome> {
     const head = await this.prisma.db.paymentTransaction.findUnique({
       where: { id: transactionId },
-      select: { content: true, matchStatus: true },
+      select: { content: true, matchStatus: true, raw: true },
     });
     if (!head || head.matchStatus !== 'unmatched') return { matched: false, reason: 'handled' };
+    const raw = head.raw;
+    if (
+      raw &&
+      typeof raw === 'object' &&
+      !Array.isArray(raw) &&
+      raw['_autoActivationDeferred'] === true
+    ) {
+      return { matched: false, reason: 'Chờ Admin xác nhận (tự kích hoạt tắt)' };
+    }
+    if (!(await this.settings.bank()).autoActivate) {
+      const reason = 'Chờ Admin xác nhận (tự kích hoạt tắt)';
+      await this.prisma.db.$transaction((tx) =>
+        this.txns.deferActivation(tx, transactionId, reason),
+      );
+      return { matched: false, reason };
+    }
     // D-104 §28.1: chỉ tự khớp nội dung đúng mẫu `OPCHUB [Mã TV] [SĐT] [GV?]`
     const parsed = parsePaymentContent(head.content);
     // D-105: có GV → Gói Gọi vốn, Mã TV phải đúng chủ khoản
@@ -159,7 +187,18 @@ export class ReconcileService {
     return this.prisma.db
       .$transaction(async (tx) => {
         try {
-          return await run(tx);
+          const result = await run(tx);
+          if (result.matched)
+            await this.audit.log(tx, {
+              actorId: null,
+              action: 'fee.auto_activate',
+              entity: 'payment_transaction',
+              entityId: transactionId,
+              tag: 'member',
+              summary: 'Tự kích hoạt từ giao dịch ngân hàng',
+              diff: { actor: 'system', userId: result.userId },
+            });
+          return result;
         } catch (err) {
           if (!(err instanceof AppError)) throw err;
           throw new UnmatchedError(err.message);

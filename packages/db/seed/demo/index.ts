@@ -1,3 +1,5 @@
+import { seedAffiliateRenewals } from './affiliate-renewals';
+import { seedRenewalDemo } from './renewal';
 import { demoAccounts } from '@opchub/shared/fixtures';
 import { seedProjectDemoFees } from './project-fees';
 import { UNPAID_DEMO } from '@opchub/shared/mock-data';
@@ -7,6 +9,7 @@ import { seedRequired } from '../required';
 import { type DemoHashes, seedFees, seedUsers } from './account';
 import { seedAdmins } from './admin';
 import { seedAffiliates } from './affiliate';
+import { seedRegionalShares } from './regional-shares';
 import { seedAffiliateScenario } from './affiliate-scenario';
 import { seedBots } from './bot';
 import { seedBotHistory } from './bot-history';
@@ -56,6 +59,7 @@ export async function seedDemo(
     botHistory?: boolean;
     stores?: boolean;
     projects?: boolean;
+    renewal?: boolean;
   } = {},
 ): Promise<void> {
   // TK `admin` có thể chưa có → seed bắt buộc tạo bằng mật khẩu demo (sau đó account.ts ghi lại hash)
@@ -69,6 +73,9 @@ export async function seedDemo(
       await seedUsers(tx, h);
       await seedAdmins(tx, h.admin);
       await seedFees(tx);
+      await seedPaymentTransactions(tx);
+      if (options.renewal) await seedRenewalDemo(tx);
+      await seedRegionalDirectors(tx);
       await seedAffiliates(tx);
       if (options.affiliate || options.affiliatePaused || options.affiliatePayout)
         await seedAffiliateScenario(tx, {
@@ -93,7 +100,12 @@ export async function seedDemo(
       await seedNotifications(tx);
       await seedAuditLog(tx);
       await seedStatsDaily(tx);
+      await seedRegionalShares(tx);
+      if (options.affiliate || options.affiliatePaused || options.affiliatePayout)
+        await seedAffiliateRenewals(tx);
     },
     { timeout: 120_000, maxWait: 30_000 },
   );
 }
+import { seedRegionalDirectors } from './regional-directors';
+import { seedPaymentTransactions } from './payment-transactions';

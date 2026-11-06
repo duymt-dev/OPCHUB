@@ -693,3 +693,195 @@ the old `.next-v42-713-msw` builds. New moderation builds use separate
 `.next-v42-714-msw` output directories and will only take over after the old
 runner exits. Do not restart the active run or claim its results cover these
 later source/test additions. No native listener, data or process was changed.
+
+## V4.6 — TIP-V46-801
+
+Các phương án an toàn dưới đây đã được TIP chỉ định; không mở rộng nghiệp vụ.
+
+| ID | Điểm cần ghi nhận | Xử lý TIP-801 |
+|---|---|---|
+| Q-V46-801-1 | Chuyển khoản phí khi đang là GĐ Vùng | Giữ unmatched để đối soát tay, không tự cộng hạn |
+| Q-V46-801-2 | Lọc Thành viên Chưa đóng / Hết hạn | Loại GĐ Vùng khỏi nhóm chưa đóng |
+| Q-V46-801-3 | Bổ nhiệm nhà đầu tư | Không cho phép; API trả 422 |
+| Q-V46-801-4 | Prototype cho đổi miền của ô | Miền của ô cố định, chỉ hiển thị theo D-120 |
+| Q-V46-801-5 | Prototype có thể hiện Gửi nhắc cho GĐ Vùng | Không hiện / không gửi theo GDV-R03 |
+| Q-V46-801-6 | Khóa tài khoản đang là GĐ Vùng | Không tự thu hồi; Admin thu hồi tay, chưa bổ sung workflow tự động |
+
+## V4.6 — TIP-V46-802
+
+| ID | Điểm cần ghi nhận | Xử lý |
+|---|---|---|
+| Q-V46-802-1 | Thời điểm ghi Gọi vốn | Ghi khi Admin duyệt, không khi đối soát CK; khoản từ chối không sinh chia sẻ |
+| Q-V46-802-2 | Người cũ còn khoản pending sau thu hồi | Giữ người nhận; lưu snapshot ngân hàng khi thu hồi để chi khoản cũ, không chuyển sang người mới |
+| Q-V46-802-3 | Prototype có thể chi tháng hiện tại | Chỉ chi tháng đã đóng theo TIP; không sửa luật để khớp ảnh |
+| Q-V46-802-4 | Hủy giao dịch đã đối soát | Hiện không có đường hủy nên không tự thêm bút toán đảo; giao dịch chưa kích hoạt không phát sự kiện |
+| Q-V46-802-5 | Tỷ lệ hợp lệ bằng 0 khi có người nhận | Owner chốt giữ vùng/GĐ Vùng với số tiền 0; CHECK không ép region NULL |
+| Q-V46-802-6 | Tổng chi có thể vượt int32 | Owner chốt PostgreSQL bigint cho tổng chi; API kiểm tra số nguyên VND an toàn |
+| Q-V46-802-7 | TIP để consumer regional_share.recorded đến 804 nhưng M1 bắt buộc mọi event có consumer | Owner xác nhận giữ phạm vi 802, ghi PARTIAL; không thêm no-op hoặc nới test M1 |
+
+Parity phải đo dữ liệu seed thật, không chép thuật toán dữ liệu prototype hoặc
+đổi ledger để làm xanh ảnh. Chính sách ngoài ba tham số mới thuộc TIP-803.
+Owner chốt dùng lại opchub_v46_801_dev / opchub_v46_801_test và Memurai 6381;
+giữ nguyên DB và Redis native.
+
+## V4.6 — TIP-V46-803
+
+| ID | Điểm cần ghi nhận | Owner đã chốt |
+|---|---|---|
+| Q-V46-803-1 | Các ô tỷ lệ không còn trên prototype | D-132: ẩn defaultRate/fundraisingRate và trường gia hạn, giữ giá trị đã tải khi lưu |
+| Q-V46-803-2 | Hoa hồng tham khảo khi gia hạn | D-131: năm đầu dùng tỷ lệ affiliate/Gọi vốn; năm 2 đến năm tối đa dùng renewalRate; sau đó hoặc làm tròn 0đ không ghi khoản |
+| Q-V46-803-3 | Nhãn quyền affiliate.payout | Giữ permission cho GĐ Vùng; đổi nhãn ở TIP-807, không mở lại chi trực tiếp affiliate |
+| Q-V46-803-4 | Doanh thu giữ lại sau hủy hoa hồng | D-132: revenue hiện hành trừ tổng sổ GĐ Vùng cùng tháng; không đảo sổ khi hủy hoa hồng |
+| Q-V46-803-5 | regionalStep = 0, min nhỏ hơn năm đầu | D-132: một dòng “Từ năm 1 trở đi”, không sao chép lỗi lặp của prototype |
+| Q-V46-803-6 | Reporting chỉ đọc nhưng TIP đặt firstPaid tại đây | Owner chấp thuận ngoại lệ hẹp đúng TIP/D-131: chỉ CustomerYearRepository.firstPaid ghi mốc chung trong transaction của consumer |
+
+Owner xác nhận tiếp tục hai DB riêng và Memurai 6381; không reset DB/cache native.
+
+## V4.6 — TIP-V46-804
+
+| ID | Điểm cần ghi nhận | Cách xử lý đúng TIP |
+|---|---|---|
+| Q-V46-804-1 | Sau thu hồi vẫn còn pending của người cũ | Portal trả none; Admin vẫn chi theo snapshot, không gán sang người mới |
+| Q-V46-804-2 | Tỷ lệ hiện hành khác snapshot cũ | Cột tỷ lệ dùng policy hiện hành; mọi tổng tiền cộng snapshot, không tính lại |
+| Q-V46-804-3 | Một tháng có nhiều batch chi, hoặc vừa paid vừa pending | Nhóm theo tháng khoản, paid khi tất cả đã paid; paidAt là max của đúng biên lai được nối |
+
+Owner xác nhận tái sử dụng opchub_v46_801_dev / opchub_v46_801_test và Memurai 6381; giữ nguyên DB/Redis native.
+Không có client logger đã cài trong Portal: lỗi GET /me/gdv được báo qua browser reportError (sanitized, không PII), không dùng console và không thay màn affiliate thường bằng lỗi.
+
+Fixture sổ chia sẻ 802/803 có năm tương lai và khác số liệu prototype; không sửa ledger/chính sách để làm xanh ảnh. Đối chiếu số đo trong completion, không mask/nới ngưỡng.
+
+804 follow-up: assert cookie paragraph trong affiliate-cross-app đã đổi sang badge đúng BR-495 (d690a63f). Retest vẫn đỏ tại cancelled row như baseline, không coi 6 failure identity là bằng chứng mọi nguyên nhân dừng đều giống baseline. Parity vùng mới vẫn chưa đạt 3%; chưa DONE.
+# TIP-V46-805 — clarifications for owner review (05/11/2026)
+
+- **Q-V46-805-1 / D-125**: không có Zalo/ZNS trong schema/API/UI; mô tả D7 chỉ Email + thông báo.
+- **Q-V46-805-2**: công tắc đổi draft; Lưu cấu hình mới ghi/audit. Gửi khi draft còn thay đổi
+  yêu cầu lưu trước để UI không hiển thị kênh khác cấu hình server; mọi kênh tắt luôn báo TC-471.
+- **Q-V46-805-3 / BR-474**: trial áp dụng đủ D30/D7/D1, thay phạm vi mốc cũ D-113.
+- **Q-V46-805-4 / §33**: job không nhắc ngày hết hạn hoặc T+3, thay mốc cũ D-57;
+  sweep trạng thái, paywall và nhắc tay ở Phí thành viên không đổi.
+- **QR fallback**: D1 mail chứa chuỗi EMVCo VietQR + STK/chủ TK/số tiền/nội dung OPCHUB,
+  như phương án dự phòng TIP cho phép; không giả là đã nhúng ảnh PNG/CID, không thêm dependency.
+- **Đã chốt trực tiếp**: owner duyệt CHECK tương thích mã cũ/mới/manual, DB riêng + Memurai6381,
+  rolling restart bộ dịch vụ riêng, và lỗi schema 400 VALIDATION_ERROR + fields theo standard.
+  Chỉ lỗi gửi khi không có kênh là 422 RENEWAL_NO_CHANNEL. Không sửa requirements matrix theo constraint TIP.
+
+## V4.6 — TIP-V46-806: đã chốt, không phải câu hỏi đang chờ
+
+| ID | Quyết định owner — D-135 | Triển khai |
+|---|---|---|
+| Q-V46-806-1 | Giữ ba cổng; cổng chưa hỗ trợ làm mờ; đổi qua env | Casso / VCB có nhãn Chưa hỗ trợ; SePay chỉ chọn khi đang chạy; fake có nút dev riêng |
+| Q-V46-806-2 | Khóa mới hiệu lực ngay, không ân hạn | Khóa mã hóa trong DB, cache chỉ ciphertext/hint; khóa cũ bị từ chối, poll không đổi |
+| Q-V46-806-3 | Bật lại không xử lý giao dịch chờ | Marker bền vững giữ giao dịch cho gán tay, cả khi retry job |
+| Q-V46-806-4 | Ghi nhận thiếu không kích hoạt hoặc cộng dồn | Ghi chú bắt buộc, chuyển trạng thái có điều kiện + audit; Thu tay hiện có không đổi |
+| Q-V46-806-5 | Tab cần settings.general | Kế toán dùng API Phí thành viên theo fees.view / fees.action, không thấy tab |
+
+Owner cũng duyệt dùng lại hai DB riêng `opchub_v46_801_dev` / `opchub_v46_801_test`,
+Memurai 6381 và rolling restart API/socket/worker riêng 805 sang 806;
+không reset/restart PostgreSQL 5432 hoặc Redis 6379.
+
+### Gate repair đã được owner duyệt — 05/11/2026
+
+Chỉ `apps/server/test/bot/bot-bulk-lines-v42.int.spec.ts`: fixture 10k vượt
+transaction mặc định5s hai lượt liên tiếp. Owner chọn dựng ngoài interactive
+transaction, dọn đúng prefix trong finally như case kế bên; giữ nguyên mọi assertion
+collision/GIN/không Seq Scan và timeout production. Commit4240c17a, scope4/4 PASS.
+Không mở rộng sửa file reply-scan khác: file đó chạy riêng4/4 PASS, giữ nguyên.
+
+SPEC7 đếm **chưa xử lý**: short đã ghi nhận vẫn hiện lịch sử nhưng không thuộc
+pending. Sửa đồng nhất API/MSW trong3c4f6f94, có assert giảm bộ đếm ở shared/int/E2E;
+không đổi quy tắc không kích hoạt/không cộng dồn D-135.
+## TIP-V46-807 — execution defaults and runtime (05/11/2026)
+
+The TIP explicitly authorizes the following defaults while awaiting owner confirmation;
+they are not new D-xx decisions and are not silently presented as owner-approved:
+
+- Q-V46-807-1: screen/CSV90 days; append-only DB retained at least12 months. No purge/trigger relaxation.
+- Q-V46-807-2: earliest current provincial group (industry uses its parent), D-128; groupless only national total.
+- Q-V46-807-3: active+expiring paid, expired+legacy pending_payment overdue; exclude deleted/investor/regional_director fee status; locked included.
+- Q-V46-807-4: CSV absolute `dd/mm/yyyy HH:mm`, Asia/Ho_Chi_Minh, not relative text.
+- Q-V46-807-5: positive commissions only across Admin/Portal list/count/total/CSV; never filter regional-share zero allocations; NOT VALID positive CHECK preserves history.
+
+Owner explicitly approved reusing the private dev/test DB pair and Memurai6381,
+with rolling restart of owned806 services to807; original native5432/6379 untouched.
+
+Migration incident: the generated create-only diff accidentally deployed handwritten
+index/FK drops on the private pair. A compensating migration restored the original
+definitions. No business rows were removed by this correction. Owner approved
+“Dọn đúng hai migration và metadata DB riêng” on 05/11/2026. Removed exactly
+`20261105111454_v46_commission_positive` and `20261110091000_restore_custom_indexes`
+from source and their metadata from both private DBs. Verified all21 indexes and
+the validated `customer_years_user_fk` restored; both metadata counts are zero.
+Prisma reports96 migrations, up to date on both DBs. Only the intended
+`20261110090000_v46_commission_positive` NOT VALID CHECK ships. No fresh-DB replay
+has been performed; original native DB/Redis remain untouched. Incident closed.
+
+### Approved807 regression fixture repair —05/11/2026
+
+Full integration and an isolated rerun reproduced a legacy chat fixture failure:
+93 background groups plus nine cases' accumulated groups exceeded the existing
+first100 community items, so the overview did not contain the current test group.
+Unread/read assertions passed. Owner explicitly chose “Sửa fixture hẹp, giữ nguyên
+assertions”. Only `test/chat/chat-rest.int.spec.ts` changes: afterEach deletes
+exact IDs created by that case, not other background groups. All assertions and
+production API/cap100 remain unchanged. Scoped14/14 and full rerun2050/2050 passed.
+The existing production first100-groups limitation is not fixed or hidden here.
+
+### TIP-V46-808 decisions and execution exceptions —05/11/2026
+
+- Owner explicitly approved private DB pair `opchub_v46_801_dev` / `opchub_v46_801_test`,
+  Memurai6381 and owned rolling807→808. Original DB/Redis6379 untouched.
+- Owner approved same-domain SQL visibility counterparts plus real equivalence tests;
+  Prisma filters and existing fee helpers retain their business meaning.
+- Q808-1→5 use the TIP-authorized defaults pending confirmation; do not record these as
+  new owner decisions: accent-insensitive search, Portal visible rows only, Admin name/email
+  plus exact member code, all nondeleted Admin states per permission, outside click keeps text.
+- Owner approved narrowing only three Affiliate month-select actions to their accessible
+  `Tháng …` label. Two old strict-mode failures were caused by the newly accessible topbar
+  combobox; no assertion, fixture data, API or production behavior was weakened.
+- First Admin search parity setup on Overview measured3.89%, including pre-existing chart
+  and dataset differences. Final scenario opens the same search from Members on both sides
+  (stable baseline D02); no masks, viewport changes or tolerance relaxation. Portal uses
+  `cà phê`; Admin uses `MediaSoft`. Native and MSW12/12 passed on final assets.
+- Owner approved the narrow legacy service fixture repair: constrain the reused YC-1010
+  outbox lookup by the commentId returned from the current API request. Recipient,
+  sanitization and notification assertions remain unchanged; historical outbox retained.
+- Two-character needs performance refined with bounded prefix/fallback IDs before payload
+  reads, preserving one query and exact visibility/ranking. Nine plan/equivalence tests pass;
+  latest scoped Ne measurement37.967ms versus initial78.966/101.447ms. No timeout/index or
+  business-rule relaxation; results do not guarantee every query/load below50ms.
+### TIP-V46-809 execution defaults —06/11/2026
+
+- Owner approved reuse of private `opchub_v46_801_dev` / `opchub_v46_801_test`, Memurai6381,
+  and owned rolling808→809. Original native DB and Redis6379 untouched. No migration.
+- Q-V46-809-1→4 follow the explicit TIP defaults pending confirmation, not new owner D-xx:
+  own draft store receives matches; hidden own store shows no matches; accent-folded unique
+  keywords; empty state has no extra edit button; prototype's “AI gợi ý” retained although
+  calculation is deterministic and never calls LLM.
+- Canonical standard unpaid response402 MEMBERSHIP_REQUIRED retained (TIP incorrectly says403);
+  investor/locked403. FE hides on401/402/403.
+- Candidate cap200 newest can omit older higher-scoring needs; accepted TIP limitation.
+  Cache60 seconds is intentionally not invalidated by production writes.
+- Existing `--stores` seed is enabled by a new test-only `demo: stores` annotation so the
+  exact same new E2E assertions run on MSW/native. Demo cache reset includes only the new
+  `opchub:need-matches:*` namespace; normal production TTL behavior is unchanged.
+- Baseline full MSW371 passed/1 failed/4 skipped: old Affiliate mobile region text assertion.
+  Unmodified isolated repeat3 of that entire file passed9/9. No unrelated repair made.
+  Baseline P01 before adding the missing card measured15.396% desktop/17.825% mobile;
+  recorded as baseline, not masked or accepted as a new UI defect.
+- Final card spacing accounts for the shell's16px sibling gap; card buttons use scoped
+  specificity to beat AntD insertion order equally on MSW/native. Final P01 captures:
+  MSW1.005%/2.967%, native1.011%/2.967% (1440/390). Remaining differences are intended
+  accent-folded product reason/37% versus prototype30%, required specific need-type label
+  versus generic prototype label, and previously approved topbar flags. No new UI defect
+  left knowingly; owner reviews full screenshot pairs in PR87.
+
+## TIP-V46-810 — defaults specified by the TIP (not new owner approvals)
+
+- Q-V46-810-1: card in both edit wizard and owner dashboard; default, awaiting owner.
+- Q-V46-810-2: slug does not change on rename; default, awaiting owner.
+- Q-V46-810-3: visibleStore eligibility only, no guest-view KPI increments; default, awaiting owner.
+- Q-V46-810-4: saved SEO title max70; default, awaiting owner.
+- Q-V46-810-5: declared business contacts public, never account-owner contact/name/id; default, awaiting owner.
+- Q-V46-810-6: read-only link/copy in Admin drawer; default, awaiting owner.
+- Owner text inputs use empty saved values with default placeholders (TIP); unlike filled prototype defaults. View-as-guest opens actual `/g/` in a new tab (TIP/D-95). Neither is a fabricated D-xx decision.
+- Infra810 confirmed by owner in this thread: private801 dev/test + Memurai6381 and rolling private809 services. Only these targets are used; original native DB/Redis remain intact.

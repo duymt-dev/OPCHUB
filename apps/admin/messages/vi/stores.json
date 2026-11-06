@@ -60,7 +60,11 @@
     "hide": "Ẩn gian hàng",
     "show": "Hiển thị lại",
     "feature": "Gắn Nổi bật",
-    "unfeature": "Gỡ Nổi bật"
+    "unfeature": "Gỡ Nổi bật",
+    "publicPage": "Trang công khai",
+    "publicCopy": "Sao chép",
+    "publicCopied": "Đã sao chép link trang công khai",
+    "publicCopyError": "Không sao chép được link"
   },
   "toast": {
     "hidden": "Đã ẩn {n} gian hàng",

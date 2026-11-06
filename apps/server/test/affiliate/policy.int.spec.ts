@@ -32,9 +32,14 @@ describe('Affiliate policy API (TIP-V2-402)', () => {
     const prior = await createAffiliate(t, new Date());
     const { token, user } = await affiliateAdminToken(t);
     const next = {
+      renewalRate: 15,
+      renewalMaxYear: 4,
       defaultRate: 27,
       cookieDays: 45,
       fundraisingRate: 12,
+      regionalFirstYear: 60,
+      regionalStep: 15,
+      regionalMin: 25,
       terms: 'Điều khoản Affiliate thử nghiệm',
     };
     const res = await t.call('/admin/affiliate/policy', { method: 'PUT', token, json: next });
@@ -62,7 +67,13 @@ describe('Affiliate policy API (TIP-V2-402)', () => {
     const audit = await t.prisma.db.auditLog.findFirstOrThrow({
       where: { actorId: user.id, action: 'affiliate.policy_update' },
     });
-    expect(audit.diff).toMatchObject({ before: original, after: next });
+    const changed = (Object.keys(next) as (keyof typeof next)[]).filter(
+      (k) => original[k] !== next[k],
+    );
+    expect(audit.diff).toEqual({
+      before: Object.fromEntries(changed.map((k) => [k, original[k]] as const)),
+      after: Object.fromEntries(changed.map((k) => [k, next[k]] as const)),
+    });
   });
 
   it('D-63 quyền chỉ xem, field validation, giới hạn payload, không ghi khi lỗi', async () => {
@@ -91,6 +102,22 @@ describe('Affiliate policy API (TIP-V2-402)', () => {
         json: { ...original, ...patch },
       });
       expect(res.status).toBe(400);
+      expect(apiErrorSchema.parse(await res.json()).error.fields?.[0]?.path).toBe(
+        Object.keys(patch)[0],
+      );
+    }
+    for (const patch of [
+      { renewalRate: -1 },
+      { renewalRate: 51 },
+      { renewalMaxYear: 0 },
+      { renewalMaxYear: 11 },
+    ]) {
+      const res = await t.call('/admin/affiliate/policy', {
+        method: 'PUT',
+        token: admin.token,
+        json: { ...original, ...patch },
+      });
+      expect(res.status).toBe(422);
       expect(apiErrorSchema.parse(await res.json()).error.fields?.[0]?.path).toBe(
         Object.keys(patch)[0],
       );

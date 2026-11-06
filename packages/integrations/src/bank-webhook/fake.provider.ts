@@ -29,9 +29,12 @@ export class FakeBankProvider implements BankWebhookProvider {
   constructor(private readonly secret: string) {}
 
   /** Tạo body + header đã ký để gọi webhook như ngân hàng thật */
-  sign(body: FakeBankBody): { rawBody: string; headers: Record<string, string> } {
+  sign(
+    body: FakeBankBody,
+    secret = this.secret,
+  ): { rawBody: string; headers: Record<string, string> } {
     const rawBody = JSON.stringify(fakeBankBodySchema.parse(body));
-    return { rawBody, headers: { [SIG_HEADER]: signBody(this.secret, rawBody) } };
+    return { rawBody, headers: { [SIG_HEADER]: signBody(secret, rawBody) } };
   }
 
   /** Ghi nhận giao dịch phía "ngân hàng" (để poll thấy cả khi webhook không về) */
@@ -48,8 +51,12 @@ export class FakeBankProvider implements BankWebhookProvider {
     return t;
   }
 
-  verify(rawBody: Buffer, headers: Record<string, string | undefined>): boolean {
-    return verifySignature(this.secret, rawBody, headers[SIG_HEADER]);
+  verify(
+    rawBody: Buffer,
+    headers: Record<string, string | undefined>,
+    secret = this.secret,
+  ): boolean {
+    return verifySignature(secret, rawBody, headers[SIG_HEADER]);
   }
 
   parse(rawBody: Buffer): BankTxn[] {

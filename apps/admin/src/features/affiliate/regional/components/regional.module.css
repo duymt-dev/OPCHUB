@@ -1,0 +1,317 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 3px 0 0;
+}
+.heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.heading > div {
+  flex: 1;
+  min-width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.heading b {
+  font-size: 16px;
+}
+.heading > div > span {
+  color: rgba(0, 0, 0, 0.55);
+  font-size: 13px;
+  max-width: 720px;
+  text-wrap: pretty;
+}
+.rules {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1px;
+  background: #f0f0f0;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.rules > div {
+  background: #fafafa;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 13px;
+}
+.rules small,
+.field > span:first-child,
+.counts span {
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 12px;
+}
+.notice {
+  font-size: 12px;
+  color: #d46b08;
+  background: #fff7e6;
+  border: 1px solid #ffd591;
+  border-radius: 6px;
+  padding: 6px 10px;
+}
+.slots {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+  gap: 16px;
+  align-items: start;
+}
+.slot {
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  min-width: 0;
+}
+.north {
+  --region-color: #1677ff;
+  --region-bg: #e6f4ff;
+}
+.central {
+  --region-color: #d46b08;
+  --region-bg: #fff7e6;
+}
+.south {
+  --region-color: #389e0d;
+  --region-bg: #f6ffed;
+}
+.stripe {
+  height: 4px;
+  background: var(--region-color);
+}
+.slotHead {
+  display: flex;
+  gap: 12px;
+  padding: 16px 16px 14px;
+  align-items: center;
+  border-bottom: 1px solid #f0f0f0;
+}
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--region-bg);
+  color: var(--region-color);
+  font-weight: 600;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.identity {
+  flex: 1;
+  min-width: 0;
+}
+.identity > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.identity b {
+  font-size: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.identity small {
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 12px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.region {
+  color: var(--region-color);
+  background: var(--region-bg);
+  font-size: 11px;
+  padding: 1px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.counts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid #f0f0f0;
+}
+.counts > div {
+  padding: 10px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.counts > div:first-child {
+  border-right: 1px solid #f0f0f0;
+}
+.counts b {
+  font-size: 18px;
+}
+.slotBody {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.55);
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.chip {
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  font: inherit;
+  padding: 3px 10px;
+  background: #fff;
+  cursor: pointer;
+}
+.chipOn {
+  background: #e6f4ff;
+  color: #1677ff;
+  border-color: #91caff;
+}
+.chip:disabled {
+  cursor: not-allowed;
+  opacity: 1;
+}
+.bank {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.bank {
+  border-top: 1px dashed #f0f0f0;
+  padding-top: 14px;
+  gap: 10px;
+}
+.bankGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.bankGrid :global(.ant-form-item) {
+  margin-bottom: 0;
+}
+.bankGrid :global(.ant-form-item-label > label) {
+  height: auto;
+  line-height: 16px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+@media (max-width: 600px) {
+  .counts {
+    grid-template-columns: 1fr;
+  }
+}
+.good {
+  color: #389e0d;
+  font-size: 12px;
+}
+.warning {
+  color: #d46b08;
+  font-size: 12px;
+}
+.danger {
+  color: #cf1322;
+}
+.history {
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.history > div {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  padding: 6px 0;
+  border-top: 1px solid #f5f5f5;
+}
+.history time {
+  color: rgba(0, 0, 0, 0.45);
+  min-width: 130px;
+}
+
+.assignment {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sectionTitle {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.45);
+}
+.provinceHeading {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: baseline;
+}
+.bankGrid :global(.ant-form-item):first-child {
+  grid-column: 1/-1;
+}
+.bankGrid :global(.ant-input),
+.assignment :global(.ant-select) {
+  height: 34px;
+  font-size: 13px;
+}
+
+.bankGrid :global(.ant-input-disabled) {
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+}
+.bankGrid :global(.ant-form-item-label) {
+  padding-bottom: 6px;
+}
+.bankGrid {
+  row-gap: 10px;
+}
+.regionValue {
+  display: flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 10px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  color: rgba(0, 0, 0, 0.88);
+  font-size: 13px;
+}
+.slotHead :global(.ant-btn) {
+  height: 28px;
+  padding: 0 10px;
+  font-size: 12px;
+  border-radius: 6px;
+}
+.heading :global(.ant-btn) {
+  height: 34px;
+  padding: 0 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+}

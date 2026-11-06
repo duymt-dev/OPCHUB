@@ -3,6 +3,7 @@ import { Prisma } from '@opchub/db';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { PersonaTurnWriter, type PersonaTurnInput } from '@/modules/chat';
 import { personaTurnPruneSql } from '@/modules/chat/repositories/persona-turn-prune';
+import { withRolledBackMessages } from './persona-plan-fixture';
 import { createGroup } from '../factories/group.factory';
 import { createUser } from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
@@ -13,6 +14,7 @@ describe('REQ-208 REQ-411 atomic persona turn storage', () => {
   const groups: string[] = [];
   const personas: string[] = [];
   const messages: string[] = [];
+  const noiseUsers: string[] = [];
   const at = new Date('2026-10-21T05:00:00Z');
 
   beforeAll(async () => {
@@ -29,6 +31,7 @@ describe('REQ-208 REQ-411 atomic persona turn storage', () => {
       });
     await t.prisma.db.group.deleteMany({ where: { id: { in: groups } } });
     await t.prisma.db.persona.deleteMany({ where: { id: { in: personas } } });
+    await t.prisma.db.user.deleteMany({ where: { id: { in: noiseUsers } } });
     await t.close();
   });
 
@@ -203,23 +206,62 @@ describe('REQ-208 REQ-411 atomic persona turn storage', () => {
     const roomId = `${input.groupIds[0]}-general`;
     const secondRoom = `${input.groupIds[1]}-general`;
     const otherRoom = `${input.groupIds[2]}-general`;
-    await t.prisma.db.$executeRaw`
+    const member = await createUser(t, { fee: 'active' });
+    noiseUsers.push(member.id);
+    await withRolledBackMessages(t, async (db) => {
+      await db.$executeRaw`
       INSERT INTO messages (id, room_id, persona_id, is_simulated, kind, body, created_at, updated_at)
       SELECT gen_random_uuid()::text, CASE WHEN n <= 121 THEN ${roomId} WHEN n <= 242 THEN ${secondRoom} ELSE ${otherRoom} END,
         ${input.personaId}, true, 'text', 'query-plan-fixture',
         ${at}::timestamptz - interval '1 day' + n * interval '1 millisecond', ${at}
       FROM generate_series(1, 10242) n`;
-    await t.prisma.db.$executeRaw`ANALYZE messages`;
-    const plan = await t.prisma.db.$queryRaw<{ 'QUERY PLAN': string }[]>(Prisma.sql`
+      // A partial index needs a mixed workload to exercise its selectivity. Preserve all
+      // 10,242 original simulated rows and add member traffic outside the target rooms.
+      await db.$executeRaw`
+      INSERT INTO messages (id, room_id, sender_id, is_simulated, kind, body, created_at, updated_at)
+      SELECT gen_random_uuid()::text, ${otherRoom}, ${member.id}, false, 'text', 'member-plan-noise',
+        ${at}::timestamptz - interval '1 day' + n * interval '1 millisecond', ${at}
+      FROM generate_series(1, 10000) n`;
+      await db.$executeRaw`ANALYZE messages`;
+      const plan = await db.$queryRaw<{ 'QUERY PLAN': string }[]>(Prisma.sql`
       EXPLAIN (ANALYZE, BUFFERS) ${personaTurnPruneSql([roomId, secondRoom], at)}`);
-    const text = plan.map((row) => row['QUERY PLAN']).join('\n');
-    expect(text).toContain('messages_simulated_room_idx');
-    expect(text).toContain('messages_pkey');
-    expect(text).not.toMatch(/Seq Scan on messages/);
-    expect(await t.prisma.db.message.count({ where: { roomId, deletedAt: null } })).toBe(120);
-    expect(
-      await t.prisma.db.message.count({ where: { roomId: secondRoom, deletedAt: null } }),
-    ).toBe(120);
-    process.stdout.write(`REQ-208 exact prune EXPLAIN on 10242 synthetic rows:\n${text}\n`);
+      const text = plan.map((row) => row['QUERY PLAN']).join('\n');
+      expect(text).toContain('messages_simulated_room_idx');
+      expect(text).toContain('messages_pkey');
+      expect(text).not.toMatch(/Seq Scan on messages/);
+      expect(await db.message.count({ where: { roomId, deletedAt: null } })).toBe(120);
+      expect(await db.message.count({ where: { roomId: secondRoom, deletedAt: null } })).toBe(120);
+      expect(
+        await db.message.count({
+          where: { roomId: otherRoom, isSimulated: false, deletedAt: null },
+        }),
+      ).toBe(10000);
+      process.stdout.write(`REQ-208 exact prune EXPLAIN on 20242 mixed rows:\n${text}\n`);
+    });
+  });
+
+  it('REQ-208 all-simulated skew still prunes through indexed PK updates without scanning messages', async () => {
+    const input = await fixture(3);
+    const roomId = `${input.groupIds[0]}-general`;
+    const secondRoom = `${input.groupIds[1]}-general`;
+    const otherRoom = `${input.groupIds[2]}-general`;
+    await withRolledBackMessages(t, async (db) => {
+      await db.$executeRaw`
+      INSERT INTO messages (id, room_id, persona_id, is_simulated, kind, body, created_at, updated_at)
+      SELECT gen_random_uuid()::text, CASE WHEN n <= 121 THEN ${roomId} WHEN n <= 242 THEN ${secondRoom} ELSE ${otherRoom} END,
+        ${input.personaId}, true, 'text', 'all-simulated-plan-fixture',
+        ${at}::timestamptz - interval '1 day' + n * interval '1 millisecond', ${at}
+      FROM generate_series(1, 10242) n`;
+      await db.$executeRaw`ANALYZE messages`;
+      const plan = await db.$queryRaw<{ 'QUERY PLAN': string }[]>(Prisma.sql`
+      EXPLAIN (ANALYZE, BUFFERS) ${personaTurnPruneSql([roomId, secondRoom], at)}`);
+      const text = plan.map((row) => row['QUERY PLAN']).join('\n');
+      expect(text).toContain('messages_pkey');
+      expect(text).not.toMatch(/Seq Scan on messages/);
+      expect(await db.message.count({ where: { roomId, deletedAt: null } })).toBe(120);
+      expect(await db.message.count({ where: { roomId: secondRoom, deletedAt: null } })).toBe(120);
+      expect(await db.message.count({ where: { roomId: otherRoom, deletedAt: null } })).toBe(10000);
+      process.stdout.write(`REQ-208 all-simulated EXPLAIN on 10242 rows:\n${text}\n`);
+    });
   });
 });

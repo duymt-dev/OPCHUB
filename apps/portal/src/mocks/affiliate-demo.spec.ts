@@ -55,7 +55,7 @@ describe('Affiliate demo middleware', () => {
     document.cookie = 'opchub-mock-affiliate-demo=1; Path=/';
     const profile = myAffiliateSchema.parse(await (await get('/me/affiliate')).json());
     // D-110 / BR-AFF-REV: gói thực trả như prototype v4.2 (P-97: Đã nhận 2.400.000đ)
-    expect(profile).toMatchObject({ stats: { paidCount: 9, received: 2400000 } });
+    expect(profile).toMatchObject({ stats: { paidCount: 11, received: 2400000 } });
     const refs = affiliateReferralsSchema.parse(
       await (await get('/me/affiliate/referrals?month=2026-10&page=1&size=6')).json(),
     );

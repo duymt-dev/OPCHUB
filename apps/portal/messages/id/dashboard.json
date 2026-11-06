@@ -2,5 +2,20 @@
   "page": {
     "title": "Dashboard",
     "sub": "Pantau aktivitas anggota dan komunitas secara real-time"
+  },
+  "matches": {
+    "title": "Kebutuhan yang cocok dengan toko Anda",
+    "sub": "Saran AI berdasarkan industri, provinsi dan produk toko · {n, plural, other {# kebutuhan}}",
+    "all": "Lihat semua kebutuhan",
+    "view": "Lihat & hubungi",
+    "fit": "tingkat kecocokan",
+    "none": "Belum ada kebutuhan yang cocok. Tambahkan industri, provinsi dan produk toko untuk saran AI yang lebih akurat.",
+    "reason": {
+      "field": "Industri sama",
+      "province": "Provinsi sama",
+      "product": "Produk cocok"
+    },
+    "error": "Tidak dapat memuat kebutuhan yang cocok.",
+    "retry": "Coba lagi"
   }
 }

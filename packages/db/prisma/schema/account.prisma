@@ -63,6 +63,7 @@ enum ConsentKind {
 }
 
 model User {
+  regionalDirector RegionalDirector?
   id                 String        @id @default(uuid(7))
   /// TV + 6 số, sinh từ sequence member_code_seq (D-41)
   memberCode         String        @unique @map("member_code")

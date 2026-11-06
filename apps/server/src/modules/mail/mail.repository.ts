@@ -29,6 +29,11 @@ export class MailRepository {
     return tx.mailLog.create({ data: row(m), select: { id: true, priority: true } });
   }
 
+  async createOnce(tx: DbTx, id: string, m: NewMail): Promise<boolean> {
+    const result = await tx.mailLog.createMany({ data: { ...row(m), id }, skipDuplicates: true });
+    return result.count === 1;
+  }
+
   async createMany(
     tx: DbTx,
     mails: readonly NewMail[],

@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, type DbTx } from '@opchub/db';
-import type { AffiliateBank } from '@opchub/shared/api-domains';
+import type { DbTx } from '@opchub/db';
 import { canCommission } from '../domain/affiliate.state';
 
 /** Mọi mutation khoá đại lý theo ID tăng dần trước khi khoá/cập nhật hoa hồng. */
@@ -23,7 +22,7 @@ export class AffiliateWriteRepository {
 
   commissions(tx: DbTx, ids: readonly string[]) {
     return tx.commission.findMany({
-      where: { id: { in: [...ids] } },
+      where: { id: { in: [...ids] }, amount: { gt: 0 } },
       select: { id: true, affiliateId: true },
     });
   }
@@ -52,33 +51,7 @@ export class AffiliateWriteRepository {
     // D-110: làm tròn đến đồng (như `commissionAmount`)
     await tx.$executeRaw`
       UPDATE commissions SET rate=${rate},amount=round(list_amount::numeric * ${rate} / 100)::integer
-      WHERE affiliate_id = ANY(${[...ids]}::text[]) AND status='recorded' AND source='membership'`;
-  }
-
-  async paid(
-    tx: DbTx,
-    affiliateId: string,
-    month: string,
-    bank: AffiliateBank,
-    actorId: string,
-    payoutId: string,
-    now: Date,
-  ) {
-    if (!canCommission('recorded', 'paid')) return { paid: 0, amount: 0 };
-    const [r] = await tx.$queryRaw<{ paid: number; amount: bigint }[]>(Prisma.sql`
-      WITH changed AS (
-        UPDATE commissions SET status='paid',paid_at=${now},paid_by=${actorId},
-          paid_bank_snapshot=${JSON.stringify({ ...bank, payoutId })}::jsonb
-        WHERE affiliate_id=${affiliateId} AND month_key=${month} AND status='recorded' RETURNING amount
-      ) SELECT count(*)::integer AS paid,COALESCE(sum(amount),0)::bigint AS amount FROM changed`);
-    return { paid: r?.paid ?? 0, amount: Number(r?.amount ?? 0) };
-  }
-
-  async receipt(tx: DbTx, affiliateId: string, month: string, payoutId: string) {
-    const [r] = await tx.$queryRaw<{ paid: number; amount: bigint }[]>`
-      SELECT count(*)::integer AS paid,COALESCE(sum(amount),0)::bigint AS amount FROM commissions
-      WHERE affiliate_id=${affiliateId} AND month_key=${month} AND status='paid'
-        AND paid_bank_snapshot->>'payoutId'=${payoutId}`;
-    return { paid: r?.paid ?? 0, amount: Number(r?.amount ?? 0) };
+      WHERE affiliate_id = ANY(${[...ids]}::text[]) AND status='recorded' AND source='membership' AND customer_year=1
+        AND amount > 0 AND round(list_amount::numeric * ${rate} / 100) > 0`;
   }
 }

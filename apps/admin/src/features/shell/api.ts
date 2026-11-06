@@ -1,4 +1,5 @@
 import {
+  globalSearchResultSchema,
   adminBadgesSchema,
   notificationListSchema,
   notificationReadResultSchema,
@@ -28,3 +29,6 @@ export async function fetchNavBadges() {
   const b = await api('/admin/badges', { schema: adminBadgesSchema });
   return { groups: b.reports, projects: b.projects, requests: b.requests };
 }
+
+export const fetchGlobalSearch = (q: string) =>
+  api(`/admin/search?q=${encodeURIComponent(q)}`, { schema: globalSearchResultSchema });

@@ -4,7 +4,8 @@ import {
   adminCategorySchema,
   adminRoleListSchema,
   adminRoleSchema,
-  auditLogRowSchema,
+  auditLogPageSchema,
+  exportJobSchema,
   generalSettingsSchema,
   mailJobSchema,
   languageSettingsSchema,
@@ -118,8 +119,12 @@ export const setAdminRole = (id: string, roleId: string) =>
   api(`${acc(id)}/role`, { method: 'PATCH', body: { roleId }, schema: adminAccountRowSchema });
 export const revokeAdmin = (id: string) => api(acc(id), { method: 'DELETE', schema: idSchema });
 
-export const fetchAuditLog = () =>
-  api('/admin/audit-logs', { schema: items(auditLogRowSchema) }).then((r) => r.items);
+export const fetchAuditLog = (cursor?: string) =>
+  api(`/admin/audit-logs${cursor ? `?cursor=${encodeURIComponent(cursor)}` : ''}`, {
+    schema: auditLogPageSchema,
+  });
+export const exportAuditLog = () =>
+  api('/admin/audit-logs/export', { method: 'POST', schema: exportJobSchema });
 
 export const fetchSecurity = () =>
   api('/admin/settings/security', { schema: securitySettingsSchema });
