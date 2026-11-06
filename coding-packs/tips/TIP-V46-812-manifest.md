@@ -367,3 +367,17 @@ Settings-nav candidate checked BEFORE deciding to edit: desktop/mobile first12 r
 Before source edits: full integration PASS2131 (DB126 + server2005), full MSW behavior PASS381/4 existing skips. Full bounded unit PASS2123/2 existing skips. Baseline parity remains raw failure, not a green gate.
 
 Correction to infrastructure test path above: inspection found no existing guard assertions in seed-demo.int.spec.ts. Leave that file unchanged; create packages/db/test/seed-demo-guard.int.spec.ts instead, dedicated URL-only acceptance/refusal tests without opening any database connection. Exact new guard name remains the sole allowlist addition.
+
+### TC-462 / BR-464 measured proof gap (before edits)
+- apps/server/src/modules/mail/templates-regional.ts: revoke subject always asks for payment even when validUntil exists; body already correctly states expiry. Apply only Q812-3 default conditional subject, no flow/payload changes.
+- apps/server/src/modules/mail/templates-regional.spec.ts (create): dedicated template tests for valid previous fee date (Vietnam midnight boundary), absent fee, all three region labels, existing unpaid wording retained.
+- apps/server/test/regional-director/appoint.int.spec.ts: add actual persisted revoke-mail/notification assertions and idempotent handler replay for TC-462 / BR-464. Existing tests/assertions retained.
+
+### Additional measured UI-only paths (before edits)
+- apps/admin/src/features/shell/components/view-only-zone.tsx: D120-GCFG-RO has duplicate gray notice35px+20gap in preview while prototype has orange preview notice only. Suppress gray notice only during preview; retain click-capture write guard and actual read-only account notice.
+- apps/admin/src/features/shell/components/view-only-zone.spec.tsx (create): prove actual read-only notice and guard, preview guard without duplicate notice, safe view/exit still work.
+
+### Isolated cache reset preflight (before edits)
+- apps/server/scripts/flush-dev-cache.mjs: existing reset rejects REDIS_DB3, so approved independent runtime cannot run unmodified native fixture. Preserve existing DB1 behavior; permit DB3 ONLY with loopback Memurai6381 and exact authorized opchub_v46_812_dev URL. No bypass/SKIP_SEED, no native6379 access.
+- apps/server/scripts/dev-cache-target.mjs (create): pure target guard extracted for exhaustive refusal tests.
+- apps/server/scripts/dev-cache-target.test.mjs (create): node:test covers existing DB1 and exact DB3 conjunction, rejects wrong host/port/database/near-miss/defaults before Redis construction.
