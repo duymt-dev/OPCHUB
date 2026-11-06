@@ -82,7 +82,7 @@ export class AiRouterService implements LlmRouter {
     month: string,
   ): Promise<string> {
     const key = this.cache.key(row);
-    if (!key) throw this.error('Chưa cấu hình AI');
+    if (!key) throw this.error('Chưa cấu hình AI', 'not_configured');
     let usage: LlmUsage = { promptTokens: 0, completionTokens: 0 };
     const started = performance.now();
     const adapter = new LocalLlmProvider(
