@@ -381,3 +381,44 @@ Correction to infrastructure test path above: inspection found no existing guard
 - apps/server/scripts/flush-dev-cache.mjs: existing reset rejects REDIS_DB3, so approved independent runtime cannot run unmodified native fixture. Preserve existing DB1 behavior; permit DB3 ONLY with loopback Memurai6381 and exact authorized opchub_v46_812_dev URL. No bypass/SKIP_SEED, no native6379 access.
 - apps/server/scripts/dev-cache-target.mjs (create): pure target guard extracted for exhaustive refusal tests.
 - apps/server/scripts/dev-cache-target.test.mjs (create): node:test covers existing DB1 and exact DB3 conjunction, rejects wrong host/port/database/near-miss/defaults before Redis construction.
+
+### Missing acceptance browser proof paths (before edits)
+- e2e/behavior/admin-regional-directors.spec.ts: add AT-GDV02 expired demo m6 appointment/revocation followed by real Portal login, mandatory non-dismissible fee popup and absent regional tab; add TC462 north previous-paid-fee revocation/date notification/no-popup.
+- e2e/behavior/admin-regional-shares.spec.ts: add AT-GDV04 through real revocation UI before existing payout, assert original payee/bank and due amount preserved.
+- e2e/behavior/global-search.spec.ts: add TC491 literal cà phê, existing stores demo prerequisite, assert both groups and exact clicked targets.
+- e2e/behavior/admin-bank-reconcile.spec.ts: title-only TC481 trace tag on existing auto activation case; no assertion edits.
+
+### Browser diagnostics after first focused run (before corrections)
+- AT-GDV02 initial mandatory popup and Esc assertions pass; extra assertion after navigating to /affiliate conflicts with existing overlay-policy.ts (explicit affiliate exemption, tested). Keep mandatory popup/Esc proof on landing page and independently assert removed regional tab on permitted affiliate page; no production policy change.
+- TC491 existing UI label is Nhu cầu địa phương (actual accessibility snapshot), not shortened Nhu cầu. Use exact actual group label; preserve both group and navigation checks.
+- e2e/parity/scenarios/admin-affiliate-list-states.ts: DOM proves two distinct matching codes HAOPC and HAOPC84, not duplicate nested row. Refine affiliate row candidate by exact code text, retaining count1 and checkbox assertions (no first() workaround).
+- e2e/parity/scenarios/admin-affiliate-steps.ts: native D84-AFF390 captured actual loading spinner (844px) while MSW complete table is3920px. Await populated affiliate row after tab navigation in both lanes before capture; no timeouts/masks/data changes.
+
+### TC462 mock prerequisite gap (before edits)
+- packages/shared/src/mock-data/domains/regional-notices.ts (create): MSW currently restores fees on revocation but never creates the native system notification. Mirror native handler content/date only; no production flow change.
+- packages/shared/src/mock-data/domains/regional-directors.ts: call notice helper on successful revoke and carry only regional notices through existing regional snapshot.
+- packages/shared/src/mock-data/domains/regional-snapshot.ts: optional/defaulted validated regional-notice entries for existing cross-origin browser fixture relay, not fake auth data.
+- packages/shared/src/mock-data/domains/regional-persistence.spec.ts: assert dated native-equivalent notification survives repeated snapshot restore without duplicates or unrelated notices loss.
+
+### BR465 expired-lock fixture gap (before edits)
+Existing Admin API accepts positive lock days only; existing demo m4 is indefinitely locked, so neither is an expired timed-lock prerequisite. No production endpoint/timeouts/auth-cookie changes are allowed.
+- packages/db/seed/expired-lock.ts (create): narrow native fixture CLI, parsed env, refuse anything except loopback exact opchub_v46_812_dev before connecting; conditional update ONLY demo m1 already manually locked, setting lockedUntil in past. No reset/new users/unlock/session fabrication. Login itself must perform unlock.
+- e2e/behavior/helpers/expired-lock.ts (create): target-specific prerequisite only: native runs narrow fixture CLI; MSW advances browser clock after real positive-day Admin lock (no fake session cookie or response). Same login/status assertions in both modes.
+- e2e/behavior/auth-expired-lock.spec.ts (create): isolated extensive proof instead of appending to existing auth-flows.spec.ts (already large); real Admin UI login + existing lock API, rejected member login while lock valid, expiry prerequisite, successful real member login active + real /me check. BR465 explicitly in title.
+
+TC462 native precondition correction: fixed prototype m3 expiry is already past on actual native clock (native correctly restores pending_payment). Establish the case using already-paid demo m1 via existing appointment UI before revocation, not fabricated dates or altered production rules. The test still requires active/expiring, no popup, dated bell notice and no regional tab in both lanes. AT01 native exposes AntD specificity retaining40px wrapper; strengthen only scoped bank wrapper sizing and rerun both lanes.
+
+### Policy and tab visibility measured before edit
+Paired D84-POL390 app/proto reviewed: both content sections present, but app lays out all3 regional inputs vertically (min200px on324px content) vs prototype two columns (156px each), labels blue vs prototype muted gray; active Chính sách tab remains offscreen in app whereas prototype scrolls it into view. D84POL baseline3.9508/10.1479%. Data KPI differences remain unchanged (D131 renewal fixtures); Sửa điều khoản remains required legacy action, not removed to improve pixels.
+- apps/admin/src/features/affiliate/components/policy-reference.module.css: scoped regional field grid140px minimum/muted label; retain all fields/validation. DOM follow-up required for year/plan row rhythm before changing those.
+- apps/admin/src/features/affiliate/components/affiliate-tabs.tsx: keep selected tab inside horizontally scrollable tablist via its own scrollLeft only; do not scroll whole page or hide other tabs.
+- apps/admin/src/features/affiliate/components/affiliate-tabs.spec.tsx (create): selected tab scroll behavior and unchanged click actions.
+- e2e/behavior/admin-affiliate-policy.spec.ts (modify if present; inspect exact filename first): mobile field positions and selected tab inside tablist, same assertions both lanes.
+MyRegion newtable has inline table-layout:auto from AntD; measured560px total but70.9375px first column vs desired62px. Keep new <70px assertion; strengthen domain table-layout CSS rather than loosen assertion.
+
+### Owner-approved BR465 narrow production correction (before edits)
+Owner explicitly approved fixing stale auto-unlock session plus regression. Native E2E login200 currently returns me.status locked; AuthService.assertUnlocked returns after DB unlock without refreshing SessionUser. Re-read session projection after successful conditional unlock so status AND incremented permission/session version are current; do not change unlock rules/guards/jobs/permissions.
+- apps/server/src/modules/account/services/auth.service.ts: narrow refresh of existing user projection only after successful auto-unlock; file under cap.
+- apps/server/test/account/auto-unlock.int.spec.ts: strengthen existing successful-login regression with active response, authenticated /me and refresh; retain audit/outbox/dedup/revoked-old-session assertions.
+
+Exact policy browser-test path confirmed: e2e/behavior/affiliate-policy-responsive.spec.ts. Add scoped mobile two-column input geometry and selected-tab visibility checks; retain every existing validation/save/hidden-value assertion. No admin-affiliate-policy.spec.ts exists or will be created.

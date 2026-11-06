@@ -118,7 +118,14 @@ export class AuthService {
    */
   private async assertUnlocked(user: SessionUser, now: Date): Promise<void> {
     if (user.status !== 'locked') return;
-    if (await this.accountLock.unlockIfExpired(user, now)) return;
+    if (await this.accountLock.unlockIfExpired(user, now)) {
+      // Unlock updates status and permission version. Never issue a new session
+      // from the pre-unlock projection (which still describes a locked account).
+      const current = await this.users.findSession(user.id);
+      if (!current) throw unauthorized();
+      Object.assign(user, current);
+      return;
+    }
     throw forbidden(
       user.lockedUntil ? accountLockedUntilMessage(user.lockedUntil) : LOCKED_MESSAGE,
     );
