@@ -94,7 +94,8 @@ pnpm e2e                                  # Playwright
 
 ## Quy trình mỗi task (TIP)
 
-Goal: [`coding-packs/plans/GOAL-V4.6.md`](coding-packs/plans/GOAL-V4.6.md) — 12 TIP tuần tự V46-801 → V46-812, tiến độ ở `coding-packs/reports/V4.6-progress.md`. Trả nợ sau 812: [`coding-packs/plans/V4.6-DEBT.md`](coding-packs/plans/V4.6-DEBT.md) (813 → 814 nhóm A; 815 → 818 nhóm B chờ D-137).
+Goal hiện hành: **trả nợ V4.6** — [`coding-packs/plans/V4.6-DEBT.md`](coding-packs/plans/V4.6-DEBT.md): TIP-V46-813 (nợ code nhóm A) → 814 (ổn định test + parity nhóm A), tuần tự; nhóm B (815 → 818) chỉ làm sau khi owner chốt D-137. Tiến độ tiếp ở `coding-packs/reports/V4.6-progress.md` (dòng #13 trở đi).
+Goal trước: [`coding-packs/plans/GOAL-V4.6.md`](coding-packs/plans/GOAL-V4.6.md) — 12 TIP V46-801 → V46-812, **đã xong** (06/11/2026, release PR #93 lên `main`).
 
 ### Git flow
 
