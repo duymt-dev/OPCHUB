@@ -927,4 +927,4 @@ Approved scope complete:486 MSW /110 native fresh captures (same source, paired 
 
 ## V4.6 — D-136 (owner, 06/11/2026)
 
-Owner chốt toàn bộ phương án mặc định Q-V46-807-1 → 5, Q808-1 → 5, Q-V46-809-1 → 4, Q-V46-810-1 → 6, Q-V46-811-1 → 7, Q812-1 → 6. Các dòng ghi "pending owner" / "awaiting owner" ở trên nay là quyết định D-136 trong `01-REQUIREMENTS-MATRIX.md`. Không đổi code.
+Owner chốt toàn bộ phương án mặc định Q-V46-807-1 → 5, Q808-1 → 5, Q-V46-809-1 → 4, Q-V46-810-1 → 6, Q-V46-811-1 → 7, Q812-1 → 6. Các dòng ghi "pending owner" / "awaiting owner" ở trên nay là quyết định D-136 trong `01-REQUIREMENTS-MATRIX.md`. Không đổi code. Riêng Q812-4: owner chọn chuyển 801 → 804 thành DONE theo M1 lượt 812, giữ ghi chú PARTIAL cũ làm lịch sử.
