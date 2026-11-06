@@ -1,6 +1,6 @@
 'use client';
 
-import { DateRangePicker, ErrorState, PageHeader } from '@opchub/ui';
+import { ErrorState } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
 import { useCan } from '@/lib/permissions';
@@ -17,12 +17,7 @@ import { StoreDrawer } from './store-drawer';
 import { StoreTable } from './store-table';
 import { StoreKpis, StoreToolbar } from './store-toolbar';
 import styles from './stores.module.css';
-
-/** Tiêu đề trang + ô khoảng ngày (prototype `showRange`) */
-function StoresHeader() {
-  const t = useTranslations('stores');
-  return <PageHeader title={t('title')} extra={<DateRangePicker />} />;
-}
+import { StoresHeader } from './stores-header';
 
 /** V4-608 AD-07 Admin › Gian hàng: orchestrator — KPI, lọc (URL), bảng chọn nhiều, chi tiết */
 export function StoresScreen() {
