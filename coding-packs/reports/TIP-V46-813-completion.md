@@ -1,0 +1,34 @@
+# TIP-V46-813 — IN PROGRESS
+
+## Scope and environment
+
+- Approved TIP: A1–A12 only; A13–A22 belong to814. Branch `feature/TIP-V46-813-debt-code`, TIP commits9098999c/7a165a82 on dev fd540d1d. No application/package/E2E code difference from dev before execution.
+- Owner approved reuse of `opchub_v46_812_dev`, integration `opchub_v46_801_test`, Memurai6381; rolling restart ONLY the separate812 runtime to813 when ready. Original native PostgreSQL/Redis6379 and older HOLD remain untouched. Never run two outbox workers against the same DB during cutover.
+- Q1–Q4 use explicit TIP defaults: retain module directory names; custom403 only three writes, not candidate GET; overlapping renewal send409 without queueing; joined-group technical cap1000.
+- Q5 explicit provider override OR local HTTP stub is approved for tests; no environment-driven fake runtime. Q6 covers EVERY manifest domain denial branch, with additional rollback cases for rule8 domains.
+- Additional owner approval: modify `apps/server/src/worker/processors/bot.processor.ts` narrowly to preserve original IntegrationError in terminal UnrecoverableError.cause. Necessary so WorkerFactory can inspect `reason` without string matching or changing retry/failure semantics.
+- Additional owner approval: `apps/server/vitest.config.ts` excludes `**/*.int.spec.ts` from the unit project's broad audit glob; the integration project retains every integration case and its test-DB setup. This prevents the new A12 suite from running without DB-test guards.
+
+## Baseline (before functional edits)
+
+Source7a165a82 is application-equivalent to dev fd540d1d. Separate logs `test-results/v46-813-baseline-*` retain actual results; cached commands are labeled as cached.
+
+|Gate|Current evidence|
+|---|---|
+|lint|8/8 PASS,8 cached; existing nine no-img warnings replayed|
+|typecheck|8/8 PASS,8 cached, explicit valid build env|
+|build|3/3 PASS,zero cache,3m2.083s; isolated `.next-v46-813-baseline`, no active Next dist overwritten|
+|unit / integration / MSW behavior|Running; not yet PASS|
+|depcheck|Queued after unit; not yet PASS|
+
+The first implementation edits are A6 comments only, after baseline build completed. They do not change rendered markup or server/integration behavior. Server/shared code remains unchanged while baseline integration runs. Final gates will be rerun after functional edits; no earlier checkpoint is substituted for a final result.
+
+## A1–A12 progress
+
+- A6: nine targeted next/no-img-element explanations in the seven approved files; preserve img, dynamic storage URLs and onError fallback. Focused Admin/Portal lint both exit0, zero warnings. Targeted existing regressions Admin23/23, Portal16/16 PASS.
+- A1/A7/A9: new regression files drafted, not yet executed; A1 requires the production fix after baseline. Newly added files were not in the already-discovered baseline integration list. Initial new-test typecheck caught UUID-template array inference; corrected without changing assertions, recheck pending.
+- A1–A5/A7–A12: implementation/final acceptance not complete.
+
+## Not complete
+
+No DONE claim, PR or merge yet. Full baseline/final gates, all named acceptance tests, joinedBy query plans and final parity evidence remain required. Test timeouts/assertions are not relaxed; A14 audit-scan stabilization remains outside813.
