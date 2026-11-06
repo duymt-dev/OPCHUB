@@ -141,6 +141,15 @@ test(
     await expect.poll(async () => (await config(page, token)).desc).toBe('');
     await guest.reload();
     await expect(guest).toHaveTitle(initial.defaultTitle);
+    // The authenticated detail actions must share the very same public URL, not /stores/:id.
+    await page.goto(`${PORTAL_URL}/stores/st1`);
+    const detail = page.locator('[data-screen="stores-detail"]');
+    await expect(detail.getByRole('link', { name: 'Xem trang hồ sơ công khai' })).toHaveAttribute(
+      'href',
+      `/g/${initial.slug}`,
+    );
+    await detail.getByRole('button', { name: 'Chia sẻ', exact: true }).click();
+    expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(initial.url);
   },
 );
 
