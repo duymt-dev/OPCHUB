@@ -9,7 +9,7 @@ OPC Hub Community (opchub.community): nền tảng cộng đồng cho doanh nghi
 
 Nguồn sự thật, theo thứ tự ưu tiên khi mâu thuẫn:
 
-1. `coding-packs/01-REQUIREMENTS-MATRIX.md`: REQ-ID, **Decisions Log** (D-xx; số lớn hơn thay số nhỏ hơn khi trái nhau — mới nhất **D-136**), Open Questions (OQ-xx). Đối chiếu đặc tả ↔ code: `coding-packs/audit/SPEC-V4.6-DELTA.md`
+1. `coding-packs/01-REQUIREMENTS-MATRIX.md`: REQ-ID, **Decisions Log** (D-xx; số lớn hơn thay số nhỏ hơn khi trái nhau — mới nhất **D-137**), Open Questions (OQ-xx). Đối chiếu đặc tả ↔ code: `coding-packs/audit/SPEC-V4.6-DELTA.md`
 2. `docs/adr/`: quyết định kiến trúc
 3. `coding-packs/00-PROJECT-CONTEXT.md`: Scan Report + **Vision** (kiến trúc, nguyên tắc scale S-01 → S-12)
 4. Prototype `docs/spec/index.html` (v4.6): **thắng đặc tả khi lệch** về giao diện và hành vi (D-89, D-93). Nút prototype không bấm được vẫn làm đúng nghiệp vụ (D-95). Chỉ tham chiếu, **không copy code**.
@@ -17,7 +17,7 @@ Nguồn sự thật, theo thứ tự ưu tiên khi mâu thuẫn:
 
 Không tự quyết nghiệp vụ. Gặp chỗ mơ hồ thì ghi vào báo cáo và hỏi, không đoán. Thay đổi backend hoặc lớn chưa có D-xx → hỏi owner trước (D-93).
 
-Dễ làm sai (đặc tả hoặc prototype ghi khác quyết định): hoa hồng affiliate chỉ để tham khảo, **không chi trực tiếp** (D-119), gia hạn năm 2 → năm tối đa có hoa hồng theo % gia hạn (D-131); Admin **không đổi tay** vùng của affiliate, vùng trống (cả miền chưa có GĐ Vùng) → 100% Media Soft (D-121), tỉnh chưa được tick vẫn tính cho GĐ Vùng của miền (D-129), affiliate nhiều nhóm tỉnh lấy nhóm tham gia sớm nhất (D-128); năm của khách tính từ giao dịch thực thu đầu tiên, gồm cả Gọi vốn (D-122, D-130); nội dung CK **`OPCHUB …`** dù §33.3 ghi `OPC …` (D-123); không có Trợ lý OPC Hub (D-92, D-124); **không Zalo, không Web Push thật** (D-125).
+Dễ làm sai (đặc tả hoặc prototype ghi khác quyết định): hoa hồng affiliate chỉ để tham khảo, **không chi trực tiếp** (D-119), gia hạn năm 2 → năm tối đa có hoa hồng theo % gia hạn (D-131); Admin **không đổi tay** vùng của affiliate, vùng trống (cả miền chưa có GĐ Vùng) → 100% Media Soft (D-121), tỉnh chưa được tick vẫn tính cho GĐ Vùng của miền (D-129), affiliate nhiều nhóm tỉnh lấy nhóm tham gia sớm nhất (D-128); năm của khách tính từ giao dịch thực thu đầu tiên, gồm cả Gọi vốn (D-122, D-130); nội dung CK **`OPCHUB …`** dù §33.3 ghi `OPC …` (D-123); không có Trợ lý OPC Hub (D-92, D-124); **không Zalo** (D-125); Web Push thật chỉ qua dịch vụ đẩy của trình duyệt + VAPID, không dịch vụ trả phí (D-137).
 
 ## Stack (phiên bản chốt ở [global/tooling](coding-packs/standards/global/tooling.md))
 
@@ -94,7 +94,8 @@ pnpm e2e                                  # Playwright
 
 ## Quy trình mỗi task (TIP)
 
-Goal: [`coding-packs/plans/GOAL-V4.6.md`](coding-packs/plans/GOAL-V4.6.md) — 12 TIP tuần tự V46-801 → V46-812, tiến độ ở `coding-packs/reports/V4.6-progress.md`.
+Goal hiện hành: **trả nợ V4.6** — [`coding-packs/plans/V4.6-DEBT.md`](coding-packs/plans/V4.6-DEBT.md), phạm vi nhóm A + B1 + B2 (D-137): TIP-V46-813 (nợ code A1 → A12) → 814 (ổn định test + parity A13 → A22) → 815 (B2 kiểm AI bằng key thật, chạy tay) → 816 (B1 Web Push + PWA thật), tuần tự; B3 → B18 để sau. Tiến độ tiếp ở `coding-packs/reports/V4.6-progress.md` (dòng #13 trở đi).
+Goal trước: [`coding-packs/plans/GOAL-V4.6.md`](coding-packs/plans/GOAL-V4.6.md) — 12 TIP V46-801 → V46-812, **đã xong** (06/11/2026, release PR #93 lên `main`).
 
 ### Git flow
 
