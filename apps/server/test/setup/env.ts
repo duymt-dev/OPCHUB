@@ -14,8 +14,6 @@ if (!testUrl?.includes('_test')) {
 }
 Object.assign(process.env, {
   NODE_ENV: 'test',
-  // Real-provider acceptance is a separate opt-in native E2E lane, never an integration default.
-  BOT_LLM_PROVIDER: 'fake',
   DATABASE_URL: testUrl,
   REDIS_DB: '2',
   LOG_LEVEL: process.env.TEST_LOG_LEVEL ?? 'silent',

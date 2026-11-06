@@ -1,4 +1,6 @@
 import { randomUUID } from 'node:crypto';
+import { FakeLlmProvider } from '@opchub/integrations';
+import { LLM } from '@/common/integrations';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import {
   chatMessagePageSchema,
@@ -26,7 +28,7 @@ describe('TIP-V2-502 REQ-141 hide persona messages and refresh open rooms', () =
   let fixture: HideFixture;
   let admin: { id: string; token: string };
   beforeAll(async () => {
-    t = await createTestApp();
+    t = await createTestApp({ overrides: [[LLM, new FakeLlmProvider()]] });
     sockets = await createSocketApp();
     fixture = new HideFixture(t);
     await fixture.start();

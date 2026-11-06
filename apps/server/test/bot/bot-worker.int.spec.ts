@@ -1,5 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { Queue } from 'bullmq';
+import { FakeLlmProvider } from '@opchub/integrations';
+import { LLM } from '@/common/integrations';
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 import { botSettingsSchema } from '@opchub/shared/api-domains';
 import { OutboxRelayService } from '@/common/outbox';
@@ -22,7 +24,11 @@ describe('REQ-208 BUG-008 real bot worker pause/resume', () => {
   const jobId = `bot-${id}-0`;
 
   beforeAll(async () => {
-    t = await createTestApp({ imports: [BotCoreModule], providers: [BotProcessor] });
+    t = await createTestApp({
+      imports: [BotCoreModule],
+      providers: [BotProcessor],
+      overrides: [[LLM, new FakeLlmProvider()]],
+    });
     queue = new Queue('bot', {
       connection: t.redis.duplicate({ prefix: '' }),
       prefix: BULL_PREFIX,
