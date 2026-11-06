@@ -466,3 +466,11 @@ Không mask, không nới ngưỡng. Visibility/quyền theo TIP; không lộ d�
 
 - D-V46-AI — AI Provider,1440/390; D124 no assistant; Q811 price fields, real inactive providers/spend.
 - D-V46-APP — App & notifications,1440/390; configuration only perD125, in-app Admin test.
+
+### TIP-V46-812 — final inventory / source50e42c1b
+
+- Whole MSW registry295 scenarios/580 tests;485 whole-run fresh captures plus1 same-source focused capture,78 existing-or-approved unreachable skips. Fourteen legacy capture gaps remain explicit.
+- Native affected set56 scenarios/114 tests;108 fresh captures,4 unreachable skips,2 harness tests. All eligible captures completed at50e. Exact IDs are in TIP812 manifest/native selection inventory.
+- Final source includes P-V46-SEARCH/D-V46-SEARCH; P-V46-REG and banner; D-120-GDV/OPEN/GCFG/RO; D-18-GDV; D-V46-AI/APP/BANK/RENEW; public storefront/card; affected Affiliate/settings/member/overview screens. Both1440 and390 unless existing registry restricts the viewport.
+- D78-GDV alone newly unreachable: prototype has no Marketing route; actual mail/native behavior + integration replace screenshot evidence under approved Q812-2. No new mask/crop/threshold/retry/timeout.
+- [Per-row causes and paired images](V4.6-causes.md), [master acceptance](../V4.6-acceptance.md).
