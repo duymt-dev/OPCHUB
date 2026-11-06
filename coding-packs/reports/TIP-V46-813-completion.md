@@ -18,8 +18,9 @@ Source7a165a82 is application-equivalent to dev fd540d1d. Separate logs `test-re
 |lint|8/8 PASS,8 cached; existing nine no-img warnings replayed|
 |typecheck|8/8 PASS,8 cached, explicit valid build env|
 |build|3/3 PASS,zero cache,3m2.083s; isolated `.next-v46-813-baseline`, no active Next dist overwritten|
-|unit / integration / MSW behavior|Running; not yet PASS|
-|depcheck|Queued after unit; not yet PASS|
+|unit|6/6 PASS,3 cached,16m21.715s;2139 passed +2 existing skips|
+|integration / MSW behavior|Running; not yet PASS; integration has reproduced an existing newest100-replies fixture transaction failure (A16 belongs to814), raw log retained|
+|depcheck|PASS:2489 modules/7553 dependencies and1143/5334; the latter includes three newly drafted integration files, not functional edits|
 
 The first implementation edits are A6 comments only, after baseline build completed. They do not change rendered markup or server/integration behavior. Server/shared code remains unchanged while baseline integration runs. Final gates will be rerun after functional edits; no earlier checkpoint is substituted for a final result.
 
@@ -27,6 +28,7 @@ The first implementation edits are A6 comments only, after baseline build comple
 
 - A6: nine targeted next/no-img-element explanations in the seven approved files; preserve img, dynamic storage URLs and onError fallback. Focused Admin/Portal lint both exit0, zero warnings. Targeted existing regressions Admin23/23, Portal16/16 PASS.
 - A1/A7/A9: new regression files drafted, not yet executed; A1 requires the production fix after baseline. Newly added files were not in the already-discovered baseline integration list. Initial new-test typecheck caught UUID-template array inference; corrected without changing assertions, recheck pending.
+- A8: shared audit-prefix helper used by capture/restore/schema; preserves affiliate, regional-share and regional-director audits, unrelated audit retained. Actual payout exposed a second boundary: its structured diff was rejected by the old strict snapshot schema. Preserve and validate JSON diff rather than dropping financial audit metadata. Focused23/23 PASS, shared typecheck/lint exit0; initial failed strict-diff run retained.
 - A1–A5/A7–A12: implementation/final acceptance not complete.
 
 ## Not complete

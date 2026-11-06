@@ -10,7 +10,7 @@ import { readMockAffiliatePolicy, replaceMockAffiliatePolicy } from '../affiliat
 import { auditLog } from '../group-admin';
 import { readMockAffiliateSettingsLog, replaceMockAffiliateSettingsLog } from '../settings-log';
 import { mockDb } from '../store';
-import { affiliateSnapshotSchema, type AffiliateSnapshot } from './schema';
+import { affiliateSnapshotSchema, isAffiliateAuditAction, type AffiliateSnapshot } from './schema';
 import { captureMockAffiliateWebhooks, restoreMockAffiliateWebhooks } from './webhooks';
 import { captureMockWelcomeSeen, restoreMockWelcomeSeen } from '../welcome-state';
 
@@ -47,7 +47,7 @@ export function captureMockAffiliateSnapshot(): AffiliateSnapshot {
       rows.filter((r) => r.type === 'affiliate'),
     ]),
     settingsLog: readMockAffiliateSettingsLog(),
-    audit: auditLog().filter((row) => row.action.startsWith('affiliate.')),
+    audit: auditLog().filter((row) => isAffiliateAuditAction(row.action)),
   });
 }
 
@@ -79,8 +79,12 @@ export function restoreMockAffiliateSnapshot(input: unknown): void {
   restoreNotices(data);
   replaceMockAffiliateSettingsLog(data.settingsLog);
   const audit = auditLog();
-  const other = audit.filter((row) => !row.action.startsWith('affiliate.'));
-  audit.splice(0, audit.length, ...data.audit, ...other);
+  const other = audit.filter((row) => !isAffiliateAuditAction(row.action));
+  const restored = data.audit.map(({ diff, ...row }) => ({
+    ...row,
+    ...(diff === undefined ? {} : { diff }),
+  }));
+  audit.splice(0, audit.length, ...restored, ...other);
 }
 
 function restoreNotices(data: AffiliateSnapshot) {

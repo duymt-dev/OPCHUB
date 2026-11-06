@@ -176,6 +176,26 @@ describe('Affiliate financial persistence boundary for the MSW bridge (not brows
     ).toEqual([notice]);
   });
 
+  it('A8 keeps regional audit on restore', () => {
+    recordAudit('admin', 'affiliate.rate_change', 'A8 affiliate', 'A8 rate');
+    recordAudit('admin', 'regional_share.payout', 'A8 north', 'A8 payout');
+    recordAudit('admin', 'regional_director.appoint', 'A8 south', 'A8 appointment');
+    const snapshot = captureMockAffiliateSnapshot();
+    expect(snapshot.audit.map((row) => row.action)).toEqual(
+      expect.arrayContaining([
+        'affiliate.rate_change',
+        'regional_share.payout',
+        'regional_director.appoint',
+      ]),
+    );
+    resetMockDb();
+    recordAudit('admin', 'group.update', 'A8 unrelated', 'A8 unrelated group');
+    restoreMockAffiliateSnapshot(JSON.parse(JSON.stringify(snapshot)) as unknown);
+    restoreMockAffiliateSnapshot(snapshot);
+    expect(captureMockAffiliateSnapshot().audit).toEqual(snapshot.audit);
+    expect(auditLog().filter((row) => row.target === 'A8 unrelated')).toHaveLength(1);
+  });
+
   it.each([
     'invalid-rate',
     'duplicate-key',
