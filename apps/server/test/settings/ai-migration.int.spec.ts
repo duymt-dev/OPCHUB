@@ -29,7 +29,19 @@ describe('REQ-628 migrate llm_configs on isolated connection-local copy', () => 
     const box = new SecretBox(loadEnv());
     const encrypted = Uint8Array.from(box.seal('TIP811-migration-key'));
     await db.$transaction(async (tx) => {
-      await tx.$executeRaw`CREATE TEMP TABLE llm_configs (LIKE public.llm_configs INCLUDING ALL) ON COMMIT DROP`;
+      await tx.$executeRaw`CREATE TEMP TABLE llm_configs (
+        id integer PRIMARY KEY DEFAULT 1, base_url text NOT NULL DEFAULT '',
+        model text NOT NULL DEFAULT '', key_enc bytea, max_tokens integer NOT NULL DEFAULT 128,
+        timeout_ms integer NOT NULL DEFAULT 60000, enabled boolean NOT NULL DEFAULT false,
+        created_at timestamptz(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        updated_at timestamptz(6) NOT NULL,
+        CONSTRAINT llm_configs_singleton CHECK (id = 1),
+        CONSTRAINT llm_configs_token_bounds CHECK (max_tokens BETWEEN 16 AND 1024),
+        CONSTRAINT llm_configs_timeout_bounds CHECK (timeout_ms BETWEEN 1000 AND 120000),
+        CONSTRAINT llm_configs_enabled_complete CHECK (
+          NOT enabled OR (length(base_url) > 0 AND length(model) > 0 AND key_enc IS NOT NULL)
+        )
+      ) ON COMMIT DROP`;
       await tx.$executeRaw`CREATE TEMP TABLE app_settings (LIKE public.app_settings INCLUDING ALL) ON COMMIT DROP`;
       await tx.$executeRaw`INSERT INTO pg_temp.llm_configs (id,base_url,model,key_enc,max_tokens,timeout_ms,enabled,updated_at) VALUES(1,${stub.url},'legacy-model',${encrypted},128,1000,true,now())`;
       // Only TEMP storage qualification changes; every migration data/check/index statement is exact.

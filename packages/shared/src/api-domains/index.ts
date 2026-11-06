@@ -10,7 +10,6 @@ export * from './membership';
 export * from './projects';
 export * from './services';
 export * from './settings';
-export * from './llm-config';
 export * from './users';
 export * from './chat-room';
 export * from './dashboard';
