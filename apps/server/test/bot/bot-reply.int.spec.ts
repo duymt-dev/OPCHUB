@@ -10,7 +10,7 @@ import {
   vi,
   type MockInstance,
 } from 'vitest';
-import type { LlmProvider } from '@opchub/integrations';
+import { FakeLlmProvider, type LlmProvider } from '@opchub/integrations';
 import { chatMessagePageSchema } from '@opchub/shared/api-domains';
 import { LLM } from '@/common/integrations';
 import { BotRunnerService } from '@/modules/bot';
@@ -26,7 +26,7 @@ describe('TIP-V2-502 UAT-14 member replies on native storage', () => {
   const now = new Date('2026-10-21T05:00:00Z');
   let generate: MockInstance<LlmProvider['generateTurn']>;
   beforeAll(async () => {
-    t = await createTestApp();
+    t = await createTestApp({ overrides: [[LLM, new FakeLlmProvider()]] });
     fixture = replyFixtures(t, now);
     await fixture.start();
     generate = vi.spyOn(t.app.get<LlmProvider>(LLM), 'generateTurn');
