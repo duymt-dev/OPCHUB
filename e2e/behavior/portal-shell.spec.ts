@@ -2,6 +2,7 @@ import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { PORTAL_URL } from '../urls';
 import { completeDeclaration } from './helpers/declaration';
+import { prepareNotificationInbox } from './helpers/notification-inbox';
 
 /** G2a — P-01 → P-16: Dashboard + khung app Portal (app mới, MSW) */
 
@@ -38,6 +39,7 @@ test.describe('Khung app', () => {
   test('REQ-210 NA-10 mở chuông → đã đọc (số về 0, giữ sau tải lại); mở nhắc tên vào chat', async ({
     page,
   }) => {
+    await prepareNotificationInbox(page.request);
     await login(page);
     const bell = page.getByRole('button', { name: 'Thông báo' });
     await expect(bell).toContainText('2');
