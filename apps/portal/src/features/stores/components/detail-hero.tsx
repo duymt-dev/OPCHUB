@@ -38,15 +38,15 @@ function HeroActions({ s }: { s: StoreDetail }) {
   const toast = useToast();
   const router = useRouter();
   const share = () => {
-    const url = `${window.location.origin}/stores/${s.id}`;
+    const url = `${window.location.origin}/g/${s.slug}`;
     void navigator.clipboard?.writeText(url).catch(() => undefined);
     toast(t('shared', { url }));
   };
   return (
     <div className={styles.heroBtns}>
-      <button type="button" className={styles.btnPub} onClick={share}>
+      <a className={styles.btnPub} href={`/g/${s.slug}`} target="_blank" rel="noopener">
         {t('publicPage')} <Svg d={EXT} size={13} />
-      </button>
+      </a>
       <button type="button" className={styles.btnShare} onClick={share}>
         <Svg d={SHARE} />
         {t('share')}

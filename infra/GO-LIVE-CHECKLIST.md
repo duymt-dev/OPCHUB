@@ -83,3 +83,12 @@ bàn giao mã nguồn, tài liệu, API (`coding-packs/plans/api-contract.md`), 
 - Theo dõi `monitoring/slo.md`: API p95 < 300ms, 5xx < 1%, đối soát < 15 phút, OTP mail < 60s.
 - Kiểm backup đêm đầu đã lên offsite; `journalctl -u 'opchub-*' -p err` không lỗi lặp.
 - Đổi mật khẩu super admin seed; rà `audit_logs` các thao tác Admin đầu tiên.
+
+## TIP-V46-810 — public store SSR
+
+- [ ] Portal server-only `API_INTERNAL_URL` includes `/v1` and reaches the native API; required when `NEXT_PUBLIC_API_MOCKING=off`. Never expose it as NEXT_PUBLIC or log credentials.
+- [ ] Portal `PORTAL_URL` matches server `PORTAL_URL` and the actual public origin (including `app.opchub.community` if that is the deployed domain); canonical, OG and copied URLs must agree.
+- [ ] Run the additive store-public migration before rolling API/worker/Portal.
+- [ ] Published public `/g/<slug>`: anonymous HTML contains the business and SEO metadata; Google enabled has `index, follow` and **no** `X-Robots-Tag: noindex` from Nginx/CDN. Google disabled is still200 but `noindex, nofollow`. Other Portal pages stay noindex.
+- [ ] Confirm owner/admin hide/unpublish invalidates the public cache, draft/hidden/expired stores404, and no account-owner/private document data is returned.
+- [ ] Sitemap, robots.txt, JSON-LD and auto-generated OG images are deliberately out of scope.

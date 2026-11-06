@@ -1,5 +1,7 @@
 import {
   storeDashboardSchema,
+  storePublicConfigSchema,
+  type StorePublicPatch,
   storeDetailSchema,
   storeFavoriteResultSchema,
   storeListSchema,
@@ -16,6 +18,7 @@ export type ExploreFilter = Omit<StoreListQuery, 'q'> & { q: string };
 
 export const storeKeys = {
   all: ['stores'] as const,
+  publicConfig: (userId: string | undefined) => ['stores', 'public-config', userId] as const,
   list: (f: ExploreFilter) => [...storeKeys.all, 'list', f] as const,
   detail: (id: string) => [...storeKeys.all, 'detail', id] as const,
   mine: () => [...storeKeys.all, 'mine'] as const,
@@ -57,3 +60,7 @@ export const saveMyStore = (body: StoreUpsert) =>
 
 export const publishMyStore = () =>
   api('/me/store/publish', { method: 'POST', schema: storeDetailSchema });
+
+export const fetchStorePublic = () => api('/me/store/public', { schema: storePublicConfigSchema });
+export const patchStorePublic = (body: StorePublicPatch) =>
+  api('/me/store/public', { method: 'PATCH', body, schema: storePublicConfigSchema });

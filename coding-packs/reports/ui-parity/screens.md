@@ -458,3 +458,6 @@ cú pháp OPCHUB theo D-123; số liệu giao dịch là fixture, không sửa l
 | D-V46-SEARCH | Admin | Topbar gõ MediaSoft; mobile ẩn ô | /overview |1440,390 |
 
 Không mask, không nới ngưỡng. Visibility/quyền theo TIP; không lộ dữ liệu ẩn để khớp prototype.
+
+| P-V46-PUBLIC-CARD | Portal | Trang công khai in edit wizard | Gian hàng địa phương → Gian hàng của tôi → Chỉnh sửa gian hàng | `/stores/mine` edit | 1440,390 |
+| P-V46-GUEST | Portal | Anonymous business page, no prototype counterpart | Actual guest URL only; owner reviews images | `/g/htx-ca-phe-hoa-phu` | 1440,390 |

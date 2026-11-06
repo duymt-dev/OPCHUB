@@ -343,5 +343,31 @@
     "empty": "暂无项目。企业发布的 OPC 项目将自动显示在此处和 OPC 项目页面。",
     "view": "查看项目 →",
     "more": "查看更多"
+  },
+  "publicPage": {
+    "title": "公开页面",
+    "subtitle": "客户无需登录即可查看店铺 · 可在 Zalo、Facebook 或名片上分享链接",
+    "view": "以访客身份查看",
+    "copy": "复制链接",
+    "link": "公开页面链接",
+    "google": "在 Google 上显示",
+    "googleOn": "Google 和其他搜索引擎可以找到店铺",
+    "googleOff": "仅持有链接的人可以查看",
+    "seoTitle": "Google 标题",
+    "desc": "简短描述",
+    "copied": "已复制公开页面链接",
+    "saveError": "无法保存设置，请重试",
+    "copyError": "无法复制，请手动复制所选链接",
+    "draft": "店铺发布后才可访问公开页面",
+    "hidden": "店铺已被管理员隐藏",
+    "loadError": "无法加载公开页面设置",
+    "retry": "重试"
+  },
+  "guest": {
+    "login": "登录",
+    "join": "加入 OPC Hub",
+    "notFound": "未找到店铺",
+    "home": "返回 OPC Hub 首页",
+    "footer": "本页面由 OPC Hub 创建 — 一人企业社区"
   }
 }

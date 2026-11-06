@@ -11,7 +11,7 @@ const DOC_ICON = 'M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01
 const PLAY = 'M7 4v16l13-8z';
 
 /** "Hình ảnh & Video" (prototype :2352) — hàng cuộn ngang, ảnh thật đã tải lên */
-export function DetailGallery({ s }: { s: StoreDetail }) {
+export function DetailGallery({ s }: { s: Pick<StoreDetail, 'gallery'> }) {
   const t = useTranslations('stores.detail');
   if (s.gallery.length === 0) return null;
   return (

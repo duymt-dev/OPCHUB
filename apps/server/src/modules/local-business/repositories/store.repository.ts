@@ -1,3 +1,5 @@
+import { allocateStoreSlug } from './store-slug.repository';
+import { conflict } from '@/common/errors';
 import { Injectable } from '@nestjs/common';
 import type { DbTx, Prisma } from '@opchub/db';
 import { ADMIN_STORE_PAGE_SIZE, type AdminStoreFilter } from '@opchub/shared/api-domains';
@@ -30,11 +32,18 @@ export class StoreRepository {
 
   /** Idempotent: UQ owner_id — chạy lại sự kiện không tạo thêm */
   async createDraft(tx: DbTx, s: StoreSeedInput): Promise<boolean> {
-    const r = await tx.store.createMany({
-      data: [{ ...s, status: 'draft', audience: 'business', autoCreated: true }],
-      skipDuplicates: true,
-    });
-    return r.count > 0;
+    // ON CONFLICT DO NOTHING keeps the transaction usable after a concurrent slug collision.
+    for (let attempt = 0; attempt < 3; attempt += 1) {
+      const slug = await allocateStoreSlug(tx, s.name);
+      const r = await tx.store.createMany({
+        data: [{ ...s, slug, status: 'draft', audience: 'business', autoCreated: true }],
+        skipDuplicates: true,
+      });
+      if (r.count) return true;
+      if (await tx.store.findUnique({ where: { ownerId: s.ownerId }, select: { id: true } }))
+        return false;
+    }
+    throw conflict('Không thể tạo link gian hàng, vui lòng thử lại');
   }
 
   /** Thay toàn bộ thông tin + item + media (PUT); giữ trạng thái. Lưu lần đầu → hết "tự tạo" */

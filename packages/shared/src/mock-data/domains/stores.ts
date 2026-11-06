@@ -1,3 +1,4 @@
+import { initMockStorePublic } from './store-public-state';
 import { isFeeUsable } from '../../membership/fee-access';
 import {
   type AdminStore,
@@ -103,6 +104,7 @@ export function mockStores(): MockStore[] {
     rows = STORE_SEED.map(seedRow);
     states.set(db, rows);
   }
+  initMockStorePublic(rows);
   return rows;
 }
 
@@ -125,6 +127,7 @@ const card = (r: MockStore, viewerId: string): StoreCard => ({
 
 const toAdmin = (r: MockStore): AdminStore => ({
   ...builderOf(r),
+  slug: r.slug,
   id: r.id,
   name: r.name,
   slogan: r.slogan,
@@ -322,6 +325,7 @@ function ensureDraft(userId: string): MockStore | null {
     updatedAt: at,
     items: [],
   };
+  initMockStorePublic([...mockStores(), row]);
   mockStores().push(row);
   return row;
 }

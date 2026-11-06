@@ -1,3 +1,4 @@
+import { storeSlugBase } from '@opchub/shared';
 import { PRICE_DEFAULTS } from '@opchub/shared/fixtures';
 import {
   STORE_SEED,
@@ -67,6 +68,7 @@ export async function seedStores(tx: DbTx, all = false): Promise<void> {
         id: s.id,
         ownerId: storeOwnerId(s),
         name: s.name,
+        slug: storeSlugBase(s.name),
         slogan: s.slogan,
         field: s.field,
         province: s.province,

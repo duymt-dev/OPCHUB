@@ -1,3 +1,4 @@
+import { StorePublicService } from './store-public.service';
 import { Injectable } from '@nestjs/common';
 import {
   ADMIN_STORE_PAGE_SIZE,
@@ -25,6 +26,7 @@ export class StoreAdminService {
     private readonly repo: StoreRepository,
     private readonly audit: AuditService,
     private readonly explore: StoreExploreService,
+    private readonly publicPage: StorePublicService,
   ) {}
 
   async list(
@@ -69,7 +71,10 @@ export class StoreAdminService {
       );
       return done.length;
     });
-    if (changed) await this.explore.invalidate();
+    if (changed) {
+      await this.explore.invalidate();
+      await this.publicPage.invalidateStores(ids);
+    }
     return { changed };
   }
 

@@ -1,0 +1,104 @@
+.card {
+  background: white;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 18px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+.head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.heading h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+}
+.heading > span {
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 13px;
+}
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.actions :global(.ant-btn) {
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 400;
+  box-shadow: none;
+}
+.actions :global(.ant-btn-primary) {
+  border: 0;
+}
+.link {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  height: 36px;
+  padding: 0 12px;
+  background: #fafafa;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  font: 13px monospace;
+  text-overflow: ellipsis;
+}
+.google {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.google > div {
+  font-size: 14px;
+}
+.google label {
+  font-size: 14px;
+}
+.google p {
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 13px;
+  margin: 2px 0 0;
+}
+.google :global(.ant-switch) {
+  min-width: 40px;
+  width: 40px;
+  height: 22px;
+  flex-shrink: 0;
+}
+.fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+  gap: 12px;
+}
+.fields label > span {
+  display: flex;
+  justify-content: space-between;
+  color: rgba(0, 0, 0, 0.55);
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+.fields :global(.ant-input) {
+  height: 34px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+.warning {
+  font-size: 12px;
+  color: #ad6800;
+}

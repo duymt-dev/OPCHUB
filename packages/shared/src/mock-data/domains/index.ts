@@ -120,3 +120,5 @@ export * from './audit-log-page';
 
 export * from './search';
 export * from './need-matches';
+
+export * from './store-public';

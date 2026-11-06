@@ -12,7 +12,12 @@ import p from './detail-profile.module.css';
  * D-97: hotline / email / địa chỉ phụ (TIP-V42-710), mạng xã hội mở link thật.
  * Email / SĐT hiện dạng chữ để người xem chép được (link `mailto:` / `tel:` có thể bị chặn).
  */
-export function DetailContact({ s }: { s: StoreDetail }) {
+type ContactData = Pick<
+  StoreDetail,
+  'phone' | 'email' | 'website' | 'address' | 'phones' | 'emails' | 'addresses' | 'socials'
+>;
+
+export function DetailContact({ s }: { s: ContactData }) {
   const t = useTranslations('stores.detail');
   const soc = useTranslations('stores.wizard.social');
   const zalo = zaloLink(s.phone);

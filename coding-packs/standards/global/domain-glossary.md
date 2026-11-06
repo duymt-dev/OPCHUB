@@ -121,3 +121,10 @@ Nhãn tiếng Việt chỉ đặt trong file messages của next-intl, không vi
 |---|---|---|
 | Nhu cầu phù hợp | need matches | Top3 nhu cầu công khai đang mở của người khác, chấm điểm theo gian hàng của chính TV Doanh nghiệp; không gọi LLM |
 | Mức phù hợp | pct | Ngành50 + tỉnh30 + từ khóa7/từ (tối đa20), lọc từ30; hiển thị trần98%, không phải xác suất AI |
+
+### V4.6 — TIP-V46-810
+
+| Thuật ngữ | Code | Nghĩa |
+|---|---|---|
+| Trang công khai | public store page | `/g/<slug>` xem không cần đăng nhập; chỉ gian hàng đã xuất bản, chủ còn phí, DTO công khai riêng; không tính KPI lượt xem |
+| Hiển thị trên Google | seoIndex | Cho phép công cụ tìm kiếm lập chỉ mục; tắt thêm noindex/nofollow, không chặn người có link |

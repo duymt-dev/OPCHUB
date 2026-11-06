@@ -372,3 +372,27 @@ Ghi 6 câu vào `reports/ui-parity/questions.md` › V4.6 (dạng "mặc định
   - Prototype không có màn khách. Bố cục `/g/` dựa trên chi tiết gian hàng v4, nên không có ảnh parity chuẩn; owner duyệt ảnh.
   - Trang khách là SSR đầu tiên của Portal, cần env mới `API_INTERNAL_URL` và nhánh MSW riêng cho server component. Builder phải kiểm cả build MSW lẫn build server.
   - Q-V46-810-1 → 6 chưa chốt. Mặc định giữ link ổn định, không lộ dữ liệu tài khoản chủ, không làm sai KPI lượt xem.
+
+## Execution refinements (builder, 06/11/2026)
+
+Additional scoped files/reasons:
+- `domain/store-owner.types.ts`: shared owner input without a service-to-service type import cycle.
+- `repositories/store-slug.repository.ts`: keep SQL I/O out of the pure domain slug selector.
+- `packages/shared/src/mock-data/domains/store-public-state.ts`: pure mock slug initialization, avoiding a stores/public-query cycle.
+- `apps/portal/next.config.ts`: validate server-only API_INTERNAL_URL at build/start as well as runtime. `PORTAL_URL` is also declared server-only for canonical/OG origin; both examples and go-live updated.
+- `apps/portal/src/providers/mock-provider.tsx`: anonymous `/g/` children must SSR even in MSW mode; existing protected-route readiness behavior unchanged.
+- `features/stores/index.ts`: expose the public view through the existing feature facade.
+- `detail-profile.tsx`, `detail-media.tsx`, `detail-contact.tsx`: narrow presentation-only prop types so the safe public DTO can reuse them without casting to/private StoreDetail data.
+- `apps/admin/.../store-public-link{,.spec}.tsx`: extracted read-only drawer link and isolated clipboard tests.
+- `apps/server/test/local-business/store-public-plan.int.spec.ts`: separate actual10k-row SQL plan regressions.
+- `apps/server/scripts/flush-dev-cache.mjs`: reset only the new store-public cache namespace after dev demo seed; no production invalidation shortcut.
+- Public SSR uses force-dynamic and no Next data cache: Redis/API is the single60s cache, so owner/admin invalidation is not followed by a second stale60s Next cache. Request-local React cache deduplicates metadata and page fetches.
+- Existing detail response slug is additive/optional-nullable for legacy typed fixtures; real migration/create/seed paths provide it.
+- MSW810 uses new3910/3911 listeners; baseline8093900/3901 are preserved; native3700/3701/4300/4301 are rolled only after owner infra confirmation.
+
+- `apps/portal/src/lib/build-config.spec.ts`: supply the newly required API_INTERNAL_URL in its existing native fixture, retain both original rewrite assertions, and add a missing-env rejection test. This is a direct new810 environment contract regression, not a workaround for an unrelated old failure.
+- Infra confirmed by owner in the execute thread. Prisma create-only was generated under an ignored staging migrations directory (TERM=xterm interactive confirmation); unrelated generated DROP FK/index statements were reviewed and excluded. Only the reviewed four-column/index/backfill/CHECK migration is deployed to the private pair. No migration metadata was deleted or rewritten.
+
+- `apps/portal/src/features/stores/types.ts`, `hooks/use-public-page-draft.ts`, `components/dashboard/public-page-{actions,fields}.tsx`: extract state/clipboard/presentation so the screen remains an orchestrator and every function stays within80 lines. Same DOM and assertions.
+- Guest screenshots are persisted to explicit Playwright output paths, not only in-memory reporter attachments. Selected actual guest/card pairs are stored under `reports/ui-parity/captures/` for owner review; there is no invented guest prototype baseline.
+- Card button computed styles were measured against prototype (padding14, borderless primary, no shadow); white logo asset receives the existing navy brand background on the otherwise-white guest header. These are actual UI corrections, not masked deviations.
