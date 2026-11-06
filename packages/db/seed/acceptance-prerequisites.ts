@@ -70,12 +70,13 @@ try {
       WHERE e.id = v.id`;
   } else {
     // Delivery date is independent of the historical campaign scheduling date shown in the table.
+    const deliveredAt = new Date(Date.now() - 3600000);
     const changed = await db.mailLog.updateMany({
       where: {
         status: 'sent',
         OR: [{ campaignId: { in: ['cp1', 'cp2', 'cp3', 'cp4'] } }, { id: { in: ['w1', 'w2'] } }],
       },
-      data: { sentAt: new Date(Date.now() - 3600000) },
+      data: { createdAt: deliveredAt, sentAt: deliveredAt },
     });
     if (changed.count !== 4052)
       throw new Error(`Expected 4052 seeded deliveries, got ${changed.count}`);

@@ -151,6 +151,7 @@ test('đăng ký xong: modal mail chào mừng một lần, không có mật kh�
   await page.getByText('Đăng ký', { exact: true }).first().click();
   await page.getByText('Cá nhân', { exact: true }).click();
   await page.getByPlaceholder('ban@congty.vn', { exact: true }).fill('welcome@x.vn');
+  await page.locator('input[type=password]').fill('User@2026');
   await page.getByText(/^Tôi xác nhận là người đại diện hợp pháp/).click();
   await page.getByRole('button', { name: 'Đăng ký', exact: true }).click();
   await page.locator('input[inputmode=numeric]').first().fill('123456');

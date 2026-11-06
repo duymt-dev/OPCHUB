@@ -497,3 +497,13 @@ Other native failure147 (one Admin login wait) is not yet diagnosed; do not chan
 The same missing native configured-provider prerequisite also affects bot-auto.spec.ts and bot-emergency.spec.ts (actual full-run failures209/214). Apply the already-tested auto-test fixture import to these two files only; keep all bodies/assertions/timeouts unchanged.
 - e2e/behavior/bot-auto.spec.ts
 - e2e/behavior/bot-emergency.spec.ts
+
+### Final exploratory native tail triage (before edits)
+First full native finished391 tests:350pass/32fail/9 existing server-mode skips (1.5h). Do not call these proven baseline failures. Additional test-prerequisite diagnoses:
+- Welcome hint case never enters a password but asserts 'Do bạn tự đặt'; production correctly omits own-password hint for passwordless registration. Fill the real registration password before OTP; keep all hint/no-secret/one-time assertions.
+- Overview response wait uses includes('/admin/overview'), so native can resolve the faster /overview/conversion response (actual range undefined). Match exact pathname, keeping range/delta/count assertions.
+- DLPL quota/retry tests used an incorrectly booted TAX_LOOKUP_PROVIDER=fake runtime; no production fix needed. Own812 runtime will use dlpl adapter with fake key and dedicated loopback4831 stub. Original HOLD/shared4810 stub are untouched. Existing env/schema supports all variables.
+- Notification count3 vs2 and one Admin-login wait remain unproven; rerun unchanged on clean own runtime, no timeout/assertion weakening.
+- Pending-project badge case conflicts with D108 direct publication; owner question pending before any fixture semantics change.
+Files: e2e/behavior/portal-shell.spec.ts (welcome prerequisite only); e2e/behavior/realtime-metrics.spec.ts (exact overview response selector only). Ignored own runtime helpers pin dedicated DLPL4831; no app/provider implementation changes.
+Marketing focused native recheck still showed1842 after4052 timestamp writes. Direct source inspection proves summary filters mail_logs.created_at, not sent_at. Correct case-local fixture to set both message creation and delivery timestamps to the same recent instant, preserving campaign history date and exact4052 assertion; strengthen mocked regression to verify both fields. Keep failed replay in raw evidence, no production query/metric change.

@@ -76,7 +76,9 @@ test('BUG-029 Tổng quan Admin: khoảng ngày, % tăng, TV mới tháng này t
     .locator('input[autocomplete=username], input[type=email]')
     .fill('admin@opchub.community');
   await page.locator('input[type=password]').fill('Admin@2026');
-  const res = page.waitForResponse((r) => r.url().includes('/v1/admin/overview') && r.ok());
+  const res = page.waitForResponse(
+    (r) => new URL(r.url()).pathname === '/v1/admin/overview' && r.ok(),
+  );
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   const o = (await (await res).json()) as {
     range: { from: string; to: string };

@@ -90,6 +90,12 @@ describe('isolated acceptance prerequisites', () => {
     mocks.deliveries.mockResolvedValueOnce({ count: 4052 });
     await run('marketing-summary');
     expect(mocks.deliveries).toHaveBeenCalledTimes(1);
+    const change = mocks.deliveries.mock.calls[0]?.[0] as {
+      data: { createdAt: Date; sentAt: Date };
+    };
+    expect(change.data.createdAt).toBeInstanceOf(Date);
+    expect(change.data.createdAt.getTime()).toBe(change.data.sentAt.getTime());
+    expect(change.data.createdAt.getTime()).toBeGreaterThan(Date.now() - 30 * 86400000);
     mocks.deliveries.mockResolvedValueOnce({ count: 1842 });
     await expect(run('marketing-summary')).rejects.toThrow('Expected 4052 seeded deliveries');
   });
