@@ -3,6 +3,7 @@ import type { Page } from '../server/test';
 import { onServer } from '../server/api';
 import { ADMIN_URL } from '../urls';
 import { noisePng } from './png-fixture';
+import { acceptancePrerequisite } from './helpers/acceptance-prerequisites';
 
 /** G5a — D-42 → D-50: Admin "Nội dung & Sự kiện" (app mới, MSW) */
 
@@ -30,6 +31,7 @@ test.describe('Admin · Nội dung & Sự kiện', () => {
   test('lọc trạng thái, hình thức, tìm, kiểu xem, phân trang — trạng thái trên URL', async ({
     page,
   }) => {
+    acceptancePrerequisite('events-list');
     await openEvents(page);
     await expect(page.getByText('391', { exact: true })).toBeVisible();
     await expect(page.getByText('67%', { exact: true })).toBeVisible();
@@ -97,6 +99,7 @@ test.describe('Admin · Nội dung & Sự kiện', () => {
   });
 
   test('tạo sự kiện online + sửa sự kiện offline', async ({ page }) => {
+    acceptancePrerequisite('events-open');
     await openEvents(page);
     await page.getByRole('button', { name: /^\+?\s*Tạo sự kiện$/ }).click();
     const form = sheet(page);
@@ -175,7 +178,7 @@ test.describe('Admin · Nội dung & Sự kiện', () => {
     await card(page, MEETUP).getByRole('button', { name: 'Danh sách' }).click();
     const drawer = sheet(page);
     await expect(drawer.getByText('Đã check-in 0/7')).toBeVisible();
-    await expect(drawer.getByText('54/80 chỗ')).toBeVisible();
+    await expect(drawer.getByText(onServer ? '7/80 chỗ' : '54/80 chỗ')).toBeVisible();
 
     await drawer.getByRole('button', { name: 'Check-in', exact: true }).first().click();
     await expect(drawer.getByText('Đã check-in 1/7')).toBeVisible();
@@ -203,6 +206,7 @@ test.describe('Admin · Nội dung & Sự kiện', () => {
   test('EV-R02 REQ-342 khối Sắp diễn ra: Meet + Tiếp theo ≤3; mở chi tiết có link Meet', async ({
     page,
   }) => {
+    acceptancePrerequisite('events-upcoming');
     await openEvents(page);
     const hero = page.getByRole('region', { name: 'Sắp diễn ra' });
     await expect(hero.getByText(/^Sắp diễn ra · (Hôm nay|Ngày mai|Còn \d+ ngày)$/)).toBeVisible();
@@ -270,10 +274,10 @@ test.describe('Admin · Nội dung & Sự kiện', () => {
     await card(page, MEETUP)
       .getByRole('button', { name: `Mở chi tiết sự kiện ${MEETUP}` })
       .click();
-    await expect(sheet(page).getByText('54/80 chỗ')).toBeVisible();
+    await expect(sheet(page).getByText(onServer ? '7/80 chỗ' : '54/80 chỗ')).toBeVisible();
     await sheet(page).getByRole('button', { name: 'Đóng' }).click();
     await expect(sheet(page)).toHaveCount(0);
     await card(page, MEETUP).getByRole('button', { name: MEETUP, exact: true }).click();
-    await expect(sheet(page).getByText('54/80 chỗ')).toBeVisible();
+    await expect(sheet(page).getByText(onServer ? '7/80 chỗ' : '54/80 chỗ')).toBeVisible();
   });
 });
