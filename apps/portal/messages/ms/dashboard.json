@@ -2,5 +2,20 @@
   "page": {
     "title": "Dashboard",
     "sub": "Pantau aktiviti ahli dan komuniti secara masa nyata"
+  },
+  "matches": {
+    "title": "Keperluan yang sepadan dengan kedai anda",
+    "sub": "Cadangan AI mengikut industri, wilayah dan produk kedai · {n, plural, other {# keperluan}}",
+    "all": "Lihat semua keperluan",
+    "view": "Lihat & hubungi",
+    "fit": "tahap padanan",
+    "none": "Belum ada keperluan yang sepadan. Tambah industri, wilayah dan produk kedai untuk cadangan AI yang lebih tepat.",
+    "reason": {
+      "field": "Industri sama",
+      "province": "Wilayah sama",
+      "product": "Padanan produk"
+    },
+    "error": "Tidak dapat memuatkan keperluan yang sepadan.",
+    "retry": "Cuba lagi"
   }
 }

@@ -2,5 +2,20 @@
   "page": {
     "title": "Dashboard",
     "sub": "Track member and community activity in real time"
+  },
+  "matches": {
+    "title": "Needs matching your store",
+    "sub": "AI suggestions by industry, province and store products · {n, plural, one {# need} other {# needs}}",
+    "all": "View all needs",
+    "view": "View & contact",
+    "fit": "match level",
+    "none": "No matching needs yet. Add your industry, province and store products for more accurate AI suggestions.",
+    "reason": {
+      "field": "Same industry",
+      "province": "Same province",
+      "product": "Product match"
+    },
+    "error": "Could not load matching needs.",
+    "retry": "Retry"
   }
 }

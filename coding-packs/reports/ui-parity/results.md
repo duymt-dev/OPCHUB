@@ -49,8 +49,8 @@
 | A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 390 | 0.18% | ✅ đạt | 411×1856 | 1ba4db0b |
 | A-32 | Đăng ký · mã giới thiệu không tồn tại | 1440 | 0.06% | ✅ đạt | 1440×1214 | 1ba4db0b |
 | A-32 | Đăng ký · mã giới thiệu không tồn tại | 390 | 0.13% | ✅ đạt | 411×1856 | 1ba4db0b |
-| P-01 | Dashboard | 1440 | 0.00% | ✅ đạt | 1440×935 | 0b76e98a |
-| P-01 | Dashboard | 390 | 0.00% | ✅ đạt | 390×1384 | 0b76e98a |
+| P-01 | Dashboard | 1440 | 1.01% | ✅ đạt | 1440×1113 | d6442cee |
+| P-01 | Dashboard | 390 | 2.97% | ✅ đạt | 390×1721 | d6442cee |
 | P-05 | Modal mail chào mừng | 1440 | 0.25% | ✅ đạt | 640×860 | bf02c7c7 |
 | P-05 | Modal mail chào mừng | 390 | 0.46% | ✅ đạt | 366×804 | bf02c7c7 |
 | P-07 | Thông báo | 1440 | 0.01% | ✅ đạt | 1440×900 | 0b76e98a |

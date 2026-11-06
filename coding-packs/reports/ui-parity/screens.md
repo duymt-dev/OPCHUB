@@ -68,7 +68,7 @@ Method: a static scan of every `data-screen-label`, `sc-if` flag (298 flags) and
 
 | ID | Area | Screen / state | Reproducible action sequence | Suggested route | Viewports |
 |---|---|---|---|---|---|
-| P-01 | Portal | Dashboard ("LIVE HOẠT ĐỘNG CỘNG ĐỒNG · OPC HUB", "Thành viên đang tham gia hoạt động", "Đang trực tuyến", "Hoạt động trực tiếp realtime", "Quốc gia", "Danh sách thành viên tham gia hoạt động LIVE", "Tỉ lệ thành viên hoạt động hôm nay", "Tin nhắn mới nhất", "Hoạt động trong ngày", "Thảo luận mới trong cộng đồng"). Live sim ticks every 3 s; freeze or mask it for parity | LOGIN-USER | `/dashboard` | 1440, 390 |
+| P-01 | Portal | Dashboard v4.6: greeting, onboarding and rule-based store need matches (0-3 rows); full-page capture, no masks. | LOGIN-USER; native demo: stores | /dashboard | 1440, 390 |
 | P-02 | Portal | Dashboard: member picked (member highlighted in the table/grid) | P-01 → click an avatar in "Đang trực tuyến" or a seat tile in the LIVE grid | `/dashboard` | 1440, 390 |
 | P-03 | Portal | Dashboard: country expanded / "Xem thêm N tỉnh/thành" / "Thu gọn" | P-01 → under "Quốc gia" click "Việt Nam" (VN is open by default; click another country to expand it) → "Xem thêm … tỉnh/thành" | `/dashboard` | 1440, 390 |
 | P-04 | Portal | Dashboard: LIVE legend filter (Tất cả / chat / online / event / off) + pagination ("8 / trang"…"24 / trang") | P-01 → click a legend chip above the LIVE grid; change the page-size select; click page numbers | `/dashboard?live=chat&page=2` | 1440, 390 |

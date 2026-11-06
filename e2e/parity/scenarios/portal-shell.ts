@@ -75,7 +75,16 @@ const registerThenLogin = async (c: StepCtx) => {
 };
 
 export const PORTAL_SHELL: Scenario[] = [
-  { id: 'P-01', name: 'Dashboard', start: 'user', fullPage: true },
+  {
+    id: 'P-01',
+    name: 'Dashboard',
+    start: 'user',
+    demo: 'stores',
+    fullPage: true,
+    steps: async (c) => {
+      if (c.side === 'app') await waitText(c, 'Nhu cầu phù hợp với gian hàng của bạn');
+    },
+  },
   {
     id: 'P-02',
     name: 'Dashboard · chọn thành viên',

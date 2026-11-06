@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { OnboardingPanel } from '@/features/onboarding';
 import styles from './dashboard.module.css';
+import { NeedMatchesCard } from './need-matches-card';
 
 /**
  * P-01: Dashboard v4 (D-89) — lời chào + "Hướng dẫn bắt đầu", như prototype v4. Khối LIVE cũ
@@ -14,6 +15,7 @@ export function DashboardScreen() {
     <>
       <h1 className={styles.srOnly}>{t('title')}</h1>
       <OnboardingPanel />
+      <NeedMatchesCard />
     </>
   );
 }

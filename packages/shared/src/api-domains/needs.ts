@@ -18,6 +18,26 @@ export const NEED_TYPES = [
   'other',
 ] as const;
 export type NeedType = (typeof NEED_TYPES)[number];
+
+/** Dashboard rule-based recommendations (BR-478–480); no private need payload. */
+export const needMatchReasonSchema = z.enum(['field', 'province', 'product']);
+export type NeedMatchReason = z.infer<typeof needMatchReasonSchema>;
+export const needMatchRowSchema = z.object({
+  id: z.string().min(1),
+  type: z.enum(NEED_TYPES),
+  title: z.string(),
+  field: z.string(),
+  province: z.string(),
+  reasons: z.array(needMatchReasonSchema).max(3),
+  pct: z.number().int().min(30).max(98),
+});
+export type NeedMatchRow = z.infer<typeof needMatchRowSchema>;
+export const needMatchesSchema = z.object({
+  hasStore: z.boolean(),
+  storeField: z.string().nullable(),
+  rows: z.array(needMatchRowSchema).max(3),
+});
+export type NeedMatches = z.infer<typeof needMatchesSchema>;
 /** Prototype: 5 chip luôn hiện, còn lại chỉ khi có nhu cầu đang mở loại đó */
 export const NEED_TYPES_ALWAYS: readonly NeedType[] = [
   'buy',

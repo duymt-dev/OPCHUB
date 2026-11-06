@@ -849,3 +849,28 @@ The existing production first100-groups limitation is not fixed or hidden here.
   reads, preserving one query and exact visibility/ranking. Nine plan/equivalence tests pass;
   latest scoped Ne measurement37.967ms versus initial78.966/101.447ms. No timeout/index or
   business-rule relaxation; results do not guarantee every query/load below50ms.
+### TIP-V46-809 execution defaults —06/11/2026
+
+- Owner approved reuse of private `opchub_v46_801_dev` / `opchub_v46_801_test`, Memurai6381,
+  and owned rolling808→809. Original native DB and Redis6379 untouched. No migration.
+- Q-V46-809-1→4 follow the explicit TIP defaults pending confirmation, not new owner D-xx:
+  own draft store receives matches; hidden own store shows no matches; accent-folded unique
+  keywords; empty state has no extra edit button; prototype's “AI gợi ý” retained although
+  calculation is deterministic and never calls LLM.
+- Canonical standard unpaid response402 MEMBERSHIP_REQUIRED retained (TIP incorrectly says403);
+  investor/locked403. FE hides on401/402/403.
+- Candidate cap200 newest can omit older higher-scoring needs; accepted TIP limitation.
+  Cache60 seconds is intentionally not invalidated by production writes.
+- Existing `--stores` seed is enabled by a new test-only `demo: stores` annotation so the
+  exact same new E2E assertions run on MSW/native. Demo cache reset includes only the new
+  `opchub:need-matches:*` namespace; normal production TTL behavior is unchanged.
+- Baseline full MSW371 passed/1 failed/4 skipped: old Affiliate mobile region text assertion.
+  Unmodified isolated repeat3 of that entire file passed9/9. No unrelated repair made.
+  Baseline P01 before adding the missing card measured15.396% desktop/17.825% mobile;
+  recorded as baseline, not masked or accepted as a new UI defect.
+- Final card spacing accounts for the shell's16px sibling gap; card buttons use scoped
+  specificity to beat AntD insertion order equally on MSW/native. Final P01 captures:
+  MSW1.005%/2.967%, native1.011%/2.967% (1440/390). Remaining differences are intended
+  accent-folded product reason/37% versus prototype30%, required specific need-type label
+  versus generic prototype label, and previously approved topbar flags. No new UI defect
+  left knowingly; owner reviews full screenshot pairs in PR87.

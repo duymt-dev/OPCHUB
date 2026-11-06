@@ -2,5 +2,20 @@
   "page": {
     "title": "Dashboard",
     "sub": "Theo dõi hoạt động của thành viên và cộng đồng theo thời gian thực"
+  },
+  "matches": {
+    "title": "Nhu cầu phù hợp với gian hàng của bạn",
+    "sub": "AI gợi ý theo ngành, tỉnh/thành và sản phẩm trong gian hàng · {n, plural, other {# nhu cầu}}",
+    "all": "Xem tất cả nhu cầu",
+    "view": "Xem & liên hệ",
+    "fit": "mức phù hợp",
+    "none": "Chưa có nhu cầu phù hợp. Bổ sung ngành, tỉnh và sản phẩm trong gian hàng để AI gợi ý chính xác hơn.",
+    "reason": {
+      "field": "Đúng ngành",
+      "province": "Cùng tỉnh",
+      "product": "Khớp sản phẩm"
+    },
+    "error": "Không tải được nhu cầu phù hợp.",
+    "retry": "Thử lại"
   }
 }
