@@ -26,6 +26,7 @@ export function MyRegionMonths({ rows }: { rows: DirectorRegion['months'] }) {
             {
               title: t('amount'),
               key: 'amount',
+              align: 'right',
               width: 162,
               render: (_, r) => <b className={styles.money}>{formatVnd(r.amount)}</b>,
             },

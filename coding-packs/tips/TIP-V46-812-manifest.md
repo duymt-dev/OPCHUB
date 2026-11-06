@@ -457,3 +457,10 @@ Event edit starts native e1 registrationOpen=false versus MSW true; normalize na
 - e2e/behavior/admin-fees.spec.ts: exact invalid-prefix assertion follows canonical parser; manual-match/reason/audit/fee assertions retained.
 No shared demo seed/global runner edits; current full native can finish on its original inputs. Additional failures outside these three groups will be reported separately, not silently repaired.
 - packages/db/test/acceptance-prerequisites.int.spec.ts (create): mocked-client prerequisite tests verify real391 registration rows/count updates, exact open/upcoming targets, delivery-count precondition and refusal of native DB, without touching running full-native data.
+
+### Remaining MyRegion numeric alignment (prototype proof before edits)
+Prototype index.html2635-2648 explicitly right-aligns four numeric year columns, three numeric affiliate columns and only payout amount in the month table. Current AntD columns omit align, so headers and values remain left-aligned despite corrected widths. This is a presentation defect, not D131 data.
+- apps/portal/src/features/affiliate/components/my-region-years.tsx: right-align percent/count/revenue/share only.
+- apps/portal/src/features/affiliate/components/my-region-affiliates.tsx: right-align customers/revenue/share only.
+- apps/portal/src/features/affiliate/components/my-region-months.tsx: right-align amount only; keep status/date left.
+- apps/portal/src/features/affiliate/components/my-region-years.spec.tsx (create): rendered table headers/cells retain exact values and numeric right alignment, year label left. Follow-up paired capture required before claiming a metric improvement.
