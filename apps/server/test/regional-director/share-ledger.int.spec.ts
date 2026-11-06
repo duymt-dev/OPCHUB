@@ -118,6 +118,46 @@ describe('TIP-V46-802 regional share ledger', () => {
       (await t.prisma.db.regionalShare.findUniqueOrThrow({ where: { id: second ?? '' } })).region,
     ).toBe('north');
   });
+  it('A7 industry child resolves parent region', async () => {
+    const f = await regionalShareFixture(t, 'north');
+    const south = await t.prisma.db.group.findFirstOrThrow({
+      where: { kind: 'province', region: 'south', deletedAt: null },
+      select: { province: true },
+    });
+    const child = await t.prisma.db.group.create({
+      data: {
+        slug: randomUUID(),
+        name: 'A7 conflicting industry child',
+        kind: 'industry',
+        industry: randomUUID(),
+        parentId: f.group.id,
+        region: 'south',
+        province: south.province,
+      },
+      select: { id: true },
+    });
+    try {
+      await t.prisma.db.groupMember.deleteMany({ where: { userId: f.agent.id } });
+      await t.prisma.db.groupMember.create({
+        data: {
+          groupId: child.id,
+          userId: f.agent.id,
+          status: 'member',
+          createdAt: new Date('2020-01-01'),
+        },
+      });
+      const id = await f.ledger.record(f.input);
+      expect(
+        await t.prisma.db.regionalShare.findUniqueOrThrow({ where: { id: id ?? '' } }),
+      ).toMatchObject({
+        region: 'north',
+        directorUserId: f.director.id,
+        directorAmount: 600_000,
+      });
+    } finally {
+      await t.prisma.db.group.delete({ where: { id: child.id } });
+    }
+  });
   it('unticked province still receives the regional share', async () => {
     const f = await regionalShareFixture(t);
     await t.prisma.db.regionalDirectorProvince.deleteMany({ where: { region: 'north' } });
