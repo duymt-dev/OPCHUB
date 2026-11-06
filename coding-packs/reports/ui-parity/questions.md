@@ -919,6 +919,8 @@ Infrastructure explicitly confirmed in execute thread: private801 DB pair, Memur
 - Event/Marketing/Fees fixture/MSW/test repairs approved; then additional fixture/cache/runtime repairs approved, with assertions/business behavior preserved. Root DEMO-only normalization now addresses missing unpaid affiliates and retained edited tariffs; required/production seed unchanged. Initial '20% changed' hypothesis was corrected by actual snapshot: missing unpaid affiliate identity, not changed percentage.
 - No new business decision, timeout/threshold waiver, fake auth response or automatic merge approved.
 
-### TIP812 final disposition — source50e42c1b
+### TIP812 final disposition / source055d862a
 
-All functional gates/15 acceptance cases PASS. Strict AC1 remains PARTIAL for14 legacy whole-MSW capture gaps plus recorded MyRegion390 whole-run scroll instability (same-source focused capture exists). Native108/108 eligible images are fresh. Do not relabel historical rows or expand unrelated legacy fixes; owner reviews paired images underD134. PR91 stays draft, no merge. Private812 demo/AI/App restored; original HOLD unchanged.
+Approved scope complete:486 MSW /110 native fresh captures (same source, paired artifacts preserved). Whole MSW568 tests excludes14 owner-approved legacy cases explicitly;78 unchanged/unreachable skips. Native118 tests includes4 harness cases/4 unreachable skips/110 captures. Whole failures and focused completion are recorded separately, never relabeled full PASS. No new mask/crop/threshold/timeout/retry/skip. D78-GDV alone newly unreachable under originalTIP. D93 mobile header fixed and actual calendar behavior PASS both lanes. Dashboard complete scope fixed; exact-zero scroll regression PASS. All remaining >3% measurements have data/decision causes, not app failure labels.
+
+[Causes](V4.6-causes.md), [acceptance](../V4.6-acceptance.md), [completion](../TIP-V46-812-completion.md). PR91 ready for owner review, no merge.

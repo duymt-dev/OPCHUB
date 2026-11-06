@@ -533,3 +533,6 @@ Notification diagnosis is now proven, not cache/queue speculation: fresh seed AP
 
 ### Closure scroll convergence correction
 Full eaf267eb run reproduced compositor offsets 2/28px after a single instant reset. Narrow follow-up changes only e2e/parity/scroll-position.ts: repeat the real instant scroll action during existing assertion polling, advance queued rendering and require three consecutive exact-zero observations. No clipping, CSS suppression, timeout/retry changes or relaxed assertions. Existing measurement-readiness.spec.ts remains the regression.
+
+### Closure evidence artifact
+Create coding-packs/reports/evidence/v46-812-closure.json: sanitized same-source capture/gate counters, fixed-image measurements, actual baseline pixel provenance and private restoration invariants. No secrets, credentials or session traces. Final reports/progress row12 classify owner-approved exceptions and D134 differences; raw reporter values remain unchanged.
