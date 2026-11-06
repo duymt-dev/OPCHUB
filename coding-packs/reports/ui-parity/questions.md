@@ -874,3 +874,14 @@ The existing production first100-groups limitation is not fixed or hidden here.
   accent-folded product reason/37% versus prototype30%, required specific need-type label
   versus generic prototype label, and previously approved topbar flags. No new UI defect
   left knowingly; owner reviews full screenshot pairs in PR87.
+
+## TIP-V46-810 — defaults specified by the TIP (not new owner approvals)
+
+- Q-V46-810-1: card in both edit wizard and owner dashboard; default, awaiting owner.
+- Q-V46-810-2: slug does not change on rename; default, awaiting owner.
+- Q-V46-810-3: visibleStore eligibility only, no guest-view KPI increments; default, awaiting owner.
+- Q-V46-810-4: saved SEO title max70; default, awaiting owner.
+- Q-V46-810-5: declared business contacts public, never account-owner contact/name/id; default, awaiting owner.
+- Q-V46-810-6: read-only link/copy in Admin drawer; default, awaiting owner.
+- Owner text inputs use empty saved values with default placeholders (TIP); unlike filled prototype defaults. View-as-guest opens actual `/g/` in a new tab (TIP/D-95). Neither is a fabricated D-xx decision.
+- Infra810 confirmed by owner in this thread: private801 dev/test + Memurai6381 and rolling private809 services. Only these targets are used; original native DB/Redis remain intact.

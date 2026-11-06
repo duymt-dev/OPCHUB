@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 312/402 ảnh.
+> Đạt 314/404 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -202,6 +202,8 @@
 | P-97 | Portal · Affiliate | 390 | 4.15% | ❌ chưa đạt | 390×1909 | c1fd1625 |
 | P-98 | Portal · Affiliate · Lịch sử nhận tiền | 1440 | 1.24% | ✅ đạt | 1440×900 | c1fd1625 |
 | P-98 | Portal · Affiliate · Lịch sử nhận tiền | 390 | 5.14% | ❌ chưa đạt | 390×1632 | c1fd1625 |
+| P-V46-PUBLIC-CARD | Trang công khai · khối trong trình sửa | 1440 | 1.57% | ✅ đạt | 1136×250 | 6dbd352a |
+| P-V46-PUBLIC-CARD | Trang công khai · khối trong trình sửa | 390 | 2.51% | ✅ đạt | 366×396 | 6dbd352a |
 | P-V46-REG | Portal · Vùng của tôi | 1440 | 7.42% | ❌ chưa đạt | 1440×1944 | c1fd1625 |
 | P-V46-REG | Portal · Vùng của tôi | 390 | 15.23% | ❌ chưa đạt | 390×3067 | c1fd1625 |
 | P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 1440 | 16.65% | ❌ chưa đạt | 1440×1183 | c1fd1625 |
@@ -408,7 +410,7 @@
 | D-V46-SEARCH | Topbar · global search Admin | 1440 | 0.55% | ✅ đạt | 1440×900 | 8f01249a |
 | D-V46-SEARCH | Topbar · global search Admin | 390 | 0.35% | ✅ đạt | 390×844 | 8f01249a |
 
-## Không đo được trên prototype (unreachable, 37 màn)
+## Không đo được trên prototype (unreachable, 38 màn)
 
 | ID | Màn | Lý do |
 |---|---|---|
@@ -440,6 +442,7 @@
 | P-95 | Hồ sơ · số Dự án → Dự án của tôi | Prototype v4 Hồ sơ chỉ còn 2 ô thống kê (Nhóm, Sự kiện), bỏ ô "Dự án"; app giữ ô Dự án → Dự án của tôi (DV-V4-615-4) |
 | P-116 | Nhu cầu của tôi · chưa đóng phí | Prototype chỉ có TK m1 và luôn coi m1 đã đóng phí (isPaidId → m1); không có TK chưa đóng phí (C-01, như P-110). |
 | P-120 | Dashboard · Hướng dẫn bắt đầu (chưa đóng phí, bước khoá) | Prototype chỉ có TK m1 và luôn coi m1 đã đóng phí (isPaidId → m1); không có TK chưa đóng phí (C-01, như P-110). Trạng thái khoá kiểm ở unit onboarding-card.spec. |
+| P-V46-GUEST | Trang khách /g/ · ảnh để owner duyệt | Prototype has no anonymous /g/ page. Actual desktop/mobile captures are attached by store-public-page.spec.ts; no invented prototype baseline or pixel comparison. |
 | P-110 | Gian hàng của tôi · chưa đóng phí | Prototype chỉ có TK m1 và luôn coi m1 đã đóng phí (isPaidId → m1); không có TK chưa đóng phí (C-01, như P-87). |
 | D-32 | Xem chat từ admin (không đổi màn) | Prototype "Xem chat" đặt screen=portal nhưng guard phiên Admin (`session==="admin"&&screen==="portal"` → screen admin) trả về ngay: nút no-op, không có màn đích. App mở trình xem chat chỉ đọc (DV-G4c-1, D-26 / C-03), kiểm bằng e2e admin-groups. |
 | P-01-BOTCARD | Dashboard · thẻ bot (dữ liệu khớp) | Trạng thái đã bỏ: prototype v4 + D-89 Dashboard bỏ khối "Thảo luận mới trong cộng đồng" ở cả hai bên (chỉ còn lời chào + Hướng dẫn bắt đầu); tin bot kiểm trong chat (e2e bot-auto) |

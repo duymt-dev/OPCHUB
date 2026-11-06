@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode, Param, Post, Put } from '@nestjs/common';
+import { Controller, Get, HttpCode, Param, Patch, Post, Put } from '@nestjs/common';
 import {
   type StoreDashboard,
   storeDashboardSchema,
@@ -12,6 +12,8 @@ import {
   storeListSchema,
   storeUpsertSchema,
 } from '@opchub/shared/api-domains';
+import { storePublicConfigSchema, storePublicPatchSchema } from '@opchub/shared/api-domains';
+import { StorePublicService } from '../services/store-public.service';
 import type { z } from 'zod';
 import { type AccessClaims, AllowAccountTypes, CurrentUser } from '@/common/auth';
 import { respond, ZodBody, ZodQuery } from '@/common/http/zod';
@@ -31,6 +33,7 @@ export class StoreController {
     private readonly explore: StoreExploreService,
     private readonly owner: StoreOwnerService,
     private readonly dashboard: StoreDashboardService,
+    private readonly publicPage: StorePublicService,
   ) {}
 
   @AllowAccountTypes('investor')
@@ -57,6 +60,19 @@ export class StoreController {
   @Get('stores/:id')
   async detail(@CurrentUser() user: AccessClaims, @Param('id') id: string): Promise<StoreDetail> {
     return respond(storeDetailSchema, await this.explore.detail(user.sub, id));
+  }
+
+  @Get('me/store/public')
+  async publicConfig(@CurrentUser() u: AccessClaims) {
+    return respond(storePublicConfigSchema, await this.publicPage.mine(owner(u)));
+  }
+
+  @Patch('me/store/public')
+  async patchPublic(
+    @CurrentUser() u: AccessClaims,
+    @ZodBody(storePublicPatchSchema) input: z.infer<typeof storePublicPatchSchema>,
+  ) {
+    return respond(storePublicConfigSchema, await this.publicPage.patch(owner(u), input));
   }
 
   @Get('me/store')

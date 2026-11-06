@@ -51,3 +51,5 @@ export * from './renewal';
 export * from './bank-reconcile';
 export * from './audit-log-page';
 export * from './search';
+
+export * from './store-public';

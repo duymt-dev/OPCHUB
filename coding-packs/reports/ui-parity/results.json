@@ -579,17 +579,17 @@
   "id": "P-108",
   "name": "Chi tiết gian hàng (HTX Cà phê Hòa Phú)",
   "viewport": 1440,
-  "diffPct": 2.4963734567901232,
+  "diffPct": 2.677932098765432,
   "size": "1440×900",
-  "sha": "0b76e98a"
+  "sha": "6dbd352a"
  },
  {
   "id": "P-108",
   "name": "Chi tiết gian hàng (HTX Cà phê Hòa Phú)",
   "viewport": 390,
-  "diffPct": 0.2558026491675781,
+  "diffPct": 0.3679061854417305,
   "size": "390×844",
-  "sha": "0b76e98a"
+  "sha": "6dbd352a"
  },
  {
   "id": "P-108-PROJECT-FORM",
@@ -629,7 +629,7 @@
   "viewport": 1440,
   "diffPct": 0,
   "size": "640×147",
-  "sha": "0b76e98a"
+  "sha": "6dbd352a"
  },
  {
   "id": "P-109",
@@ -637,7 +637,7 @@
   "viewport": 390,
   "diffPct": 0,
   "size": "366×171",
-  "sha": "0b76e98a"
+  "sha": "6dbd352a"
  },
  {
   "id": "P-11",
@@ -1974,6 +1974,22 @@
   "diffPct": 0.01089001951491497,
   "size": "272×844",
   "sha": "0b76e98a"
+ },
+ {
+  "id": "P-V46-PUBLIC-CARD",
+  "name": "Trang công khai · khối trong trình sửa",
+  "viewport": 1440,
+  "diffPct": 1.5010563380281692,
+  "size": "1136×250",
+  "sha": "6dbd352a"
+ },
+ {
+  "id": "P-V46-PUBLIC-CARD",
+  "name": "Trang công khai · khối trong trình sửa",
+  "viewport": 390,
+  "diffPct": 2.496274217585693,
+  "size": "366×396",
+  "sha": "6dbd352a"
  },
  {
   "id": "P-V46-REG",

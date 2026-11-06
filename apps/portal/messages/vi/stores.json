@@ -343,5 +343,31 @@
     "empty": "Chưa có dự án. Dự án OPC do doanh nghiệp đăng sẽ tự hiện tại đây và ở trang Dự án OPC.",
     "view": "Xem dự án →",
     "more": "Xem thêm"
+  },
+  "publicPage": {
+    "title": "Trang công khai",
+    "subtitle": "Khách hàng xem gian hàng không cần đăng nhập · chia sẻ link lên Zalo, Facebook, danh thiếp",
+    "view": "Xem như khách",
+    "copy": "Sao chép link",
+    "link": "Link trang công khai",
+    "google": "Hiển thị trên Google",
+    "googleOn": "Google và các công cụ tìm kiếm tìm thấy được gian hàng",
+    "googleOff": "Chỉ người có link mới xem được",
+    "seoTitle": "Tiêu đề trên Google",
+    "desc": "Mô tả ngắn",
+    "copied": "Đã sao chép link trang công khai",
+    "saveError": "Không lưu được cấu hình, vui lòng thử lại",
+    "copyError": "Không sao chép được, hãy sao chép đường dẫn đã chọn",
+    "draft": "Trang công khai chỉ hiển thị khi gian hàng đã xuất bản",
+    "hidden": "Gian hàng đang bị Admin ẩn",
+    "loadError": "Không tải được cấu hình trang công khai",
+    "retry": "Thử lại"
+  },
+  "guest": {
+    "login": "Đăng nhập",
+    "join": "Tham gia OPC Hub",
+    "notFound": "Không tìm thấy gian hàng",
+    "home": "Về trang chủ OPC Hub",
+    "footer": "Trang được tạo trên OPC Hub — cộng đồng doanh nghiệp một người"
   }
 }

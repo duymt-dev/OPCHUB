@@ -15,7 +15,7 @@ const MISSION_ICON = 'M12 22a10 10 0 100-20 10 10 0 000 20zM8 12l3 3 5-6';
 const CERT_FALLBACK = 'M12 15a5 5 0 100-10 5 5 0 000 10zM8.5 13.5L7 22l5-3 5 3-1.5-8.5';
 
 /** "Tầm nhìn & Sứ mệnh" (prototype index.html :2341 → 2345) — chỉ hiện khi có ít nhất 1 trong 2 */
-export function DetailVisionMission({ s }: { s: StoreDetail }) {
+export function DetailVisionMission({ s }: { s: Pick<StoreDetail, 'vision' | 'mission'> }) {
   const t = useTranslations('stores.detail');
   if (!s.vision.trim() && !s.mission.trim()) return null;
   return (
@@ -53,7 +53,11 @@ export function DetailVisionMission({ s }: { s: StoreDetail }) {
 }
 
 /** "Đội ngũ chuyên gia" (prototype :2347 → 2349) — hàng cuộn ngang, ảnh thật hoặc chữ viết tắt */
-export function DetailTeam({ s }: { s: StoreDetail }) {
+export function DetailTeam({
+  s,
+}: {
+  s: { team: { name: string; role: string; photoUrl: string | null; desc?: string }[] };
+}) {
   const t = useTranslations('stores.detail');
   if (s.team.length === 0) return null;
   return (
@@ -84,7 +88,11 @@ export function DetailTeam({ s }: { s: StoreDetail }) {
 }
 
 /** "Giấy chứng nhận" (prototype :2350 → 2351) — ảnh 4:3 thật, trống → biểu tượng + tên */
-export function DetailCerts({ s }: { s: StoreDetail }) {
+export function DetailCerts({
+  s,
+}: {
+  s: { certs: { name: string; imageUrl: string | null; org?: string }[] };
+}) {
   const t = useTranslations('stores.detail');
   if (s.certs.length === 0) return null;
   return (

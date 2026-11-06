@@ -1,10 +1,17 @@
 import {
   storeFavoriteSchema,
+  storePublicPatchSchema,
   storeListQuerySchema,
   storeUpsertSchema,
 } from '@opchub/shared/api-domains';
 import {
   favoriteMockStore,
+  myMockStorePublic,
+  patchMockStorePublic,
+  mockStorePublicPage,
+  mockStorePublicCookie,
+  syncMockStorePublic,
+  STORE_PUBLIC_COOKIE,
   listMockStores,
   mockStoreDetail,
   myMockStore,
@@ -58,8 +65,33 @@ function listQuery(url: string) {
 }
 
 export const storeHandlers = [
+  http.get(`${API}/public/stores/:slug`, ({ params, cookies }) =>
+    reply(
+      mockStorePublicPage(
+        param(params, 'slug'),
+        cookies[STORE_PUBLIC_COOKIE],
+        cookies[STORE_BRIDGE_COOKIE],
+      ),
+    ),
+  ),
+  http.get(`${API}/me/store/public`, ({ request }) =>
+    reply(myMockStorePublic(userIdOf(request), new URL(request.url).origin)),
+  ),
+  http.patch(`${API}/me/store/public`, async ({ request, cookies }) => {
+    const body = await parseBody(request, storePublicPatchSchema);
+    if (!body.ok) return body.res;
+    const r = patchMockStorePublic(userIdOf(request), new URL(request.url).origin, body.data);
+    if (r.ok && typeof document !== 'undefined')
+      document.cookie = mockStorePublicCookie(cookies[STORE_PUBLIC_COOKIE], r.data.slug, {
+        seoIndex: r.data.seoIndex,
+        title: r.data.title,
+        desc: r.data.desc,
+      });
+    return reply(r);
+  }),
   http.all(`${API}/*`, ({ cookies, request }) => {
     syncStoreBridge(readCookie(cookies));
+    syncMockStorePublic(cookies[STORE_PUBLIC_COOKIE]);
     const me = userIdOf(request);
     restoreMockStoreFavs(me, readMockStoreFavs(me));
     return undefined;

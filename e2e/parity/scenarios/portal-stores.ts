@@ -12,6 +12,37 @@ const toExplore = async (c: StepCtx) => {
 
 export const PORTAL_STORES: Scenario[] = [
   {
+    id: 'P-V46-PUBLIC-CARD',
+    name: 'Trang công khai · khối trong trình sửa',
+    start: 'user',
+    beforeCapture: resetScroll,
+    capture: {
+      selector: (c) =>
+        c.side === 'app'
+          ? c.page.locator('[data-block="store-public-card"]')
+          : c.page
+              .locator('div')
+              .filter({ has: c.page.getByText('Trang công khai', { exact: true }) })
+              .filter({ has: c.page.getByText('Hiển thị trên Google', { exact: true }) })
+              .last(),
+      reason:
+        'BR-494: complete public-page configuration card, including inputs/actions; no masks.',
+    },
+    steps: async (c) => {
+      await nav(c, 'Gian hàng địa phương');
+      await tap(c, 'Gian hàng của tôi');
+      await tap(c, 'Chỉnh sửa gian hàng');
+      await waitText(c, 'Trang công khai');
+    },
+  },
+  {
+    id: 'P-V46-GUEST',
+    name: 'Trang khách /g/ · ảnh để owner duyệt',
+    start: 'auth',
+    unreachable:
+      'Prototype has no anonymous /g/ page. Actual desktop/mobile captures are attached by store-public-page.spec.ts; no invented prototype baseline or pixel comparison.',
+  },
+  {
     id: 'P-108-PROJECT-FORM',
     name: 'Gian hàng của tôi · form đăng dự án điền sẵn',
     start: 'user',

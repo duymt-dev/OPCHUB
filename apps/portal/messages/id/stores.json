@@ -343,5 +343,31 @@
     "empty": "Belum ada proyek. Proyek OPC yang dipublikasikan bisnis ini akan muncul di sini dan di halaman Proyek OPC.",
     "view": "Lihat proyek →",
     "more": "Lihat lainnya"
+  },
+  "publicPage": {
+    "title": "Halaman publik",
+    "subtitle": "Pelanggan melihat toko tanpa masuk · bagikan di Zalo, Facebook, kartu nama",
+    "view": "Lihat sebagai tamu",
+    "copy": "Salin tautan",
+    "link": "Tautan halaman publik",
+    "google": "Tampilkan di Google",
+    "googleOn": "Google dan mesin pencari dapat menemukan toko",
+    "googleOff": "Hanya pemilik tautan yang dapat melihat",
+    "seoTitle": "Judul Google",
+    "desc": "Deskripsi singkat",
+    "copied": "Tautan halaman publik disalin",
+    "saveError": "Gagal menyimpan pengaturan. Coba lagi",
+    "copyError": "Gagal menyalin. Salin tautan terpilih secara manual",
+    "draft": "Halaman publik tersedia setelah toko diterbitkan",
+    "hidden": "Toko disembunyikan oleh admin",
+    "loadError": "Gagal memuat pengaturan halaman publik",
+    "retry": "Coba lagi"
+  },
+  "guest": {
+    "login": "Masuk",
+    "join": "Gabung OPC Hub",
+    "notFound": "Toko tidak ditemukan",
+    "home": "Kembali ke OPC Hub",
+    "footer": "Dibuat di OPC Hub — komunitas bisnis satu orang"
   }
 }

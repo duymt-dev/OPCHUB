@@ -343,5 +343,31 @@
     "empty": "Wala pang proyekto. Ang mga proyekto ng OPC na ipinost ng negosyo ay lalabas dito at sa pahina ng Mga Proyekto ng OPC.",
     "view": "Tingnan ang proyekto →",
     "more": "Ipakita pa"
+  },
+  "publicPage": {
+    "title": "Pampublikong pahina",
+    "subtitle": "Makikita ng mga customer ang tindahan nang walang login · ibahagi sa Zalo, Facebook o business card",
+    "view": "Tingnan bilang bisita",
+    "copy": "Kopyahin ang link",
+    "link": "Link ng pampublikong pahina",
+    "google": "Ipakita sa Google",
+    "googleOn": "Mahahanap ng Google at ibang search engine ang tindahan",
+    "googleOff": "Mga may link lamang ang makakakita",
+    "seoTitle": "Pamagat sa Google",
+    "desc": "Maikling paglalarawan",
+    "copied": "Nakopya ang link ng pampublikong pahina",
+    "saveError": "Hindi ma-save ang mga setting. Subukang muli",
+    "copyError": "Hindi makopya. Manu-manong kopyahin ang napiling link",
+    "draft": "Makikita lang ang pampublikong pahina kapag nailathala ang tindahan",
+    "hidden": "Itinago ng admin ang tindahan",
+    "loadError": "Hindi ma-load ang mga setting ng pampublikong pahina",
+    "retry": "Subukang muli"
+  },
+  "guest": {
+    "login": "Mag-sign in",
+    "join": "Sumali sa OPC Hub",
+    "notFound": "Hindi nakita ang tindahan",
+    "home": "Bumalik sa OPC Hub",
+    "footer": "Ginawa sa OPC Hub — komunidad ng negosyong iisang tao"
   }
 }

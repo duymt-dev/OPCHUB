@@ -19,3 +19,20 @@ export const env = schema.parse({
 
 /** V2Q-163: prototype ver2 bỏ hộp "Tài khoản dùng thử" → mặc định tắt mọi chế độ, bật bằng `on` */
 export const showDemoAccounts = env.NEXT_PUBLIC_SHOW_DEMO_ACCOUNTS === 'on';
+
+/** Server-only configuration: never parsed in a browser or exposed as NEXT_PUBLIC. */
+export function portalServerEnv() {
+  return z
+    .object({
+      API_INTERNAL_URL: z.url().optional(),
+      PORTAL_URL: z.url().default('https://opchub.community'),
+    })
+    .refine((v) => env.NEXT_PUBLIC_API_MOCKING === 'msw' || !!v.API_INTERNAL_URL, {
+      path: ['API_INTERNAL_URL'],
+      message: 'Required when mocking is off',
+    })
+    .parse({
+      API_INTERNAL_URL: process.env.API_INTERNAL_URL || undefined,
+      PORTAL_URL: process.env.PORTAL_URL || undefined,
+    });
+}

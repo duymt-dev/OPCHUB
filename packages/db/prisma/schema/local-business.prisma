@@ -30,6 +30,10 @@ enum StoreItemKind {
 model Store {
   id           String        @id @default(uuid(7))
   ownerId      String        @unique @map("owner_id")
+  slug         String?       @unique
+  seoIndex     Boolean       @default(true) @map("seo_index")
+  seoTitle     String        @default("") @map("seo_title")
+  seoDesc      String        @default("") @map("seo_desc")
   name         String
   slogan       String        @default("")
   /// Danh mục scope `project` (tên); rỗng khi tự tạo

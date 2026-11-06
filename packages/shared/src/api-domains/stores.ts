@@ -60,6 +60,7 @@ export type StoreCard = z.infer<typeof storeCardSchema>;
 
 /** Chi tiết 1 trang + Gian hàng của tôi */
 export const storeDetailSchema = storeCardSchema.extend({
+  slug: z.string().nullable().optional(),
   intro: z.string(),
   website: z.string(),
   phone: z.string(),

@@ -343,5 +343,31 @@
     "empty": "Belum ada projek. Projek OPC yang diterbitkan perniagaan ini akan muncul di sini dan pada halaman Projek OPC.",
     "view": "Lihat projek →",
     "more": "Lihat lagi"
+  },
+  "publicPage": {
+    "title": "Halaman awam",
+    "subtitle": "Pelanggan melihat kedai tanpa log masuk · kongsi di Zalo, Facebook, kad nama",
+    "view": "Lihat sebagai tetamu",
+    "copy": "Salin pautan",
+    "link": "Pautan halaman awam",
+    "google": "Papar di Google",
+    "googleOn": "Google dan enjin carian boleh menemui kedai",
+    "googleOff": "Hanya pemegang pautan boleh melihat",
+    "seoTitle": "Tajuk Google",
+    "desc": "Penerangan ringkas",
+    "copied": "Pautan halaman awam disalin",
+    "saveError": "Gagal menyimpan tetapan. Cuba lagi",
+    "copyError": "Gagal menyalin. Salin pautan terpilih secara manual",
+    "draft": "Halaman awam tersedia selepas kedai diterbitkan",
+    "hidden": "Kedai disembunyikan oleh pentadbir",
+    "loadError": "Gagal memuatkan tetapan halaman awam",
+    "retry": "Cuba lagi"
+  },
+  "guest": {
+    "login": "Log masuk",
+    "join": "Sertai OPC Hub",
+    "notFound": "Kedai tidak ditemui",
+    "home": "Kembali ke OPC Hub",
+    "footer": "Dicipta di OPC Hub — komuniti perniagaan seorang"
   }
 }

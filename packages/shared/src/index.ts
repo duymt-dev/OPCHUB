@@ -1,3 +1,4 @@
+export * from './stores/store-slug';
 export * from './enums';
 export * from './membership/plans';
 export * from './membership/pricing';
