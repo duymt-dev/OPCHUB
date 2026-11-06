@@ -897,3 +897,22 @@ The existing production first100-groups limitation is not fixed or hidden here.
 - Q-V46-811-7: Both settings tabs are drafts until explicit Save. **TIP default, pending owner override.**
 
 Infrastructure explicitly confirmed in execute thread: private801 DB pair, Memurai6381, private rolling restart.
+
+## TIP-V46-812 — defaults explicitly supplied by TIP (not invented owner approvals)
+
+- Q812-1: exactly8 TC rows plus7 AT rows, BR461–495 traceability; no invented TC IDs.
+- Q812-2: D-78-GDV unreachable (prototype missing Marketing), existing mail behavior/int replace parity, owner reviews app.
+- Q812-3: when old fee still usable, revoke mail subject states expiry date; otherwise original payment request wording. Narrow text-only default, no flow change. Not implemented before baseline.
+- Q812-4: historical801–811 rows preserved; current M1 findings reported separately at812.
+- Q812-5: native real lists/data differences preserved and paired, not emptied for screenshot matching.
+- Infrastructure: owner confirmed private801 DB pair, Memurai6381, keep existing HOLD; new Next-only ports separate.
+
+- Q812-6 (traceability clarification): raw dac-ta.html contains26 BR definitions in461�495. BR466�470 and487�490 do not exist (raw-text grep, not only stripped HTML). Report those9 slots as 'not defined in source spec', not invented PASS tests or D124/D125 exceptions; cover all26 actual BRs plus REQ628/629. Business scope/behavior unchanged.
+
+- Infrastructure follow-up explicitly approved: separate opchub_v46_812_dev + Memurai6381 DB3 + API/socket4310/4311, keeping all HOLD. Exact new DB name may be added to seed guard; no broad allowlist. Native baseline parity currently uses unchanged811 runtime; final measurements/behavior use isolated812 runtime with correct mail origins.
+
+### TIP812 owner-approved execute follow-ups
+- Separate812dev/Redis3/runtime approved; original HOLD preserved.
+- Narrow auto-unlock stale session projection fix + regression approved and committed.
+- Event/Marketing/Fees fixture/MSW/test repairs approved; then additional fixture/cache/runtime repairs approved, with assertions/business behavior preserved. Root DEMO-only normalization now addresses missing unpaid affiliates and retained edited tariffs; required/production seed unchanged. Initial '20% changed' hypothesis was corrected by actual snapshot: missing unpaid affiliate identity, not changed percentage.
+- No new business decision, timeout/threshold waiver, fake auth response or automatic merge approved.

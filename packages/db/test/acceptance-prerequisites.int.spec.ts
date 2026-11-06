@@ -9,9 +9,6 @@ const mocks = vi.hoisted(() => ({
   events: vi.fn(),
   deliveries: vi.fn(),
   disconnect: vi.fn(),
-  findUser: vi.fn(),
-  affiliate: vi.fn(),
-  prices: vi.fn(),
 }));
 
 async function run(mode: string, target = isolated) {
@@ -19,7 +16,7 @@ async function run(mode: string, target = isolated) {
   vi.stubEnv('DIRECT_URL', target);
   vi.spyOn(process, 'argv', 'get').mockReturnValue(['node', 'fixture', mode]);
   const tx = {
-    user: { createMany: mocks.users, findUniqueOrThrow: mocks.findUser },
+    user: { createMany: mocks.users },
     eventRegistration: { createMany: mocks.registrations, deleteMany: mocks.removeRegistrations },
     $executeRaw: mocks.sql,
   };
@@ -29,8 +26,6 @@ async function run(mode: string, target = isolated) {
       $transaction: async (fn: (value: typeof tx) => Promise<void>) => fn(tx),
       event: { updateMany: mocks.events },
       mailLog: { updateMany: mocks.deliveries },
-      affiliate: { upsert: mocks.affiliate },
-      priceConfig: { update: mocks.prices },
       $disconnect: mocks.disconnect,
     }),
   }));
@@ -105,36 +100,5 @@ describe('isolated acceptance prerequisites', () => {
     ).rejects.toThrow('exact isolated TIP-812 database');
     expect(mocks.users).not.toHaveBeenCalled();
     expect(mocks.sql).not.toHaveBeenCalled();
-  });
-
-  it('creates the unpaid demo affiliate without fabricating payment or sessions', async () => {
-    mocks.findUser.mockResolvedValueOnce({ id: 'hai-yen-fixture' });
-    await run('unpaid-affiliate');
-    expect(mocks.findUser).toHaveBeenCalledExactlyOnceWith({
-      where: { email: 'do.haiyen@opchub.vn' },
-      select: { id: true },
-    });
-    expect(mocks.affiliate).toHaveBeenCalledExactlyOnceWith({
-      where: { userId: 'hai-yen-fixture' },
-      create: {
-        id: 'v46-812-unpaid-affiliate',
-        userId: 'hai-yen-fixture',
-        code: 'YENOPC812',
-        rate: 20,
-        status: 'active',
-      },
-      update: {},
-    });
-  });
-
-  it('restores the explicit demo tariff before the1.2m bank-link assertion', async () => {
-    await run('default-prices');
-    expect(mocks.prices).toHaveBeenCalledTimes(1);
-    expect(mocks.prices.mock.calls[0]?.[0]).toMatchObject({
-      where: { id: 1 },
-      data: { perYear: 1200000, bizYear: 3600000 },
-    });
-    expect(mocks.deliveries).not.toHaveBeenCalled();
-    expect(mocks.registrations).not.toHaveBeenCalled();
   });
 });

@@ -4,13 +4,11 @@ import { expect, test } from '../server/test';
 import { newMember, openPricing } from '../server/new-member-acceptance';
 import { onServer, simulateTransfer } from '../server/api';
 import { ADMIN_URL } from '../urls';
-import { acceptancePrerequisite } from './helpers/acceptance-prerequisites';
 
 test('UAT-09 AT-NR01 LK-02 REQ-402 new member bank transfer activates Portal and the same persisted Admin fee', async ({
   page,
   context,
 }) => {
-  acceptancePrerequisite('default-prices');
   const created = await newMember(page);
   // D-94 1A: TK mới miễn phí 3 tháng → nâng cấp sớm từ "Xem bảng giá"
   const gate = await openPricing(page);

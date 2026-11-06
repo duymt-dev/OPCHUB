@@ -25,6 +25,7 @@ import { seedServices } from './service';
 import { seedNeeds } from './needs';
 import { seedStores } from './stores';
 import { seedAuditLog, seedNotifications, seedSettings } from './settings';
+import { seedDemoPricing } from './pricing';
 
 /** Mật khẩu demo lấy từ ACCOUNTS của prototype (dữ liệu công khai, không phải secret) */
 function demoPasswords(): { member: string; admin: string } {
@@ -70,6 +71,7 @@ export async function seedDemo(
       await resetDemoData(tx);
       await seedGroups(tx);
       await seedSettings(tx, options.botManual);
+      await seedDemoPricing(tx);
       await seedUsers(tx, h);
       await seedAdmins(tx, h.admin);
       await seedFees(tx);

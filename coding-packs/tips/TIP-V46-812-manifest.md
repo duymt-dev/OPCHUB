@@ -484,3 +484,16 @@ Additional evidence in the same approved Event group: Portal register/cancel and
 Event edit robustness refinement: explicitly set the draft form switch ON before the existing click OFF, identically in both lanes. This avoids a scheduler race against an expired seed event while preserving the original close-state assertion and exercising the real draft control. Remove the now-unnecessary case-local events-open invocation; no production scheduler modification. Portal prerequisite must keep m1's existing e2 registration while materializing real counts, and open future e1/e4 so the full-capacity button is tested independently of the closed-event state.
 Same confirmed pricing-fixture root cause also fails fundraising.spec.ts first case: snapshot shows18m button, assertion retains15m; price_configs preserve Admin edits across demo resets. Add the same default-prices prerequisite in this file's beforeEach (no business or expected-value changes).
 - e2e/behavior/fundraising.spec.ts: case-local demo tariff prerequisite only.
+
+### Root-cause fixture normalization after complete failure triage (before edits)
+Exploratory native exposes same causes beyond the first examples: AF0 table has62 not required66 (exact snapshot), first-fee/renewal rows use1.5m not1.2m; fundraising18m not15m; voluntary pricing snapshots also retain edited price. Production ensureAffiliate already applies D94 to every non-investor regardless of fee. Correct the shared DEMO fixture at its root rather than proliferating case-local synthetic affiliates/tariffs. Required/production seed remains unchanged and preserves Admin pricing.
+- packages/db/seed/demo/affiliate.ts: remove obsolete feePeriod eligibility, keep non-investor/deleted filter, active status matches production D94; preserve existing paid-member code sequence, append unpaid codes.
+- packages/db/seed/demo/pricing.ts (create): demo-only reset of PRICE_DEFAULTS in the existing seed transaction; no production pricing API/migration/history deletion.
+- packages/db/seed/demo/index.ts: import/call demo pricing reset beside settings (two wiring lines).
+- packages/db/test/demo-prerequisites.int.spec.ts (create): mocked seed regression for every fee state, unchanged paid codes/bank, no old feePeriod filter, exact demo tariff fields.
+- acceptance-prerequisites CLI/helper/test: remove redundant unpaid-affiliate/default-prices modes/tests now covered by shared demo fixture.
+- affiliate-screen/bank-fee-link/fundraising E2E: remove redundant case-local calls; their original assertions remain exactly unchanged.
+Other native failure147 (one Admin login wait) is not yet diagnosed; do not change credentials, timeout or assertions. Rerun unchanged after full exploratory completion before deciding if a fixture repair is justified.
+The same missing native configured-provider prerequisite also affects bot-auto.spec.ts and bot-emergency.spec.ts (actual full-run failures209/214). Apply the already-tested auto-test fixture import to these two files only; keep all bodies/assertions/timeouts unchanged.
+- e2e/behavior/bot-auto.spec.ts
+- e2e/behavior/bot-emergency.spec.ts

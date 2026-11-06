@@ -1,6 +1,5 @@
 import { z } from 'zod';
 import { buildEvents, MY_EVENT_REGS } from '@opchub/shared/mock-domains';
-import { PRICE_DEFAULTS as prices } from '@opchub/shared/fixtures';
 import { createPrismaClient } from '../src/client';
 
 /** Case-local prerequisites, never run against native/HOLD or integration databases. */
@@ -14,15 +13,7 @@ if (
 )
   throw new Error('Acceptance prerequisites require the exact isolated TIP-812 database');
 const mode = z
-  .enum([
-    'events-list',
-    'events-portal',
-    'events-open',
-    'events-upcoming',
-    'marketing-summary',
-    'unpaid-affiliate',
-    'default-prices',
-  ])
+  .enum(['events-list', 'events-portal', 'events-open', 'events-upcoming', 'marketing-summary'])
   .parse(process.argv[2]);
 const db = createPrismaClient(env.DIRECT_URL, { max: 1 });
 try {
@@ -77,35 +68,6 @@ try {
       FROM unnest(${['e2', 'e3']}::text[],
         ${[new Date(now + 86400000), new Date(now + 2 * 86400000)]}::timestamptz[]) AS v(id, at)
       WHERE e.id = v.id`;
-  } else if (mode === 'unpaid-affiliate') {
-    const user = await db.user.findUniqueOrThrow({
-      where: { email: 'do.haiyen@opchub.vn' },
-      select: { id: true },
-    });
-    await db.affiliate.upsert({
-      where: { userId: user.id },
-      create: {
-        id: 'v46-812-unpaid-affiliate',
-        userId: user.id,
-        code: 'YENOPC812',
-        rate: 20,
-        status: 'active',
-      },
-      update: {},
-    });
-  } else if (mode === 'default-prices') {
-    await db.priceConfig.update({
-      where: { id: 1 },
-      data: {
-        perList: prices.per.list,
-        perYear: prices.per.y,
-        bizList: prices.biz.list,
-        bizYear: prices.biz.y,
-        fundPrice: prices.fund.p,
-        fundRenew: prices.fund.r,
-        fundMonths: prices.fund.mo,
-      },
-    });
   } else {
     // Delivery date is independent of the historical campaign scheduling date shown in the table.
     const changed = await db.mailLog.updateMany({

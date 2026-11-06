@@ -1,5 +1,5 @@
 import { botThreadListSchema } from '@opchub/shared/api-domains';
-import { expect, test } from '../server/test';
+import { expect, test } from '../llm/auto-test';
 import { botTab, observedThread, prepareManualRun } from './helpers/bot-ui';
 
 test.use({ botManual: true });

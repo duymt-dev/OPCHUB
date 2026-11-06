@@ -3,14 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { onServer } from '../../server/api';
 
 export function acceptancePrerequisite(
-  mode:
-    | 'events-list'
-    | 'events-portal'
-    | 'events-open'
-    | 'events-upcoming'
-    | 'marketing-summary'
-    | 'unpaid-affiliate'
-    | 'default-prices',
+  mode: 'events-list' | 'events-portal' | 'events-open' | 'events-upcoming' | 'marketing-summary',
 ) {
   if (!onServer) return;
   const result = spawnSync(
