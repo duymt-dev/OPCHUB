@@ -58,6 +58,11 @@
   border-radius: 6px;
   padding: 6px 10px;
 }
+.readonlyNotice {
+  composes: notice;
+  font-size: 13px;
+  padding: 8px 12px;
+}
 .slots {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));

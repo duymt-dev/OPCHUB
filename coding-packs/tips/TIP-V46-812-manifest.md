@@ -436,3 +436,11 @@ D-V46-AI390 pair+DOM: actual API label12px vs prototype13px, actual input12px vs
 - e2e/behavior/ai-providers.spec.ts: add API-key label13/input14 visual contract, retain provider/save/allocation/runtime assertions.
 - e2e/behavior/app-notify.spec.ts: add card20/normal row-label contract at both widths, retain draft/save/notification checks.
 - e2e/behavior/admin-bank-reconcile.spec.ts: add readonly input font13 contract, retain every existing assertion (TC481 title already added).
+
+### Remaining read-only notice geometry (measured before edit)
+Post-fix targeted r6: normal GCFG1440 is2.4128%, RO1440 remains4.3032%. Existing paired DOM separately proves the local read-only notice prototype13px/padding8px12/height35 vs app12px/padding6px10/height30. Duplicate global preview notice is already fixed; this is the separate local hint, not the coverage hint.
+- apps/admin/src/features/affiliate/regional/components/regional-config-panel.tsx: apply a dedicated readonlyNotice class to the existing local hint only. No read-only/permission/state changes.
+- apps/admin/src/features/affiliate/regional/components/regional.module.css: dedicated local hint13px/padding8px12. Coverage notice unchanged.
+- apps/admin/src/features/affiliate/regional/components/regional-config-panel.spec.tsx (create): read-only role hint uses its own geometry class, coverage notice separate and management action remains absent. Existing browser assertions remain unchanged; ongoing full behavior suites stay frozen.
+
+Targeted r6 readiness correction: D85-CUS both widths time out before capture; actual screenshot/accessibility tree proves page1 has10 populated AFDEMO rows among66 affiliates, and HAOPC is not on that page. The new generic readiness wait must not assume a particular customer is on page1. Change only e2e/parity/scenarios/admin-affiliate-steps.ts to require the first visible populated row on each side; detail/bulk steps retain their exact HAOPC search/count and target assertions. No seed/order/page-size/timeout changes.
