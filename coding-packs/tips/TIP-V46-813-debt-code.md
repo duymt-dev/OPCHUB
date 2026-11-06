@@ -333,6 +333,11 @@ Trả 12 khoản nợ code / test nhóm A còn lại sau GOAL-V4.6, **không đ�
 - **Q-V46-813-4 Trần số nhóm ở Tổng quan chat.**
   - **Mặc định:** hiện đủ mọi nhóm TV đang tham gia, trần kỹ thuật 1.000 nhóm.
 
+**Đã chốt (owner, 06/11/2026):**
+
+- **Q-V46-813-5 A3 — LLM giả trong test:** cho phép **cả hai** cách: override tường minh `[LLM, new FakeLlmProvider()]` qua `createTestApp({ overrides })` **hoặc** stub HTTP + `aiDraft`. Builder chọn theo từng spec; không bắt buộc chuyển hết sang stub HTTP. Cấm mọi nhánh fake dựa vào env / `NODE_ENV`.
+- **Q-V46-813-6 A12 — phạm vi:** **mọi domain** trong manifest có ca (a) "bị từ chối → không ghi audit, dữ liệu không đổi"; domain luật 8 có thêm ca (b) "audit lỗi → hoàn tác". Không thu hẹp về luật 8.
+
 ## ⚠️ BUILDER-CHECKLIST (agent PHẢI hoàn thành trước khi báo DONE)
 
 - [ ] `pwd` = `D:\CODING\OPCHUB\CODING`, nhánh `feature/TIP-V46-813-debt-code`; chỉ sửa file trong **Files touched** (A3 / A10 lộ thêm spec / mock thì ghi rõ lý do vào completion).
@@ -366,6 +371,6 @@ Trả 12 khoản nợ code / test nhóm A còn lại sau GOAL-V4.6, **không đ�
 - [x] Constraints DO NOT / REUSE / SKIP; trích luật 4 / 5 / 8 / 10 / 11 / 12, ADR-0008
 - [x] Parallel: sequential trước 814 (khai rõ không sửa `admin-audit-coverage.spec.ts`)
 - ⚠️ Gap:
-  - A3 có thể lộ nhiều spec int boot app không override LLM. Chưa đếm được trước khi chạy full; builder ghi danh sách.
-  - A12 khối lượng phụ thuộc số domain (~30 trong manifest). Nếu vượt L, builder tách A12 thành commit theo nhóm domain, không tách TIP.
+  - A3 có thể lộ nhiều spec int boot app không override LLM. Chưa đếm được trước khi chạy full; builder ghi danh sách. Cách sửa đã chốt (Q-V46-813-5).
+  - A12 khối lượng phụ thuộc số domain (~30 trong manifest). Phạm vi đã chốt (Q-V46-813-6). Nếu vượt L, builder tách A12 thành commit theo nhóm domain, không tách TIP.
   - Q-V46-813-1 → 4 chưa chốt; mặc định chọn hướng ít đổi nhất.
