@@ -6,6 +6,8 @@ import {
   welcomeMailSchema,
   renewalSettingsSchema,
   bankSettingsPatchSchema,
+  aiSettingsSchema,
+  appNotifySettingsSchema,
 } from '@opchub/shared/api-domains';
 import { z } from 'zod';
 import { PrismaService } from '@/common/prisma/prisma.service';
@@ -23,7 +25,7 @@ const securityCoreSchema = z.object({
 export type SecurityCore = z.infer<typeof securityCoreSchema>;
 
 export type SettingKey =
-  'general' | 'security' | 'languages' | 'welcome_mail' | 'bot' | 'renewal' | 'bank';
+  'general' | 'security' | 'languages' | 'welcome_mail' | 'bot' | 'renewal' | 'bank' | 'ai' | 'app';
 
 const CACHE_TTL_SEC = 60;
 const cacheKey = (k: SettingKey) => `settings:${k}`;
@@ -57,6 +59,13 @@ export class AppSettingsService {
   }
   bank() {
     return this.read('bank', bankSettingsPatchSchema);
+  }
+
+  ai() {
+    return this.read('ai', aiSettingsSchema);
+  }
+  app() {
+    return this.read('app', appNotifySettingsSchema);
   }
 
   async invalidate(key: SettingKey): Promise<void> {

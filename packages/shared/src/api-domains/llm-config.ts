@@ -1,3 +1,4 @@
+/** @deprecated ADR0009: retained for legacy typed imports; runtime/API use ai-providers. */
 import { z } from 'zod';
 import { llmLocalConfigSchema } from '../integrations/llm';
 

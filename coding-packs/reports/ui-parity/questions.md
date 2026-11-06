@@ -885,3 +885,15 @@ The existing production first100-groups limitation is not fixed or hidden here.
 - Q-V46-810-6: read-only link/copy in Admin drawer; default, awaiting owner.
 - Owner text inputs use empty saved values with default placeholders (TIP); unlike filled prototype defaults. View-as-guest opens actual `/g/` in a new tab (TIP/D-95). Neither is a fabricated D-xx decision.
 - Infra810 confirmed by owner in this thread: private801 dev/test + Memurai6381 and rolling private809 services. Only these targets are used; original native DB/Redis remain intact.
+
+## TIP-V46-811 — explicit TIP defaults (owner decisions not fabricated)
+
+- Q-V46-811-1: Per-provider input/output token prices default0; integer VND budget. **TIP default, pending owner override.**
+- Q-V46-811-2: Existing OpenAI-compatible HTTP adapter; Gemini compatibility URL, no SDK. **TIP default, pending owner override.**
+- Q-V46-811-3: content/mod allocations saved; no feature consumers yet. **TIP default, pending owner override.**
+- Q-V46-811-4: Warning color only; exhausted bot stops, other purposes use fallback and still account. **TIP default, pending owner override.**
+- Q-V46-811-5: Metadata journal90days, no viewer/export screen. **TIP default, pending owner override.**
+- Q-V46-811-6: PWA/push configuration only; test is in-app notification for acting Admin. **TIP default, pending owner override.**
+- Q-V46-811-7: Both settings tabs are drafts until explicit Save. **TIP default, pending owner override.**
+
+Infrastructure explicitly confirmed in execute thread: private801 DB pair, Memurai6381, private rolling restart.

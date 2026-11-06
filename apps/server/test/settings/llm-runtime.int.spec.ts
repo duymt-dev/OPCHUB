@@ -1,4 +1,6 @@
-import type { LlmConfigModel } from '@opchub/db';
+import { aiDraft, snapshotAi, restoreAi } from '../helpers/ai-config';
+import { AiProviderRepository } from '@/modules/llm-config/repositories/ai-provider.repository';
+import { AiBudgetService, AiRouterService } from '@/modules/llm-config';
 import type { LlmProvider } from '@opchub/integrations';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { ENV, loadEnv } from '@/common/config';
@@ -12,7 +14,7 @@ import { createTestApp, type TestApp } from '../setup/test-app';
 
 describe('REQ-607 ADR-0008 runtime follows committed Admin configuration', () => {
   let t: TestApp;
-  let snapshot: LlmConfigModel | null;
+  let snapshot: Awaited<ReturnType<typeof snapshotAi>>;
   let token: string;
   let stub: Awaited<ReturnType<typeof llmHttpStub>>;
   let runtime: LlmProvider;
@@ -20,29 +22,45 @@ describe('REQ-607 ADR-0008 runtime follows committed Admin configuration', () =>
   const key1 = 'local-key-version-one';
   const key2 = 'local-key-version-two';
   const save = (enabled: boolean, key?: string, model = 'model-one') =>
-    t.call('/admin/settings/llm', {
+    t.call('/admin/settings/ai', {
       method: 'PUT',
       token,
-      json: { baseUrl: stub.url, enabled, model, key, maxTokens: 128, timeoutMs: 1000 },
+      json: {
+        ...aiDraft(stub.url, key ?? '', model),
+        ...(!enabled ? { use: { bot: '', script: '', content: '', mod: '' } } : {}),
+        providers: aiDraft(stub.url, key ?? '', model).providers.map((p) =>
+          p.id === 'custom'
+            ? { ...p, enabled }
+            : p.id === 'openai' && !enabled
+              ? { ...p, enabled: true, baseUrl: stub.url, model, key: key1 }
+              : p,
+        ),
+      },
     });
   beforeAll(async () => {
     stub = await llmHttpStub();
     t = await createTestApp({
       overrides: [[ENV, { ...loadEnv(), NODE_ENV: 'development', BOT_LLM_PROVIDER: 'fake' }]],
     });
-    snapshot = await t.prisma.db.llmConfig.findUnique({ where: { id: 1 } });
-    await t.prisma.db.llmConfig.deleteMany();
+    snapshot = await snapshotAi(t);
+    await t.prisma.db.llmProvider.updateMany({ data: { enabled: false } });
     await t.redis.client.del('llm:requests:minute');
     token = await tokenOf(t, await createUser(t, { adminPermissions: ['settings.general'] }));
     runtime = t.app.get<LlmProvider>(LLM);
     // Independent process-style cache intentionally has no pub/sub subscription.
-    const cache = new LlmConfigCache(t.prisma, t.app.get(SecretBox), t.redis);
-    independent = new LlmRuntimeService(cache, t.redis);
+    const cache = new LlmConfigCache(
+      t.prisma,
+      t.app.get(SecretBox),
+      t.redis,
+      t.app.get(AiProviderRepository),
+    );
+    independent = new LlmRuntimeService(
+      new AiRouterService(cache, t.app.get(AiBudgetService), t.redis),
+    );
   });
   afterAll(async () => {
     if (t) {
-      await t.prisma.db.llmConfig.deleteMany();
-      if (snapshot) await t.prisma.db.llmConfig.create({ data: snapshot });
+      await restoreAi(t, snapshot);
       await t.redis.client.del('llm:requests:minute');
       await t.close();
     }
@@ -67,8 +85,10 @@ describe('REQ-607 ADR-0008 runtime follows committed Admin configuration', () =>
     expect(stub.requests.at(-1)?.body).toContain('"model":"model-two"');
     expect((await save(false)).status).toBe(200);
     const count = stub.requests.length;
-    await expect(independent.complete('hello')).rejects.toThrow('Chưa cấu hình AI');
-    await expect(runtime.complete('hello')).rejects.toThrow('Chưa cấu hình AI');
+    await expect(independent.complete('hello')).rejects.toThrow(
+      'Chức năng chưa chọn nhà cung cấp AI',
+    );
+    await expect(runtime.complete('hello')).rejects.toThrow('Chức năng chưa chọn nhà cung cấp AI');
     expect(stub.requests).toHaveLength(count);
   });
   it('preserves shared request ceiling and never falls back on provider failure', async () => {

@@ -76,7 +76,7 @@ describe('REQ-208 REQ-411 real LLM protocol adapter (mock HTTP)', () => {
       vi.stubGlobal('fetch', transport);
       await expect(new LocalLlmProvider(config).complete('x')).rejects.toMatchObject({
         provider: 'local-llm',
-        retryable: status >= 500,
+        retryable: status === 429 || status >= 500,
         message: `[local-llm] LLM HTTP ${status}`,
       });
       expect(transport).toHaveBeenCalledTimes(1);
@@ -182,5 +182,46 @@ describe('REQ-208 REQ-411 real LLM protocol adapter (mock HTTP)', () => {
       retryable: true,
       message: '[local-llm] Invalid or unreadable LLM response body',
     });
+  });
+  it('REQ-628 sends temperature, transforms every message and reports validated usage/latency', async () => {
+    const transport = vi.fn<typeof fetch>(() =>
+      Promise.resolve(
+        new Response(
+          JSON.stringify({
+            choices: [{ message: { content: 'OK' }, finish_reason: 'stop' }],
+            usage: { prompt_tokens: 1000, completion_tokens: 500 },
+          }),
+        ),
+      ),
+    );
+    vi.stubGlobal('fetch', transport);
+    const usage = vi.fn();
+    const provider = new LocalLlmProvider(
+      { ...config, temperature: 0.7 },
+      { transform: (text) => text.replaceAll('secret', 'masked'), onUsage: usage },
+    );
+    await provider.generateTurn({
+      topic: 'secret',
+      persona: { id: 'ps', name: 'secret', tone: '', skills: '' },
+      history: [{ personaId: null, body: 'secret' }],
+    });
+    const body = transport.mock.calls[0]?.[1]?.body;
+    expect(typeof body).toBe('string');
+    expect(body).not.toContain('secret');
+    expect(body).toContain('masked');
+    expect(body).toContain('"temperature":0.7');
+    expect(usage.mock.calls[0]?.[0]).toEqual({ promptTokens: 1000, completionTokens: 500 });
+    expect(usage.mock.calls[0]?.[1]).toBeGreaterThanOrEqual(0);
+  });
+  it('REQ-628429 is retryable but401 is not', async () => {
+    for (const status of [429, 401]) {
+      vi.stubGlobal(
+        'fetch',
+        vi.fn<typeof fetch>(() => Promise.resolve(new Response('{}', { status }))),
+      );
+      await expect(new LocalLlmProvider(config).complete('x')).rejects.toMatchObject({
+        retryable: status === 429,
+      });
+    }
   });
 });

@@ -16,6 +16,26 @@ const NO_ENTRY =
 
 export const ADMIN_SETTINGS: Scenario[] = [
   {
+    id: 'D-V46-AI',
+    name: 'Cài đặt · AI Provider',
+    start: 'admin',
+    fullPage: true,
+    steps: async (c) => {
+      await settingsTab(c, 'AI Provider');
+      await waitText(c, 'Nhà cung cấp AI');
+    },
+  },
+  {
+    id: 'D-V46-APP',
+    name: 'Cài đặt · Ứng dụng & thông báo',
+    start: 'admin',
+    fullPage: true,
+    steps: async (c) => {
+      await settingsTab(c, 'Ứng dụng & thông báo');
+      await waitText(c, 'Ứng dụng di động & thông báo đẩy');
+    },
+  },
+  {
     id: 'D-V46-BANK',
     name: 'Cài đặt · Đối soát ngân hàng',
     start: 'admin',

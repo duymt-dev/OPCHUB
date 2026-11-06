@@ -461,3 +461,8 @@ Không mask, không nới ngưỡng. Visibility/quyền theo TIP; không lộ d�
 
 | P-V46-PUBLIC-CARD | Portal | Trang công khai in edit wizard | Gian hàng địa phương → Gian hàng của tôi → Chỉnh sửa gian hàng | `/stores/mine` edit | 1440,390 |
 | P-V46-GUEST | Portal | Anonymous business page, no prototype counterpart | Actual guest URL only; owner reviews images | `/g/htx-ca-phe-hoa-phu` | 1440,390 |
+
+### TIP-V46-811
+
+- D-V46-AI — AI Provider,1440/390; D124 no assistant; Q811 price fields, real inactive providers/spend.
+- D-V46-APP — App & notifications,1440/390; configuration only perD125, in-app Admin test.

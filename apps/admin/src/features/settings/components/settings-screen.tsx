@@ -26,7 +26,8 @@ import { BankTab } from './bank-tab';
 import { RolesTab } from './roles-tab';
 import { SettingsNav } from './settings-nav';
 import { SmtpTab } from './smtp-tab';
-import { LlmTab } from './llm-tab';
+import { AiTab } from './ai/ai-tab';
+import { AppNotifyTab } from './app-notify-tab';
 import { SsoTab } from './sso-tab';
 import { WelcomeMailTab } from './welcome-mail-tab';
 import styles from './settings.module.css';
@@ -46,7 +47,9 @@ function TabBody({ tab, ask }: { tab: SettingsTab; ask: AskConfirm }) {
     case 'smtp':
       return <SmtpTab />;
     case 'llm':
-      return <LlmTab />;
+      return <AiTab />;
+    case 'app':
+      return <AppNotifyTab />;
     case 'price':
       return <PriceTab />;
     case 'admins':

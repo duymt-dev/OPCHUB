@@ -128,3 +128,11 @@ Nhãn tiếng Việt chỉ đặt trong file messages của next-intl, không vi
 |---|---|---|
 | Trang công khai | public store page | `/g/<slug>` xem không cần đăng nhập; chỉ gian hàng đã xuất bản, chủ còn phí, DTO công khai riêng; không tính KPI lượt xem |
 | Hiển thị trên Google | seoIndex | Cho phép công cụ tìm kiếm lập chỉ mục; tắt thêm noindex/nofollow, không chặn người có link |
+
+### AI settings (TIP-V46-811)
+
+- AI Provider: fixed encrypted-credential connection record; no runtime fake fallback.
+- Phân bổ theo chức năng: provider choice for bot/script/content/mod; no assistant.
+- Nhà cung cấp dự phòng: one distinct retryable fallback, not an unbounded retry chain.
+- Ngân sách AI tháng: integer VND, VN calendar month, input/output token prices;0 unlimited.
+- Ứng dụng & thông báo: PWA/push configuration only; no Portal delivery in811 (D125).

@@ -18,6 +18,7 @@ export const llmLocalConfigSchema = z.object({
         (url.protocol === 'https:' || (url.protocol === 'http:' && loopback))
       );
     }),
+  temperature: z.number().min(0).max(1).optional(),
   apiKey: z.string().trim().min(1),
   model: z.string().trim().min(1).max(200),
   maxRequests: z.number().int().min(1).max(100).default(10),
@@ -26,6 +27,12 @@ export const llmLocalConfigSchema = z.object({
 });
 
 export const llmCompletionSchema = z.object({
+  usage: z
+    .object({
+      prompt_tokens: z.number().int().nonnegative(),
+      completion_tokens: z.number().int().nonnegative(),
+    })
+    .optional(),
   choices: z
     .array(
       z.object({

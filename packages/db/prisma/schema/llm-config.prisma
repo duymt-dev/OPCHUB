@@ -12,3 +12,42 @@ model LlmConfig {
 
   @@map("llm_configs")
 }
+
+model LlmProvider {
+  id String @id
+  enabled Boolean @default(false)
+  baseUrl String @default("") @map("base_url")
+  model String @default("")
+  keyEnc Bytes? @map("key_enc")
+  status String @default("none")
+  checkedAt DateTime? @map("checked_at") @db.Timestamptz(6)
+  priceIn Int @default(0) @map("price_in")
+  priceOut Int @default(0) @map("price_out")
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+  @@map("llm_providers")
+}
+
+model LlmCall {
+  id String @id @default(uuid(7))
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  purpose String
+  provider String
+  model String
+  promptTokens Int @default(0) @map("prompt_tokens")
+  completionTokens Int @default(0) @map("completion_tokens")
+  cost BigInt @default(0)
+  latencyMs Int @map("latency_ms")
+  status String
+  errorCode String? @map("error_code")
+  @@index([createdAt, id])
+  @@map("llm_calls")
+}
+
+model LlmUsageMonth {
+  month String @id
+  cost BigInt @default(0)
+  promptTokens BigInt @default(0) @map("prompt_tokens")
+  completionTokens BigInt @default(0) @map("completion_tokens")
+  calls BigInt @default(0)
+  @@map("llm_usage_months")
+}

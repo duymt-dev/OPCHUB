@@ -1,9 +1,10 @@
+import { aiBrowserFixture } from './settings-session';
 import { adminLoginResponseSchema } from '@opchub/shared/api';
 import type { APIRequestContext } from '@playwright/test';
 import {
   botScheduleResponseSchema,
-  llmConfigSchema,
-  llmConfigUpdateSchema,
+  aiSettingsResponseSchema,
+  aiSettingsUpdateSchema,
 } from '@opchub/shared/api-domains';
 import { env } from '../env';
 
@@ -29,21 +30,24 @@ export async function configureBulkProvider(request: APIRequestContext, baseUrl:
     if (saved.schedule.paused !== paused) throw new Error('Native pause did not persist');
   };
   const save = async (enabled: boolean) => {
-    const response = await request.put(`${api}/admin/settings/llm`, {
+    const response = await request.put(`${api}/admin/settings/ai`, {
       headers,
-      data: llmConfigUpdateSchema.parse({
-        baseUrl,
-        enabled,
-        model: 'browser-bulk-model',
-        key: 'browser-bulk-test-key',
+      data: aiSettingsUpdateSchema.parse({
+        ...aiBrowserFixture(baseUrl),
+        use: {
+          bot: enabled ? 'custom' : '',
+          script: enabled ? 'custom' : '',
+          content: '',
+          mod: '',
+        },
         maxTokens: 1024,
         timeoutMs: 2000,
       }),
     });
     if (response.status() !== 200)
       throw new Error(`Native fixture save returned ${response.status()}`);
-    const config = llmConfigSchema.parse(await response.json());
-    if (config.enabled !== enabled || config.configured !== enabled)
+    const config = aiSettingsResponseSchema.parse(await response.json());
+    if (config.use.script !== (enabled ? 'custom' : ''))
       throw new Error('Native fixture configuration did not persist');
   };
   await pause(true);

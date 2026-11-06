@@ -1,3 +1,4 @@
+import { AiCallRepository } from '@/modules/llm-config';
 import { Injectable, Logger } from '@nestjs/common';
 import { RefreshTokenRepository } from '@/modules/account';
 import { AdminRefreshTokenRepository } from '@/modules/admin-account';
@@ -8,7 +9,8 @@ import { MediaGcService } from '@/modules/uploads';
 /** Token hết hạn / thu hồi giữ thêm 7 ngày (tra cứu sự cố) rồi xoá */
 const TOKEN_KEEP_MS = 7 * 86_400_000;
 
-export type HousekeepingStep = 'tokens' | 'adminTokens' | 'exports' | 'simulated' | 'media';
+export type HousekeepingStep =
+  'tokens' | 'adminTokens' | 'exports' | 'simulated' | 'media' | 'aiCalls';
 export type HousekeepingReport = Partial<Record<HousekeepingStep, number>>;
 
 /**
@@ -26,6 +28,7 @@ export class HousekeepingService {
     private readonly exports: ExportService,
     private readonly personas: PersonaMessageService,
     private readonly media: MediaGcService,
+    private readonly aiCalls: AiCallRepository,
   ) {}
 
   async run(now = new Date()): Promise<HousekeepingReport> {
@@ -36,6 +39,7 @@ export class HousekeepingService {
       ['exports', () => this.exports.purgeExpired(now)],
       ['simulated', () => this.personas.pruneSimulated()],
       ['media', () => this.media.sweep(now)],
+      ['aiCalls', () => this.aiCalls.purge(now)],
     ];
     const report: HousekeepingReport = {};
     const failed: HousekeepingStep[] = [];

@@ -9,6 +9,8 @@ import {
 } from '@opchub/shared/fixtures';
 import {
   botSettingsSchema,
+  DEFAULT_AI_SETTINGS,
+  DEFAULT_APP_NOTIFY,
   CATEGORY_SCOPES,
   SSO_IDS,
   welcomeMailSchema,
@@ -121,6 +123,8 @@ const w = welcomeTemplate as typeof welcomeTemplate & {
 
 /** Giá trị `app_settings` mặc định; `userCount` của SSO do server tính, không lưu */
 export const APP_SETTINGS = {
+  ai: DEFAULT_AI_SETTINGS,
+  app: DEFAULT_APP_NOTIFY,
   renewal: { milestones: { d30: true, d7: true, d1: true }, channels: { email: true, app: true } },
   bank: { autoActivate: true },
   general: {

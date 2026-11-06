@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 435/496 ảnh.
+> Đạt 435/500 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -495,6 +495,10 @@
 | D-95 | Admin › Nhu cầu địa phương (KPI, chip, bảng) | 390 | 0.09% | ✅ đạt | 390×2354 | 0b76e98a |
 | D-98 | Kiểm duyệt · Thời gian khóa 14 ngày | 1440 | 0.18% | ✅ đạt | 1440×900 | 0b76e98a |
 | D-98 | Kiểm duyệt · Thời gian khóa 14 ngày | 390 | 0.25% | ✅ đạt | 390×1667 | 0b76e98a |
+| D-V46-AI | Cài đặt · AI Provider | 1440 | 3.50% | ❌ chưa đạt | 1440×1584 | 39390b53 |
+| D-V46-AI | Cài đặt · AI Provider | 390 | 8.54% | ❌ chưa đạt | 390×3478 | 39390b53 |
+| D-V46-APP | Cài đặt · Ứng dụng & thông báo | 1440 | 11.98% | ❌ chưa đạt | 1440×1065 | 39390b53 |
+| D-V46-APP | Cài đặt · Ứng dụng & thông báo | 390 | 3.56% | ❌ chưa đạt | 390×1603 | 39390b53 |
 | D-V46-BANK | Cài đặt · Đối soát ngân hàng | 1440 | 11.59% | ❌ chưa đạt | 1440×1050 | 3c4f6f94 |
 | D-V46-BANK | Cài đặt · Đối soát ngân hàng | 390 | 7.28% | ❌ chưa đạt | 390×2103 | 3c4f6f94 |
 | D-V46-RENEW | Cài đặt · Nhắc gia hạn | 1440 | 6.36% | ❌ chưa đạt | 1440×1006 | 3c4f6f94 |
