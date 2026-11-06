@@ -16,6 +16,8 @@ import type { FeeLike } from '../../membership/fee-access';
 import { regionalSnapshotSchema, type RegionalSnapshot } from './regional-snapshot';
 import { registeredMockProfiles } from './registration/state';
 import { rememberRegionalBank } from './regional-share-bank';
+import { publishRegionalRevokeNotice, REGIONAL_NOTICE_PREFIX } from './regional-notices';
+import { publishMockNotification } from './notification-runtime';
 
 interface State {
   data: RegionalDirectors;
@@ -25,13 +27,26 @@ const states = new WeakMap<MockDb, State>();
 
 export function captureMockRegionalSnapshot(): RegionalSnapshot {
   const { data, previous } = state();
-  return regionalSnapshotSchema.parse({ data, previous: [...previous] });
+  const notices = [...mockDb().notifications].map(([userId, rows]) => [
+    userId,
+    rows.filter((row) => row.id.startsWith(REGIONAL_NOTICE_PREFIX)),
+  ]);
+  return regionalSnapshotSchema.parse({ data, previous: [...previous], notices });
 }
 
 export function restoreMockRegionalSnapshot(input: RegionalSnapshot | undefined) {
   if (!input) return;
   const parsed = regionalSnapshotSchema.parse(input);
   states.set(mockDb(), { data: parsed.data, previous: new Map(parsed.previous) });
+  for (const [userId, rows] of mockDb().notifications) {
+    mockDb().notifications.set(
+      userId,
+      rows.filter((row) => !row.id.startsWith(REGIONAL_NOTICE_PREFIX)),
+    );
+  }
+  for (const [userId, rows] of parsed.notices) {
+    for (const row of rows) publishMockNotification(mockDb(), userId, row);
+  }
 }
 const people = () => [
   ...members.map((m) => ({ id: m.id, fullName: m.name, email: m.email })),
@@ -159,6 +174,7 @@ export function mockRegionalRevoke(
   slot.member = null;
   previous.delete(id);
   log(region, id, 'revoke', actorRole, now);
+  publishRegionalRevokeNotice(id, region, fee?.validUntil ?? null, now);
   return ok({ updated: true });
 }
 

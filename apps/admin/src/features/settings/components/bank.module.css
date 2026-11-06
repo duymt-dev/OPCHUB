@@ -54,12 +54,15 @@
 .field input {
   min-width: 0;
   flex: 1;
-  font: 12px monospace;
+  font: 13px monospace;
   height: 32px;
   padding: 0 10px;
   border: 1px solid #d9d9d9;
   border-radius: 6px;
   background: #fafafa;
+}
+.panel > label {
+  font-size: 13px;
 }
 .unsupported {
   opacity: 0.45;
@@ -163,6 +166,9 @@
   border-radius: 6px;
 }
 @media (max-width: 600px) {
+  .card {
+    padding: 20px;
+  }
   .info {
     grid-template-columns: 1fr;
   }

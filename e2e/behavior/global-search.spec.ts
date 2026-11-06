@@ -71,3 +71,35 @@ test('Portal BR-491 group target: joined opens chat, unjoined opens join dialog'
   await expect(page.getByRole('dialog', { name: 'OPC Đà Nẵng' })).toBeVisible();
   await expect(search).toHaveValue('');
 });
+
+test(
+  'TC-491 literal cà phê groups stores and needs and opens the selected targets',
+  {
+    annotation: { type: 'demo', description: 'stores' },
+  },
+  async ({ page }) => {
+    await login(page);
+    const search = page.getByRole('combobox', { name: /^Tìm gian hàng/ });
+    await search.fill('cà phê');
+    const list = page.getByRole('listbox');
+    await expect(list.getByText('Gian hàng', { exact: true })).toBeVisible();
+    await expect(list.getByText('Nhu cầu địa phương', { exact: true })).toBeVisible();
+    await list.getByRole('option', { name: /^HTX Cà phê Hòa Phú/ }).click();
+    await expect(page).toHaveURL(/\/stores\/st2$/);
+    const storeName = page.locator('main').getByText('HTX Cà phê Hòa Phú', { exact: true });
+    await expect(storeName).toHaveCount(2); // breadcrumb and store identity, not invented heading semantics
+    for (const name of await storeName.all()) await expect(name).toBeVisible();
+    await search.fill('cà phê');
+    await list
+      .getByRole('option', { name: /^Cần 50 kg cà phê Robusta rang mộc mỗi tháng/ })
+      .click();
+    await expect(page).toHaveURL(
+      (url) =>
+        url.pathname === '/needs' &&
+        url.searchParams.get('q') === 'Cần 50 kg cà phê Robusta rang mộc mỗi tháng',
+    );
+    await expect(
+      page.getByText('Cần 50 kg cà phê Robusta rang mộc mỗi tháng', { exact: true }),
+    ).toBeVisible();
+  },
+);

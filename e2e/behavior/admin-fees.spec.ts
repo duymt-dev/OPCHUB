@@ -172,7 +172,7 @@ test.describe('Admin · Phí thành viên', () => {
     const txn = txns.getByRole('row').filter({ hasText: CONTENT });
     await expect(txn).toHaveCount(1);
     await expect(txn).toContainText('1.200.000đ');
-    await expect(txn).toContainText('Không tìm thấy Mã TV trong nội dung');
+    await expect(txn).toContainText('Nội dung không bắt đầu bằng OPCHUB');
 
     await txn.getByRole('button', { name: 'Khớp tay' }).click();
     const dlg = page.getByRole('dialog', { name: 'Khớp tay giao dịch' });

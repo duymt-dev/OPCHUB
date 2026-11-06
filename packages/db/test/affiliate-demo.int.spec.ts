@@ -16,6 +16,17 @@ const counts = async () => ({
   clicks: await db.affiliateClickDaily.count(),
   fees: await db.membershipFeePeriod.count(),
 });
+
+async function assertEveryMemberHasAffiliate() {
+  const members = await db.user.findMany({
+    where: { deletedAt: null, accountType: { not: 'investor' } },
+    select: { id: true, affiliate: { select: { id: true } } },
+  });
+  expect(members.length).toBeGreaterThan(0);
+  expect(members.filter((member) => member.affiliate === null).map((member) => member.id)).toEqual(
+    [],
+  );
+}
 describe('Affiliate AF0 native demo scenario', () => {
   it('AT-AF05 expired owner has a coherent one-year period covering all old commissions', async () => {
     await seedDemo(db, { affiliatePaused: true });
@@ -62,7 +73,8 @@ describe('Affiliate AF0 native demo scenario', () => {
   }, 120_000);
 
   it('REQ-301 REQ-311 all 51 customers have real first periods and their own affiliates', async () => {
-    expect(await counts()).toEqual({ agents: 62, refs: 51, commissions: 53, clicks: 6, fees: 65 });
+    expect(await counts()).toEqual({ agents: 66, refs: 51, commissions: 53, clicks: 6, fees: 65 });
+    await assertEveryMemberHasAffiliate();
     const rows = await db.commission.findMany({
       where: { id: { startsWith: 'demo-commission-' } },
       select: {
@@ -160,6 +172,7 @@ describe('Affiliate AF0 native demo scenario', () => {
     const first = await counts();
     await db.$transaction(seedAffiliateScenario, { timeout: 60_000 });
     expect(await counts()).toEqual(first);
+    await assertEveryMemberHasAffiliate();
     await db.affiliatePolicy.update({
       where: { id: 1 },
       data: { defaultRate: 35, cookieDays: 45 },
@@ -171,7 +184,8 @@ describe('Affiliate AF0 native demo scenario', () => {
       cookieDays: 30,
     });
     await seedDemo(db);
-    expect(await counts()).toEqual({ agents: 6, refs: 0, commissions: 0, clicks: 0, fees: 6 });
+    expect(await counts()).toEqual({ agents: 10, refs: 0, commissions: 0, clicks: 0, fees: 6 });
+    await assertEveryMemberHasAffiliate();
     expect(await db.user.count({ where: { id: { startsWith: 'af-' } } })).toBe(0);
   }, 120_000);
 });

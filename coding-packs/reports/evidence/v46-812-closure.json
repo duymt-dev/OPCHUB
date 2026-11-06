@@ -1,0 +1,185 @@
+{
+  "source": "055d862a",
+  "at": "2026-11-06T14:04:52.265Z",
+  "acceptance": "DONE within owner-approved scope; pixel threshold is reference under D134",
+  "waivedCaptureIds": [
+    "P-05",
+    "P-100",
+    "P-101",
+    "P-102",
+    "D-09",
+    "D-17",
+    "D-22"
+  ],
+  "waivedViewportCount": 14,
+  "msw": {
+    "whole": {
+      "tests": 568,
+      "passed": 427,
+      "skipped": 78,
+      "failed": 63,
+      "captures": 484
+    },
+    "focused": {
+      "tests": 8,
+      "passed": 6,
+      "pixelFailures": 2,
+      "captures": 4
+    },
+    "combined": {
+      "captures": 486,
+      "within3": 424,
+      "over3": 62
+    }
+  },
+  "native": {
+    "tests": 118,
+    "passed": 68,
+    "skipped": 4,
+    "pixelFailures": 46,
+    "captures": 110,
+    "within3": 64,
+    "over3": 46,
+    "durationMinutes": 31.1,
+    "noncaptureFailures": 0
+  },
+  "gates": {
+    "unit": 2139,
+    "unitExistingSkips": 2,
+    "serverUnitReplay": 243,
+    "integration": 2149,
+    "fullMswBehavior": 387,
+    "fullNativeBehavior": 382,
+    "storesDelta": {
+      "msw": 5,
+      "native": 5
+    },
+    "mandatoryCasesPerLane": 15,
+    "definedBusinessRules": 26
+  },
+  "fixedMeasurements": [
+    {
+      "id": "P-119",
+      "name": "Dashboard · Hướng dẫn bắt đầu (M1 đã phí)",
+      "viewport": 1440,
+      "diffPct": 1.00510382350005,
+      "size": "1440×1113",
+      "sha": "055d862a"
+    },
+    {
+      "id": "P-119",
+      "name": "Dashboard · Hướng dẫn bắt đầu (M1 đã phí)",
+      "viewport": 390,
+      "diffPct": 2.9669691145577257,
+      "size": "390×1721",
+      "sha": "055d862a"
+    },
+    {
+      "id": "D-93",
+      "name": "Admin › Gian hàng (KPI, chip, bảng)",
+      "viewport": 1440,
+      "diffPct": 0.4663392163392163,
+      "size": "1440×1001",
+      "sha": "055d862a"
+    },
+    {
+      "id": "D-93",
+      "name": "Admin › Gian hàng (KPI, chip, bảng)",
+      "viewport": 390,
+      "diffPct": 2.9436301572524486,
+      "size": "390×3553",
+      "sha": "055d862a"
+    },
+    {
+      "id": "P-119",
+      "name": "Dashboard · Hướng dẫn bắt đầu (M1 đã phí)",
+      "viewport": 1440,
+      "diffPct": 1.010968852949985,
+      "size": "1440×1113",
+      "sha": "055d862a"
+    },
+    {
+      "id": "P-119",
+      "name": "Dashboard · Hướng dẫn bắt đầu (M1 đã phí)",
+      "viewport": 390,
+      "diffPct": 2.967118103666622,
+      "size": "390×1721",
+      "sha": "055d862a"
+    }
+  ],
+  "regressions": [
+    {
+      "lane": "msw",
+      "id": "D-43",
+      "viewport": 390,
+      "before": 0.4969530595954287,
+      "after": 2.48817241983529,
+      "delta": 1.9912193602398616,
+      "app": {
+        "changedPct": 0
+      },
+      "proto": {
+        "changedPct": 2.017502871716995
+      }
+    },
+    {
+      "lane": "msw",
+      "id": "D-89",
+      "viewport": 390,
+      "before": 0.10906550006076074,
+      "after": 2.025154939846883,
+      "delta": 1.9160894397861223,
+      "app": {
+        "changedPct": 0
+      },
+      "proto": {
+        "changedPct": 1.913659010815409
+      }
+    },
+    {
+      "lane": "native",
+      "id": "P-98",
+      "viewport": 390,
+      "before": 5.140931372549019,
+      "after": 7.703619909502263,
+      "delta": 2.5626885369532433,
+      "app": {
+        "changedPct": 3.117301407742584
+      },
+      "proto": {
+        "changedPct": 0
+      }
+    }
+  ],
+  "regressionReview": {
+    "D43": "App unchanged; prototype sticky-header state",
+    "D89": "App unchanged; prototype dialog state",
+    "P98": "App body/card geometry unchanged; sticky header scroll overlay and own runtime link port differ"
+  },
+  "restoration": {
+    "database": "opchub_v46_812_dev",
+    "redis": {
+      "port": 6381,
+      "db": 3
+    },
+    "counts": {
+      "users": 96,
+      "affiliates": 66,
+      "referrals": 51,
+      "commissions": 53,
+      "periods": 65,
+      "shares": 53,
+      "payouts": 1,
+      "anchors": 50,
+      "directors": 3,
+      "bankTransactions": 5,
+      "stores": 17,
+      "missingSlugs": 0,
+      "unbalanced": 0
+    },
+    "idempotent": true,
+    "aiAppRestored": true,
+    "originalHoldProcessesAlive": 5
+  },
+  "provenance": "Full functional/integration checkpoints and local delta verification are distinguished in completion report. Full failed parity runs are retained, not relabeled PASS. No new masks/crops/thresholds/timeouts/retries/skips."
+}

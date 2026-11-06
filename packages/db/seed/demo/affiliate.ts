@@ -1,14 +1,16 @@
 import type { DbTx } from '../../src/client';
 
-/** Đại lý demo chỉ cho TV có kỳ phí, cùng nguyên tắc backfill go-live (AF-R01). */
+/** D94: every non-investor member has an affiliate, independently of historical fees. */
 export async function seedAffiliates(tx: DbTx): Promise<void> {
   const rows = await tx.membershipFee.findMany({
     where: {
-      user: { deletedAt: null, accountType: { not: 'investor' }, feePeriods: { some: {} } },
+      user: { deletedAt: null, accountType: { not: 'investor' } },
     },
-    select: { userId: true, status: true, paidAt: true },
+    select: { userId: true, paidAt: true },
     orderBy: { userId: 'asc' },
   });
+  // Preserve historical paid-member codes; append unpaid members rather than shifting them.
+  const ordered = [...rows.filter((r) => r.paidAt), ...rows.filter((r) => !r.paidAt)];
   // Like all demo settings, reset after a test edits policy; required/production seed preserves it.
   const policy = await tx.affiliatePolicy.upsert({
     where: { id: 1 },
@@ -26,13 +28,13 @@ export async function seedAffiliates(tx: DbTx): Promise<void> {
     },
   });
   await tx.affiliate.createMany({
-    data: rows.map((r, i) => ({
+    data: ordered.map((r, i) => ({
       id: r.userId === 'm1' ? 'a1' : `demo-affiliate-${r.userId}`,
       userId: r.userId,
       // Mã m1 và tài khoản nhận là dữ liệu prototype, các mã còn lại ổn định giữa lượt seed.
       code: r.userId === 'm1' ? 'OPCAN26' : `DEMOOPC${i + 10}`,
       rate: policy.defaultRate,
-      status: r.status === 'active' || r.status === 'expiring' ? 'active' : 'paused',
+      status: 'active',
       ...(r.paidAt ? { createdAt: r.paidAt } : {}),
       ...(r.userId === 'm1'
         ? {

@@ -1,6 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
+import { useLayoutEffect, useRef } from 'react';
 import { affiliateMoney } from '../format';
 import type { AffiliateParams } from '../types';
 import styles from './affiliate.module.css';
@@ -17,9 +18,21 @@ export function AffiliateTabs({
   net: number | undefined;
 }) {
   const t = useTranslations('affiliate');
+  const tabs = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    const list = tabs.current;
+    const selected = list?.querySelector<HTMLElement>('[aria-selected="true"]');
+    if (!list || !selected) return;
+    const viewport = list.getBoundingClientRect();
+    const item = selected.getBoundingClientRect();
+    list.scrollLeft +=
+      item.left < viewport.left
+        ? item.left - viewport.left
+        : Math.max(0, item.right - viewport.right);
+  }, [tab, counts.com, counts.aff, counts.gdv]);
   return (
     <div className={styles.head}>
-      <div className={styles.tabs} role="tablist" aria-label={t('title')}>
+      <div ref={tabs} className={styles.tabs} role="tablist" aria-label={t('title')}>
         {(['com', 'aff', 'gdv', 'gcfg', 'cfg'] as const).map((key) => (
           <button
             key={key}

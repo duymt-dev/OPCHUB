@@ -2,6 +2,7 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { regionalDirectorsSchema, regionalCandidatesSchema } from '@opchub/shared/api-domains';
 import { RegionalDirectorEventsHandler } from '@/modules/regional-director';
 import { isFeeUsable } from '@opchub/shared';
+import { outboxEvents } from '@opchub/shared/outbox';
 import { tokenOf } from '../factories/group.factory';
 import { createUser, flushAuthState } from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
@@ -139,6 +140,46 @@ describe('TIP-V46-801 regional director lifecycle', () => {
     expect(await t.prisma.db.auditLog.count({ where: { entity: 'regional_director' } })).toBe(
       before,
     );
+  });
+
+  it('TC-462 BR-464 revoke preserves valid fee and persists dated mail and notification once', async () => {
+    const u = await createUser(t, { fee: 'active' });
+    const until = new Date(Date.now() + 40 * 86_400_000);
+    await t.prisma.db.membershipFee.update({
+      where: { userId: u.id },
+      data: { validUntil: until },
+    });
+    expect((await appoint(u.id)).status).toBe(200);
+    expect((await revoke()).status).toBe(200);
+    const event = await t.prisma.db.outboxEvent.findFirstOrThrow({
+      where: { type: 'regional_director.revoked', payload: { path: ['userId'], equals: u.id } },
+    });
+    const payload = outboxEvents['regional_director.revoked'].parse(event.payload);
+    expect(payload).toMatchObject({
+      region: 'south',
+      userId: u.id,
+      feeStatus: 'active',
+      validUntil: until.toISOString(),
+    });
+    const handler = t.app.get(RegionalDirectorEventsHandler);
+    await handler.revoked(payload, String(event.id));
+    await handler.revoked(payload, String(event.id));
+    const date = until.toLocaleDateString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
+    const mails = await t.prisma.db.mailLog.findMany({
+      where: { to: u.email, kind: 'regional_director' },
+    });
+    expect(mails).toHaveLength(1);
+    expect(mails[0]?.subject).toContain(`Miền Nam · phí thành viên còn hiệu lực đến ${date}`);
+    expect(mails[0]?.bodyHtml).toContain(`Phí thành viên cũ còn hiệu lực đến ${date}`);
+    const notifications = await t.prisma.db.notification.findMany({
+      where: { userId: u.id, type: 'system' },
+    });
+    expect(notifications).toHaveLength(1);
+    expect(notifications[0]?.body).toContain(`Phí thành viên cũ còn hiệu lực đến ${date}`);
+    expect(notifications[0]?.title).toBe('Kết thúc vai trò GĐ Vùng Miền Nam');
+    const fee = await t.prisma.db.membershipFee.findUniqueOrThrow({ where: { userId: u.id } });
+    expect(fee).toMatchObject({ status: 'active', validUntil: until });
+    expect(isFeeUsable(fee, new Date())).toBe(true);
   });
 
   it('AT-GDV05 rejects another region and excludes its occupant from candidates', async () => {

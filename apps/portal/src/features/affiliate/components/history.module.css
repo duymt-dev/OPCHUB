@@ -96,6 +96,12 @@
 .table b {
   font-weight: 600;
 }
+/* Zero referrals are already announced by the summary; keep the header without an empty card. */
+.emptyReferrals :global(.ant-table-wrapper .ant-table-tbody > tr.ant-table-placeholder > td) {
+  padding: 0;
+  height: 0;
+  line-height: 0;
+}
 .table [data-commission] {
   color: var(--af-success);
 }

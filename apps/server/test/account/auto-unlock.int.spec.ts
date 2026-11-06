@@ -2,6 +2,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { AccountLockService, AdminUsersService } from '@/modules/account';
 import { createUser, flushAuthState } from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
+import { loginResponseSchema, meSchema } from '@opchub/shared/api';
 
 describe('REQ-622 BR-465 auto unlock audit and refresh', () => {
   let t: TestApp;
@@ -47,7 +48,24 @@ describe('REQ-622 BR-465 auto unlock audit and refresh', () => {
         before,
         1,
       );
-    expect((await login()).status).toBe(200);
+    const unlocked = await login();
+    expect(unlocked.status).toBe(200);
+    const session = loginResponseSchema.parse(await unlocked.json());
+    expect(session.me).toMatchObject({ id: user.id, status: 'active' });
+    const me = await t.call('/me', { token: session.accessToken });
+    expect(me.status).toBe(200);
+    expect(meSchema.parse(await me.json())).toMatchObject({ id: user.id, status: 'active' });
+    const currentCookie = unlocked.headers
+      .getSetCookie()
+      .find((value) => value.startsWith('opchub_rt='))
+      ?.split(';')[0];
+    expect(currentCookie).toBeTruthy();
+    const currentRefresh = await t.call('/auth/refresh', {
+      method: 'POST',
+      headers: { Cookie: currentCookie ?? '', Origin: 'http://localhost:3000' },
+    });
+    expect(currentRefresh.status).toBe(200);
+    expect(loginResponseSchema.parse(await currentRefresh.json()).me.status).toBe('active');
     expect(
       await t.prisma.db.user.findUniqueOrThrow({
         where: { id: user.id },

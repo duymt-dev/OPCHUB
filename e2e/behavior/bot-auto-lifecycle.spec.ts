@@ -5,7 +5,8 @@ import {
   chatMessagePageSchema,
   type BotThread,
 } from '@opchub/shared/api-domains';
-import { expect, test, type Page } from '../server/test';
+import { expect, test } from '../llm/auto-test';
+import type { Page } from '../server/test';
 import { PORTAL_URL } from '../urls';
 import { botTab } from './helpers/bot-ui';
 import { prepareReplyParticipants } from './helpers/bot-participants';

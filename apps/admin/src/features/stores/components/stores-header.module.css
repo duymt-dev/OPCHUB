@@ -1,0 +1,24 @@
+@media (max-width: 600px) {
+  .header > div {
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 12px;
+  }
+  .range {
+    width: 216px !important;
+    flex-shrink: 0;
+  }
+  .range :global(.ant-picker-input > input) {
+    width: 68px !important;
+    font-size: 12px !important;
+  }
+  .range :global(.ant-picker-range-separator) {
+    padding: 0 2px !important;
+  }
+  .range :global(.ant-picker-prefix) {
+    margin-inline-end: 4px !important;
+  }
+  .range :global(.ant-picker-suffix) {
+    margin-inline-start: 4px !important;
+  }
+}

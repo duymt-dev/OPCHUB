@@ -14,6 +14,12 @@ for (const width of [1440, 390]) {
       page.getByRole('heading', { name: 'Ứng dụng di động & thông báo đẩy' }),
     ).toBeVisible();
     const pwa = page.getByRole('switch', { name: 'Cho phép cài ứng dụng OPC Hub' });
+    const card = page.locator('section').filter({ has: pwa });
+    await expect(card).toHaveCSS('padding', '20px');
+    await expect(page.getByText('Tin nhắn mới trong nhóm', { exact: true })).toHaveCSS(
+      'font-weight',
+      '400',
+    );
     await expect(pwa).toBeChecked();
     await expect(
       page.getByRole('switch', { name: 'Lượt xem & liên hệ gian hàng' }),

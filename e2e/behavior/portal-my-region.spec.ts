@@ -23,6 +23,20 @@ for (const width of [1440, 390]) {
       'true',
     );
     await expect(page.getByText('Chỉ xem', { exact: true })).toBeVisible();
+    const panel = page.getByRole('tabpanel');
+    const card = panel
+      .locator('div')
+      .filter({ has: page.getByText('Doanh thu thực thu của vùng', { exact: true }) })
+      .last();
+    const label = page.getByText('Doanh thu thực thu của vùng', { exact: true });
+    await expect(label).toHaveCSS('font-size', '13px');
+    await expect(card.locator('b').first()).toHaveCSS('font-size', '22px');
+    if (width === 390) {
+      const table = panel.getByRole('table').first();
+      expect(Math.round((await table.boundingBox())?.width ?? 0)).toBe(560);
+      const year = table.getByRole('columnheader').first();
+      expect((await year.boundingBox())?.width).toBeLessThan(70);
+    }
     await expect(
       page.getByRole('heading', { name: 'Phần được chia theo năm của khách' }),
     ).toBeVisible();

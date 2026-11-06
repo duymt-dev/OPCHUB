@@ -14,6 +14,23 @@ async function signIn(page: Page, email: string) {
 }
 
 test.describe('Affiliate Portal — màn và tài khoản nhận', () => {
+  for (const width of [1440, 390]) {
+    test(`TIP-V46-812 zero referrals retain summary without an empty illustration at ${width}`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await signIn(page, 'bao.tran@solobooks.vn');
+      const panel = page.getByRole('tabpanel');
+      await expect(panel.getByText('0 khách', { exact: true })).toBeVisible();
+      await expect(panel.getByText('Chưa phát sinh', { exact: true })).toBeVisible();
+      await expect(panel.locator('.ant-empty')).toHaveCount(0);
+      if (width === 1440) {
+        await expect(panel.getByRole('columnheader')).toHaveCount(6);
+        const placeholder = panel.locator('tr.ant-table-placeholder');
+        expect((await placeholder.boundingBox())?.height).toBe(0);
+      }
+    });
+  }
   test('REQ-311 AF0 lịch sử có dữ liệu và ngân hàng nhận tiền giữ snapshot', async ({ page }) => {
     await signIn(page, 'an.nguyen@mediasoft.vn');
     await expect(page.getByText('412', { exact: true })).toBeVisible();

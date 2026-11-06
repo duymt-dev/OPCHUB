@@ -24,6 +24,7 @@ test('REQ-621 D-135 providers read-only, OPCHUB syntax, immediate toggle persist
 }) => {
   await open(page);
   const panel = region(page);
+  await expect(panel.getByLabel('Webhook URL', { exact: true })).toHaveCSS('font-size', '13px');
   for (const name of [/Casso/, /^SePay$/, /Vietcombank API/]) {
     const b = panel.getByRole('button', { name });
     await expect(b).toHaveAttribute('aria-disabled', 'true');
@@ -74,7 +75,7 @@ test('REQ-621 BR-484 key rotation confirms no grace, displayed once and masked a
   await expect(page.locator('#bank-new-key')).toHaveCount(0);
 });
 
-test('REQ-621 simulate and connection; off waits, enabling does not replay, on activates new transaction', async ({
+test('REQ-621 TC-481 simulate and connection; off waits, enabling does not replay, on activates new transaction', async ({
   page,
 }) => {
   await open(page);

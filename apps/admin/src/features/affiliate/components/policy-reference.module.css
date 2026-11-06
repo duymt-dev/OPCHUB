@@ -88,7 +88,7 @@
 .regional {
   margin-top: -6px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 12px;
 }
 .regional:global(.ant-row) {
@@ -96,7 +96,7 @@
 }
 .regional :global(.ant-form-item-label > label) {
   font-size: 12px !important;
-  color: #0958d9;
+  color: rgba(0, 0, 0, 0.45);
 }
 .regional :global(.ant-form-item-label) {
   padding-bottom: 2px !important;

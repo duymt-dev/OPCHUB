@@ -111,6 +111,7 @@ export const PORTAL_STORES: Scenario[] = [
   },
   {
     id: 'P-108',
+    demo: 'stores',
     name: 'Chi tiết gian hàng (HTX Cà phê Hòa Phú)',
     start: 'user',
     note: 'So khung nhìn đầu trang (hero + Giới thiệu + Sản phẩm). TIP-V42-710: hero dùng logo thật khi có; phía dưới (Tầm nhìn & Sứ mệnh, Đội ngũ, Chứng nhận, Hình ảnh & Video, Reels, Hồ sơ năng lực, "Đang cần" V4-609, Thông tin liên hệ REQ-510 — DV-V4-608-2) đo bằng behavior test, chưa đo parity khung nhìn đầy đủ (lệch tích luỹ theo chiều cao, Q-V42-710-8)',

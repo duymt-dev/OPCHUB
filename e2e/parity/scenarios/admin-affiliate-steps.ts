@@ -22,6 +22,17 @@ export async function affiliateTab(c: StepCtx, label: 'Affiliate' | 'Chính sác
   await tab.click();
   await c.page.waitForLoadState('networkidle');
   await tick(c, 1000);
+  if (label === 'Affiliate') {
+    // networkidle does not guarantee the query's rendered rows under a paused clock.
+    const row =
+      c.side === 'app'
+        ? c.page.locator('tbody tr[data-row-key]').first()
+        : c.page
+            .locator('[data-m="tbl"] div[style*="min-height: 60px"]')
+            .filter({ visible: true })
+            .first();
+    await row.waitFor({ state: 'visible' });
+  }
 }
 
 export async function affiliateDetail(c: StepCtx) {

@@ -2,6 +2,7 @@ import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { PORTAL_URL } from '../urls';
 import { completeDeclaration } from './helpers/declaration';
+import { prepareNotificationInbox } from './helpers/notification-inbox';
 
 /** G2a — P-01 → P-16: Dashboard + khung app Portal (app mới, MSW) */
 
@@ -38,6 +39,7 @@ test.describe('Khung app', () => {
   test('REQ-210 NA-10 mở chuông → đã đọc (số về 0, giữ sau tải lại); mở nhắc tên vào chat', async ({
     page,
   }) => {
+    await prepareNotificationInbox(page.request);
     await login(page);
     const bell = page.getByRole('button', { name: 'Thông báo' });
     await expect(bell).toContainText('2');
@@ -151,6 +153,7 @@ test('đăng ký xong: modal mail chào mừng một lần, không có mật kh�
   await page.getByText('Đăng ký', { exact: true }).first().click();
   await page.getByText('Cá nhân', { exact: true }).click();
   await page.getByPlaceholder('ban@congty.vn', { exact: true }).fill('welcome@x.vn');
+  await page.locator('input[type=password]').fill('User@2026');
   await page.getByText(/^Tôi xác nhận là người đại diện hợp pháp/).click();
   await page.getByRole('button', { name: 'Đăng ký', exact: true }).click();
   await page.locator('input[inputmode=numeric]').first().fill('123456');

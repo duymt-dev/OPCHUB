@@ -1,5 +1,5 @@
 import { botEmergencyStoppedSchema, botMessagesHiddenSchema } from '@opchub/shared/api-domains';
-import { expect, test } from '../server/test';
+import { expect, test } from '../llm/auto-test';
 import { emergencyScene } from './helpers/bot-emergency-scene';
 import { observedThread } from './helpers/bot-ui';
 

@@ -1,6 +1,7 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { ADMIN_URL } from '../urls';
+import { acceptancePrerequisite } from './helpers/acceptance-prerequisites';
 
 /** G6b — D-78 / D-79 Admin Marketing (prototype không có lối vào; D-33: mục menu admin) */
 
@@ -28,6 +29,7 @@ async function openMarketing(page: Page) {
 
 test.describe('Admin · Marketing', () => {
   test('vào từ menu: thống kê, bảng chiến dịch, tab trên URL', async ({ page }) => {
+    acceptancePrerequisite('marketing-summary');
     await openMarketing(page);
     await expect(page.getByRole('heading', { name: 'Marketing' })).toBeVisible();
     await expect(page.getByText('4.052', { exact: true })).toBeVisible();
