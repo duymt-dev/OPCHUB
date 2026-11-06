@@ -96,8 +96,8 @@
 | P-26 | Cộng đồng · đã tham gia nhóm công khai | 390 | 1.01% | ✅ đạt | 390×4171 | 25a1eec |
 | P-27 | Cộng đồng · rời nhóm | 1440 | 0.78% | ✅ đạt | 1440×1601 | 25a1eec |
 | P-27 | Cộng đồng · rời nhóm | 390 | 1.04% | ✅ đạt | 390×4171 | 25a1eec |
-| P-28 | Chat · phòng mặc định | 1440 | 0.58% | ✅ đạt | 1440×900 | 25a1eec |
-| P-28 | Chat · phòng mặc định | 390 | 1.12% | ✅ đạt | 390×844 | 25a1eec |
+| P-28 | Chat · phòng mặc định | 1440 | 0.71% | ✅ đạt | 1440×900 | 14aff77a |
+| P-28 | Chat · phòng mặc định | 390 | 1.57% | ✅ đạt | 390×844 | 14aff77a |
 | P-29 | Chat · đổi chủ đề | 1440 | 0.20% | ✅ đạt | 1440×900 | 25a1eec |
 | P-30 | Chat · đổi nhóm | 1440 | 0.20% | ✅ đạt | 1440×900 | 25a1eec |
 | P-30 | Chat · đổi nhóm | 390 | 0.55% | ✅ đạt | 390×844 | 25a1eec |
@@ -214,10 +214,10 @@
 | P-98 | Portal · Affiliate · Lịch sử nhận tiền | 390 | 7.70% | ❌ chưa đạt | 390×1632 | 055d862a |
 | P-V46-PUBLIC-CARD | Trang công khai · khối trong trình sửa | 1440 | 1.57% | ✅ đạt | 1136×250 | 055d862a |
 | P-V46-PUBLIC-CARD | Trang công khai · khối trong trình sửa | 390 | 2.50% | ✅ đạt | 366×396 | 055d862a |
-| P-V46-REG | Portal · Vùng của tôi | 1440 | 5.74% | ❌ chưa đạt | 1440×1944 | 055d862a |
-| P-V46-REG | Portal · Vùng của tôi | 390 | 10.47% | ❌ chưa đạt | 390×3353 | 055d862a |
-| P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 1440 | 1.27% | ✅ đạt | 1440×997 | 055d862a |
-| P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 390 | 2.12% | ✅ đạt | 390×1635 | 055d862a |
+| P-V46-REG | Portal · Vùng của tôi | 1440 | 5.74% | ❌ chưa đạt | 1440×1944 | 14aff77a |
+| P-V46-REG | Portal · Vùng của tôi | 390 | 10.47% | ❌ chưa đạt | 390×3353 | 14aff77a |
+| P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 1440 | 1.27% | ✅ đạt | 1440×997 | 14aff77a |
+| P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 390 | 2.12% | ✅ đạt | 390×1635 | 14aff77a |
 | P-V46-SEARCH | Topbar · global search | 1440 | 0.74% | ✅ đạt | 1440×900 | 055d862a |
 | P-V46-SEARCH | Topbar · global search | 390 | 0.11% | ✅ đạt | 390×844 | 055d862a |
 | D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 2.45% | ✅ đạt | 1440×1344 | 055d862a |
@@ -244,12 +244,12 @@
 | D-11 | Thành viên · khóa hàng loạt | 390 | 3.17% | ❌ chưa đạt | 390×2810 | 25a1eec |
 | D-12 | Modal gán vào nhóm | 1440 | 0.98% | ✅ đạt | 1440×900 | 25a1eec |
 | D-12 | Modal gán vào nhóm | 390 | 0.71% | ✅ đạt | 390×844 | 25a1eec |
-| D-120-GCFG | Cấu hình Giám đốc Vùng | 1440 | 2.51% | ✅ đạt | 1440×1274 | 055d862a |
-| D-120-GCFG | Cấu hình Giám đốc Vùng | 390 | 4.41% | ❌ chưa đạt | 390×3275 | 055d862a |
+| D-120-GCFG | Cấu hình Giám đốc Vùng | 1440 | 2.51% | ✅ đạt | 1440×1274 | 14aff77a |
+| D-120-GCFG | Cấu hình Giám đốc Vùng | 390 | 4.41% | ❌ chưa đạt | 390×3275 | 14aff77a |
 | D-120-GCFG-RO | Cấu hình GĐ Vùng · Kế toán chỉ xem | 1440 | 2.14% | ✅ đạt | 1440×1395 | 055d862a |
 | D-120-GCFG-RO | Cấu hình GĐ Vùng · Kế toán chỉ xem | 390 | 3.91% | ❌ chưa đạt | 390×3401 | 055d862a |
-| D-120-GDV | GĐ Vùng · Sổ chia sẻ | 1440 | 2.12% | ✅ đạt | 1440×900 | 055d862a |
-| D-120-GDV | GĐ Vùng · Sổ chia sẻ | 390 | 4.05% | ❌ chưa đạt | 390×1305 | 055d862a |
+| D-120-GDV | GĐ Vùng · Sổ chia sẻ | 1440 | 2.12% | ✅ đạt | 1440×900 | 14aff77a |
+| D-120-GDV | GĐ Vùng · Sổ chia sẻ | 390 | 4.05% | ❌ chưa đạt | 390×1305 | 14aff77a |
 | D-120-GDV-OPEN | GĐ Vùng · Khoản ghi nhận Miền Bắc | 1440 | 10.66% | ❌ chưa đạt | 1440×1429 | 055d862a |
 | D-120-GDV-OPEN | GĐ Vùng · Khoản ghi nhận Miền Bắc | 390 | 5.73% | ❌ chưa đạt | 390×1920 | 055d862a |
 | D-13 | Thành viên · menu dòng | 1440 | 2.16% | ✅ đạt | 1440×900 | 25a1eec |
@@ -423,14 +423,14 @@
 | D-88 | Tạo sự kiện · Link Google Meet (D-59) | 390 | 0.02% | ✅ đạt | 390×844 | 25a1eec |
 | D-89 | Gán vào nhóm · vai trò Giảng viên (GR-R01) | 1440 | 0.98% | ✅ đạt | 1440×900 | 25a1eec |
 | D-89 | Gán vào nhóm · vai trò Giảng viên (GR-R01) | 390 | 0.71% | ✅ đạt | 390×844 | 25a1eec |
-| D-V46-AI | Cài đặt · AI Provider | 1440 | 2.83% | ✅ đạt | 1440×1584 | 055d862a |
-| D-V46-AI | Cài đặt · AI Provider | 390 | 6.87% | ❌ chưa đạt | 390×3478 | 055d862a |
+| D-V46-AI | Cài đặt · AI Provider | 1440 | 2.83% | ✅ đạt | 1440×1584 | 14aff77a |
+| D-V46-AI | Cài đặt · AI Provider | 390 | 6.87% | ❌ chưa đạt | 390×3478 | 14aff77a |
 | D-V46-APP | Cài đặt · Ứng dụng & thông báo | 1440 | 12.01% | ❌ chưa đạt | 1440×1065 | 055d862a |
 | D-V46-APP | Cài đặt · Ứng dụng & thông báo | 390 | 2.26% | ✅ đạt | 390×1604 | 055d862a |
 | D-V46-BANK | Cài đặt · Đối soát ngân hàng | 1440 | 12.33% | ❌ chưa đạt | 1440×1065 | 055d862a |
 | D-V46-BANK | Cài đặt · Đối soát ngân hàng | 390 | 7.80% | ❌ chưa đạt | 390×2164 | 055d862a |
-| D-V46-RENEW | Cài đặt · Nhắc gia hạn | 1440 | 11.07% | ❌ chưa đạt | 1440×1065 | 055d862a |
-| D-V46-RENEW | Cài đặt · Nhắc gia hạn | 390 | 15.53% | ❌ chưa đạt | 390×2012 | 055d862a |
+| D-V46-RENEW | Cài đặt · Nhắc gia hạn | 1440 | 11.07% | ❌ chưa đạt | 1440×1065 | 14aff77a |
+| D-V46-RENEW | Cài đặt · Nhắc gia hạn | 390 | 15.53% | ❌ chưa đạt | 390×2012 | 14aff77a |
 | D-V46-SEARCH | Topbar · global search Admin | 1440 | 0.55% | ✅ đạt | 1440×900 | 055d862a |
 | D-V46-SEARCH | Topbar · global search Admin | 390 | 0.35% | ✅ đạt | 390×844 | 055d862a |
 

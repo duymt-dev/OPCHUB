@@ -928,3 +928,16 @@ Approved scope complete:486 MSW /110 native fresh captures (same source, paired 
 ## V4.6 — D-136 (owner, 06/11/2026)
 
 Owner chốt toàn bộ phương án mặc định Q-V46-807-1 → 5, Q808-1 → 5, Q-V46-809-1 → 4, Q-V46-810-1 → 6, Q-V46-811-1 → 7, Q812-1 → 6. Các dòng ghi "pending owner" / "awaiting owner" ở trên nay là quyết định D-136 trong `01-REQUIREMENTS-MATRIX.md`. Không đổi code. Riêng Q812-4: owner chọn chuyển 801 → 804 thành DONE theo M1 lượt 812, giữ ghi chú PARTIAL cũ làm lịch sử.
+
+## TIP-V46-813 — approved defaults and execution boundaries
+
+- Q1: retain `llm-config` directory/module names; rename only the obsolete controller to AiSettingsController.
+- Q2: exact regional denial text on the three writes; candidate GET and unrelated routes keep generic permission errors and existing codes.
+- Q3: overlapping manual renewal sends return409 `RENEWAL_SEND_BUSY`; no waiting/queue and no same-day resend ban after completion.
+- Q4: joined-group overview technical cap1000, deterministic createdAt/id order; no business membership cap introduced.
+- Q5: owner approved explicit LLM-token FakeLlmProvider overrides OR local HTTP stubs in tests. No env/NODE_ENV-driven fake runtime.
+- Q6: owner requires denial/no-audit/unchanged-data coverage for every manifest domain; critical rule8 mutations additionally prove audit-failure rollback.
+- Infrastructure: reuse `opchub_v46_812_dev`, `opchub_v46_801_test`, Memurai6381. Owner corrected the initially proposed ports-only separation: rolling restart the separate812 runtime to813, because two workers on one DB would contend. Original native DB/Redis6379 and older HOLD stay unchanged.
+- Owner approved `bot.processor.ts` preserving terminal IntegrationError as cause, without changing failure/retry semantics; also approved unit Vitest excluding integration suffixes while the integration project still runs all cases with DB guards.
+- Owner additionally approved updating the old RBAC matrix's exact message expectation on only POST `/admin/gdv`, PATCH `/admin/gdv/:region` and DELETE `/admin/gdv/:region`; status, code, permission matrix and generic text on other routes remain asserted. Extra explicit LLM overrides discovered in four reply/dashboard integration files follow Q5, with all their existing assertions unchanged.
+- No new layout or business deviation proposed by813. D-134 parity categories remain data / approved D-xx / genuine UI defect, not a blanket failure label.
