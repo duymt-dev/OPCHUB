@@ -3,7 +3,6 @@
 import { useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import type { MouseEvent, ReactNode } from 'react';
-import { useAuthStore } from '@/lib/auth-store';
 import { isWriteClick, type RoTarget } from '../model-ro';
 import styles from './rbac.module.css';
 
@@ -32,17 +31,19 @@ export function ViewOnlyZone({
   readOnly,
   role,
   banner,
+  showNotice = true,
   children,
 }: {
   readOnly: boolean;
   role: string;
   /** Dải xem thử: prototype đặt sau dải chỉ xem, trước nội dung */
   banner?: ReactNode;
+  /** A domain may supply its own preview notice; other menus retain the generic notice. */
+  showNotice?: boolean;
   children: ReactNode;
 }) {
   const t = useTranslations('common.rbac');
   const toast = useToast();
-  const preview = useAuthStore((s) => s.preview);
   if (!readOnly)
     return (
       <>
@@ -58,7 +59,7 @@ export function ViewOnlyZone({
   };
   return (
     <div className={styles.zone} onClickCapture={guard} data-view-only="1">
-      {!preview && (
+      {showNotice && (
         <div className={styles.viewOnly} role="status">
           <svg
             width="15"
