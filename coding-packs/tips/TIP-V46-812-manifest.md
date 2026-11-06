@@ -427,3 +427,12 @@ Exact policy browser-test path confirmed: e2e/behavior/affiliate-policy-responsi
 D85-CUS desktop8.50/mobile16.52% baseline: detail header geometry already matches; much of the row-height/content mismatch is the rate cell dropping existing customerYear (API already exposes it) and showing only percent. Prototype shows year1 / renewal text. D131 changes amounts/renewal horizon, so no snapshot values will be changed to match prototype.
 - apps/admin/src/features/affiliate/components/customer-table-columns.tsx: render existing commissionFirstYear/commissionRenewalYear translations with actual API year; widen rate column56→90 while retaining total table width via existing flexible-column formula. No business calculation/API/fixture changes.
 - apps/admin/src/features/affiliate/components/customer-table-columns.spec.tsx (create): actual year1/2/4 labels and snapshot percentage retained, same table component.
+
+### Measured settings typography / mobile padding (before edits)
+D-V46-AI390 pair+DOM: actual API label12px vs prototype13px, actual input12px vs prototype key14px/base13px; outer card mobile16px vs prototype20px. Allocation/price/key/limit controls must stay intact (real fields, no flattening/hiding). D-V46-APP390 pair: actual content x29 vs prototype33 from same16/20 padding; row text500 vs prototype400. Bank DOM actual read-only input12px vs prototype13px, labels12 vs13; fake-provider row/readonly providers remain owner-approved D135 differences.
+- apps/admin/src/features/settings/components/ai/ai.module.css: scoped card mobile padding20, labels13, key/limit input14, provider label13; retain all controls/responsive grids.
+- apps/admin/src/features/settings/components/app-notify.module.css: mobile card20 and row/PWA/category-heading normal400; no settings behavior changes.
+- apps/admin/src/features/settings/components/bank.module.css: scoped mobile card20, field label13 and readonly input13px monospace; preserve D135 providers and transactions.
+- e2e/behavior/ai-providers.spec.ts: add API-key label13/input14 visual contract, retain provider/save/allocation/runtime assertions.
+- e2e/behavior/app-notify.spec.ts: add card20/normal row-label contract at both widths, retain draft/save/notification checks.
+- e2e/behavior/admin-bank-reconcile.spec.ts: add readonly input font13 contract, retain every existing assertion (TC481 title already added).

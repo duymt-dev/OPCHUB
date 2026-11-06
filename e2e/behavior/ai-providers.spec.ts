@@ -19,6 +19,8 @@ for (const width of [1440, 390]) {
         page.getByRole('button', { name: /Tùy chỉnh \(OpenAI-compatible\)/ }).click();
       await choose();
       const key = page.getByLabel('API key', { exact: true });
+      await expect(key).toHaveCSS('font-size', '14px');
+      await expect(key.locator('xpath=ancestor::label')).toHaveCSS('font-size', '13px');
       const enabled = page.getByRole('switch', { name: 'Bật kết nối' });
       const save = page.getByRole('button', { name: 'Lưu cấu hình', exact: true });
       await expect(key).toHaveValue('');
