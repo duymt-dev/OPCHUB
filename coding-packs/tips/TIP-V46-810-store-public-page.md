@@ -335,25 +335,25 @@ Ghi 6 câu vào `reports/ui-parity/questions.md` › V4.6 (dạng "mặc định
 
 ## ⚠️ BUILDER-CHECKLIST (agent PHẢI hoàn thành trước khi báo DONE)
 
-- [ ] `pwd` = `D:\CODING\OPCHUB\CODING`, nhánh `feature/TIP-V46-810-store-public-page`; chỉ sửa file trong **Files touched** (thêm ngoài danh sách → ghi lý do)
-- [ ] Hỏi owner DB đích trước khi `migrate deploy` / int / e2e server / seed; migration `--create-only` rồi sửa SQL (backfill 1 câu), có `down.sql`
-- [ ] Env mới `API_INTERNAL_URL` có trong zod env Portal + `.env.example` + `infra/env/portal.env.example` + GO-LIVE (luật 12); không sửa `.env` thật
-- [ ] Đo baseline `dev` trước (e2e MSW, `stores.spec.ts`, parity P-108 / P-109) để tách lỗi cũ / mới
-- [ ] Mỗi AC có test đúng tên, ghi PASS / FAIL thật từng cái
-- [ ] Chạy và dán tóm tắt output thật: `pnpm lint && pnpm typecheck && pnpm test && pnpm test:int && pnpm depcheck && pnpm build`; `pnpm e2e` MSW không tụt; e2e server cho `store-public-page.spec.ts` (khách không cookie, kiểm HTML SSR + meta robots)
-- [ ] EXPLAIN tra slug + items → `TIP-V46-810-query-plans.md`
-- [ ] Parity (D-134): `P-V46-PUBLIC-CARD` 1440 + 390 ghi % + nguyên nhân; `P-V46-GUEST` chụp lưu cho owner duyệt; sửa hết lệch giao diện thật của khối
-- [ ] Luật BUILDER-HANDOFF liên quan:
+- [x] `pwd` = `D:\CODING\OPCHUB\CODING`, nhánh `feature/TIP-V46-810-store-public-page`; chỉ sửa file trong **Files touched** (thêm ngoài danh sách → ghi lý do)
+- [x] Hỏi owner DB đích trước khi `migrate deploy` / int / e2e server / seed; migration `--create-only` rồi sửa SQL (backfill 1 câu), có `down.sql`
+- [x] Env mới `API_INTERNAL_URL` có trong zod env Portal + `.env.example` + `infra/env/portal.env.example` + GO-LIVE (luật 12); không sửa `.env` thật
+- [x] Đo baseline `dev` trước (e2e MSW, `stores.spec.ts`, parity P-108 / P-109) để tách lỗi cũ / mới
+- [x] Mỗi AC có test đúng tên, ghi PASS / FAIL thật từng cái
+- [x] Chạy và dán tóm tắt output thật: `pnpm lint && pnpm typecheck && pnpm test && pnpm test:int && pnpm depcheck && pnpm build`; `pnpm e2e` MSW không tụt; e2e server cho `store-public-page.spec.ts` (khách không cookie, kiểm HTML SSR + meta robots)
+- [x] EXPLAIN tra slug + items → `TIP-V46-810-query-plans.md`
+- [x] Parity (D-134): `P-V46-PUBLIC-CARD` 1440 + 390 ghi % + nguyên nhân; `P-V46-GUEST` chụp lưu cho owner duyệt; sửa hết lệch giao diện thật của khối
+- [x] Luật BUILDER-HANDOFF liên quan:
   - **Luật 2 / bảo mật**: endpoint công khai DTO danh sách trắng, parse zod slug; không lộ dữ liệu tài khoản chủ
   - **Luật 3**: trang khách không import nội bộ feature khác ngoài `stores`; server chỉ đọc bảng local-business (+ `visibleStoreSql` đã duyệt)
   - **Luật 5 / 7**: tra slug qua unique index; PATCH cấu hình có điều kiện `owner_id`; backfill 1 câu
   - **Luật 12**: env `API_INTERNAL_URL` đủ 3 chỗ
-- [ ] File ≤ trần (BE 600, FE 400); không `any` / `@ts-ignore` / `console.*`
-- [ ] D-65: 9 bộ dịch Portal có `stores.publicPage.*`, `stores.guest.*`; `messages.spec.ts` PASS
-- [ ] Ghi Q-V46-810-1 → 6 vào `questions.md`; cập nhật `V4.6-progress.md` dòng #10; glossary; GO-LIVE
-- [ ] Sau khi đo: chạy lại seed demo (native HOLD); không tắt tiến trình HOLD
-- [ ] Commit theo bước `git commit -- <paths>` (cấm `git add -A`); `git status --short` sạch; push; PR `base: dev`, không tự merge; completion report có **git commit SHA**, PR, số test thật, parity (tham khảo), EXPLAIN, soát luật cứng 1–14, phần chưa làm
-- [ ] KHÔNG báo DONE nếu còn gate đỏ (lint / type / unit / int / e2e / depcheck / build); parity theo D-134 không chặn nhưng phải có nguyên nhân
+- [x] File ≤ trần (BE 600, FE 400); không `any` / `@ts-ignore` / `console.*`
+- [x] D-65: 9 bộ dịch Portal có `stores.publicPage.*`, `stores.guest.*`; `messages.spec.ts` PASS
+- [x] Ghi Q-V46-810-1 → 6 vào `questions.md`; cập nhật `V4.6-progress.md` dòng #10; glossary; GO-LIVE
+- [x] Sau khi đo: chạy lại seed demo (native HOLD); không tắt tiến trình HOLD
+- [x] Commit theo bước `git commit -- <paths>` (cấm `git add -A`); `git status --short` sạch; push; PR `base: dev`, không tự merge; completion report có **git commit SHA**, PR, số test thật, parity (tham khảo), EXPLAIN, soát luật cứng 1–14, phần chưa làm
+- [x] KHÔNG báo DONE nếu còn gate đỏ (lint / type / unit / int / e2e / depcheck / build); parity theo D-134 không chặn nhưng phải có nguyên nhân
 
 ---
 

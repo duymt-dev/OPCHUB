@@ -1576,6 +1576,22 @@
   "sha": "c1fd1625"
  },
  {
+  "id": "P-V46-PUBLIC-CARD",
+  "name": "Trang công khai · khối trong trình sửa",
+  "viewport": 1440,
+  "diffPct": 1.5707746478873237,
+  "size": "1136×250",
+  "sha": "6dbd352a"
+ },
+ {
+  "id": "P-V46-PUBLIC-CARD",
+  "name": "Trang công khai · khối trong trình sửa",
+  "viewport": 390,
+  "diffPct": 2.5093834520064027,
+  "size": "366×396",
+  "sha": "6dbd352a"
+ },
+ {
   "id": "P-V46-REG",
   "name": "Portal · Vùng của tôi",
   "viewport": 1440,
