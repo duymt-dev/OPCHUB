@@ -481,3 +481,5 @@ Ghi 7 câu vào `reports/ui-parity/questions.md` › V4.6 (dạng "mặc định
 - Final native evidence refinements: ai-call.repository.ts + schema/llm-config.prisma use the shared UUIDv7 client default (no SQL migration rewrite). mask-pii.ts/spec.ts preserve complete resource UUIDs rather than masking numeric UUID tails as bank accounts.
 - ai-migration.int.spec.ts additionally sends an actual HTTP request with the migrated/decrypted key, exact URL/model. e2e/llm/reply-provider-setup.ts supplies a native-only HTTP prerequisite after demoReset; bot-replies.spec.ts retains every original assertion/timeout and closes the stub in finally. No fake development runtime.
 - Catalog visual correction follows the inspected prototype USGate blue #0958D9 and custom + / #595959. No prototype implementation code copied.
+
+- Final paired mobile capture found two remaining layout issues: provider count belongs below the intro, and verify action below its status. ai-tab.tsx/ai.module.css use mobile-only grid areas/footer stacking; desktop and all assertions unchanged. AI UI2/2, root lint/type and both Admin builds pass before committing.

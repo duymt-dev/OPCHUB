@@ -307,3 +307,31 @@
     height: 40px;
   }
 }
+
+@media (max-width: 767px) {
+  .catalog {
+    display: grid;
+    grid-template-areas: 'heading' 'intro' 'count' 'providers';
+  }
+  .catalog > .row {
+    display: contents;
+  }
+  .catalog h2 {
+    grid-area: heading;
+  }
+  .catalog p {
+    grid-area: intro;
+  }
+  .catalog .row > span {
+    grid-area: count;
+    margin-bottom: 12px;
+  }
+  .catalog > .grid {
+    grid-area: providers;
+  }
+  .detailFooter {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}

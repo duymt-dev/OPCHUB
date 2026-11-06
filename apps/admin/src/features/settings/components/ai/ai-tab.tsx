@@ -26,7 +26,7 @@ export function AiTab() {
   if (!p.form) return <div role="status">{t('loading')}</div>;
   return (
     <div className={styles.stack}>
-      <section className={styles.card} aria-label={t('heading')}>
+      <section className={`${styles.card} ${styles.catalog}`} aria-label={t('heading')}>
         <div className={styles.row}>
           <h2>{t('heading')}</h2>
           <span>{t('count', { n: p.form.providers.filter((r) => r.enabled).length })}</span>
