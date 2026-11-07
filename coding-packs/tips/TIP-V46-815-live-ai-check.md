@@ -72,6 +72,17 @@
 - [testing/testing](../standards/testing/testing.md): `@live` tách khỏi CI; ghi PASS / FAIL thật; không retry.
 - [global/git-workflow](../standards/global/git-workflow.md).
 
+## PHẠM VI THỰC TẾ (owner, 07/11/2026)
+
+- Owner có **một** key: **9router** (router tương thích OpenAI), model **`ag/gemini3-flash`**.
+- Kiểm qua nhà cung cấp **"Tùy chỉnh (OpenAI-compatible)"** (`custom`):
+  - owner nhập Base URL của 9router + key + model `ag/gemini3-flash` ở Admin › Cài đặt › AI Provider (runtime dev riêng)
+  - Base URL phải là `https://…`, hoặc `http://localhost` / `127.0.0.1` nếu 9router chạy trên máy này (`llmLocalConfigSchema`)
+  - model có dấu `/` hợp lệ (chuỗi 1..200)
+- Claude / OpenAI / Gemini / DeepSeek / USGate: **chưa kiểm (không có key)**, ghi vào ma trận.
+- Đủ điều kiện DONE khi `custom` (9router) có kết quả thật (PASS, hoặc FAIL có nguyên nhân + xử lý theo SPEC 9 → 10). Không bắt buộc 5 nhà cung cấp còn lại.
+- Nếu 9router trả lệch chuẩn (ví dụ `finish_reason` khác `stop`, thiếu `usage`, model id lạ) → SPEC 9 → 10. **Không** đổi `AI_PROVIDER_CATALOG` vì 9router không phải nhà cung cấp trong danh mục.
+
 ## TASK
 
 Kiểm từng nhà cung cấp AI mà owner cấp key bằng gọi thật, chạy tay, không vào CI:
@@ -183,7 +194,7 @@ Phát hiện lệch chuẩn OpenAI thì sửa adapter / schema / danh mục tron
   - đo chất lượng câu trả lời
   - thêm nút xóa key (B-backlog)
 
-## Câu hỏi chờ owner chốt (builder dùng mặc định nếu chưa có trả lời, ghi `questions.md` › TIP-V46-815)
+## Câu hỏi — **đã chốt theo mặc định** (owner, 07/11/2026; ghi `questions.md` › TIP-V46-815)
 
 - **Q-V46-815-1 Nhập key ở đâu.**
   - **Mặc định:** bạn tự nhập ở Admin › Cài đặt › AI Provider trên runtime dev riêng (`opchub_v46_812_dev`). Key được mã hóa trong DB đó.
@@ -213,7 +224,7 @@ Phát hiện lệch chuẩn OpenAI thì sửa adapter / schema / danh mục tron
 - [ ] Có sửa code: `pnpm lint && pnpm typecheck && pnpm test` + int `settings/ai-*` xanh, chép output.
 - [ ] Ghi Q-V46-815-1 → 4 vào `questions.md`; cập nhật `V4.6-progress.md` dòng #15, `V4.6-DEBT.md` B2.
 - [ ] Commit `git commit -- <paths>` (cấm `git add -A`); `git status --short` sạch; push; PR `base: dev`; không tự merge. Completion có **git commit SHA**.
-- [ ] KHÔNG báo DONE nếu chưa kiểm được nhà cung cấp nào (NOT RUN toàn bộ).
+- [ ] KHÔNG báo DONE nếu `custom` (9router, `ag/gemini3-flash`) chưa có kết quả thật.
 
 ---
 
@@ -226,5 +237,5 @@ Phát hiện lệch chuẩn OpenAI thì sửa adapter / schema / danh mục tron
 - [x] Constraints: trích bảo mật / luật 11 / 12 / D-137
 - [x] Parallel: sequential giữa 814 và 816
 - ⚠️ Gap:
-  - Kết quả phụ thuộc owner có key nào; thiếu hết thì TIP không DONE được.
+  - Chỉ có key 9router (`custom`); 5 nhà cung cấp trong danh mục chưa kiểm, endpoint của họ vẫn chưa xác minh bằng key thật — giữ là nợ, ghi completion.
   - Endpoint tương thích OpenAI của Anthropic có thể đòi điều kiện ngoài chuẩn; nếu vậy dừng ở Q, không thêm header / SDK.
