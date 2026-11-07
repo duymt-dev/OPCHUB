@@ -21,7 +21,12 @@ export async function signInAffiliate(page: Page, origin: string, email: string,
       ? 'Admin login was throttled (429); preserve the production throttle'
       : 'Admin login must succeed before navigation',
   ).toBeGreaterThanOrEqual(200);
-  expect(response.status(), 'Admin login must return 2xx').toBeLessThan(300);
+  expect(
+    response.status(),
+    response.status() === 429
+      ? 'Login was throttled (429); preserve the production throttle'
+      : 'Login must return 2xx before navigation',
+  ).toBeLessThan(300);
   await expect(page).not.toHaveURL(/\/login$/);
   await page.goto(`${origin}/affiliate`);
   await expect(
