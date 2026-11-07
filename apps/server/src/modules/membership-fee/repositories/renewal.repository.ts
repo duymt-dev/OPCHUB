@@ -29,6 +29,12 @@ export const renewalWindow = (now: Date) => {
 export class RenewalRepository {
   constructor(private readonly prisma: PrismaService) {}
 
+  async tryManualLock(tx: DbTx): Promise<boolean> {
+    const [row] = await tx.$queryRaw<{ locked: boolean }[]>`
+      SELECT pg_try_advisory_xact_lock(hashtextextended('opchub:renewal-manual', 0)) AS locked`;
+    return row?.locked === true;
+  }
+
   async count(now: Date): Promise<number> {
     const { from, to } = renewalWindow(now);
     const [r] = await this.prisma.db.$queryRaw<{ total: bigint }[]>`

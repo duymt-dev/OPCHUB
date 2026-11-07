@@ -1,6 +1,7 @@
 import { Controller, Delete, Get, HttpCode, Patch, Post, Req } from '@nestjs/common';
 import type { Request } from 'express';
 import type { z } from 'zod';
+import { regionalDirectorDeniedMessage } from '@opchub/shared';
 import {
   regionalAppointSchema,
   regionalCandidateQuerySchema,
@@ -49,7 +50,7 @@ export class AdminRegionalDirectorsController {
 
   @Post()
   @HttpCode(200)
-  @RequireAdmin('affiliate.regional')
+  @RequireAdmin('affiliate.regional', { deniedMessage: regionalDirectorDeniedMessage })
   async appoint(
     @CurrentUser() user: AccessClaims,
     @Req() req: Request,
@@ -62,7 +63,7 @@ export class AdminRegionalDirectorsController {
   }
 
   @Patch(':region')
-  @RequireAdmin('affiliate.regional')
+  @RequireAdmin('affiliate.regional', { deniedMessage: regionalDirectorDeniedMessage })
   async patch(
     @CurrentUser() user: AccessClaims,
     @Req() req: Request,
@@ -76,7 +77,7 @@ export class AdminRegionalDirectorsController {
   }
 
   @Delete(':region')
-  @RequireAdmin('affiliate.regional')
+  @RequireAdmin('affiliate.regional', { deniedMessage: regionalDirectorDeniedMessage })
   async revoke(
     @CurrentUser() user: AccessClaims,
     @Req() req: Request,

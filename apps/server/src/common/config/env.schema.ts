@@ -47,15 +47,6 @@ export const envSchema = z.object({
   MAIL_PROVIDER: z.enum(['fake', 'smtp', 'brevo']).default('fake'),
   /** Chỉ dev/e2e (TD-035): FakeMail ghi thư ra thư mục này — cấm ở production */
   FAKE_MAIL_DIR: z.string().optional(),
-  /** D-50: deterministic default; real-LLM E2E provider is enabled explicitly, never silently. */
-  BOT_LLM_PROVIDER: z.enum(['fake', 'local']).default('fake'),
-  LLM_LOCAL_BASE: z.string().url().optional(),
-  LLM_LOCAL_KEY: z.string().min(1).optional(),
-  LLM_LOCAL_MODELS: z.string().min(1).optional(),
-  /** Per-worker-process safety limits, not a provider billing/currency budget. */
-  LLM_LOCAL_MAX_REQUESTS: z.coerce.number().int().min(1).max(100).default(10),
-  LLM_LOCAL_MAX_TOKENS: z.coerce.number().int().min(16).max(1024).default(128),
-  LLM_LOCAL_TIMEOUT_MS: z.coerce.number().int().min(1000).max(120_000).default(60_000),
   /** D-51 / D-60: Dịch vụ thuộc go-live (popup V4) — cờ chỉ còn là công tắc khẩn cấp */
   FEATURE_SERVICES: bool.default(true),
   MAIL_FROM_NAME: z.string().default('OPC Hub'),
@@ -139,12 +130,6 @@ export function parseEnv(source: Record<string, string | undefined>): Env {
   if (!r.success) {
     const names = r.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`).join('; ');
     throw new Error(`Env không hợp lệ — ${names}`);
-  }
-  if (r.data.BOT_LLM_PROVIDER === 'local') {
-    for (const key of ['LLM_LOCAL_BASE', 'LLM_LOCAL_KEY', 'LLM_LOCAL_MODELS'] as const) {
-      if (!r.data[key])
-        throw new Error(`Env không hợp lệ — ${key}: bắt buộc khi BOT_LLM_PROVIDER=local`);
-    }
   }
   if (r.data.NODE_ENV === 'production' && r.data.OTP_FIXED_CODE) {
     throw new Error('Env không hợp lệ — OTP_FIXED_CODE: cấm dùng ở production');

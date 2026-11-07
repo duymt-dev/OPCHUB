@@ -13,12 +13,14 @@ import { createTestApp, type TestApp } from '../setup/test-app';
 import { replyValue } from '../bot/reply-fixture';
 import { signal } from '../bot/generation-fixture';
 import { ThreadFixture } from './thread-fixture';
+import { FakeLlmProvider } from '@opchub/integrations';
+import { LLM } from '@/common/integrations';
 
 describe('TIP-V2-502 UAT-15 LK-11 real persona conversation feed', () => {
   let t: TestApp;
   let fixture: ThreadFixture;
   beforeAll(async () => {
-    t = await createTestApp();
+    t = await createTestApp({ overrides: [[LLM, new FakeLlmProvider()]] });
     fixture = new ThreadFixture(t);
     await fixture.start();
   });

@@ -22,6 +22,7 @@ export function Cover({ e }: { e: Pick<EventView, 'coverUrl'> }) {
     const img = ev.currentTarget;
     if (!img.src.endsWith(COVER_DEFAULT_SRC)) img.src = COVER_DEFAULT_SRC;
   };
+  // eslint-disable-next-line @next/next/no-img-element -- Dynamic storage cover keeps the D-36 onError fallback.
   return <img className={styles.img} src={groupCoverSrc(e.coverUrl)} alt="" onError={onError} />;
 }
 
@@ -76,6 +77,7 @@ function Card({ e, a }: { e: EventView; a: EventActions }) {
             <div className={styles.people}>
               <div className={styles.faces}>
                 {e.avatars.slice(0, 3).map((src, i) => (
+                  // eslint-disable-next-line @next/next/no-img-element -- Small attendee avatars use arbitrary storage URLs from the API.
                   <img key={i} className={styles.face} src={src} alt="" />
                 ))}
               </div>

@@ -5,6 +5,8 @@ import { BotAdmissionService, BotRunnerService } from '@/modules/bot';
 import { BotAutoAdmissionService } from '@/modules/bot/services/bot-auto-admission.service';
 import { createTestApp, type TestApp } from '../setup/test-app';
 import { generationFixtures } from './generation-fixture';
+import { FakeLlmProvider } from '@opchub/integrations';
+import { LLM } from '@/common/integrations';
 
 describe('REQ-208 real automatic conversation admission', () => {
   let t: TestApp;
@@ -15,7 +17,7 @@ describe('REQ-208 real automatic conversation admission', () => {
   let originallyEnabled: string[] = [];
   const now = new Date('2026-10-21T05:00:00Z');
   beforeAll(async () => {
-    t = await createTestApp();
+    t = await createTestApp({ overrides: [[LLM, new FakeLlmProvider()]] });
     original = botSettingsSchema.parse(
       (await t.prisma.db.appSetting.findUniqueOrThrow({ where: { key: 'bot' } })).value,
     );

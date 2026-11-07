@@ -16,6 +16,13 @@ import {
 
 const id = z.string().min(1);
 const integer = z.number().int().nonnegative();
+
+/** All financial-network audit survives the same snapshot, without absorbing other domains. */
+export function isAffiliateAuditAction(action: string): boolean {
+  return ['affiliate.', 'regional_share.', 'regional_director.'].some((prefix) =>
+    action.startsWith(prefix),
+  );
+}
 const agent = z.strictObject({
   userId: id,
   code: affiliateCodeSchema,
@@ -36,10 +43,11 @@ const referral = z.strictObject({
 const audit = z.strictObject({
   id,
   actorId: id,
-  action: z.string().startsWith('affiliate.'),
+  action: z.string().refine(isAffiliateAuditAction, { message: 'Invalid affiliate audit domain' }),
   target: z.string(),
   detail: z.string(),
   at: z.string(),
+  diff: z.record(z.string(), z.json()).optional(),
 });
 const entries = <T extends z.ZodType>(value: T) =>
   z

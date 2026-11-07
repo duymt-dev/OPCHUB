@@ -15,7 +15,7 @@ import { notFound } from '@/common/errors';
 import { AiSettingsService } from './services/ai-settings.service';
 @Controller('admin/settings/ai')
 @RequireAdmin('settings.general')
-export class LlmConfigController {
+export class AiSettingsController {
   constructor(private readonly config: AiSettingsService) {}
   @Get() async get() {
     return respond(aiSettingsResponseSchema, await this.config.get());

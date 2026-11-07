@@ -731,17 +731,17 @@
   "id": "P-28",
   "name": "Chat · phòng mặc định",
   "viewport": 1440,
-  "diffPct": 0.5806327160493827,
+  "diffPct": 0.7133487654320988,
   "size": "1440×900",
-  "sha": "25a1eec"
+  "sha": "14aff77a"
  },
  {
   "id": "P-28",
   "name": "Chat · phòng mặc định",
   "viewport": 390,
-  "diffPct": 1.1225543808482197,
+  "diffPct": 1.5697533114594726,
   "size": "390×844",
-  "sha": "25a1eec"
+  "sha": "14aff77a"
  },
  {
   "id": "P-29",
@@ -1675,9 +1675,9 @@
   "id": "P-V46-REG",
   "name": "Portal · Vùng của tôi",
   "viewport": 1440,
-  "diffPct": 5.741455189757659,
+  "diffPct": 5.739669067215364,
   "size": "1440×1944",
-  "sha": "055d862a"
+  "sha": "14aff77a"
  },
  {
   "id": "P-V46-REG",
@@ -1685,23 +1685,23 @@
   "viewport": 390,
   "diffPct": 10.469537421520721,
   "size": "390×3353",
-  "sha": "055d862a"
+  "sha": "14aff77a"
  },
  {
   "id": "P-V46-REG-BANNER",
   "name": "Portal · GĐ Vùng · Banner",
   "viewport": 1440,
-  "diffPct": 1.2701298339462832,
+  "diffPct": 1.269085032876407,
   "size": "1440×997",
-  "sha": "055d862a"
+  "sha": "14aff77a"
  },
  {
   "id": "P-V46-REG-BANNER",
   "name": "Portal · GĐ Vùng · Banner",
   "viewport": 390,
-  "diffPct": 2.1242060691601976,
+  "diffPct": 2.124049243315298,
   "size": "390×1635",
-  "sha": "055d862a"
+  "sha": "14aff77a"
  },
  {
   "id": "P-V46-SEARCH",
@@ -1926,7 +1926,7 @@
   "viewport": 1440,
   "diffPct": 2.5093210361067504,
   "size": "1440×1274",
-  "sha": "055d862a"
+  "sha": "14aff77a"
  },
  {
   "id": "D-120-GCFG",
@@ -1934,7 +1934,7 @@
   "viewport": 390,
   "diffPct": 4.414171070659621,
   "size": "390×3275",
-  "sha": "055d862a"
+  "sha": "14aff77a"
  },
  {
   "id": "D-120-GCFG-RO",
@@ -1958,7 +1958,7 @@
   "viewport": 1440,
   "diffPct": 2.1155864197530865,
   "size": "1440×900",
-  "sha": "055d862a"
+  "sha": "14aff77a"
  },
  {
   "id": "D-120-GDV",
@@ -1966,7 +1966,7 @@
   "viewport": 390,
   "diffPct": 4.051478534237155,
   "size": "390×1305",
-  "sha": "055d862a"
+  "sha": "14aff77a"
  },
  {
   "id": "D-120-GDV-OPEN",
@@ -3361,7 +3361,7 @@
   "viewport": 1440,
   "diffPct": 2.8300803170594837,
   "size": "1440×1584",
-  "sha": "055d862a"
+  "sha": "14aff77a"
  },
  {
   "id": "D-V46-AI",
@@ -3369,7 +3369,7 @@
   "viewport": 390,
   "diffPct": 6.869037613718465,
   "size": "390×3478",
-  "sha": "055d862a"
+  "sha": "14aff77a"
  },
  {
   "id": "D-V46-APP",
@@ -3409,7 +3409,7 @@
   "viewport": 1440,
   "diffPct": 11.070487741262388,
   "size": "1440×1065",
-  "sha": "055d862a"
+  "sha": "14aff77a"
  },
  {
   "id": "D-V46-RENEW",
@@ -3417,7 +3417,7 @@
   "viewport": 390,
   "diffPct": 15.52518223989397,
   "size": "390×2012",
-  "sha": "055d862a"
+  "sha": "14aff77a"
  },
  {
   "id": "D-V46-SEARCH",

@@ -16,6 +16,7 @@ import {
 } from './affiliate-persistence/snapshot';
 import { readMockAffiliatePolicy, replaceMockAffiliatePolicy } from './affiliate-policy';
 import { mockRegionalRevoke } from './regional-directors';
+import { auditLog } from './group-admin';
 
 beforeEach(() => {
   resetMockDb();
@@ -52,8 +53,11 @@ describe('TIP-V46-802 mock regional ledger', () => {
     );
     expect(pending.length).toBeGreaterThan(0);
     const snapshot = captureMockAffiliateSnapshot();
+    const payoutAudit = auditLog().filter((row) => row.action === 'regional_share.payout');
+    expect(payoutAudit).toHaveLength(1);
     resetMockDb();
     restoreMockAffiliateSnapshot(snapshot);
+    expect(auditLog().filter((row) => row.action === 'regional_share.payout')).toEqual(payoutAudit);
     expect(mockPayRegional('north', north.member.id, 'stable-key', 'admin')).toEqual(first);
     expect(
       mockDb()

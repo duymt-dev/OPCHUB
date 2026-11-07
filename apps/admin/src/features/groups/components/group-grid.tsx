@@ -20,6 +20,7 @@ export function Cover({ g }: { g: AdminGroup }) {
     const img = e.currentTarget;
     if (!img.src.endsWith(COVER_DEFAULT_SRC)) img.src = COVER_DEFAULT_SRC;
   };
+  // eslint-disable-next-line @next/next/no-img-element -- Dynamic storage cover keeps the D-36 onError fallback.
   return <img className={styles.img} src={groupCoverSrc(g.coverUrl)} alt="" onError={onError} />;
 }
 

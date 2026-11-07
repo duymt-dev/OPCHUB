@@ -1,7 +1,6 @@
 import type { LlmProvider } from '@opchub/integrations';
 import type { AiPurpose } from '@opchub/shared/api-domains';
 import { Global, Module } from '@nestjs/common';
-import { ENV } from '@/common/config';
 import { LLM } from '@/common/integrations';
 import { createLlmProvider } from '@/common/integrations/llm-provider';
 import { AiConfigCache } from './ai-config-cache';
@@ -24,7 +23,7 @@ const services = [
 @Module({
   providers: [
     ...services,
-    { provide: LLM, inject: [ENV, LlmRuntimeService], useFactory: createLlmProvider },
+    { provide: LLM, inject: [LlmRuntimeService], useFactory: createLlmProvider },
     {
       provide: LLM_ROUTER,
       inject: [LLM, LlmRuntimeService],

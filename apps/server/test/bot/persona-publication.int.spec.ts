@@ -1,5 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { Queue } from 'bullmq';
+import { FakeLlmProvider } from '@opchub/integrations';
+import { LLM } from '@/common/integrations';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { OutboxRelayService } from '@/common/outbox';
 import { BULL_PREFIX, WorkerFactory } from '@/common/queue';
@@ -36,6 +38,7 @@ describe('REQ-208 REQ-207 durable persona publication via real worker', () => {
     t = await createTestApp({
       imports: [ChatCoreModule, ModerationCoreModule],
       providers: [BotPublicationProcessor, ModerationProcessor],
+      overrides: [[LLM, new FakeLlmProvider()]],
     });
     queue = new Queue('bot', {
       connection: t.redis.duplicate({ prefix: '' }),
