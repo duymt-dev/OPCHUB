@@ -40,3 +40,10 @@ Trigger for constraint messages_room_id_fkey: time=123.144 calls=9880
 Trigger for constraint messages_persona_id_fkey: time=97.983 calls=9880
 Execution Time: 831.288 ms
 ```
+
+## Full-sweep correction (supersedes the focused plan above)
+
+The first frozen full integration on27778a43 reproduced an inner Seq Scan when the base table was nearly empty (35018 total vs focused55028). The boundary join could flatten; ORDER BY/OFFSET0 still selected Seq Scan+Sort.128-ID recursive keyset pages now use one SQL statement, retaining the same120 newest IDs and processing all older IDs. No planner settings/index/test relaxation. Actual final focused plan:
+
+```text
+```

@@ -952,3 +952,5 @@ Owner chốt toàn bộ phương án mặc định Q-V46-807-1 → 5, Q808-1 →
 - Owner reconfirmed private801test/Redis2 and812dev/Redis3, rolling restart only owned813 runtime to814. Original HOLD/native DB/Redis6379 remain untouched.
 - A16 exception approved during execution: use a dedicated single-connection SQL transaction with finally rollback for the bulk test fixtures. Autocommit reproduced a30s timeout in per-row FK cleanup; no Prisma interactive timeout, production timeout, assertion or index change.
 - A21 exception approved after a real failed white-DB replay: historical downs retain enum labels. On owned chain DB only, restore the three retained enum boundaries (preserving defaults/checks/indexes), then redeploy and compare normalized schemas. Keep historical migrations immutable; no enum reconstruction on reused dev/integration DBs.
+
+- Full integration execution exception: owner approved narrow bot-reply-storage.int.spec.ts fixture population of valid indexed trigger/reply rows and post-rollback statistics restoration, retaining every index/Index Only Scan/no Seq Scan assertion and timeout.

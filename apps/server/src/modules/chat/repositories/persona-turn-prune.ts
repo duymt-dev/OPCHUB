@@ -1,22 +1,31 @@
 import { Prisma } from '@opchub/db';
 
-/** Exact runtime fragment shared with the 10k-row EXPLAIN integration check. */
+/** Exact runtime fragment shared with the skewed EXPLAIN integration checks. */
 export function personaTurnPruneSql(roomIds: string[], at: Date) {
-  // Seek the retained boundary (including the ID tie-breaker) before reading stale IDs.
-  // One SQL statement handles all rooms; no query per room or planner setting.
+  // Read stale IDs in bounded keyset pages within one statement. A hot room must
+  // not turn an otherwise selective partial-index seek into a whole-table scan.
   const selectors = [...new Set(roomIds)].map(
     (roomId) => Prisma.sql`(
-    SELECT old.id FROM (
-      SELECT created_at, id FROM messages
-      WHERE room_id = ${roomId} AND is_simulated AND deleted_at IS NULL
-      ORDER BY created_at DESC, id DESC OFFSET 119 LIMIT 1
-    ) boundary
-    CROSS JOIN LATERAL (
-      SELECT id FROM messages
-      WHERE room_id = ${roomId} AND is_simulated AND deleted_at IS NULL
-        AND (created_at, id) < (boundary.created_at, boundary.id)
-    ) old
-  )`,
+      WITH RECURSIVE batches(ids) AS (
+        SELECT ARRAY(
+          SELECT id FROM messages
+          WHERE room_id = ${roomId} AND is_simulated AND deleted_at IS NULL
+          ORDER BY created_at DESC, id DESC OFFSET 120 LIMIT 128
+        )
+        UNION ALL
+        SELECT ARRAY(
+          SELECT id FROM messages
+          WHERE room_id = ${roomId} AND is_simulated AND deleted_at IS NULL
+            AND (created_at, id) < (
+              SELECT created_at, id FROM messages
+              WHERE id = batches.ids[cardinality(batches.ids)]
+            )
+          ORDER BY created_at DESC, id DESC LIMIT 128
+        )
+        FROM batches WHERE cardinality(ids) = 128
+      )
+      SELECT unnest(ids) AS id FROM batches
+    )`,
   );
   const ids = selectors.length
     ? Prisma.join(selectors, ' UNION ALL ')

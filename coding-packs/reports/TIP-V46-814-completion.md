@@ -40,3 +40,13 @@ Ignored local logs/helpers are under `test-results/v46-814-*`; no credentials or
 ## Quality gate
 
 Implementation committed/pushed, all focused preparation proofs complete. **Not DONE:** frozen full parity review and all ten A22 gates remain required. Source is committed; no PR-ready/DONE claim.
+
+## A22 attempt1 / correction checkpoint
+
+Frozen SHA27778a43: lint PASS86.405s, typecheck PASS34.010s, unit2138 passed +2 existing skips PASS551.767s. Full integration FAILED: DB144 passed; server2048 passed/2 failed,25m43s total. No later gate ran. Raw ledger/logs: test-results/v46-814-A22-27778a43-*.
+
+- A17: with only18 pre-existing messages, the35000-row skew makes the target a much larger table share than the earlier focused55028-row table. Planner flattened the lateral range into a whole-message Seq Scan; an ORDER BY/OFFSET0 experiment also failed. Final correction uses128-ID keyset pages inside one recursive SQL statement, keeping newest120 and all stale rows processed. No DB-query loop, planner flags, new index or bounded total deletion. The partial index supplies each page and primary keys supply the cursor/update. Added tied-time/empty/exact-page boundary and idempotence regressions for0/120/121/248/249/376 rows.
+- Owner approved extra bot-reply-storage.int.spec.ts fixture correction: its10001 messages had only one nonnull reply pointer and therefore only one row in the partial index under test. Add10000 valid source messages and unique reply pointers, retain all index/Index Only Scan/no Seq Scan assertions and30s timeout. Finally ANALYZE the three affected tables after rollback, because statistics outlive rolled-back fixtures. No production reply change.
+- A22 must restart at gate1 after the correction commit; attempt1 is not combined with a later SHA.
+
+Post-correction focused combined suites:18/18 PASS (31.03s), including six new keyset edge cases and every original reply-storage assertion. Root lint8/8 (7 cached), typecheck8/8 (7 cached), unit6/6 tasks (5 cached; changed server tests executed) PASS before committing. Frozen retry will force all tasks again.

@@ -4,6 +4,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { personaTurnPruneSql } from '@/modules/chat/repositories/persona-turn-prune';
 import { createTestApp, type TestApp } from '../setup/test-app';
 import { createUser } from '../factories/user.factory';
+import { createGroup } from '../factories/group.factory';
 import { withRolledBackMessages } from './persona-plan-fixture';
 
 describe('A17 persona prune with a hot target room and fifty background rooms', () => {
@@ -101,4 +102,42 @@ describe('A17 persona prune with a hot target room and fifty background rooms', 
       await t.prisma.db.$executeRaw`ANALYZE messages`;
     }
   });
+  it.each([0, 120, 121, 248, 249, 376])(
+    'retains the newest120 tied-time IDs across keyset boundaries with %i rows',
+    async (count) => {
+      const group = await createGroup(t);
+      const roomId = `${group.id}-general`;
+      const personaId = randomUUID();
+      const at = new Date('2026-11-07T00:00:00Z');
+      try {
+        await t.prisma.db.persona.create({
+          data: { id: personaId, name: 'Keyset edge', groupIds: [group.id] },
+        });
+        await withRolledBackMessages(t, async (db) => {
+          await db.$executeRaw`
+            INSERT INTO messages (id,room_id,persona_id,is_simulated,body,created_at,updated_at)
+            SELECT ${personaId} || '-' || lpad(n::text,4,'0'), ${roomId}, ${personaId},
+              true, 'tied timestamp', ${at}, ${at} FROM generate_series(1,${count}) n`;
+          const expected = await db.message.findMany({
+            where: { roomId },
+            orderBy: [{ createdAt: 'desc' }, { id: 'desc' }],
+            take: 120,
+            select: { id: true },
+          });
+          await db.$executeRaw(personaTurnPruneSql([roomId, roomId], at));
+          const remaining = await db.message.findMany({
+            where: { roomId, deletedAt: null },
+            orderBy: [{ createdAt: 'desc' }, { id: 'desc' }],
+            select: { id: true },
+          });
+          expect(remaining).toEqual(expected);
+          expect(await db.$executeRaw(personaTurnPruneSql([roomId], at))).toBe(0);
+          expect(await db.$executeRaw(personaTurnPruneSql([], at))).toBe(0);
+        });
+      } finally {
+        await t.prisma.db.group.delete({ where: { id: group.id } });
+        await t.prisma.db.persona.delete({ where: { id: personaId } });
+      }
+    },
+  );
 });

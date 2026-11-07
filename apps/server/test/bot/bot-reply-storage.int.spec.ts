@@ -80,64 +80,76 @@ describe('REQ-411 reply storage invariants and native seek plans', () => {
     const f = await fixture.room();
     const source = await fixture.send(f.token, f.roomId);
     const prefix = `reply-plan-${randomUUID()}-`;
-    await expect(
-      t.prisma.db.$transaction(
-        async (tx) => {
-          await lockBotExecution(tx);
-          await tx.$executeRaw`
+    try {
+      await expect(
+        t.prisma.db.$transaction(
+          async (tx) => {
+            await lockBotExecution(tx);
+            await tx.$executeRaw`
         INSERT INTO bot_threads (id, topic, group_ids, lines, kind, reply_room_id, status, created_at, updated_at)
         SELECT ${prefix} || n::text, 'Reply plan', ARRAY['c1'],
           jsonb_build_array(jsonb_build_object('personaId', ${f.persona.id}::text, 'body', repeat('wide ', 300))),
           'reply', ${prefix} || n::text,
           CASE WHEN n = 1 THEN 'scheduled'::bot_thread_status ELSE 'done'::bot_thread_status END,
           ${now}, ${now} FROM generate_series(1, 10001) n`;
-          await tx.$executeRaw`
+            // Populate the indexed predicate, not 10000 NULL reply pointers outside it.
+            await tx.$executeRaw`
+        INSERT INTO messages (id, room_id, sender_id, body, created_at, updated_at)
+        SELECT ${prefix} || 'source-' || n::text, ${f.roomId}, ${f.user.id},
+          'Member trigger', ${now}, ${now} FROM generate_series(2, 10001) n`;
+            await tx.$executeRaw`
         INSERT INTO messages (id, room_id, persona_id, is_simulated, body, reply_to_id, created_at, updated_at)
         SELECT ${prefix} || n::text, ${f.roomId}, ${f.persona.id}, true, repeat('wide ', 300),
-          CASE WHEN n = 1 THEN ${source.id} ELSE NULL END, ${now}, ${now}
+          CASE WHEN n = 1 THEN ${source.id} ELSE ${prefix} || 'source-' || n::text END, ${now}, ${now}
         FROM generate_series(1, 10001) n`;
-          await tx.$executeRaw`
+            await tx.$executeRaw`
         INSERT INTO personas (id, name, enabled, group_ids, created_at, updated_at)
         SELECT ${prefix} || n::text, 'Index fixture', true,
           CASE WHEN n = 1 THEN ARRAY[${f.group.id}] ELSE ARRAY['unassigned-plan'] END,
           ${now}, ${now} FROM generate_series(1, 10001) n`;
-          await tx.$executeRaw`ANALYZE bot_threads`;
-          await tx.$executeRaw`ANALYZE messages`;
-          await tx.$executeRaw`ANALYZE personas`;
-          const pending = await tx.$queryRaw<{ 'QUERY PLAN': string }[]>`
+            await tx.$executeRaw`ANALYZE bot_threads`;
+            await tx.$executeRaw`ANALYZE messages`;
+            await tx.$executeRaw`ANALYZE personas`;
+            const pending = await tx.$queryRaw<{ 'QUERY PLAN': string }[]>`
         EXPLAIN (ANALYZE, BUFFERS) SELECT reply_room_id FROM bot_threads WHERE kind = 'reply'
           AND reply_room_id = ${prefix + '1'} AND status IN ('scheduled', 'running') LIMIT 1`;
-          const admitted = await tx.$queryRaw<{ 'QUERY PLAN': string }[]>`
+            const admitted = await tx.$queryRaw<{ 'QUERY PLAN': string }[]>`
         EXPLAIN (ANALYZE, BUFFERS) SELECT created_at FROM bot_threads
         WHERE kind = 'reply' AND reply_room_id = ${prefix + '1'} ORDER BY created_at DESC, id DESC LIMIT 1`;
-          const answered = await tx.$queryRaw<{ 'QUERY PLAN': string }[]>`
+            const answered = await tx.$queryRaw<{ 'QUERY PLAN': string }[]>`
         EXPLAIN (ANALYZE, BUFFERS) SELECT id FROM messages WHERE is_simulated AND reply_to_id = ${source.id} LIMIT 1`;
-          const posted = await tx.$queryRaw<{ 'QUERY PLAN': string }[]>`
+            const posted = await tx.$queryRaw<{ 'QUERY PLAN': string }[]>`
         EXPLAIN (ANALYZE, BUFFERS) SELECT created_at FROM messages WHERE room_id = ${f.roomId}
           AND is_simulated AND reply_to_id IS NOT NULL ORDER BY created_at DESC, id DESC LIMIT 1`;
-          const candidates = await tx.$queryRaw<{ 'QUERY PLAN': string }[]>`
+            const candidates = await tx.$queryRaw<{ 'QUERY PLAN': string }[]>`
         EXPLAIN (ANALYZE, BUFFERS) SELECT id FROM personas WHERE enabled AND group_ids @> ARRAY[${f.group.id}]`;
-          const plans = [pending, admitted, answered, posted, candidates].map((rows) =>
-            rows.map((row) => row['QUERY PLAN']).join('\n'),
-          );
-          const indexes = [
-            'bot_threads_one_pending_reply_per_room',
-            'bot_threads_reply_cooldown_idx',
-            'messages_bot_reply_trigger_key',
-            'messages_bot_reply_cooldown_idx',
-            'personas_enabled_groups_idx',
-          ];
-          for (let i = 0; i < indexes.length; i += 1) {
-            expect(plans[i]).toContain(indexes[i]);
-            expect(plans[i]).not.toContain('Seq Scan');
-            if (i < 4) expect(plans[i]).toContain('Index Only Scan');
-          }
-          process.stdout.write(`REQ-411 10001-row selectors EXPLAIN:\n${plans.join('\n')}\n`);
-          throw new Error('Rollback reply plan fixture');
-        },
-        { timeout: 30_000 },
-      ),
-    ).rejects.toThrow('Rollback reply plan fixture');
+            const plans = [pending, admitted, answered, posted, candidates].map((rows) =>
+              rows.map((row) => row['QUERY PLAN']).join('\n'),
+            );
+            const indexes = [
+              'bot_threads_one_pending_reply_per_room',
+              'bot_threads_reply_cooldown_idx',
+              'messages_bot_reply_trigger_key',
+              'messages_bot_reply_cooldown_idx',
+              'personas_enabled_groups_idx',
+            ];
+            for (let i = 0; i < indexes.length; i += 1) {
+              expect(plans[i]).toContain(indexes[i]);
+              expect(plans[i]).not.toContain('Seq Scan');
+              if (i < 4) expect(plans[i]).toContain('Index Only Scan');
+            }
+            process.stdout.write(`REQ-411 10001-row selectors EXPLAIN:\n${plans.join('\n')}\n`);
+            throw new Error('Rollback reply plan fixture');
+          },
+          { timeout: 30_000 },
+        ),
+      ).rejects.toThrow('Rollback reply plan fixture');
+    } finally {
+      // ANALYZE statistics survive rollback; do not leak synthetic distributions.
+      await t.prisma.db.$executeRaw`ANALYZE messages`;
+      await t.prisma.db.$executeRaw`ANALYZE bot_threads`;
+      await t.prisma.db.$executeRaw`ANALYZE personas`;
+    }
     expect(await t.prisma.db.botThread.count({ where: { id: { startsWith: prefix } } })).toBe(0);
   });
 });
