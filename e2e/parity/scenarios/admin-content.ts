@@ -74,13 +74,22 @@ export const ADMIN_CONTENT: Scenario[] = [
       await settleScrollAtTop(page);
       await settleDrawerScroll(page, page.getByText('Check-in tất cả', { exact: true }).first());
     },
-    name: 'Sự kiện · Đã đầy → chi tiết sự kiện (Demo Day)',
+    name: 'Sự kiện · chi tiết danh sách (Demo Day)',
     start: 'admin',
     fullPage: true,
-    note: 'Prototype v4 + app (TIP-V4-622): bấm nhãn "Đã đầy" trên ảnh bìa thẻ Demo Day mở drawer Chi tiết',
+    note: 'Owner814: open the Demo Day card registration list on both sides; native seed is not full. Same drawer assertion/capture scope.',
     steps: async (c) => {
       await toEvents(c);
-      await tapLast(c, 'Đã đầy');
+      // Native seed counts real registrations; the event need not be full.
+      // Use the same real card action on both sides, not the full-status filter.
+      await c.page
+        .locator('article, div')
+        .filter({ hasText: 'Demo Day – Dự án cộng đồng Q4' })
+        .filter({ has: c.page.getByText('Danh sách', { exact: true }) })
+        .last()
+        .getByText('Danh sách', { exact: true })
+        .filter({ visible: true })
+        .click();
       await waitText(c, 'Check-in tất cả');
     },
   },
