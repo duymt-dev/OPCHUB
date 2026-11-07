@@ -1,4 +1,5 @@
 import { Queue } from 'bullmq';
+import { Prisma } from '@opchub/db';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { LocalLlmProvider, type LlmProvider } from '@opchub/integrations';
 import { llmHttpStub } from '../helpers/llm-http-stub';
@@ -22,6 +23,8 @@ describe('UAT-14 REQ-207 real worker member reply pipeline', () => {
   let moderation: Queue;
   const botJobs: string[] = [];
   let originalEnabled: string[] = [];
+  const controlKeys = ['bot_schedule', 'bot_control', 'bot_reply_settings'];
+  let originalControl: { key: string; value: Prisma.JsonValue }[] = [];
   let groupId: string | undefined;
   let runId: string | undefined;
   let stub: Awaited<ReturnType<typeof llmHttpStub>>;
@@ -46,6 +49,12 @@ describe('UAT-14 REQ-207 real worker member reply pipeline', () => {
       imports: [BotCoreModule, ChatCoreModule, ModerationCoreModule],
       providers: [BotProcessor, BotPublicationProcessor, ModerationProcessor],
     });
+    originalControl = await t.prisma.db.appSetting.findMany({
+      where: { key: { in: controlKeys } },
+      select: { key: true, value: true },
+    });
+    // This worker proof needs a live schedule, independent of preceding suites.
+    await t.prisma.db.appSetting.deleteMany({ where: { key: { in: controlKeys } } });
     await t.redis.client.flushdb();
     await t.prisma.db.botReplyRun.deleteMany();
     fixture = replyFixtures(t, new Date());
@@ -54,7 +63,7 @@ describe('UAT-14 REQ-207 real worker member reply pipeline', () => {
       await t.prisma.db.persona.findMany({ where: { enabled: true }, select: { id: true } })
     ).map((p) => p.id);
     await t.prisma.db.persona.updateMany({ data: { enabled: false } });
-    await t.prisma.db.appSetting.deleteMany({ where: { key: 'bot_reply_settings' } });
+
     bot = new Queue('bot', { connection: t.redis.duplicate({ prefix: '' }), prefix: BULL_PREFIX });
     moderation = new Queue('moderation', {
       connection: t.redis.duplicate({ prefix: '' }),
@@ -80,7 +89,11 @@ describe('UAT-14 REQ-207 real worker member reply pipeline', () => {
       where: { id: { in: originalEnabled } },
       data: { enabled: true },
     });
-    await t.prisma.db.appSetting.deleteMany({ where: { key: 'bot_reply_settings' } });
+    await t.prisma.db.appSetting.deleteMany({ where: { key: { in: controlKeys } } });
+    if (originalControl.length)
+      await t.prisma.db.appSetting.createMany({
+        data: originalControl.map(({ key, value }) => ({ key, value: value ?? Prisma.JsonNull })),
+      });
     if (groupId) await t.redis.client.del(`bot:reply-rate:group:${groupId}`);
     await t.redis.client.del('bot:reply-rate:system');
     await t.close();
@@ -101,17 +114,35 @@ describe('UAT-14 REQ-207 real worker member reply pipeline', () => {
     botJobs.push(replyJob);
     keywordJobs.push(`kw-${source.id}`);
     const relay = t.app.get(OutboxRelayService);
-    await expect
-      .poll(
-        async () => {
-          await relay.relayOnce();
-          return t.prisma.db.botReplyRun.count({
-            where: { groupId: f.group.id, status: 'running' },
-          });
-        },
-        { timeout: 20_000 },
-      )
-      .toBe(1);
+    try {
+      await expect
+        .poll(
+          async () => {
+            await relay.relayOnce();
+            return t.prisma.db.botReplyRun.count({
+              where: { groupId: f.group.id, status: 'running' },
+            });
+          },
+          { timeout: 20_000 },
+        )
+        .toBe(1);
+    } catch (error) {
+      const job = await bot.getJob(replyJob);
+      const settings = await t.prisma.db.appSetting.findMany({
+        where: { key: { in: controlKeys } },
+        select: { key: true, value: true },
+      });
+      process.stdout.write(
+        JSON.stringify({
+          diagnostic: 'UAT-14 admission',
+          settings,
+          jobState: await job?.getState(),
+          failedReason: job?.failedReason,
+          queue: await bot.getJobCounts(),
+        }) + '\n',
+      );
+      throw error;
+    }
     const run = await t.prisma.db.botReplyRun.findFirstOrThrow({
       where: { groupId: f.group.id, status: 'running' },
     });

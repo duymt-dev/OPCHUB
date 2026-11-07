@@ -50,3 +50,9 @@ Frozen SHA27778a43: lint PASS86.405s, typecheck PASS34.010s, unit2138 passed +2 
 - A22 must restart at gate1 after the correction commit; attempt1 is not combined with a later SHA.
 
 Post-correction focused combined suites:18/18 PASS (31.03s), including six new keyset edge cases and every original reply-storage assertion. Root lint8/8 (7 cached), typecheck8/8 (7 cached), unit6/6 tasks (5 cached; changed server tests executed) PASS before committing. Frozen retry will force all tasks again.
+
+## A22 attempt2 / worker fixture exception
+
+Frozen3b83b120: lint/type/unit2138+2skip PASS; integration DB144 PASS, server2055 PASS/1 FAIL (UAT-14 worker admission poll20s),35m49s. Both query-plan failures from attempt1 are resolved in this full sweep. No later gate ran. Old worker case passed20/20 consecutive standalone attempts (debug logs retained); original full-run cause is not conclusively established. Owner approved narrow fixture isolation/diagnostics. A concrete missing precondition was reproduced separately: inherited paused bot_schedule causes the identical admission poll failure. Snapshot/clear/restore bot_schedule, bot_control and bot_reply_settings fixes that inherited-paused reproduction while preserving the real5000ms worker deadline and all assertions/timeouts. Diagnostic on admission failure now captures control settings/job state/queue counts. Q5 evidence is20 original attempts + definitely wrong fixture precondition corrected + passing A22 still required; not a claim that the first full failure's exact cause was proven.
+
+Worker correction proof: inherited-paused scenario5/5 PASS, each verifies paused setting restored after suite; real5000ms deadline retained. Root lint/typecheck/unit all PASS before commit (changed server tasks executed, other packages cached).
