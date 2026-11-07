@@ -7,7 +7,7 @@
 - Module: notification (đẩy theo thiết bị), integrations (adapter `push`), settings (Ứng dụng & thông báo), worker (queue `push`), Portal (manifest, service worker, bật thông báo, công tắc theo loại), Admin (đăng ký thiết bị để gửi thử)
 - Priority: P2
 - Depends on: V46-815 (đã merge, `dev` = `ad4c5434`)
-- Estimated: L
+- Estimated: XL (thêm 3 nguồn thông báo theo Q-V46-816-1, 2 — owner 07/11/2026)
 - REQ / D:
   - **D-137** (B1: Web Push qua dịch vụ đẩy của trình duyệt, VAPID, `web-push`, `push_subscriptions`, manifest + service worker, công tắc theo TV, test bằng máy chủ đẩy giả). Thay phần "PWA / Web Push để sau" của **D-125**.
   - REQ-629, BR-492, BR-493, VM-463
@@ -64,6 +64,29 @@
     - `apps/admin/src/features/settings/app-notify-api.ts` (modify)
     - `apps/admin/src/mocks/handlers/app-notify.ts` (modify)
     - `apps/admin/messages/vi/settings.json` (modify)
+  - **Nguồn thông báo mới (Q-V46-816-1, 2 — owner chọn làm đủ)**
+    - Nhu cầu phù hợp (`need`):
+      - `packages/shared/src/outbox/events.ts` (modify: `need.published { needId }`)
+      - `apps/server/src/modules/local-business/services/need-owner.service.ts` (modify: phát `need.published` trong cùng transaction khi nhu cầu được tạo / mở lại ở trạng thái hiển thị)
+      - `apps/server/src/modules/local-business/repositories/need-match-audience.query.ts` (create: tìm chủ gian hàng phù hợp cho một nhu cầu, theo lô)
+      - `apps/server/src/modules/local-business/services/need-match-notify.handler.ts` (create)
+      - `apps/server/src/modules/local-business/index.ts`, `local-business-core.module.ts` (modify)
+      - `apps/server/src/worker/processors/need-notify.processor.ts` (create) hoặc thêm vào processor local-business sẵn có
+      - cùng migration `20261116090000_v46_web_push`: bảng `need_match_notifications (need_id, user_id)` PK kép chống gửi trùng; index phục vụ truy vấn audience nếu EXPLAIN cần
+    - Sự kiện trước 1 giờ (`event`):
+      - `packages/db/prisma/schema/event.prisma` (modify: `reminded1hAt`)
+      - `apps/server/src/modules/event/domain/event-sweep.ts` (modify: `REMIND_1H_MS`)
+      - `apps/server/src/modules/event/repositories/event-sweep.repository.ts` (modify: `claimReminders1h`)
+      - `apps/server/src/modules/event/services/event-scheduler.service.ts` (modify)
+      - `packages/shared/src/outbox/events.ts` (modify: `event.reminder_due` thêm `window: '24h' | '1h'`, mặc định `24h` để payload cũ vẫn parse)
+      - `apps/server/src/modules/notification/services/notification-events.handler.ts` (modify: tiêu đề theo `window`)
+    - Tổng hợp gian hàng hằng ngày (`store`):
+      - `packages/shared/src/queues/queues.ts` (modify: `jobs.scheduler.store-digest`)
+      - `apps/server/src/worker/schedules.ts` (modify: `store-digest` 08:05 Asia/Ho_Chi_Minh)
+      - `apps/server/src/modules/local-business/repositories/store-digest.query.ts` (create)
+      - `apps/server/src/modules/local-business/services/store-digest.service.ts` (create)
+      - processor scheduler tương ứng (modify) + bảng `store_digest_runs (day PK)` trong cùng migration để chạy lại không gửi trùng
+    - Test: `apps/server/test/local-business/need-match-notify.int.spec.ts`, `store-digest.int.spec.ts`, `apps/server/test/event/event-reminder-1h.int.spec.ts` (create)
   - **Hạ tầng (chỉ file cấu hình, không chạy trên VPS)**
     - `infra/nginx/app.opchub.community.conf`, `infra/nginx/opchub.conf` (modify: `Cache-Control: no-cache` cho `/sw.js`, `/admin/sw.js`, `/manifest.webmanifest`)
   - **Test**
@@ -148,7 +171,7 @@ Làm Web Push + PWA thật cho OPC Hub qua **dịch vụ đẩy sẵn có của 
   - nút "Bật thông báo"
   - công tắc từng loại thông báo trong hồ sơ
 - **Admin:** "Gửi thông báo thử" đẩy tới thiết bị của chính Admin.
-- **Phạm vi đẩy:** chỉ đẩy cho các thông báo trong app **đã có** (nhắc tên / trả lời, nhắc gia hạn, sự kiện trước 24 giờ), theo công tắc Admin và công tắc TV.
+- **Phạm vi đẩy:** đủ **5 loại** theo công tắc Admin và công tắc TV. Ba loại đã có thông báo trong app (nhắc tên / trả lời, nhắc gia hạn, sự kiện 24 giờ). **Thêm 3 nguồn thông báo trong app mới** (owner chốt 07/11/2026): nhu cầu phù hợp gian hàng, sự kiện trước 1 giờ, tổng hợp lượt xem gian hàng hằng ngày.
 
 ## SPECIFICATIONS
 
@@ -202,6 +225,8 @@ Làm Web Push + PWA thật cho OPC Hub qua **dịch vụ đẩy sẵn có của 
    - `membership_fee.reminded` → `renew` (chỉ thông báo nhắc gia hạn, không gắn cho thông báo kích hoạt phí)
    - `event.reminder_due` → `event`
    - gửi thử Admin → `test`
+   - nhu cầu phù hợp (SPEC 17a) → `need`
+   - tổng hợp gian hàng (SPEC 17c) → `store`
 
    **Không** gắn cho thông báo khác.
 9. Processor `push.send`:
@@ -240,7 +265,7 @@ Làm Web Push + PWA thật cho OPC Hub qua **dịch vụ đẩy sẵn có của 
     - Nút "Bật thông báo trên thiết bị này": `Notification.requestPermission()` → `pushManager.subscribe({ userVisibleOnly: true, applicationServerKey })` → `POST` subscriptions.
     - Trạng thái theo quyền trình duyệt / đăng ký: "Đang bật trên thiết bị này" / "Đã chặn trong trình duyệt" / "Trình duyệt không hỗ trợ". Trên iOS chưa cài thì hiện "Thêm OPC Hub vào màn hình chính để nhận thông báo".
     - "Tắt trên thiết bị này" → `unsubscribe` + `DELETE`.
-    - 5 công tắc loại (chữ như Admin `settings.json` app.*). Loại Admin đang tắt → công tắc mờ + "Quản trị đã tắt loại này". `need` / `store` hiện mờ "Sắp có" (Q-V46-816-1).
+    - 5 công tắc loại (chữ như Admin `settings.json` app.*). Loại Admin đang tắt → công tắc mờ + "Quản trị đã tắt loại này".
     - `config.enabled = false` → ẩn cả tab.
 15. Chữ giao diện tiếng Việt. Khóa thêm vào 10 bộ `messages/*` (D-65); bản dịch ngoài `vi` dùng tiếng Việt tạm, ghi completion.
 
@@ -252,6 +277,33 @@ Làm Web Push + PWA thật cho OPC Hub qua **dịch vụ đẩy sẵn có của 
 17. "Gửi thông báo thử" giữ hành vi cũ: audit + thông báo trong app. Thêm đẩy tới các thiết bị realm `admin` của chính Admin (D-137 (5)).
     - Toast thêm: "Đã gửi tới {n} thiết bị", hoặc "Chưa có thiết bị nào bật thông báo" khi n = 0.
     - n đếm số đăng ký tại lúc gửi, không chờ kết quả đẩy.
+
+### Nguồn thông báo mới (Q-V46-816-1, 2 — owner chốt làm đủ)
+
+17a. **Nhu cầu phù hợp (`need`, BR-493):**
+   - Khi một nhu cầu **chuyển sang hiển thị lần đầu** (tạo mới ở trạng thái công khai, hoặc được mở lại), `need-owner.service` phát outbox `need.published { needId }` trong cùng transaction.
+   - Handler tìm chủ gian hàng TK doanh nghiệp có gian hàng không ẩn, **dùng đúng `scoreNeedMatch` / ngưỡng ≥ 30** của 809 (một nguồn logic, không viết lại). Truy vấn audience theo lô:
+     - lọc trước bằng `field = need.field OR province = need.province`
+     - chấm điểm trong bộ nhớ
+     - trần 500 người / nhu cầu
+   - Loại: chính người đăng nhu cầu; TK không còn hiệu lực phí theo `isFeeUsable` (V-11), không viết lại điều kiện phí.
+   - Chống trùng: `need_match_notifications (need_id, user_id)` `ON CONFLICT DO NOTHING RETURNING`, chỉ thông báo dòng mới chèn.
+   - Thông báo: dùng `type` có sẵn phù hợp nhất (ghi completion), tiêu đề "Nhu cầu phù hợp với gian hàng của bạn", body = tên nhu cầu (cắt 80) + "· {tỉnh}", link tới trang nhu cầu hiện có, `push: 'need'`.
+   - Xóa cache `need-matches:{userId}` của người nhận để thẻ Dashboard cập nhật (đóng một phần nợ B14).
+17b. **Sự kiện trước 1 giờ (`event`):**
+   - Thêm cột `events.reminded_1h_at`.
+   - `claimReminders1h` đánh dấu sự kiện `starts_at` trong (now, now + 1h] chưa nhắc 1 giờ, cùng mẫu câu `UPDATE … RETURNING` của mốc 24 giờ. Chạy trong `events-sweep` 15 phút, nên có thể nhắc sớm tối đa 15 phút: chấp nhận, ghi chú.
+   - Phát `event.reminder_due { eventId, window: '1h' }`. Handler đổi tiêu đề "Sắp bắt đầu sau 1 giờ: {tên}", vẫn `push: 'event'`.
+   - Sự kiện tạo trong vòng < 1 giờ trước giờ bắt đầu chỉ nhận mốc 1 giờ; mốc 24 giờ không gửi bù.
+17c. **Tổng hợp gian hàng hằng ngày (`store`):**
+   - Job `store-digest` 08:05 giờ VN.
+   - Dữ liệu: lượt xem **hôm qua** theo `store_daily_views` cho mọi gian hàng không ẩn có views > 0. Chưa có bảng đếm lượt liên hệ (Q-V46-816-7): tổng hợp chỉ ghi lượt xem, không bịa số liên hệ.
+   - Chống trùng theo ngày: `store_digest_runs (day)`. Đã có dòng thì bỏ qua.
+   - Thông báo cho chủ gian hàng: tiêu đề "Gian hàng hôm qua", body "{n} lượt xem", link trang dashboard gian hàng hiện có, `push: 'store'`.
+   - Lọc chủ gian hàng không còn hiệu lực phí bằng `isFeeUsable`.
+   - Truy vấn theo lô, keyset 1.000.
+   - Chỉ chạy khi Admin bật `push.store` (mặc định tắt ở 811). Tắt thì không tạo thông báo trong app lẫn đẩy (Q-V46-816-8).
+17d. Ba nguồn mới đi qua outbox / scheduler như các nguồn khác; không truy vấn trong vòng lặp; mỗi nguồn có EXPLAIN trong `TIP-V46-816-query-plans.md`.
 
 ### Validation
 
@@ -277,6 +329,9 @@ Làm Web Push + PWA thật cho OPC Hub qua **dịch vụ đẩy sẵn có của 
 - **Đăng ký:** Given TV đăng nhập, `pwa` bật When `POST /push/subscriptions` Then 201, có dòng realm `member`. Đăng ký lại cùng endpoint thì không tạo dòng mới. Thiết bị thứ 11 thay cái cũ nhất. `pwa` tắt → 409. Test: int `push-subscriptions.int.spec.ts` › `subscribe upsert cap and pwa off`.
 - **Gửi theo loại:** Given TV có 2 thiết bị (endpoint trỏ stub), Admin bật `msg` When có người nhắc tên TV Then stub nhận đúng 2 POST, payload có `title` / `body` đã cắt và lọc, `tag` = id thông báo, `link` tới phòng. Admin tắt `msg`, hoặc TV tắt `msg` → 0 POST nhưng thông báo trong app vẫn có. Test: int `push-dispatch.int.spec.ts` › `mention push respects admin and member switches`.
 - **Gia hạn / sự kiện:** `membership_fee.reminded` → đẩy `renew`; `event.reminder_due` → đẩy `event`. Thông báo kích hoạt phí / đăng ký sự kiện **không** đẩy. Test: int `› renew and event kinds only`.
+- **Nhu cầu phù hợp:** Given chủ gian hàng A cùng ngành, chủ B khác ngành khác tỉnh, người đăng nhu cầu C When C đăng nhu cầu công khai Then A có thông báo "Nhu cầu phù hợp…" (+ đẩy nếu bật `need`), B và C không. Outbox giao lại → A không nhận lần 2. TK hết hiệu lực phí không nhận. Test: int `need-match-notify.int.spec.ts` › `need published notifies matching store owners once`.
+- **Sự kiện 1 giờ:** Given sự kiện bắt đầu sau 50 phút, đã nhắc 24 giờ When `events-sweep` chạy Then người đăng ký nhận "Sắp bắt đầu sau 1 giờ…"; chạy lại không nhận thêm; payload outbox cũ không có `window` vẫn xử lý như 24 giờ. Test: int `event-reminder-1h.int.spec.ts`.
+- **Tổng hợp gian hàng:** Given Admin bật `store`, gian hàng X có 7 lượt xem hôm qua, Y có 0 When job `store-digest` chạy hai lần cùng ngày Then chủ X nhận đúng 1 thông báo "7 lượt xem", Y không. Admin tắt `store` → không tạo. Test: int `store-digest.int.spec.ts`.
 - **Dọn đăng ký chết:** Given stub trả 410 cho 1 endpoint Then đăng ký đó bị xóa, endpoint còn lại vẫn nhận. Stub trả 503 một lần → job thử lại, thiết bị đã thành công không nhận lần 2. Test: int `› gone removed and retry once`.
 - **Không trùng:** cùng sự kiện outbox giao 2 lần → mỗi thiết bị nhận 1 lần. Test: int `› outbox replay pushes once`.
 - **Bảo mật nội dung:** thông báo chứa SĐT / email / số tiền → payload đã che. Test: unit `push-payload.spec.ts`.
@@ -296,7 +351,6 @@ Làm Web Push + PWA thật cho OPC Hub qua **dịch vụ đẩy sẵn có của 
   - đẩy nội dung có SĐT / email / số tiền / số TK
   - đẩy mà không có thông báo trong app tương ứng
   - cache ngoại tuyến / fetch handler trong `sw.js`; đăng ký SW thật ở chế độ MSW
-  - tạo nguồn thông báo mới cho `need`, `store`, sự kiện trước 1 giờ (Q-V46-816-1, Q-V46-816-2)
   - Zalo (D-125)
   - truy vấn trong vòng lặp; `select *`
   - `any`, `@ts-ignore`, `console.*`
@@ -309,20 +363,19 @@ Làm Web Push + PWA thật cho OPC Hub qua **dịch vụ đẩy sẵn có của 
   - mẫu stub `e2e/server/dlpl-stub.ts`
   - mẫu housekeeping xóa theo lô
 - SKIP:
-  - nguồn thông báo `need` (B14), `store` (tổng hợp hằng ngày), sự kiện trước 1 giờ (Q-V46-816-1, 2)
-  - đẩy cho thông báo khác ngoài 3 loại + gửi thử
+  - đẩy cho thông báo khác ngoài 5 loại + gửi thử
+  - đếm lượt liên hệ gian hàng (chưa có dữ liệu; Q-V46-816-7)
+  - phần còn lại của nợ B14 (trần 200 ứng viên, trang chi tiết nhu cầu, TK cá nhân / nhà đầu tư)
   - PWA ngoại tuyến
   - tùy chọn loại đẩy cho Admin
   - thống kê tỷ lệ nhận
 
-## Câu hỏi chờ owner chốt (builder dùng mặc định nếu chưa có trả lời, ghi `questions.md` › TIP-V46-816)
+## Câu hỏi — **đã chốt** (owner, 07/11/2026; ghi `questions.md` › TIP-V46-816)
 
 - **Q-V46-816-1 Loại "Nhu cầu phù hợp" và "Lượt xem & liên hệ gian hàng".** Hai loại này hiện chưa có thông báo trong app nào để đẩy theo.
-  - **Mặc định:** chưa đẩy. Công tắc Admin vẫn lưu được; ở Portal hai loại hiện mờ kèm chữ "Sắp có".
-  - Làm nguồn thông báo cho hai loại này là việc riêng, đã ghi trong nợ B14.
+  - **Chốt (owner): LÀM** — thêm nguồn thông báo cho cả hai loại theo SPEC 17a, 17c.
 - **Q-V46-816-2 Nhắc sự kiện "trước 1 giờ".** Hiện chỉ có mốc trước 24 giờ.
-  - **Mặc định:** chỉ đẩy mốc 24 giờ đang có. Mốc 1 giờ cần thêm cột và job mới, để sau.
-  - Phương án khác: làm luôn mốc 1 giờ trong TIP này.
+  - **Chốt (owner): LÀM** mốc 1 giờ theo SPEC 17b.
 - **Q-V46-816-3 Chỗ thành viên tắt từng loại thông báo.**
   - **Mặc định:** thêm tab mới "Thông báo" trong Hồ sơ.
 - **Q-V46-816-4 Khi Admin tắt "Cho phép cài ứng dụng" (PWA).**
@@ -331,6 +384,10 @@ Làm Web Push + PWA thật cho OPC Hub qua **dịch vụ đẩy sẵn có của 
   - **Mặc định:** ngay trong tab Ứng dụng & thông báo của Admin, khối "Thiết bị này", tách riêng với thiết bị của tài khoản thành viên.
 - **Q-V46-816-6 Mỗi người tối đa bao nhiêu thiết bị.**
   - **Mặc định:** 10. Thêm thiết bị thứ 11 thì thiết bị cũ nhất bị thay.
+
+- Q-V46-816-3 → 6: **chốt theo mặc định**.
+- **Q-V46-816-7 Tổng hợp gian hàng chưa có số lượt liên hệ.** Chốt hướng an toàn: chỉ ghi lượt xem; đếm lượt liên hệ cần nguồn dữ liệu mới, để sau.
+- **Q-V46-816-8 Tổng hợp gian hàng khi Admin tắt loại `store`.** Chốt hướng an toàn: không tạo thông báo trong app lẫn đẩy, tránh làm đầy chuông mỗi sáng. Admin bật thì mới tạo.
 
 ## ⚠️ BUILDER-CHECKLIST (agent PHẢI hoàn thành trước khi báo DONE)
 
@@ -369,6 +426,6 @@ Làm Web Push + PWA thật cho OPC Hub qua **dịch vụ đẩy sẵn có của 
 - [x] Constraints DO NOT / REUSE / SKIP; trích luật 5 / 11 / 12 / 13, D-103, D-137
 - [x] Parallel: sequential, TIP cuối đợt trả nợ
 - ⚠️ Gap:
-  - D-137 ghi "5 loại đẩy" nhưng 2 loại (`need`, `store`) và mốc 1 giờ chưa có nguồn thông báo. TIP mặc định chỉ đẩy 3 loại đang có (Q-V46-816-1, 2); cần owner xác nhận.
+  - Owner chọn làm đủ 5 loại + mốc 1 giờ, nên TIP lên cỡ XL (thêm 3 nguồn thông báo). Builder có thể tách commit theo nguồn (push core → need → event 1h → store digest) trong cùng nhánh, không tách TIP.
   - Gửi đẩy thật tới trình duyệt chỉ kiểm được bằng tay sau khi owner có VAPID key; test tự động dùng stub.
   - iOS chỉ nhận khi đã thêm vào màn hình chính (16.4+); không có thiết bị iOS để kiểm tự động.
