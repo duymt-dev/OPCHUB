@@ -12,7 +12,10 @@ export const appNotifyPatchSchema = z.strictObject({
   pwa: z.boolean().optional(),
   push: push.partial().optional(),
 });
-export const appNotifyTestResultSchema = z.strictObject({ ok: z.literal(true) });
+export const appNotifyTestResultSchema = z.strictObject({
+  ok: z.literal(true),
+  deviceCount: z.number().int().min(0),
+});
 export type AppNotifySettings = z.infer<typeof appNotifySettingsSchema>;
 export type AppNotifyPatch = z.infer<typeof appNotifyPatchSchema>;
 export const DEFAULT_APP_NOTIFY: AppNotifySettings = {

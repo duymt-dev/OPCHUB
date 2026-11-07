@@ -155,5 +155,27 @@
     "loggedOut": "Telah log keluar dari {n} peranti lain",
     "left": "Telah keluar dari {name}",
     "failed": "Tidak dapat dilaksanakan, sila cuba lagi"
+  },
+  "push": {
+    "device": "Peranti ini",
+    "heading": "Peranti ini",
+    "loading": "Menyemak peranti…",
+    "unsupported": "Pelayar tidak disokong",
+    "ios": "Tambahkan OPC Hub ke skrin utama untuk menerima pemberitahuan",
+    "denied": "Disekat dalam pelayar",
+    "off": "Belum diaktifkan pada peranti ini",
+    "on": "Diaktifkan pada peranti ini",
+    "enable": "Aktifkan pemberitahuan pada peranti ini",
+    "disable": "Nyahaktifkan pada peranti ini",
+    "tab": "Pemberitahuan",
+    "kinds": "Jenis pemberitahuan push",
+    "msg": "Mesej kumpulan baharu",
+    "need": "Keperluan yang sepadan dengan kedai",
+    "renew": "Peringatan pembaharuan keahlian",
+    "event": "Acara akan datang",
+    "store": "Paparan dan hubungan kedai",
+    "adminOff": "Pentadbir mematikan jenis ini",
+    "failed": "Tidak dapat mengemas kini pemberitahuan",
+    "retry": "Cuba lagi"
   }
 }

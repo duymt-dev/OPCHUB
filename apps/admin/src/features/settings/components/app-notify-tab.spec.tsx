@@ -13,6 +13,7 @@ vi.mock('../app-notify-api', async (original) => ({
   fetchAppNotify: vi.fn(),
   saveAppNotify: vi.fn(),
   testAppNotify: vi.fn(),
+  fetchDeviceConfig: vi.fn(),
 }));
 const mount = () =>
   render(
@@ -34,7 +35,12 @@ beforeEach(() => {
   vi.clearAllMocks();
   vi.mocked(api.fetchAppNotify).mockResolvedValue(structuredClone(DEFAULT_APP_NOTIFY));
   vi.mocked(api.saveAppNotify).mockResolvedValue(structuredClone(DEFAULT_APP_NOTIFY));
-  vi.mocked(api.testAppNotify).mockResolvedValue({ ok: true });
+  vi.mocked(api.testAppNotify).mockResolvedValue({ ok: true, deviceCount: 0 });
+  vi.mocked(api.fetchDeviceConfig).mockResolvedValue({
+    enabled: false,
+    vapidPublicKey: '',
+    kinds: DEFAULT_APP_NOTIFY.push,
+  });
 });
 afterEach(cleanup);
 describe('REQ-629 app settings draft only, D-125', () => {

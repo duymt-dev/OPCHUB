@@ -1,0 +1,11 @@
+DROP TABLE push_deliveries;
+DROP TABLE push_dispatches;
+DROP TABLE push_preferences;
+DROP TABLE push_subscriptions;
+DROP TABLE need_match_notifications;
+DROP TABLE store_digest_runs;
+DROP INDEX store_daily_views_digest;
+DROP INDEX stores_need_audience_province;
+DROP INDEX stores_need_audience_field;
+DROP INDEX events_remind_1h_due;
+ALTER TABLE events DROP COLUMN reminded_1h_at;

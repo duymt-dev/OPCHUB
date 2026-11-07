@@ -19,6 +19,9 @@ import {
   type StorageProvider,
   type TaxLookupProvider,
   VietqrTaxProvider,
+  FakePushProvider,
+  WebPushProvider,
+  type PushProvider,
 } from '@opchub/integrations';
 import { ENV, type Env } from '../config';
 
@@ -29,6 +32,7 @@ export const TAX_LOOKUP = Symbol('TAX_LOOKUP_PROVIDER');
 export const STORAGE = Symbol('STORAGE_PROVIDER');
 export const SSO = Symbol('SSO_PROVIDER');
 export const LLM = Symbol('LLM_PROVIDER');
+export const PUSH = Symbol('PUSH_PROVIDER');
 
 const logger = new Logger('Integrations');
 
@@ -115,6 +119,22 @@ function sso(env: Env): SsoProvider {
   return new FakeSsoProvider();
 }
 
+function push(env: Env): PushProvider {
+  if (
+    env.PUSH_PROVIDER === 'webpush' &&
+    env.VAPID_PUBLIC_KEY &&
+    env.VAPID_PRIVATE_KEY &&
+    env.VAPID_SUBJECT
+  ) {
+    return new WebPushProvider({
+      publicKey: env.VAPID_PUBLIC_KEY,
+      privateKey: env.VAPID_PRIVATE_KEY,
+      subject: env.VAPID_SUBJECT,
+    });
+  }
+  return new FakePushProvider();
+}
+
 @Global()
 @Module({
   providers: [
@@ -123,7 +143,8 @@ function sso(env: Env): SsoProvider {
     { provide: TAX_LOOKUP, inject: [ENV], useFactory: tax },
     { provide: STORAGE, inject: [ENV], useFactory: storage },
     { provide: SSO, inject: [ENV], useFactory: sso },
+    { provide: PUSH, inject: [ENV], useFactory: push },
   ],
-  exports: [MAIL, BANK, TAX_LOOKUP, STORAGE, SSO],
+  exports: [MAIL, BANK, TAX_LOOKUP, STORAGE, SSO, PUSH],
 })
 export class IntegrationsModule {}

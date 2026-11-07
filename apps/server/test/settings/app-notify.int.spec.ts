@@ -3,14 +3,23 @@ import { appNotifySettingsSchema, DEFAULT_APP_NOTIFY } from '@opchub/shared/api-
 import { AppSettingsService } from '@/modules/settings';
 import { tokenOf } from '../factories/group.factory';
 import { createUser } from '../factories/user.factory';
-import { createTestApp, type TestApp } from '../setup/test-app';
-describe('REQ-629 D-125 app notification configuration only', () => {
+import type { TestApp } from '../setup/test-app';
+import { PushDispatchService } from '@/modules/notification';
+import {
+  clearPushFixtures,
+  device,
+  pushTestApp,
+  setPushSettings,
+} from '../notification/push-test.helpers';
+describe('REQ-629 D-137 app notification configuration and device test', () => {
   let t: TestApp, token: string, denied: string, id: string;
   let previous: unknown;
+  let fixture: Awaited<ReturnType<typeof pushTestApp>>;
   const path = '/admin/settings/app';
   beforeAll(async () => {
-    t = await createTestApp();
-    previous = (await t.prisma.db.appSetting.findUniqueOrThrow({ where: { key: 'app' } })).value;
+    fixture = await pushTestApp();
+    t = fixture.t;
+    previous = fixture.previous;
     await t.prisma.db.appSetting.update({
       where: { key: 'app' },
       data: { value: DEFAULT_APP_NOTIFY },
@@ -28,6 +37,7 @@ describe('REQ-629 D-125 app notification configuration only', () => {
       data: { value: appNotifySettingsSchema.parse(previous) },
     });
     await t.app.get(AppSettingsService).invalidate('app');
+    await clearPushFixtures(t, [id]);
     await t.prisma.db.notification.deleteMany({ where: { userId: id } });
     await t.close();
   });
@@ -85,10 +95,33 @@ describe('REQ-629 D-125 app notification configuration only', () => {
       await t.prisma.db.auditLog.count({ where: { actorId: id, action: 'settings.app' } }),
     ).toBe(2);
   });
-  it('test creates only acting Admin in-app notification and audit, no external queue', async () => {
+  it('test creates acting Admin notification audit and high urgency push to admin devices only', async () => {
+    await setPushSettings(t, {
+      ...DEFAULT_APP_NOTIFY,
+      push: { msg: false, need: false, renew: false, event: false, store: false },
+    });
+    await t.prisma.db.pushSubscription.createMany({
+      data: [
+        {
+          realm: 'admin',
+          userId: id,
+          endpoint: device(`${id}-admin`).endpoint,
+          p256dh: 'test',
+          auth: 'test',
+        },
+        {
+          realm: 'member',
+          userId: id,
+          endpoint: device(`${id}-member`).endpoint,
+          p256dh: 'test',
+          auth: 'test',
+        },
+      ],
+    });
     const before = await t.prisma.db.outboxEvent.count();
     const response = await t.call(path + '/test', { method: 'POST', token });
     expect(response.status).toBe(201);
+    expect(await response.json()).toEqual({ ok: true, deviceCount: 1 });
     expect(
       await t.prisma.db.notification.findMany({
         where: { userId: id },
@@ -104,6 +137,16 @@ describe('REQ-629 D-125 app notification configuration only', () => {
     expect(
       await t.prisma.db.auditLog.count({ where: { actorId: id, action: 'settings.app_test' } }),
     ).toBe(1);
-    expect(await t.prisma.db.outboxEvent.count()).toBe(before);
+    expect(await t.prisma.db.outboxEvent.count()).toBe(before + 1);
+    const note = await t.prisma.db.notification.findFirstOrThrow({
+      where: { userId: id },
+      select: { id: true },
+    });
+    await t.app.get(PushDispatchService).send([note.id]);
+    expect(fixture.provider.sent).toHaveLength(1);
+    expect(fixture.provider.sent[0]?.options.urgency).toBe('high');
+    await t.prisma.db.pushSubscription.deleteMany({ where: { realm: 'admin', userId: id } });
+    const noDevice = await t.call(path + '/test', { method: 'POST', token });
+    expect(await noDevice.json()).toEqual({ ok: true, deviceCount: 0 });
   });
 });

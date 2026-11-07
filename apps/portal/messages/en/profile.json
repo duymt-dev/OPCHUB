@@ -155,5 +155,27 @@
     "loggedOut": "Signed out of {n} other devices",
     "left": "Left {name}",
     "failed": "Action failed, please try again"
+  },
+  "push": {
+    "device": "This device",
+    "heading": "This device",
+    "loading": "Checking device…",
+    "unsupported": "Browser not supported",
+    "ios": "Add OPC Hub to your home screen to receive notifications",
+    "denied": "Blocked in the browser",
+    "off": "Not enabled on this device",
+    "on": "Enabled on this device",
+    "enable": "Enable notifications on this device",
+    "disable": "Disable on this device",
+    "tab": "Notifications",
+    "kinds": "Push notification types",
+    "msg": "New group messages",
+    "need": "Needs matching your store",
+    "renew": "Membership renewal reminders",
+    "event": "Upcoming events",
+    "store": "Store views and contacts",
+    "adminOff": "An administrator disabled this type",
+    "failed": "Unable to update notifications",
+    "retry": "Retry"
   }
 }

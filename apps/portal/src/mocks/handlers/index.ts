@@ -47,3 +47,5 @@ import { affiliateDemoHandlers } from './affiliate-demo';
 handlers.unshift(...affiliateDemoHandlers);
 
 handlers.push(...searchHandlers);
+handlers.push(...pushHandlers);
+import { pushHandlers } from './push';

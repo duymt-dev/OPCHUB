@@ -5,6 +5,12 @@ import { QUEUES } from '@opchub/shared/queues';
  * nhiều worker cùng khởi động vẫn chỉ một lịch.
  */
 export const SCHEDULES = [
+  {
+    id: 'store-digest',
+    queue: QUEUES.scheduler,
+    name: 'storeDigest',
+    repeat: { pattern: '5 8 * * *', tz: 'Asia/Ho_Chi_Minh' },
+  },
   { id: 'bot-reply-scan', queue: QUEUES.bot, name: 'replyScan', repeat: { every: 20000 } },
   { id: 'bot-tick', queue: QUEUES.bot, name: 'tick', repeat: { every: 10000 } },
   {

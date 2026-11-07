@@ -16,3 +16,79 @@ model Notification {
   @@index([userId, createdAt(sort: Desc), id(sort: Desc)])
   @@map("notifications")
 }
+
+/// D-52: realm distinguishes members/admins; user_id deliberately has no FK.
+model PushSubscription {
+  id            String    @id @default(uuid(7))
+  realm         String
+  userId        String    @map("user_id")
+  endpoint      String    @unique
+  p256dh        String
+  auth          String
+  userAgent     String?   @map("user_agent")
+  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  lastSuccessAt DateTime? @map("last_success_at") @db.Timestamptz(6)
+  failureCount  Int       @default(0) @map("failure_count")
+  deliveries    PushDelivery[]
+
+  @@index([realm, userId, createdAt(sort: Desc), id(sort: Desc)], map: "push_subscriptions_owner")
+  /// COALESCE(last_success_at,created_at) cleanup index is handwritten.
+  @@map("push_subscriptions")
+}
+
+model PushPreference {
+  realm     String
+  userId    String   @map("user_id")
+  kinds     Json
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@id([realm, userId])
+  @@map("push_preferences")
+}
+
+/// Persisted intent survives notification retention, so replay cannot create a second push.
+model PushDispatch {
+  notificationId String   @id @map("notification_id")
+  realm          String
+  kind           String
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  deliveries     PushDelivery[]
+
+  @@map("push_dispatches")
+}
+
+model PushDelivery {
+  notificationId String    @map("notification_id")
+  subscriptionId String    @map("subscription_id")
+  leaseOwner     String?   @map("lease_owner")
+  leaseAttempt   Int       @default(0) @map("lease_attempt")
+  leaseUntil     DateTime? @map("lease_until") @db.Timestamptz(6)
+  sentAt         DateTime? @map("sent_at") @db.Timestamptz(6)
+  terminalAt     DateTime? @map("terminal_at") @db.Timestamptz(6)
+  dispatch       PushDispatch @relation(fields: [notificationId], references: [notificationId], onDelete: Cascade)
+  subscription   PushSubscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  @@id([notificationId, subscriptionId])
+  @@index([subscriptionId], map: "push_deliveries_subscription")
+  /// Partial lease-owner index is handwritten.
+  @@map("push_deliveries")
+}
+
+/// Notification deduplication ledger, not a second user/need domain relationship.
+model NeedMatchNotification {
+  needId    String   @map("need_id")
+  userId    String   @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@id([needId, userId])
+  @@map("need_match_notifications")
+}
+
+model StoreDigestRun {
+  day         DateTime  @id @db.Date
+  cursor      String    @default("")
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  completedAt DateTime? @map("completed_at") @db.Timestamptz(6)
+
+  @@map("store_digest_runs")
+}

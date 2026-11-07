@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { ENV, type Env } from '@/common/config';
 import { appNotifySettingsSchema, type AppNotifyPatch } from '@opchub/shared/api-domains';
 import { AuditService } from '@/common/audit';
 import { PrismaService } from '@/common/prisma/prisma.service';
-import { NotificationService } from '@/modules/notification';
+import { NotificationService, PushSubscriptionRepository } from '@/modules/notification';
 import { AppSettingsService } from '../app-settings.service';
 interface Actor {
   id: string;
@@ -15,6 +16,8 @@ export class AppNotifyService {
     private readonly settings: AppSettingsService,
     private readonly audit: AuditService,
     private readonly notifications: NotificationService,
+    private readonly devices: PushSubscriptionRepository,
+    @Inject(ENV) private readonly env: Env,
   ) {}
   get() {
     return this.settings.app();
@@ -46,6 +49,7 @@ export class AppNotifyService {
     return after;
   }
   async test(actor: Actor) {
+    const deviceCount = await this.devices.count('admin', actor.id);
     await this.prisma.db.$transaction((tx) =>
       this.audit.log(tx, {
         actorId: actor.id,
@@ -60,12 +64,14 @@ export class AppNotifyService {
     await this.notifications.notify([
       {
         userId: actor.id,
+        realm: 'admin',
+        push: 'test',
         type: 'system',
         title: 'Thông báo thử từ OPC Hub',
         body: 'Thông báo đẩy đang hoạt động trên thiết bị của bạn.',
-        link: '',
+        link: `${new URL(this.env.ADMIN_URL).pathname.replace(/\/$/, '')}/settings?tab=app`,
       },
     ]);
-    return { ok: true as const };
+    return { ok: true as const, deviceCount };
   }
 }

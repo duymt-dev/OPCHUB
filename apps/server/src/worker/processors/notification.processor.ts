@@ -18,7 +18,7 @@ export class NotificationProcessor implements OnApplicationBootstrap {
   ) {}
 
   onApplicationBootstrap(): void {
-    this.relay.register('chat.mentioned', (p) => this.handler.chatMentioned(p));
+    this.relay.registerWithId('chat.mentioned', (p, id) => this.handler.chatMentioned(p, id));
     this.relay.register('group.joined', (p) => this.handler.groupJoined(p));
     this.relay.register('group.members_assigned', (p) => this.handler.membersAssigned(p));
     this.relay.register('group.owner_changed', (p) => this.handler.ownerChanged(p));
@@ -27,7 +27,9 @@ export class NotificationProcessor implements OnApplicationBootstrap {
     // D-113 (F4): email biên nhận phí thành viên / Gói Gọi vốn
     this.relay.register('membership_fee.confirmed', (p) => this.receipt.feeConfirmed(p));
     this.relay.register('fundraising.paid', (p) => this.receipt.fundraisingPaid(p));
-    this.relay.register('membership_fee.reminded', (p) => this.handler.feeReminded(p));
+    this.relay.registerWithId('membership_fee.reminded', (p, id) =>
+      this.handler.feeReminded(p, id),
+    );
     this.relay.register('event.registered', (p) => this.handler.eventRegistered(p));
     this.relay.register('event.registered', (p) => this.eventMail.registered(p));
     this.relay.register('fundraising.paid', (p) => this.fundraising.paid(p));

@@ -23,7 +23,9 @@ export class EventProcessor implements OnApplicationBootstrap {
   ) {}
 
   onApplicationBootstrap(): void {
-    this.relay.register('event.reminder_due', (p) => this.mail.reminder(p));
+    this.relay.register('event.reminder_due', async (p) => {
+      if (p.window === '24h') await this.mail.reminder(p);
+    });
     this.relay.register('event.reminder_due', (p) => this.notify.eventReminder(p));
     this.workers.start(
       QUEUES.scheduler,

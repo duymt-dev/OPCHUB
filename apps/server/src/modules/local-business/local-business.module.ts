@@ -1,4 +1,9 @@
 import { NeedSearchService } from './services/need-search.service';
+import { NotificationCoreModule } from '@/modules/notification';
+import { NeedMatchAudienceRepository } from './repositories/need-match-audience.query';
+import { StoreDigestRepository } from './repositories/store-digest.query';
+import { NeedMatchNotifyHandler } from './services/need-match-notify.handler';
+import { StoreDigestService } from './services/store-digest.service';
 import { StoreSearchService } from './services/store-search.service';
 import { NeedSearchRepository } from './repositories/need-search.query';
 import { StoreSearchRepository } from './repositories/store-search.query';
@@ -29,6 +34,10 @@ import { StoreMediaService } from './services/store-media.service';
 import { StoreOwnerService } from './services/store-owner.service';
 
 const services = [
+  NeedMatchAudienceRepository,
+  StoreDigestRepository,
+  NeedMatchNotifyHandler,
+  StoreDigestService,
   StorePublicService,
   StorePublicRepository,
   NeedMatchRepository,
@@ -53,7 +62,11 @@ const services = [
 ];
 
 /** V4-608 Gian hàng + V4-609 Nhu cầu địa phương (REQ-510/511, D-75, D-84) — dùng chung api + worker */
-@Module({ imports: [AccountCoreModule, UploadsCoreModule], providers: services, exports: services })
+@Module({
+  imports: [AccountCoreModule, UploadsCoreModule, NotificationCoreModule],
+  providers: services,
+  exports: services,
+})
 export class LocalBusinessCoreModule {}
 
 @Module({
