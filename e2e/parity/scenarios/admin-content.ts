@@ -13,6 +13,7 @@ import {
 } from '../steps';
 import type { Scenario, StepCtx } from '../types';
 import { row, tickRow } from './admin-members';
+import { settleDrawerScroll, settleScrollAtTop } from '../scroll-position';
 
 /** Admin D-42 → D-65: Nội dung & Sự kiện, Dự án, Nhà đầu tư, Dịch vụ */
 
@@ -58,6 +59,7 @@ export const ADMIN_CONTENT: Scenario[] = [
   { id: 'D-42', name: 'Sự kiện · lưới', start: 'admin', fullPage: true, steps: toEvents },
   {
     id: 'D-43',
+    beforeCapture: ({ page }) => settleScrollAtTop(page),
     name: 'Sự kiện · danh sách',
     start: 'admin',
     fullPage: true,
@@ -68,6 +70,10 @@ export const ADMIN_CONTENT: Scenario[] = [
   },
   {
     id: 'D-44',
+    beforeCapture: async ({ page }) => {
+      await settleScrollAtTop(page);
+      await settleDrawerScroll(page, page.getByText('Check-in tất cả', { exact: true }).first());
+    },
     name: 'Sự kiện · Đã đầy → chi tiết sự kiện (Demo Day)',
     start: 'admin',
     fullPage: true,

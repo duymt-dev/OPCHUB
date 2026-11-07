@@ -1,5 +1,6 @@
 import { choose, nav, press, resetScroll, tap, tick, type, waitText } from '../steps';
 import type { Scenario, StepCtx } from '../types';
+import { settleScrollAtTop } from '../scroll-position';
 
 /** Portal P-79 → P-95: Gói dịch vụ, thanh toán phí, Hồ sơ */
 
@@ -248,6 +249,7 @@ export const PORTAL_ACCOUNT: Scenario[] = [
   },
   {
     id: 'P-98',
+    beforeCapture: ({ page }) => settleScrollAtTop(page),
     demo: 'affiliate',
     name: 'Portal · Affiliate · Lịch sử nhận tiền',
     start: 'user',

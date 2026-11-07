@@ -4,6 +4,7 @@ import { ACCOUNTS, choose, nav, tap, waitText } from '../steps';
 import type { Scenario, StepCtx } from '../types';
 import { row } from './admin-members';
 import { PORTAL_PROJECTS } from './portal-projects';
+import { settleScrollAtTop } from '../scroll-position';
 
 /** Same real UI action on each side; retain the original default scenarios and their raw diffs. */
 async function renewOwner(c: StepCtx) {
@@ -39,6 +40,10 @@ export const PROJECT_RENEWAL: Scenario[] = PORTAL_PROJECTS.filter((s) =>
   name: `${s.name} · sau khi Admin ghi nhận phí chủ p4`,
   start: 'admin',
   demo: 'projects',
+  beforeCapture: async (c) => {
+    await s.beforeCapture?.(c);
+    await settleScrollAtTop(c.page);
+  },
   note: 'Additional full-screen comparison after identical fee-activation UI actions. Default D-109 screenshots remain unchanged.',
   steps: async (c) => {
     await renewOwner(c);

@@ -12,6 +12,12 @@ import {
   waitText,
 } from '../steps';
 import type { Scenario, StepCtx } from '../types';
+import { settleInnerScroll, settleScrollAtTop } from '../scroll-position';
+
+async function settledChat(c: StepCtx) {
+  await settleScrollAtTop(c.page);
+  await settleInnerScroll(c.page, c.page.getByText(/^Chào mừng đến #/).first(), 'bottom');
+}
 
 /** Portal P-28 → P-48: Chat nhóm */
 
@@ -58,6 +64,7 @@ export const PORTAL_CHAT: Scenario[] = [
   },
   {
     id: 'P-30',
+    beforeCapture: settledChat,
     name: 'Chat · đổi nhóm',
     start: 'user',
     steps: async (c) => {
@@ -67,6 +74,7 @@ export const PORTAL_CHAT: Scenario[] = [
   },
   {
     id: 'P-34',
+    beforeCapture: settledChat,
     name: 'Chat · đã gửi tin',
     start: 'user',
     steps: async (c) => {

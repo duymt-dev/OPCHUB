@@ -28,6 +28,7 @@ export const PORTAL_MY_REGION: Scenario[] = [
       await nav(c, 'Mạng lưới Affiliate');
       await c.page.waitForLoadState('networkidle');
       await tick(c, 1000);
+      await waitText(c, 'Bạn là Giám đốc Vùng');
       await c.page.getByRole('button', { name: 'Xem Vùng của tôi', exact: true }).click();
       await waitText(c, 'Phần được chia theo năm của khách');
     },
