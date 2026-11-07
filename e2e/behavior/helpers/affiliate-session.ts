@@ -5,7 +5,28 @@ export async function signInAffiliate(page: Page, origin: string, email: string,
   await page.goto(`${origin}/login`);
   await page.locator('input[autocomplete=username], input[type=email]').fill(email);
   await page.locator('input[type=password]').fill(password);
-  await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
+  const loginPath =
+    new URL(origin).origin === new URL(ADMIN_URL).origin
+      ? '/v1/admin/auth/login'
+      : '/v1/auth/login';
+  const [response] = await Promise.all([
+    page.waitForResponse(
+      (r) => r.request().method() === 'POST' && new URL(r.url()).pathname === loginPath,
+    ),
+    page.getByRole('button', { name: 'Đăng nhập', exact: true }).click(),
+  ]);
+  expect(
+    response.status(),
+    response.status() === 429
+      ? 'Admin login was throttled (429); preserve the production throttle'
+      : 'Admin login must succeed before navigation',
+  ).toBeGreaterThanOrEqual(200);
+  expect(
+    response.status(),
+    response.status() === 429
+      ? 'Login was throttled (429); preserve the production throttle'
+      : 'Login must return 2xx before navigation',
+  ).toBeLessThan(300);
   await expect(page).not.toHaveURL(/\/login$/);
   await page.goto(`${origin}/affiliate`);
   await expect(

@@ -17,6 +17,7 @@ import { suppressions } from './unsubscribe';
 import { conflict, iso, MOCK_NOW, notFound, ok, type MockResult } from './util';
 import { registrationMailLog } from './registration/mail';
 import { mockRenewalMailLog } from './renewal';
+import { mockRegionalMailLog } from './regional-mail';
 
 /**
  * Admin Marketing (D-78, D-79): chiến dịch email, nhật ký gửi, mẫu email. WeakMap theo MockDb
@@ -186,6 +187,7 @@ export function estimateRecipients(audience: CampaignAudience, groupIds: string[
 
 export const listCampaigns = (): Campaign[] => marketingState().campaigns;
 export const listMailLog = (): MailLogRow[] => [
+  ...mockRegionalMailLog(),
   ...mockRenewalMailLog(),
   ...registrationMailLog(),
   ...marketingState().log,

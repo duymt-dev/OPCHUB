@@ -1,25 +1,41 @@
-import { readdirSync, readFileSync } from 'node:fs';
+import { readdir, readFile } from 'node:fs/promises';
 import { resolve, join } from 'node:path';
 import * as ts from 'typescript';
 import { describe, expect, it } from 'vitest';
 import { methodDecoratorMap } from './controller-decorators.audit';
 import { adminAuditManifest, type AdminAuditEntry } from './admin-audit-manifest';
 
-function files(dir: string): string[] {
-  return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
-    const name = join(dir, entry.name);
-    return entry.isDirectory()
-      ? files(name)
-      : name.endsWith('.ts') && !name.endsWith('.spec.ts')
-        ? [name]
-        : [];
-  });
+async function sources(dir: string): Promise<{ path: string; text: string }[]> {
+  const pending = [dir];
+  const paths: string[] = [];
+  while (pending.length) {
+    const directory = pending.pop();
+    if (!directory) continue;
+    for (const entry of await readdir(directory, { withFileTypes: true })) {
+      const path = join(directory, entry.name);
+      if (entry.isDirectory()) pending.push(path);
+      else if (path.endsWith('.ts') && !path.endsWith('.spec.ts')) paths.push(path);
+    }
+  }
+  const result: { path: string; text: string }[] = [];
+  // Bound open file handles even on Windows and read every source exactly once.
+  for (let offset = 0; offset < paths.length; offset += 8) {
+    result.push(
+      ...(await Promise.all(
+        paths.slice(offset, offset + 8).map(async (path) => ({
+          path,
+          text: await readFile(path, 'utf8'),
+        })),
+      )),
+    );
+  }
+  return result;
 }
 
 /** Flat controllers and class-level Admin decorators count as well as /controllers/. */
 export function adminWriteRoutes(source: string): string[] {
   const file = ts.createSourceFile('controller.ts', source, ts.ScriptTarget.Latest, true);
-  const decorators = methodDecoratorMap(source),
+  const decorators = methodDecoratorMap(file),
     result: string[] = [];
   const visit = (node: ts.Node): void => {
     if (ts.isMethodDeclaration(node) && ts.isClassDeclaration(node.parent)) {
@@ -58,13 +74,13 @@ function gaps(
 }
 
 describe('REQ-624 BR-485 Admin audit manifest', () => {
-  it('covers every Admin write route and references actual production action expressions', () => {
-    const all = files(resolve('src'));
+  it('covers every Admin write route and references actual production action expressions', async () => {
+    const all = await sources(resolve('src'));
     const routes = all
-      .filter((p) => p.endsWith('.controller.ts'))
-      .flatMap((p) => adminWriteRoutes(readFileSync(p, 'utf8')));
+      .filter((p) => p.path.endsWith('.controller.ts'))
+      .flatMap((p) => adminWriteRoutes(p.text));
     expect(routes.length).toBeGreaterThan(100);
-    const source = all.map((p) => readFileSync(p, 'utf8')).join('\n');
+    const source = all.map((p) => p.text).join('\n');
     expect(gaps(routes, adminAuditManifest, source)).toEqual({
       missing: [],
       stale: [],

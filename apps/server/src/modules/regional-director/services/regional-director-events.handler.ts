@@ -29,7 +29,7 @@ export class RegionalDirectorEventsHandler {
     await this.prisma.db.$transaction((tx) =>
       this.mail.requestOnce(tx, `regional-mail-${id}`, {
         to: member.email,
-        kind: 'regional_director',
+        kind: 'regional_director_appoint',
         ...mail,
       }),
     );
@@ -52,7 +52,7 @@ export class RegionalDirectorEventsHandler {
     await this.prisma.db.$transaction((tx) =>
       this.mail.requestOnce(tx, `regional-mail-${id}`, {
         to: member.email,
-        kind: 'regional_director',
+        kind: 'regional_director_revoke',
         ...mail,
       }),
     );

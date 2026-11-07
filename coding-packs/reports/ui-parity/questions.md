@@ -941,3 +941,26 @@ Owner chốt toàn bộ phương án mặc định Q-V46-807-1 → 5, Q808-1 →
 - Owner approved `bot.processor.ts` preserving terminal IntegrationError as cause, without changing failure/retry semantics; also approved unit Vitest excluding integration suffixes while the integration project still runs all cases with DB guards.
 - Owner additionally approved updating the old RBAC matrix's exact message expectation on only POST `/admin/gdv`, PATCH `/admin/gdv/:region` and DELETE `/admin/gdv/:region`; status, code, permission matrix and generic text on other routes remain asserted. Extra explicit LLM overrides discovered in four reply/dashboard integration files follow Q5, with all their existing assertions unchanged.
 - No new layout or business deviation proposed by813. D-134 parity categories remain data / approved D-xx / genuine UI defect, not a blanket failure label.
+
+## TIP-V46-814 — owner decisions and execution exceptions
+
+- Q1: if no prototype UI route can expose the registration password/welcome state, retain only P05/P100/P101/P102 viewport waivers, with trace; do not inject state, modify prototype or add unreachable markers. Real Admin sidebar inspection confirms no Marketing route. D09/D17/D22 are not waived: repair their stale count/pagination journeys and capture again.
+- Q2: exact `opchub_v46_814_chain_test` creation/deletion approved; announced before running. Script must refuse existing/other databases and drop only its owned DB in finally.
+- Q3: new mail kinds/labels “Bổ nhiệm GĐ Vùng” / “Thu hồi GĐ Vùng”; historical `regional_director` keeps “GĐ Vùng”.
+- Q4: after source commit, ten full sequential gates on one SHA; source fix requires restart from gate1. Preparation results are not a substitute.
+- Q5: an unreproduced flake requires20 old-condition attempts, correction of the definitely wrong part and passing A22; otherwise PARTIAL. A13 did reproduce5/5 original count3→0 failures; no nonreproduction exemption claimed for it.
+- Owner reconfirmed private801test/Redis2 and812dev/Redis3, rolling restart only owned813 runtime to814. Original HOLD/native DB/Redis6379 remain untouched.
+- A16 exception approved during execution: use a dedicated single-connection SQL transaction with finally rollback for the bulk test fixtures. Autocommit reproduced a30s timeout in per-row FK cleanup; no Prisma interactive timeout, production timeout, assertion or index change.
+- A21 exception approved after a real failed white-DB replay: historical downs retain enum labels. On owned chain DB only, restore the three retained enum boundaries (preserving defaults/checks/indexes), then redeploy and compare normalized schemas. Keep historical migrations immutable; no enum reconstruction on reused dev/integration DBs.
+
+- Full integration execution exception: owner approved narrow bot-reply-storage.int.spec.ts fixture population of valid indexed trigger/reply rows and post-rollback statistics restoration, retaining every index/Index Only Scan/no Seq Scan assertion and timeout.
+
+- Owner approved narrow bot-reply-worker.int.spec.ts fixture/control isolation and failure diagnostics, preserving real worker pipeline,5s deadline, all assertions and timeouts. Original standalone20/20 did not reproduce the full-sweep failure; inherited-paused fixture separately reproduced the identical poll failure.
+
+- Under the approved worker fixture exception, defer only processor bootstrap until test Redis/state reset; production bootstrap methods then start real workers. External reboot12:02 ended all prior HOLD PIDs; recorded interruption, never claim process continuity or stop reused PIDs.
+
+- Owner approved D44 unified exact-card registration-list journey on app/prototype, keeping drawer assertion/full-page capture/scroll. Native real-registration seed is not full; no production or DB-count fabrication.
+
+- Owner explicitly approved the extra narrow MSW regional membership snapshot + fresh-runtime regression correction ("ok sua di"), retaining existing E2E assertions and backend/business rules. New wire state is restricted to the six regional demo owners; older wire versions reconstruct only absent demo fixture membership, never overwrite explicit left/empty state or replay money effects.
+
+- Final814 outcome on ef7934ff: all10 commands sequential;8 functional gates PASS, both parity lanes complete/classified under D134. Q1 retains8 prototype viewport waivers only,6 D09/D17/D22 waivers resolved. Q5/A18 exact legacy helper20 native attempts not reproduced, definite missing response assertion corrected and final full lanes PASS. External reboot12:02 ended original HOLD; private final runtime/demo/AI restored, native data untouched. Paired-image review belongs to PR review; no auto-merge.

@@ -2,6 +2,7 @@ import type { Locator } from '@playwright/test';
 import { nav, pager, tap, tapLast, tapTitle, waitText } from '../steps';
 import type { Scenario, StepCtx } from '../types';
 import { OVERVIEW_CHART_MASK } from './overview-mask';
+import { settleScrollAtTop } from '../scroll-position';
 
 /** Admin D-02 → D-22: topbar, sidebar, Thành viên, Phí thành viên */
 
@@ -53,6 +54,19 @@ const toFees = async (c: StepCtx) => {
   await nav(c, 'Phí thành viên');
   await waitText(c, 'Phí thành viên hệ thống');
 };
+
+/** Wait for the actual second page, not the obsolete seven/eight-of-eight seed copy. */
+async function pageTwo(c: StepCtx) {
+  const summary = c.page
+    .getByText(/^Hiển thị 1–6 \/ \d+/)
+    .filter({ visible: true })
+    .first();
+  await summary.waitFor();
+  const total = Number((await summary.textContent())?.match(/\/ (\d+)/)?.[1]);
+  if (!Number.isInteger(total) || total <= 6) throw new Error('Missing second-page prerequisite');
+  await pager(c, 2);
+  await waitText(c, `Hiển thị 7–${Math.min(12, total)} / ${total}`);
+}
 
 export const ADMIN_MEMBERS: Scenario[] = [
   {
@@ -118,7 +132,7 @@ export const ADMIN_MEMBERS: Scenario[] = [
     fullPage: true,
     steps: async (c) => {
       await toMembers(c);
-      await tap(c, /^Doanh nghiệp\s*4$/);
+      await tap(c, /^Doanh nghiệp\s*\d+$/);
     },
   },
   { id: 'D-10', name: 'Thành viên · chọn nhiều', start: 'admin', fullPage: true, steps: pickTwo },
@@ -150,6 +164,7 @@ export const ADMIN_MEMBERS: Scenario[] = [
   },
   {
     id: 'D-89',
+    beforeCapture: ({ page }) => settleScrollAtTop(page),
     name: 'Gán vào nhóm · vai trò Giảng viên (GR-R01)',
     start: 'admin',
     steps: async (c) => {
@@ -202,7 +217,7 @@ export const ADMIN_MEMBERS: Scenario[] = [
     name: 'Thành viên · 6/trang, trang 2',
     start: 'admin',
     fullPage: true,
-    note: 'Seed chỉ 8 thành viên; đổi 6 / trang để có trang 2',
+    note: 'Đổi 6 / trang; chờ đúng tổng hiện hành ở mỗi bên',
     steps: async (c) => {
       await toMembers(c);
       // Prototype v4 thêm 7 ô chọn lọc: chọn đúng ô cỡ trang theo option
@@ -212,8 +227,7 @@ export const ADMIN_MEMBERS: Scenario[] = [
         .filter({ has: c.page.locator('option', { hasText: '6 / trang' }) })
         .last()
         .selectOption({ label: '6 / trang' });
-      await pager(c, 2);
-      await waitText(c, /Hiển thị 7–8 \/ 8/);
+      await pageTwo(c);
     },
   },
   { id: 'D-18', name: 'Phí thành viên', start: 'admin', fullPage: true, steps: toFees },
@@ -270,8 +284,7 @@ export const ADMIN_MEMBERS: Scenario[] = [
         .filter({ has: c.page.locator('option', { hasText: '6 / trang' }) })
         .last()
         .selectOption({ label: '6 / trang' });
-      await pager(c, 2);
-      await waitText(c, /Hiển thị 7–8 \/ 8/);
+      await pageTwo(c);
     },
   },
 ];
