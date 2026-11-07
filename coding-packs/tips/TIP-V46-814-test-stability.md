@@ -114,7 +114,7 @@
 1. Mỗi mục làm theo thứ tự: **tái hiện → ghi lỗi gốc → sửa nguyên nhân → chứng minh**.
    - Tái hiện: chạy lặp có kiểm soát, ví dụ `--repeat-each` hoặc tải song song như lúc lỗi.
    - Chứng minh: lặp N lần PASS ở cùng điều kiện tải. N ghi theo từng mục.
-   - Không tái hiện được sau ≥ 20 lần ở điều kiện cũ → ghi "không tái hiện" kèm log, sửa phần **chắc chắn sai** (ví dụ A18 không chờ response), không đoán thêm.
+   - Không tái hiện được sau ≥ 20 lần ở điều kiện cũ → ghi "không tái hiện" kèm log, sửa phần **chắc chắn sai** (ví dụ A18 không chờ response), không đoán thêm. Mục được tính **DONE kèm ghi chú "không tái hiện"** nếu: đủ 20 lần không lỗi + đã sửa phần chắc chắn sai + test đó PASS trong lượt A22 (Q-V46-814-5). Lỗi xuất hiện lại sau này → mở mục nợ mới.
 2. Không: `retries`, `fixme`, `skip`, `unreachable` mới, tăng timeout, nới assertion / ngưỡng, mask, sửa ảnh gốc, `onServer` làm yếu.
 
 ### A13 — vòng đời bot
@@ -226,7 +226,7 @@
 
 | Trường hợp | Xử lý |
 |---|---|
-| Không tái hiện được flake sau ≥ 20 lần | Ghi "không tái hiện" + log; chỉ sửa phần chắc chắn sai; mục ghi PARTIAL, không DONE giả |
+| Không tái hiện được flake sau ≥ 20 lần | Ghi "không tái hiện" + log; sửa phần chắc chắn sai; test PASS trong lượt A22 → DONE kèm ghi chú (Q-V46-814-5), không thì PARTIAL |
 | Sửa A13 / A17 cần đổi hành vi nghiệp vụ | Dừng mục đó, ghi Q-V46-814-n |
 | Prototype không còn đường UI cho A19 | Q-V46-814-1, giữ miễn có lý do, không `unreachable` mới |
 | A22 có lỗi | Sửa → chạy lại từ đầu trên SHA mới |
@@ -267,7 +267,7 @@
   - parity dòng > 3% do dữ liệu / D-xx (đã có nguyên nhân, không ép về 3%)
   - B1 / B2 (816 / 815)
 
-## Câu hỏi chờ owner chốt (builder dùng mặc định nếu chưa có trả lời, ghi `questions.md` › TIP-V46-814)
+## Câu hỏi — **đã chốt theo mặc định** (owner, 07/11/2026; ghi `questions.md` › TIP-V46-814)
 
 - **Q-V46-814-1 Prototype không còn đường nào để chụp P-05 / P-100 → 102.**
   - **Mặc định:** giữ miễn cho các ảnh đó, ghi lý do kèm trace.
@@ -275,7 +275,7 @@
   - Hành vi vẫn được kiểm bằng e2e hiện có.
 - **Q-V46-814-2 DB trắng cho A21.**
   - **Mặc định:** tạo `opchub_v46_814_chain_test` trên Postgres riêng đang dùng cho 801 → 813, xóa ngay sau khi chạy.
-  - Builder hỏi owner trước khi tạo.
+  - **Owner đã duyệt** tạo / xóa đúng DB này; builder vẫn báo trước khi chạy.
 - **Q-V46-814-3 Nhãn mail GĐ Vùng (BR-464).**
   - **Mặc định:**
     - tách thành 2 loại "Bổ nhiệm GĐ Vùng" / "Thu hồi GĐ Vùng" đúng đặc tả;
@@ -284,6 +284,9 @@
 - **Q-V46-814-4 Chạy A22 vào lúc nào.**
   - **Mặc định:** chạy một lần duy nhất sau khi mọi mục đã commit, khoảng 4–5 giờ.
   - Nếu lỗi, sửa rồi chạy lại từ đầu.
+
+- **Q-V46-814-5 Flake không tái hiện được (A13, A18).**
+  - **Chốt:** đủ ≥ 20 lần ở điều kiện cũ không lỗi + sửa phần chắc chắn sai + test PASS trong lượt A22 → mục DONE kèm ghi chú "không tái hiện" (log đính kèm). Không đạt đủ 3 điều kiện → PARTIAL.
 
 ## ⚠️ BUILDER-CHECKLIST (agent PHẢI hoàn thành trước khi báo DONE)
 
@@ -300,7 +303,7 @@
 - [ ] File ≤ trần; không `any` / `@ts-ignore` / `console.*`.
 - [ ] Ghi Q-V46-814-1 → 4 vào `questions.md`; cập nhật `V4.6-progress.md` dòng #14, `V4.6-DEBT.md`, `V4.6-causes.md`, `V4.6-acceptance-cases.md`.
 - [ ] Commit theo mục, `git commit -- <paths>` (cấm `git add -A`). `git status --short` sạch; push; PR `base: dev`; không tự merge. Completion có **git commit SHA**, PR, số thật, mục PARTIAL (nếu có).
-- [ ] KHÔNG báo DONE nếu A22 chưa có lượt xanh cùng SHA hoặc còn mục chưa có bằng chứng.
+- [ ] KHÔNG báo DONE nếu A22 chưa có lượt xanh cùng SHA hoặc còn mục chưa có bằng chứng (mục "không tái hiện" theo Q-V46-814-5 được tính là có bằng chứng).
 
 ---
 
@@ -313,6 +316,6 @@
 - [x] Constraints DO NOT / REUSE / SKIP; trích testing, D-63, D-134, luật 5 / 13
 - [x] Parallel: sequential sau 813, trước 815 / 816
 - ⚠️ Gap:
-  - A13 / A18 là flake theo tải. Nguyên nhân mới là giả thuyết, có thể không tái hiện được; mục đó sẽ ghi PARTIAL có log.
-  - B12 phát hiện mới: nhãn mail GĐ Vùng thiếu so đặc tả, 812 ghi PASS chưa đúng phần này. Cần owner xác nhận Q-V46-814-3.
+  - A13 / A18 là flake theo tải. Nguyên nhân mới là giả thuyết, có thể không tái hiện được; xử lý theo Q-V46-814-5.
+  - B12 phát hiện mới: nhãn mail GĐ Vùng thiếu so đặc tả, 812 ghi PASS chưa đúng phần này. Owner đã chốt tách 2 nhãn (Q-V46-814-3).
   - A22 tốn khoảng 4–5 giờ máy chạy.
