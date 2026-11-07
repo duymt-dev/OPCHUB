@@ -1,3 +1,56 @@
+# TIP-V46-814 — final A17 query plan
+
+Source ef7934ff. The final full2200/2200 integration suite executed this identical production SQL on35000 skewed fixture rows.128-ID recursive keyset pages, partial-index reads and PK cursor/update; no message Seq Scan/Hash Join/new index/planner setting; all stale IDs processed,120 retained;10000 humans/15000 other-room messages unchanged. Six new exact-page/tied-time/idempotence cases and all old persona cases pass.
+
+```text
+A17 hot-room 35000-row EXPLAIN:
+Update on messages m  (cost=4528.92..4608.24 rows=0 width=0) (actual time=516.735..516.740 rows=0 loops=1)
+  Buffers: shared hit=325801 read=182 dirtied=449 written=267
+  InitPlan 5 (returns $6)
+    ->  ProjectSet  (cost=4527.66..4528.51 rows=110 width=32) (actual time=0.154..6.241 rows=9880 loops=1)
+          Buffers: shared hit=3362
+          CTE batches
+            ->  Recursive Union  (cost=466.99..4527.66 rows=11 width=32) (actual time=0.147..5.524 rows=78 loops=1)
+                  Buffers: shared hit=3362
+                  ->  Result  (cost=466.99..467.00 rows=1 width=32) (actual time=0.145..0.146 rows=1 loops=1)
+                        Buffers: shared hit=18
+                        InitPlan 1 (returns $1)
+                          ->  Limit  (cost=226.18..466.99 rows=128 width=55) (actual time=0.096..0.132 rows=128 loops=1)
+                                Buffers: shared hit=18
+                                ->  Index Only Scan using messages_simulated_room_idx on messages  (cost=0.41..26887.10 rows=14291 width=55) (actual time=0.068..0.122 rows=248 loops=1)
+                                      Index Cond: (room_id = '4e2fe184-4a35-446a-b100-db2934d69ac5-g-0-general'::text)
+                                      Heap Fetches: 248
+                                      Buffers: shared hit=18
+                  ->  WorkTable Scan on batches  (cost=0.00..406.05 rows=1 width=32) (actual time=0.068..0.068 rows=1 loops=78)
+                        Filter: (cardinality(ids) = 128)
+                        Rows Removed by Filter: 0
+                        Buffers: shared hit=3344
+                        SubPlan 3
+                          ->  Limit  (cost=8.85..405.80 rows=128 width=55) (actual time=0.013..0.060 rows=127 loops=77)
+                                Buffers: shared hit=3344
+                                InitPlan 2 (returns $3,$4)
+                                  ->  Index Scan using messages_pkey on messages messages_1  (cost=0.42..8.44 rows=1 width=55) (actual time=0.007..0.008 rows=1 loops=77)
+                                        Index Cond: (id = (batches.ids)[cardinality(batches.ids)])
+                                        Buffers: shared hit=308
+                                ->  Index Only Scan using messages_simulated_room_idx on messages messages_2  (cost=0.41..14774.65 rows=4764 width=55) (actual time=0.005..0.045 rows=127 loops=77)
+                                      Index Cond: ((room_id = '4e2fe184-4a35-446a-b100-db2934d69ac5-g-0-general'::text) AND (ROW(created_at, id) < ROW($3, $4)))
+                                      Heap Fetches: 9752
+                                      Buffers: shared hit=3036
+          ->  CTE Scan on batches batches_1  (cost=0.00..0.22 rows=11 width=32) (actual time=0.152..5.754 rows=78 loops=1)
+                Buffers: shared hit=3362
+  ->  Index Scan using messages_pkey on messages m  (cost=0.41..79.74 rows=10 width=22) (actual time=48.357..115.632 rows=9880 loops=1)
+        Index Cond: (id = ANY ($6))
+        Buffers: shared hit=36192
+Planning:
+  Buffers: shared hit=165 read=13
+Planning Time: 9.287 ms
+Trigger for constraint messages_room_id_fkey: time=115.661 calls=9880
+Trigger for constraint messages_persona_id_fkey: time=142.768 calls=9880
+Execution Time: 778.086 ms
+```
+
+## Historical focused plans (superseded)
+
 # TIP-V46-814 ? A17 skewed persona prune
 
 Actual fixture:10000 simulated +10000 member messages in the target room,50 other rooms?300 simulated. Existing integration rows remain; the measured table contains about55028 rows. No index/planner setting added. The same exported SQL fragment is used by production and EXPLAIN.

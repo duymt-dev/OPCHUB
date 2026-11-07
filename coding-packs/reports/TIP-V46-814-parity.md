@@ -1,32 +1,164 @@
-# TIP-V46-814 — parity preparation (not A22)
+# TIP-V46-814 — final parity review
 
-Baseline26 cases:15 pass/11 fail (six missing D09/D17/D22 captures, five threshold-only). Corrected26 cases:24 pass/2 threshold-only, all22 captures complete. Only P-V46-REG remains above3%, unchanged regional ledger data/D131. These preparation measurements used pending branch changes, not a committed single-SHA claim. Both frozen final lanes remain pending.
+Source `ef7934ff528ade7c00ebaf695f0077f2b797065a`; MSW492/native128 fresh captures. MSW433/native78 within3%;59/50 above3% remain reference measurements under D134, not application failures merely for approved decision/data differences. Raw runner stats are preserved in gates/closure JSON. Owner paired-image review remains part of PR review.
 
-## A20 before/after — MSW
+## Capture completeness / waivers
 
-|ID|Viewport|Before|After|Classification|
-|---|---|---|---|---|
-|P-98|1440|1.2109%|1.2109%|Complete; within3%|
-|P-98|390|1.5550%|1.5550%|Complete; within3%|
-|D-44|1440|0.3504%|0.1179%|Complete; within3%|
-|D-44|390|11.0234%|0.3582%|Complete; within3%|
-|P-30|1440|0.2962%|0.2963%|Complete; within3%|
-|P-30|390|3.8872%|0.8819%|Complete; within3%|
-|P-34|1440|1.6799%|0.9592%|Complete; within3%|
-|P-34|390|4.5373%|2.7658%|Complete; within3%|
-|D-43|1440|0.4315%|0.4315%|Complete; within3%|
-|D-43|390|0.4970%|0.5527%|Complete; within3%|
-|D-89|1440|0.2066%|0.2066%|Complete; within3%|
-|D-89|390|0.1091%|0.1051%|Complete; within3%|
-|P-V46-REG|1440|5.7162%|5.7162%|Existing ledger data/D131|
-|P-V46-REG|390|10.3944%|10.3944%|Existing ledger data/D131|
-|P-56-RENEWED|1440|0.1227%|0.1227%|Complete; within3%|
-|P-56-RENEWED|390|0.1645%|0.1645%|Complete; within3%|
+- Repaired D09/D17/D22 at1440/390: all six MSW and native captures completed. These six old viewport waivers are removed.
+- Only P05/P100/P101/P102×2=8 Q1 prototype waivers retained, with real traces; not successful captures. No injected state/new skip/unreachable marker. Existing registry78 MSW/4 selected native unreachable skips unchanged.
+- All affected A20 states P98/D44/P30/P34/D43/D89/PREG/P56-RENEWED completed in both lanes. Scroll normalized on both sides, no new crop/mask/style/threshold/timeout changes. D44 now opens the exact Demo Day card on both sides, retaining drawer readiness/capture scope.
 
-Normalization acts on both sides without masks/crops/style changes. P30/P34 settle the real feed to latest; P98/D43/D89 settle viewport top; D44 settles actual drawer body. PREG adds content readiness; renewed projects settle viewport. Neither preparation run reproduced PREG390/P56-RENEWED390 capture timeouts. Final full proof remains required.
+## New measurement review
 
-## A19
+- MSW D35 mobile3.33% (previous0.42%): inspected both full images. Identical card/content positions; sticky topbar overlays different scroll positions (app aroundy823, prototype aroundy758), plus existing flag-vs-globe owner decision. Not a new page layout change; retain raw measurement and paired images for owner review. Other58 above-threshold MSW rows were already above3% in preparation.
+- Native D43/D44: actual current-date next event is Nov18 while prototype freezes Oct18; DB holds7 real registrations vs prototype120, so hero title/height/status/backdrop differ. Both final D44 drawers are Demo Day. These are data/date reference differences, not missing captures or production layout patches. Other native above-threshold rows remain existing classified differences.
+- Existing settings navigation B16 remains deferred by D137. This TIP does not silently claim to fix it. See [existing causes](ui-parity/V4.6-causes.md) for earlier accepted decisions/data and [closure](evidence/v46-814-closure.json) for all620 rows.
 
-D09/D17/D22×1440/390 all complete within3% after fixing stale count/pagination journeys. Those six old viewport waivers will be removed in814 closure evidence.
+## Paired images (all above3% + affected journeys)
 
-P05/P100/P101/P102: prototype login clears welcome popup; actual Admin sidebar has no Marketing entry. A speculative Admin-mail journey was removed, not replaced by injected state. Fresh unchanged-journey traces record the Q1 owner waiver, not successful captures. Existing behavior tests still verify the app. Eight viewport waivers may remain under Q1; no new skip/unreachable marker.
+|Lane|ID|Width|Diff|Classification|Pair|
+|---|---|---:|---:|---|---|
+|msw|P-121|390|3.2984%|Existing D-xx/data differences retained; see V4.6-causes.md|[app](ui-parity/captures/TIP-V46-814/msw/P-121-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/P-121-390.proto.png)|
+|msw|P-30|1440|0.2963%|Within3%|[app](ui-parity/captures/TIP-V46-814/msw/P-30-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/P-30-1440.proto.png)|
+|msw|P-30|390|0.8819%|Within3%|[app](ui-parity/captures/TIP-V46-814/msw/P-30-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/P-30-390.proto.png)|
+|msw|P-34|1440|0.9592%|Within3%|[app](ui-parity/captures/TIP-V46-814/msw/P-34-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/P-34-1440.proto.png)|
+|msw|P-34|390|2.7658%|Within3%|[app](ui-parity/captures/TIP-V46-814/msw/P-34-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/P-34-390.proto.png)|
+|msw|P-40|390|4.3140%|Existing D-xx/data differences retained; see V4.6-causes.md|[app](ui-parity/captures/TIP-V46-814/msw/P-40-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/P-40-390.proto.png)|
+|msw|P-45|390|3.2984%|Existing D-xx/data differences retained; see V4.6-causes.md|[app](ui-parity/captures/TIP-V46-814/msw/P-45-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/P-45-390.proto.png)|
+|msw|P-55|1440|5.3777%|Existing D-xx/data differences retained; see V4.6-causes.md|[app](ui-parity/captures/TIP-V46-814/msw/P-55-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/P-55-1440.proto.png)|
+|msw|P-55|390|16.9844%|Existing D-xx/data differences retained; see V4.6-causes.md|[app](ui-parity/captures/TIP-V46-814/msw/P-55-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/P-55-390.proto.png)|
+|msw|P-56|1440|3.0252%|Existing D-xx/data differences retained; see V4.6-causes.md|[app](ui-parity/captures/TIP-V46-814/msw/P-56-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/P-56-1440.proto.png)|
+|msw|P-56|390|9.0835%|Existing D-xx/data differences retained; see V4.6-causes.md|[app](ui-parity/captures/TIP-V46-814/msw/P-56-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/P-56-390.proto.png)|
+|msw|P-56-RENEWED|1440|0.1227%|Within3%|[app](ui-parity/captures/TIP-V46-814/msw/P-56-RENEWED-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/P-56-RENEWED-1440.proto.png)|
+|msw|P-56-RENEWED|390|0.1645%|Within3%|[app](ui-parity/captures/TIP-V46-814/msw/P-56-RENEWED-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/P-56-RENEWED-390.proto.png)|
+|msw|P-57|1440|3.3529%|Existing D-xx/data differences retained; see V4.6-causes.md|[app](ui-parity/captures/TIP-V46-814/msw/P-57-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/P-57-1440.proto.png)|
+|msw|P-57|390|11.7119%|Existing D-xx/data differences retained; see V4.6-causes.md|[app](ui-parity/captures/TIP-V46-814/msw/P-57-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/P-57-390.proto.png)|
+|msw|P-59|1440|3.0024%|Existing D-xx/data differences retained; see V4.6-causes.md|[app](ui-parity/captures/TIP-V46-814/msw/P-59-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/P-59-1440.proto.png)|
+|msw|P-59|390|9.2372%|Existing D-xx/data differences retained; see V4.6-causes.md|[app](ui-parity/captures/TIP-V46-814/msw/P-59-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/P-59-390.proto.png)|
+|msw|P-97|1440|4.1819%|Existing D-xx/data differences retained; see V4.6-causes.md|[app](ui-parity/captures/TIP-V46-814/msw/P-97-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/P-97-1440.proto.png)|
+|msw|P-98|1440|1.2109%|Within3%|[app](ui-parity/captures/TIP-V46-814/msw/P-98-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/P-98-1440.proto.png)|
+|msw|P-98|390|1.5550%|Within3%|[app](ui-parity/captures/TIP-V46-814/msw/P-98-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/P-98-390.proto.png)|
+|msw|P-V46-REG|1440|5.7162%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/P-V46-REG-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/P-V46-REG-1440.proto.png)|
+|msw|P-V46-REG|390|10.3944%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/P-V46-REG-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/P-V46-REG-390.proto.png)|
+|msw|D-09|1440|0.2398%|Within3%|[app](ui-parity/captures/TIP-V46-814/msw/D-09-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-09-1440.proto.png)|
+|msw|D-09|390|0.1823%|Within3%|[app](ui-parity/captures/TIP-V46-814/msw/D-09-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-09-390.proto.png)|
+|msw|D-100|1440|11.2252%|Existing D-xx/data differences retained; see V4.6-causes.md|[app](ui-parity/captures/TIP-V46-814/msw/D-100-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-100-1440.proto.png)|
+|msw|D-120-GCFG|390|4.2867%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/D-120-GCFG-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-120-GCFG-390.proto.png)|
+|msw|D-120-GCFG-RO|390|3.9097%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/D-120-GCFG-RO-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-120-GCFG-RO-390.proto.png)|
+|msw|D-120-GDV|390|4.0291%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/D-120-GDV-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-120-GDV-390.proto.png)|
+|msw|D-120-GDV-OPEN|1440|10.6619%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/D-120-GDV-OPEN-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-120-GDV-OPEN-1440.proto.png)|
+|msw|D-120-GDV-OPEN|390|5.7253%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/D-120-GDV-OPEN-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-120-GDV-OPEN-390.proto.png)|
+|msw|D-17|1440|0.2442%|Within3%|[app](ui-parity/captures/TIP-V46-814/msw/D-17-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-17-1440.proto.png)|
+|msw|D-17|390|0.2107%|Within3%|[app](ui-parity/captures/TIP-V46-814/msw/D-17-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-17-390.proto.png)|
+|msw|D-22|1440|0.3807%|Within3%|[app](ui-parity/captures/TIP-V46-814/msw/D-22-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-22-1440.proto.png)|
+|msw|D-22|390|1.0491%|Within3%|[app](ui-parity/captures/TIP-V46-814/msw/D-22-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-22-390.proto.png)|
+|msw|D-35|390|3.3327%|Measurement: same content geometry; transient sticky-header overlay at different scroll positions (paired images); owner review, not an app layout change|[app](ui-parity/captures/TIP-V46-814/msw/D-35-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-35-390.proto.png)|
+|msw|D-39-BULK-RESULT|1440|5.5612%|Existing actual generated-topic/result data|[app](ui-parity/captures/TIP-V46-814/msw/D-39-BULK-RESULT-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-39-BULK-RESULT-1440.proto.png)|
+|msw|D-39-BULK-RESULT|390|8.0435%|Existing actual generated-topic/result data|[app](ui-parity/captures/TIP-V46-814/msw/D-39-BULK-RESULT-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-39-BULK-RESULT-390.proto.png)|
+|msw|D-43|1440|0.4315%|Within3%|[app](ui-parity/captures/TIP-V46-814/msw/D-43-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-43-1440.proto.png)|
+|msw|D-43|390|0.5527%|Within3%|[app](ui-parity/captures/TIP-V46-814/msw/D-43-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-43-390.proto.png)|
+|msw|D-44|1440|0.1179%|Within3%|[app](ui-parity/captures/TIP-V46-814/msw/D-44-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-44-1440.proto.png)|
+|msw|D-44|390|0.3582%|Within3%|[app](ui-parity/captures/TIP-V46-814/msw/D-44-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-44-390.proto.png)|
+|msw|D-66|1440|11.3170%|Existing settings navigation deviation B16 remains deferred by D137|[app](ui-parity/captures/TIP-V46-814/msw/D-66-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-66-1440.proto.png)|
+|msw|D-71|1440|5.4320%|Existing settings navigation deviation B16 remains deferred by D137|[app](ui-parity/captures/TIP-V46-814/msw/D-71-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-71-1440.proto.png)|
+|msw|D-72|1440|5.4320%|Existing settings navigation deviation B16 remains deferred by D137|[app](ui-parity/captures/TIP-V46-814/msw/D-72-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-72-1440.proto.png)|
+|msw|D-73|1440|11.3716%|Existing settings navigation deviation B16 remains deferred by D137|[app](ui-parity/captures/TIP-V46-814/msw/D-73-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-73-1440.proto.png)|
+|msw|D-75|1440|11.4173%|Existing settings navigation deviation B16 remains deferred by D137|[app](ui-parity/captures/TIP-V46-814/msw/D-75-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-75-1440.proto.png)|
+|msw|D-84|1440|6.6533%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/D-84-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-84-1440.proto.png)|
+|msw|D-84|390|3.6616%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/D-84-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-84-390.proto.png)|
+|msw|D-84-AFF|1440|5.9078%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/D-84-AFF-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-84-AFF-1440.proto.png)|
+|msw|D-84-AFF|390|9.6109%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/D-84-AFF-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-84-AFF-390.proto.png)|
+|msw|D-84-AFF-BULK|390|23.6463%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/D-84-AFF-BULK-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-84-AFF-BULK-390.proto.png)|
+|msw|D-84-AFF-Q|390|24.5873%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/D-84-AFF-Q-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-84-AFF-Q-390.proto.png)|
+|msw|D-84-COM-BULK|1440|6.3609%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/D-84-COM-BULK-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-84-COM-BULK-1440.proto.png)|
+|msw|D-84-COM-BULK|390|14.1648%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/D-84-COM-BULK-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-84-COM-BULK-390.proto.png)|
+|msw|D-84-COM-EMPTY|390|6.7203%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/D-84-COM-EMPTY-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-84-COM-EMPTY-390.proto.png)|
+|msw|D-84-COM-PAID|1440|9.7379%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/D-84-COM-PAID-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-84-COM-PAID-1440.proto.png)|
+|msw|D-84-COM-PAID|390|6.4206%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/D-84-COM-PAID-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-84-COM-PAID-390.proto.png)|
+|msw|D-84-COM-PAID-MENU|1440|9.7853%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/D-84-COM-PAID-MENU-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-84-COM-PAID-MENU-1440.proto.png)|
+|msw|D-84-COM-PAID-MENU|390|6.7992%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/D-84-COM-PAID-MENU-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-84-COM-PAID-MENU-390.proto.png)|
+|msw|D-84-COM-RECORDED|1440|6.6382%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/D-84-COM-RECORDED-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-84-COM-RECORDED-1440.proto.png)|
+|msw|D-84-COM-RECORDED|390|4.9417%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/D-84-COM-RECORDED-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-84-COM-RECORDED-390.proto.png)|
+|msw|D-84-COM-RECORDED-MENU|1440|6.6635%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/D-84-COM-RECORDED-MENU-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-84-COM-RECORDED-MENU-1440.proto.png)|
+|msw|D-84-COM-RECORDED-MENU|390|5.1501%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/D-84-COM-RECORDED-MENU-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-84-COM-RECORDED-MENU-390.proto.png)|
+|msw|D-84-POL|1440|3.9462%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/D-84-POL-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-84-POL-1440.proto.png)|
+|msw|D-84-POL|390|7.6953%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/D-84-POL-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-84-POL-390.proto.png)|
+|msw|D-85|390|7.4878%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/D-85-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-85-390.proto.png)|
+|msw|D-85-CUS|1440|4.0030%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/D-85-CUS-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-85-CUS-1440.proto.png)|
+|msw|D-85-CUS|390|16.6189%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/D-85-CUS-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-85-CUS-390.proto.png)|
+|msw|D-85-RATE|390|7.3911%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/msw/D-85-RATE-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-85-RATE-390.proto.png)|
+|msw|D-89|1440|0.2066%|Within3%|[app](ui-parity/captures/TIP-V46-814/msw/D-89-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-89-1440.proto.png)|
+|msw|D-89|390|0.1051%|Within3%|[app](ui-parity/captures/TIP-V46-814/msw/D-89-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-89-390.proto.png)|
+|msw|D-94|1440|3.7284%|Existing D-xx/data differences retained; see V4.6-causes.md|[app](ui-parity/captures/TIP-V46-814/msw/D-94-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-94-1440.proto.png)|
+|msw|D-94|390|5.6447%|Existing D-xx/data differences retained; see V4.6-causes.md|[app](ui-parity/captures/TIP-V46-814/msw/D-94-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-94-390.proto.png)|
+|msw|D-V46-AI|390|6.8696%|D124/D135: no Assistant; actual provider/app state and spend/price controls|[app](ui-parity/captures/TIP-V46-814/msw/D-V46-AI-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-V46-AI-390.proto.png)|
+|msw|D-V46-APP|1440|12.0066%|D124/D135: no Assistant; actual provider/app state and spend/price controls|[app](ui-parity/captures/TIP-V46-814/msw/D-V46-APP-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-V46-APP-1440.proto.png)|
+|msw|D-V46-BANK|1440|12.3292%|D123: OPCHUB transfer prefix; actual bank/transaction data|[app](ui-parity/captures/TIP-V46-814/msw/D-V46-BANK-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-V46-BANK-1440.proto.png)|
+|msw|D-V46-BANK|390|7.7956%|D123: OPCHUB transfer prefix; actual bank/transaction data|[app](ui-parity/captures/TIP-V46-814/msw/D-V46-BANK-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-V46-BANK-390.proto.png)|
+|msw|D-V46-RENEW|1440|11.0705%|D125 +owner805: no Zalo,30/7/1, explicit Save; actual recipient data|[app](ui-parity/captures/TIP-V46-814/msw/D-V46-RENEW-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-V46-RENEW-1440.proto.png)|
+|msw|D-V46-RENEW|390|15.5252%|D125 +owner805: no Zalo,30/7/1, explicit Save; actual recipient data|[app](ui-parity/captures/TIP-V46-814/msw/D-V46-RENEW-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/msw/D-V46-RENEW-390.proto.png)|
+|native|P-30|1440|0.3103%|Within3%|[app](ui-parity/captures/TIP-V46-814/native/P-30-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/P-30-1440.proto.png)|
+|native|P-30|390|0.8990%|Within3%|[app](ui-parity/captures/TIP-V46-814/native/P-30-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/P-30-390.proto.png)|
+|native|P-34|1440|1.0133%|Within3%|[app](ui-parity/captures/TIP-V46-814/native/P-34-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/P-34-1440.proto.png)|
+|native|P-34|390|2.7941%|Within3%|[app](ui-parity/captures/TIP-V46-814/native/P-34-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/P-34-390.proto.png)|
+|native|P-56-RENEWED|1440|1.8994%|Within3%|[app](ui-parity/captures/TIP-V46-814/native/P-56-RENEWED-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/P-56-RENEWED-1440.proto.png)|
+|native|P-56-RENEWED|390|2.4141%|Within3%|[app](ui-parity/captures/TIP-V46-814/native/P-56-RENEWED-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/P-56-RENEWED-390.proto.png)|
+|native|P-97|1440|4.2353%|Existing D-xx/data differences retained; see V4.6-causes.md|[app](ui-parity/captures/TIP-V46-814/native/P-97-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/P-97-1440.proto.png)|
+|native|P-97|390|4.1511%|Existing D-xx/data differences retained; see V4.6-causes.md|[app](ui-parity/captures/TIP-V46-814/native/P-97-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/P-97-390.proto.png)|
+|native|P-98|1440|1.2744%|Within3%|[app](ui-parity/captures/TIP-V46-814/native/P-98-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/P-98-1440.proto.png)|
+|native|P-98|390|3.8645%|Existing classified reference difference; see V4.6-causes.md|[app](ui-parity/captures/TIP-V46-814/native/P-98-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/P-98-390.proto.png)|
+|native|P-V46-REG|1440|5.7402%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/P-V46-REG-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/P-V46-REG-1440.proto.png)|
+|native|P-V46-REG|390|10.4695%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/P-V46-REG-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/P-V46-REG-390.proto.png)|
+|native|D-09|1440|0.2650%|Within3%|[app](ui-parity/captures/TIP-V46-814/native/D-09-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-09-1440.proto.png)|
+|native|D-09|390|0.2210%|Within3%|[app](ui-parity/captures/TIP-V46-814/native/D-09-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-09-390.proto.png)|
+|native|D-100|1440|11.2250%|Existing D-xx/data differences retained; see V4.6-causes.md|[app](ui-parity/captures/TIP-V46-814/native/D-100-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-100-1440.proto.png)|
+|native|D-120-GCFG|390|4.4142%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/D-120-GCFG-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-120-GCFG-390.proto.png)|
+|native|D-120-GCFG-RO|390|3.9118%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/D-120-GCFG-RO-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-120-GCFG-RO-390.proto.png)|
+|native|D-120-GDV|390|4.0515%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/D-120-GDV-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-120-GDV-390.proto.png)|
+|native|D-120-GDV-OPEN|1440|10.6636%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/D-120-GDV-OPEN-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-120-GDV-OPEN-1440.proto.png)|
+|native|D-120-GDV-OPEN|390|5.7265%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/D-120-GDV-OPEN-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-120-GDV-OPEN-390.proto.png)|
+|native|D-17|1440|0.2659%|Within3%|[app](ui-parity/captures/TIP-V46-814/native/D-17-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-17-1440.proto.png)|
+|native|D-17|390|0.2412%|Within3%|[app](ui-parity/captures/TIP-V46-814/native/D-17-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-17-390.proto.png)|
+|native|D-22|1440|0.3801%|Within3%|[app](ui-parity/captures/TIP-V46-814/native/D-22-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-22-1440.proto.png)|
+|native|D-22|390|1.0476%|Within3%|[app](ui-parity/captures/TIP-V46-814/native/D-22-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-22-390.proto.png)|
+|native|D-43|1440|8.4368%|Data/date: actual7 registrations vs prototype120; real current-date upcoming event/backdrop; exact Demo Day drawer confirmed|[app](ui-parity/captures/TIP-V46-814/native/D-43-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-43-1440.proto.png)|
+|native|D-43|390|16.6357%|Data/date: actual7 registrations vs prototype120; real current-date upcoming event/backdrop; exact Demo Day drawer confirmed|[app](ui-parity/captures/TIP-V46-814/native/D-43-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-43-390.proto.png)|
+|native|D-44|1440|9.1819%|Data/date: actual7 registrations vs prototype120; real current-date upcoming event/backdrop; exact Demo Day drawer confirmed|[app](ui-parity/captures/TIP-V46-814/native/D-44-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-44-1440.proto.png)|
+|native|D-44|390|42.4214%|Data/date: actual7 registrations vs prototype120; real current-date upcoming event/backdrop; exact Demo Day drawer confirmed|[app](ui-parity/captures/TIP-V46-814/native/D-44-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-44-390.proto.png)|
+|native|D-66|1440|11.3168%|Existing settings navigation deviation B16 remains deferred by D137|[app](ui-parity/captures/TIP-V46-814/native/D-66-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-66-1440.proto.png)|
+|native|D-71|1440|5.4318%|Existing settings navigation deviation B16 remains deferred by D137|[app](ui-parity/captures/TIP-V46-814/native/D-71-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-71-1440.proto.png)|
+|native|D-72|1440|5.4318%|Existing settings navigation deviation B16 remains deferred by D137|[app](ui-parity/captures/TIP-V46-814/native/D-72-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-72-1440.proto.png)|
+|native|D-73|1440|11.3893%|Existing settings navigation deviation B16 remains deferred by D137|[app](ui-parity/captures/TIP-V46-814/native/D-73-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-73-1440.proto.png)|
+|native|D-75|1440|69.5892%|Existing settings navigation deviation B16 remains deferred by D137|[app](ui-parity/captures/TIP-V46-814/native/D-75-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-75-1440.proto.png)|
+|native|D-75|390|67.2214%|Existing settings navigation deviation B16 remains deferred by D137|[app](ui-parity/captures/TIP-V46-814/native/D-75-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-75-390.proto.png)|
+|native|D-84|1440|6.6506%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/D-84-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-84-1440.proto.png)|
+|native|D-84|390|3.6512%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/D-84-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-84-390.proto.png)|
+|native|D-84-AFF|1440|5.9113%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/D-84-AFF-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-84-AFF-1440.proto.png)|
+|native|D-84-AFF|390|8.2984%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/D-84-AFF-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-84-AFF-390.proto.png)|
+|native|D-84-AFF-BULK|390|23.6463%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/D-84-AFF-BULK-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-84-AFF-BULK-390.proto.png)|
+|native|D-84-AFF-Q|390|24.5873%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/D-84-AFF-Q-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-84-AFF-Q-390.proto.png)|
+|native|D-84-COM-BULK|1440|6.3582%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/D-84-COM-BULK-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-84-COM-BULK-1440.proto.png)|
+|native|D-84-COM-BULK|390|14.1547%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/D-84-COM-BULK-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-84-COM-BULK-390.proto.png)|
+|native|D-84-COM-EMPTY|390|6.7203%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/D-84-COM-EMPTY-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-84-COM-EMPTY-390.proto.png)|
+|native|D-84-COM-PAID|1440|9.7379%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/D-84-COM-PAID-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-84-COM-PAID-1440.proto.png)|
+|native|D-84-COM-PAID|390|6.4206%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/D-84-COM-PAID-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-84-COM-PAID-390.proto.png)|
+|native|D-84-COM-PAID-MENU|1440|9.7756%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/D-84-COM-PAID-MENU-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-84-COM-PAID-MENU-1440.proto.png)|
+|native|D-84-COM-PAID-MENU|390|6.7789%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/D-84-COM-PAID-MENU-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-84-COM-PAID-MENU-390.proto.png)|
+|native|D-84-COM-RECORDED|1440|6.6355%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/D-84-COM-RECORDED-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-84-COM-RECORDED-1440.proto.png)|
+|native|D-84-COM-RECORDED|390|4.9312%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/D-84-COM-RECORDED-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-84-COM-RECORDED-390.proto.png)|
+|native|D-84-COM-RECORDED-MENU|1440|6.6758%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/D-84-COM-RECORDED-MENU-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-84-COM-RECORDED-MENU-1440.proto.png)|
+|native|D-84-COM-RECORDED-MENU|390|5.1407%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/D-84-COM-RECORDED-MENU-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-84-COM-RECORDED-MENU-390.proto.png)|
+|native|D-84-POL|1440|3.9540%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/D-84-POL-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-84-POL-1440.proto.png)|
+|native|D-84-POL|390|7.7077%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/D-84-POL-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-84-POL-390.proto.png)|
+|native|D-85|390|7.4891%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/D-85-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-85-390.proto.png)|
+|native|D-85-CUS|1440|4.0034%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/D-85-CUS-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-85-CUS-1440.proto.png)|
+|native|D-85-CUS|390|16.6198%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/D-85-CUS-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-85-CUS-390.proto.png)|
+|native|D-85-RATE|390|7.3924%|Existing D94/D119-D132 regional attribution/reference ledger data and decisions|[app](ui-parity/captures/TIP-V46-814/native/D-85-RATE-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-85-RATE-390.proto.png)|
+|native|D-89|1440|0.2483%|Within3%|[app](ui-parity/captures/TIP-V46-814/native/D-89-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-89-1440.proto.png)|
+|native|D-89|390|0.1051%|Within3%|[app](ui-parity/captures/TIP-V46-814/native/D-89-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-89-390.proto.png)|
+|native|D-V46-AI|390|6.8816%|D124/D135: no Assistant; actual provider/app state and spend/price controls|[app](ui-parity/captures/TIP-V46-814/native/D-V46-AI-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-V46-AI-390.proto.png)|
+|native|D-V46-APP|1440|12.0064%|D124/D135: no Assistant; actual provider/app state and spend/price controls|[app](ui-parity/captures/TIP-V46-814/native/D-V46-APP-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-V46-APP-1440.proto.png)|
+|native|D-V46-BANK|1440|12.3281%|D123: OPCHUB transfer prefix; actual bank/transaction data|[app](ui-parity/captures/TIP-V46-814/native/D-V46-BANK-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-V46-BANK-1440.proto.png)|
+|native|D-V46-BANK|390|7.7935%|D123: OPCHUB transfer prefix; actual bank/transaction data|[app](ui-parity/captures/TIP-V46-814/native/D-V46-BANK-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-V46-BANK-390.proto.png)|
+|native|D-V46-RENEW|1440|11.0703%|D125 +owner805: no Zalo,30/7/1, explicit Save; actual recipient data|[app](ui-parity/captures/TIP-V46-814/native/D-V46-RENEW-1440.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-V46-RENEW-1440.proto.png)|
+|native|D-V46-RENEW|390|15.5248%|D125 +owner805: no Zalo,30/7/1, explicit Save; actual recipient data|[app](ui-parity/captures/TIP-V46-814/native/D-V46-RENEW-390.app.png) / [prototype](ui-parity/captures/TIP-V46-814/native/D-V46-RENEW-390.proto.png)|

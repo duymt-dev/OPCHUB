@@ -1,45 +1,66 @@
-# TIP-V46-814 — IN PROGRESS
+# TIP-V46-814 — DONE (D134 reference parity / approved Q1 scope)
 
-## Scope / approved environment
+## Delivery
 
-- Branch `feature/TIP-V46-814-test-stability`, dependency dev `06e9627b`; approved TIP commits `ff7ea482` / `3c727677`.
-- A13–A22 plus B12 only. No agent merge/auto-merge. No815/816 work.
-- Owner reconfirmed integration `opchub_v46_801_test` / Memurai6381 DB2, native `opchub_v46_812_dev` / DB3, API/socket4310/4311 and Portal/Admin3710/3711. Rolling restart only the owned813 runtime; older HOLD/native DB/Redis6379 unchanged.
-- A21 exact temporary `opchub_v46_814_chain_test` creation/deletion already approved by TIP; announced before first run. Every invocation refuses an existing DB and drops only the DB it created, in finally.
-- Owner approved two execution exceptions: (1) A16 dedicated single-connection SQL transaction + finally rollback instead of autocommit fixture cleanup, no Prisma interactive timer or timeout increase; (2) restore enum labels deliberately retained by historical downs on the owned white chain DB only, before replay, keeping all historical migration files immutable.
-- Latest implementation source `d1b8a5eb` is committed/pushed; later correction checkpoints and actual failed sweeps are recorded below. Initial implementation source42178d37: Six scoped implementation commits: d2927e28 (A14/A15),34b45fd2 (A16/A17),7a14db66 (A13),e0b34e3f (B12),f1ccf985 (A18–A20),686b3b85 (A21). Final A18 diagnostic correction:42178d37 (429 detail on the failing assertion, unchanged response conditions). PR #96 is draft: https://github.com/duymt-dev/OPCHUB/pull/96. Reports remain in progress; no A22/full-green claim.
+- Implementation/frozen source: **ef7934ff528ade7c00ebaf695f0077f2b797065a**; branch feature/TIP-V46-814-test-stability from dev06e9627b. Later report-only commits do not change tested source.
+- PR [#96](https://github.com/duymt-dev/OPCHUB/pull/96), **base dev**. No merge/auto-merge; owner reviews the paired images.
+- A13–A22 +B12 complete. No815/816 implementation, live AI calls, new dependency or new business rule.
+- [Single-SHA gates](TIP-V46-814-gates.md), [closure evidence](evidence/v46-814-closure.json), [parity / paired images](TIP-V46-814-parity.md), [actual query plan](TIP-V46-814-query-plans.md).
 
-## Evidence by acceptance criterion
+## Final verification on one unchanged source SHA
 
-|Item|Implementation / evidence|Status|
-|---|---|---|
-|A13|Baseline five repeats/four workers:5/5 failed at final count3, receiving0 after10.8m. Original trace shows history JSON200 with1 matching message, JSON200 with2, then HTML404. Old reset clears visible data before that read. Mock reload now reactivates the MSW document via its existing acknowledgement, cancels old queries and invalidates without clearing observed content; native hidden-content reload unchanged. All hook regressions9/9 PASS. First rebuilt repeat:2 pass/3 fail; all three failures were initial Admin login503 from the mock bridge, before entering the bot flow, not count3→0. Their cold-runtime traces retained. A13 now asserts the actual login response as a diagnostic, avoiding a misleading15m navigation wait. Final warm repeat5/5 PASS under four workers,20.7m; each actual ten-minute lifecycle completed. No retry/timeout/count assertion change.|IN PROGRESS|
-|A14|Bounded eight-file async reads, source text read once, one AST/controller shared with decorator mapping. Baseline8/8 PASS876ms; focused new regression9/9 PASS790ms. Full-root proof ×3 pending.|IN PROGRESS|
-|A15|Admin/Portal/UI use package-local absolute Vite cache, forks/maxWorkers50%. Unbounded preparation plus simultaneous browser/build load reproduced fork termination timeouts; aborted after actual errors and an old synchronous hook expectation failure. Extra neighboring `use-mock-room-reload.spec.ts` now waits for acknowledgement while retaining exact calls/counts (9/9 hook PASS). Extra root `package.json` limits only test Turbo concurrency2: task-local concurrency is a CLI option, not a valid task key in turbo.json. Three fresh root runs each2138+2 existing skips PASS, zero cache,10m15.202s /13m20.044s /7m38.927s, no fork/empty-file failures. No timeout/retry/skip/throttle change.|IN PROGRESS|
-|A16|Autocommit experiment failed at30s while FK cleanup ran; EXPLAIN identified self-reference checks, not scan/history assertions. Owner approved dedicated one-connection SQL transaction. Both bulk fixtures now rollback in finally, restoring ANALYZE afterward. Repeated authentication fixtures clear only existing test auth state in Redis DB2; initial quick repeats hit the production-shaped login throttle. Final file five consecutive invocations4/4 PASS each, no assertion/timeout change. Full integration still pending.|FOCUSED PASS|
-|A17|Actual35k new-row skew (10k target simulated +10k target humans +50×300 background simulated) reproduced Hash Join/Seq Scan. Boundary seek + array of selected primary keys now uses partial/primary indexes with no Hash Join/message Seq Scan. Dedicated skew + all old persona tests + B12 suite25/25 PASS. No new index/planner flag. Actual query plan recorded in TIP-V46-814-query-plans.md.|FOCUSED PASS|
-|A18|Login helper waits for actual Admin or Portal POST response before URL, asserts2xx and reports429 clearly. Both origins are used. Five MSW repeats/four workers5/5 PASS1.4m; five native repeats/one worker5/5 PASS3.6m, plus complete responsive/mail file6/6 PASS2.2m. Native runtime RATE_LIMIT_DISABLED=false; no throttle bypass or shared-session workaround needed. Full native A22 still required.|FOCUSED PASS|
-|A19|Real prototype Admin sidebar has no Marketing entry; `_login` clears welcome popup, with no other reachable password display. Speculative Admin-mail journey removed, not replaced by injected state. Fresh original journeys:8 prototype failures/4 harness passes4.6m, traces retained for Q1's four IDs×two viewports. D09 expected4 businesses but actual6; D17/D22 expected7–8/8 while seed10. Harness selects live business tab and exact calculated second-page range. All six repaired D09/D17/D22 captures complete within3%. No new skip/unreachable marker.|FOCUSED PASS + EXPLICIT Q1 WAIVER|
-|A20|Baseline affected26 runner cases:15 pass/11 fail (six non-captures: D09/D17/D22×2; five threshold-only). PREG390 and renewed-project390 both completed. Shared viewport/inner-feed/drawer normalization on both sides plus regional content readiness: focused24 pass/2 threshold-only (PREG existing data), all22 captures complete. Both chat mobile rows and drawer row now within3%. Before/after table recorded in TIP-V46-814-parity.md; final frozen full parity still required; no mask/crop/threshold/timeout change.|FOCUSED PASS|
-|A21|Full101 up → sixteen v46 downs (15 historical + B12) → approved retained-enum restoration → full up: PASS, normalized pg_dump schemas identical; owned DB dropped. Final ACL-preserving round trip log A21-final.log retained. Six invalid targets rejected before any connection, including other_chain_test and SQL-injection-shaped name.|PASS WITH APPROVED EXCEPTION|
-|A22|No claim yet. Ten sequential gates must start after final source commit; any source correction restarts from gate1.|NOT RUN|
-|B12|Two new mail kinds/labels, old kind retained, priority3. Extra exhaustive mail-priority mapping required. Dedicated MSW mail helper plus snapshot persistence, not new marketing-monolith logic. Shared26/26 and combined integration25/25 PASS; real lifecycle test preserves historical row. Browser2/2 MSW16.5s and6/6 native2.2m PASS, including both labels and all responsive Affiliate regressions. BR462 unchanged; full A22 pending.|FOCUSED PASS|
+|Gate|Result|
+|---|---|
+|lint|PASS,8 tasks forced|
+|typecheck|PASS,8 tasks forced|
+|unit|**2142 passed +2 pre-existing skips**,6 nonempty packages, forced; no fork timeout/no empty-file import|
+|test:int|**2200/2200 PASS**: server2056 +DB144|
+|depcheck|PASS|
+|build|PASS,forced MSW and native builds; separate SHA-specific dist; owned runtime cutover|
+|full E2E MSW|**391 PASS /4 existing skips**,0 flaky/unexpected|
+|full E2E native|**386 PASS /9 existing skips**,0 flaky/unexpected|
+|whole MSW parity|492 captures:433 within3%,59 threshold-only;8 approved prototype failures;78 existing registry-unreachable skips. Runner437 passed/67 raw failed; not relabeled zero exit.|
+|selected native parity|128 captures from66 IDs:78 within3%,50 threshold-only;4 existing unreachable skips. Runner82 passed/50 threshold-only; no capture/harness failure.|
 
-## Migration review / failed experiments
+All10 commands ran sequentially on ef7934ff without source/HEAD changes. Earlier failed/interrupted attempts below are not combined into this result. Pixel measurements are reference/owner-review under D134, not application failures merely for known data/decisions. Raw command exits and counts remain explicit.
 
-- Prisma create-only generated an unapplied current-date directory before later v46 migrations and proposed unrelated index/FK removals. Verified no applied metadata, renamed the unapplied directory to `20261115090000_v46_regional_mail_kinds`, retained only the two enum additions before any deployment. No unrelated index/FK drop applied.
-- First deployment failed before SQL execution because the newly written SQL had a UTF8 BOM. Removed BOM, resolved exactly that failed migration as rolled back, deployed successfully to approved integration DB; private812dev also deployed successfully. Failed logs retained. No applied up SQL was edited.
-- New B12 down maps new kinds back to legacy, recreates enum and preserves its dependent historical partial index. White-chain proof caught the index dependency before finalizing down SQL.
-- Historical downs intentionally retain `regional_director` and `short` labels; unmodified redeploy fails with duplicate enum. Owner-approved chain-only restoration recreates three enums while preserving table defaults/checks/index definitions. No such operation runs on the reused dev/integration DBs.
-- Final A21 replay also retains ACL entries in `pg_dump --schema-only --no-owner` comparison (only random restrict tokens/line endings normalized): PASS; DB dropped. Early native preparation invocation started before the cold API was ready, so zero tests ran; after actual health200, unchanged six-case run passed. No Playwright readiness/test timeout was raised.
+## Acceptance evidence
 
-## Raw evidence / provenance
+|Item|Evidence / disposition|
+|---|---|
+|A13|Original real10-minute lifecycle5/5 failed under4 workers; trace: history JSON200(1),200(2), then HTML404; reset had cleared observed messages. MSW activation acknowledgement +cancel/invalidate without clearing observed data; native reload unchanged. Hook9/9 PASS; final warm5/5 PASS20.7m at4 workers; first rebuilt2/5 had3 initial login503 failures, retained, not count-regression passes. Final full MSW/native lifecycle PASS.|
+|A14|Bounded8-file async reads, read text once/AST once per controller. Focused9/9 PASS;3 consecutive forced full root runs2138+2 skips each:10m15.202s /13m20.044s /7m38.927s; final forced unit2142+2 skips PASS. No timeout increase.|
+|A15|Per-package absolute Vite cache, forks/maxWorkers50%; root test-only Turbo concurrency2 after actual unbounded fork failures. Same3 forced full root proofs and final single-SHA PASS; no empty-file/fork failure. Neighbor async-ack unit assertion retained.|
+|A16|Owner-approved one-connection SQL transaction/finally rollback; no Prisma interactive5s timer, no timeout/index/assertion change. Autocommit cleanup failure retained.5 consecutive file runs4/4 PASS each; final full integration PASS.|
+|A17|35000-row hot-room/human/50-background-room fixture reproduced Seq Scan/Hash Join.128-ID recursive keyset pages inside ONE SQL statement, partial-index reads +PK cursor/update; no planner flag/new index/query loop, all stale IDs processed, newest120 retained. Original9 tests +skew +6 tied-time/page-edge regressions PASS; final full integration uses identical SQL and asserts no message Seq Scan/Hash Join.|
+|A18|Await actual Admin/Portal login response in Promise.all; assert2xx, clear429 diagnostic; production throttle intact. New helper5/5 MSW +5/5 native, full files6/6 native; final full lanes PASS. Legacy helper from06e9627b replayed in ignored diagnostic copy after sweep:20/20 native attempts, no original failure reproduced. Missing response check was definitely wrong and corrected; Q5 nonreproduction noted, not a claimed throttle root cause.|
+|A19|D09 live business count, D17/D22 actual pagination ranges; all6 formerly waived viewport captures complete on final SHA (both lanes). Only P05/P100/P101/P102×2=8 Q1 waivers remain: real UI/trace confirms no reachable password-view journey. No prototype state injection/new unreachable/skip.|
+|A20|Both-side viewport/feed/drawer scroll/readiness, no mask/crop/style/threshold/timeout changes. All affected states complete in both final lanes. D44 owner-approved exact Demo Day card action preserves drawer readiness/full-page scope; native real-registration seed is not full. MSW D35 mobile new threshold crossing is transient sticky-overlay measurement with identical content positions, not a production layout change; images retained. Native D43/D44 actual date/registration backdrop differences classified.|
+|A21|Final SHA rerun on owned opchub_v46_814_chain_test:101 up→16 down→approved retained-enum restoration→101 up; ACL-preserving normalized pg_dump identical; owned DB dropped.6 invalid targets rejected before connection. Applied historical migration files unchanged.|
+|A22|All8 functional gates PASS +both complete classified parity lanes on ef7934ff; timestamps/commands/counts in gate table and raw ledger. No cross-SHA assembly.|
+|B12|Distinct appointment/revocation mail kinds/labels, legacy kind retained, priority3; additive migration/down +dedicated MSW mail state/snapshot (only facade lines in legacy marketing file). Shared26/26, combined int25/25, browser2/2 MSW and6/6 native preparation; both final full lanes PASS. BR462 unchanged; BR464 acceptance row corrected.|
 
-Ignored local logs/helpers are under `test-results/v46-814-*`; no credentials or encrypted snapshots are committed. Original A13 trace retained as `v46-814-A13-original-trace.zip`. Prototype sidebar observation: `v46-814-A19-prototype-menu.log` / PNG. A16 final proof logs: `A16-proof-{1..5}.log`; A17/B12 final focused log: `A17-B12-fixed.log`; migration round trip: `A21-final.log`. Preparation runs are not substituted for the single-SHA A22 sweep.
+## Narrow execution extensions approved by owner
 
-## Quality gate
+- A16 transaction fixture rollback instead of slow autocommit cascade cleanup.
+- A21 retained-enum reconstruction on owned white chain DB ONLY; no historical up rewrite or dev/test enum reconstruction.
+- bot-reply-storage fixture now actually populates indexed trigger/reply rows; keeps every Index Only Scan/index/no Seq Scan assertion and30s timeout, restores ANALYZE after rollback.
+- Worker fixture snapshots/restores control settings and defers only processor bootstrap until after test Redis reset; real production bootstrap/handlers/5s deadline unchanged.20 old standalone attempts did not reproduce full failure; inherited-paused scenario did; corrected5/5. Full log also exposed old-job/flush Missing key race; bootstrap correction final full integration PASS.
+- D44 unified exact-card journey, same assertion and capture scope, no DB count fabrication.
+- MSW regional memberships: independently reproduced2/2 fresh-runtime failures; six fixture owners' validated membership snapshot +legacy compatibility, no overwrite of explicit empty/left or unrelated user state and no money replay.4 new regressions; focused46/46 PASS; unchanged original Affiliate E2E now passes final full MSW/native. Old standalone E2E20/20 had not reproduced its full-run timing failure; do not confuse that with the deterministic snapshot regression.
+- Supporting file-list extensions: root package.json test-only concurrency, mail priority exhaustive mapping, package-local audit/unit support and isolated helper modules are documented with their reasons. No feature scope beyond approved extensions.
 
-Implementation committed/pushed, all focused preparation proofs complete. **Not DONE:** frozen full parity review and all ten A22 gates remain required. Source is committed; no PR-ready/DONE claim.
+## Environment / restoration / remaining review
+
+- Integration: opchub_v46_801_test +Memurai6381 DB2. Native: opchub_v46_812_dev +DB3; API/socket4310/4311, Portal/Admin3710/3711. MSW3930/3931. Fake adapters/local stubs only; native RATE_LIMIT_DISABLED=false.
+- External machine reboot12:02 on07/11 ended old HOLD and private PIDs; this is recorded as an interrupted attempt, **not** agent preservation/process continuity. No native PostgreSQL/Redis6379 data/service operation by this work. Private Memurai/runtime restarted without stopping stale/reused numeric PIDs; final owned processes stay running.
+- Demo seeded twice with identical counts after all tests (and again after legacy A18 proof), original encrypted813 AI/App snapshot restored, only private cache flushed.96 users/66 affiliates/51 referrals/53 commissions/65 periods/53 shares/1 payout/50 anchors/3 directors/5 bank transactions/17 stores;0 missing slugs/0 unbalanced shares. Final restoration receipt in closure JSON; no secret/snapshot committed.
+- Paired images:144 pairs/288 PNGs (39,189,008 bytes), all above3% plus affected journeys. Owner image review remains PR review, not a false all-pixel-green claim. Existing settings-navigation B16 stays deferred by D137. Only8 explicit Q1 prototype waivers, no new skip/unreachable/mask/retry/timeout relaxation.
+- No required implementation/functional gate outstanding.815/816 and unrelated deferred B items remain untouched. Do not merge automatically.
+
+## Historical failed/preparation checkpoints (superseded by final evidence above)
+
+The following are chronological records, not current status; earlier pending/failed statements are retained for audit.
 
 ## A22 attempt1 / correction checkpoint
 
