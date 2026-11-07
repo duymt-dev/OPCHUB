@@ -166,7 +166,7 @@ describe('TIP-V46-801 regional director lifecycle', () => {
     await handler.revoked(payload, String(event.id));
     const date = until.toLocaleDateString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
     const mails = await t.prisma.db.mailLog.findMany({
-      where: { to: u.email, kind: 'regional_director' },
+      where: { to: u.email, kind: 'regional_director_revoke' },
     });
     expect(mails).toHaveLength(1);
     expect(mails[0]?.subject).toContain(`Miền Nam · phí thành viên còn hiệu lực đến ${date}`);
@@ -248,6 +248,52 @@ describe('TIP-V46-801 regional director lifecycle', () => {
     });
   });
 
+  it('B12 BR-464 mail kinds distinguish appointment/revocation and retain legacy history', async () => {
+    const u = await createUser(t, { fee: 'trial' });
+    const handler = t.app.get(RegionalDirectorEventsHandler);
+    await t.prisma.db.mailLog.create({
+      data: {
+        to: u.email,
+        kind: 'regional_director',
+        subject: 'Historical regional mail',
+      },
+    });
+    expect((await appoint(u.id)).status).toBe(200);
+    const appointed = await t.prisma.db.outboxEvent.findFirstOrThrow({
+      where: {
+        type: 'regional_director.appointed',
+        payload: { path: ['userId'], equals: u.id },
+      },
+    });
+    await handler.appointed(
+      outboxEvents['regional_director.appointed'].parse(appointed.payload),
+      String(appointed.id),
+    );
+    expect((await revoke()).status).toBe(200);
+    const revoked = await t.prisma.db.outboxEvent.findFirstOrThrow({
+      where: {
+        type: 'regional_director.revoked',
+        payload: { path: ['userId'], equals: u.id },
+      },
+    });
+    await handler.revoked(
+      outboxEvents['regional_director.revoked'].parse(revoked.payload),
+      String(revoked.id),
+    );
+    const rows = await t.prisma.db.mailLog.findMany({
+      where: { to: u.email },
+      select: { kind: true, priority: true },
+    });
+    expect(rows.map((row) => row.kind).sort()).toEqual([
+      'regional_director',
+      'regional_director_appoint',
+      'regional_director_revoke',
+    ]);
+    expect(
+      rows.filter((row) => row.kind !== 'regional_director').every((row) => row.priority === 3),
+    ).toBe(true);
+  });
+
   it('outbox retries create one password-free email and one system notification', async () => {
     const u = await createUser(t, { fee: 'trial' });
     expect((await appoint(u.id)).status).toBe(200);
@@ -259,7 +305,7 @@ describe('TIP-V46-801 regional director lifecycle', () => {
     await handler.appointed(payload, String(event.id));
     await handler.appointed(payload, String(event.id));
     const mail = await t.prisma.db.mailLog.findMany({
-      where: { to: u.email, kind: 'regional_director' },
+      where: { to: u.email, kind: 'regional_director_appoint' },
     });
     expect(mail).toHaveLength(1);
     expect(mail[0]?.bodyHtml).toContain('/huong-dan');

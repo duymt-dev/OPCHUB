@@ -3,14 +3,13 @@ import * as ts from 'typescript';
 const HTTP = new Set(['Get', 'Post', 'Put', 'Patch', 'Delete']);
 
 /** Associate the whole method decorator block, regardless of order or formatting. */
-export function methodDecoratorMap(source: string): ReadonlyMap<number, readonly string[]> {
-  const file = ts.createSourceFile(
-    'controller.ts',
-    source,
-    ts.ScriptTarget.Latest,
-    true,
-    ts.ScriptKind.TS,
-  );
+export function methodDecoratorMap(
+  source: string | ts.SourceFile,
+): ReadonlyMap<number, readonly string[]> {
+  const file =
+    typeof source === 'string'
+      ? ts.createSourceFile('controller.ts', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS)
+      : source;
   const result = new Map<number, readonly string[]>();
   const visit = (node: ts.Node): void => {
     if (ts.isMethodDeclaration(node)) {

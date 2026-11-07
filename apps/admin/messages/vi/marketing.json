@@ -66,6 +66,8 @@
     "onboarding": "Nhắc khởi đầu",
     "receipt": "Biên nhận thanh toán",
     "regional_director": "GĐ Vùng",
+    "regional_director_appoint": "Bổ nhiệm GĐ Vùng",
+    "regional_director_revoke": "Thu hồi GĐ Vùng",
     "st": {
       "queued": "Đang chờ",
       "sent": "✓ Đã gửi",

@@ -13,6 +13,7 @@ import {
 } from '../steps';
 import type { Scenario, StepCtx } from '../types';
 import { row, tickRow } from './admin-members';
+import { settleDrawerScroll, settleScrollAtTop } from '../scroll-position';
 
 /** Admin D-42 → D-65: Nội dung & Sự kiện, Dự án, Nhà đầu tư, Dịch vụ */
 
@@ -58,6 +59,7 @@ export const ADMIN_CONTENT: Scenario[] = [
   { id: 'D-42', name: 'Sự kiện · lưới', start: 'admin', fullPage: true, steps: toEvents },
   {
     id: 'D-43',
+    beforeCapture: ({ page }) => settleScrollAtTop(page),
     name: 'Sự kiện · danh sách',
     start: 'admin',
     fullPage: true,
@@ -68,13 +70,26 @@ export const ADMIN_CONTENT: Scenario[] = [
   },
   {
     id: 'D-44',
-    name: 'Sự kiện · Đã đầy → chi tiết sự kiện (Demo Day)',
+    beforeCapture: async ({ page }) => {
+      await settleScrollAtTop(page);
+      await settleDrawerScroll(page, page.getByText('Check-in tất cả', { exact: true }).first());
+    },
+    name: 'Sự kiện · chi tiết danh sách (Demo Day)',
     start: 'admin',
     fullPage: true,
-    note: 'Prototype v4 + app (TIP-V4-622): bấm nhãn "Đã đầy" trên ảnh bìa thẻ Demo Day mở drawer Chi tiết',
+    note: 'Owner814: open the Demo Day card registration list on both sides; native seed is not full. Same drawer assertion/capture scope.',
     steps: async (c) => {
       await toEvents(c);
-      await tapLast(c, 'Đã đầy');
+      // Native seed counts real registrations; the event need not be full.
+      // Use the same real card action on both sides, not the full-status filter.
+      await c.page
+        .locator('article, div')
+        .filter({ hasText: 'Demo Day – Dự án cộng đồng Q4' })
+        .filter({ has: c.page.getByText('Danh sách', { exact: true }) })
+        .last()
+        .getByText('Danh sách', { exact: true })
+        .filter({ visible: true })
+        .click();
       await waitText(c, 'Check-in tất cả');
     },
   },

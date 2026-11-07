@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import * as ts from 'typescript';
 import { methodDecoratorMap } from './controller-decorators.audit';
 
 function only(source: string) {
@@ -8,6 +9,11 @@ function only(source: string) {
 }
 
 describe('REQ-312 C5 audit associates real method guards without relying on decorator order', () => {
+  it('A14 reuses an already parsed SourceFile without changing decorator associations', () => {
+    const source = "class C { @RequireAdmin('affiliate.view') @Post('x') save() {} }";
+    const file = ts.createSourceFile('controller.ts', source, ts.ScriptTarget.Latest, true);
+    expect(methodDecoratorMap(file)).toEqual(methodDecoratorMap(source));
+  });
   it.each([
     "@RequireAdmin('affiliate.view')\n@Get('preview')",
     "@Get('preview')\n@RequireAdmin('affiliate.view')",

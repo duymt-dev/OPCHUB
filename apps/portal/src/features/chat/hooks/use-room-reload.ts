@@ -18,9 +18,20 @@ export async function reloadChatRoom(qc: QueryClient, roomId: string): Promise<v
   ]);
 }
 
+/** Mock storage hints must not clear an observed list before a fresh API read succeeds. */
+export async function reloadMockChatRoom(qc: QueryClient, roomId: string): Promise<void> {
+  const keys = [chatKeys.roomMessages(roomId), chatKeys.pins(roomId), chatKeys.groupFilesAll()];
+  await Promise.all(keys.map((queryKey) => qc.cancelQueries({ queryKey })));
+  await Promise.all([
+    ...keys.map((queryKey) => qc.invalidateQueries({ queryKey })),
+    qc.invalidateQueries({ queryKey: chatKeys.overview() }),
+    qc.invalidateQueries({ queryKey: [...chatKeys.all, 'rooms'] }),
+  ]);
+}
+
 export function useRoomReload(): void {
   const qc = useQueryClient();
-  useMockRoomReload(qc, !realtimeEnabled, reloadChatRoom);
+  useMockRoomReload(qc, !realtimeEnabled, reloadMockChatRoom);
   useEffect(() => {
     if (!realtimeEnabled) return undefined;
     const socket = getSocket();
