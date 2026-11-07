@@ -964,3 +964,12 @@ Owner chốt toàn bộ phương án mặc định Q-V46-807-1 → 5, Q808-1 →
 - Owner explicitly approved the extra narrow MSW regional membership snapshot + fresh-runtime regression correction ("ok sua di"), retaining existing E2E assertions and backend/business rules. New wire state is restricted to the six regional demo owners; older wire versions reconstruct only absent demo fixture membership, never overwrite explicit left/empty state or replay money effects.
 
 - Final814 outcome on ef7934ff: all10 commands sequential;8 functional gates PASS, both parity lanes complete/classified under D134. Q1 retains8 prototype viewport waivers only,6 D09/D17/D22 waivers resolved. Q5/A18 exact legacy helper20 native attempts not reproduced, definite missing response assertion corrected and final full lanes PASS. External reboot12:02 ended original HOLD; private final runtime/demo/AI restored, native data untouched. Paired-image review belongs to PR review; no auto-merge.
+# TIP-V46-815 — chốt kiểm AI live (07/11/2026)
+
+- Q-V46-815-1: owner nhập key trực tiếp trong Admin; builder chỉ dùng key đã mã hóa ở DB riêng, không nhận/đọc key qua chat, file hay env.
+- Q-V46-815-2: owner duyệt **4** lời gọi cho verify + bot ma trận + REQ-208 + UAT-14, thay giới hạn3 mâu thuẫn phạm vi; mỗi lời gọi tối đa256 token đầu ra, giữ ngân sách. Gọi lại sau sửa adapter phải hỏi riêng.
+- Q-V46-815-3: owner duyệt ngoại lệ khôi phục nguyên cấu hình AI và giữ provider cuối cùng, nhưng tắt bot tự động. API hiện cấm tắt mọi provider; không đổi backend hay vòng qua bằng SQL.
+- Q-V46-815-4: vẫn từ chối câu trả lời bị cắt; không chấp nhận nội dung rỗng hoặc chỉ phần suy luận.
+- Q-V46-815-5: owner duyệt DB dev `opchub_v46_812_dev`, test `opchub_v46_801_test`, Memurai6381 DB3/DB2 và rolling restart bộ riêng khi cần; giữ native DB/Redis6379.
+- Q-V46-815-6 (**đã duyệt**): thêm đúng `e2e/env.ts` để parse URL DB sẵn có bằng Zod, chặn đọc metadata ngoài DB riêng; không thêm biến cấu hình mới hay đọc key AI.
+- Q-V46-815-7 (**đã duyệt**): sửa hẹp REQ-208 trong `native-real-provider.spec.ts` từ Dashboard LIVE đã bỏ theo D-89 sang kiểm đúng bài tại chat c1, giữ assertion sinh/đăng/dừng; thêm đúng1 lời gọi tối đa256 token, tổng tối đa5. Topic fixture có nonce để không nhầm thread đã xong. Kết quả REQ-208/UAT-14 PASS; tổng thực tế5 lượt, lần vướng topic cũ0 lượt.
