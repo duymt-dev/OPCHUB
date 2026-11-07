@@ -956,3 +956,5 @@ Owner chốt toàn bộ phương án mặc định Q-V46-807-1 → 5, Q808-1 →
 - Full integration execution exception: owner approved narrow bot-reply-storage.int.spec.ts fixture population of valid indexed trigger/reply rows and post-rollback statistics restoration, retaining every index/Index Only Scan/no Seq Scan assertion and timeout.
 
 - Owner approved narrow bot-reply-worker.int.spec.ts fixture/control isolation and failure diagnostics, preserving real worker pipeline,5s deadline, all assertions and timeouts. Original standalone20/20 did not reproduce the full-sweep failure; inherited-paused fixture separately reproduced the identical poll failure.
+
+- Under the approved worker fixture exception, defer only processor bootstrap until test Redis/state reset; production bootstrap methods then start real workers. External reboot12:02 ended all prior HOLD PIDs; recorded interruption, never claim process continuity or stop reused PIDs.

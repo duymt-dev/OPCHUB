@@ -10,11 +10,9 @@ import { BotCoreModule } from '@/modules/bot';
 import { ChatCoreModule } from '@/modules/chat';
 import { ModerationCoreModule } from '@/modules/moderation';
 import { KeywordFilterService } from '@/modules/moderation/services/keyword-filter.service';
-import { BotProcessor } from '@/worker/processors/bot.processor';
-import { BotPublicationProcessor } from '@/worker/processors/bot-publication.processor';
-import { ModerationProcessor } from '@/worker/processors/moderation.processor';
 import { createTestApp, type TestApp } from '../setup/test-app';
 import { replyFixtures, replyValue } from './reply-fixture';
+import { startFixtureWorkers, workerFixtureProviders } from './worker-bootstrap-fixture';
 
 describe('UAT-14 REQ-207 real worker member reply pipeline', () => {
   let t: TestApp;
@@ -47,7 +45,7 @@ describe('UAT-14 REQ-207 real worker member reply pipeline', () => {
         ],
       ],
       imports: [BotCoreModule, ChatCoreModule, ModerationCoreModule],
-      providers: [BotProcessor, BotPublicationProcessor, ModerationProcessor],
+      providers: workerFixtureProviders,
     });
     originalControl = await t.prisma.db.appSetting.findMany({
       where: { key: { in: controlKeys } },
@@ -65,6 +63,7 @@ describe('UAT-14 REQ-207 real worker member reply pipeline', () => {
     await t.prisma.db.persona.updateMany({ data: { enabled: false } });
 
     bot = new Queue('bot', { connection: t.redis.duplicate({ prefix: '' }), prefix: BULL_PREFIX });
+    startFixtureWorkers(t);
     moderation = new Queue('moderation', {
       connection: t.redis.duplicate({ prefix: '' }),
       prefix: BULL_PREFIX,
