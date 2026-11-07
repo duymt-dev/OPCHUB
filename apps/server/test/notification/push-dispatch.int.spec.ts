@@ -2,13 +2,18 @@ import { randomUUID } from 'node:crypto';
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { DEFAULT_APP_NOTIFY } from '@opchub/shared/api-domains';
 import { OutboxService } from '@/common/outbox';
-import { NotificationService, PushDispatchService } from '@/modules/notification';
+import {
+  NotificationService,
+  PushDispatchService,
+  NotificationEventsHandler,
+} from '@/modules/notification';
 import { createUser } from '../factories/user.factory';
 import { clearPushFixtures, device, pushTestApp, setPushSettings } from './push-test.helpers';
 
 describe('D-137 durable push dispatch', () => {
   let f: Awaited<ReturnType<typeof pushTestApp>>;
   const users: string[] = [];
+  const events: string[] = [];
   beforeAll(async () => {
     f = await pushTestApp();
   });
@@ -21,6 +26,7 @@ describe('D-137 durable push dispatch', () => {
     if (!f) return;
     vi.restoreAllMocks();
     await clearPushFixtures(f.t, users);
+    await f.t.prisma.db.event.deleteMany({ where: { id: { in: events } } });
     await setPushSettings(f.t, f.previous);
     await f.t.close();
   });
@@ -140,20 +146,28 @@ describe('D-137 durable push dispatch', () => {
   });
   it('renew and event kinds only; untagged activation and registration never create an intent', async () => {
     const user = await recipient();
-    const renew = { ...item(user.id), type: 'membership' as const, push: 'renew' as const };
-    const event = { ...item(user.id), type: 'event' as const, push: 'event' as const };
-    await notify([
-      renew,
-      event,
-      {
-        userId: user.id,
-        type: 'membership',
-        title: 'Đã ghi nhận phí thành viên',
-        body: '',
-        link: '/dashboard',
+    const event = await f.t.prisma.db.event.create({
+      data: {
+        title: '816 source mapping',
+        mode: 'online',
+        place: 'Online',
+        seats: 10,
+        startsAt: new Date(Date.now() + 50 * 60000),
+        registrations: { create: { userId: user.id } },
       },
-      { userId: user.id, type: 'event', title: 'Đã đăng ký', body: '', link: '/events/one' },
-    ]);
+      select: { id: true },
+    });
+    events.push(event.id);
+    const handler = f.t.app.get(NotificationEventsHandler),
+      outboxId = randomUUID();
+    const reminder = {
+      items: [{ userId: user.id, title: 'Nhắc phí thành viên', text: 'Sắp đến hạn' }],
+    };
+    await handler.feeReminded(reminder, outboxId);
+    await handler.feeReminded(reminder, outboxId);
+    await handler.eventReminder({ eventId: event.id, window: '1h' });
+    await handler.feeActivated({ userId: user.id, status: 'active', validUntil: null });
+    await handler.eventRegistered({ eventId: event.id, userId: user.id });
     const ids = await f.t.prisma.db.notification.findMany({
       where: { userId: user.id },
       select: { id: true },
