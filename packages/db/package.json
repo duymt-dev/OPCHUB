@@ -11,6 +11,7 @@
     "migrate:dev": "prisma migrate dev",
     "migrate:deploy": "prisma migrate deploy",
     "migrate:test": "node --env-file-if-exists=.env scripts/migrate-test.mjs",
+    "migrate:chain-check": "node --env-file-if-exists=.env scripts/migration-chain-check.mjs",
     "seed": "tsx --env-file-if-exists=.env seed/index.ts",
     "seed:demo": "tsx --env-file-if-exists=.env seed/demo.ts",
     "seed:load": "tsx --env-file-if-exists=.env seed/load.ts",
