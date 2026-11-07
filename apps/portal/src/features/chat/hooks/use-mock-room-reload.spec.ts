@@ -34,6 +34,8 @@ describe('REQ-060 mock live room subscription lifecycle', () => {
     const listener = bridge.subscribe.mock.calls[0]?.[0];
     if (!listener) throw new Error('Missing subscription');
     listener(['c1-general', 'c2-general']);
+    // Reload follows the asynchronous MSW activation acknowledgement now.
+    await waitFor(() => expect(reload).toHaveBeenCalledTimes(2));
     expect(reload.mock.calls).toEqual([
       [qc, 'c1-general'],
       [qc, 'c2-general'],

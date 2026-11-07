@@ -43,7 +43,13 @@ test('UAT-15 REQ-208 REQ-411 P5-PLAN-01 full automatic three-turn conversation c
   const settings = page.waitForResponse(
     (r) => new URL(r.url()).pathname === '/v1/admin/bot/settings' && r.status() === 200,
   );
-  const prepared = await prepareReplyParticipants(page);
+  const login = page.waitForResponse(
+    (r) => r.request().method() === 'POST' && new URL(r.url()).pathname === '/v1/admin/auth/login',
+  );
+  const [prepared] = await Promise.all([
+    prepareReplyParticipants(page),
+    login.then((response) => expect(response.status(), 'A13 Admin login prerequisite').toBe(200)),
+  ]);
   expect(botSettingsSchema.parse(await (await settings).json()).delayMinutes).toBe(5);
   const topic = `P5 automatic lifecycle ${randomUUID()}`;
   const input = page.getByRole('textbox', {
