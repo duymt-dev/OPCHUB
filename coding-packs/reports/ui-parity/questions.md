@@ -960,3 +960,5 @@ Owner chốt toàn bộ phương án mặc định Q-V46-807-1 → 5, Q808-1 →
 - Under the approved worker fixture exception, defer only processor bootstrap until test Redis/state reset; production bootstrap methods then start real workers. External reboot12:02 ended all prior HOLD PIDs; recorded interruption, never claim process continuity or stop reused PIDs.
 
 - Owner approved D44 unified exact-card registration-list journey on app/prototype, keeping drawer assertion/full-page capture/scroll. Native real-registration seed is not full; no production or DB-count fabrication.
+
+- Owner explicitly approved the extra narrow MSW regional membership snapshot + fresh-runtime regression correction ("ok sua di"), retaining existing E2E assertions and backend/business rules. New wire state is restricted to the six regional demo owners; older wire versions reconstruct only absent demo fixture membership, never overwrite explicit left/empty state or replay money effects.

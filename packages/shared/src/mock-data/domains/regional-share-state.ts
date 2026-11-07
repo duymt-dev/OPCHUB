@@ -19,6 +19,11 @@ import {
 import { readMockAffiliatePolicy } from './affiliate-policy';
 import { readMockPrices } from './price-config';
 import { regionalMockBanks } from './regional-share-bank';
+import {
+  regionalDemoMembershipsSchema,
+  captureRegionalDemoMemberships,
+  restoreRegionalDemoMemberships,
+} from './regional-demo-memberships';
 
 export const regionalMockShareSchema = regionalShareItemSchema.extend({
   source: z.enum(['membership', 'fundraising']),
@@ -32,6 +37,7 @@ export const regionalMockShareSchema = regionalShareItemSchema.extend({
 });
 export const regionalShareSnapshotSchema = z.object({
   seeded: z.boolean(),
+  memberships: regionalDemoMembershipsSchema.optional(),
   rows: z.array(regionalMockShareSchema),
   firstPaid: z.array(z.tuple([z.string(), z.iso.datetime()])),
   receipts: z.array(
@@ -135,6 +141,7 @@ export function captureRegionalShareState() {
   const s = regionalShareState();
   return regionalShareSnapshotSchema.parse({
     seeded: s.seeded,
+    memberships: captureRegionalDemoMemberships(s.seeded),
     rows: s.rows,
     firstPaid: [...s.firstPaid],
     receipts: [...s.receipts],
@@ -146,6 +153,7 @@ export function restoreRegionalShareState(
 ) {
   if (!input) return;
   const data = regionalShareSnapshotSchema.parse(input);
+  restoreRegionalDemoMemberships(data.memberships, data.seeded);
   states.set(mockDb(), {
     seeded: data.seeded,
     rows: data.rows,
