@@ -10,5 +10,7 @@
 | [0006](0006-ant-design-6.md)                  | Ant Design 6, không dùng pro-components                                    | Accepted   |
 | [0007](0007-s3-storage-rustfs.md)             | Object storage S3-compatible: RustFS thay MinIO (MinIO cộng đồng đã ngừng) | Accepted   |
 | [0008](0008-llm-config-in-admin.md)           | Cấu hình nhà cung cấp AI (LLM) trong Admin thay cho biến môi trường        | Accepted   |
+| [0009](0009-multi-ai-providers.md)            | Nhiều nhà cung cấp AI, fallback và adapter tương thích                     | Accepted   |
+| [0010](0010-web-push.md)                      | Web Push VAPID, ledger giao nhận và PWA không lưu ngoại tuyến              | Accepted   |
 
 Mẫu ADR mới: copy một file, tăng số, giữ 4 mục Context · Decision · Consequences · Status.
