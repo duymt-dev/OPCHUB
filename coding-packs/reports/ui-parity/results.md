@@ -1,7 +1,9 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 441/500 ảnh.
+> Đạt ngưỡng pixel 440/500 ảnh.
+> TIP-V46-816: chỉ 6 ảnh mới của P-89/P-93/D-V46-APP ở lane này. D-V46-APP được phân loại D-137 (khối Thiết bị này) + B16 đã để sau + dữ liệu; không phải lỗi chức năng theo D-134. CLI pixel vẫn exit 1, số đo/ảnh/assertion không đổi. Xem [báo cáo 816](../TIP-V46-816-parity.md).
+
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -232,16 +234,16 @@
 | P-85 | Chuyển khoản · đã sao chép | 390 | 1.84% | ✅ đạt | 390×844 | ef7934ff |
 | P-86 | Chuyển khoản · đang đối soát | 1440 | 0.58% | ✅ đạt | 1440×900 | ef7934ff |
 | P-86 | Chuyển khoản · đang đối soát | 390 | 1.00% | ✅ đạt | 390×844 | ef7934ff |
-| P-89 | Hồ sơ · thông tin cá nhân | 1440 | 0.24% | ✅ đạt | 1440×900 | ef7934ff |
-| P-89 | Hồ sơ · thông tin cá nhân | 390 | 0.28% | ✅ đạt | 390×1652 | ef7934ff |
+| P-89 | Hồ sơ · thông tin cá nhân | 1440 | 1.99% | ✅ đạt | 1440×900 | 584742ea |
+| P-89 | Hồ sơ · thông tin cá nhân | 390 | 0.31% | ✅ đạt | 390×1652 | 584742ea |
 | P-90 | Hồ sơ · báo thiếu họ tên | 1440 | 0.24% | ✅ đạt | 1440×900 | ef7934ff |
 | P-90 | Hồ sơ · báo thiếu họ tên | 390 | 0.28% | ✅ đạt | 390×1652 | ef7934ff |
 | P-91 | Hồ sơ · thông tin doanh nghiệp | 1440 | 0.89% | ✅ đạt | 1440×900 | ef7934ff |
 | P-91 | Hồ sơ · thông tin doanh nghiệp | 390 | 1.93% | ✅ đạt | 390×1502 | ef7934ff |
 | P-92 | Hồ sơ · nhóm & hoạt động | 1440 | 0.20% | ✅ đạt | 1440×900 | ef7934ff |
 | P-92 | Hồ sơ · nhóm & hoạt động | 390 | 0.49% | ✅ đạt | 390×1436 | ef7934ff |
-| P-93 | Hồ sơ · bảo mật | 1440 | 0.21% | ✅ đạt | 1440×900 | ef7934ff |
-| P-93 | Hồ sơ · bảo mật | 390 | 0.32% | ✅ đạt | 390×1532 | ef7934ff |
+| P-93 | Hồ sơ · bảo mật | 1440 | 1.75% | ✅ đạt | 1440×900 | 584742ea |
+| P-93 | Hồ sơ · bảo mật | 390 | 0.34% | ✅ đạt | 390×1532 | 584742ea |
 | P-94 | Đổi mật khẩu · báo thiếu | 1440 | 0.21% | ✅ đạt | 1440×900 | ef7934ff |
 | P-94 | Đổi mật khẩu · báo thiếu | 390 | 0.44% | ✅ đạt | 390×1532 | ef7934ff |
 | P-96 | Chi tiết sự kiện · đã đăng ký (link Meet) | 1440 | 0.20% | ✅ đạt | 1440×900 | ef7934ff |
@@ -497,8 +499,8 @@
 | D-98 | Kiểm duyệt · Thời gian khóa 14 ngày | 390 | 0.43% | ✅ đạt | 390×1667 | ef7934ff |
 | D-V46-AI | Cài đặt · AI Provider | 1440 | 2.83% | ✅ đạt | 1440×1584 | ef7934ff |
 | D-V46-AI | Cài đặt · AI Provider | 390 | 6.87% | ❌ chưa đạt | 390×3478 | ef7934ff |
-| D-V46-APP | Cài đặt · Ứng dụng & thông báo | 1440 | 12.01% | ❌ chưa đạt | 1440×1065 | ef7934ff |
-| D-V46-APP | Cài đặt · Ứng dụng & thông báo | 390 | 2.26% | ✅ đạt | 390×1604 | ef7934ff |
+| D-V46-APP | Cài đặt · Ứng dụng & thông báo | 1440 | 12.40% | ℹ️ D-137/B16 (tham khảo) | 1440×1065 | 584742ea |
+| D-V46-APP | Cài đặt · Ứng dụng & thông báo | 390 | 8.06% | ℹ️ D-137/B16 (tham khảo) | 390×1693 | 584742ea |
 | D-V46-BANK | Cài đặt · Đối soát ngân hàng | 1440 | 12.33% | ❌ chưa đạt | 1440×1065 | ef7934ff |
 | D-V46-BANK | Cài đặt · Đối soát ngân hàng | 390 | 7.80% | ❌ chưa đạt | 390×2164 | ef7934ff |
 | D-V46-RENEW | Cài đặt · Nhắc gia hạn | 1440 | 11.07% | ❌ chưa đạt | 1440×1065 | ef7934ff |

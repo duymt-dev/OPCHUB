@@ -1819,17 +1819,17 @@
   "id": "P-89",
   "name": "Hồ sơ · thông tin cá nhân",
   "viewport": 1440,
-  "diffPct": 0.23726851851851852,
+  "diffPct": 1.9906635802469135,
   "size": "1440×900",
-  "sha": "ef7934ff"
+  "sha": "584742ea"
  },
  {
   "id": "P-89",
   "name": "Hồ sơ · thông tin cá nhân",
   "viewport": 390,
-  "diffPct": 0.2849692680201155,
+  "diffPct": 0.30669895076674736,
   "size": "390×1652",
-  "sha": "ef7934ff"
+  "sha": "584742ea"
  },
  {
   "id": "P-90",
@@ -1883,17 +1883,17 @@
   "id": "P-93",
   "name": "Hồ sơ · bảo mật",
   "viewport": 1440,
-  "diffPct": 0.2066358024691358,
+  "diffPct": 1.7540123456790124,
   "size": "1440×900",
-  "sha": "ef7934ff"
+  "sha": "584742ea"
  },
  {
   "id": "P-93",
   "name": "Hồ sơ · bảo mật",
   "viewport": 390,
-  "diffPct": 0.31699805851241886,
+  "diffPct": 0.3382540001338957,
   "size": "390×1532",
-  "sha": "ef7934ff"
+  "sha": "584742ea"
  },
  {
   "id": "P-94",
@@ -3951,17 +3951,17 @@
   "id": "D-V46-APP",
   "name": "Cài đặt · Ứng dụng & thông báo",
   "viewport": 1440,
-  "diffPct": 12.006585811163276,
+  "diffPct": 12.396778821074596,
   "size": "1440×1065",
-  "sha": "ef7934ff"
+  "sha": "584742ea"
  },
  {
   "id": "D-V46-APP",
   "name": "Cài đặt · Ứng dụng & thông báo",
   "viewport": 390,
-  "diffPct": 2.258776136581623,
-  "size": "390×1604",
-  "sha": "ef7934ff"
+  "diffPct": 8.058067154345949,
+  "size": "390×1693",
+  "sha": "584742ea"
  },
  {
   "id": "D-V46-BANK",

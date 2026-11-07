@@ -1,7 +1,9 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 319/430 ảnh.
+> Đạt ngưỡng pixel 318/430 ảnh.
+> TIP-V46-816: chỉ 6 ảnh mới của P-89/P-93/D-V46-APP ở lane này. D-V46-APP được phân loại D-137 (khối Thiết bị này) + B16 đã để sau + dữ liệu; không phải lỗi chức năng theo D-134. CLI pixel vẫn exit 1, số đo/ảnh/assertion không đổi. Xem [báo cáo 816](../../TIP-V46-816-parity.md).
+
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -196,16 +198,16 @@
 | P-85 | Chuyển khoản · đã sao chép | 390 | 2.01% | ✅ đạt | 390×844 | 25a1eec |
 | P-86 | Chuyển khoản · đang đối soát | 1440 | 1.54% | ✅ đạt | 1440×900 | 25a1eec |
 | P-86 | Chuyển khoản · đang đối soát | 390 | 0.00% | ✅ đạt | 390×844 | 25a1eec |
-| P-89 | Hồ sơ · thông tin cá nhân | 1440 | 0.17% | ✅ đạt | 1440×900 | 25a1eec |
-| P-89 | Hồ sơ · thông tin cá nhân | 390 | 0.18% | ✅ đạt | 390×1618 | 25a1eec |
+| P-89 | Hồ sơ · thông tin cá nhân | 1440 | 2.07% | ✅ đạt | 1440×900 | 584742ea |
+| P-89 | Hồ sơ · thông tin cá nhân | 390 | 0.37% | ✅ đạt | 390×1652 | 584742ea |
 | P-90 | Hồ sơ · báo thiếu họ tên | 1440 | 0.17% | ✅ đạt | 1440×900 | 25a1eec |
 | P-90 | Hồ sơ · báo thiếu họ tên | 390 | 0.18% | ✅ đạt | 390×1618 | 25a1eec |
 | P-91 | Hồ sơ · thông tin doanh nghiệp | 1440 | 0.80% | ✅ đạt | 1440×900 | 25a1eec |
 | P-91 | Hồ sơ · thông tin doanh nghiệp | 390 | 1.81% | ✅ đạt | 390×1468 | 25a1eec |
 | P-92 | Hồ sơ · nhóm & hoạt động | 1440 | 0.10% | ✅ đạt | 1440×900 | 25a1eec |
 | P-92 | Hồ sơ · nhóm & hoạt động | 390 | 0.16% | ✅ đạt | 390×1402 | 25a1eec |
-| P-93 | Hồ sơ · bảo mật | 1440 | 0.21% | ✅ đạt | 1440×1112 | 25a1eec |
-| P-93 | Hồ sơ · bảo mật | 390 | 0.42% | ✅ đạt | 390×1798 | 25a1eec |
+| P-93 | Hồ sơ · bảo mật | 1440 | 1.84% | ✅ đạt | 1440×900 | 584742ea |
+| P-93 | Hồ sơ · bảo mật | 390 | 0.37% | ✅ đạt | 390×1532 | 584742ea |
 | P-94 | Đổi mật khẩu · báo thiếu | 1440 | 0.20% | ✅ đạt | 1440×1112 | 25a1eec |
 | P-94 | Đổi mật khẩu · báo thiếu | 390 | 0.52% | ✅ đạt | 390×1798 | 25a1eec |
 | P-96 | Chi tiết sự kiện · đã đăng ký (link Meet) | 1440 | 0.11% | ✅ đạt | 1440×900 | 25a1eec |
@@ -427,8 +429,8 @@
 | D-89 | Gán vào nhóm · vai trò Giảng viên (GR-R01) | 390 | 0.11% | ✅ đạt | 390×844 | ef7934ff |
 | D-V46-AI | Cài đặt · AI Provider | 1440 | 2.84% | ✅ đạt | 1440×1584 | ef7934ff |
 | D-V46-AI | Cài đặt · AI Provider | 390 | 6.88% | ❌ chưa đạt | 390×3478 | ef7934ff |
-| D-V46-APP | Cài đặt · Ứng dụng & thông báo | 1440 | 12.01% | ❌ chưa đạt | 1440×1065 | ef7934ff |
-| D-V46-APP | Cài đặt · Ứng dụng & thông báo | 390 | 2.26% | ✅ đạt | 390×1604 | ef7934ff |
+| D-V46-APP | Cài đặt · Ứng dụng & thông báo | 1440 | 12.39% | ℹ️ D-137/B16 (tham khảo) | 1440×1065 | 584742ea |
+| D-V46-APP | Cài đặt · Ứng dụng & thông báo | 390 | 8.05% | ℹ️ D-137/B16 (tham khảo) | 390×1693 | 584742ea |
 | D-V46-BANK | Cài đặt · Đối soát ngân hàng | 1440 | 12.33% | ❌ chưa đạt | 1440×1065 | ef7934ff |
 | D-V46-BANK | Cài đặt · Đối soát ngân hàng | 390 | 7.79% | ❌ chưa đạt | 390×2164 | ef7934ff |
 | D-V46-RENEW | Cài đặt · Nhắc gia hạn | 1440 | 11.07% | ❌ chưa đạt | 1440×1065 | ef7934ff |
