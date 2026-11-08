@@ -2,6 +2,7 @@
 
 import { DateRangePicker, ErrorState, PageHeader, PageSkeleton, Tabs } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
+import { usePushConfig, PushPreferences } from '@/features/push';
 import { useProfile } from '../hooks/use-profile';
 import { useProfileForm } from '../hooks/use-profile-form';
 import { useProfileTab } from '../hooks/use-profile-tab';
@@ -34,10 +35,14 @@ export function ProfileScreen() {
 function ProfileBody({ profile }: { profile: Profile }) {
   const t = useTranslations('profile');
   const [rawTab, setTab] = useProfileTab();
+  const push = usePushConfig();
   const form = useProfileForm(profile);
   const biz = profile.business;
   // Tab DN chỉ có với TK doanh nghiệp
-  const tab: ProfileTab = rawTab === 'business' && !biz ? 'info' : rawTab;
+  const tab: ProfileTab =
+    (rawTab === 'business' && !biz) || (rawTab === 'notifications' && !push.data?.enabled)
+      ? 'info'
+      : rawTab;
 
   const items = [
     { key: 'info' as const, label: t('tabs.info') },
@@ -45,6 +50,7 @@ function ProfileBody({ profile }: { profile: Profile }) {
     { key: 'activity' as const, label: t('tabs.activity') },
     { key: 'pay' as const, label: t('tabs.pay') },
     { key: 'security' as const, label: t('tabs.security') },
+    ...(push.data?.enabled ? [{ key: 'notifications' as const, label: t('push.tab') }] : []),
   ];
 
   return (
@@ -74,6 +80,7 @@ function ProfileBody({ profile }: { profile: Profile }) {
             {tab === 'business' && biz ? <BusinessTab form={form} business={biz} /> : null}
             {tab === 'activity' ? <ActivityTab /> : null}
             {tab === 'pay' ? <BillingTab /> : null}
+            {tab === 'notifications' && push.data ? <PushPreferences config={push.data} /> : null}
             {tab === 'security' ? (
               <SecurityTab linked={profile.linkedSso} hasPassword={profile.hasPassword} />
             ) : null}

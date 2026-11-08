@@ -39,7 +39,7 @@ export class NotificationEventsHandler {
   ) {}
 
   /** @nhắc / trả lời: chỉ người còn là thành viên nhóm mới nhận */
-  async chatMentioned(p: OutboxPayload<'chat.mentioned'>): Promise<void> {
+  async chatMentioned(p: OutboxPayload<'chat.mentioned'>, outboxId?: string): Promise<void> {
     // D-111: chủ đề vừa bị xoá mềm → không báo (link mở ra 404)
     const room = await this.prisma.db.room.findFirst({
       where: { id: p.roomId, deletedAt: null },
@@ -66,6 +66,8 @@ export class NotificationEventsHandler {
     const verb = p.kind === 'reply' ? 'trả lời bạn trong' : 'nhắc đến bạn trong';
     await this.notifications.notify(
       room.group.members.map((m) => ({
+        id: `chat-${outboxId ?? p.messageId}-${p.kind}-${m.userId}`,
+        push: 'msg' as const,
         userId: m.userId,
         type: 'mention' as const,
         title: `${sender.fullName} ${verb} #${room.name}`,
@@ -169,9 +171,11 @@ export class NotificationEventsHandler {
   }
 
   /** Nhắc phí (NA-04, §12): thông báo chuông, mở trang thanh toán phí */
-  async feeReminded(p: OutboxPayload<'membership_fee.reminded'>): Promise<void> {
+  async feeReminded(p: OutboxPayload<'membership_fee.reminded'>, outboxId?: string): Promise<void> {
     await this.notifications.notify(
-      p.items.map((i) => ({
+      p.items.map((i, index) => ({
+        ...(outboxId ? { id: `renew-${outboxId}-${index}-${i.userId}` } : {}),
+        push: 'renew' as const,
         userId: i.userId,
         type: 'membership' as const,
         title: i.title ?? 'Nhắc phí thành viên',
@@ -223,9 +227,12 @@ export class NotificationEventsHandler {
     if (!ev?.registrations.length) return;
     await this.notifications.notify(
       ev.registrations.map(({ userId }) => ({
+        id: `event-reminder-${p.eventId}-${p.window}-${ev.startsAt.getTime()}-${userId}`,
+        push: 'event' as const,
         userId,
         type: 'event' as const,
-        title: `Sắp diễn ra: ${ev.title}`,
+        title:
+          p.window === '1h' ? `Sắp bắt đầu sau 1 giờ: ${ev.title}` : `Sắp diễn ra: ${ev.title}`,
         body: `${eventWhere(ev)}Bắt đầu lúc ${vnWhen(ev.startsAt)}`,
         link: `/events/${p.eventId}`,
       })),

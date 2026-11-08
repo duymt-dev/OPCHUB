@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import type { DbTx } from '@opchub/db';
 import { PrismaService } from '@/common/prisma/prisma.service';
 
 export interface NewNotification {
@@ -64,8 +65,8 @@ export class NotificationRepository {
   }
 
   /** Một lệnh cho cả lô (luật 7: không insert trong vòng lặp) */
-  createMany(rows: readonly NewNotification[]) {
-    return this.prisma.db.notification.createManyAndReturn({
+  createMany(rows: readonly NewNotification[], tx: DbTx = this.prisma.db) {
+    return tx.notification.createManyAndReturn({
       data: [...rows],
       skipDuplicates: true,
       select: { ...SELECT, userId: true },

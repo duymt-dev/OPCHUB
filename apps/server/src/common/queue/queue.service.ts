@@ -14,6 +14,7 @@ export const BULL_PREFIX = 'opchub:bull';
  * 1 / 5 / 15 phút — backoff tuỳ biến `mail` (backoff.ts, WorkerFactory gắn `settings`).
  */
 const DEFAULT_OPTS: Partial<Record<JobQueue, JobsOptions>> = {
+  push: { attempts: 5, backoff: { type: 'exponential', delay: 1000 } },
   mail: { attempts: MAIL_ATTEMPTS, backoff: { type: MAIL_BACKOFF } },
   reconcile: { attempts: 3, backoff: { type: 'exponential', delay: 2_000 } },
   scheduler: { attempts: 3, backoff: { type: 'exponential', delay: 10_000 } },

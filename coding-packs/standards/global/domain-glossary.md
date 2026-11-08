@@ -136,3 +136,14 @@ Nhãn tiếng Việt chỉ đặt trong file messages của next-intl, không vi
 - Nhà cung cấp dự phòng: one distinct retryable fallback, not an unbounded retry chain.
 - Ngân sách AI tháng: integer VND, VN calendar month, input/output token prices;0 unlimited.
 - Ứng dụng & thông báo: PWA/push configuration only; no Portal delivery in811 (D125).
+
+### Web Push/PWA (TIP-V46-816, D-137)
+
+- **Thông báo đẩy** (`Web Push`): thông báo ngắn đã che PII/số tiền, đi qua dịch vụ đẩy
+  của trình duyệt và VAPID; luôn có thông báo trong app tương ứng, không phải Zalo hay dịch vụ trả phí.
+- **Đăng ký thiết bị** (`push subscription`): endpoint và khóa trình duyệt, thuộc một
+  realm/người nhận; giới hạn 10, đăng ký lại endpoint cập nhật chủ sở hữu và khóa.
+- **Ledger giao nhận** (`push dispatch/delivery`): intent theo notification và kết quả theo
+  từng cặp notification/device; retry không gửi lại thành công đã lưu, không hứa exactly-once qua mạng ngoài.
+- **Tổng hợp gian hàng** (`store digest`): một thông báo lượt xem hôm qua, chạy 08:05 giờ VN
+  khi Admin bật loại store; không có số lượt liên hệ giả lập.

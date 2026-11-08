@@ -32,9 +32,14 @@ export class NeedRepository {
   }
 
   /** Chủ: Đóng / Mở lại — `updated_at` làm mới (Prisma `@updatedAt`) */
-  async step(ownerId: string, id: string, t: 'close' | 'reopen'): Promise<boolean> {
+  async step(
+    ownerId: string,
+    id: string,
+    t: 'close' | 'reopen',
+    tx: DbTx = this.prisma.db,
+  ): Promise<boolean> {
     const { from, to } = NEED_TRANSITIONS[t];
-    const r = await this.prisma.db.need.updateMany({
+    const r = await tx.need.updateMany({
       where: { id, ownerId, status: { in: [...from] } },
       data: { status: to },
     });

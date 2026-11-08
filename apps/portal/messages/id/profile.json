@@ -155,5 +155,27 @@
     "loggedOut": "Telah keluar dari {n} perangkat lain",
     "left": "Telah keluar dari {name}",
     "failed": "Tidak dapat diproses, silakan coba lagi"
+  },
+  "push": {
+    "device": "Perangkat ini",
+    "heading": "Perangkat ini",
+    "loading": "Memeriksa perangkat…",
+    "unsupported": "Peramban tidak didukung",
+    "ios": "Tambahkan OPC Hub ke layar utama untuk menerima notifikasi",
+    "denied": "Diblokir di peramban",
+    "off": "Belum aktif di perangkat ini",
+    "on": "Aktif di perangkat ini",
+    "enable": "Aktifkan notifikasi di perangkat ini",
+    "disable": "Nonaktifkan di perangkat ini",
+    "tab": "Notifikasi",
+    "kinds": "Jenis notifikasi push",
+    "msg": "Pesan grup baru",
+    "need": "Kebutuhan yang sesuai dengan toko",
+    "renew": "Pengingat perpanjangan keanggotaan",
+    "event": "Acara mendatang",
+    "store": "Kunjungan dan kontak toko",
+    "adminOff": "Administrator menonaktifkan jenis ini",
+    "failed": "Tidak dapat memperbarui notifikasi",
+    "retry": "Coba lagi"
   }
 }

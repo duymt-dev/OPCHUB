@@ -22,6 +22,9 @@ const fundraisingRef = z.object({
 });
 
 export const outboxEvents = {
+  'push.requested': z.strictObject({ notificationIds: z.array(z.string().min(1)).min(1).max(500) }),
+  'need.published': z.strictObject({ needId: z.string().min(1) }),
+  'store.digest_due': z.strictObject({ day: z.iso.date() }),
   'regional_share.recorded': z.object({ shareId: z.string() }),
   'regional_share.payout_recorded': z.object({
     payoutId: z.string(),
@@ -176,7 +179,10 @@ export const outboxEvents = {
     missing: z.array(z.string()),
   }),
   /** NA-23: scheduler 15' — nhắc 24h trước giờ bắt đầu (mỗi sự kiện một lần, `reminded_at`) */
-  'event.reminder_due': z.object({ eventId: z.string() }),
+  'event.reminder_due': z.object({
+    eventId: z.string(),
+    window: z.enum(['24h', '1h']).default('24h'),
+  }),
   /** Chiến dịch chuyển sang `sending` (B42) → worker gửi theo lô */
   'campaign.send': z.object({ campaignId: z.string() }),
   /** Admin xuất dữ liệu (B43) → worker `export.run` */

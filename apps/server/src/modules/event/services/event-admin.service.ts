@@ -107,7 +107,7 @@ export class EventAdminService {
     if (!cur) throw notFound(NOT_FOUND);
     const write = await this.toWrite(actor, input, cur.coverUrl);
     const moved = cur.startsAt.getTime() !== write.startsAt.getTime();
-    const data: EventWrite = moved ? { ...write, remindedAt: null } : write;
+    const data: EventWrite = moved ? { ...write, remindedAt: null, reminded1hAt: null } : write;
     const row = await this.prisma.db.$transaction(async (tx) => {
       const r = await this.repo.update(tx, id, data);
       if (r === 'missing') throw notFound(NOT_FOUND);

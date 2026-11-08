@@ -515,3 +515,10 @@ Số "1 / 8" của prototype (chỉ TK demo `m1` đã đóng phí) khác MSW "6 
 | D-70 / P-05 — DV-G2a-1 (D-47) | **đã sửa** (D-91 (5)): khối "Tài khoản & thông tin truy cập" như prototype (URL, Tên đăng nhập, dòng "Mật khẩu: Do bạn tự đặt") + ghi chú "Vì bảo mật, OPC Hub không gửi mật khẩu của bạn qua email." — **không có giá trị mật khẩu** (D-47). Cờ `showAccess` (mặc định bật, mẫu cũ parse được), mail server cùng khối. Unit server + e2e Admin / Portal. | D-70 0,41 / 0,55 (trước 16,33 / 15,56) · P-05 0,25 / 0,46 (trước 4,52 / 4,71) |
 | D-84-AFF — DV-V4-602-1 (AF-R01) | **giữ — owner chấp nhận ngoại lệ** (D-91 (1), Q-V4-624-1 = c, 27/10/2026): owner chọn A (demo 6 đại lý) nhưng chưa làm — 51 khách AF0 đã đóng phí, AF-R01 bắt buộc tự thành đại lý (worker `AffiliateBackfillService` tạo lại); làm A = bỏ đóng phí của 51 khách hoặc bỏ AF-R01 cho demo (đổi số liệu tiền / hoa hồng của kịch bản). Q-V4-624-1. | 24,12 / 29,36 |
 | P-104 @390 (D-31), P-40 @390 (D-71 / D-56) | **giữ — owner chấp nhận ngoại lệ** (D-91 (6), (7), 27/10/2026). | 15,94 · 4,31 |
+
+## TIP-V46-816 — D-137,08/11/2026
+
+| Màn | Phân loại theo D-134 | Quyết định / bằng chứng |
+|---|---|---|
+| D-V46-APP1440/390 | Thay đổi được TIP/D-137 yêu cầu: thêm Thiết bị này; B16/menu và số liệu cũ giữ phạm vi đã chốt | MSW12,40/8,06%; native12,39/8,05%. Không phải lỗi chức năng; không mask/đổi ngưỡng. [Cặp ảnh](../TIP-V46-816-parity.md), owner review PR98. |
+| P-89/P-93 | Thêm tab Thông báo theo D-137; các ảnh mới đều dưới3% | Native tab mới có ảnh riêng; không có màn prototype tương ứng để ép pixel. |

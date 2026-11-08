@@ -80,6 +80,7 @@ export class NeedOwnerService {
         channel: v.channel,
       });
       await this.outbox.add(tx, 'onboarding.touched', { userId: u.id });
+      await this.outbox.add(tx, 'need.published', { needId: r.id });
       return r;
     });
     await this.explore.invalidate();
@@ -98,8 +99,11 @@ export class NeedOwnerService {
 
   async step(u: StoreOwner, id: string, action: 'close' | 'reopen'): Promise<Need> {
     await this.owned(u, id);
-    if (!(await this.repo.step(u.id, id, action)))
-      throw conflict('Nhu cầu đã thay đổi, vui lòng tải lại');
+    await this.prisma.db.$transaction(async (tx) => {
+      if (!(await this.repo.step(u.id, id, action, tx)))
+        throw conflict('Nhu cầu đã thay đổi, vui lòng tải lại');
+      if (action === 'reopen') await this.outbox.add(tx, 'need.published', { needId: id });
+    });
     await this.explore.invalidate();
     const row = await this.repo.byId(id);
     if (!row) throw notFound('Không tìm thấy nhu cầu');

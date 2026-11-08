@@ -40,6 +40,7 @@ model Event {
   closedAt         DateTime? @map("closed_at") @db.Timestamptz(6)
   /// NA-23: đã phát nhắc 24h (mỗi sự kiện một lần)
   remindedAt       DateTime? @map("reminded_at") @db.Timestamptz(6)
+  reminded1hAt     DateTime? @map("reminded_1h_at") @db.Timestamptz(6)
   createdBy        String?   @map("created_by")
   createdAt        DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt        DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)

@@ -1,6 +1,13 @@
 import type { Profile } from '@opchub/shared/api-domains';
 
-export const PROFILE_TABS = ['info', 'business', 'activity', 'pay', 'security'] as const;
+export const PROFILE_TABS = [
+  'info',
+  'business',
+  'activity',
+  'pay',
+  'security',
+  'notifications',
+] as const;
 export type ProfileTab = (typeof PROFILE_TABS)[number];
 
 /** Bản nháp form (prototype `meEdit`): chỉ chứa trường người dùng đã sửa */

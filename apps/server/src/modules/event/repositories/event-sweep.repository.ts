@@ -1,8 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
+import { Prisma } from '@opchub/db';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { EVENT_SELECT, type EventRow } from '../domain/event.mapper';
-import { DEFAULT_DURATION_MS, REMIND_BEFORE_MS } from '../domain/event-sweep';
+import { DEFAULT_DURATION_MS, REMIND_BEFORE_MS, REMIND_1H_MS } from '../domain/event-sweep';
+
+export const eventReminders1hQuery = (now: Date) => Prisma.sql`
+  UPDATE events SET reminded_1h_at=${now}
+  WHERE reminded_1h_at IS NULL AND starts_at>${now}
+    AND starts_at<=${new Date(now.getTime() + REMIND_1H_MS)} RETURNING id`;
 
 /** NA-23 (scheduler 15') + EV-R02 — mỗi bước một câu, không lặp theo sự kiện */
 @Injectable()
@@ -22,10 +28,16 @@ export class EventSweepRepository {
   /** Nhắc 24h: đánh dấu `reminded_at` rồi trả id (idx `events_remind_due`) — chạy lại không trùng */
   async claimReminders(tx: DbTx, now: Date): Promise<string[]> {
     const until = new Date(now.getTime() + REMIND_BEFORE_MS);
+    const after = new Date(now.getTime() + REMIND_1H_MS);
     const rows = await tx.$queryRaw<{ id: string }[]>`
       UPDATE events SET reminded_at = ${now}
-      WHERE reminded_at IS NULL AND starts_at > ${now} AND starts_at <= ${until}
+      WHERE reminded_at IS NULL AND starts_at > ${after} AND starts_at <= ${until}
       RETURNING id`;
+    return rows.map((r) => r.id);
+  }
+
+  async claimReminders1h(tx: DbTx, now: Date): Promise<string[]> {
+    const rows = await tx.$queryRaw<{ id: string }[]>(eventReminders1hQuery(now));
     return rows.map((r) => r.id);
   }
 

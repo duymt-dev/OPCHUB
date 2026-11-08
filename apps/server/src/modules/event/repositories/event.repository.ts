@@ -25,6 +25,7 @@ export interface EventWrite {
   closedAt: null;
   /** Đổi giờ bắt đầu → nhắc 24h lại (undefined = giữ) */
   remindedAt?: null;
+  reminded1hAt?: null;
 }
 
 export interface LockedEvent {

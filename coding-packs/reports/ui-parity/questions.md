@@ -973,3 +973,20 @@ Owner chốt toàn bộ phương án mặc định Q-V46-807-1 → 5, Q808-1 →
 - Q-V46-815-5: owner duyệt DB dev `opchub_v46_812_dev`, test `opchub_v46_801_test`, Memurai6381 DB3/DB2 và rolling restart bộ riêng khi cần; giữ native DB/Redis6379.
 - Q-V46-815-6 (**đã duyệt**): thêm đúng `e2e/env.ts` để parse URL DB sẵn có bằng Zod, chặn đọc metadata ngoài DB riêng; không thêm biến cấu hình mới hay đọc key AI.
 - Q-V46-815-7 (**đã duyệt**): sửa hẹp REQ-208 trong `native-real-provider.spec.ts` từ Dashboard LIVE đã bỏ theo D-89 sang kiểm đúng bài tại chat c1, giữ assertion sinh/đăng/dừng; thêm đúng1 lời gọi tối đa256 token, tổng tối đa5. Topic fixture có nonce để không nhầm thread đã xong. Kết quả REQ-208/UAT-14 PASS; tổng thực tế5 lượt, lần vướng topic cũ0 lượt.
+
+## TIP-V46-816 — Web Push/PWA (owner chốt, thực hiện 08/11/2026)
+
+- Q816-1/2: làm đủ năm loại; bổ sung nhu cầu phù hợp, mốc sự kiện 1 giờ và tổng hợp lượt xem gian hàng.
+- Q816-3/4: tab Thông báo trong Hồ sơ; PWA tắt thì ẩn tab, từ chối đăng ký và ngừng đẩy, giữ đăng ký cũ.
+- Q816-5/6: thiết bị Admin ở tab Ứng dụng & thông báo, realm riêng; tối đa 10 thiết bị/người/realm.
+- Q816-7/8: tổng hợp chỉ lượt xem hôm qua, không bịa số liên hệ; store tắt thì không tạo cả thông báo trong app.
+- Owner duyệt dùng lại `opchub_v46_812_dev`, `opchub_v46_801_test`, Memurai6381 DB3/DB2;
+  rolling restart đúng bộ riêng 815→816. Không đổi DB native/Redis6379 hay HOLD gốc.
+- Owner duyệt `push_dispatches`/`push_deliveries` và repository notification để lưu notification,
+  intent và outbox nguyên tử; ledger theo từng notification/device thay cho mốc thành công chung.
+- Owner duyệt nối `notification.processor.ts` truyền ID outbox, `need.repository.ts` nhận transaction,
+  và API config trả thêm cờ loại Admin. Các module/hook/query được tách nhỏ theo standard.
+- Parity D-V46-APP có thêm khối **Thiết bị này** theo D-137; prototype chưa có. Đây là thay đổi
+  đã được TIP yêu cầu, không phải lỗi chức năng. D-134 giữ số đo pixel tham khảo và cặp ảnh để owner review.
+- Không sửa prototype, không mask/nới ngưỡng hay bỏ assertion parity. Real push/iOS cần owner
+  cấu hình VAPID và kiểm thủ công production; test tự động chỉ fake/HTTP loopback stub theo D-103.

@@ -4,6 +4,7 @@ import { APP_PUSH_KINDS } from '@opchub/shared/api-domains';
 import { useAppNotify } from '../hooks/use-app-notify';
 import { Switch } from './switch';
 import { AppNotifyPwa } from './app-notify-pwa';
+import { AppNotifyDevice } from './app-notify-device';
 import styles from './app-notify.module.css';
 export function AppNotifyTab() {
   const t = useTranslations('settings.app');
@@ -46,6 +47,7 @@ export function AppNotifyTab() {
         </div>
       </div>
       <AppNotifyPwa p={p} />
+      <AppNotifyDevice />
       <div className={styles.kinds}>
         <h3>{t('kinds')}</h3>
         {APP_PUSH_KINDS.map((key) => (
