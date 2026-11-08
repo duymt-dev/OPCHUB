@@ -22,6 +22,11 @@ const fundraisingRef = z.object({
 });
 
 export const outboxEvents = {
+  'ai.budget_warned': z.strictObject({
+    month: z.string().regex(/^\d{4}-\d{2}$/),
+    pct: z.number().int().min(1).max(100),
+  }),
+  'ai.budget_exhausted': z.strictObject({ month: z.string().regex(/^\d{4}-\d{2}$/) }),
   'push.requested': z.strictObject({ notificationIds: z.array(z.string().min(1)).min(1).max(500) }),
   'need.published': z.strictObject({ needId: z.string().min(1) }),
   'store.digest_due': z.strictObject({ day: z.iso.date() }),

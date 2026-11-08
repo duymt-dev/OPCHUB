@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { PushProcessor } from './processors/push.processor';
+import { AiBudgetProcessor } from './processors/ai-budget.processor';
+import { AiBudgetNotifyHandler } from '@/modules/llm-config';
 import { NeedNotifyProcessor } from './processors/need-notify.processor';
 import { RegionalDirectorCoreModule } from '@/modules/regional-director';
 import { RegionalDirectorProcessor } from './processors/regional-director.processor';
@@ -78,6 +80,8 @@ import { OnboardingProcessor } from './processors/onboarding.processor';
     FundraisingPaymentModule,
   ],
   providers: [
+    AiBudgetProcessor,
+    AiBudgetNotifyHandler,
     PushProcessor,
     NeedNotifyProcessor,
     RegionalDirectorProcessor,

@@ -1,5 +1,5 @@
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterAll, beforeAll, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { NextIntlClientProvider } from 'next-intl';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ToastProvider } from '@opchub/ui';
@@ -37,7 +37,45 @@ beforeEach(() => {
   vi.mocked(api.verifyAiProvider).mockResolvedValue({ ok: true, message: 'verified' });
 });
 afterEach(cleanup);
+beforeAll(() => {
+  vi.stubGlobal(
+    'ResizeObserver',
+    class {
+      observe() {
+        return undefined;
+      }
+      unobserve() {
+        return undefined;
+      }
+      disconnect() {
+        return undefined;
+      }
+    },
+  );
+});
+afterAll(() => vi.unstubAllGlobals());
 describe('REQ-628 AI provider UI', () => {
+  it('D-138 purpose model stays draft until explicit save', async () => {
+    const data = emptyAiProviders();
+    data.use.content = 'claude';
+    data.providers = data.providers.map((p) =>
+      p.id === 'claude' ? { ...p, enabled: true, hasKey: true, model: 'saved-legacy-model' } : p,
+    );
+    vi.mocked(api.fetchAiSettings).mockResolvedValue(data);
+    mount();
+    const input = await screen.findByRole('combobox', { name: 'Mô hình (content)' });
+    expect(screen.getByRole<HTMLSelectElement>('combobox', { name: settings.ai.model }).value).toBe(
+      'saved-legacy-model',
+    );
+    fireEvent.change(input, { target: { value: 'owner-purpose-model' } });
+    expect(api.saveAiSettings).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: settings.ai.save }));
+    await waitFor(() =>
+      expect(vi.mocked(api.saveAiSettings).mock.calls[0]?.[0]).toEqual(
+        expect.objectContaining({ models: { content: 'owner-purpose-model' } }),
+      ),
+    );
+  });
   it('six providers, four purposes and fallback; no assistant row; switches are drafts', async () => {
     mount();
     await screen.findByRole('heading', { name: settings.ai.heading });

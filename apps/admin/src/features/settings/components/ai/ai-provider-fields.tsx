@@ -58,6 +58,9 @@ export function AiProviderFields({ p }: { p: AiPanel }) {
             disabled={p.busy}
             onChange={(e) => set({ model: e.target.value })}
           >
+            {row.model && !catalog.models.some((model) => model === row.model) ? (
+              <option value={row.model}>{row.model}</option>
+            ) : null}
             {catalog.models.map((m) => (
               <option key={m}>{m}</option>
             ))}

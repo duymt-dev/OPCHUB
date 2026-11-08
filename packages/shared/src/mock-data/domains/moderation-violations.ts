@@ -1,6 +1,5 @@
 import {
   AUTO_LOCK_FROM,
-  type LockDays,
   MODERATION_DEFAULTS,
   type ModerationSettings,
   type Report,
@@ -178,8 +177,8 @@ export function withMockViolations(r: Report, now = Date.now()): Report {
 export const mockModerationSettings = (): ModerationSettings => state().settings;
 export const mockViolationState = () => state();
 
-export function saveMockModerationSettings(actorId: string, next: { autoLockDays: LockDays }) {
-  state().settings = { ...next };
+export function saveMockModerationSettings(actorId: string, next: ModerationSettings) {
+  state().settings = { ...state().settings, ...next };
   logSetting(
     actorId,
     'moderation.settings.update',

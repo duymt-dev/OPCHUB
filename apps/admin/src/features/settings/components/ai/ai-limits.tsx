@@ -1,10 +1,14 @@
 'use client';
 import { useTranslations } from 'next-intl';
+import { useState } from 'react';
+import { Button } from 'antd';
+import { AiCallLog } from './ai-call-log';
 import { Switch } from '../switch';
 import type { AiPanel } from './types';
 import styles from './ai.module.css';
 export function AiLimits({ p }: { p: AiPanel }) {
   const t = useTranslations('settings.ai');
+  const [logOpen, setLogOpen] = useState(false);
   const form = p.form;
   if (!form) return null;
   const spend = p.query.data?.spend;
@@ -46,6 +50,13 @@ export function AiLimits({ p }: { p: AiPanel }) {
         </div>
       )}
       <small>{t('exhausted')}</small>
+      <small>{t('budgetAlert')}</small>
+      <Button onClick={() => setLogOpen(true)}>Xem nhật ký</Button>
+      <AiCallLog
+        open={logOpen}
+        close={() => setLogOpen(false)}
+        logging={p.query.data?.log ?? true}
+      />
       {(['log', 'pii'] as const).map((key) => (
         <div className={styles.row} key={key}>
           <div>

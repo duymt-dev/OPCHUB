@@ -8,3 +8,4 @@ export { AiSettingsService } from './services/ai-settings.service';
 export { AiCallRepository } from './repositories/ai-call.repository';
 export { AiBudgetService } from './services/ai-budget.service';
 export type { AiPurpose } from '@opchub/shared/api-domains';
+export { AiBudgetNotifyHandler } from './services/ai-budget-notify.handler';

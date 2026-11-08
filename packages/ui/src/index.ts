@@ -29,3 +29,4 @@ export * from './confirm-dialog';
 export * from './pay-qr';
 export * from './date-range-picker/date-range-picker';
 export * from './global-search';
+export { AiSuggestButton } from './ai-suggestion/ai-suggest-button';

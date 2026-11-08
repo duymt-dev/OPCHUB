@@ -126,3 +126,4 @@ export * from './store-public';
 export * from './ai-providers';
 export * from './app-notify';
 export * from './push';
+export { mockAiCall, mockAiCallsPage, mockAiCallsCsv } from './ai-ops';

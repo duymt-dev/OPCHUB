@@ -97,7 +97,10 @@ export const reportActionSchema = z.object({
 });
 
 /** V4-612: "Thời gian khóa" khi vi phạm lần 2+ — `app_settings.moderation` */
-export const moderationSettingsSchema = z.object({ autoLockDays: lockDaysSchema });
+export const moderationSettingsSchema = z.object({
+  autoLockDays: lockDaysSchema,
+  ai: z.boolean().optional(),
+});
 export type ModerationSettings = z.infer<typeof moderationSettingsSchema>;
 export const MODERATION_DEFAULTS: ModerationSettings = { autoLockDays: 7 };
 /** Cửa sổ đếm vi phạm (D-83) */

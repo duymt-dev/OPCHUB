@@ -1589,7 +1589,7 @@
   "viewport": 1440,
   "diffPct": 0.46134259259259264,
   "size": "1440×900",
-  "sha": "ef7934ff"
+  "sha": "fb0ecf62"
  },
  {
   "id": "P-73",
@@ -1597,7 +1597,7 @@
   "viewport": 390,
   "diffPct": 2.0534086766314257,
   "size": "390×844",
-  "sha": "ef7934ff"
+  "sha": "fb0ecf62"
  },
  {
   "id": "P-74",
@@ -2612,17 +2612,17 @@
   "id": "D-33",
   "name": "Kiểm duyệt tin nhắn",
   "viewport": 1440,
-  "diffPct": 0.3867283950617284,
+  "diffPct": 1.4618055555555556,
   "size": "1440×900",
-  "sha": "ef7934ff"
+  "sha": "fb0ecf62"
  },
  {
   "id": "D-33",
   "name": "Kiểm duyệt tin nhắn",
   "viewport": 390,
-  "diffPct": 0.5092827588328488,
-  "size": "390×1667",
-  "sha": "ef7934ff"
+  "diffPct": 4.379674538778841,
+  "size": "390×1697",
+  "sha": "fb0ecf62"
  },
  {
   "id": "D-34",
@@ -3935,17 +3935,17 @@
   "id": "D-V46-AI",
   "name": "Cài đặt · AI Provider",
   "viewport": 1440,
-  "diffPct": 2.830211840628507,
-  "size": "1440×1584",
-  "sha": "ef7934ff"
+  "diffPct": 8.18871278575226,
+  "size": "1440×1672",
+  "sha": "fb0ecf62"
  },
  {
   "id": "D-V46-AI",
   "name": "Cài đặt · AI Provider",
   "viewport": 390,
-  "diffPct": 6.869627401542296,
-  "size": "390×3478",
-  "sha": "ef7934ff"
+  "diffPct": 11.073670369216929,
+  "size": "390×3705",
+  "sha": "fb0ecf62"
  },
  {
   "id": "D-V46-APP",

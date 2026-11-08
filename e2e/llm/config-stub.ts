@@ -2,13 +2,16 @@ import { createServer } from 'node:http';
 import type { AddressInfo } from 'node:net';
 
 /** Browser verification reaches an actual loopback HTTP provider in native mode. */
-export async function startConfigStub() {
+export async function startConfigStub(content = 'OK') {
   const server = createServer((request, response) => {
     request.resume();
     request.on('end', () => {
       response.setHeader('content-type', 'application/json');
       response.end(
-        JSON.stringify({ choices: [{ message: { content: 'OK' }, finish_reason: 'stop' }] }),
+        JSON.stringify({
+          choices: [{ message: { content }, finish_reason: 'stop' }],
+          usage: { prompt_tokens: 42, completion_tokens: 20 },
+        }),
       );
     });
   });

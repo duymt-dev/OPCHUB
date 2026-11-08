@@ -17,6 +17,7 @@ import { PrismaService } from '@/common/prisma/prisma.service';
 import { AiConfigCache } from '../ai-config-cache';
 import { AiProviderRepository, type ProviderWrite } from '../repositories/ai-provider.repository';
 import { AiBudgetService, aiMonth } from './ai-budget.service';
+import { AiBudgetAlertRepository } from '../repositories/ai-budget-alert.repository';
 interface Actor {
   id: string;
   ip: string | null;
@@ -31,6 +32,7 @@ export class AiSettingsService {
     private readonly audit: AuditService,
     private readonly cache: AiConfigCache,
     private readonly budget: AiBudgetService,
+    private readonly alerts: AiBudgetAlertRepository,
   ) {}
   async get() {
     const { settings, providers } = await this.cache.snapshot();
@@ -67,6 +69,7 @@ export class AiSettingsService {
     await this.prisma.db.$transaction(async (tx) => {
       await tx.$queryRaw`SELECT 1 AS locked FROM pg_advisory_xact_lock(712001)`;
       const old = await this.rows.rows(tx);
+      const oldSettings = await this.rows.settingsForUpdate(tx);
       const writes = input.providers.map((p): ProviderWrite => {
         const existing = old.find((r) => r.id === p.id);
         const keyEnc = p.key ? Uint8Array.from(this.box.seal(p.key)) : existing?.keyEnc;
@@ -95,6 +98,7 @@ export class AiSettingsService {
         Object.fromEntries(Object.entries(input).filter(([key]) => key !== 'providers')),
       );
       await this.rows.write(tx, writes);
+      await this.alerts.rearm(tx, aiMonth(), aiSettingsSchema.parse(oldSettings.value), settings);
       await tx.appSetting.upsert({
         where: { key: 'ai' },
         create: { key: 'ai', value: settings },

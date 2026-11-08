@@ -27,6 +27,13 @@ export interface ProviderWrite {
 @Injectable()
 export class AiProviderRepository {
   constructor(private readonly prisma: PrismaService) {}
+  async settingsForUpdate(tx: DbTx) {
+    const [row] = await tx.$queryRaw<
+      { value: unknown }[]
+    >`SELECT value FROM app_settings WHERE key='ai' FOR UPDATE`;
+    if (!row) throw Error('Missing AI settings');
+    return row;
+  }
   rows(tx: DbTx = this.prisma.db) {
     return tx.llmProvider.findMany({ select: AI_PROVIDER_SELECT, orderBy: { id: 'asc' } });
   }

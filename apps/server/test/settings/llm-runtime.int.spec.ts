@@ -1,6 +1,8 @@
 import { aiDraft, snapshotAi, restoreAi } from '../helpers/ai-config';
 import { AiProviderRepository } from '@/modules/llm-config/repositories/ai-provider.repository';
 import { AiBudgetService, AiRouterService } from '@/modules/llm-config';
+import { AiReservationService } from '@/modules/llm-config/services/ai-reservation.service';
+import { AiBudgetAlertService } from '@/modules/llm-config/services/ai-budget-alert.service';
 import type { LlmProvider } from '@opchub/integrations';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { SecretBox } from '@/common/crypto/secret-box';
@@ -52,7 +54,13 @@ describe('REQ-607 ADR-0008 runtime follows committed Admin configuration', () =>
       t.app.get(AiProviderRepository),
     );
     independent = new LlmRuntimeService(
-      new AiRouterService(cache, t.app.get(AiBudgetService), t.redis),
+      new AiRouterService(
+        cache,
+        t.app.get(AiBudgetService),
+        t.redis,
+        t.app.get(AiReservationService),
+        t.app.get(AiBudgetAlertService),
+      ),
     );
   });
   afterAll(async () => {

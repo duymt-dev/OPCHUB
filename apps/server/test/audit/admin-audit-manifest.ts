@@ -61,6 +61,8 @@ export const adminAuditManifest: Readonly<Record<string, AdminAuditEntry>> = {
   'AdminAppNotifyController.test': 'settings.app_test',
   'AiSettingsController.save': 'llm.update',
   'AiSettingsController.verify': 'llm.verify',
+  'AiCallsController.export': 'llm.calls.export',
+  'AdminAiComposeController.compose': 'llm.compose',
   'AdminNeedController.hide': 'need.${action}',
   'AdminNeedController.show': 'need.${action}',
   'AdminStoreController.hide': 'store.${action}',

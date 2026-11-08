@@ -7,6 +7,8 @@ import { useGroupOptions } from '../hooks/use-marketing';
 import { applyTemplate, fmtN, toggleGroup } from '../model';
 import { MAIL_VARS, type CampaignFormError, type CampaignFormState } from '../types';
 import styles from './campaign-form.module.css';
+import { AdminAiSuggestButton } from '@/components/ai-suggest-button';
+import { useState } from 'react';
 
 interface FieldProps {
   f: CampaignFormState;
@@ -160,11 +162,19 @@ export function BodyField({
   onInsert,
 }: FieldProps & { rev: number; onInsert: (v: string) => void }) {
   const t = useTranslations('marketing.form');
+  const [aiRevision, setAiRevision] = useState(0);
   return (
     <div className={styles.field}>
       {t('body')}
+      <AdminAiSuggestButton
+        input={{ title: f.subject.slice(0, 300), description: f.body.slice(0, 1500) }}
+        apply={(body) => {
+          set({ body });
+          setAiRevision((value) => value + 1);
+        }}
+      />
       <RichTextField
-        key={rev}
+        key={`${rev}:${aiRevision}`}
         value={f.body}
         onChange={(body) => set({ body })}
         placeholder={t('bodyPh')}

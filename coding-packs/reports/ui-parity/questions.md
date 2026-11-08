@@ -990,3 +990,41 @@ Owner chốt toàn bộ phương án mặc định Q-V46-807-1 → 5, Q808-1 →
   đã được TIP yêu cầu, không phải lỗi chức năng. D-134 giữ số đo pixel tham khảo và cặp ảnh để owner review.
 - Không sửa prototype, không mask/nới ngưỡng hay bỏ assertion parity. Real push/iOS cần owner
   cấu hình VAPID và kiểm thủ công production; test tự động chỉ fake/HTTP loopback stub theo D-103.
+
+## TIP-V46-817 — Vận hành AI (D-138, owner chốt 08/11/2026)
+
+- Q-V46-817-1 → 8 đã được owner chốt mặc định trong TIP trước execute:
+  ba ô Soạn nội dung; AI chỉ tạo ca chờ Admin, không tự phạt; cảnh báo Admin
+  không email; fallback dùng model riêng của provider; nhật ký chỉ realm/mã rút gọn;
+  10 lượt/người/giờ + trần chung; Redis lỗi không gọi AI; AI kiểm duyệt mặc định tắt.
+- Q-V46-817-9: owner duyệt DB riêng `opchub_v46_812_dev` / `opchub_v46_801_test`,
+  Memurai6381 DB3/DB2, rolling restart đúng runtime riêng 816→817, giữ native/HOLD gốc.
+  Duyệt tạo/xóa DB trắng `opchub_v46_817_chain_test` cho up→down→up, không down DB HOLD.
+- Q-V46-817-10: owner duyệt ID cảnh báo thêm ID sự kiện outbox sau tiền tố
+  `ai-budget:{month}:{warn|exhausted}` để retry không trùng nhưng tái kích hoạt vẫn gửi lại.
+- Q-V46-817-11: owner duyệt nút cho mô tả gian hàng, không thêm nút SEO. Khảo sát
+  bổ sung đã đính chính trong chat: ô thực tế là `step-media.tsx` / `intro` (giới hạn
+  nhập 4.000), không phải `step-info.tsx`; 500 là giới hạn gợi ý đã duyệt (và là giới hạn
+  mô tả sản phẩm trong schema cũ). Không đổi giới hạn nhập hoặc thêm ô thứ tư.
+- Q-V46-817-12: owner duyệt ledger `moderation_ai_claims(message_id PK, created_at)`
+  chống gọi lại dù tắt log/worker chết; migration bổ sung vì metadata migration đã deploy,
+  không sửa migration đã áp dụng. Dọn theo FK khi xóa vật lý tin.
+- Q-V46-817-13: owner duyệt cô lập auth fixture đúng một file
+  `push-subscriptions.int.spec.ts`, gọi `flushAuthState` sẵn có trước từng ca.
+  Giữ nguyên assertions/timeout/rate limit production; lỗi full run xảy ra khi lấy
+  token đăng nhập, trước logic purge; chạy riêng lại 5/5 qua.
+- Vận hành 817: lệnh rolling restart riêng bị môi trường chặn trước khi dừng
+  tiến trình. Đã yêu cầu owner dừng đúng 5 PID riêng 816 để tiếp tục native;
+  không tự đổi cổng/DB để lách ràng buộc worker hay chạm HOLD gốc.
+- Chọn drawer nhật ký từ nút **Xem nhật ký**; ba nút gợi ý, model theo chức năng,
+  AI kiểm duyệt và drawer không có trạng thái tương ứng trong prototype. Thay đổi
+  được D-138/TIP yêu cầu; giữ phép đo tham khảo và ảnh thật để owner review theo D-134.
+
+### TIP-V46-817 native closure
+
+The owner manually stopped the five old private816 processes. Combined startup
+commands were rejected, but standard managed process sessions started817; no
+permission escalation or new DB/port was required. Native E2E2/2 passed; six native
+paired journeys completed. D-138/data pixel differences remain reference-only
+under D-134. Provider/settings snapshot equality and bot-off flags verified after
+both gates; owner real custom key untouched. The private817 runtime remains HOLD.

@@ -5,6 +5,7 @@ import { tones } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { avatarColorOf } from '../model';
 import styles from './moderation.module.css';
+import { AiReportActions } from './ai-report-actions';
 
 const CAT_TONE: Record<Report['reason'], keyof typeof tones> = {
   scam: 'rose',
@@ -53,6 +54,7 @@ export function ReportCard({ r, days, onRestore, onLock }: Props) {
   const pre = i < 0 ? r.body : r.body.slice(0, i);
   const post = i < 0 ? '' : r.body.slice(i + r.hit.length);
   const auto = r.source === 'auto';
+  const ai = auto && r.hit.startsWith('ai:');
   const severe = r.senderLocked || r.violations > 1;
   return (
     <article className={styles.report} data-report={r.id}>
@@ -78,29 +80,37 @@ export function ReportCard({ r, days, onRestore, onLock }: Props) {
       </div>
       <div className={styles.src}>
         <span className={`${styles.srcDot} ${auto ? styles.dotAuto : styles.dotReport}`} />
-        {auto ? t('srcAuto') : t('srcReport', { count: r.reporterCount })}
+        {ai
+          ? `AI · ${r.hit.slice(3)}`
+          : auto
+            ? t('srcAuto')
+            : t('srcReport', { count: r.reporterCount })}
       </div>
-      <div className={styles.acts}>
-        <span className={styles.badge}>{t('autoHidden')}</span>
-        <span className={`${styles.badge} ${severe ? styles.badgeRed : styles.badgeAmber}`}>
-          {r.senderLocked
-            ? t('lockedDays', { days })
-            : t('violation', { count: Math.max(1, r.violations) })}
-        </span>
-        {r.canLock ? (
-          <button type="button" className={styles.lock} onClick={() => onLock(r)}>
-            {t('lockDays', { days })}
+      {ai ? (
+        <AiReportActions report={r} days={days} onLock={onLock} />
+      ) : (
+        <div className={styles.acts}>
+          <span className={styles.badge}>{t('autoHidden')}</span>
+          <span className={`${styles.badge} ${severe ? styles.badgeRed : styles.badgeAmber}`}>
+            {r.senderLocked
+              ? t('lockedDays', { days })
+              : t('violation', { count: Math.max(1, r.violations) })}
+          </span>
+          {r.canLock ? (
+            <button type="button" className={styles.lock} onClick={() => onLock(r)}>
+              {t('lockDays', { days })}
+            </button>
+          ) : null}
+          <button
+            type="button"
+            className={styles.restore}
+            title={t('restoreTitle')}
+            onClick={() => onRestore(r)}
+          >
+            {t('restore')}
           </button>
-        ) : null}
-        <button
-          type="button"
-          className={styles.restore}
-          title={t('restoreTitle')}
-          onClick={() => onRestore(r)}
-        >
-          {t('restore')}
-        </button>
-      </div>
+        </div>
+      )}
     </article>
   );
 }

@@ -14,7 +14,7 @@ import { parseBody, userIdOf } from './domain-util';
 import { API, apiError } from './util';
 const KEY = 'opchub-mock-ai-providers';
 let memory = emptyAiProviders();
-function current() {
+export function mockAiConfiguration() {
   try {
     const hit = aiSettingsResponseSchema.safeParse(
       JSON.parse(sessionStorage.getItem(KEY) ?? 'null'),
@@ -25,6 +25,7 @@ function current() {
   }
   return memory;
 }
+const current = mockAiConfiguration;
 function persist(value: AiSettingsResponse) {
   memory = aiSettingsResponseSchema.parse(value);
   try {

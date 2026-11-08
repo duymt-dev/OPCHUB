@@ -7,6 +7,7 @@ import {
 } from '@opchub/shared/api-domains';
 import { AuditService } from '@/common/audit';
 import { PrismaService } from '@/common/prisma/prisma.service';
+import { RedisService } from '@/common/redis/redis.service';
 
 const KEY = 'moderation';
 
@@ -16,6 +17,7 @@ export class ModerationSettingsService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly audit: AuditService,
+    private readonly redis: RedisService,
   ) {}
 
   async get(db: DbTx | PrismaService['db'] = this.prisma.db): Promise<ModerationSettings> {
@@ -28,8 +30,10 @@ export class ModerationSettingsService {
     actor: { id: string; ip: string | null },
     next: ModerationSettings,
   ): Promise<ModerationSettings> {
-    await this.prisma.db.$transaction(async (tx) => {
-      const value = next as Prisma.InputJsonValue;
+    const saved = await this.prisma.db.$transaction(async (tx) => {
+      const current = await this.get(tx);
+      const merged = { ...current, ...next };
+      const value = merged as Prisma.InputJsonValue;
       await tx.appSetting.upsert({
         where: { key: KEY },
         create: { key: KEY, value },
@@ -41,10 +45,12 @@ export class ModerationSettingsService {
         entity: 'app_setting',
         entityId: KEY,
         tag: 'moderation',
-        summary: `Thời gian khóa khi vi phạm: ${next.autoLockDays} ngày`,
+        summary: `Thời gian khóa khi vi phạm: ${next.autoLockDays} ngày; phân loại AI: ${merged.ai ? 'bật' : 'tắt'}`,
         ip: actor.ip,
       });
+      return merged;
     });
-    return next;
+    await this.redis.client.publish(this.redis.channel('moderation:settings'), 'changed');
+    return saved;
   }
 }

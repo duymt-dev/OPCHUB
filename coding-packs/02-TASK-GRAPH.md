@@ -63,7 +63,7 @@ Chạy tuần tự 813 → 814 → 815 → 816 — **đã xong**, release #99 l�
 
 | TIP | Tên | Nguồn nợ | Phụ thuộc | Ước lượng | Vùng file dự kiến (chốt trong TIP) |
 |---|---|---|---|---|---|
-| V46-817 | Vận hành AI: B3 nhật ký gọi AI (xem / lọc / xuất), B4 AI cho Soạn nội dung / Kiểm duyệt, B5 cảnh báo ngân sách + giữ chỗ chi phí + model theo chức năng | 811 | 816 | L | `srv/llm-config/**`, `srv/settings/**`, `packages/integrations/src/llm/**`, `admin/features/settings/**` |
+| V46-817 | [TIP](tips/TIP-V46-817-ai-ops.md) · nhánh `feature/TIP-V46-817-ai-ops` · **TIP viết, chưa code** — Vận hành AI: B3 nhật ký gọi AI (xem / lọc / xuất), B4 AI cho Soạn nội dung / Kiểm duyệt, B5 cảnh báo ngân sách + giữ chỗ chi phí + model theo chức năng | 811 | 816 | L | `srv/llm-config/**`, `srv/settings/**`, `packages/integrations/src/llm/**`, `admin/features/settings/**` |
 
 Các mục B khác để sau (D-138). TIP viết lúc tới bước, dựa trên `dev` lúc ấy.
 

@@ -96,7 +96,11 @@ export const fetchReports = () =>
   api(`/admin/reports?status=open&page=1&size=${ALL}`, { schema: pageSchema(reportSchema) });
 
 /** V4-612 (D-77): Khôi phục tin / Khóa N ngày */
-export const actOnReport = (id: string, action: 'restore' | 'lock', days?: LockDays) =>
+export const actOnReport = (
+  id: string,
+  action: 'restore' | 'lock' | 'hide' | 'dismiss',
+  days?: LockDays,
+) =>
   api(`/admin/reports/${enc(id)}/action`, {
     method: 'POST',
     body: days ? { action, days } : { action },
@@ -112,6 +116,9 @@ export const saveModerationSettings = (autoLockDays: LockDays) =>
     body: { autoLockDays },
     schema: moderationSettingsSchema,
   });
+
+export const saveAiModerationSettings = (body: { autoLockDays: LockDays; ai: boolean }) =>
+  api('/admin/moderation/settings', { method: 'PUT', body, schema: moderationSettingsSchema });
 
 export const fetchKeywords = () => api('/admin/moderation/keywords', { schema: keywordListSchema });
 

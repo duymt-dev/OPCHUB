@@ -3,6 +3,7 @@ import { AI_PROVIDER_CATALOG, AI_PURPOSES } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
 import type { AiPanel } from './types';
 import styles from './ai.module.css';
+import { AiPurposeModel } from './ai-purpose-model';
 export function AiAllocation({ p }: { p: AiPanel }) {
   const t = useTranslations('settings.ai');
   const form = p.form;
@@ -39,6 +40,7 @@ export function AiAllocation({ p }: { p: AiPanel }) {
                   </option>
                 ))}
             </select>
+            {key !== 'fallback' ? <AiPurposeModel p={p} purpose={key} /> : null}
           </div>
         ))}
       </div>
