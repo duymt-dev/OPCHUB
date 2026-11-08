@@ -1,13 +1,14 @@
 # COMPLETION REPORT — TIP-V46-820
 
-**STATUS: IN-PROGRESS.** Implementation and focused/static/unit checks passed;
-full integration/build/browser/parity closure is still being collected. Not DONE.
+**STATUS: DONE.** All functional gates passed, including a clean full-root
+integration rerun. Raw parity measurements and approved differences are retained
+under D-134; owner image review remains part of PR review, not a fabricated pixel PASS.
 
 - Branch `feature/TIP-V46-820-public-seo`, from dev `1b5a28e6` with approved TIP
   and seven defaults at `e5808021`. Scope B15/D-139, REQ-627/BR-494/TC-494.
 - Source `faf824de`, browser cases `82260154`, stable OG alias `6fc01245`, full
   dashboard parity/KPI coverage `cebaec68`, approved mobile grid repair `3a199fb4`;
-  committed/pushed with normal hooks. Draft review [PR105](https://github.com/duymt-dev/OPCHUB/pull/105).
+  committed/pushed with normal hooks. Review [PR105](https://github.com/duymt-dev/OPCHUB/pull/105), base `dev`.
 - No main release, auto-merge, new public-content domains or editable slugs.
 
 ## Owner approvals / environment
@@ -96,7 +97,7 @@ full integration/build/browser/parity closure is still being collected. Not DONE
 
 ## Acceptance / actual verification
 
-| Criterion | Evidence so far |
+| Criterion | Actual evidence |
 |---|---|
 | Eligibility/noindex/locked/expired,1001 keyset rows | store-sitemap.int.spec.ts5/5 |
 | Separate guest counts/dedup/owner/bots/Redis/validation/throttle | store-guest-view.int.spec.ts4/4 |
@@ -109,7 +110,7 @@ full integration/build/browser/parity closure is still being collected. Not DONE
 | Primary vs duplicate/malicious host | Portal robots5/5 |
 | Real PNG dimensions/font/404 | Portal OG2/2 |
 | Beacon once/fallback/webdriver/new-tab owner token | Portal beacon4/4 |
-| Existing public810/dashboard regressions | Passed in initial focused batch; full reruns pending |
+| Existing public810/dashboard/digest/need-match regressions | Clean root2145/2145 server cases and full MSW401/401 |
 
 - Lint8 tasks PASS. Typecheck8 tasks PASS with explicit MSW build env.
 - Final full unit **2246 passed +2 existing adapter skips**,6 tasks PASS:
@@ -130,14 +131,18 @@ full integration/build/browser/parity closure is still being collected. Not DONE
   received an undefined test app. No820 assertion failure. Unchanged
   `group-owner-omission.int.spec.ts` immediately reran1/1 PASS (10.24s), without
   production/test code changes, retries inside the test or timeout increases.
-  Separate DB suite29files/144tests PASS (82.62s). A clean root rerun is in progress;
-  the first full command remains documented as exit1, not misreported as PASS.
+  Separate DB suite29files/144tests PASS (82.62s). The first full command remains
+  documented as exit1, not misreported as PASS. **Clean root rerun PASS**:
+  server245files/2145tests + DB29files/144tests = **2289 passed**, no skips,
+  no cache,2/2 tasks, exit0,30m0.035s. No source/assertion/timeout changes between
+  the failed bootstrap, isolated recheck and clean full run.
+  [Clean summary](evidence/v46-820-int-clean-summary.txt).
 - Verified native production build3 tasks PASS,1m20.977s. Final MSW build also
   uses explicit private proxy/socket/public-origin variables; no live server/static
-  files were overwritten during builds. Full integration/visual closure pending.
+  files were overwritten during builds. All functional/visual evidence collected.
 - Final MSW production build3 tasks PASS,1m42.254s. Concise actual gate outputs:
-  [checks.txt](evidence/v46-820-checks.txt). Full-root clean rerun is the only
-  pending executable gate; paired visual classification is complete.
+  [checks.txt](evidence/v46-820-checks.txt). All executable gates are closed;
+  paired visual classification is complete under D-134.
 
 ## Rerun / incident notes
 
@@ -163,7 +168,7 @@ full integration/build/browser/parity closure is still being collected. Not DONE
   Rebuilt fresh verified directories with explicit4310 proxy/socket4311 and
   matching Portal origins3710/3982; no assertions/timeouts were relaxed.
 - Before native/browser gates, provider/settings/call-count fingerprint captured
-  on private812 at21:45; after native/visual checks22:33 exactly the same digest,
+  on private812 at21:45; final recheck23:09 exactly the same digest,
   all bot flags false, encrypted custom key retained, calls127 unchanged.
   [Before](evidence/v46-820-ai-before.json) / [after](evidence/v46-820-ai-after.json).
   No real AI call is part of this TIP; this fingerprint is not a claim that every
@@ -186,7 +191,28 @@ full integration/build/browser/parity closure is still being collected. Not DONE
 - GitHub CI workflow triggers only main push/PR, not dev PR; absence of PR105
   checks must not be described as CI PASS. Local gates are reported separately.
 
-## Remaining
+## Review / intentionally not performed
 
-Final full integration and browser evidence, visual classification/owner images,
-final reports/progress/debt updates, clean commit/push and review PR into dev.
+- Owner reviews committed app/prototype pairs and newly generated OG images
+  under D-134. Full dashboard raw percentages are informational, not pixel PASS.
+- Historical applied-migration checksum mismatch remains recorded above; it was
+  not introduced or destructively repaired by820. New migration and clean chain passed.
+- No VPS deployment/Nginx reload, real-provider AI calls, slug editing/redirects,
+  additional public-content domains,821 finance work, release/main PR or merge.
+- Verification source SHA `3a199fb4`; evidence progress commit `4c1e8a02`.
+  Final documentation commit SHA is supplied in the completion message.
+
+## Quality gate / hard-rule self-review
+
+- Rules1–3/13: modular production files, separate tests, strict typing and import
+  boundaries verified by lint/typecheck/depcheck; no new dependency or monolith.
+- Rules4/7/8/10: existing permission/auth boundaries retained; approved internal
+  conditional soft-delete + audit + outbox transaction, replay integration PASS.
+- Rules5/6/9: bounded/indexed queries and actual plans attached; no recipient DB
+  loops/chat changes; VN day derived from UTC, existing integer-money rules untouched.
+- Rules11/12: storage adapter only, bundled licensed font, fake external providers,
+  no raw IP/secret in artifacts; existing parsed secret reused for domain-separated HMAC.
+- Rule14: implementation/evidence commits pushed; final documentation commit and
+  clean working tree are checked before completion. PR targets dev, not main.
+- Acceptance criteria all covered above; D-134 image review and the recorded
+  historical checksum mismatch are explicit, not concealed verification gaps.

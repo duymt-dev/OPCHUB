@@ -72,7 +72,7 @@ Các mục B khác để sau (D-138). TIP viết lúc tới bước, dựa trên
 | TIP | Tên | Nguồn nợ | Phụ thuộc | Ước lượng | Vùng file dự kiến (chốt trong TIP) |
 |---|---|---|---|---|---|
 | V46-818 | [TIP](tips/TIP-V46-818-admin-log-search.md) · nhánh `feature/TIP-V46-818-admin-log-search` · **DONE** - source5c562e14; static/unit/both builds PASS, full integration2271/2271, MSW397+5 existing skips, native focused PASS; parity D134/D139 classified, PR104 ready for review, no auto-merge. [Completion](reports/TIP-V46-818-completion.md) | 807 / 808 / 809 | 817 | M | `srv/settings/**`, `packages/shared/src/api-domains/{audit-log-page,regional-directors,reports}.ts`, `packages/ui/src/global-search/**`, `srv/local-business/**`, `admin/features/settings/**` |
-| V46-820 | [TIP](tips/TIP-V46-820-public-seo.md) · nhánh `feature/TIP-V46-820-public-seo` · **TIP viết, chưa code** — SEO trang công khai (B15): sitemap, robots, JSON-LD, ảnh OG, lượt khách riêng, xóa cache theo phí / khóa / xóa TK | 810 | 818 | M | — |
+| V46-820 | [TIP](tips/TIP-V46-820-public-seo.md) · nhánh `feature/TIP-V46-820-public-seo` · **DONE** — SEO trang công khai (B15): sitemap, robots, JSON-LD, ảnh OG, lượt khách riêng, xóa cache theo phí / khóa / xóa TK | 810 | 818 | M | [Report](reports/TIP-V46-820-completion.md) · [PR105](https://github.com/duymt-dev/OPCHUB/pull/105) · `3a199fb4` |
 | V46-821 | Tài chính & vùng (B7 → B10) — chưa viết TIP | 801 → 805 | 820 | L | — |
 
 Số 819 không dùng (gộp vào 818 theo D-139).
