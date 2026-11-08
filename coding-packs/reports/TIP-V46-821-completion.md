@@ -168,3 +168,13 @@ B10 is in progress. Full final integration/build/E2E/parity and report closure r
 
 Code milestone only. Final full integration, both builds, full MSW E2E, focused
 native E2E/parity and final evidence/report/PR readiness remain; NOT DONE yet.
+
+## Full-gate seed connection repair
+
+The first root integration attempt stopped in DB seed tests: the new P0 payee-bank
+FK correctly prevents deleting a parent slot before its ledger child. Fixed only
+approved demo reset ordering (delete new ledger before slots/users) and added a
+regression that seeds a synthetic child before resetting. Existing assertions,
+DB guards and production FKs remain unchanged. Focused seed integration10/10,
+DB lint/typecheck PASS. This reset was executed only on approved integration DB,
+never on private native dev/HOLD. Full root integration must be rerun.

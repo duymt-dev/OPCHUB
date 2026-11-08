@@ -45,6 +45,17 @@ describe('seed demo (TIP-B62)', () => {
     assertDemoDatabase(testEnv.TEST_DATABASE_URL);
     await seedDemo(db);
     first = await snapshot();
+    // TIP-V46-821: retired bank ledger is a child of both slots and members.
+    await db.regionalPayeeBank.create({
+      data: {
+        region: 'north',
+        userId: 'm3',
+        bankName: 'Fixture Bank',
+        bankNo: '123456789',
+        bankHolder: 'FIXTURE PAYEE',
+        updatedBy: 'admin',
+      },
+    });
     // Giả lập e2e ghi bậy rồi chạy lại → phải về đúng mốc demo
     await db.message.create({ data: { roomId: 'c1-general', senderId: 'm1', body: 'e2e rác' } });
     await db.group.update({ where: { id: 'c3' }, data: { deletedAt: new Date(), memberCount: 1 } });
@@ -66,6 +77,11 @@ describe('seed demo (TIP-B62)', () => {
   it('chạy lần 2 (sau khi dữ liệu bị đổi) cho đúng số dòng như lần 1', async () => {
     expect(await snapshot()).toEqual(first);
     expect(first.audit).toBe(6);
+  });
+
+  it('TIP-V46-821 resets retired payee bank children before recreating slots and members', async () => {
+    expect(await db.regionalPayeeBank.count()).toBe(0);
+    expect(await db.regionalDirector.count()).toBe(3);
   });
 
   it('TIP-V46-801 retains three exempt directors, their previous fee snapshots and 34 provinces', async () => {
