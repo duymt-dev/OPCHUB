@@ -179,7 +179,7 @@
   - CID / tệp đính kèm trong mail
   - soát 9 bản dịch AI (việc tay)
 
-## Câu hỏi chờ owner chốt (builder dùng mặc định nếu chưa có trả lời, ghi `questions.md` › TIP-V46-821)
+## Câu hỏi — **đã chốt theo mặc định** (owner, 08/11/2026: "chốt mặc định hết"; ghi `questions.md` › TIP-V46-821)
 
 - **Q-V46-821-1 Bút toán đảo (B9).** Mặc định: **đóng, không code** — hệ thống không có hoàn phí (NR-R01) nên không có gì để đảo.
 - **Q-V46-821-2 Sửa lỗi tài khoản nhận.** Mặc định: thu hồi thì chuyển tài khoản sang người cũ và xóa khỏi vùng; GĐ Vùng mới phải được Admin nhập tài khoản trước khi chi. Dữ liệu đang có: chỉ báo cáo vùng nghi thừa hưởng để owner kiểm tay, không tự sửa.
