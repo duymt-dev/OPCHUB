@@ -1,4 +1,5 @@
 import { initMockStorePublic } from './store-public-state';
+import { mockGuestViews7d } from './store-guest-views';
 import { isFeeUsable } from '../../membership/fee-access';
 import {
   type AdminStore,
@@ -374,6 +375,7 @@ export function myMockStoreDashboard(userId: string, now = Date.now()): MockResu
     days,
     views7: days.reduce((a, d) => a + d.views, 0),
     viewsPrev7: prev,
+    guestViews7d: mockGuestViews7d(r.data, now),
     openNeeds: openNeedsOfStore(r.data.id, Number.MAX_SAFE_INTEGER).length,
   });
 }

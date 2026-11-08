@@ -6,7 +6,7 @@ import { useMyStoreDashboard } from '../../hooks/use-stores';
 import { storeShortName } from '../../model';
 import { PublicPageCard } from './public-page-card';
 import { DashChart } from './dash-chart';
-import { DashInfo, DashItems } from './dash-cards';
+import { DashInfo, DashItems, GuestViewsKpi } from './dash-cards';
 import d from './dashboard.module.css';
 
 const HERO =
@@ -103,6 +103,7 @@ export function StoreDashboard({ store, onEdit, onView }: Props) {
           bg="#FFF0F6"
           ic={STAR}
         />
+        <GuestViewsKpi views={s?.guestViews7d ?? 0} />
         <Kpi
           label={t('needs')}
           value={String(s?.openNeeds ?? 0)}

@@ -127,3 +127,5 @@ export * from './ai-providers';
 export * from './app-notify';
 export * from './push';
 export { mockAiCall, mockAiCallsPage, mockAiCallsCsv } from './ai-ops';
+export { mockStoreSitemap } from './store-sitemap';
+export { recordMockGuestView } from './store-guest-views';

@@ -1,4 +1,10 @@
 import { NeedSearchService } from './services/need-search.service';
+import { StoreSitemapController } from './controllers/store-sitemap.controller';
+import { StoreSitemapService } from './services/store-sitemap.service';
+import { StorePublicLogoService } from './services/store-public-logo.service';
+import { StoreGuestViewService } from './services/store-guest-view.service';
+import { StoreGuestViewRepository } from './repositories/store-guest-view.repository';
+import { StorePublicInvalidationHandler } from './services/store-public-invalidation.handler';
 import { NotificationCoreModule } from '@/modules/notification';
 import { NeedMatchAudienceRepository } from './repositories/need-match-audience.query';
 import { StoreDigestRepository } from './repositories/store-digest.query';
@@ -34,6 +40,11 @@ import { StoreMediaService } from './services/store-media.service';
 import { StoreOwnerService } from './services/store-owner.service';
 
 const services = [
+  StorePublicLogoService,
+  StoreSitemapService,
+  StoreGuestViewService,
+  StoreGuestViewRepository,
+  StorePublicInvalidationHandler,
   NeedMatchAudienceRepository,
   StoreDigestRepository,
   NeedMatchNotifyHandler,
@@ -72,6 +83,7 @@ export class LocalBusinessCoreModule {}
 @Module({
   imports: [LocalBusinessCoreModule],
   controllers: [
+    StoreSitemapController,
     StorePublicController,
     StoreController,
     AdminStoreController,

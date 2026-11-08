@@ -1,12 +1,16 @@
 import {
   storeFavoriteSchema,
   storePublicPatchSchema,
+  storeGuestViewBodySchema,
   storeListQuerySchema,
   storeUpsertSchema,
 } from '@opchub/shared/api-domains';
 import {
   favoriteMockStore,
   myMockStorePublic,
+  mockStoreSitemap,
+  mockStores,
+  recordMockGuestView,
   patchMockStorePublic,
   mockStorePublicPage,
   mockStorePublicCookie,
@@ -65,6 +69,31 @@ function listQuery(url: string) {
 }
 
 export const storeHandlers = [
+  http.get(`${API}/public/stores-sitemap`, ({ request, cookies }) =>
+    HttpResponse.json(
+      mockStoreSitemap(
+        new URL(request.url).searchParams.get('cursor') ?? undefined,
+        cookies[STORE_PUBLIC_COOKIE],
+        cookies[STORE_BRIDGE_COOKIE],
+      ),
+    ),
+  ),
+  http.post(`${API}/public/stores/:slug/view`, async ({ request, params, cookies }) => {
+    const body = await parseBody(request, storeGuestViewBodySchema);
+    if (!body.ok) return body.res;
+    const slug = param(params, 'slug'),
+      row = mockStores().find((s) => s.slug === slug);
+    if (
+      row &&
+      mockStorePublicPage(slug, cookies[STORE_PUBLIC_COOKIE], cookies[STORE_BRIDGE_COOKIE]).ok
+    )
+      await recordMockGuestView(
+        row,
+        request.headers.get('user-agent') ?? '',
+        request.headers.has('authorization') ? userIdOf(request) : undefined,
+      );
+    return new HttpResponse(null, { status: 204 });
+  }),
   http.get(`${API}/public/stores/:slug`, ({ params, cookies }) =>
     reply(
       mockStorePublicPage(

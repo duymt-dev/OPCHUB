@@ -90,6 +90,7 @@
     "heroSub": "Manage your store, products, services and interested customers on OPC Hub.",
     "views": "Store views",
     "viewsSub": "last 7 days",
+    "guestViews": "Public page guest views (7 days)",
     "items": "Products",
     "itemsSub": "published",
     "needs": "Open needs",

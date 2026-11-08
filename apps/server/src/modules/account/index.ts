@@ -45,3 +45,4 @@ export {
 export { RefreshTokenRepository } from './repositories/refresh-token.repository';
 
 export { MemberSearchService } from './services/member-search.service';
+export { UserDeletionService } from './services/user-deletion.service';

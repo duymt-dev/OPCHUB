@@ -213,6 +213,7 @@ export const storeDashboardSchema = z.object({
   days: z.array(z.object({ day: z.string(), views: z.number().int() })).length(7),
   views7: z.number().int(),
   viewsPrev7: z.number().int(),
+  guestViews7d: z.number().int().nonnegative().default(0),
   /** Nhu cầu đang mở của gian hàng */
   openNeeds: z.number().int(),
 });

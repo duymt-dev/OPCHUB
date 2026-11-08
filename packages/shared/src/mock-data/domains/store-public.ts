@@ -8,6 +8,7 @@ import type { StorePublicPatch } from '../../api-domains/store-public';
 import { mockStores, myMockStore, visibleMockStores, type MockStore } from './stores';
 import { notFound, ok } from './util';
 import { z } from 'zod';
+import { mockDb } from './store';
 
 export const STORE_PUBLIC_COOKIE = 'opchub-mock-store-public';
 const config = new WeakMap<MockStore, { seoIndex: boolean; title: string; desc: string }>();
@@ -87,6 +88,8 @@ export function mockStorePublicPage(
 ) {
   const row = visibleMockStores(now).find((r) => r.slug === slug);
   if (!row) return notFound('Không tìm thấy gian hàng');
+  if (mockDb().userStatus.get(row.ownerId) === 'locked')
+    return notFound('Không tìm thấy gian hàng');
   const statusSchema = z.array(z.object({ id: z.string(), status: z.string() }));
   let hidden = false;
   try {
