@@ -20,6 +20,7 @@ const googleSso = {
 };
 
 const ok = {
+  MAIL_QR_SECRET: 'q'.repeat(32),
   DATABASE_URL: 'postgresql://u:p@localhost:5432/db',
   JWT_SECRET: 'x'.repeat(32),
   BANK_WEBHOOK_SECRET: 'y'.repeat(16),
@@ -27,6 +28,18 @@ const ok = {
 };
 
 describe('parseEnv', () => {
+  it('SPEC11 production requires a separate mail QR secret, never prints its value', () => {
+    expect(() =>
+      parseEnv({
+        ...ok,
+        ...googleSso,
+        NODE_ENV: 'production',
+        UNSUBSCRIBE_SECRET: 'u'.repeat(32),
+        MAIL_QR_SECRET: undefined,
+      }),
+    ).toThrow(/MAIL_QR_SECRET/);
+    expect(() => parseEnv({ ...ok, MAIL_QR_SECRET: 'short' })).toThrow(/MAIL_QR_SECRET/);
+  });
   it('D-137 production rejects fake or missing VAPID; dev unconfigured remains optional', () => {
     const prod = {
       ...ok,

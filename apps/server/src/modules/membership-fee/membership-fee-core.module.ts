@@ -1,5 +1,6 @@
 import { Global, Injectable, Module } from '@nestjs/common';
 import { MailCoreModule } from '../mail';
+import { FeeMailQrResolver } from './services/fee-mail-qr.resolver';
 import {
   AccountCoreModule,
   FEE_READER,
@@ -48,6 +49,7 @@ export class FeeReaderService implements FeeReader {
 }
 
 const services = [
+  FeeMailQrResolver,
   BankKeyRepository,
   BankTransactionsRepository,
   BankKeyService,

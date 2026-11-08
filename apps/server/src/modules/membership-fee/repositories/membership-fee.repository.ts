@@ -13,6 +13,12 @@ export interface FeeChange {
 /** Bảng membership_fees — chỉ domain membership-fee đọc/ghi */
 @Injectable()
 export class MembershipFeeRepository {
+  mailQrTarget(userId: string) {
+    return this.prisma.db.membershipFee.findUnique({
+      where: { userId },
+      select: { userId: true, status: true, amount: true, validUntil: true, paidAt: true },
+    });
+  }
   constructor(private readonly prisma: PrismaService) {}
 
   findCurrent(userId: string): Promise<(FeeSnapshot & { paidAt: Date | null }) | null> {

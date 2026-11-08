@@ -43,6 +43,10 @@ export class MemberDirectory {
     });
   }
 
+  contactsByIds(ids: readonly string[], tx: DbTx) {
+    return tx.user.findMany({ where: { id: { in: [...ids] }, deletedAt: null }, select: SELECT });
+  }
+
   /** Dùng đúng biểu thức GIN users_search, chỉ trả ID sang domain gọi. */
   async searchIds(q: string, tx?: DbTx): Promise<string[]> {
     const rows = await (tx ?? this.prisma.db).$queryRaw<{ id: string }[]>(memberSearchQuery(q));

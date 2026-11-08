@@ -29,6 +29,12 @@ export type FundraisingRow = Prisma.ProjectFundraisingGetPayload<{
 /** Bảng `project_fundraisings` (V4-610) — đọc theo index (project_id, status), (status, ends_at) */
 @Injectable()
 export class FundraisingRepository {
+  mailQrTarget(id: string) {
+    return this.prisma.db.projectFundraising.findFirst({
+      where: { id, status: 'pending_payment', legacy: false, project: { deletedAt: null } },
+      select: { id: true, ownerId: true, code: true, amount: true },
+    });
+  }
   constructor(private readonly prisma: PrismaService) {}
 
   /** Khoản đang mở hoặc đang hiệu lực mới nhất của dự án */

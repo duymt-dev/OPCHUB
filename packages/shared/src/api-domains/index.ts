@@ -58,3 +58,4 @@ export * from './app-notify';
 export * from './push';
 export * from './ai-calls';
 export * from './ai-compose';
+export * from './mail-qr';

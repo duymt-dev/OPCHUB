@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { LoggerModule as PinoModule } from 'nestjs-pino';
 import { ENV, type Env } from '../config';
 import { assignRequestId } from './request-id';
+import { redactMailQrRequest } from './redact-mail-qr';
 
 /** Không log secret/PII (code-structure.md › Lỗi và log) */
 export const REDACT_PATHS = [
@@ -26,6 +27,7 @@ export const REDACT_PATHS = [
         pinoHttp: {
           level: env.LOG_LEVEL,
           genReqId: assignRequestId,
+          serializers: { req: redactMailQrRequest },
           redact: { paths: REDACT_PATHS, censor: '[Redacted]' },
           customProps: (req) => {
             const user = (req as { user?: { sub?: string } }).user;

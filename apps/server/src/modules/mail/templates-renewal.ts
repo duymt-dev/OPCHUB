@@ -11,12 +11,13 @@ export interface RenewalMailInput {
   daysLeft: number;
   trial: boolean;
   transfer?: {
+    imageUrl?: string;
     qr: string;
     transferContent: string;
     bank: { bankName: string; accountNo: string; accountName: string };
   };
 }
-/** No PNG encoder/CID facility installed: use TIP-approved offline EMVCo text fallback, no external QR URL. */
+/** Signed first-party image plus unchanged offline text fallback, never an external QR URL. */
 export function renewalMail(i: RenewalMailInput): RenderedMail {
   const plan = i.plan === 'business' ? 'Gói Doanh nghiệp' : 'Gói Cá nhân';
   const line = i.trial
@@ -39,7 +40,7 @@ export function renewalMail(i: RenewalMailInput): RenderedMail {
       : `[OPC Hub] ${plan} của bạn sẽ hết hạn sau ${i.daysLeft} ngày`,
     html: layout(
       'Nhắc gia hạn',
-      `<p>Xin chào ${esc(i.fullName)},</p><p>${esc(line)}</p><p>${esc(benefit)}</p><p>${esc(policy)}</p>${transfer ? `<p>${esc(transfer)}</p>` : ''}`,
+      `<p>Xin chào ${esc(i.fullName)},</p><p>${esc(line)}</p><p>${esc(benefit)}</p><p>${esc(policy)}</p>${t?.imageUrl ? `<img src="${esc(t.imageUrl)}" width="200" alt="Mã VietQR chuyển khoản">` : ''}${transfer ? `<p>${esc(transfer)}</p>` : ''}`,
     ),
     text: `${line} ${benefit} ${policy} ${transfer}`,
   };

@@ -100,3 +100,37 @@ commit/push and review PR into dev. No claim of task completion at this stage.
   and current price before sending its QR in the same transaction. It never
   activates/extends without actual bank receipt. Owner explicitly approved
   “Duyệt tạo khoản chờ gia hạn mới khi hết hạn”. No QR may target the old paid code.
+
+## B7 progress
+
+- Locally rendered PNG320x320/M via approved pinned qrcode1.5.4 (MIT), no QR/image API.
+  First-party HMAC30day URL, strict shared token schema, production MAIL_QR_SECRET
+  required (>=32 chars), dev/test domain-separated JWT-key fallback. URL credentials
+  are removed from access logs by a narrowly scoped request serializer.
+- Domain resolvers read current invoices without mail->project/fee circular imports.
+  Fee PK is userId: signed expiry anchor identifies the unpaid renewal occurrence;
+  payment/new expiry invalidates its image. D1 only adds image; bank/text/OPCHUB
+  fallback remains. Malformed/tampered/expired/unknown/paid targets all return404.
+- T14 now includes project/date/current renewal price and no QR. Expiry transition,
+  new pending GV request, mail and in-app outbox are atomic. Project lock plus
+  unique open-request constraint and bulk sequence allocation prevent duplicate codes;
+  pre-existing pending requests are reused. No activation or extension before receipt.
+  Rejected paid requests remain blocked under D-113 rather than charged again.
+- Mail kind fundraising_expired migration is additive; its down retains mail history.
+  108 migrations deployed from empty disposable chain DB; both new821 migrations
+  down/up produce identical normalized schema; temporary DB dropped.
+- Final B7 integration3files/8cases PASS, including pending-code reuse through real
+  member start(), rollback on mail failure and concurrent expiry workers. Root
+  lint8/typecheck8, unit2254 passed+2 pre-existing adapter skips (6m42.564s),
+  depcheck both graphs PASS. One typecheck invocation omitted frontend mock/API env
+  and failed config validation; rerun with explicit MSW env passed, no code exemption.
+- Independent local ZXing-C++ decoder read generated synthetic PNG and reproduced
+  the exact EMVCo payload (hash/dimensions evidence), not merely PNG headers or an
+  encoder-to-itself comparison. OpenCV could not detect this valid code; independent
+  ZXing verification succeeded without adding any decoder dependency to the app.
+- Technical extra files: resolver registry/ports preserve domain ownership;
+  bulk renewal repository/delivery isolate approved Q821-11 from legacy scheduler;
+  account directory supplies bulk contacts; masked access logger protects signed URL;
+  Admin mail-kind label and enum schema expose the actual new kind.
+
+B10 is in progress. Full final integration/build/E2E/parity and report closure remain.

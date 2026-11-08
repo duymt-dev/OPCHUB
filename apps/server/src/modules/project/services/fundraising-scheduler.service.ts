@@ -1,8 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
-import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
-import { type FundraisingMailKind, fundraisingMail, MailService } from '../../mail';
+import { type FundraisingMailKind } from '../../mail';
+import { FundraisingReminderDeliveryService } from './fundraising-reminder-delivery.service';
 import { remindFrom } from '../domain/fundraising-status';
 import { FundraisingRepository } from '../repositories/fundraising.repository';
 
@@ -24,8 +24,7 @@ export class FundraisingSchedulerService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly repo: FundraisingRepository,
-    private readonly mail: MailService,
-    private readonly outbox: OutboxService,
+    private readonly delivery: FundraisingReminderDeliveryService,
   ) {}
 
   async run(now = new Date()): Promise<{ expired: number; reminded: number }> {
@@ -59,6 +58,7 @@ export class FundraisingSchedulerService {
       tx,
       due.filter((r) => done.has(r.id)),
       'expired',
+      now,
     );
     return done.size;
   }
@@ -76,37 +76,17 @@ export class FundraisingSchedulerService {
       tx,
       due.filter((r) => done.has(r.id)),
       'renew',
+      now,
     );
     return done.size;
   }
 
-  private async notify(tx: DbTx, rows: DueRow[], kind: FundraisingMailKind): Promise<void> {
-    if (!rows.length) return;
-    const owners = new Map(
-      (
-        await this.repo.owners(
-          tx,
-          rows.map((r) => r.ownerId),
-        )
-      ).map((u) => [u.id, u]),
-    );
-    const mails = rows.flatMap((r) => {
-      const u = owners.get(r.ownerId);
-      if (!u?.email || !r.endsAt) return [];
-      const m = fundraisingMail(kind, u.fullName, r.project.name, r.endsAt);
-      return [{ to: u.email, kind: 'fundraising' as const, subject: m.subject, html: m.html }];
-    });
-    if (mails.length) await this.mail.requestMany(tx, mails);
-    await this.outbox.add(tx, 'fundraising.reminded', {
-      items: rows.map((r) => ({
-        fundraisingId: r.id,
-        projectId: r.projectId,
-        projectName: r.project.name,
-        ownerId: r.ownerId,
-        amount: r.amount,
-        kind,
-        endsAt: (r.endsAt ?? new Date(0)).toISOString(),
-      })),
-    });
+  private async notify(
+    tx: DbTx,
+    rows: DueRow[],
+    kind: FundraisingMailKind,
+    now: Date,
+  ): Promise<void> {
+    await this.delivery.deliver(tx, rows, kind, now);
   }
 }

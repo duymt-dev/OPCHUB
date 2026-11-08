@@ -62,10 +62,15 @@ describe('Gói Gọi vốn · job hết hạn + nhắc (TIP-V4-610)', () => {
         .remindedAt,
     ).toBeNull();
     const mails = await t.prisma.db.mailLog.findMany({
-      where: { kind: 'fundraising', to: { in: [old.u.email, soon.u.email, far.u.email] } },
-      select: { to: true, subject: true },
+      where: {
+        kind: { in: ['fundraising', 'fundraising_expired'] },
+        to: { in: [old.u.email, soon.u.email, far.u.email] },
+      },
+      select: { to: true, subject: true, kind: true },
     });
     expect(mails.map((m) => m.to).sort()).toEqual([old.u.email, soon.u.email].sort());
+    expect(mails.find((m) => m.to === old.u.email)?.kind).toBe('fundraising_expired');
+    expect(mails.find((m) => m.to === soon.u.email)?.kind).toBe('fundraising');
     const ev = await t.prisma.db.outboxEvent.count({
       where: { type: 'fundraising.reminded', createdAt: { gte: new Date(Date.now() - 60_000) } },
     });
@@ -73,7 +78,10 @@ describe('Gói Gọi vốn · job hết hạn + nhắc (TIP-V4-610)', () => {
     // Chạy lại: không gửi lần hai
     await job.run(NOW);
     const again = await t.prisma.db.mailLog.count({
-      where: { kind: 'fundraising', to: { in: [old.u.email, soon.u.email] } },
+      where: {
+        kind: { in: ['fundraising', 'fundraising_expired'] },
+        to: { in: [old.u.email, soon.u.email] },
+      },
     });
     expect(again).toBe(2);
     // Thông báo chuông đi qua outbox (consumer notification) — payload đủ chủ dự án + loại nhắc

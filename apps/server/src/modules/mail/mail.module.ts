@@ -1,4 +1,7 @@
 import { Module } from '@nestjs/common';
+import { MailQrToken } from './mail-qr-token';
+import { MailQrRegistry } from './mail-qr.registry';
+import { QrImageController } from './qr-image.controller';
 import { AdminMailController } from './controllers/admin-mail.controller';
 import { DailyQuota } from './daily-quota';
 import { EventMailHandler } from './event-mail.handler';
@@ -14,6 +17,8 @@ import { WelcomeMailController } from './welcome-mail.controller';
 import { WelcomeService } from './welcome.service';
 
 const providers = [
+  MailQrToken,
+  MailQrRegistry,
   MailRepository,
   MailService,
   MailSenderService,
@@ -31,7 +36,7 @@ export class MailCoreModule {}
 
 @Module({
   imports: [MailCoreModule],
-  controllers: [WelcomeMailController, AdminMailController],
+  controllers: [WelcomeMailController, AdminMailController, QrImageController],
   providers: [MailAdminService, SmtpConfigService],
 })
 export class MailHttpModule {}

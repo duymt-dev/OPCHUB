@@ -13,6 +13,7 @@ export const MAIL_PRIORITY: Record<MailKind, number> = {
   event: 3,
   service: 3,
   fundraising: 3,
+  fundraising_expired: 3,
   onboarding: 3,
   receipt: 3,
   regional_director: 3,

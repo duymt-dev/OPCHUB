@@ -1,0 +1,10 @@
+{
+  "decoder": "ZXing-C++ (independent local decoder)",
+  "dimensions": [
+    320,
+    320
+  ],
+  "decodedExactly": true,
+  "payloadSha256": "3227f79abf84298eb364c4725593b827a09c295f67b4bc2a0243808b0e106827",
+  "syntheticFixtureOnly": true
+}
