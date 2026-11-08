@@ -95,8 +95,18 @@ each case; no assertion, timeout, authentication or production rate limit change
 The final full integration rerun included this approved change and passed all
 five Push subscription tests, all four compose tests and all seven moderation tests.
 It logged one non-failing BullMQ `write ECONNABORTED` during the worker consumer
-registration suite; both tests and the command passed. This warning is recorded,
-not silently converted into a failed/passed test count.
+registration suite; both tests and Turbo's two tasks passed. This warning is
+recorded, not silently converted into a failed/passed test count.
+
+**PowerShell host status:** the integration tool session returned outer exit 1
+despite all 2,260 tests and both Turbo tasks succeeding. The invocation redirected
+native stderr using Windows PowerShell `*>` without an explicit exit statement.
+A harmless reproduction (`node` writes stderr and deliberately exits 0) produced
+the same outer exit 1; capturing `$LASTEXITCODE` and explicitly `exit`ing it
+returned 0. This establishes a shell-status reporting artifact, not an additional
+failed assertion. The test counts/task success above come from the real run; no
+claim is made that its outer session returned 0. Future invocations must preserve
+the native exit code explicitly. Probe logs: `v46-817-powershell-stderr-probe*.log`.
 
 ### Acceptance evidence on the final implementation
 
