@@ -9,3 +9,9 @@ export interface GlobalSearchProps {
   onQuery: (query: string) => void;
   onPick: (kind: SearchKind, item: SearchHit) => void;
 }
+
+export type SearchResultsProps = Pick<GlobalSearchProps, 'groups' | 'emptyText' | 'onPick'> & {
+  id: string;
+  selected: number;
+  onSelect: (index: number) => void;
+};

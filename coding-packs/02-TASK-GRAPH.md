@@ -67,6 +67,16 @@ Chạy tuần tự 813 → 814 → 815 → 816 — **đã xong**, release #99 l�
 
 Các mục B khác để sau (D-138). TIP viết lúc tới bước, dựa trên `dev` lúc ấy.
 
+## V4.6 — ĐỢT 818 → 821 (D-139, release một lượt sau 821)
+
+| TIP | Tên | Nguồn nợ | Phụ thuộc | Ước lượng | Vùng file dự kiến (chốt trong TIP) |
+|---|---|---|---|---|---|
+| V46-818 | [TIP](tips/TIP-V46-818-admin-log-search.md) · nhánh `feature/TIP-V46-818-admin-log-search` · **DONE** - source5c562e14; static/unit/both builds PASS, full integration2271/2271, MSW397+5 existing skips, native focused PASS; parity D134/D139 classified, PR104 ready for review, no auto-merge. [Completion](reports/TIP-V46-818-completion.md) | 807 / 808 / 809 | 817 | M | `srv/settings/**`, `packages/shared/src/api-domains/{audit-log-page,regional-directors,reports}.ts`, `packages/ui/src/global-search/**`, `srv/local-business/**`, `admin/features/settings/**` |
+| V46-820 | SEO trang công khai (B15) — chưa viết TIP | 810 | 818 | M | — |
+| V46-821 | Tài chính & vùng (B7 → B10) — chưa viết TIP | 801 → 805 | 820 | L | — |
+
+Số 819 không dùng (gộp vào 818 theo D-139).
+
 ## V4.6 — GIT (nhánh xếp chồng, không tự merge)
 
 - TIP #1 tách từ `dev`. TIP #k: PR #k-1 đã merge → tách từ `dev` mới; chưa merge → tách từ nhánh TIP #k-1 (PR `base` = nhánh đó, ghi "Stacked on #…").

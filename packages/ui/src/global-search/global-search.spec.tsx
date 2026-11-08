@@ -17,10 +17,56 @@ function mount(overrides: Partial<GlobalSearchProps> = {}) {
     onPick: vi.fn(),
     ...overrides,
   };
-  render(<GlobalSearch {...props} />);
-  return { ...props, input: screen.getByRole('combobox') };
+  const view = render(<GlobalSearch {...props} />);
+  return {
+    ...props,
+    input: screen.getByRole('combobox'),
+    rerenderGroups: (groups: GlobalSearchProps['groups']) =>
+      view.rerender(<GlobalSearch {...props} groups={groups} />),
+  };
 }
 describe('GlobalSearch BR-491 interaction', () => {
+  const groups: GlobalSearchProps['groups'] = [
+    {
+      kind: 'store',
+      label: 'Stores',
+      items: [1, 2].map((n) => ({ id: `s${n}`, title: `Store ${n}`, sub: '' })),
+    },
+    {
+      kind: 'need',
+      label: 'Needs',
+      items: [1, 2].map((n) => ({ id: `n${n}`, title: `Need ${n}`, sub: '' })),
+    },
+  ];
+  it('crosses groups, enters third result, wraps in both directions and keeps ARIA selection', () => {
+    const { input, onPick } = mount({ groups });
+    fireEvent.change(input, { target: { value: 'co' } });
+    for (let i = 0; i < 3; i++) fireEvent.keyDown(input, { key: 'ArrowDown' });
+    const options = screen.getAllByRole('option');
+    expect(input.getAttribute('aria-activedescendant')).toBe(options[2]?.id);
+    expect(options[2]?.getAttribute('aria-selected')).toBe('true');
+    fireEvent.submit(screen.getByRole('search'));
+    expect(onPick).toHaveBeenCalledWith('need', groups[1]?.items[0]);
+    fireEvent.change(input, { target: { value: 'co' } });
+    fireEvent.mouseEnter(screen.getAllByRole('option')[0] as HTMLElement);
+    fireEvent.keyDown(input, { key: 'ArrowUp' });
+    expect(input.getAttribute('aria-activedescendant')).toBe(screen.getAllByRole('option')[3]?.id);
+    fireEvent.keyDown(input, { key: 'ArrowDown' });
+    expect(input.getAttribute('aria-activedescendant')).toBe(screen.getAllByRole('option')[0]?.id);
+  });
+  it('mouse hover selects a result; a new response resets selection to Enter first hit', () => {
+    const props = mount({ groups });
+    fireEvent.change(props.input, { target: { value: 'co' } });
+    fireEvent.mouseEnter(screen.getAllByRole('option')[3] as HTMLElement);
+    expect(props.input.getAttribute('aria-activedescendant')).toBe(
+      screen.getAllByRole('option')[3]?.id,
+    );
+    // React re-renders on the new caller-owned result array, not a comparison of hit IDs.
+    props.rerenderGroups([...groups]);
+    expect(props.input.hasAttribute('aria-activedescendant')).toBe(false);
+    fireEvent.submit(screen.getByRole('search'));
+    expect(props.onPick).toHaveBeenCalledWith('store', groups[0]?.items[0]);
+  });
   it('only opens at two trimmed characters, keeps text on outside click and reopens on focus', () => {
     const { input } = mount();
     fireEvent.change(input, { target: { value: ' a ' } });

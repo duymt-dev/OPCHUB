@@ -126,9 +126,15 @@ describe('Contract: settings', () => {
         token: owner,
       },
     );
+    // Reused test databases can hold >50 fixture roles; the write contract is a bounded batch.
     const matrix = Object.fromEntries(
-      cur.data.items.filter((r) => r.key !== 'super_admin').map((r) => [r.id, r.permissions]),
+      cur.data.items
+        .filter((r) => r.key !== 'super_admin')
+        .slice(0, 50)
+        .map((r) => [r.id, r.permissions]),
     );
+    expect(Object.keys(matrix).length).toBeGreaterThan(0);
+    expect(Object.keys(matrix).length).toBeLessThanOrEqual(50);
     const put = await ep(
       t,
       'PUT',

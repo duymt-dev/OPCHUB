@@ -20,6 +20,7 @@ import { NeedExploreRepository } from '../repositories/need-explore.repository';
 import { StoreRepository } from '../repositories/store.repository';
 import { StoreExploreService } from './store-explore.service';
 import { StoreMediaService, storeMediaUrls } from './store-media.service';
+import { NeedMatchService } from './need-match.service';
 
 const PROVINCES = new Set(provinces.map(([name]) => name));
 const FIELDS = new Set<string>(STORE_FIELDS);
@@ -48,6 +49,7 @@ export class StoreOwnerService {
     private readonly publicPage: StorePublicService,
     private readonly outbox: OutboxService,
     private readonly needs: NeedExploreRepository,
+    private readonly matches: NeedMatchService,
   ) {}
 
   private async own(u: StoreOwner): Promise<StoreDetailRow> {
@@ -81,6 +83,7 @@ export class StoreOwnerService {
       await this.repo.replace(tx, cur.id, next);
       await this.gc.enqueueRemoved(tx, removed, 'store-media');
     });
+    await this.matches.invalidate([u.id]);
     await this.publicPage.invalidate(cur.slug);
     if (cur.status === 'published') await this.explore.invalidate();
     return this.mine(u);

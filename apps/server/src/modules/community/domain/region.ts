@@ -1,12 +1,9 @@
+import { REGION_LABEL_SHORT } from '@opchub/shared';
 import type { Region } from '@opchub/db';
 import { regionOf } from '@opchub/shared/fixtures';
 
 /** Enum DB ↔ chuỗi hiển thị của hợp đồng (`groupSummarySchema.region`, fixtures `regionOf`) */
-const LABEL: Record<Region, string> = {
-  north: 'Miền Bắc',
-  central: 'Miền Trung',
-  south: 'Miền Nam',
-};
+const LABEL = REGION_LABEL_SHORT;
 export const OTHER_REGION = 'Khác';
 
 export const regionLabel = (r: Region): string => LABEL[r];

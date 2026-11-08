@@ -27,7 +27,7 @@ export class NeedRepository {
   owned(ownerId: string, id: string) {
     return this.prisma.db.need.findFirst({
       where: { id, ownerId },
-      select: { id: true, status: true },
+      select: { id: true, status: true, ownerId: true, field: true, province: true },
     });
   }
 
@@ -46,8 +46,8 @@ export class NeedRepository {
     return r.count === 1;
   }
 
-  async remove(ownerId: string, id: string): Promise<boolean> {
-    const r = await this.prisma.db.need.deleteMany({
+  async remove(ownerId: string, id: string, tx: DbTx = this.prisma.db): Promise<boolean> {
+    const r = await tx.need.deleteMany({
       where: { id, ownerId, status: { in: [...NEED_DELETABLE] } },
     });
     return r.count === 1;

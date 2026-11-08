@@ -1,5 +1,8 @@
 import type { Prisma } from '@opchub/db';
-import { needMatchesSchema } from '@opchub/shared/api-domains';
+import { EMPTY_STORE_BUILDER, needMatchesSchema } from '@opchub/shared/api-domains';
+import { STORE_FIELDS } from '@opchub/shared/fixtures';
+import { parseOutboxPayload } from '@opchub/shared/outbox';
+import { NeedMatchNotifyHandler } from '@/modules/local-business';
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { NeedMatchRepository } from '@/modules/local-business/repositories/need-match.query';
 import { NeedMatchService } from '@/modules/local-business/services/need-match.service';
@@ -15,6 +18,7 @@ describe('REQ-626 BR-478–480 real need matches', () => {
   let ownStore: string;
   let otherStore: string;
   let token: string;
+  let providerToken: string;
   const users: string[] = [];
   const field = 'V46809 isolated food';
   const province = 'V46809 province';
@@ -27,6 +31,7 @@ describe('REQ-626 BR-478–480 real need matches', () => {
     provider = supplier.id;
     users.push(owner, provider);
     token = await tokenOf(t, me);
+    providerToken = await tokenOf(t, supplier);
     ownStore = (
       await t.prisma.db.store.create({
         data: {
@@ -237,5 +242,95 @@ describe('REQ-626 BR-478–480 real need matches', () => {
     await t.app.get(AuthStateService).setLocked(locked.id, true);
     expect((await t.call('/me/needs/matches', { token: lockedToken })).status).toBe(403);
     expect((await t.call('/me/needs/matches')).status).toBe(401);
+  });
+
+  it('same field and province need survives candidate cap', async () => {
+    const old = await need({ updatedAt: new Date('2020-01-01T00:00:00Z') });
+    await t.prisma.db.need.createMany({
+      data: Array.from({ length: 250 }, (_, i) => ({
+        ownerId: provider,
+        storeId: otherStore,
+        type: 'buy' as const,
+        title: `Province-only ${i}`,
+        description: '',
+        phone: '0912345678',
+        field: 'Other field',
+        province,
+        updatedAt: new Date(),
+      })),
+    });
+    const result = await get();
+    expect(result.rows[0]?.id).toBe(old.id);
+    expect(result.rows[0]?.pct).toBe(98);
+  });
+
+  it('invalidates on close delete and store edit', async () => {
+    const auth = providerToken;
+    const row = await need();
+    expect((await get()).rows.map((r) => r.id)).toContain(row.id);
+    const changed = await t.call(`/me/needs/${row.id}`, {
+      token: auth,
+      method: 'PATCH',
+      json: { action: 'close' },
+    });
+    expect(changed.status).toBe(200);
+    const deliver = async (needId: string) => {
+      const event = await t.prisma.db.outboxEvent.findFirstOrThrow({
+        where: {
+          type: 'need.unpublished',
+          payload: { path: ['needId'], equals: needId },
+        },
+        orderBy: { id: 'desc' },
+      });
+      const payload = parseOutboxPayload('need.unpublished', event.payload);
+      await t.app.get(NeedMatchNotifyHandler).unpublished(payload);
+      await t.app.get(NeedMatchNotifyHandler).unpublished(payload); // replay safe
+    };
+    await deliver(row.id);
+    expect((await get()).rows).toEqual([]);
+    const removed = await need();
+    await clear();
+    expect((await get()).rows.map((r) => r.id)).toContain(removed.id);
+    expect(
+      (await t.call(`/me/needs/${removed.id}`, { token: auth, method: 'DELETE' })).status,
+    ).toBe(204);
+    await deliver(removed.id); // snapshot still addresses recipients after hard deletion
+    expect((await get()).rows).toEqual([]);
+    await t.prisma.db.store.update({ where: { id: ownStore }, data: { status: 'draft' } });
+    const save = await t.call('/me/store', {
+      method: 'PUT',
+      token,
+      json: {
+        ...EMPTY_STORE_BUILDER,
+        name: '818 draft',
+        slogan: '',
+        field: STORE_FIELDS[0],
+        province: '',
+        intro: '',
+        phone: '',
+        email: '',
+        website: '',
+        address: '',
+        audience: 'organization',
+        coverUrl: null,
+        items: [],
+      },
+    });
+    expect(save.status).toBe(200);
+    expect(await t.redis.client.get(`need-matches:${owner}`)).toBeNull();
+    expect((await get()).storeField).toBe(STORE_FIELDS[0]);
+  });
+
+  it('cache invalidation uses one deduplicated DEL and tolerates Redis failure', async () => {
+    const service = t.app.get(NeedMatchService);
+    const del = vi.spyOn(t.redis.client, 'del');
+    await service.invalidate([owner, owner, provider]);
+    expect(del).toHaveBeenCalledExactlyOnceWith(
+      `need-matches:${owner}`,
+      `need-matches:${provider}`,
+    );
+    del.mockRejectedValueOnce(new Error('offline'));
+    await expect(service.invalidate([owner])).resolves.toBeUndefined();
+    del.mockRestore();
   });
 });

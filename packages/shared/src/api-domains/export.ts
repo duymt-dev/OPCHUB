@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { reportParamsSchema } from './reports';
 import { aiCallsFilterSchema } from './ai-calls';
+import { auditLogFiltersSchema } from './audit-log-page';
 
 /**
  * Job xuất dữ liệu (luật 10, Q-G4a-6, B43). `POST …/export` trả 202 `exportJobSchema` (groups.ts);
@@ -39,7 +40,7 @@ export const GROUP_EXPORT_FIELDS = [
 /** Tham số job lưu trong `export_jobs.params` — worker parse lại */
 export const exportParamsSchema = z.discriminatedUnion('kind', [
   z.strictObject({ kind: z.literal('ai_calls'), filters: aiCallsFilterSchema }),
-  z.object({ kind: z.literal('audit') }).strict(),
+  z.object({ kind: z.literal('audit'), filters: auditLogFiltersSchema.optional() }).strict(),
   z.object({ kind: z.literal('users'), userIds: z.array(z.string()).optional() }),
   z.object({
     kind: z.literal('group_members'),

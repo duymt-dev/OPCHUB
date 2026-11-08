@@ -5,6 +5,8 @@ import {
   adminRoleListSchema,
   adminRoleSchema,
   auditLogPageSchema,
+  auditLogActorsSchema,
+  type AuditLogFilters,
   exportJobSchema,
   generalSettingsSchema,
   mailJobSchema,
@@ -119,12 +121,18 @@ export const setAdminRole = (id: string, roleId: string) =>
   api(`${acc(id)}/role`, { method: 'PATCH', body: { roleId }, schema: adminAccountRowSchema });
 export const revokeAdmin = (id: string) => api(acc(id), { method: 'DELETE', schema: idSchema });
 
-export const fetchAuditLog = (cursor?: string) =>
-  api(`/admin/audit-logs${cursor ? `?cursor=${encodeURIComponent(cursor)}` : ''}`, {
+export const fetchAuditLogActors = () =>
+  api('/admin/audit-logs/actors', { schema: auditLogActorsSchema }).then((r) => r.items);
+export const fetchAuditLog = (cursor?: string, filters: AuditLogFilters = {}) => {
+  const query = new URLSearchParams();
+  for (const [key, value] of Object.entries(filters)) if (value) query.set(key, value);
+  if (cursor) query.set('cursor', cursor);
+  return api(`/admin/audit-logs${query.size ? `?${query}` : ''}`, {
     schema: auditLogPageSchema,
   });
-export const exportAuditLog = () =>
-  api('/admin/audit-logs/export', { method: 'POST', schema: exportJobSchema });
+};
+export const exportAuditLog = (filters: AuditLogFilters = {}) =>
+  api('/admin/audit-logs/export', { method: 'POST', body: { filters }, schema: exportJobSchema });
 
 export const fetchSecurity = () =>
   api('/admin/settings/security', { schema: securitySettingsSchema });

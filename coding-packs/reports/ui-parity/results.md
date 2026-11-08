@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 438/500 ảnh.
+> Đạt 437/500 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -49,8 +49,8 @@
 | A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 390 | 0.15% | ✅ đạt | 390×2148 | ef7934ff |
 | A-32 | Đăng ký · mã giới thiệu không tồn tại | 1440 | 0.06% | ✅ đạt | 1440×1214 | ef7934ff |
 | A-32 | Đăng ký · mã giới thiệu không tồn tại | 390 | 0.12% | ✅ đạt | 390×2148 | ef7934ff |
-| P-01 | Dashboard | 1440 | 1.01% | ✅ đạt | 1440×1113 | ef7934ff |
-| P-01 | Dashboard | 390 | 2.97% | ✅ đạt | 390×1721 | ef7934ff |
+| P-01 | Dashboard | 1440 | 1.01% | ✅ đạt | 1440×1113 | 6c5800b4 |
+| P-01 | Dashboard | 390 | 2.97% | ✅ đạt | 390×1721 | 6c5800b4 |
 | P-05 | Modal mail chào mừng | 1440 | 0.25% | ✅ đạt | 640×860 | bf02c7c7 |
 | P-05 | Modal mail chào mừng | 390 | 0.46% | ✅ đạt | 366×804 | bf02c7c7 |
 | P-07 | Thông báo | 1440 | 0.94% | ✅ đạt | 1440×900 | ef7934ff |
@@ -258,8 +258,8 @@
 | P-V46-REG | Portal · Vùng của tôi | 390 | 10.39% | ❌ chưa đạt | 390×3353 | ef7934ff |
 | P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 1440 | 1.21% | ✅ đạt | 1440×997 | ef7934ff |
 | P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 390 | 1.96% | ✅ đạt | 390×1635 | ef7934ff |
-| P-V46-SEARCH | Topbar · global search | 1440 | 1.00% | ✅ đạt | 1440×900 | ef7934ff |
-| P-V46-SEARCH | Topbar · global search | 390 | 0.11% | ✅ đạt | 390×844 | ef7934ff |
+| P-V46-SEARCH | Topbar · global search | 1440 | 1.00% | ✅ đạt | 1440×900 | 6c5800b4 |
+| P-V46-SEARCH | Topbar · global search | 390 | 0.11% | ✅ đạt | 390×844 | 6c5800b4 |
 | D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 2.29% | ✅ đạt | 1440×1344 | ef7934ff |
 | D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 1.90% | ✅ đạt | 390×2279 | ef7934ff |
 | D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.23% | ✅ đạt | 1440×900 | ef7934ff |
@@ -430,8 +430,8 @@
 | D-73 | Cài đặt · Tài khoản quản trị | 390 | 0.30% | ✅ đạt | 390×2297 | ef7934ff |
 | D-74 | Tài khoản quản trị · hộp thoại tạo TK (§21 RB-R02) | 1440 | 0.77% | ✅ đạt | 1440×900 | ef7934ff |
 | D-74 | Tài khoản quản trị · hộp thoại tạo TK (§21 RB-R02) | 390 | 1.72% | ✅ đạt | 390×844 | ef7934ff |
-| D-75 | Cài đặt · Nhật ký hoạt động | 1440 | 11.42% | ❌ chưa đạt | 1440×1065 | ef7934ff |
-| D-75 | Cài đặt · Nhật ký hoạt động | 390 | 0.54% | ✅ đạt | 390×1680 | ef7934ff |
+| D-75 | Cài đặt · Nhật ký hoạt động | 1440 | 12.27% | ❌ chưa đạt | 1440×1065 | 6c5800b4 |
+| D-75 | Cài đặt · Nhật ký hoạt động | 390 | 10.54% | ❌ chưa đạt | 390×1832 | 6c5800b4 |
 | D-80 | Toast toàn cục | 1440 | 0.16% | ✅ đạt | 1440×900 | ef7934ff |
 | D-80 | Toast toàn cục | 390 | 0.16% | ✅ đạt | 390×844 | ef7934ff |
 | D-81 | Xem thử vai trò Kế toán · menu + dải cam (RB-R09, AT-RB02) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.23% | ✅ đạt | 1440×900 | ef7934ff |
@@ -503,8 +503,8 @@
 | D-V46-BANK | Cài đặt · Đối soát ngân hàng | 390 | 7.80% | ❌ chưa đạt | 390×2164 | ef7934ff |
 | D-V46-RENEW | Cài đặt · Nhắc gia hạn | 1440 | 11.07% | ❌ chưa đạt | 1440×1065 | ef7934ff |
 | D-V46-RENEW | Cài đặt · Nhắc gia hạn | 390 | 15.53% | ❌ chưa đạt | 390×2012 | ef7934ff |
-| D-V46-SEARCH | Topbar · global search Admin | 1440 | 0.51% | ✅ đạt | 1440×900 | ef7934ff |
-| D-V46-SEARCH | Topbar · global search Admin | 390 | 0.35% | ✅ đạt | 390×844 | ef7934ff |
+| D-V46-SEARCH | Topbar · global search Admin | 1440 | 0.51% | ✅ đạt | 1440×900 | 6c5800b4 |
+| D-V46-SEARCH | Topbar · global search Admin | 390 | 0.35% | ✅ đạt | 390×844 | 6c5800b4 |
 
 ## Không đo được trên prototype (unreachable, 39 màn)
 

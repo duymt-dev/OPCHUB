@@ -1028,3 +1028,42 @@ permission escalation or new DB/port was required. Native E2E2/2 passed; six nat
 paired journeys completed. D-138/data pixel differences remain reference-only
 under D-134. Provider/settings snapshot equality and bot-off flags verified after
 both gates; owner real custom key untouched. The private817 runtime remains HOLD.
+
+## TIP-V46-818 — D-139 approved defaults / execution notes
+
+- Q-V46-818-1: preserve both short and director region copy, centralize only.
+- Q-V46-818-2: tag/actor/date filters only; no free-text summary search.
+- Q-V46-818-3: arrow keys only; keep mobile search hidden and existing groups/caps.
+- Q-V46-818-4: two200-ID candidate windows; scoring/top3 remain unchanged.
+- Q-V46-818-5: encoded `/needs?q=<title>` list link, no detail page.
+- Q-V46-818-6: business store owners only, no personal/investor suggestions.
+- Owner approved reuse of private812 development/test801 integration databases,
+  Memurai6381 DB3/DB2, rolling private817 runtime to818 and disposable818 chain DB;
+  do not touch original HOLD/native services or release `main`.
+- Technical connections (no new business policy): names-only existing Admin
+  directory through `settings.log`; unpublished outbox includes the minimal
+  industry/province/owner snapshot because deletion is physical. Transaction and
+  existing consumer wiring recorded in the completion report.
+- D-139 audit controls have no prototype equivalent; their additional height
+  and native append-only history are classified separately from genuine visual
+  defects. Eight pairs per lane archived; owner image review remains PR review.
+- Owner approved the narrow contract/settings fixture correction: send at most
+  50 non-super roles per batch, retain equality of the whole returned role list
+  and production limit50. Audit818 now removes only its own fixture accounts and
+  unused custom roles, not append-only audit history. Focused19/19 passed.
+- Owner approved EV-R02 browser clock at16/10 in both MSW/native after static
+  upcoming fixtures expired after16h08/11. Native preparation and all assertions
+  retained; MSW events9/9 and native EV-R02 1/1 passed before fresh full reruns.
+- Cache-only disk cleanup was requested. Subsequent external cleanup removed
+  custom build artifacts and closed ignored logs as well; owned818 builds were
+  forced/recovered. Do not infer uninterrupted old HOLD assets or fabricate lost
+  logs/snapshots. Details and surviving evidence are in the completion report.
+- Resolved scope question: legacy `moderation/violations.int.spec.ts` assumes
+  precisely `{autoLockDays:7}`. Full server2126/2127 leaves one mismatch because
+  the earlier AI suite's merge-based restore retains `ai:false`. Unchanged
+  ordered reproduction confirms AI7/7 then legacy4/5. Proposed snapshot/reset/
+  exact restore of only that fixture was approved ("làm nốt đi") and implemented
+  in5c562e14. No production/original assertion/timeout edit; added cleanup equality
+  proves exact restoration including prior optional keys/timestamp or absence.
+  Ordered AI7/7 then legacy5/5 PASS; final root integration2271/2271, no skip/cache.
+  Full MSW confirmation397 passed+5 existing skips. PR104 ready for owner review.

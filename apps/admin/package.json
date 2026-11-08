@@ -18,6 +18,7 @@
     "@opchub/ui": "workspace:*",
     "@tanstack/react-query": "catalog:",
     "antd": "catalog:",
+    "dayjs": "catalog:",
     "next": "catalog:",
     "next-intl": "catalog:",
     "react": "catalog:",

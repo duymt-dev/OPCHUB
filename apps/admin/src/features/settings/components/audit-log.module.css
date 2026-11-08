@@ -1,4 +1,24 @@
 /* Nhật ký hoạt động (D-75) — prototype stLogs */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+.filters > * {
+  flex: 1 1 180px;
+  min-width: 0;
+  max-width: 100%;
+}
+@media (max-width: 767px) {
+  .filters {
+    flex-direction: column;
+  }
+  .filters > * {
+    flex: none;
+    width: 100%;
+  }
+}
 .list {
   background: #fff;
   border: 1px solid #f0f0f0;

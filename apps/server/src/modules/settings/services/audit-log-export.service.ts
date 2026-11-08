@@ -4,6 +4,7 @@ import {
   auditCsvTimestamp as vnTime,
   auditLogPageQuerySchema,
   type AuditLogPageQuery,
+  type AuditLogFilters,
 } from '@opchub/shared/api-domains';
 import { AuditService } from '@/common/audit';
 import { toCsv, csvSafeText as safe } from '@/common/http/csv';
@@ -21,12 +22,12 @@ export class AuditLogExportService implements OnModuleInit {
     private readonly audit: AuditService,
   ) {}
   onModuleInit() {
-    this.builders.register('audit', () => this.build());
+    this.builders.register('audit', (params) => this.build(new Date(), params.filters));
   }
 
-  request(actor: { id: string; ip: string | null }) {
+  request(actor: { id: string; ip: string | null }, filters: AuditLogFilters = {}) {
     return this.prisma.db.$transaction(async (tx) => {
-      const jobId = await this.exports.request(tx, actor.id, { kind: 'audit' });
+      const jobId = await this.exports.request(tx, actor.id, { kind: 'audit', filters });
       await this.audit.log(tx, {
         actorId: actor.id,
         ip: actor.ip,
@@ -35,17 +36,18 @@ export class AuditLogExportService implements OnModuleInit {
         entityId: jobId,
         tag: 'settings',
         summary: 'xuất nhật ký hoạt động 90 ngày',
+        diff: { filters },
       });
       return { jobId, status: 'queued' as const };
     });
   }
 
-  async build(now = new Date()) {
+  async build(now = new Date(), filters: AuditLogFilters = {}) {
     let cursor: AuditLogPageQuery['cursor'];
     const rows: string[][] = [];
     // Export owns the bounded keyset scan; never a per-row database lookup.
     for (;;) {
-      const page = await this.pages.page({ limit: 500, cursor }, now);
+      const page = await this.pages.page({ ...filters, limit: 500, cursor }, now);
       rows.push(
         ...page.items.map((r) => [
           safe(r.actorName),

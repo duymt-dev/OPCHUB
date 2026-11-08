@@ -1,3 +1,4 @@
+import { REGION_LABEL_SHORT } from '../../regions/region-labels';
 import {
   adminConversionSchema,
   REGIONAL_REGIONS,
@@ -16,7 +17,7 @@ export function mockConversion(): AdminConversion {
     directors = mockRegionalDirectors(false).items;
   const rows = REGIONAL_REGIONS.map((region) => ({
     region,
-    label: { north: 'Miền Bắc', central: 'Miền Trung', south: 'Miền Nam' }[region],
+    label: REGION_LABEL_SHORT[region],
     directorName: directors.find((d) => d.region === region)?.member?.fullName ?? null,
     trial: 0,
     paid: 0,

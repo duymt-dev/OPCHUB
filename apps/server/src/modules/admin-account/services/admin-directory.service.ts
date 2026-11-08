@@ -21,6 +21,14 @@ export class AdminDirectoryService implements AdminDirectoryPort {
     return new Map(rows.map((r) => [r.id, r.name]));
   }
 
+  /** Audit history may reference revoked accounts too; never expose credentials or contacts. */
+  listNames() {
+    return this.prisma.db.adminUser.findMany({
+      select: { id: true, name: true },
+      orderBy: [{ name: 'asc' }, { id: 'asc' }],
+    });
+  }
+
   /** TK active, chưa xoá, vai trò có `key` (Super Admin luôn có) — sắp theo tên */
   async withPermission(key: AdminPermissionKey) {
     const rows = await this.prisma.db.adminUser.findMany({

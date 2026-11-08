@@ -1,3 +1,4 @@
+import { REGION_LABEL_DIRECTOR, REGION_LABEL_SHORT } from '../regions/region-labels';
 import { z } from 'zod';
 import { provinces } from '../fixtures';
 import { MEMBERSHIP_FEE_STATUS } from '../enums';
@@ -6,12 +7,8 @@ import { affiliateBankSchema } from './affiliate';
 export const REGIONAL_REGIONS = ['north', 'central', 'south'] as const;
 export const regionalRegionSchema = z.enum(REGIONAL_REGIONS);
 export type RegionalRegion = z.infer<typeof regionalRegionSchema>;
-export const REGIONAL_LABELS: Record<RegionalRegion, string> = {
-  north: 'Miền Bắc',
-  central: 'Miền Trung & Tây Nguyên',
-  south: 'Miền Nam',
-};
-const PROVINCE_LABELS = { north: 'Miền Bắc', central: 'Miền Trung', south: 'Miền Nam' };
+export const REGIONAL_LABELS = REGION_LABEL_DIRECTOR;
+const PROVINCE_LABELS = REGION_LABEL_SHORT;
 export const regionalProvinces = (region: RegionalRegion) =>
   provinces.filter(([, label]) => label === PROVINCE_LABELS[region]).map(([name]) => name);
 export const regionalParamsSchema = z.object({ region: regionalRegionSchema });
