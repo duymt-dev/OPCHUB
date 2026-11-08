@@ -1,4 +1,9 @@
-import { createParamDecorator, type ExecutionContext, SetMetadata } from '@nestjs/common';
+import {
+  applyDecorators,
+  createParamDecorator,
+  type ExecutionContext,
+  SetMetadata,
+} from '@nestjs/common';
 import type { AccountType, AdminPermissionKey } from '@opchub/shared';
 import type { Request } from 'express';
 import { unauthorized } from '../errors';
@@ -13,6 +18,7 @@ export const META = {
   groupRole: 'auth:group_role',
   realms: 'auth:realms',
   adminPermissions: 'auth:admin_permissions',
+  adminDeniedMessage: 'auth:admin_denied_message',
   adminAny: 'auth:admin_any',
   adminSetup: 'auth:admin_setup',
 } as const;
@@ -30,8 +36,17 @@ export const AllowAccountTypes = (...types: AccountType[]) => SetMetadata(META.a
  * Route quản trị (§21, TIP-V2-203): cần đủ mọi khoá trong 25 khoá RBAC (Super Admin luôn qua).
  * Thiếu khoá thao tác mà có khoá Xem của menu → 403 `VIEW_ONLY` (RB-R07); còn lại 403 `FORBIDDEN`.
  */
-export const RequireAdmin = (...keys: AdminPermissionKey[]) =>
-  SetMetadata(META.adminPermissions, keys);
+export interface AdminDenialOptions {
+  deniedMessage?: (roleName: string) => string;
+}
+export const RequireAdmin = (...args: (AdminPermissionKey | AdminDenialOptions)[]) => {
+  const keys = args.filter((arg): arg is AdminPermissionKey => typeof arg === 'string');
+  const options = args.find((arg): arg is AdminDenialOptions => typeof arg === 'object');
+  return applyDecorators(
+    SetMetadata(META.adminPermissions, keys),
+    SetMetadata(META.adminDeniedMessage, options?.deniedMessage),
+  );
+};
 
 /** Route quản trị cần ÍT NHẤT một khoá trong danh sách (badge sidebar, trạng thái job xuất) */
 export const RequireAnyAdmin = (...keys: readonly AdminPermissionKey[]) =>

@@ -41,6 +41,13 @@ service worker or existing Portal notification behavior changes.
 
 ## Consequences
 
+TIP-813 removes the obsolete singleton table, controller/service/cache aliases and
+environment provider switches. Runtime selection always comes from Admin configuration,
+independently of NODE_ENV. Automated tests explicitly override the LLM token or configure
+a local HTTP stub; fake providers are never selected implicitly. Missing configuration is
+a terminal integration error with reason `not_configured`: jobs still fail without retry,
+but their worker diagnostic is debug rather than warning. Other failures keep their level.
+
 Admin must enter legitimate endpoint credentials and pricing. No key is read back,
 only hasKey/last4; blank replacements retain the encrypted key. Content/mod allocations
 are stored for future callers, not new AI product features. The original encrypted

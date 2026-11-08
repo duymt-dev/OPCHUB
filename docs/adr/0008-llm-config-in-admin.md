@@ -21,10 +21,16 @@ phải tự đặt và đổi endpoint, model, key mà không cần sửa file e
 - Không có cấu hình hoặc `enabled = false` → bot tắt phần cần AI (trả lời từng tin, AI tạo hàng loạt) và
   Admin thấy trạng thái "Chưa cấu hình AI". **Không** tự rơi về provider fake ở dev hay production.
 - Test tự động (unit / int / e2e) chạy với stub HTTP cục bộ trả lời theo kịch bản (D-103, luật 11);
-  `@live` gọi thật khi có key. Env `BOT_LLM_PROVIDER` chỉ còn cho test, không dùng ở runtime.
+  `@live` gọi thật khi có key. TIP-813 bỏ hoàn toàn lựa chọn provider bằng env;
+  test có thể override tường minh `[LLM, new FakeLlmProvider()]` hoặc dùng stub HTTP cục bộ.
 - Giới hạn chi phí và tải giữ ở worker: trần tin bot (S-11, D-112), giới hạn số request mỗi phút và timeout.
 
 ## Consequences
+
+- Superseded storage: ADR-0009 / TIP-811 migrated configuration to `llm_providers`
+  and `app_settings.ai`. TIP-813 drops the unused `llm_configs` table and compatibility
+  aliases; its down migration recreates an empty table, not deleted configuration data.
+  Runtime always uses Admin-configured providers in every NODE_ENV; no implicit fake fallback.
 
 - Đổi khoá giải mã (env) làm mất key đã lưu; runbook xoay khoá phải nhập lại key SMTP và LLM.
 - Dữ liệu tin nhắn gửi sang nhà cung cấp AI do Admin chọn; Admin chịu trách nhiệm chọn nhà cung cấp hợp pháp.

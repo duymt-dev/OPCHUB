@@ -2,7 +2,6 @@ import { aiDraft, snapshotAi, restoreAi } from '../helpers/ai-config';
 import type { LlmProvider } from '@opchub/integrations';
 import { Queue } from 'bullmq';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { ENV, loadEnv } from '@/common/config';
 import { LLM } from '@/common/integrations';
 import { OutboxRelayService } from '@/common/outbox';
 import { BULL_PREFIX, WorkerFactory } from '@/common/queue';
@@ -46,7 +45,6 @@ describe('D-112 bulk outbox and actual worker use committed Admin LLM configurat
     t = await createTestApp({
       imports: [BotCoreModule],
       providers: [BotProcessor],
-      overrides: [[ENV, { ...loadEnv(), NODE_ENV: 'development', BOT_LLM_PROVIDER: 'fake' }]],
     });
     f = new BulkFixture(t);
     await f.start();

@@ -17,12 +17,14 @@
     "@aws-sdk/s3-request-presigner": "catalog:",
     "jose": "catalog:",
     "nodemailer": "catalog:",
+    "web-push": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {
     "@opchub/config": "workspace:*",
     "@types/node": "catalog:",
     "@types/nodemailer": "catalog:",
+    "@types/web-push": "catalog:",
     "eslint": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"

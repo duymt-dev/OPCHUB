@@ -68,7 +68,11 @@ export class BotProcessor implements OnApplicationBootstrap {
             const terminal = error instanceof IntegrationError && !error.retryable;
             if (terminal || job.attemptsMade + 1 >= (job.opts.attempts ?? 1))
               await this.replies.failThread(payload.threadId);
-            if (terminal) throw new UnrecoverableError(error.message);
+            if (terminal) {
+              const failure = new UnrecoverableError(error.message);
+              failure.cause = error;
+              throw failure;
+            }
             throw error;
           }
         },

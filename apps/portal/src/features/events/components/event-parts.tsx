@@ -17,6 +17,7 @@ const swapToFallback = (e: SyntheticEvent<HTMLImageElement>) => {
 /** BUG-011: ảnh bìa `coverUrl` của API; chưa có → ảnh mặc định tự host */
 export function EventCover({ e, className }: { e: EventView; className?: string }) {
   return (
+    // eslint-disable-next-line @next/next/no-img-element -- Dynamic storage cover keeps the D-36 onError fallback.
     <img
       className={className ?? styles.coverImg}
       src={groupCoverSrc(e.coverUrl)}
@@ -32,6 +33,7 @@ export function Attendees({ srcs, size }: { srcs: string[]; size?: 'lg' }) {
   return (
     <div className={styles.avatars} data-size={size}>
       {srcs.map((src, i) => (
+        // eslint-disable-next-line @next/next/no-img-element -- Small attendee avatars use arbitrary storage URLs from the API.
         <img key={`${src}-${i}`} src={src} alt="" />
       ))}
     </div>

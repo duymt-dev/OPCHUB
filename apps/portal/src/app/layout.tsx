@@ -1,5 +1,6 @@
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import '@opchub/ui/globals.css';
+import { colors } from '@opchub/ui';
 import type { Metadata, Viewport } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale } from 'next-intl/server';
@@ -11,10 +12,16 @@ import { AppProviders } from '@/providers/app-providers';
 export const metadata: Metadata = {
   title: 'OPC Hub',
   icons: { icon: '/opchub-logo.png' },
+  manifest: '/manifest.webmanifest',
+  appleWebApp: { capable: true, title: 'OPC Hub', statusBarStyle: 'default' },
   robots: { index: false, follow: false },
 };
 
-export const viewport: Viewport = { width: 'device-width', initialScale: 1 };
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: colors.primary,
+};
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
   const lang = await getLocale();

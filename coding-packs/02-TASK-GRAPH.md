@@ -48,6 +48,17 @@ Tổng: 4 M · 6 L · 1 XL (+ 812 L). Mốc: **M1 = 801 → 804**, **M2 = 805 �
 Cổng mỗi TIP: `pnpm lint && pnpm typecheck && pnpm test && pnpm test:int && pnpm depcheck && pnpm build`; e2e MSW không tụt so với `dev` + e2e server
 cho luồng TIP đụng tới; **parity ≤ 3% (1440 + 390) cho mọi màn TIP đụng tới**; query mới có `EXPLAIN (ANALYZE, BUFFERS)` ≥ 10k dòng; migration sạch trên `opchub_dev` + `opchub_test`.
 
+## V4.6 — TRẢ NỢ (sau 812, danh sách ở [`plans/V4.6-DEBT.md`](plans/V4.6-DEBT.md))
+
+| TIP | Tên | Nguồn nợ | Phụ thuộc | Ước lượng | Vùng file dự kiến (chốt trong TIP) |
+|---|---|---|---|---|---|
+| V46-813 | [TIP](tips/TIP-V46-813-debt-code.md) · nhánh `feature/TIP-V46-813-debt-code` · **TIP viết, chưa code** — Nợ code nhóm A (A1 → A12): Tổng quan chat > 100 nhóm, xóa `llm_configs` + `BOT_LLM_PROVIDER`, chữ 403 GĐ Vùng, log "Chưa cấu hình AI", lint `<img>`, test thiếu 801 / 802 / 803 / 805 / 807 | 801 → 811 completion | 812 | L | `srv/chat/**`, `llm-config.prisma`, `srv/llm-config/**`, `common/config/env.schema.ts`, `common/integrations/llm-provider.ts`, `test/{regional-director,affiliate,audit}/**`, `e2e/behavior/**` |
+| V46-814 | [TIP](tips/TIP-V46-814-test-stability.md) · nhánh `feature/TIP-V46-814-test-stability` · **TIP viết, chưa code** — Ổn định test + parity nhóm A (A13 → A22): flake bot, timeout audit / Vitest fork, plan persona-turn, native 147, 14 ảnh miễn, nhiễu chụp, chuỗi migration DB trắng + `down.sql`, một lượt full gate xanh | 804 / 806 / 808 / 809 / 812 | 813 | L | `e2e/{parity,behavior}/**`, `apps/server/test/**`, `vitest` config, `reports/ui-parity/**` |
+| V46-815 | [TIP](tips/TIP-V46-815-live-ai-check.md) · nhánh `feature/TIP-V46-815-live-ai-check` · **TIP viết, chưa code** — B2: kiểm AI bằng key thật — lượt `@live` chạy tay, "Kiểm tra kết nối" từng nhà cung cấp có key, sửa adapter nếu lệch chuẩn OpenAI (D-137) | 811 | 814 | S–M | `e2e/llm/**`, `packages/integrations/src/llm/**` (chỉ khi lệch) |
+| V46-816 | [TIP](tips/TIP-V46-816-web-push-pwa.md) · nhánh `feature/TIP-V46-816-web-push-pwa` · **TIP viết, chưa code** — B1: Web Push + PWA thật qua dịch vụ đẩy của trình duyệt (VAPID, `web-push`, `push_subscriptions`, manifest + service worker, công tắc TV) (D-137, thay D-125) | 805 / 811 | 815 | L | `packages/db/prisma/schema/**`, `srv/notification/**`, `srv/settings/**`, `worker/**`, `portal/public/**`, `portal/features/{account,shell}/**`, `docs/adr/**` |
+
+Chạy tuần tự 813 → 814 → 815 → 816. B3 → B18 để sau (D-137). TIP viết lúc tới bước, dựa trên `dev` lúc ấy.
+
 ## V4.6 — GIT (nhánh xếp chồng, không tự merge)
 
 - TIP #1 tách từ `dev`. TIP #k: PR #k-1 đã merge → tách từ `dev` mới; chưa merge → tách từ nhánh TIP #k-1 (PR `base` = nhánh đó, ghi "Stacked on #…").

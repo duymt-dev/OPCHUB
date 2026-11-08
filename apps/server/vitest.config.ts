@@ -9,7 +9,12 @@ export default defineConfig({
     projects: [
       {
         resolve: { alias },
-        test: { name: 'unit', include: ['src/**/*.spec.ts', 'test/audit/**/*.spec.ts'] },
+        test: {
+          name: 'unit',
+          include: ['src/**/*.spec.ts', 'test/audit/**/*.spec.ts'],
+          // Audit integration suites must retain the int project's guarded DB/Redis setup.
+          exclude: ['**/*.int.spec.ts'],
+        },
       },
       {
         resolve: { alias },

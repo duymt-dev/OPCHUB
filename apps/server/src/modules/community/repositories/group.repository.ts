@@ -15,10 +15,31 @@ const LIVE = { deletedAt: null } as const;
 /** Thứ tự ổn định = thứ tự seed (c1…c34) rồi nhóm tạo sau */
 const ORDER: Prisma.GroupOrderByWithRelationInput[] = [{ createdAt: 'asc' }, { id: 'asc' }];
 
+/** No business membership cap exists; bound the overview to 1000 joined groups (TIP813 Q4).
+ * Seek memberships first, sort narrow IDs, then fetch only the selected group payloads. */
+export const joinedGroupsQuery = (userId: string) => Prisma.sql`
+  SELECT g.id, g.name, g.province, g.region, g.kind, g.industry,
+         g.parent_id AS "parentId", g.description, g.member_count AS "memberCount",
+         g.weekly_active AS "weeklyActive", g.cover_url AS "coverUrl"
+  FROM (
+    SELECT gm.group_id, g.created_at
+    FROM group_members gm
+    JOIN groups g ON g.id = gm.group_id
+    WHERE gm.user_id = ${userId} AND gm.status = 'member' AND g.deleted_at IS NULL
+    ORDER BY g.created_at ASC, g.id ASC
+    LIMIT 1000
+  ) joined
+  JOIN groups g ON g.id = joined.group_id
+  ORDER BY joined.created_at ASC, joined.group_id ASC`;
+
 /** Bảng `groups` + trạng thái của người gọi trong `group_members` */
 @Injectable()
 export class GroupRepository {
   constructor(private readonly prisma: PrismaService) {}
+
+  joinedBy(userId: string): Promise<GroupRow[]> {
+    return this.prisma.db.$queryRaw<GroupRow[]>(joinedGroupsQuery(userId));
+  }
 
   private where(f: GroupFilter): Prisma.GroupWhereInput | null {
     if (f.region === null) return null;

@@ -37,7 +37,7 @@ export class AiRouterService implements LlmRouter {
   private async run(purpose: AiPurpose, operation: Operation): Promise<string> {
     const { settings, providers } = await this.cache.snapshot();
     const selected = settings.use[purpose];
-    if (!selected) throw this.error('Chức năng chưa chọn nhà cung cấp AI');
+    if (!selected) throw this.error('Chức năng chưa chọn nhà cung cấp AI', 'not_configured');
     const usable = (id: string) =>
       providers.find((p) => p.id === id && p.enabled && p.baseUrl && p.model && this.cache.key(p));
     const month = aiMonth();
@@ -45,7 +45,7 @@ export class AiRouterService implements LlmRouter {
     if (exhausted && purpose === 'bot') throw this.error('Hết ngân sách AI tháng');
     const fallback = usable(settings.fallback);
     const primary = exhausted ? fallback : (usable(selected) ?? fallback);
-    if (!primary) throw this.error('Chưa cấu hình AI');
+    if (!primary) throw this.error('Chưa cấu hình AI', 'not_configured');
     const count = Number(await this.redis.client.eval(TAKE, 1, 'llm:requests:minute'));
     if (count > 60)
       throw new IntegrationError('admin-configured-llm', 'AI request rate limit reached', true);
@@ -82,7 +82,7 @@ export class AiRouterService implements LlmRouter {
     month: string,
   ): Promise<string> {
     const key = this.cache.key(row);
-    if (!key) throw this.error('Chưa cấu hình AI');
+    if (!key) throw this.error('Chưa cấu hình AI', 'not_configured');
     let usage: LlmUsage = { promptTokens: 0, completionTokens: 0 };
     const started = performance.now();
     const adapter = new LocalLlmProvider(
@@ -158,7 +158,12 @@ export class AiRouterService implements LlmRouter {
       month,
     );
   }
-  private error(message: string) {
-    return new IntegrationError('admin-configured-llm', message, false);
+  private error(message: string, reason?: 'not_configured') {
+    return new IntegrationError(
+      'admin-configured-llm',
+      message,
+      false,
+      reason ? { reason } : undefined,
+    );
   }
 }

@@ -12,6 +12,7 @@ export const QUEUES = {
   export: 'export',
   bot: 'bot',
   moderation: 'moderation',
+  push: 'push',
 } as const;
 export type QueueName = (typeof QUEUES)[keyof typeof QUEUES];
 
@@ -29,6 +30,9 @@ export const mailRetryDelay = (attemptsMade: number): number =>
 const isoDay = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
 
 export const jobs = {
+  push: {
+    send: z.strictObject({ notificationIds: z.array(z.string().min(1)).min(1).max(500) }),
+  },
   mail: {
     send: z.object({ mailLogId: z.string().min(1) }),
     /** Chiến dịch: mỗi job xếp một lô người nhận rồi tự xếp job lô sau (B42) */
@@ -41,6 +45,7 @@ export const jobs = {
     poll: z.object({}),
   },
   scheduler: {
+    storeDigest: z.strictObject({ day: isoDay.optional() }),
     /** 08:00 VN: trạng thái phí + nhắc T-30/T-7/T-0/T+3. `day` bỏ trống = hôm nay theo giờ VN */
     feeStatus: z.object({ day: isoDay.optional() }),
     /** `day` bỏ trống = hôm qua theo giờ VN (lịch 00:10 chụp ngày vừa hết) */

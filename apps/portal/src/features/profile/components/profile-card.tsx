@@ -94,6 +94,7 @@ function ContactCard({ profile: p }: { profile: Profile }) {
         {p.email}
       </div>
       <div className={styles.row}>
+        {/* eslint-disable-next-line @next/next/no-img-element -- Country flags are fixed-size external flagcdn assets. */}
         <img
           className={styles.flag}
           src={`https://flagcdn.com/w80/${p.phone.country}.png`}

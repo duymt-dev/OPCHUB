@@ -8,6 +8,7 @@ const HOUR_MS = 3_600_000;
 
 /** Nhắc trước 24 giờ */
 export const REMIND_BEFORE_MS = 24 * HOUR_MS;
+export const REMIND_1H_MS = HOUR_MS;
 /** Thiếu giờ kết thúc → coi như kéo dài 2 giờ (ẩn khỏi "Sắp tới" sau mốc này) */
 export const DEFAULT_DURATION_MS = 2 * HOUR_MS;
 

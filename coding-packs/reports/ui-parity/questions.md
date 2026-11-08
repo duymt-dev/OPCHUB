@@ -928,3 +928,65 @@ Approved scope complete:486 MSW /110 native fresh captures (same source, paired 
 ## V4.6 — D-136 (owner, 06/11/2026)
 
 Owner chốt toàn bộ phương án mặc định Q-V46-807-1 → 5, Q808-1 → 5, Q-V46-809-1 → 4, Q-V46-810-1 → 6, Q-V46-811-1 → 7, Q812-1 → 6. Các dòng ghi "pending owner" / "awaiting owner" ở trên nay là quyết định D-136 trong `01-REQUIREMENTS-MATRIX.md`. Không đổi code. Riêng Q812-4: owner chọn chuyển 801 → 804 thành DONE theo M1 lượt 812, giữ ghi chú PARTIAL cũ làm lịch sử.
+
+## TIP-V46-813 — approved defaults and execution boundaries
+
+- Q1: retain `llm-config` directory/module names; rename only the obsolete controller to AiSettingsController.
+- Q2: exact regional denial text on the three writes; candidate GET and unrelated routes keep generic permission errors and existing codes.
+- Q3: overlapping manual renewal sends return409 `RENEWAL_SEND_BUSY`; no waiting/queue and no same-day resend ban after completion.
+- Q4: joined-group overview technical cap1000, deterministic createdAt/id order; no business membership cap introduced.
+- Q5: owner approved explicit LLM-token FakeLlmProvider overrides OR local HTTP stubs in tests. No env/NODE_ENV-driven fake runtime.
+- Q6: owner requires denial/no-audit/unchanged-data coverage for every manifest domain; critical rule8 mutations additionally prove audit-failure rollback.
+- Infrastructure: reuse `opchub_v46_812_dev`, `opchub_v46_801_test`, Memurai6381. Owner corrected the initially proposed ports-only separation: rolling restart the separate812 runtime to813, because two workers on one DB would contend. Original native DB/Redis6379 and older HOLD stay unchanged.
+- Owner approved `bot.processor.ts` preserving terminal IntegrationError as cause, without changing failure/retry semantics; also approved unit Vitest excluding integration suffixes while the integration project still runs all cases with DB guards.
+- Owner additionally approved updating the old RBAC matrix's exact message expectation on only POST `/admin/gdv`, PATCH `/admin/gdv/:region` and DELETE `/admin/gdv/:region`; status, code, permission matrix and generic text on other routes remain asserted. Extra explicit LLM overrides discovered in four reply/dashboard integration files follow Q5, with all their existing assertions unchanged.
+- No new layout or business deviation proposed by813. D-134 parity categories remain data / approved D-xx / genuine UI defect, not a blanket failure label.
+
+## TIP-V46-814 — owner decisions and execution exceptions
+
+- Q1: if no prototype UI route can expose the registration password/welcome state, retain only P05/P100/P101/P102 viewport waivers, with trace; do not inject state, modify prototype or add unreachable markers. Real Admin sidebar inspection confirms no Marketing route. D09/D17/D22 are not waived: repair their stale count/pagination journeys and capture again.
+- Q2: exact `opchub_v46_814_chain_test` creation/deletion approved; announced before running. Script must refuse existing/other databases and drop only its owned DB in finally.
+- Q3: new mail kinds/labels “Bổ nhiệm GĐ Vùng” / “Thu hồi GĐ Vùng”; historical `regional_director` keeps “GĐ Vùng”.
+- Q4: after source commit, ten full sequential gates on one SHA; source fix requires restart from gate1. Preparation results are not a substitute.
+- Q5: an unreproduced flake requires20 old-condition attempts, correction of the definitely wrong part and passing A22; otherwise PARTIAL. A13 did reproduce5/5 original count3→0 failures; no nonreproduction exemption claimed for it.
+- Owner reconfirmed private801test/Redis2 and812dev/Redis3, rolling restart only owned813 runtime to814. Original HOLD/native DB/Redis6379 remain untouched.
+- A16 exception approved during execution: use a dedicated single-connection SQL transaction with finally rollback for the bulk test fixtures. Autocommit reproduced a30s timeout in per-row FK cleanup; no Prisma interactive timeout, production timeout, assertion or index change.
+- A21 exception approved after a real failed white-DB replay: historical downs retain enum labels. On owned chain DB only, restore the three retained enum boundaries (preserving defaults/checks/indexes), then redeploy and compare normalized schemas. Keep historical migrations immutable; no enum reconstruction on reused dev/integration DBs.
+
+- Full integration execution exception: owner approved narrow bot-reply-storage.int.spec.ts fixture population of valid indexed trigger/reply rows and post-rollback statistics restoration, retaining every index/Index Only Scan/no Seq Scan assertion and timeout.
+
+- Owner approved narrow bot-reply-worker.int.spec.ts fixture/control isolation and failure diagnostics, preserving real worker pipeline,5s deadline, all assertions and timeouts. Original standalone20/20 did not reproduce the full-sweep failure; inherited-paused fixture separately reproduced the identical poll failure.
+
+- Under the approved worker fixture exception, defer only processor bootstrap until test Redis/state reset; production bootstrap methods then start real workers. External reboot12:02 ended all prior HOLD PIDs; recorded interruption, never claim process continuity or stop reused PIDs.
+
+- Owner approved D44 unified exact-card registration-list journey on app/prototype, keeping drawer assertion/full-page capture/scroll. Native real-registration seed is not full; no production or DB-count fabrication.
+
+- Owner explicitly approved the extra narrow MSW regional membership snapshot + fresh-runtime regression correction ("ok sua di"), retaining existing E2E assertions and backend/business rules. New wire state is restricted to the six regional demo owners; older wire versions reconstruct only absent demo fixture membership, never overwrite explicit left/empty state or replay money effects.
+
+- Final814 outcome on ef7934ff: all10 commands sequential;8 functional gates PASS, both parity lanes complete/classified under D134. Q1 retains8 prototype viewport waivers only,6 D09/D17/D22 waivers resolved. Q5/A18 exact legacy helper20 native attempts not reproduced, definite missing response assertion corrected and final full lanes PASS. External reboot12:02 ended original HOLD; private final runtime/demo/AI restored, native data untouched. Paired-image review belongs to PR review; no auto-merge.
+# TIP-V46-815 — chốt kiểm AI live (07/11/2026)
+
+- Q-V46-815-1: owner nhập key trực tiếp trong Admin; builder chỉ dùng key đã mã hóa ở DB riêng, không nhận/đọc key qua chat, file hay env.
+- Q-V46-815-2: owner duyệt **4** lời gọi cho verify + bot ma trận + REQ-208 + UAT-14, thay giới hạn3 mâu thuẫn phạm vi; mỗi lời gọi tối đa256 token đầu ra, giữ ngân sách. Gọi lại sau sửa adapter phải hỏi riêng.
+- Q-V46-815-3: owner duyệt ngoại lệ khôi phục nguyên cấu hình AI và giữ provider cuối cùng, nhưng tắt bot tự động. API hiện cấm tắt mọi provider; không đổi backend hay vòng qua bằng SQL.
+- Q-V46-815-4: vẫn từ chối câu trả lời bị cắt; không chấp nhận nội dung rỗng hoặc chỉ phần suy luận.
+- Q-V46-815-5: owner duyệt DB dev `opchub_v46_812_dev`, test `opchub_v46_801_test`, Memurai6381 DB3/DB2 và rolling restart bộ riêng khi cần; giữ native DB/Redis6379.
+- Q-V46-815-6 (**đã duyệt**): thêm đúng `e2e/env.ts` để parse URL DB sẵn có bằng Zod, chặn đọc metadata ngoài DB riêng; không thêm biến cấu hình mới hay đọc key AI.
+- Q-V46-815-7 (**đã duyệt**): sửa hẹp REQ-208 trong `native-real-provider.spec.ts` từ Dashboard LIVE đã bỏ theo D-89 sang kiểm đúng bài tại chat c1, giữ assertion sinh/đăng/dừng; thêm đúng1 lời gọi tối đa256 token, tổng tối đa5. Topic fixture có nonce để không nhầm thread đã xong. Kết quả REQ-208/UAT-14 PASS; tổng thực tế5 lượt, lần vướng topic cũ0 lượt.
+
+## TIP-V46-816 — Web Push/PWA (owner chốt, thực hiện 08/11/2026)
+
+- Q816-1/2: làm đủ năm loại; bổ sung nhu cầu phù hợp, mốc sự kiện 1 giờ và tổng hợp lượt xem gian hàng.
+- Q816-3/4: tab Thông báo trong Hồ sơ; PWA tắt thì ẩn tab, từ chối đăng ký và ngừng đẩy, giữ đăng ký cũ.
+- Q816-5/6: thiết bị Admin ở tab Ứng dụng & thông báo, realm riêng; tối đa 10 thiết bị/người/realm.
+- Q816-7/8: tổng hợp chỉ lượt xem hôm qua, không bịa số liên hệ; store tắt thì không tạo cả thông báo trong app.
+- Owner duyệt dùng lại `opchub_v46_812_dev`, `opchub_v46_801_test`, Memurai6381 DB3/DB2;
+  rolling restart đúng bộ riêng 815→816. Không đổi DB native/Redis6379 hay HOLD gốc.
+- Owner duyệt `push_dispatches`/`push_deliveries` và repository notification để lưu notification,
+  intent và outbox nguyên tử; ledger theo từng notification/device thay cho mốc thành công chung.
+- Owner duyệt nối `notification.processor.ts` truyền ID outbox, `need.repository.ts` nhận transaction,
+  và API config trả thêm cờ loại Admin. Các module/hook/query được tách nhỏ theo standard.
+- Parity D-V46-APP có thêm khối **Thiết bị này** theo D-137; prototype chưa có. Đây là thay đổi
+  đã được TIP yêu cầu, không phải lỗi chức năng. D-134 giữ số đo pixel tham khảo và cặp ảnh để owner review.
+- Không sửa prototype, không mask/nới ngưỡng hay bỏ assertion parity. Real push/iOS cần owner
+  cấu hình VAPID và kiểm thủ công production; test tự động chỉ fake/HTTP loopback stub theo D-103.

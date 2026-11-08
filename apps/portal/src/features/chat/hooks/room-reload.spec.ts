@@ -1,9 +1,10 @@
-import { QueryClient, type InfiniteData } from '@tanstack/react-query';
-import { describe, expect, it } from 'vitest';
+import { QueryClient, QueryObserver, type InfiniteData } from '@tanstack/react-query';
+import { describe, expect, it, vi } from 'vitest';
 import { chatMessageSchema, type ChatMessagePage } from '@opchub/shared/api-domains';
 import { chatKeys } from '../api';
 import { upsertMessage } from './use-message-actions';
-import { reloadChatRoom } from './use-room-reload';
+import { reloadChatRoom, reloadMockChatRoom } from './use-room-reload';
+import { activateMockRoomClient } from './use-mock-room-reload';
 
 const message = (id: string, hiddenAt?: string) =>
   chatMessageSchema.parse({
@@ -30,6 +31,70 @@ const pages = (): InfiniteData<ChatMessagePage> => ({
 });
 
 describe('REQ-141 hidden message cache and room reload', () => {
+  it('A13 reactivates a restarted MSW client before reading and releases listeners on unmount', async () => {
+    const serviceWorker = new EventTarget();
+    const postMessage = vi.fn();
+    const controller = { postMessage } as unknown as ServiceWorker;
+    Object.assign(serviceWorker, { controller });
+    vi.stubGlobal('navigator', { serviceWorker });
+    const lifetime = new AbortController();
+    try {
+      let ready = false;
+      const activation = activateMockRoomClient(lifetime.signal).then(() => {
+        ready = true;
+      });
+      expect(postMessage).toHaveBeenCalledExactlyOnceWith('MOCK_ACTIVATE');
+      expect(ready).toBe(false);
+      serviceWorker.dispatchEvent(
+        new MessageEvent('message', {
+          source: controller,
+          data: { type: 'MOCKING_ENABLED' },
+        }),
+      );
+      await activation;
+      expect(ready).toBe(true);
+      const pending = activateMockRoomClient(lifetime.signal);
+      lifetime.abort();
+      await pending;
+    } finally {
+      lifetime.abort();
+      vi.unstubAllGlobals();
+    }
+  });
+  it('A13 stale empty reload does not replace newer list', async () => {
+    const qc = new QueryClient({
+      defaultOptions: { queries: { retry: false, staleTime: Infinity } },
+    });
+    const key = chatKeys.messages('room-a', '');
+    const latest = pages();
+    qc.setQueryData(key, latest);
+    let completeOld: (value: InfiniteData<ChatMessagePage>) => void = () => {
+      throw new Error('Old fetch not started');
+    };
+    let calls = 0;
+    const observer = new QueryObserver(qc, {
+      queryKey: key,
+      queryFn: () => {
+        calls += 1;
+        if (calls > 1) return Promise.resolve(latest);
+        return new Promise<InfiniteData<ChatMessagePage>>((resolve) => {
+          completeOld = resolve;
+        });
+      },
+    });
+    const unsubscribe = observer.subscribe(() => undefined);
+    try {
+      const old = qc.refetchQueries({ queryKey: key });
+      await reloadMockChatRoom(qc, 'room-a');
+      completeOld({ pages: [{ items: [], nextCursor: null }], pageParams: [null] });
+      await old;
+      expect(calls).toBe(2);
+      expect(qc.getQueryData(key)).toEqual(latest);
+    } finally {
+      unsubscribe();
+      qc.clear();
+    }
+  });
   it('REQ-141 hidden updates remove the row from every search/page variant without removing humans', () => {
     const qc = new QueryClient();
     qc.setQueryData(chatKeys.messages('room-a', ''), pages());

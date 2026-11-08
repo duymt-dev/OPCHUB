@@ -9,9 +9,25 @@ import {
   mockRegionalRevoke,
 } from './regional-directors';
 import { mockDb, resetMockDb } from './store';
+import { listMailLog } from './marketing';
+import { captureMockRegionalSnapshot, restoreMockRegionalSnapshot } from './regional-directors';
 
 describe('TIP-V46-801 regional mock parity', () => {
   beforeEach(resetMockDb);
+  it('B12 BR-464 preserves distinct lifecycle mail kinds across snapshot restore', () => {
+    expect(mockRegionalAppoint('south', 'm5', 'Admin').ok).toBe(true);
+    expect(mockRegionalRevoke('south', 'Admin').ok).toBe(true);
+    const snapshot = captureMockRegionalSnapshot();
+    // Use the actual selected member's address rather than an unrelated seed count.
+    const kinds = snapshot.mail.filter((row) => row.kind.startsWith('regional_director_'));
+    expect(kinds.filter((row) => row.kind === 'regional_director_appoint')).toHaveLength(1);
+    expect(kinds.filter((row) => row.kind === 'regional_director_revoke')).toHaveLength(2);
+    resetMockDb();
+    restoreMockRegionalSnapshot(snapshot);
+    expect(listMailLog().filter((row) => row.kind.startsWith('regional_director_'))).toEqual(
+      snapshot.mail,
+    );
+  });
   it('newly activated members are searchable and appointable, not only fixture IDs', () => {
     const now = Date.parse('2026-10-16T02:00:00Z');
     const email = 'new.regional@example.test';

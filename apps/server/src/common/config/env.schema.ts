@@ -45,17 +45,23 @@ export const envSchema = z.object({
   ADMIN_URL: z.string().url().default('http://localhost:3001'),
   /** Adapter (adapters.md): dev/test mặc định fake */
   MAIL_PROVIDER: z.enum(['fake', 'smtp', 'brevo']).default('fake'),
+  PUSH_PROVIDER: z.enum(['fake', 'webpush']).default('fake'),
+  VAPID_PUBLIC_KEY: z
+    .string()
+    .regex(/^[A-Za-z0-9_-]+$/)
+    .max(200)
+    .optional(),
+  VAPID_PRIVATE_KEY: z
+    .string()
+    .regex(/^[A-Za-z0-9_-]+$/)
+    .max(200)
+    .optional(),
+  VAPID_SUBJECT: z
+    .url()
+    .refine((v) => /^(mailto:|https:\/\/)/.test(v))
+    .optional(),
   /** Chỉ dev/e2e (TD-035): FakeMail ghi thư ra thư mục này — cấm ở production */
   FAKE_MAIL_DIR: z.string().optional(),
-  /** D-50: deterministic default; real-LLM E2E provider is enabled explicitly, never silently. */
-  BOT_LLM_PROVIDER: z.enum(['fake', 'local']).default('fake'),
-  LLM_LOCAL_BASE: z.string().url().optional(),
-  LLM_LOCAL_KEY: z.string().min(1).optional(),
-  LLM_LOCAL_MODELS: z.string().min(1).optional(),
-  /** Per-worker-process safety limits, not a provider billing/currency budget. */
-  LLM_LOCAL_MAX_REQUESTS: z.coerce.number().int().min(1).max(100).default(10),
-  LLM_LOCAL_MAX_TOKENS: z.coerce.number().int().min(16).max(1024).default(128),
-  LLM_LOCAL_TIMEOUT_MS: z.coerce.number().int().min(1000).max(120_000).default(60_000),
   /** D-51 / D-60: Dịch vụ thuộc go-live (popup V4) — cờ chỉ còn là công tắc khẩn cấp */
   FEATURE_SERVICES: bool.default(true),
   MAIL_FROM_NAME: z.string().default('OPC Hub'),
@@ -140,12 +146,6 @@ export function parseEnv(source: Record<string, string | undefined>): Env {
     const names = r.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`).join('; ');
     throw new Error(`Env không hợp lệ — ${names}`);
   }
-  if (r.data.BOT_LLM_PROVIDER === 'local') {
-    for (const key of ['LLM_LOCAL_BASE', 'LLM_LOCAL_KEY', 'LLM_LOCAL_MODELS'] as const) {
-      if (!r.data[key])
-        throw new Error(`Env không hợp lệ — ${key}: bắt buộc khi BOT_LLM_PROVIDER=local`);
-    }
-  }
   if (r.data.NODE_ENV === 'production' && r.data.OTP_FIXED_CODE) {
     throw new Error('Env không hợp lệ — OTP_FIXED_CODE: cấm dùng ở production');
   }
@@ -177,6 +177,18 @@ export function parseEnv(source: Record<string, string | undefined>): Env {
   }
   if (r.data.STORAGE_PROVIDER === 'local' && !r.data.LOCAL_STORAGE_DIR) {
     throw new Error('Env không hợp lệ — LOCAL_STORAGE_DIR: bắt buộc khi STORAGE_PROVIDER=local');
+  }
+  if (r.data.NODE_ENV === 'production' && r.data.PUSH_PROVIDER === 'fake') {
+    throw new Error('Env không hợp lệ — PUSH_PROVIDER: fake cấm dùng ở production');
+  }
+  if (
+    r.data.NODE_ENV === 'production' &&
+    r.data.PUSH_PROVIDER === 'webpush' &&
+    (!r.data.VAPID_PUBLIC_KEY || !r.data.VAPID_PRIVATE_KEY || !r.data.VAPID_SUBJECT)
+  ) {
+    throw new Error(
+      'Env không hợp lệ — VAPID_PUBLIC_KEY/VAPID_PRIVATE_KEY/VAPID_SUBJECT: bắt buộc',
+    );
   }
   return Object.freeze(r.data);
 }

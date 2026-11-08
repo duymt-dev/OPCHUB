@@ -20,8 +20,13 @@ export class ChatOverviewService {
   ) {}
 
   async overview(user: AccessClaims): Promise<ChatOverview> {
-    const { items } = await this.groups.page(user.sub, { page: 1, size: 100 });
-    const joined = items.filter((g) => g.myStatus === 'member').map((g) => g.id);
+    const [memberships, page] = await Promise.all([
+      this.groups.joined(user.sub),
+      this.groups.page(user.sub, { page: 1, size: 100 }),
+    ]);
+    const joined = memberships.map((g) => g.id);
+    const joinedIds = new Set(joined);
+    const items = [...memberships, ...page.items.filter((g) => !joinedIds.has(g.id))];
     const [rooms, owned] = await Promise.all([
       this.prisma.db.room.findMany({
         where: { groupId: { in: joined }, deletedAt: null },
@@ -51,8 +56,8 @@ export class ChatOverviewService {
       isOwner: ownedIds.includes(g.id),
     }));
     return {
-      joined: all.filter((g) => g.myStatus === 'member'),
-      others: all.filter((g) => g.myStatus !== 'member'),
+      joined: all.filter((g) => joinedIds.has(g.id)),
+      others: all.filter((g) => !joinedIds.has(g.id)),
     };
   }
 

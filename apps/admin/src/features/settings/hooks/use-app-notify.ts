@@ -25,8 +25,8 @@ export function useAppNotify() {
   const send = useSettingsMutation({
     key: appNotifyKey,
     fn: testAppNotify,
-    onDone: () => {
-      toast(t('sent'));
+    onDone: (result) => {
+      toast(result.deviceCount ? t('sentDevices', { n: result.deviceCount }) : t('noDevices'));
       void qc.invalidateQueries({ queryKey: ['notifications'] });
     },
   });

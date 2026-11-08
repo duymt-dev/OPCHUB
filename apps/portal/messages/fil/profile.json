@@ -155,5 +155,27 @@
     "loggedOut": "Na-sign out sa {n} ibang device",
     "left": "Umalis ka sa {name}",
     "failed": "Hindi maisagawa, pakisubukang muli"
+  },
+  "push": {
+    "device": "Device na ito",
+    "heading": "Device na ito",
+    "loading": "Sinusuri ang device…",
+    "unsupported": "Hindi suportado ang browser",
+    "ios": "Idagdag ang OPC Hub sa home screen upang makatanggap ng mga abiso",
+    "denied": "Hinarang sa browser",
+    "off": "Hindi pa naka-enable sa device na ito",
+    "on": "Naka-enable sa device na ito",
+    "enable": "I-enable ang mga abiso sa device na ito",
+    "disable": "I-disable sa device na ito",
+    "tab": "Mga abiso",
+    "kinds": "Mga uri ng push notification",
+    "msg": "Mga bagong mensahe sa grupo",
+    "need": "Mga pangangailangang tugma sa tindahan",
+    "renew": "Mga paalala sa pag-renew ng pagiging miyembro",
+    "event": "Mga paparating na kaganapan",
+    "store": "Mga pagtingin at pakikipag-ugnayan sa tindahan",
+    "adminOff": "Na-disable ng administrator ang uring ito",
+    "failed": "Hindi ma-update ang mga abiso",
+    "retry": "Subukang muli"
   }
 }

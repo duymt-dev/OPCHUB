@@ -23,7 +23,7 @@ test('REQ-208 actual LocalLlm worker publishes one automatic opening without man
   context,
 }) => {
   const prepared = await prepareRealParticipants(page);
-  const topic = 'P5: Gợi ý một cách sắp xếp công việc cá nhân. Trả lời thật ngắn.';
+  const topic = `P5 ${crypto.randomUUID()}: Gợi ý một cách sắp xếp công việc cá nhân. Trả lời thật ngắn.`;
   const topics = page.getByRole('textbox', {
     name: 'Chủ đề để AI tự sinh hội thoại (cách nhau bằng dấu phẩy)',
   });
@@ -60,9 +60,12 @@ test('REQ-208 actual LocalLlm worker publishes one automatic opening without man
   await member.locator('input[type=password]').fill('User@2026');
   await member.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await member.waitForURL(/\/dashboard$/);
-  const card = member.getByRole('article').filter({ hasText: body });
-  await expect(card).toHaveCount(1, { timeout: 20000 });
-  await expect(card.getByText(body, { exact: true })).toBeVisible();
+  // D-89 removed the Dashboard LIVE feed; published openings belong to the real group chat.
+  await member.goto(`${PORTAL_URL}/chat/c1`);
+  await expect
+    .poll(() => member.getByText(body, { exact: true }).count(), { timeout: 20000 })
+    .toBe(1);
+  expect(await member.getByText(body, { exact: true }).isVisible()).toBe(true);
   await test.info().attach('real-opening-receipt', {
     body: JSON.stringify({ kind: 'auto', bodyDigest: digest(body), characters: body.length }),
     contentType: 'application/json',

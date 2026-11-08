@@ -23,10 +23,19 @@ export class EventSchedulerService {
       await this.outbox.addMany(
         tx,
         'event.reminder_due',
-        ids.map((eventId) => ({ eventId })),
+        ids.map((eventId) => ({ eventId, window: '24h' as const })),
       );
       return ids;
     });
-    return { closed: closed.length, reminded: reminded.length };
+    const hourly = await this.prisma.db.$transaction(async (tx) => {
+      const ids = await this.repo.claimReminders1h(tx, now);
+      await this.outbox.addMany(
+        tx,
+        'event.reminder_due',
+        ids.map((eventId) => ({ eventId, window: '1h' as const })),
+      );
+      return ids;
+    });
+    return { closed: closed.length, reminded: reminded.length + hourly.length };
   }
 }

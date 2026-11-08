@@ -155,5 +155,27 @@
     "loggedOut": "Đã đăng xuất khỏi {n} thiết bị khác",
     "left": "Đã rời {name}",
     "failed": "Không thực hiện được, vui lòng thử lại"
+  },
+  "push": {
+    "device": "Thiết bị này",
+    "heading": "Thiết bị này",
+    "loading": "Đang kiểm tra thiết bị…",
+    "unsupported": "Trình duyệt không hỗ trợ",
+    "ios": "Thêm OPC Hub vào màn hình chính để nhận thông báo",
+    "denied": "Đã chặn trong trình duyệt",
+    "off": "Chưa bật trên thiết bị này",
+    "on": "Đang bật trên thiết bị này",
+    "enable": "Bật thông báo trên thiết bị này",
+    "disable": "Tắt trên thiết bị này",
+    "tab": "Thông báo",
+    "kinds": "Loại thông báo đẩy",
+    "msg": "Tin nhắn mới trong nhóm",
+    "need": "Nhu cầu phù hợp với gian hàng",
+    "renew": "Nhắc gia hạn gói",
+    "event": "Sự kiện sắp diễn ra",
+    "store": "Lượt xem & liên hệ gian hàng",
+    "adminOff": "Quản trị đã tắt loại này",
+    "failed": "Không thể cập nhật thông báo",
+    "retry": "Thử lại"
   }
 }

@@ -3,10 +3,9 @@ import { AiProviderRepository } from '@/modules/llm-config/repositories/ai-provi
 import { AiBudgetService, AiRouterService } from '@/modules/llm-config';
 import type { LlmProvider } from '@opchub/integrations';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { ENV, loadEnv } from '@/common/config';
 import { SecretBox } from '@/common/crypto/secret-box';
 import { LLM } from '@/common/integrations';
-import { LlmConfigCache, LlmRuntimeService } from '@/modules/llm-config';
+import { AiConfigCache, LlmRuntimeService } from '@/modules/llm-config';
 import { tokenOf } from '../factories/group.factory';
 import { createUser } from '../factories/user.factory';
 import { llmHttpStub } from '../helpers/llm-http-stub';
@@ -39,16 +38,14 @@ describe('REQ-607 ADR-0008 runtime follows committed Admin configuration', () =>
     });
   beforeAll(async () => {
     stub = await llmHttpStub();
-    t = await createTestApp({
-      overrides: [[ENV, { ...loadEnv(), NODE_ENV: 'development', BOT_LLM_PROVIDER: 'fake' }]],
-    });
+    t = await createTestApp();
     snapshot = await snapshotAi(t);
     await t.prisma.db.llmProvider.updateMany({ data: { enabled: false } });
     await t.redis.client.del('llm:requests:minute');
     token = await tokenOf(t, await createUser(t, { adminPermissions: ['settings.general'] }));
     runtime = t.app.get<LlmProvider>(LLM);
     // Independent process-style cache intentionally has no pub/sub subscription.
-    const cache = new LlmConfigCache(
+    const cache = new AiConfigCache(
       t.prisma,
       t.app.get(SecretBox),
       t.redis,

@@ -46,7 +46,7 @@ describe('Chat REST (TIP-B23)', () => {
     await flushAuthState(t);
   });
   afterEach(async () => {
-    // Isolate this case without deleting other suites' groups or changing the100-row API.
+    // Isolate case groups; TIP813 now loads joined memberships separately from the100-row others page.
     await t.prisma.db.group.deleteMany({ where: { id: { in: caseGroupIds } } });
     caseGroupIds.length = 0;
   });

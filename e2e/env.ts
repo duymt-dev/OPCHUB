@@ -38,6 +38,8 @@ const schema = z.object({
   AUDIT_OTP: z.string().default(''),
   /** walk-recheck.audit: danh sách id màn parity, phân tách bằng dấu phẩy */
   WALK_IDS: z.string().default(''),
+  /** Existing DB connection, used only by explicitly selected live metadata checks. */
+  DIRECT_URL: z.url().optional(),
 });
 
 export const env = schema.parse({
@@ -62,4 +64,18 @@ export const env = schema.parse({
   AUDIT_PSQL: process.env.AUDIT_PSQL || undefined,
   AUDIT_OTP: process.env.AUDIT_OTP,
   WALK_IDS: process.env.WALK_IDS,
+  DIRECT_URL: process.env.DIRECT_URL || undefined,
 });
+
+/** Fail closed before any billable call; ordinary E2E does not invoke this guard. */
+export function liveDatabaseUrl(): URL {
+  if (!env.DIRECT_URL) throw new Error('Live metadata requires a private DB connection');
+  const url = new URL(env.DIRECT_URL);
+  if (
+    !['localhost', '127.0.0.1'].includes(url.hostname) ||
+    url.pathname !== '/opchub_v46_812_dev'
+  ) {
+    throw new Error('Live metadata requires the approved private development database');
+  }
+  return url;
+}

@@ -86,6 +86,12 @@ function adminRoutes(): AdminRoute[] {
 }
 
 const ROUTES = adminRoutes();
+// A4 owner-approved exception: only these three writes use the regional denial copy.
+const REGIONAL_WRITES = new Set([
+  'POST /v1/admin/gdv',
+  'DELETE /v1/admin/gdv/:region',
+  'PATCH /v1/admin/gdv/:region',
+]);
 const ROLES = ADMIN_SYSTEM_ROLES.map((r) => ({
   ...r,
   grants: effectiveAdminGrants(
@@ -180,7 +186,11 @@ describe('Ma trận quyền route /admin × vai trò (TIP-V2-203, REQ-325, RB-R0
         expect(r.status).toBe(403);
         const err = apiErrorSchema.parse(await r.json()).error;
         expect(err.code).toBe(want);
-        if (want === 'VIEW_ONLY') {
+        if (REGIONAL_WRITES.has(`${route.method} ${route.path}`)) {
+          expect(err.message).toBe(
+            `Vai trò ${role.name} không có quyền bổ nhiệm / thu hồi GĐ Vùng`,
+          );
+        } else if (want === 'VIEW_ONLY') {
           expect(err.message).toBe(`Vai trò ${role.name} chỉ có quyền xem mục này`);
         }
       });

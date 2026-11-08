@@ -1,4 +1,6 @@
 import { Module } from '@nestjs/common';
+import { PushProcessor } from './processors/push.processor';
+import { NeedNotifyProcessor } from './processors/need-notify.processor';
 import { RegionalDirectorCoreModule } from '@/modules/regional-director';
 import { RegionalDirectorProcessor } from './processors/regional-director.processor';
 import { CoreModule } from '@/common/core.module';
@@ -76,6 +78,8 @@ import { OnboardingProcessor } from './processors/onboarding.processor';
     FundraisingPaymentModule,
   ],
   providers: [
+    PushProcessor,
+    NeedNotifyProcessor,
     RegionalDirectorProcessor,
     OutboxRelayProcessor,
     MailProcessor,

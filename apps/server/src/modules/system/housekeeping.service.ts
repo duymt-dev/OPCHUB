@@ -1,4 +1,5 @@
 import { AiCallRepository } from '@/modules/llm-config';
+import { PushSubscriptionRepository } from '@/modules/notification';
 import { Injectable, Logger } from '@nestjs/common';
 import { RefreshTokenRepository } from '@/modules/account';
 import { AdminRefreshTokenRepository } from '@/modules/admin-account';
@@ -10,7 +11,7 @@ import { MediaGcService } from '@/modules/uploads';
 const TOKEN_KEEP_MS = 7 * 86_400_000;
 
 export type HousekeepingStep =
-  'tokens' | 'adminTokens' | 'exports' | 'simulated' | 'media' | 'aiCalls';
+  'tokens' | 'adminTokens' | 'exports' | 'simulated' | 'media' | 'aiCalls' | 'pushSubscriptions';
 export type HousekeepingReport = Partial<Record<HousekeepingStep, number>>;
 
 /**
@@ -29,6 +30,7 @@ export class HousekeepingService {
     private readonly personas: PersonaMessageService,
     private readonly media: MediaGcService,
     private readonly aiCalls: AiCallRepository,
+    private readonly push: PushSubscriptionRepository,
   ) {}
 
   async run(now = new Date()): Promise<HousekeepingReport> {
@@ -40,6 +42,7 @@ export class HousekeepingService {
       ['simulated', () => this.personas.pruneSimulated()],
       ['media', () => this.media.sweep(now)],
       ['aiCalls', () => this.aiCalls.purge(now)],
+      ['pushSubscriptions', () => this.push.purge(now)],
     ];
     const report: HousekeepingReport = {};
     const failed: HousekeepingStep[] = [];

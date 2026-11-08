@@ -1,8 +1,19 @@
 import { describe, expect, it } from 'vitest';
 import { parseEnv } from './env.schema';
+import { createECDH } from 'node:crypto';
+
+const ec = createECDH('prime256v1');
+ec.generateKeys();
+const webPush = {
+  PUSH_PROVIDER: 'webpush',
+  VAPID_PUBLIC_KEY: ec.getPublicKey().toString('base64url'),
+  VAPID_PRIVATE_KEY: ec.getPrivateKey().toString('base64url'),
+  VAPID_SUBJECT: 'mailto:test@opchub.invalid',
+};
 
 /** D-64: production bắt buộc Google SSO thật */
 const googleSso = {
+  ...webPush,
   SSO_PROVIDER: 'google',
   GOOGLE_CLIENT_ID: 'id.apps.googleusercontent.com',
   GOOGLE_CLIENT_SECRET: 'google-secret-value',
@@ -16,6 +27,21 @@ const ok = {
 };
 
 describe('parseEnv', () => {
+  it('D-137 production rejects fake or missing VAPID; dev unconfigured remains optional', () => {
+    const prod = {
+      ...ok,
+      ...googleSso,
+      NODE_ENV: 'production',
+      UNSUBSCRIBE_SECRET: 'u'.repeat(32),
+    };
+    expect(() => parseEnv({ ...prod, PUSH_PROVIDER: 'fake' })).toThrow(/PUSH_PROVIDER/);
+    expect(() => parseEnv({ ...prod, VAPID_PRIVATE_KEY: '' })).toThrow(/VAPID/);
+    expect(() => parseEnv({ ...ok, VAPID_SUBJECT: 'http://unsafe.invalid' })).toThrow(
+      /VAPID_SUBJECT/,
+    );
+    expect(parseEnv(prod).PUSH_PROVIDER).toBe('webpush');
+    expect(parseEnv(ok).PUSH_PROVIDER).toBe('fake');
+  });
   it('báo tên biến thiếu, không in giá trị', () => {
     expect(() => parseEnv({ DATABASE_URL: undefined })).toThrow(/DATABASE_URL/);
   });

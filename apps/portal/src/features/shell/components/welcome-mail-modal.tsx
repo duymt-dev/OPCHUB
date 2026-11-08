@@ -49,6 +49,7 @@ export function WelcomeMailModal({ mail, name, onClose }: Props) {
           <div className={styles.paper}>
             <div className={styles.mail}>
               <div className={styles.brand}>
+                {/* eslint-disable-next-line @next/next/no-img-element -- Mail preview renders the same local logo asset as the email template. */}
                 <img src="/opchub-logo.png" alt="OPC Hub" />
                 <span>opchub.community</span>
               </div>

@@ -152,15 +152,21 @@ export class PermissionGuard implements CanActivate {
     const user = reqOf(ctx).user;
     if (!user) throw unauthorized();
     const can = await this.perms.checker(user);
-    if (any.length && !any.some(can)) throw forbidden();
+    const deniedMessage = meta<(roleName: string) => string>(
+      this.reflector,
+      META.adminDeniedMessage,
+      ctx,
+    );
+    const message = deniedMessage?.(user.roleName ?? 'hiện tại');
+    if (any.length && !any.some(can)) throw forbidden(message);
     // Luật 4: chỉ kiểm permission key, không so tên vai trò
     const missing = keys.find((k) => !can(k));
     if (!missing) return true;
     const view = viewKeyOf(missing);
     if (view && can(view)) {
-      throw new AppError('VIEW_ONLY', viewOnlyMessage(user.roleName ?? 'hiện tại'));
+      throw new AppError('VIEW_ONLY', message ?? viewOnlyMessage(user.roleName ?? 'hiện tại'));
     }
-    throw forbidden();
+    throw forbidden(message);
   }
 }
 

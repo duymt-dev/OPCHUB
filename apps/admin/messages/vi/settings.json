@@ -559,6 +559,20 @@
     "storeSub": "Tổng hợp hằng ngày",
     "loading": "Đang tải…",
     "failed": "Không thể tải cấu hình ứng dụng",
-    "retry": "Thử lại"
+    "retry": "Thử lại",
+    "device": {
+      "device": "Thiết bị này",
+      "heading": "Thiết bị này",
+      "loading": "Đang kiểm tra thiết bị…",
+      "unsupported": "Trình duyệt không hỗ trợ",
+      "ios": "Thêm OPC Hub vào màn hình chính để nhận thông báo",
+      "denied": "Đã chặn trong trình duyệt",
+      "off": "Chưa bật trên thiết bị này",
+      "on": "Đang bật trên thiết bị này",
+      "enable": "Bật thông báo trên thiết bị này",
+      "disable": "Tắt trên thiết bị này"
+    },
+    "sentDevices": "Đã gửi tới {n} thiết bị",
+    "noDevices": "Chưa có thiết bị nào bật thông báo"
   }
 }

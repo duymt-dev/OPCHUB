@@ -35,7 +35,9 @@ for (const width of [1440, 390]) {
     await page.reload();
     await expect(pwa).not.toBeChecked();
     await page.getByRole('button', { name: 'Gửi thông báo thử', exact: true }).click();
-    await expect(page.getByText('Đã gửi thông báo đẩy thử', { exact: true })).toBeVisible();
+    await expect(
+      page.getByText('Chưa có thiết bị nào bật thông báo', { exact: true }),
+    ).toBeVisible();
     await page
       .getByRole('button', { name: /Thông báo/ })
       .first()

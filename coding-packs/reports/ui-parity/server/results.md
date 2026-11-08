@@ -1,12 +1,14 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 319/428 ảnh.
+> Đạt ngưỡng pixel 318/430 ảnh.
+> TIP-V46-816: chỉ 6 ảnh mới của P-89/P-93/D-V46-APP ở lane này. D-V46-APP được phân loại D-137 (khối Thiết bị này) + B16 đã để sau + dữ liệu; không phải lỗi chức năng theo D-134. CLI pixel vẫn exit 1, số đo/ảnh/assertion không đổi. Xem [báo cáo 816](../../TIP-V46-816-parity.md).
+
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
-| A-01 | Đăng nhập | 1440 | 0.10% | ✅ đạt | 1440×900 | 055d862a |
-| A-01 | Đăng nhập | 390 | 0.14% | ✅ đạt | 390×1747 | 055d862a |
+| A-01 | Đăng nhập | 1440 | 0.10% | ✅ đạt | 1440×900 | ef7934ff |
+| A-01 | Đăng nhập | 390 | 0.14% | ✅ đạt | 390×1747 | ef7934ff |
 | A-02 | Đăng nhập · bỏ trống | 1440 | 0.19% | ✅ đạt | 1440×944 | 25a1eec |
 | A-02 | Đăng nhập · bỏ trống | 390 | 0.50% | ✅ đạt | 390×996 | 25a1eec |
 | A-03 | Đăng nhập · sai thông tin | 1440 | 0.15% | ✅ đạt | 1440×944 | 25a1eec |
@@ -49,8 +51,8 @@
 | A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 390 | 0.20% | ✅ đạt | 390×2130 | f821b0e |
 | A-32 | Đăng ký · mã giới thiệu không tồn tại | 1440 | 0.09% | ✅ đạt | 1440×1769 | f821b0e |
 | A-32 | Đăng ký · mã giới thiệu không tồn tại | 390 | 0.17% | ✅ đạt | 390×2130 | f821b0e |
-| P-01 | Dashboard | 1440 | 1.01% | ✅ đạt | 1440×1113 | 055d862a |
-| P-01 | Dashboard | 390 | 2.97% | ✅ đạt | 390×1721 | 055d862a |
+| P-01 | Dashboard | 1440 | 1.01% | ✅ đạt | 1440×1113 | ef7934ff |
+| P-01 | Dashboard | 390 | 2.97% | ✅ đạt | 390×1721 | ef7934ff |
 | P-05 | Modal mail chào mừng | 1440 | 4.72% | ❌ chưa đạt | 1440×900 | 25a1eec |
 | P-05 | Modal mail chào mừng | 390 | 4.47% | ❌ chưa đạt | 390×844 | 25a1eec |
 | P-07 | Thông báo | 1440 | 2.76% | ✅ đạt | 1440×900 | 25a1eec |
@@ -61,18 +63,18 @@
 | P-09 | Thông báo · trống | 390 | 0.66% | ✅ đạt | 390×844 | 25a1eec |
 | P-10 | Thông báo · mở nhắc tên | 1440 | 0.78% | ✅ đạt | 1440×900 | 25a1eec |
 | P-10 | Thông báo · mở nhắc tên | 390 | 0.41% | ✅ đạt | 390×844 | 25a1eec |
-| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 1440 | 2.68% | ✅ đạt | 1440×900 | 055d862a |
-| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 390 | 0.37% | ✅ đạt | 390×844 | 055d862a |
-| P-108-PROJECT-FORM | Gian hàng của tôi · form đăng dự án điền sẵn | 1440 | 0.56% | ✅ đạt | 1440×900 | 055d862a |
-| P-108-PROJECT-FORM | Gian hàng của tôi · form đăng dự án điền sẵn | 390 | 2.43% | ✅ đạt | 390×844 | 055d862a |
-| P-108-PROJECTS | Gian hàng của tôi · khối Dự án OPC | 1440 | 0.00% | ✅ đạt | 1136×202 | 055d862a |
-| P-108-PROJECTS | Gian hàng của tôi · khối Dự án OPC | 390 | 0.30% | ✅ đạt | 366×202 | 055d862a |
-| P-109 | Gian hàng của tôi · dashboard số thật (lời chào) | 1440 | 0.00% | ✅ đạt | 640×147 | 055d862a |
-| P-109 | Gian hàng của tôi · dashboard số thật (lời chào) | 390 | 0.00% | ✅ đạt | 366×171 | 055d862a |
+| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 1440 | 2.68% | ✅ đạt | 1440×900 | ef7934ff |
+| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 390 | 0.37% | ✅ đạt | 390×844 | ef7934ff |
+| P-108-PROJECT-FORM | Gian hàng của tôi · form đăng dự án điền sẵn | 1440 | 0.56% | ✅ đạt | 1440×900 | ef7934ff |
+| P-108-PROJECT-FORM | Gian hàng của tôi · form đăng dự án điền sẵn | 390 | 2.43% | ✅ đạt | 390×844 | ef7934ff |
+| P-108-PROJECTS | Gian hàng của tôi · khối Dự án OPC | 1440 | 0.00% | ✅ đạt | 1136×202 | ef7934ff |
+| P-108-PROJECTS | Gian hàng của tôi · khối Dự án OPC | 390 | 0.30% | ✅ đạt | 366×202 | ef7934ff |
+| P-109 | Gian hàng của tôi · dashboard số thật (lời chào) | 1440 | 0.00% | ✅ đạt | 640×147 | ef7934ff |
+| P-109 | Gian hàng của tôi · dashboard số thật (lời chào) | 390 | 0.00% | ✅ đạt | 366×171 | ef7934ff |
 | P-11 | Topbar · ngôn ngữ | 1440 | 0.12% | ✅ đạt | 1440×900 | 8f01249a |
 | P-11 | Topbar · ngôn ngữ | 390 | 0.11% | ✅ đạt | 390×844 | 8f01249a |
-| P-119 | Dashboard · Hướng dẫn bắt đầu (M1 đã phí) | 1440 | 1.01% | ✅ đạt | 1440×1113 | 055d862a |
-| P-119 | Dashboard · Hướng dẫn bắt đầu (M1 đã phí) | 390 | 2.97% | ✅ đạt | 390×1721 | 055d862a |
+| P-119 | Dashboard · Hướng dẫn bắt đầu (M1 đã phí) | 1440 | 1.01% | ✅ đạt | 1440×1113 | ef7934ff |
+| P-119 | Dashboard · Hướng dẫn bắt đầu (M1 đã phí) | 390 | 2.97% | ✅ đạt | 390×1721 | ef7934ff |
 | P-12 | Topbar · menu người dùng | 1440 | 0.12% | ✅ đạt | 1440×900 | 8f01249a |
 | P-12 | Topbar · menu người dùng | 390 | 0.11% | ✅ đạt | 390×844 | 8f01249a |
 | P-13 | Sidebar thu gọn | 1440 | 31.70% | ❌ chưa đạt | 1440×1928 | 25a1eec |
@@ -96,13 +98,13 @@
 | P-26 | Cộng đồng · đã tham gia nhóm công khai | 390 | 1.01% | ✅ đạt | 390×4171 | 25a1eec |
 | P-27 | Cộng đồng · rời nhóm | 1440 | 0.78% | ✅ đạt | 1440×1601 | 25a1eec |
 | P-27 | Cộng đồng · rời nhóm | 390 | 1.04% | ✅ đạt | 390×4171 | 25a1eec |
-| P-28 | Chat · phòng mặc định | 1440 | 0.58% | ✅ đạt | 1440×900 | 25a1eec |
-| P-28 | Chat · phòng mặc định | 390 | 1.12% | ✅ đạt | 390×844 | 25a1eec |
+| P-28 | Chat · phòng mặc định | 1440 | 0.71% | ✅ đạt | 1440×900 | 14aff77a |
+| P-28 | Chat · phòng mặc định | 390 | 1.57% | ✅ đạt | 390×844 | 14aff77a |
 | P-29 | Chat · đổi chủ đề | 1440 | 0.20% | ✅ đạt | 1440×900 | 25a1eec |
-| P-30 | Chat · đổi nhóm | 1440 | 0.20% | ✅ đạt | 1440×900 | 25a1eec |
-| P-30 | Chat · đổi nhóm | 390 | 0.55% | ✅ đạt | 390×844 | 25a1eec |
-| P-34 | Chat · đã gửi tin | 1440 | 0.88% | ✅ đạt | 1440×900 | 25a1eec |
-| P-34 | Chat · đã gửi tin | 390 | 2.46% | ✅ đạt | 390×844 | 25a1eec |
+| P-30 | Chat · đổi nhóm | 1440 | 0.31% | ✅ đạt | 1440×900 | ef7934ff |
+| P-30 | Chat · đổi nhóm | 390 | 0.90% | ✅ đạt | 390×844 | ef7934ff |
+| P-34 | Chat · đã gửi tin | 1440 | 1.01% | ✅ đạt | 1440×900 | ef7934ff |
+| P-34 | Chat · đã gửi tin | 390 | 2.79% | ✅ đạt | 390×844 | ef7934ff |
 | P-35 | Chat · gợi ý nhắc tên | 1440 | 0.48% | ✅ đạt | 1440×900 | 25a1eec |
 | P-35 | Chat · gợi ý nhắc tên | 390 | 1.71% | ✅ đạt | 390×844 | 25a1eec |
 | P-36 | Chat · chọn tin | 1440 | 0.58% | ✅ đạt | 1440×900 | 25a1eec |
@@ -143,6 +145,8 @@
 | P-55 | Dự án · khám phá | 390 | 0.13% | ✅ đạt | 390×3997 | 25a1eec |
 | P-56 | Dự án · dạng bảng | 1440 | 0.16% | ✅ đạt | 1440×1347 | 25a1eec |
 | P-56 | Dự án · dạng bảng | 390 | 0.20% | ✅ đạt | 525×3432 | 25a1eec |
+| P-56-RENEWED | Dự án · dạng bảng · sau khi Admin ghi nhận phí chủ p4 | 1440 | 1.90% | ✅ đạt | 1440×2102 | ef7934ff |
+| P-56-RENEWED | Dự án · dạng bảng · sau khi Admin ghi nhận phí chủ p4 | 390 | 2.41% | ✅ đạt | 587×5402 | ef7934ff |
 | P-57 | Dự án · lọc giai đoạn + sắp xếp | 1440 | 0.17% | ✅ đạt | 1440×1253 | 25a1eec |
 | P-57 | Dự án · lọc giai đoạn + sắp xếp | 390 | 0.17% | ✅ đạt | 390×3020 | 25a1eec |
 | P-58 | Dự án · trống | 1440 | 0.10% | ✅ đạt | 1440×1081 | 25a1eec |
@@ -194,84 +198,84 @@
 | P-85 | Chuyển khoản · đã sao chép | 390 | 2.01% | ✅ đạt | 390×844 | 25a1eec |
 | P-86 | Chuyển khoản · đang đối soát | 1440 | 1.54% | ✅ đạt | 1440×900 | 25a1eec |
 | P-86 | Chuyển khoản · đang đối soát | 390 | 0.00% | ✅ đạt | 390×844 | 25a1eec |
-| P-89 | Hồ sơ · thông tin cá nhân | 1440 | 0.17% | ✅ đạt | 1440×900 | 25a1eec |
-| P-89 | Hồ sơ · thông tin cá nhân | 390 | 0.18% | ✅ đạt | 390×1618 | 25a1eec |
+| P-89 | Hồ sơ · thông tin cá nhân | 1440 | 2.07% | ✅ đạt | 1440×900 | 584742ea |
+| P-89 | Hồ sơ · thông tin cá nhân | 390 | 0.37% | ✅ đạt | 390×1652 | 584742ea |
 | P-90 | Hồ sơ · báo thiếu họ tên | 1440 | 0.17% | ✅ đạt | 1440×900 | 25a1eec |
 | P-90 | Hồ sơ · báo thiếu họ tên | 390 | 0.18% | ✅ đạt | 390×1618 | 25a1eec |
 | P-91 | Hồ sơ · thông tin doanh nghiệp | 1440 | 0.80% | ✅ đạt | 1440×900 | 25a1eec |
 | P-91 | Hồ sơ · thông tin doanh nghiệp | 390 | 1.81% | ✅ đạt | 390×1468 | 25a1eec |
 | P-92 | Hồ sơ · nhóm & hoạt động | 1440 | 0.10% | ✅ đạt | 1440×900 | 25a1eec |
 | P-92 | Hồ sơ · nhóm & hoạt động | 390 | 0.16% | ✅ đạt | 390×1402 | 25a1eec |
-| P-93 | Hồ sơ · bảo mật | 1440 | 0.21% | ✅ đạt | 1440×1112 | 25a1eec |
-| P-93 | Hồ sơ · bảo mật | 390 | 0.42% | ✅ đạt | 390×1798 | 25a1eec |
+| P-93 | Hồ sơ · bảo mật | 1440 | 1.84% | ✅ đạt | 1440×900 | 584742ea |
+| P-93 | Hồ sơ · bảo mật | 390 | 0.37% | ✅ đạt | 390×1532 | 584742ea |
 | P-94 | Đổi mật khẩu · báo thiếu | 1440 | 0.20% | ✅ đạt | 1440×1112 | 25a1eec |
 | P-94 | Đổi mật khẩu · báo thiếu | 390 | 0.52% | ✅ đạt | 390×1798 | 25a1eec |
 | P-96 | Chi tiết sự kiện · đã đăng ký (link Meet) | 1440 | 0.11% | ✅ đạt | 1440×900 | 25a1eec |
 | P-96 | Chi tiết sự kiện · đã đăng ký (link Meet) | 390 | 0.00% | ✅ đạt | 390×844 | 25a1eec |
-| P-97 | Portal · Affiliate | 1440 | 4.24% | ❌ chưa đạt | 1440×1070 | 055d862a |
-| P-97 | Portal · Affiliate | 390 | 4.15% | ❌ chưa đạt | 390×1909 | 055d862a |
-| P-98 | Portal · Affiliate · Lịch sử nhận tiền | 1440 | 1.22% | ✅ đạt | 1440×900 | 055d862a |
-| P-98 | Portal · Affiliate · Lịch sử nhận tiền | 390 | 7.70% | ❌ chưa đạt | 390×1632 | 055d862a |
-| P-V46-PUBLIC-CARD | Trang công khai · khối trong trình sửa | 1440 | 1.57% | ✅ đạt | 1136×250 | 055d862a |
-| P-V46-PUBLIC-CARD | Trang công khai · khối trong trình sửa | 390 | 2.50% | ✅ đạt | 366×396 | 055d862a |
-| P-V46-REG | Portal · Vùng của tôi | 1440 | 5.74% | ❌ chưa đạt | 1440×1944 | 055d862a |
-| P-V46-REG | Portal · Vùng của tôi | 390 | 10.47% | ❌ chưa đạt | 390×3353 | 055d862a |
-| P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 1440 | 1.27% | ✅ đạt | 1440×997 | 055d862a |
-| P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 390 | 2.12% | ✅ đạt | 390×1635 | 055d862a |
-| P-V46-SEARCH | Topbar · global search | 1440 | 0.74% | ✅ đạt | 1440×900 | 055d862a |
-| P-V46-SEARCH | Topbar · global search | 390 | 0.11% | ✅ đạt | 390×844 | 055d862a |
-| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 2.45% | ✅ đạt | 1440×1344 | 055d862a |
-| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 2.31% | ✅ đạt | 390×2279 | 055d862a |
-| D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.44% | ✅ đạt | 1440×900 | 055d862a |
-| D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 0.30% | ✅ đạt | 390×844 | 055d862a |
+| P-97 | Portal · Affiliate | 1440 | 4.24% | ❌ chưa đạt | 1440×1070 | ef7934ff |
+| P-97 | Portal · Affiliate | 390 | 4.15% | ❌ chưa đạt | 390×1909 | ef7934ff |
+| P-98 | Portal · Affiliate · Lịch sử nhận tiền | 1440 | 1.27% | ✅ đạt | 1440×900 | ef7934ff |
+| P-98 | Portal · Affiliate · Lịch sử nhận tiền | 390 | 3.86% | ❌ chưa đạt | 390×1632 | ef7934ff |
+| P-V46-PUBLIC-CARD | Trang công khai · khối trong trình sửa | 1440 | 1.57% | ✅ đạt | 1136×250 | ef7934ff |
+| P-V46-PUBLIC-CARD | Trang công khai · khối trong trình sửa | 390 | 2.50% | ✅ đạt | 366×396 | ef7934ff |
+| P-V46-REG | Portal · Vùng của tôi | 1440 | 5.74% | ❌ chưa đạt | 1440×1944 | ef7934ff |
+| P-V46-REG | Portal · Vùng của tôi | 390 | 10.47% | ❌ chưa đạt | 390×3353 | ef7934ff |
+| P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 1440 | 1.27% | ✅ đạt | 1440×997 | ef7934ff |
+| P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 390 | 2.12% | ✅ đạt | 390×1635 | ef7934ff |
+| P-V46-SEARCH | Topbar · global search | 1440 | 0.74% | ✅ đạt | 1440×900 | ef7934ff |
+| P-V46-SEARCH | Topbar · global search | 390 | 0.11% | ✅ đạt | 390×844 | ef7934ff |
+| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 2.45% | ✅ đạt | 1440×1344 | ef7934ff |
+| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 2.32% | ✅ đạt | 390×2279 | ef7934ff |
+| D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.44% | ✅ đạt | 1440×900 | ef7934ff |
+| D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 0.30% | ✅ đạt | 390×844 | ef7934ff |
 | D-03 | Admin · Hồ sơ cá nhân (không đổi màn) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.34% | ✅ đạt | 1440×900 | 25a1eec |
 | D-03 | Admin · Hồ sơ cá nhân (không đổi màn) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 2.09% | ✅ đạt | 390×1281 | 25a1eec |
 | D-04 | Admin · thông báo (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.56% | ✅ đạt | 1440×900 | 25a1eec |
 | D-04 | Admin · thông báo (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 0.38% | ✅ đạt | 390×844 | 25a1eec |
 | D-05 | Admin · sidebar thu gọn (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.28% | ✅ đạt | 1440×900 | 25a1eec |
 | D-06 | Admin · drawer điều hướng | 390 | 0.38% | ✅ đạt | 390×844 | 25a1eec |
-| D-07 | Thành viên · danh sách | 1440 | 0.23% | ✅ đạt | 1440×1267 | 055d862a |
-| D-07 | Thành viên · danh sách | 390 | 0.19% | ✅ đạt | 390×3383 | 055d862a |
+| D-07 | Thành viên · danh sách | 1440 | 0.23% | ✅ đạt | 1440×1267 | ef7934ff |
+| D-07 | Thành viên · danh sách | 390 | 0.19% | ✅ đạt | 390×3383 | ef7934ff |
 | D-08 | Thành viên · lưới | 1440 | 3.11% | ❌ chưa đạt | 1440×1063 | 25a1eec |
 | D-08 | Thành viên · lưới | 390 | 2.95% | ✅ đạt | 390×3170 | 25a1eec |
-| D-09 | Thành viên · lọc Doanh nghiệp | 1440 | 0.93% | ✅ đạt | 1440×900 | 25a1eec |
-| D-09 | Thành viên · lọc Doanh nghiệp | 390 | 2.48% | ✅ đạt | 390×1754 | 25a1eec |
+| D-09 | Thành viên · lọc Doanh nghiệp | 1440 | 0.26% | ✅ đạt | 1440×971 | ef7934ff |
+| D-09 | Thành viên · lọc Doanh nghiệp | 390 | 0.22% | ✅ đạt | 390×2327 | ef7934ff |
 | D-10 | Thành viên · chọn nhiều | 1440 | 1.63% | ✅ đạt | 1440×1091 | 25a1eec |
 | D-10 | Thành viên · chọn nhiều | 390 | 3.40% | ❌ chưa đạt | 390×2943 | 25a1eec |
-| D-100 | Cài đặt · Cấu hình bảng giá | 1440 | 11.23% | ❌ chưa đạt | 1440×1065 | 055d862a |
-| D-100 | Cài đặt · Cấu hình bảng giá | 390 | 0.07% | ✅ đạt | 390×2061 | 055d862a |
+| D-100 | Cài đặt · Cấu hình bảng giá | 1440 | 11.22% | ❌ chưa đạt | 1440×1065 | ef7934ff |
+| D-100 | Cài đặt · Cấu hình bảng giá | 390 | 0.07% | ✅ đạt | 390×2061 | ef7934ff |
 | D-11 | Thành viên · khóa hàng loạt | 1440 | 1.74% | ✅ đạt | 1440×1027 | 25a1eec |
 | D-11 | Thành viên · khóa hàng loạt | 390 | 3.17% | ❌ chưa đạt | 390×2810 | 25a1eec |
 | D-12 | Modal gán vào nhóm | 1440 | 0.98% | ✅ đạt | 1440×900 | 25a1eec |
 | D-12 | Modal gán vào nhóm | 390 | 0.71% | ✅ đạt | 390×844 | 25a1eec |
-| D-120-GCFG | Cấu hình Giám đốc Vùng | 1440 | 2.51% | ✅ đạt | 1440×1274 | 055d862a |
-| D-120-GCFG | Cấu hình Giám đốc Vùng | 390 | 4.41% | ❌ chưa đạt | 390×3275 | 055d862a |
-| D-120-GCFG-RO | Cấu hình GĐ Vùng · Kế toán chỉ xem | 1440 | 2.14% | ✅ đạt | 1440×1395 | 055d862a |
-| D-120-GCFG-RO | Cấu hình GĐ Vùng · Kế toán chỉ xem | 390 | 3.91% | ❌ chưa đạt | 390×3401 | 055d862a |
-| D-120-GDV | GĐ Vùng · Sổ chia sẻ | 1440 | 2.12% | ✅ đạt | 1440×900 | 055d862a |
-| D-120-GDV | GĐ Vùng · Sổ chia sẻ | 390 | 4.05% | ❌ chưa đạt | 390×1305 | 055d862a |
-| D-120-GDV-OPEN | GĐ Vùng · Khoản ghi nhận Miền Bắc | 1440 | 10.66% | ❌ chưa đạt | 1440×1429 | 055d862a |
-| D-120-GDV-OPEN | GĐ Vùng · Khoản ghi nhận Miền Bắc | 390 | 5.73% | ❌ chưa đạt | 390×1920 | 055d862a |
+| D-120-GCFG | Cấu hình Giám đốc Vùng | 1440 | 2.51% | ✅ đạt | 1440×1274 | ef7934ff |
+| D-120-GCFG | Cấu hình Giám đốc Vùng | 390 | 4.41% | ❌ chưa đạt | 390×3275 | ef7934ff |
+| D-120-GCFG-RO | Cấu hình GĐ Vùng · Kế toán chỉ xem | 1440 | 2.14% | ✅ đạt | 1440×1395 | ef7934ff |
+| D-120-GCFG-RO | Cấu hình GĐ Vùng · Kế toán chỉ xem | 390 | 3.91% | ❌ chưa đạt | 390×3401 | ef7934ff |
+| D-120-GDV | GĐ Vùng · Sổ chia sẻ | 1440 | 2.12% | ✅ đạt | 1440×900 | ef7934ff |
+| D-120-GDV | GĐ Vùng · Sổ chia sẻ | 390 | 4.05% | ❌ chưa đạt | 390×1305 | ef7934ff |
+| D-120-GDV-OPEN | GĐ Vùng · Khoản ghi nhận Miền Bắc | 1440 | 10.66% | ❌ chưa đạt | 1440×1429 | ef7934ff |
+| D-120-GDV-OPEN | GĐ Vùng · Khoản ghi nhận Miền Bắc | 390 | 5.73% | ❌ chưa đạt | 390×1920 | ef7934ff |
 | D-13 | Thành viên · menu dòng | 1440 | 2.16% | ✅ đạt | 1440×900 | 25a1eec |
 | D-13 | Thành viên · menu dòng | 390 | 3.79% | ❌ chưa đạt | 390×844 | 25a1eec |
 | D-14 | Thành viên · đã khóa 1 dòng | 1440 | 1.71% | ✅ đạt | 1440×1027 | 25a1eec |
 | D-14 | Thành viên · đã khóa 1 dòng | 390 | 4.72% | ❌ chưa đạt | 390×2810 | 25a1eec |
 | D-16 | Drawer hồ sơ đăng ký | 1440 | 1.55% | ✅ đạt | 1440×900 | 25a1eec |
 | D-16 | Drawer hồ sơ đăng ký | 390 | 0.00% | ✅ đạt | 390×844 | 25a1eec |
-| D-17 | Thành viên · 6/trang, trang 2 | 1440 | 0.51% | ✅ đạt | 1440×900 | 25a1eec |
-| D-17 | Thành viên · 6/trang, trang 2 | 390 | 1.10% | ✅ đạt | 390×1201 | 25a1eec |
-| D-18 | Phí thành viên | 1440 | 0.34% | ✅ đạt | 1440×1214 | 055d862a |
-| D-18 | Phí thành viên | 390 | 2.16% | ✅ đạt | 390×3563 | 055d862a |
-| D-18-GDV | Phí · Miễn phí GĐ Vùng | 1440 | 0.40% | ✅ đạt | 1440×900 | 055d862a |
-| D-18-GDV | Phí · Miễn phí GĐ Vùng | 390 | 1.65% | ✅ đạt | 390×1581 | 055d862a |
+| D-17 | Thành viên · 6/trang, trang 2 | 1440 | 0.27% | ✅ đạt | 1440×900 | ef7934ff |
+| D-17 | Thành viên · 6/trang, trang 2 | 390 | 0.24% | ✅ đạt | 390×1774 | ef7934ff |
+| D-18 | Phí thành viên | 1440 | 0.34% | ✅ đạt | 1440×1214 | ef7934ff |
+| D-18 | Phí thành viên | 390 | 2.16% | ✅ đạt | 390×3563 | ef7934ff |
+| D-18-GDV | Phí · Miễn phí GĐ Vùng | 1440 | 0.40% | ✅ đạt | 1440×900 | ef7934ff |
+| D-18-GDV | Phí · Miễn phí GĐ Vùng | 390 | 1.65% | ✅ đạt | 390×1581 | ef7934ff |
 | D-19 | Phí · chờ thanh toán | 1440 | 0.28% | ✅ đạt | 1440×900 | 25a1eec |
 | D-19 | Phí · chờ thanh toán | 390 | 0.40% | ✅ đạt | 390×1089 | 25a1eec |
 | D-20 | Phí · chọn nhiều | 1440 | 0.53% | ✅ đạt | 1440×1038 | 25a1eec |
 | D-20 | Phí · chọn nhiều | 390 | 0.60% | ✅ đạt | 390×2721 | 25a1eec |
 | D-21 | Phí · ghi nhận đã thu | 1440 | 1.66% | ✅ đạt | 1440×974 | 25a1eec |
 | D-21 | Phí · ghi nhận đã thu | 390 | 4.16% | ❌ chưa đạt | 390×2615 | 25a1eec |
-| D-22 | Phí · 6/trang, trang 2 | 1440 | 0.22% | ✅ đạt | 1440×900 | 25a1eec |
-| D-22 | Phí · 6/trang, trang 2 | 390 | 0.13% | ✅ đạt | 390×1307 | 25a1eec |
+| D-22 | Phí · 6/trang, trang 2 | 1440 | 0.38% | ✅ đạt | 1440×900 | ef7934ff |
+| D-22 | Phí · 6/trang, trang 2 | 390 | 1.05% | ✅ đạt | 390×1905 | ef7934ff |
 | D-23 | Nhóm cộng đồng · lưới | 1440 | 0.04% | ✅ đạt | 1440×1614 | 25a1eec |
 | D-23 | Nhóm cộng đồng · lưới | 390 | 0.01% | ✅ đạt | 390×5752 | 25a1eec |
 | D-24 | Nhóm cộng đồng · danh sách | 1440 | 0.06% | ✅ đạt | 1440×1806 | 25a1eec |
@@ -310,10 +314,10 @@
 | D-41 | Bot · Hội thoại | 390 | 25.32% | ❌ chưa đạt | 390×3014 | ecc1b687 |
 | D-42 | Sự kiện · lưới | 1440 | 0.26% | ✅ đạt | 1440×1451 | 25a1eec |
 | D-42 | Sự kiện · lưới | 390 | 23.34% | ❌ chưa đạt | 390×3867 | 25a1eec |
-| D-43 | Sự kiện · danh sách | 1440 | 0.32% | ✅ đạt | 1440×1105 | 25a1eec |
-| D-43 | Sự kiện · danh sách | 390 | 21.58% | ❌ chưa đạt | 390×3061 | 25a1eec |
-| D-44 | Sự kiện · Đã đầy → chi tiết sự kiện (Demo Day) | 1440 | 0.34% | ✅ đạt | 1440×1451 | 25a1eec |
-| D-44 | Sự kiện · Đã đầy → chi tiết sự kiện (Demo Day) | 390 | 24.59% | ❌ chưa đạt | 390×3867 | 25a1eec |
+| D-43 | Sự kiện · danh sách | 1440 | 8.44% | ❌ chưa đạt | 1440×1105 | ef7934ff |
+| D-43 | Sự kiện · danh sách | 390 | 16.64% | ❌ chưa đạt | 390×2634 | ef7934ff |
+| D-44 | Sự kiện · chi tiết danh sách (Demo Day) | 1440 | 9.18% | ❌ chưa đạt | 1440×1451 | ef7934ff |
+| D-44 | Sự kiện · chi tiết danh sách (Demo Day) | 390 | 42.42% | ❌ chưa đạt | 390×3599 | ef7934ff |
 | D-45 | Sự kiện · 6/trang | 1440 | 0.26% | ✅ đạt | 1440×1451 | 25a1eec |
 | D-45 | Sự kiện · 6/trang | 390 | 23.34% | ❌ chưa đạt | 390×3867 | 25a1eec |
 | D-46 | Drawer danh sách đăng ký | 1440 | 0.21% | ✅ đạt | 1440×900 | 25a1eec |
@@ -354,26 +358,26 @@
 | D-63 | Drawer yêu cầu YC-1005 | 390 | 0.60% | ✅ đạt | 390×844 | 25a1eec |
 | D-65 | Dịch vụ · danh mục | 1440 | 24.32% | ❌ chưa đạt | 1440×1176 | 25a1eec |
 | D-65 | Dịch vụ · danh mục | 390 | 27.69% | ❌ chưa đạt | 390×1161 | 25a1eec |
-| D-66 | Cài đặt · Chung | 1440 | 11.32% | ❌ chưa đạt | 1440×1065 | 055d862a |
-| D-66 | Cài đặt · Chung | 390 | 0.25% | ✅ đạt | 390×1971 | 055d862a |
-| D-67 | Cài đặt · Danh mục lĩnh vực | 1440 | 0.27% | ✅ đạt | 1440×2287 | 055d862a |
-| D-67 | Cài đặt · Danh mục lĩnh vực | 390 | 0.17% | ✅ đạt | 390×7003 | 055d862a |
-| D-68 | Lĩnh vực · đang sửa | 1440 | 0.27% | ✅ đạt | 1440×2287 | 055d862a |
-| D-68 | Lĩnh vực · đang sửa | 390 | 0.17% | ✅ đạt | 390×7003 | 055d862a |
-| D-69 | Cài đặt · Vai trò & phân quyền | 1440 | 2.69% | ✅ đạt | 1440×2173 | 055d862a |
-| D-69 | Cài đặt · Vai trò & phân quyền | 390 | 2.86% | ✅ đạt | 390×9113 | 055d862a |
-| D-70 | Cài đặt · Email chào mừng | 1440 | 0.52% | ✅ đạt | 1440×1236 | 055d862a |
-| D-70 | Cài đặt · Email chào mừng | 390 | 0.54% | ✅ đạt | 390×2928 | 055d862a |
-| D-71 | Cài đặt · SMTP | 1440 | 5.43% | ❌ chưa đạt | 1440×1065 | 055d862a |
-| D-71 | Cài đặt · SMTP | 390 | 0.20% | ✅ đạt | 390×1919 | 055d862a |
-| D-72 | SMTP · lỗi xác thực | 1440 | 5.43% | ❌ chưa đạt | 1440×1065 | 055d862a |
-| D-72 | SMTP · lỗi xác thực | 390 | 0.16% | ✅ đạt | 390×1944 | 055d862a |
-| D-73 | Cài đặt · Tài khoản quản trị | 1440 | 11.39% | ❌ chưa đạt | 1440×1065 | 055d862a |
-| D-73 | Cài đặt · Tài khoản quản trị | 390 | 0.33% | ✅ đạt | 390×2297 | 055d862a |
-| D-74 | Tài khoản quản trị · hộp thoại tạo TK (§21 RB-R02) | 1440 | 0.79% | ✅ đạt | 1440×900 | 055d862a |
-| D-74 | Tài khoản quản trị · hộp thoại tạo TK (§21 RB-R02) | 390 | 1.72% | ✅ đạt | 390×844 | 055d862a |
-| D-75 | Cài đặt · Nhật ký hoạt động | 1440 | 69.59% | ❌ chưa đạt | 1440×3151 | 055d862a |
-| D-75 | Cài đặt · Nhật ký hoạt động | 390 | 67.22% | ❌ chưa đạt | 390×5324 | 055d862a |
+| D-66 | Cài đặt · Chung | 1440 | 11.32% | ❌ chưa đạt | 1440×1065 | ef7934ff |
+| D-66 | Cài đặt · Chung | 390 | 0.25% | ✅ đạt | 390×1971 | ef7934ff |
+| D-67 | Cài đặt · Danh mục lĩnh vực | 1440 | 0.27% | ✅ đạt | 1440×2287 | ef7934ff |
+| D-67 | Cài đặt · Danh mục lĩnh vực | 390 | 0.17% | ✅ đạt | 390×7003 | ef7934ff |
+| D-68 | Lĩnh vực · đang sửa | 1440 | 0.27% | ✅ đạt | 1440×2287 | ef7934ff |
+| D-68 | Lĩnh vực · đang sửa | 390 | 0.17% | ✅ đạt | 390×7003 | ef7934ff |
+| D-69 | Cài đặt · Vai trò & phân quyền | 1440 | 2.69% | ✅ đạt | 1440×2173 | ef7934ff |
+| D-69 | Cài đặt · Vai trò & phân quyền | 390 | 2.86% | ✅ đạt | 390×9113 | ef7934ff |
+| D-70 | Cài đặt · Email chào mừng | 1440 | 0.52% | ✅ đạt | 1440×1236 | ef7934ff |
+| D-70 | Cài đặt · Email chào mừng | 390 | 0.54% | ✅ đạt | 390×2928 | ef7934ff |
+| D-71 | Cài đặt · SMTP | 1440 | 5.43% | ❌ chưa đạt | 1440×1065 | ef7934ff |
+| D-71 | Cài đặt · SMTP | 390 | 0.20% | ✅ đạt | 390×1919 | ef7934ff |
+| D-72 | SMTP · lỗi xác thực | 1440 | 5.43% | ❌ chưa đạt | 1440×1065 | ef7934ff |
+| D-72 | SMTP · lỗi xác thực | 390 | 0.16% | ✅ đạt | 390×1944 | ef7934ff |
+| D-73 | Cài đặt · Tài khoản quản trị | 1440 | 11.39% | ❌ chưa đạt | 1440×1065 | ef7934ff |
+| D-73 | Cài đặt · Tài khoản quản trị | 390 | 0.33% | ✅ đạt | 390×2297 | ef7934ff |
+| D-74 | Tài khoản quản trị · hộp thoại tạo TK (§21 RB-R02) | 1440 | 0.79% | ✅ đạt | 1440×900 | ef7934ff |
+| D-74 | Tài khoản quản trị · hộp thoại tạo TK (§21 RB-R02) | 390 | 1.72% | ✅ đạt | 390×844 | ef7934ff |
+| D-75 | Cài đặt · Nhật ký hoạt động | 1440 | 69.59% | ❌ chưa đạt | 1440×3151 | ef7934ff |
+| D-75 | Cài đặt · Nhật ký hoạt động | 390 | 67.22% | ❌ chưa đạt | 390×5324 | ef7934ff |
 | D-80 | Toast toàn cục | 1440 | 0.16% | ✅ đạt | 1440×900 | 25a1eec |
 | D-80 | Toast toàn cục | 390 | 5.25% | ❌ chưa đạt | 390×844 | 25a1eec |
 | D-81 | Xem thử vai trò Kế toán · menu + dải cam (RB-R09, AT-RB02) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.74% | ✅ đạt | 1440×900 | 25a1eec |
@@ -381,58 +385,58 @@
 | D-82 | Chế độ chỉ xem · Giảng viên mở Thành viên (AT-RB03) | 1440 | 1.47% | ✅ đạt | 1440×1154 | 25a1eec |
 | D-82 | Chế độ chỉ xem · Giảng viên mở Thành viên (AT-RB03) | 390 | 3.01% | ❌ chưa đạt | 390×2969 | 25a1eec |
 | D-83 | Đổi mật khẩu lần đầu (AT-SEC01, RB-R02) (che: Email TK tạm khác nhau mỗi lần đo trên server (cần duy nhất)) | 1440 | 91.39% | ❌ chưa đạt | 1440×900 | 25a1eec |
-| D-84 | Admin · Affiliate | 1440 | 6.65% | ❌ chưa đạt | 1440×1235 | 055d862a |
-| D-84 | Admin · Affiliate | 390 | 3.65% | ❌ chưa đạt | 390×3103 | 055d862a |
-| D-84-AFF | Admin · Affiliate · Đại lý mặc định | 1440 | 5.91% | ❌ chưa đạt | 1440×1296 | 055d862a |
-| D-84-AFF | Admin · Affiliate · Đại lý mặc định | 390 | 8.30% | ❌ chưa đạt | 390×4174 | 055d862a |
-| D-84-AFF-BULK | Admin · Affiliate · Chọn đại lý HAOPC | 1440 | 1.80% | ✅ đạt | 1440×900 | 055d862a |
-| D-84-AFF-BULK | Admin · Affiliate · Chọn đại lý HAOPC | 390 | 23.65% | ❌ chưa đạt | 390×1522 | 055d862a |
-| D-84-AFF-EMPTY | Admin · Affiliate · Đại lý không có kết quả | 1440 | 1.19% | ✅ đạt | 1440×900 | 055d862a |
-| D-84-AFF-EMPTY | Admin · Affiliate · Đại lý không có kết quả | 390 | 2.20% | ✅ đạt | 390×844 | 055d862a |
-| D-84-AFF-Q | Admin · Affiliate · Tìm đại lý HAOPC | 1440 | 1.76% | ✅ đạt | 1440×900 | 055d862a |
-| D-84-AFF-Q | Admin · Affiliate · Tìm đại lý HAOPC | 390 | 24.59% | ❌ chưa đạt | 390×1462 | 055d862a |
-| D-84-COM-BULK | Admin · Affiliate · Chọn hai khoản hoa hồng | 1440 | 6.36% | ❌ chưa đạt | 1440×1269 | 055d862a |
-| D-84-COM-BULK | Admin · Affiliate · Chọn hai khoản hoa hồng | 390 | 14.15% | ❌ chưa đạt | 390×3210 | 055d862a |
-| D-84-COM-CANCELLED | Admin · Affiliate · Hoa hồng đã hủy | 1440 | 1.09% | ✅ đạt | 1440×900 | 055d862a |
-| D-84-COM-CANCELLED | Admin · Affiliate · Hoa hồng đã hủy | 390 | 2.68% | ✅ đạt | 390×1112 | 055d862a |
-| D-84-COM-CANCELLED-MENU | Admin · Affiliate · Menu khoản đã hủy | 1440 | 1.13% | ✅ đạt | 1440×900 | 055d862a |
-| D-84-COM-CANCELLED-MENU | Admin · Affiliate · Menu khoản đã hủy | 390 | 2.94% | ✅ đạt | 390×1120 | 055d862a |
-| D-84-COM-EMPTY | Admin · Affiliate · Hoa hồng không có kết quả | 1440 | 0.95% | ✅ đạt | 1440×900 | 055d862a |
-| D-84-COM-EMPTY | Admin · Affiliate · Hoa hồng không có kết quả | 390 | 6.72% | ❌ chưa đạt | 390×904 | 055d862a |
-| D-84-COM-PAID | Admin · Affiliate · Hoa hồng đã chi trả | 1440 | 9.74% | ❌ chưa đạt | 1440×1260 | 055d862a |
-| D-84-COM-PAID | Admin · Affiliate · Hoa hồng đã chi trả | 390 | 6.42% | ❌ chưa đạt | 390×3094 | 055d862a |
-| D-84-COM-PAID-MENU | Admin · Affiliate · Menu khoản đã chi trả | 1440 | 9.78% | ❌ chưa đạt | 1440×1260 | 055d862a |
-| D-84-COM-PAID-MENU | Admin · Affiliate · Menu khoản đã chi trả | 390 | 6.78% | ❌ chưa đạt | 390×3094 | 055d862a |
-| D-84-COM-RECORDED | Admin · Affiliate · Hoa hồng đã ghi nhận | 1440 | 6.64% | ❌ chưa đạt | 1440×1235 | 055d862a |
-| D-84-COM-RECORDED | Admin · Affiliate · Hoa hồng đã ghi nhận | 390 | 4.93% | ❌ chưa đạt | 390×3075 | 055d862a |
-| D-84-COM-RECORDED-MENU | Admin · Affiliate · Menu khoản đã ghi nhận | 1440 | 6.68% | ❌ chưa đạt | 1440×1235 | 055d862a |
-| D-84-COM-RECORDED-MENU | Admin · Affiliate · Menu khoản đã ghi nhận | 390 | 5.14% | ❌ chưa đạt | 390×3075 | 055d862a |
-| D-84-POL | Admin · Affiliate · Chính sách | 1440 | 3.95% | ❌ chưa đạt | 1440×1364 | 055d862a |
-| D-84-POL | Admin · Affiliate · Chính sách | 390 | 7.71% | ❌ chưa đạt | 390×1969 | 055d862a |
-| D-85 | Admin · Affiliate · Chi tiết đại lý | 1440 | 1.14% | ✅ đạt | 1440×900 | 055d862a |
-| D-85 | Admin · Affiliate · Chi tiết đại lý | 390 | 7.49% | ❌ chưa đạt | 390×1003 | 055d862a |
-| D-85-CUS | Admin · Affiliate · Khách hàng của đại lý | 1440 | 4.00% | ❌ chưa đạt | 1440×1140 | 055d862a |
-| D-85-CUS | Admin · Affiliate · Khách hàng của đại lý | 390 | 16.62% | ❌ chưa đạt | 390×1515 | 055d862a |
-| D-85-RATE | Admin · Affiliate · Sửa tỷ lệ cá nhân | 1440 | 1.15% | ✅ đạt | 1440×900 | 055d862a |
-| D-85-RATE | Admin · Affiliate · Sửa tỷ lệ cá nhân | 390 | 7.39% | ❌ chưa đạt | 390×1019 | 055d862a |
+| D-84 | Admin · Affiliate | 1440 | 6.65% | ❌ chưa đạt | 1440×1235 | ef7934ff |
+| D-84 | Admin · Affiliate | 390 | 3.65% | ❌ chưa đạt | 390×3103 | ef7934ff |
+| D-84-AFF | Admin · Affiliate · Đại lý mặc định | 1440 | 5.91% | ❌ chưa đạt | 1440×1296 | ef7934ff |
+| D-84-AFF | Admin · Affiliate · Đại lý mặc định | 390 | 8.30% | ❌ chưa đạt | 390×4174 | ef7934ff |
+| D-84-AFF-BULK | Admin · Affiliate · Chọn đại lý HAOPC | 1440 | 1.80% | ✅ đạt | 1440×900 | ef7934ff |
+| D-84-AFF-BULK | Admin · Affiliate · Chọn đại lý HAOPC | 390 | 23.65% | ❌ chưa đạt | 390×1522 | ef7934ff |
+| D-84-AFF-EMPTY | Admin · Affiliate · Đại lý không có kết quả | 1440 | 1.19% | ✅ đạt | 1440×900 | ef7934ff |
+| D-84-AFF-EMPTY | Admin · Affiliate · Đại lý không có kết quả | 390 | 2.20% | ✅ đạt | 390×844 | ef7934ff |
+| D-84-AFF-Q | Admin · Affiliate · Tìm đại lý HAOPC | 1440 | 1.76% | ✅ đạt | 1440×900 | ef7934ff |
+| D-84-AFF-Q | Admin · Affiliate · Tìm đại lý HAOPC | 390 | 24.59% | ❌ chưa đạt | 390×1462 | ef7934ff |
+| D-84-COM-BULK | Admin · Affiliate · Chọn hai khoản hoa hồng | 1440 | 6.36% | ❌ chưa đạt | 1440×1269 | ef7934ff |
+| D-84-COM-BULK | Admin · Affiliate · Chọn hai khoản hoa hồng | 390 | 14.15% | ❌ chưa đạt | 390×3210 | ef7934ff |
+| D-84-COM-CANCELLED | Admin · Affiliate · Hoa hồng đã hủy | 1440 | 1.09% | ✅ đạt | 1440×900 | ef7934ff |
+| D-84-COM-CANCELLED | Admin · Affiliate · Hoa hồng đã hủy | 390 | 2.68% | ✅ đạt | 390×1112 | ef7934ff |
+| D-84-COM-CANCELLED-MENU | Admin · Affiliate · Menu khoản đã hủy | 1440 | 1.13% | ✅ đạt | 1440×900 | ef7934ff |
+| D-84-COM-CANCELLED-MENU | Admin · Affiliate · Menu khoản đã hủy | 390 | 2.94% | ✅ đạt | 390×1120 | ef7934ff |
+| D-84-COM-EMPTY | Admin · Affiliate · Hoa hồng không có kết quả | 1440 | 0.95% | ✅ đạt | 1440×900 | ef7934ff |
+| D-84-COM-EMPTY | Admin · Affiliate · Hoa hồng không có kết quả | 390 | 6.72% | ❌ chưa đạt | 390×904 | ef7934ff |
+| D-84-COM-PAID | Admin · Affiliate · Hoa hồng đã chi trả | 1440 | 9.74% | ❌ chưa đạt | 1440×1260 | ef7934ff |
+| D-84-COM-PAID | Admin · Affiliate · Hoa hồng đã chi trả | 390 | 6.42% | ❌ chưa đạt | 390×3094 | ef7934ff |
+| D-84-COM-PAID-MENU | Admin · Affiliate · Menu khoản đã chi trả | 1440 | 9.78% | ❌ chưa đạt | 1440×1260 | ef7934ff |
+| D-84-COM-PAID-MENU | Admin · Affiliate · Menu khoản đã chi trả | 390 | 6.78% | ❌ chưa đạt | 390×3094 | ef7934ff |
+| D-84-COM-RECORDED | Admin · Affiliate · Hoa hồng đã ghi nhận | 1440 | 6.64% | ❌ chưa đạt | 1440×1235 | ef7934ff |
+| D-84-COM-RECORDED | Admin · Affiliate · Hoa hồng đã ghi nhận | 390 | 4.93% | ❌ chưa đạt | 390×3075 | ef7934ff |
+| D-84-COM-RECORDED-MENU | Admin · Affiliate · Menu khoản đã ghi nhận | 1440 | 6.68% | ❌ chưa đạt | 1440×1235 | ef7934ff |
+| D-84-COM-RECORDED-MENU | Admin · Affiliate · Menu khoản đã ghi nhận | 390 | 5.14% | ❌ chưa đạt | 390×3075 | ef7934ff |
+| D-84-POL | Admin · Affiliate · Chính sách | 1440 | 3.95% | ❌ chưa đạt | 1440×1364 | ef7934ff |
+| D-84-POL | Admin · Affiliate · Chính sách | 390 | 7.71% | ❌ chưa đạt | 390×1969 | ef7934ff |
+| D-85 | Admin · Affiliate · Chi tiết đại lý | 1440 | 1.14% | ✅ đạt | 1440×900 | ef7934ff |
+| D-85 | Admin · Affiliate · Chi tiết đại lý | 390 | 7.49% | ❌ chưa đạt | 390×1003 | ef7934ff |
+| D-85-CUS | Admin · Affiliate · Khách hàng của đại lý | 1440 | 4.00% | ❌ chưa đạt | 1440×1140 | ef7934ff |
+| D-85-CUS | Admin · Affiliate · Khách hàng của đại lý | 390 | 16.62% | ❌ chưa đạt | 390×1515 | ef7934ff |
+| D-85-RATE | Admin · Affiliate · Sửa tỷ lệ cá nhân | 1440 | 1.15% | ✅ đạt | 1440×900 | ef7934ff |
+| D-85-RATE | Admin · Affiliate · Sửa tỷ lệ cá nhân | 390 | 7.39% | ❌ chưa đạt | 390×1019 | ef7934ff |
 | D-86 | Tạo nhóm · + Thêm chủ đề (NA-09, chỉ quản trị tạo) | 1440 | 0.12% | ✅ đạt | 1440×900 | 25a1eec |
 | D-86 | Tạo nhóm · + Thêm chủ đề (NA-09, chỉ quản trị tạo) | 390 | 1.26% | ✅ đạt | 390×844 | 25a1eec |
 | D-87 | Sự kiện · khối Sắp diễn ra + Tiếp theo (TIP-V2-303) | 1440 | 0.38% | ✅ đạt | 1440×900 | 25a1eec |
 | D-87 | Sự kiện · khối Sắp diễn ra + Tiếp theo (TIP-V2-303) | 390 | 25.00% | ❌ chưa đạt | 390×844 | 25a1eec |
 | D-88 | Tạo sự kiện · Link Google Meet (D-59) | 1440 | 0.09% | ✅ đạt | 1440×900 | 25a1eec |
 | D-88 | Tạo sự kiện · Link Google Meet (D-59) | 390 | 0.02% | ✅ đạt | 390×844 | 25a1eec |
-| D-89 | Gán vào nhóm · vai trò Giảng viên (GR-R01) | 1440 | 0.98% | ✅ đạt | 1440×900 | 25a1eec |
-| D-89 | Gán vào nhóm · vai trò Giảng viên (GR-R01) | 390 | 0.71% | ✅ đạt | 390×844 | 25a1eec |
-| D-V46-AI | Cài đặt · AI Provider | 1440 | 2.83% | ✅ đạt | 1440×1584 | 055d862a |
-| D-V46-AI | Cài đặt · AI Provider | 390 | 6.87% | ❌ chưa đạt | 390×3478 | 055d862a |
-| D-V46-APP | Cài đặt · Ứng dụng & thông báo | 1440 | 12.01% | ❌ chưa đạt | 1440×1065 | 055d862a |
-| D-V46-APP | Cài đặt · Ứng dụng & thông báo | 390 | 2.26% | ✅ đạt | 390×1604 | 055d862a |
-| D-V46-BANK | Cài đặt · Đối soát ngân hàng | 1440 | 12.33% | ❌ chưa đạt | 1440×1065 | 055d862a |
-| D-V46-BANK | Cài đặt · Đối soát ngân hàng | 390 | 7.80% | ❌ chưa đạt | 390×2164 | 055d862a |
-| D-V46-RENEW | Cài đặt · Nhắc gia hạn | 1440 | 11.07% | ❌ chưa đạt | 1440×1065 | 055d862a |
-| D-V46-RENEW | Cài đặt · Nhắc gia hạn | 390 | 15.53% | ❌ chưa đạt | 390×2012 | 055d862a |
-| D-V46-SEARCH | Topbar · global search Admin | 1440 | 0.55% | ✅ đạt | 1440×900 | 055d862a |
-| D-V46-SEARCH | Topbar · global search Admin | 390 | 0.35% | ✅ đạt | 390×844 | 055d862a |
+| D-89 | Gán vào nhóm · vai trò Giảng viên (GR-R01) | 1440 | 0.25% | ✅ đạt | 1440×900 | ef7934ff |
+| D-89 | Gán vào nhóm · vai trò Giảng viên (GR-R01) | 390 | 0.11% | ✅ đạt | 390×844 | ef7934ff |
+| D-V46-AI | Cài đặt · AI Provider | 1440 | 2.84% | ✅ đạt | 1440×1584 | ef7934ff |
+| D-V46-AI | Cài đặt · AI Provider | 390 | 6.88% | ❌ chưa đạt | 390×3478 | ef7934ff |
+| D-V46-APP | Cài đặt · Ứng dụng & thông báo | 1440 | 12.39% | ℹ️ D-137/B16 (tham khảo) | 1440×1065 | 584742ea |
+| D-V46-APP | Cài đặt · Ứng dụng & thông báo | 390 | 8.05% | ℹ️ D-137/B16 (tham khảo) | 390×1693 | 584742ea |
+| D-V46-BANK | Cài đặt · Đối soát ngân hàng | 1440 | 12.33% | ❌ chưa đạt | 1440×1065 | ef7934ff |
+| D-V46-BANK | Cài đặt · Đối soát ngân hàng | 390 | 7.79% | ❌ chưa đạt | 390×2164 | ef7934ff |
+| D-V46-RENEW | Cài đặt · Nhắc gia hạn | 1440 | 11.07% | ❌ chưa đạt | 1440×1065 | ef7934ff |
+| D-V46-RENEW | Cài đặt · Nhắc gia hạn | 390 | 15.52% | ❌ chưa đạt | 390×2012 | ef7934ff |
+| D-V46-SEARCH | Topbar · global search Admin | 1440 | 0.55% | ✅ đạt | 1440×900 | ef7934ff |
+| D-V46-SEARCH | Topbar · global search Admin | 390 | 0.35% | ✅ đạt | 390×844 | ef7934ff |
 
 ## Không đo được trên prototype (unreachable, 39 màn)
 

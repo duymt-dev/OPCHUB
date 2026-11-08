@@ -1,5 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it, vi, type MockInstance } from 'vitest';
-import type { LlmProvider } from '@opchub/integrations';
+import { FakeLlmProvider, type LlmProvider } from '@opchub/integrations';
 import { LLM } from '@/common/integrations';
 import { BotRunnerService } from '@/modules/bot';
 import { createTestApp, type TestApp } from '../setup/test-app';
@@ -10,7 +10,7 @@ describe('UAT-14 REQ-411 member reply context chronological control', () => {
   let fixture: ReturnType<typeof replyFixtures>;
   let generate: MockInstance<LlmProvider['generateTurn']>;
   beforeAll(async () => {
-    t = await createTestApp();
+    t = await createTestApp({ overrides: [[LLM, new FakeLlmProvider()]] });
     fixture = replyFixtures(t, new Date());
     await fixture.start();
     generate = vi.spyOn(t.app.get<LlmProvider>(LLM), 'generateTurn');

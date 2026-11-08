@@ -18,6 +18,11 @@ import { registeredMockProfiles } from './registration/state';
 import { rememberRegionalBank } from './regional-share-bank';
 import { publishRegionalRevokeNotice, REGIONAL_NOTICE_PREFIX } from './regional-notices';
 import { publishMockNotification } from './notification-runtime';
+import {
+  requestMockRegionalMail,
+  mockRegionalMailLog,
+  restoreMockRegionalMailLog,
+} from './regional-mail';
 
 interface State {
   data: RegionalDirectors;
@@ -31,12 +36,18 @@ export function captureMockRegionalSnapshot(): RegionalSnapshot {
     userId,
     rows.filter((row) => row.id.startsWith(REGIONAL_NOTICE_PREFIX)),
   ]);
-  return regionalSnapshotSchema.parse({ data, previous: [...previous], notices });
+  return regionalSnapshotSchema.parse({
+    data,
+    previous: [...previous],
+    notices,
+    mail: mockRegionalMailLog(),
+  });
 }
 
 export function restoreMockRegionalSnapshot(input: RegionalSnapshot | undefined) {
   if (!input) return;
   const parsed = regionalSnapshotSchema.parse(input);
+  restoreMockRegionalMailLog(parsed.mail);
   states.set(mockDb(), { data: parsed.data, previous: new Map(parsed.previous) });
   for (const [userId, rows] of mockDb().notifications) {
     mockDb().notifications.set(
@@ -152,6 +163,8 @@ function log(
     actorRole,
     createdAt: new Date(now).toISOString(),
   });
+  const member = person(userId);
+  if (member) requestMockRegionalMail(member, region, action, now);
 }
 
 export function mockRegionalRevoke(

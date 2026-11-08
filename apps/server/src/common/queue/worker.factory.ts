@@ -1,5 +1,6 @@
 import { Injectable, Logger, type OnApplicationShutdown } from '@nestjs/common';
 import { jobs, type JobName, type JobQueue } from '@opchub/shared/queues';
+import { IntegrationError } from '@opchub/integrations';
 import { type Job, Worker } from 'bullmq';
 import type { z } from 'zod';
 import { RedisService } from '../redis/redis.service';
@@ -11,6 +12,17 @@ type Handlers<Q extends JobQueue> = {
 };
 
 type AnyHandler = (data: never, job: Job) => Promise<void>;
+
+function unconfigured(error: unknown): boolean {
+  const visited = new Set<unknown>();
+  let current = error;
+  while (current instanceof Error && !visited.has(current)) {
+    if (current instanceof IntegrationError && current.reason === 'not_configured') return true;
+    visited.add(current);
+    current = current.cause;
+  }
+  return false;
+}
 
 /**
  * Dựng BullMQ Worker cho process worker. Payload parse zod theo tên job trước khi gọi handler;
@@ -52,9 +64,11 @@ export class WorkerFactory implements OnApplicationShutdown {
           : {}),
       },
     );
-    w.on('failed', (job, err) =>
-      this.logger.warn({ queue, job: job?.name, jobId: job?.id, err }, 'Job lỗi'),
-    );
+    w.on('failed', (job, err) => {
+      const detail = { queue, job: job?.name, jobId: job?.id, err };
+      if (unconfigured(err)) this.logger.debug(detail, 'Job lỗi');
+      else this.logger.warn(detail, 'Job lỗi');
+    });
     this.workers.set(queue, w);
     return w;
   }

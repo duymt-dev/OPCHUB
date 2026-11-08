@@ -28,6 +28,7 @@ export function CoverField({ f, set, onFile }: Props & { onFile: (file: File) =>
       {t('cover')}
       {f.coverUrl ? (
         <div className={styles.coverBox}>
+          {/* eslint-disable-next-line @next/next/no-img-element -- Preview the uploaded storage URL without an image optimizer round-trip. */}
           <img className={styles.coverImg} src={f.coverUrl} alt="" />
           <button type="button" className={styles.coverRm} onClick={() => set({ coverUrl: null })}>
             {t('coverRemove')}
