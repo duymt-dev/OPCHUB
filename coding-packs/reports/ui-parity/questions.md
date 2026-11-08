@@ -1028,3 +1028,21 @@ permission escalation or new DB/port was required. Native E2E2/2 passed; six nat
 paired journeys completed. D-138/data pixel differences remain reference-only
 under D-134. Provider/settings snapshot equality and bot-off flags verified after
 both gates; owner real custom key untouched. The private817 runtime remains HOLD.
+
+## TIP-V46-818 — D-139 approved defaults / execution notes
+
+- Q-V46-818-1: preserve both short and director region copy, centralize only.
+- Q-V46-818-2: tag/actor/date filters only; no free-text summary search.
+- Q-V46-818-3: arrow keys only; keep mobile search hidden and existing groups/caps.
+- Q-V46-818-4: two200-ID candidate windows; scoring/top3 remain unchanged.
+- Q-V46-818-5: encoded `/needs?q=<title>` list link, no detail page.
+- Q-V46-818-6: business store owners only, no personal/investor suggestions.
+- Owner approved reuse of private812 development/test801 integration databases,
+  Memurai6381 DB3/DB2, rolling private817 runtime to818 and disposable818 chain DB;
+  do not touch original HOLD/native services or release `main`.
+- Technical connections (no new business policy): names-only existing Admin
+  directory through `settings.log`; unpublished outbox includes the minimal
+  industry/province/owner snapshot because deletion is physical. Transaction and
+  existing consumer wiring recorded in the completion report.
+- D-139 audit controls have no prototype equivalent; classify their additional
+  height separately from genuine visual defects. Image review/results pending.
