@@ -380,3 +380,13 @@
   font-size: 14px;
   color: rgba(0, 0, 0, 0.45);
 }
+
+@media (max-width: 575px) {
+  .prods {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .prodFoot {
+    flex-wrap: wrap;
+  }
+}

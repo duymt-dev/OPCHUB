@@ -71,7 +71,7 @@ export function DashItems(p: { store: StoreDetail; onManage: () => void }) {
           {t('dash.manage')}
         </button>
       </div>
-      <div className={d.prods}>
+      <div className={d.prods} data-block="store-dashboard-items">
         {items.map((i) => (
           <div key={i.id} className={d.prod}>
             <div className={d.prodImgBox}>
