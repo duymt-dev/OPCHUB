@@ -45,6 +45,16 @@ for (const width of [1440, 390]) {
     const rows = auditLogPageSchema.parse(await (await system).json()).items;
     expect(rows.every((r) => r.actorName === 'Hệ thống' && r.tag === 'member')).toBe(true);
     const range = await auditDayRange(page);
+    await expect(page).toHaveURL(
+      (url) =>
+        url.searchParams.get('tag') === 'member' &&
+        url.searchParams.get('actorId') === 'system' &&
+        url.searchParams.get('from') === range.from,
+    );
+    await page.reload();
+    await expect(
+      page.getByRole('combobox', { name: 'Người thực hiện', exact: true }),
+    ).toBeVisible();
     const exporting = page.waitForRequest(
       (r) => r.url().endsWith('/admin/audit-logs/export') && r.method() === 'POST',
     );

@@ -8,6 +8,22 @@ import * as api from '../api';
 import { AuditLogTab } from './audit-log-tab';
 
 const run = vi.hoisted(() => vi.fn());
+vi.mock('next/navigation', async () => {
+  const { useSyncExternalStore } = await import('react');
+  return {
+    usePathname: () => '/settings',
+    useSearchParams: () =>
+      new URLSearchParams(
+        useSyncExternalStore(
+          (notify) => {
+            window.addEventListener('audit-url-change', notify);
+            return () => window.removeEventListener('audit-url-change', notify);
+          },
+          () => window.location.search,
+        ),
+      ),
+  };
+});
 vi.mock('@/lib/use-export-job', () => ({ useExportJob: () => run }));
 vi.mock('../api', async (original) => ({
   ...(await original<typeof api>()),
@@ -40,6 +56,12 @@ function mount() {
   );
 }
 beforeEach(() => {
+  window.history.replaceState(null, '', '/settings?tab=audit-log');
+  const replace = window.history.replaceState.bind(window.history);
+  vi.spyOn(window.history, 'replaceState').mockImplementation((...args) => {
+    replace(...args);
+    window.dispatchEvent(new Event('audit-url-change'));
+  });
   vi.stubGlobal(
     'ResizeObserver',
     class {
@@ -66,9 +88,24 @@ beforeEach(() => {
 afterEach(() => {
   cleanup();
   vi.unstubAllGlobals();
+  vi.restoreAllMocks();
   clients.splice(0).forEach((c) => c.clear());
 });
 describe('REQ-624 AuditLogTab', () => {
+  it('hydrates shared URL filters without sending Settings or unknown URL keys to the audit API', async () => {
+    window.history.replaceState(
+      null,
+      '',
+      '/settings?tab=audit-log&tag=member&actorId=system&scope=all&other=retained',
+    );
+    mount();
+    await screen.findByText('Action 1');
+    expect(api.fetchAuditLog).toHaveBeenLastCalledWith(undefined, {
+      tag: 'member',
+      actorId: 'system',
+    });
+    expect(new URLSearchParams(window.location.search).get('other')).toBe('retained');
+  });
   it('filter changes reset cursor; filtered CSV and clear use the same query state', async () => {
     vi.mocked(api.fetchAuditLog).mockImplementation((cursor, filters) =>
       Promise.resolve({
@@ -85,6 +122,7 @@ describe('REQ-624 AuditLogTab', () => {
     fireEvent.click(await screen.findByText('Thành viên'));
     await screen.findByText('Không có thao tác phù hợp');
     expect(api.fetchAuditLog).toHaveBeenLastCalledWith(undefined, { tag: 'member' });
+    expect(new URLSearchParams(window.location.search).get('tag')).toBe('member');
     expect(screen.queryByText('Action 2')).toBeNull();
     fireEvent.click(screen.getByRole('button', { name: 'Xuất CSV' }));
     await waitFor(() => expect(api.exportAuditLog).toHaveBeenCalledWith({ tag: 'member' }));
@@ -92,6 +130,7 @@ describe('REQ-624 AuditLogTab', () => {
     await screen.findByText('Action 1');
     expect(screen.queryByText('Action 2')).toBeNull();
     expect(api.fetchAuditLog).toHaveBeenLastCalledWith(undefined, {});
+    expect(window.location.search).toBe('?tab=audit-log');
     expect(screen.queryByText('Không có thao tác phù hợp')).toBeNull();
   });
   it('shows90-day copy, export under heading and more appends without dropping page1', async () => {

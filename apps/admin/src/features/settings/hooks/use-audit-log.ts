@@ -1,16 +1,16 @@
 'use client';
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
 import type { AuditLogFilters } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
 import { useToast } from '@opchub/ui';
 import { ApiError } from '@/lib/api-client';
 import { useExportJob } from '@/lib/use-export-job';
 import { fetchAuditLog, fetchAuditLogActors, exportAuditLog, settingsKeys } from '../api';
+import { useAuditLogFilters } from './use-audit-log-filters';
 
 export function useAuditLog() {
   const client = useQueryClient();
-  const [filters, setFilters] = useState<AuditLogFilters>({});
+  const { filters, setFilters } = useAuditLogFilters();
   const changeFilters = (next: AuditLogFilters) => {
     // Revisiting a previously used filter must not restore its old infinite-page cursor.
     client.removeQueries({ queryKey: [...settingsKeys.log, next], exact: true });
