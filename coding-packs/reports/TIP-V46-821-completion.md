@@ -212,3 +212,22 @@ never on private native dev/HOLD. Full root integration must be rerun.
   fresh mail/error-envelope/client-log integration3files/11cases PASS (16.95s).
   Existing assertions/timeouts were kept. Builds/runtime and browser gates are
   being refreshed; no all-gates/single-SHA/DONE claim yet.
+
+## Browser/parity UI correction
+
+- First full MSW run:401 passed,5 pre-existing skips,2 failures (16.9m), both the
+  old read-only test's blanket zero-button assertion. TIP821 intentionally adds
+  the read-only CSV export. Updated exactly that expectation to one named export
+  and still explicitly zero save/payout actions; all other assertions kept.
+- Native final build focused journeys3/3 PASS, no reset/seed. Native signed-URL
+  log probe proves URL/params/query/referer contain no synthetic bearer marker.
+- Initial native parity measured14 pairs (the ID selector also includes related
+  prefix scenarios):8 under3%,6 above. Actual images revealed a pre-existing
+  mobile month column squeezed to44px. Fixed only the three fixed widths to
+  prototype150/120/120, leaving90px at the480px minimum and a flexible desktop
+  month column. Added unit and real-browser width regression. No masks/baselines
+  or threshold changes. Province remains in CSV/API, not added to prototype row text.
+- Post-UI root lint8/type8/unit2265+2 existing skips/depcheck PASS. Source changes
+  are confined to the regional components and their browser regression; no ledger,
+  configuration or fee mutations. Both builds/full MSW/native/parity are refreshed
+  next; previous raw parity measurements are not presented as final results.

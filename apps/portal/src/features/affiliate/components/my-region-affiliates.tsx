@@ -31,10 +31,7 @@ export function MyRegionAffiliates({ data }: { data: DirectorRegion }) {
               render: (_, r) => (
                 <div>
                   <b>{r.name}</b>
-                  <small>
-                    {r.code}
-                    {r.province ? ` · ${r.province}` : ''}
-                  </small>
+                  <small>{r.code}</small>
                 </div>
               ),
             },

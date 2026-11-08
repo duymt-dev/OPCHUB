@@ -25,6 +25,16 @@ for (const width of [1440, 390]) {
       .locator('../..');
     await expect(section.getByRole('table')).toBeVisible();
     await expect(section.getByRole('row')).toHaveCount(data.affiliates.length + 1);
+    if (width === 390) {
+      const months = page
+        .getByRole('heading', { name: 'Lịch sử Media Soft chi trả theo tháng', exact: true })
+        .locator('..')
+        .getByRole('table');
+      expect(Math.round((await months.boundingBox())?.width ?? 0)).toBe(480);
+      expect(
+        Math.round((await months.getByRole('columnheader').first().boundingBox())?.width ?? 0),
+      ).toBe(90);
+    }
     if (data.more)
       await expect(section.getByRole('button', { name: `Xem thêm (${data.more})` })).toBeVisible();
     else await expect(section.getByRole('button', { name: /Xem thêm/ })).toHaveCount(0);
