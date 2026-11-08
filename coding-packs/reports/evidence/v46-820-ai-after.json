@@ -1,0 +1,11 @@
+{
+  "checkedAt": "2026-11-08T15:33:12.887Z",
+  "target": "opchub_v46_812_dev",
+  "fingerprint": "a485f9dc3d729a96eb6b549eb3f6f196272fb083560963681d63c32d44722476",
+  "botEnabled": false,
+  "autoGenerate": false,
+  "replyToMembers": false,
+  "customEncryptedKeyRetained": true,
+  "calls": 127,
+  "unchanged": true
+}

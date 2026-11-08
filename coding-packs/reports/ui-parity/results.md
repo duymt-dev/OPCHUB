@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 437/500 ảnh.
+> Đạt 437/502 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -77,8 +77,8 @@
 | P-106 | Khám phá · lọc ô danh mục Thủy sản | 390 | 0.05% | ✅ đạt | 390×1919 | ef7934ff |
 | P-107 | Khám phá · không có kết quả | 1440 | 0.15% | ✅ đạt | 1440×1212 | ef7934ff |
 | P-107 | Khám phá · không có kết quả | 390 | 0.90% | ✅ đạt | 390×1739 | ef7934ff |
-| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 1440 | 2.68% | ✅ đạt | 1440×900 | ef7934ff |
-| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 390 | 0.37% | ✅ đạt | 390×844 | ef7934ff |
+| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 1440 | 2.68% | ✅ đạt | 1440×900 | 3a199fb4 |
+| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 390 | 0.37% | ✅ đạt | 390×844 | 3a199fb4 |
 | P-108-PROJECT-FORM | Gian hàng của tôi · form đăng dự án điền sẵn | 1440 | 0.56% | ✅ đạt | 1440×900 | ef7934ff |
 | P-108-PROJECT-FORM | Gian hàng của tôi · form đăng dự án điền sẵn | 390 | 2.43% | ✅ đạt | 390×844 | ef7934ff |
 | P-108-PROJECTS | Gian hàng của tôi · khối Dự án OPC | 1440 | 0.00% | ✅ đạt | 1136×202 | ef7934ff |
@@ -252,8 +252,10 @@
 | P-98 | Portal · Affiliate · Lịch sử nhận tiền | 390 | 1.55% | ✅ đạt | 390×1616 | ef7934ff |
 | P-99 | Sidebar Portal §27.3 · nhóm menu + thẻ gói | 1440 | 0.01% | ✅ đạt | 248×900 | ef7934ff |
 | P-99-DRAWER | Drawer Portal §27.3 · nhóm menu + thẻ gói | 390 | 0.01% | ✅ đạt | 272×844 | ef7934ff |
-| P-V46-PUBLIC-CARD | Trang công khai · khối trong trình sửa | 1440 | 1.50% | ✅ đạt | 1136×250 | ef7934ff |
-| P-V46-PUBLIC-CARD | Trang công khai · khối trong trình sửa | 390 | 2.49% | ✅ đạt | 366×396 | ef7934ff |
+| P-V46-GUEST-KPI | B15 complete store dashboard, independent guest-view KPI | 1440 | 12.12% | ❌ chưa đạt | 1440×1532 | 3a199fb4 |
+| P-V46-GUEST-KPI | B15 complete store dashboard, independent guest-view KPI | 390 | 46.67% | ❌ chưa đạt | 390×3383 | 3a199fb4 |
+| P-V46-PUBLIC-CARD | Trang công khai · khối trong trình sửa | 1440 | 1.49% | ✅ đạt | 1136×250 | 3a199fb4 |
+| P-V46-PUBLIC-CARD | Trang công khai · khối trong trình sửa | 390 | 2.48% | ✅ đạt | 366×396 | 3a199fb4 |
 | P-V46-REG | Portal · Vùng của tôi | 1440 | 5.72% | ❌ chưa đạt | 1440×1944 | ef7934ff |
 | P-V46-REG | Portal · Vùng của tôi | 390 | 10.39% | ❌ chưa đạt | 390×3353 | ef7934ff |
 | P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 1440 | 1.21% | ✅ đạt | 1440×997 | ef7934ff |

@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 315/430 ảnh.
+> Đạt 315/432 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -61,8 +61,8 @@
 | P-09 | Thông báo · trống | 390 | 0.66% | ✅ đạt | 390×844 | 25a1eec |
 | P-10 | Thông báo · mở nhắc tên | 1440 | 0.78% | ✅ đạt | 1440×900 | 25a1eec |
 | P-10 | Thông báo · mở nhắc tên | 390 | 0.41% | ✅ đạt | 390×844 | 25a1eec |
-| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 1440 | 2.68% | ✅ đạt | 1440×900 | ef7934ff |
-| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 390 | 0.37% | ✅ đạt | 390×844 | ef7934ff |
+| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 1440 | 2.75% | ✅ đạt | 1440×900 | 3a199fb4 |
+| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 390 | 0.37% | ✅ đạt | 390×844 | 3a199fb4 |
 | P-108-PROJECT-FORM | Gian hàng của tôi · form đăng dự án điền sẵn | 1440 | 0.56% | ✅ đạt | 1440×900 | ef7934ff |
 | P-108-PROJECT-FORM | Gian hàng của tôi · form đăng dự án điền sẵn | 390 | 2.43% | ✅ đạt | 390×844 | ef7934ff |
 | P-108-PROJECTS | Gian hàng của tôi · khối Dự án OPC | 1440 | 0.00% | ✅ đạt | 1136×202 | ef7934ff |
@@ -214,8 +214,10 @@
 | P-97 | Portal · Affiliate | 390 | 4.15% | ❌ chưa đạt | 390×1909 | ef7934ff |
 | P-98 | Portal · Affiliate · Lịch sử nhận tiền | 1440 | 1.27% | ✅ đạt | 1440×900 | ef7934ff |
 | P-98 | Portal · Affiliate · Lịch sử nhận tiền | 390 | 3.86% | ❌ chưa đạt | 390×1632 | ef7934ff |
-| P-V46-PUBLIC-CARD | Trang công khai · khối trong trình sửa | 1440 | 1.57% | ✅ đạt | 1136×250 | ef7934ff |
-| P-V46-PUBLIC-CARD | Trang công khai · khối trong trình sửa | 390 | 2.50% | ✅ đạt | 366×396 | ef7934ff |
+| P-V46-GUEST-KPI | B15 complete store dashboard, independent guest-view KPI | 1440 | 12.16% | ❌ chưa đạt | 1440×1532 | 3a199fb4 |
+| P-V46-GUEST-KPI | B15 complete store dashboard, independent guest-view KPI | 390 | 46.67% | ❌ chưa đạt | 390×3383 | 3a199fb4 |
+| P-V46-PUBLIC-CARD | Trang công khai · khối trong trình sửa | 1440 | 1.57% | ✅ đạt | 1136×250 | 3a199fb4 |
+| P-V46-PUBLIC-CARD | Trang công khai · khối trong trình sửa | 390 | 2.50% | ✅ đạt | 366×396 | 3a199fb4 |
 | P-V46-REG | Portal · Vùng của tôi | 1440 | 5.74% | ❌ chưa đạt | 1440×1944 | ef7934ff |
 | P-V46-REG | Portal · Vùng của tôi | 390 | 10.47% | ❌ chưa đạt | 390×3353 | ef7934ff |
 | P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 1440 | 1.27% | ✅ đạt | 1440×997 | ef7934ff |
