@@ -1,9 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt ngưỡng pixel 440/500 ảnh.
-> TIP-V46-816: chỉ 6 ảnh mới của P-89/P-93/D-V46-APP ở lane này. D-V46-APP được phân loại D-137 (khối Thiết bị này) + B16 đã để sau + dữ liệu; không phải lỗi chức năng theo D-134. CLI pixel vẫn exit 1, số đo/ảnh/assertion không đổi. Xem [báo cáo 816](../TIP-V46-816-parity.md).
-
+> Đạt 438/500 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -205,8 +203,8 @@
 | P-67 | Góp ý · trống | 390 | 0.97% | ✅ đạt | 390×1891 | ef7934ff |
 | P-68 | Dự án · repo riêng tư, đã xin quyền | 1440 | 1.89% | ✅ đạt | 1440×1558 | ef7934ff |
 | P-68 | Dự án · repo riêng tư, đã xin quyền | 390 | 2.42% | ✅ đạt | 390×2687 | ef7934ff |
-| P-73 | Form đăng dự án | 1440 | 0.46% | ✅ đạt | 1440×900 | ef7934ff |
-| P-73 | Form đăng dự án | 390 | 2.05% | ✅ đạt | 390×844 | ef7934ff |
+| P-73 | Form đăng dự án | 1440 | 0.46% | ✅ đạt | 1440×900 | fb0ecf62 |
+| P-73 | Form đăng dự án | 390 | 2.05% | ✅ đạt | 390×844 | fb0ecf62 |
 | P-74 | Form dự án · báo thiếu tên | 1440 | 0.69% | ✅ đạt | 1440×900 | ef7934ff |
 | P-74 | Form dự án · báo thiếu tên | 390 | 2.49% | ✅ đạt | 390×844 | ef7934ff |
 | P-75 | Form dự án · mở gọi vốn | 1440 | 0.22% | ✅ đạt | 1440×900 | ef7934ff |
@@ -332,8 +330,8 @@
 | D-30 | Drawer sửa nhóm | 390 | 1.49% | ✅ đạt | 390×844 | ef7934ff |
 | D-31 | Modal xuất danh sách thành viên | 1440 | 0.21% | ✅ đạt | 1440×900 | ef7934ff |
 | D-31 | Modal xuất danh sách thành viên | 390 | 0.11% | ✅ đạt | 390×844 | ef7934ff |
-| D-33 | Kiểm duyệt tin nhắn | 1440 | 0.39% | ✅ đạt | 1440×900 | ef7934ff |
-| D-33 | Kiểm duyệt tin nhắn | 390 | 0.51% | ✅ đạt | 390×1667 | ef7934ff |
+| D-33 | Kiểm duyệt tin nhắn | 1440 | 1.46% | ✅ đạt | 1440×900 | fb0ecf62 |
+| D-33 | Kiểm duyệt tin nhắn | 390 | 4.38% | ❌ chưa đạt | 390×1697 | fb0ecf62 |
 | D-34 | Kiểm duyệt · hết tin | 1440 | 0.22% | ✅ đạt | 1440×900 | ef7934ff |
 | D-34 | Kiểm duyệt · hết tin | 390 | 0.33% | ✅ đạt | 390×897 | ef7934ff |
 | D-35 | Kiểm duyệt · thêm từ khóa | 1440 | 0.39% | ✅ đạt | 1440×900 | ef7934ff |
@@ -497,10 +495,10 @@
 | D-95 | Admin › Nhu cầu địa phương (KPI, chip, bảng) | 390 | 0.21% | ✅ đạt | 390×2354 | ef7934ff |
 | D-98 | Kiểm duyệt · Thời gian khóa 14 ngày | 1440 | 0.39% | ✅ đạt | 1440×900 | ef7934ff |
 | D-98 | Kiểm duyệt · Thời gian khóa 14 ngày | 390 | 0.43% | ✅ đạt | 390×1667 | ef7934ff |
-| D-V46-AI | Cài đặt · AI Provider | 1440 | 2.83% | ✅ đạt | 1440×1584 | ef7934ff |
-| D-V46-AI | Cài đặt · AI Provider | 390 | 6.87% | ❌ chưa đạt | 390×3478 | ef7934ff |
-| D-V46-APP | Cài đặt · Ứng dụng & thông báo | 1440 | 12.40% | ℹ️ D-137/B16 (tham khảo) | 1440×1065 | 584742ea |
-| D-V46-APP | Cài đặt · Ứng dụng & thông báo | 390 | 8.06% | ℹ️ D-137/B16 (tham khảo) | 390×1693 | 584742ea |
+| D-V46-AI | Cài đặt · AI Provider | 1440 | 8.19% | ❌ chưa đạt | 1440×1672 | fb0ecf62 |
+| D-V46-AI | Cài đặt · AI Provider | 390 | 11.07% | ❌ chưa đạt | 390×3705 | fb0ecf62 |
+| D-V46-APP | Cài đặt · Ứng dụng & thông báo | 1440 | 12.40% | ❌ chưa đạt | 1440×1065 | 584742ea |
+| D-V46-APP | Cài đặt · Ứng dụng & thông báo | 390 | 8.06% | ❌ chưa đạt | 390×1693 | 584742ea |
 | D-V46-BANK | Cài đặt · Đối soát ngân hàng | 1440 | 12.33% | ❌ chưa đạt | 1440×1065 | ef7934ff |
 | D-V46-BANK | Cài đặt · Đối soát ngân hàng | 390 | 7.80% | ❌ chưa đạt | 390×2164 | ef7934ff |
 | D-V46-RENEW | Cài đặt · Nhắc gia hạn | 1440 | 11.07% | ❌ chưa đạt | 1440×1065 | ef7934ff |
