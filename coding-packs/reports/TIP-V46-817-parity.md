@@ -1,6 +1,7 @@
 # TIP-V46-817 — UI review and parity
 
-**IN-PROGRESS:** final MSW captures available; native verification pending.
+**PARTIAL:** final MSW captures available; native verification blocked by the
+rejected private-runtime stop command. Draft PR [#102](https://github.com/duymt-dev/OPCHUB/pull/102).
 Pixel percentages are D-134 reference measurements, not a
 claim that decision-approved app differences are functional failures.
 
