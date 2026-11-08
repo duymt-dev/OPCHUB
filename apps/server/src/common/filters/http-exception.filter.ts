@@ -10,6 +10,7 @@ import type { Request, Response } from 'express';
 import { ZodError } from 'zod';
 import { AppError, codeForStatus, type FieldError } from '../errors';
 import { requestIdOf } from '../logger/request-id';
+import { redactMailQrPath } from '../logger/redact-mail-qr';
 
 interface Normalized {
   status: number;
@@ -75,9 +76,12 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const res = http.getResponse<Response>();
     const n = normalizeError(err);
     if (n.bodyParser) {
-      this.logger.warn({ path: req.path, status: n.status }, 'Thân request bị từ chối');
+      this.logger.warn(
+        { path: redactMailQrPath(req.path), status: n.status },
+        'Thân request bị từ chối',
+      );
     } else if (n.status >= 500) {
-      this.logger.error({ err, path: req.path }, 'Lỗi không xử lý');
+      this.logger.error({ err, path: redactMailQrPath(req.path) }, 'Lỗi không xử lý');
     }
     const requestId = requestIdOf(req);
     if (n.retryAfterSec !== undefined) res.setHeader('Retry-After', String(n.retryAfterSec));

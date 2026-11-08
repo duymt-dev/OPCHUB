@@ -1,7 +1,16 @@
-/** Signed image URLs are bearer credentials; preserve request metadata, not the token/query. */
+export const redactMailQrPath = (path: string) =>
+  path.replace(/(\/public\/mail-qr\/)[^?]*(?:\?.*)?$/i, '$1[Redacted].png');
+
+/** Pino's standard request serializer copies credentials into params/query too. */
 export function redactMailQrRequest(req: Record<string, unknown>) {
-  const url = req.url;
-  return typeof url === 'string' && url.includes('/public/mail-qr/')
-    ? { ...req, url: url.replace(/(\/public\/mail-qr\/)[^?]*(?:\?.*)?$/, '$1[Redacted].png') }
-    : req;
+  if (typeof req.url !== 'string' || !/\/public\/mail-qr\//i.test(req.url)) return req;
+  return {
+    ...req,
+    url: redactMailQrPath(req.url),
+    params: '[Redacted]',
+    query: '[Redacted]',
+    ...(typeof req.originalUrl === 'string'
+      ? { originalUrl: redactMailQrPath(req.originalUrl) }
+      : {}),
+  };
 }

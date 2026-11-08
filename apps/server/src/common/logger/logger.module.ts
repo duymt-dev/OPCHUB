@@ -8,6 +8,7 @@ import { redactMailQrRequest } from './redact-mail-qr';
 export const REDACT_PATHS = [
   'req.headers.authorization',
   'req.headers.cookie',
+  'req.headers.referer',
   'res.headers["set-cookie"]',
   '*.password',
   '*.newPassword',

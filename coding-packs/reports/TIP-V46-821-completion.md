@@ -195,3 +195,20 @@ never on private native dev/HOLD. Full root integration must be rerun.
   Updated10k actual-query plans captured after the identity fix; fixture cleaned.
 - One final fresh root integration run and closure/build/E2E/parity remain. No DONE
   claim based on the failed full run or the focused rerun alone.
+
+## Final core gates and log-hardening follow-up
+
+- Fresh full root integration on3bdce39b:145 DB +2170 server =2315/2315 PASS,
+  no skipped cases or cache,29m20.411s. Final root lint8/type8/unit2263+2 existing
+  adapter skips/depcheck and forced native+MSW builds all PASS.
+- Private runtime rolled820->821; original PG5432/Redis6379/Memurai6381 and old
+  MSW HOLD3980/3981 preserved. All5 private HTTP health/login checks return200.
+- Native log inspection then identified Pino also copies the signed path into
+  params/query. Extended the existing new QR sanitizer to cover those copies and
+  originalUrl, including case-insensitive routing; error-filter paths use the same
+  helper. Referer is redacted so following a signed image cannot echo it later.
+  No endpoint/error status or unrelated path semantics changed.
+- Post-hardening root lint8/type8/unit2264+2 existing skips/depcheck PASS;
+  fresh mail/error-envelope/client-log integration3files/11cases PASS (16.95s).
+  Existing assertions/timeouts were kept. Builds/runtime and browser gates are
+  being refreshed; no all-gates/single-SHA/DONE claim yet.
