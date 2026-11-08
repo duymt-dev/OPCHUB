@@ -40,3 +40,5 @@ export * from './membership/renewal-milestone';
 export * from './needs/need-match';
 
 export * from './ai/mask-pii';
+
+export * from './regions/region-labels';

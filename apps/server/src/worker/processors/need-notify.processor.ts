@@ -15,6 +15,7 @@ export class NeedNotifyProcessor implements OnApplicationBootstrap {
   ) {}
   onApplicationBootstrap() {
     this.relay.register('need.published', (p) => this.needs.published(p));
+    this.relay.register('need.unpublished', (p) => this.needs.unpublished(p));
     this.relay.registerWithId('store.digest_due', async (p, id) => {
       await this.queues.add(QUEUES.scheduler, 'storeDigest', p, { jobId: `store-digest-${id}` });
     });

@@ -71,7 +71,7 @@ describe('D-137 matching need notification source', () => {
         userId: a.u.id,
         title: 'Nhu cầu phù hợp với gian hàng của bạn',
         body: `A new need · ${province}`,
-        link: '/needs',
+        link: `/needs?q=${encodeURIComponent('A new need')}`,
       },
     ]);
     expect(notifications.some((n) => [b.u.id, c.u.id, expired.u.id].includes(n.userId))).toBe(

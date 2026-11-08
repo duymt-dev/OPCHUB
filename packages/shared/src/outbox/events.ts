@@ -29,6 +29,15 @@ export const outboxEvents = {
   'ai.budget_exhausted': z.strictObject({ month: z.string().regex(/^\d{4}-\d{2}$/) }),
   'push.requested': z.strictObject({ notificationIds: z.array(z.string().min(1)).min(1).max(500) }),
   'need.published': z.strictObject({ needId: z.string().min(1) }),
+  // Snapshot survives hard deletion; worker reuses the 816 audience query without reading a missing need.
+  'need.unpublished': z.strictObject({
+    needId: z.string().min(1),
+    audience: z.strictObject({
+      ownerId: z.string().min(1),
+      field: z.string(),
+      province: z.string(),
+    }),
+  }),
   'store.digest_due': z.strictObject({ day: z.iso.date() }),
   'regional_share.recorded': z.object({ shareId: z.string() }),
   'regional_share.payout_recorded': z.object({

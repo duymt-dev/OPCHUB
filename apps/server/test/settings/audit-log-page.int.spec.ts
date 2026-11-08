@@ -154,4 +154,147 @@ describe('REQ-624 BR-485 audit pages and real export job', () => {
     }
     expect(found).toEqual([3, 2, 1].map((n) => `${prefix}-micro-${n}`));
   });
+
+  it('filters by tag actor and range inside the 90-day window', async () => {
+    const now = new Date(),
+      a = `${prefix}-A`,
+      b = `${prefix}-B`,
+      c = `${prefix}-C`;
+    const data = [a, b, c].flatMap((actorId) =>
+      ['member', 'settings', 'project', 'permission'].flatMap((tag) =>
+        [1, 2, 10, 29, 45, 100].map((days) => ({
+          id: randomUUID(),
+          actorId,
+          tag,
+          action: 'test.filters',
+          entity: 'test',
+          entityId: prefix,
+          summary: `${actorId}-${tag}-${days}`,
+          createdAt: new Date(now.getTime() - days * DAY),
+        })),
+      ),
+    );
+    await t.prisma.db.auditLog.createMany({ data });
+    const filters = {
+      tag: 'member' as const,
+      actorId: a,
+      from: new Date(now.getTime() - 30 * DAY).toISOString(),
+    };
+    const ids: string[] = [];
+    let cursor: string | undefined;
+    do {
+      const page = await t.app
+        .get(AuditLogService)
+        .page(auditLogPageQuerySchema.parse({ ...filters, cursor, limit: 2 }), now);
+      ids.push(...page.items.map((r) => r.id));
+      cursor = page.nextCursor ?? undefined;
+    } while (cursor);
+    expect(ids).toEqual(
+      data
+        .filter(
+          (r) =>
+            r.actorId === a &&
+            r.tag === 'member' &&
+            r.createdAt.getTime() >= Date.parse(filters.from),
+        )
+        .map((r) => r.id),
+    );
+    expect(new Set(ids).size).toBe(4);
+    const clamped = await t.app.get(AuditLogService).page(
+      auditLogPageQuerySchema.parse({
+        actorId: a,
+        from: new Date(now.getTime() - 200 * DAY).toISOString(),
+        to: '2200-01-01T00:00:00Z',
+      }),
+      now,
+    );
+    expect(clamped.items).toHaveLength(20);
+    const system = await t.prisma.db.auditLog.create({
+      data: {
+        actorId: null,
+        action: 'test.system',
+        entity: 'test',
+        entityId: prefix,
+        summary: 'System filter',
+        tag: 'member',
+        createdAt: now,
+      },
+    });
+    const systemPage = await t.app.get(AuditLogService).page(
+      auditLogPageQuerySchema.parse({
+        actorId: 'system',
+        tag: 'member',
+        from: now.toISOString(),
+        to: now.toISOString(),
+      }),
+      now,
+    );
+    expect(systemPage.items.map((r) => r.id)).toEqual([system.id]);
+    for (const query of [
+      'tag=wrong',
+      'actorId=',
+      'from=wrong',
+      'from=2026-11-08T00:00:00Z&to=2026-11-07T00:00:00Z',
+      'summary=free',
+    ]) {
+      expect((await t.call(`/admin/audit-logs?${query}`, { token })).status).toBe(400);
+    }
+  });
+
+  it('export applies filters and old payload still works', async () => {
+    const marker = `${prefix}-export`,
+      now = new Date();
+    await t.prisma.db.auditLog.createMany({
+      data: ['member', 'settings'].map((tag) => ({
+        actorId: marker,
+        action: 'test.export_filter',
+        entity: 'test',
+        entityId: prefix,
+        summary: `Filtered-${tag}`,
+        tag,
+        createdAt: now,
+      })),
+    });
+    const filters = { actorId: marker, tag: 'member' };
+    const response = await t.call('/admin/audit-logs/export', {
+      method: 'POST',
+      token,
+      json: { filters },
+    });
+    expect(response.status).toBe(202);
+    const { jobId } = exportJobSchema.parse(await response.json());
+    const job = await t.prisma.db.exportJob.findUniqueOrThrow({ where: { id: jobId } });
+    expect(job.params).toEqual({ kind: 'audit', filters });
+    const audit = await t.prisma.db.auditLog.findFirstOrThrow({
+      where: { action: 'export.audit', entityId: jobId },
+    });
+    expect(audit.diff).toEqual({ filters });
+    await t.app.get(ExportService).run(jobId);
+    const csv = storage.objects.get(`exports/${jobId}.csv`)?.body.toString('utf8');
+    expect(csv).toContain('Filtered-member');
+    expect(csv).not.toContain('Filtered-settings');
+    const built = await t.app.get(AuditLogExportService).build(new Date());
+    expect(built.csv).toContain('Filtered-member');
+    expect(built.csv).toContain('Filtered-settings');
+    expect(
+      (
+        await t.call('/admin/audit-logs/export', {
+          method: 'POST',
+          token,
+          json: { filters: { tag: 'bad' } },
+        })
+      ).status,
+    ).toBe(400);
+  });
+
+  it('log-only permission can load the existing admin directory without admin management grants', async () => {
+    const auth = await tokenOf(t, await createUser(t, { adminPermissions: ['settings.log'] }));
+    const response = await t.call('/admin/audit-logs/actors', { token: auth });
+    expect(response.status).toBe(200);
+    const body = (await response.json()) as { items: { id: string; name: string }[] };
+    expect(body.items.length).toBeGreaterThan(0);
+    expect(body.items.every((a) => Object.keys(a).sort().join(',') === 'id,name')).toBe(true);
+    const denied = await tokenOf(t, await createUser(t, { adminPermissions: ['events.view'] }));
+    expect((await t.call('/admin/audit-logs/actors', { token: denied })).status).toBe(403);
+  });
 });

@@ -1,3 +1,4 @@
+import { REGION_LABEL_SHORT } from '@opchub/shared';
 import { adminConversionSchema } from '@opchub/shared/api-domains';
 import type { ConversionAggregate } from './conversion.repository';
 
@@ -5,7 +6,7 @@ const rate = (paid: number, expired: number) =>
   paid + expired ? Math.round((paid * 100) / (paid + expired)) : 0;
 /** No denominator contribution from trial or regional-director fee exemptions. */
 export function buildConversion(aggregate: ConversionAggregate[]) {
-  const labels = { north: 'Miền Bắc', central: 'Miền Trung', south: 'Miền Nam' };
+  const labels = REGION_LABEL_SHORT;
   const rows = (['north', 'central', 'south'] as const).map((region) => {
     const r = aggregate.find((a) => a.region === region);
     const trial = Number(r?.trial ?? 0),

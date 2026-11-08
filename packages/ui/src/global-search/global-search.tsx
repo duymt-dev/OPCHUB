@@ -24,7 +24,7 @@ export function GlobalSearch(props: GlobalSearchProps) {
     clear();
     props.onPick(kind, item);
   };
-  useSearchKeyboard(shown, clear);
+  const keyboard = useSearchKeyboard(shown, clear, props.groups);
   return (
     <form
       ref={root}
@@ -33,8 +33,8 @@ export function GlobalSearch(props: GlobalSearchProps) {
       className={styles.wrap}
       onSubmit={(event) => {
         event.preventDefault();
-        const first = props.groups[0];
-        if (shown && first?.items[0]) pick(first.kind, first.items[0]);
+        const selected = keyboard.selected;
+        if (shown && selected) pick(selected.kind, selected.item);
       }}
     >
       <div className={styles.box}>
@@ -44,18 +44,17 @@ export function GlobalSearch(props: GlobalSearchProps) {
             role="combobox"
             aria-expanded={shown}
             aria-controls={id}
+            aria-activedescendant={
+              shown && keyboard.index >= 0 ? `${id}-${keyboard.index}` : undefined
+            }
             aria-autocomplete="list"
             aria-label={props.placeholder}
             placeholder={props.placeholder}
             maxLength={100}
             value={query}
-            onKeyDown={(event) => {
-              if (event.key === 'Escape') {
-                event.stopPropagation();
-                clear();
-              }
-            }}
+            onKeyDown={keyboard.onKeyDown}
             onChange={(event) => {
+              keyboard.select(-1);
               setQuery(event.target.value);
               props.onQuery(event.target.value);
               if (!popover.open) popover.toggle();
@@ -72,7 +71,14 @@ export function GlobalSearch(props: GlobalSearchProps) {
         </div>
         {shown && (
           <div id={id} role="listbox" aria-label={props.placeholder} className={styles.dropdown}>
-            <SearchResults groups={props.groups} emptyText={props.emptyText} onPick={pick} />
+            <SearchResults
+              groups={props.groups}
+              emptyText={props.emptyText}
+              onPick={pick}
+              id={id}
+              selected={keyboard.index}
+              onSelect={keyboard.select}
+            />
           </div>
         )}
       </div>

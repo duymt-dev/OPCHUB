@@ -26,6 +26,13 @@ for (const admin of [false, true]) {
     await search.fill('MediaSoft');
     const list = page.getByRole('listbox');
     await expect(list.getByRole('option').first()).toContainText('MediaSoft');
+    await search.press('ArrowDown');
+    const firstId = await list.getByRole('option').first().getAttribute('id');
+    await expect(search).toHaveAttribute('aria-activedescendant', firstId ?? 'missing');
+    await expect(list.getByRole('option').first()).toHaveAttribute('aria-selected', 'true');
+    await search.press('ArrowUp');
+    const lastId = await list.getByRole('option').last().getAttribute('id');
+    await expect(search).toHaveAttribute('aria-activedescendant', lastId ?? 'missing');
     await expect(page).toHaveURL(start);
     await page.locator('main').click({ position: { x: 10, y: 10 } });
     await expect(list).toHaveCount(0);

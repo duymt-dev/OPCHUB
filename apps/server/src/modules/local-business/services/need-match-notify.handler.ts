@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { isFeeUsable, scoreNeedMatch } from '@opchub/shared';
 import type { OutboxPayload } from '@opchub/shared/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
-import { RedisService } from '@/common/redis/redis.service';
+import { NeedMatchService } from './need-match.service';
 import { NotificationService } from '@/modules/notification';
 import { NeedMatchAudienceRepository } from '../repositories/need-match-audience.query';
 
@@ -12,7 +12,7 @@ export class NeedMatchNotifyHandler {
     private readonly prisma: PrismaService,
     private readonly repo: NeedMatchAudienceRepository,
     private readonly notifications: NotificationService,
-    private readonly redis: RedisService,
+    private readonly matches: NeedMatchService,
   ) {}
 
   async published(p: OutboxPayload<'need.published'>, now = new Date()) {
@@ -40,13 +40,17 @@ export class NeedMatchNotifyHandler {
           push: 'need',
           title: 'Nhu cầu phù hợp với gian hàng của bạn',
           body: `${need.title.slice(0, 80)} · ${need.province}`,
-          link: '/needs',
+          link: `/needs?q=${encodeURIComponent(need.title)}`,
         })),
       );
     });
     // Invalidate all eligible recipients on replay too: an earlier cache DEL may have failed.
-    if (audience.length)
-      await this.redis.client.del(...audience.map((r) => `need-matches:${r.userId}`));
+    await this.matches.invalidate(audience.map((r) => r.userId));
     await this.notifications.publish(rows);
+  }
+
+  async unpublished(p: OutboxPayload<'need.unpublished'>, now = new Date()) {
+    const audience = await this.repo.audience(p.audience, now);
+    await this.matches.invalidate(audience.map((r) => r.userId));
   }
 }

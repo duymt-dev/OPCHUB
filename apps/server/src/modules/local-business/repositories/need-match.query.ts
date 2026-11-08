@@ -15,16 +15,24 @@ export const matchStoreQuery = (userId: string) => Prisma.sql`
     ARRAY(SELECT i.name FROM store_items i WHERE i.store_id=s.id ORDER BY i.sort,i.id) AS "productNames"
   FROM stores s WHERE s.owner_id=${userId} LIMIT 1`;
 
-/** Visibility BEFORE LIMIT; only <=200 IDs reach wide title/description heap payloads. */
+/** D-139: reserve a separate 200-ID window for strong matches before fetching wide payloads. */
 export const matchCandidatesQuery = (userId: string, store: MatchStoreRow, now: Date) => Prisma.sql`
   SELECT n.id,n.type,n.title,n.description,n.field,n.field_custom AS "fieldCustom",n.province,
     found.updated_at AS "updatedAt"
   FROM (
-    SELECT n.id,n.updated_at FROM needs n
+    SELECT DISTINCT id,updated_at FROM (
+    (SELECT n.id,n.updated_at FROM needs n
+    WHERE ${visibleNeedSql(now)} AND n.store_id<>${store.id} AND n.owner_id<>${userId}
+      AND ${store.field}<>'' AND n.field=${store.field}
+      AND ${store.province}<>'' AND n.province=${store.province}
+    ORDER BY n.updated_at DESC,n.id LIMIT 200)
+    UNION ALL
+    (SELECT n.id,n.updated_at FROM needs n
     WHERE ${visibleNeedSql(now)} AND n.store_id<>${store.id} AND n.owner_id<>${userId}
       AND ((${store.field}<>'' AND n.field=${store.field})
         OR (${store.province}<>'' AND n.province=${store.province}))
-    ORDER BY n.updated_at DESC,n.id LIMIT 200
+    ORDER BY n.updated_at DESC,n.id LIMIT 200)
+    ) candidates
   ) found CROSS JOIN LATERAL (
     SELECT n.id,n.type,n.title,n.description,n.field,n.field_custom,n.province
     FROM needs n WHERE n.id=found.id LIMIT 1

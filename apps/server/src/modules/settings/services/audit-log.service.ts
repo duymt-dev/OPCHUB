@@ -23,8 +23,12 @@ export class AuditLogService {
     private readonly repo: AuditLogRepository,
   ) {}
 
+  actors() {
+    return this.admins.listNames();
+  }
+
   async page(query: AuditLogPageQuery, now = new Date()) {
-    const stored = await this.repo.page(now, query.limit + 1, query.cursor);
+    const stored = await this.repo.page(now, query.limit + 1, query.cursor, query);
     const rows = stored.slice(0, query.limit);
     const last = rows.at(-1);
     const ids = [...new Set(rows.flatMap((r) => (r.actorId ? [r.actorId] : [])))];

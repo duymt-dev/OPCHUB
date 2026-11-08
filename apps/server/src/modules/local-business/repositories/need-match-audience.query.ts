@@ -19,7 +19,11 @@ export const publishedNeedQuery = (needId: string, now: Date) => Prisma.sql`
   FROM needs n WHERE n.id=${needId} AND ${visibleNeedSql(now)}`;
 
 /** Equality prefilter and fee eligibility before the bounded late join to wide store text. */
-export const needAudienceQuery = (need: PublishedNeed, now: Date) => Prisma.sql`
+export type NeedAudienceContext = Pick<PublishedNeed, 'ownerId' | 'field' | 'province'>;
+export const needAudienceQuery = (
+  need: PublishedNeed | NeedAudienceContext,
+  now: Date,
+) => Prisma.sql`
   SELECT s.owner_id AS "userId",s.field,s.province,s.intro,
     f.status AS "feeStatus",f.valid_until AS "validUntil",
     ARRAY(SELECT i.name FROM store_items i WHERE i.store_id=s.id ORDER BY i.sort,i.id) AS "productNames"
@@ -40,7 +44,7 @@ export class NeedMatchAudienceRepository {
       (await this.prisma.db.$queryRaw<PublishedNeed[]>(publishedNeedQuery(id, now)))[0] ?? null
     );
   }
-  audience(need: PublishedNeed, now: Date) {
+  audience(need: NeedAudienceContext, now: Date) {
     return this.prisma.db.$queryRaw<NeedAudience[]>(needAudienceQuery(need, now));
   }
   async claim(tx: DbTx, needId: string, userIds: string[]) {

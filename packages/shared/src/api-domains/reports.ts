@@ -1,3 +1,4 @@
+import { REGION_LABEL_SHORT } from '../regions/region-labels';
 import { z } from 'zod';
 
 /**
@@ -11,11 +12,7 @@ export type ReportTemplate = (typeof REPORT_TEMPLATES)[number];
 /** Vùng theo `groups.region` (prototype REGION(): Miền Bắc / Trung / Nam) */
 export const REPORT_REGIONS = ['north', 'central', 'south'] as const;
 export type ReportRegion = (typeof REPORT_REGIONS)[number];
-export const REPORT_REGION_LABEL: Record<ReportRegion, string> = {
-  north: 'Miền Bắc',
-  central: 'Miền Trung',
-  south: 'Miền Nam',
-};
+export const REPORT_REGION_LABEL = REGION_LABEL_SHORT;
 
 /** Tháng `YYYY-MM` (giờ Việt Nam) */
 export const reportMonthSchema = z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/);
