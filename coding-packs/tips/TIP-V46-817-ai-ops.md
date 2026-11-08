@@ -200,7 +200,7 @@ Hoàn thiện vận hành AI đã cấu hình ở 811:
   - 5 nhà cung cấp chưa có key (B2 còn lại)
   - B6 → B11, B13 → B18
 
-## Câu hỏi chờ owner chốt (builder dùng mặc định nếu chưa có trả lời, ghi `questions.md` › TIP-V46-817)
+## Câu hỏi — **đã chốt theo mặc định** (owner, 08/11/2026: "chốt mặc định"; ghi `questions.md` › TIP-V46-817)
 
 - **Q-V46-817-1 Soạn nội dung ở những ô nào.**
   - **Mặc định:** 3 ô theo prototype "mô tả gian hàng, dự án, email": mô tả gian hàng (Portal), tóm tắt dự án (Portal), nội dung email Marketing (Admin).
