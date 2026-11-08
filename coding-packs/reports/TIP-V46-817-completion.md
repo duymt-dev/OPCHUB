@@ -2,7 +2,8 @@
 
 **STATUS: PARTIAL — native verification blocked.** Implementation and all executed
 functional gates passed. Native 817 E2E/parity has not run because the environment
-rejected stopping the owned 816 runtime. This is **not** a DONE/merge-ready declaration.
+rejected service control. The owner has now stopped the owned 816 runtime, but
+starting the approved 817 processes was also rejected. This is **not** a DONE/merge-ready declaration.
 
 - Branch: `feature/TIP-V46-817-ai-ops`, base `dev` `7d5f8f0e`.
 - Implementation: **`fb0ecf62`**, committed with normal hooks and pushed to origin.
@@ -85,7 +86,7 @@ Final reruns finished on 08/11/2026. Local evidence is under
 | Migration chain | PASS, 104 migrations, both 817 down/up pairs and identical schema. |
 | SQL plans | Actual before/after measurements in linked report. |
 | MSW parity | Six paired captures +4 harness checks; raw 3 above/3 below 3% reference. D-134/D-138 classifications and images supplied, no masks/threshold changes. |
-| Native E2E | Not yet run on 817: private rolling restart command rejected before stopping any service; owner manual action requested. |
+| Native E2E | Not yet run on 817: owner manually stopped the five old private processes; starting817 is now also rejected by the execution environment. Manual startup instructions supplied. |
 
 The old Push subscription suite passed all five tests on its isolated rerun. Its
 full-run failure occurred while obtaining a login token, before device cleanup.
@@ -169,10 +170,14 @@ No merge, auto-merge, main push or production deployment was performed.
 
 ## Required next action
 
-The owner must first stop the five identified owned 816 processes (the manual
-request is pending). Then start the approved private 817 API/socket/worker and
-Next builds on their existing ports, run native `admin-ai-ops.spec.ts` with
-`SKIP_SEED=1`, and repeat scoped native parity. Preserve the existing real custom
-credential, keep bot automation off and restore the unused-provider stub fixture.
-Do not replace native evidence with the still-running 816 service results.
-Only after these gates and report updates should the PR become ready/DONE.
+The owner manually stopped all five identified owned816 processes. Preflight
+confirmed their PIDs were absent and ports4310/4311,3710/3711 were free.
+The environment then rejected the start command before launching any817 service.
+The exact private startup instructions were supplied to the owner.
+
+After manual startup, run native `admin-ai-ops.spec.ts` with `SKIP_SEED=1`,
+then scoped native parity. Preserve the existing real custom credential, keep
+bot automation off and restore the unused-provider stub fixture. A read-only
+preflight snapshot confirmed all three bot automation flags remained false.
+Do not replace native evidence with older runtime results. Only after these
+gates and report updates should the PR become ready/DONE.

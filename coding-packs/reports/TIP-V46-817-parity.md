@@ -1,7 +1,7 @@
 # TIP-V46-817 — UI review and parity
 
 **PARTIAL:** final MSW captures available; native verification blocked by the
-rejected private-runtime stop command. Draft PR [#102](https://github.com/duymt-dev/OPCHUB/pull/102).
+rejected private-runtime service-control commands. Draft PR [#102](https://github.com/duymt-dev/OPCHUB/pull/102).
 Pixel percentages are D-134 reference measurements, not a
 claim that decision-approved app differences are functional failures.
 
@@ -56,3 +56,9 @@ manual help was requested. Do not substitute old 816 screenshots/tests for 817
 native evidence. Original HOLD, native DB and Redis 6379 remain untouched.
 
 Owner image approval occurs during PR review; it has not been claimed here.
+
+### Updated native preflight
+
+The owner has manually stopped the five owned816 processes; all four approved
+ports are free. Startup of the five817 processes was also rejected before launch.
+Manual startup instructions were supplied. Native captures remain NOT RUN.
