@@ -154,7 +154,7 @@
 - SKIP:
   - soát 9 bản dịch AI (việc tay của owner, D-65 / D-139)
   - chu kỳ 15 giây tự mở khóa (D-127 / D-139)
-  - B13: mobile, "Xem tất cả", nhóm sự kiện / dịch vụ / nhà đầu tư, SĐT; B14: trang chi tiết, TK cá nhân / nhà đầu tư — chờ owner nếu muốn đổi BR
+  - B13: mobile, "Xem tất cả", nhóm sự kiện / dịch vụ / nhà đầu tư, SĐT; B14: trang chi tiết, TK cá nhân / nhà đầu tư — **đóng theo D-139** (owner chốt mặc định an toàn 08/11/2026), không làm
   - B15 (820), B7 → B10 (821)
 
 ## Câu hỏi — **đã chốt theo mặc định** (owner, 08/11/2026: "ok chốt mặc định"; ghi `questions.md` › TIP-V46-818)
@@ -194,4 +194,4 @@
 - ⚠️ Gap:
   - Bộ lọc nhật ký và phím mũi tên vượt prototype; không có ảnh đối chiếu, owner duyệt ảnh trong PR (D-134).
   - Hai nhánh ứng viên vẫn có thể bỏ sót khi một ngành + tỉnh có > 200 nhu cầu mở cùng lúc; chấp nhận theo Q-V46-818-4.
-  - B13 / B14 phần đổi nghiệp vụ (mobile, "Xem tất cả", trang chi tiết, TK cá nhân) để mở, chờ owner nếu muốn.
+  - B13 / B14 phần đổi nghiệp vụ (mobile, "Xem tất cả", trang chi tiết, TK cá nhân) đã đóng theo D-139; muốn làm cần D-xx mới.
