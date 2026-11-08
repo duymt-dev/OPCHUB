@@ -1108,3 +1108,5 @@ both gates; owner real custom key untouched. The private817 runtime remains HOLD
   package code is already paid and must never be reused for the renewal QR.
 - P0 diagnostic private dev:3 occupied accounts,0 suspicious inherited regions;
   counts only, not a production audit. Owner must check production separately.
+
+- Q821-12 (optional, no owner response): literal “mã TV” conflicts with prototype/current visible affiliate code. Preserve visible affiliate code and label CSV “Mã affiliate” under D-89/SPEC17; not recorded as owner approval. Final parity measured20 pairs, plus2 app-only retired-bank captures; see TIP-V46-821-parity.md.

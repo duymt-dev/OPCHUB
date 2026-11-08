@@ -1,0 +1,61 @@
+{
+  "source": "c5848a37",
+  "lint": "PASS (8 tasks)",
+  "typecheck": "PASS (8 tasks)",
+  "unit": {
+    "passed": 2265,
+    "existingSkipped": 2
+  },
+  "depcheck": "PASS (both graphs)",
+  "integration": {
+    "source": "3bdce39b",
+    "passed": 2315,
+    "db": 145,
+    "server": 2170,
+    "cache": 0,
+    "skipped": 0,
+    "seconds": 1760.411
+  },
+  "securityFollowup": {
+    "source": "e348e586",
+    "targetedIntegrationPassed": 11
+  },
+  "builds": {
+    "native": {
+      "tasks": 3,
+      "cache": 0,
+      "seconds": 48.99
+    },
+    "msw": {
+      "tasks": 3,
+      "cache": 0,
+      "seconds": 48.567
+    }
+  },
+  "fullMswE2e": {
+    "startTime": "2026-11-08T20:07:30.970Z",
+    "duration": 996664.6950000001,
+    "expected": 403,
+    "skipped": 5,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "nativeE2e": {
+    "passed": 6,
+    "seconds": 38.3
+  },
+  "standaloneNativePayeeJourney": "PASS, not counted as a seventh formal test",
+  "parity": {
+    "native": {
+      "pairs": 10,
+      "above3": 6
+    },
+    "msw": {
+      "pairs": 10,
+      "above3": 5
+    },
+    "rawExit": 1,
+    "reference": "D-134",
+    "functionalJourneyErrors": 0
+  }
+}

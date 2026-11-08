@@ -218,10 +218,10 @@
 | P-V46-GUEST-KPI | B15 complete store dashboard, independent guest-view KPI | 390 | 46.67% | ❌ chưa đạt | 390×3383 | 3a199fb4 |
 | P-V46-PUBLIC-CARD | Trang công khai · khối trong trình sửa | 1440 | 1.57% | ✅ đạt | 1136×250 | 3a199fb4 |
 | P-V46-PUBLIC-CARD | Trang công khai · khối trong trình sửa | 390 | 2.50% | ✅ đạt | 366×396 | 3a199fb4 |
-| P-V46-REG | Portal · Vùng của tôi | 1440 | 5.74% | ❌ chưa đạt | 1440×1944 | ef7934ff |
-| P-V46-REG | Portal · Vùng của tôi | 390 | 10.47% | ❌ chưa đạt | 390×3353 | ef7934ff |
-| P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 1440 | 1.27% | ✅ đạt | 1440×997 | ef7934ff |
-| P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 390 | 2.12% | ✅ đạt | 390×1635 | ef7934ff |
+| P-V46-REG | Portal · Vùng của tôi | 1440 | 4.66% | ❌ chưa đạt | 1440×1944 | c5848a37 |
+| P-V46-REG | Portal · Vùng của tôi | 390 | 3.00% | ❌ chưa đạt | 390×3067 | c5848a37 |
+| P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 1440 | 1.27% | ✅ đạt | 1440×997 | c5848a37 |
+| P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 390 | 2.12% | ✅ đạt | 390×1635 | c5848a37 |
 | P-V46-SEARCH | Topbar · global search | 1440 | 0.88% | ✅ đạt | 1440×900 | 6c5800b4 |
 | P-V46-SEARCH | Topbar · global search | 390 | 0.11% | ✅ đạt | 390×844 | 6c5800b4 |
 | D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 2.45% | ✅ đạt | 1440×1344 | ef7934ff |
@@ -248,14 +248,14 @@
 | D-11 | Thành viên · khóa hàng loạt | 390 | 3.17% | ❌ chưa đạt | 390×2810 | 25a1eec |
 | D-12 | Modal gán vào nhóm | 1440 | 0.98% | ✅ đạt | 1440×900 | 25a1eec |
 | D-12 | Modal gán vào nhóm | 390 | 0.71% | ✅ đạt | 390×844 | 25a1eec |
-| D-120-GCFG | Cấu hình Giám đốc Vùng | 1440 | 2.51% | ✅ đạt | 1440×1274 | ef7934ff |
-| D-120-GCFG | Cấu hình Giám đốc Vùng | 390 | 4.41% | ❌ chưa đạt | 390×3275 | ef7934ff |
+| D-120-GCFG | Cấu hình Giám đốc Vùng | 1440 | 2.51% | ✅ đạt | 1440×1274 | c5848a37 |
+| D-120-GCFG | Cấu hình Giám đốc Vùng | 390 | 4.41% | ❌ chưa đạt | 390×3275 | c5848a37 |
 | D-120-GCFG-RO | Cấu hình GĐ Vùng · Kế toán chỉ xem | 1440 | 2.14% | ✅ đạt | 1440×1395 | ef7934ff |
 | D-120-GCFG-RO | Cấu hình GĐ Vùng · Kế toán chỉ xem | 390 | 3.91% | ❌ chưa đạt | 390×3401 | ef7934ff |
-| D-120-GDV | GĐ Vùng · Sổ chia sẻ | 1440 | 2.12% | ✅ đạt | 1440×900 | ef7934ff |
-| D-120-GDV | GĐ Vùng · Sổ chia sẻ | 390 | 4.05% | ❌ chưa đạt | 390×1305 | ef7934ff |
-| D-120-GDV-OPEN | GĐ Vùng · Khoản ghi nhận Miền Bắc | 1440 | 10.66% | ❌ chưa đạt | 1440×1429 | ef7934ff |
-| D-120-GDV-OPEN | GĐ Vùng · Khoản ghi nhận Miền Bắc | 390 | 5.73% | ❌ chưa đạt | 390×1920 | ef7934ff |
+| D-120-GDV | GĐ Vùng · Sổ chia sẻ | 1440 | 2.11% | ✅ đạt | 1440×900 | c5848a37 |
+| D-120-GDV | GĐ Vùng · Sổ chia sẻ | 390 | 4.04% | ❌ chưa đạt | 390×1305 | c5848a37 |
+| D-120-GDV-OPEN | GĐ Vùng · Khoản ghi nhận Miền Bắc | 1440 | 10.66% | ❌ chưa đạt | 1440×1429 | c5848a37 |
+| D-120-GDV-OPEN | GĐ Vùng · Khoản ghi nhận Miền Bắc | 390 | 5.73% | ❌ chưa đạt | 390×1920 | c5848a37 |
 | D-13 | Thành viên · menu dòng | 1440 | 2.16% | ✅ đạt | 1440×900 | 25a1eec |
 | D-13 | Thành viên · menu dòng | 390 | 3.79% | ❌ chưa đạt | 390×844 | 25a1eec |
 | D-14 | Thành viên · đã khóa 1 dòng | 1440 | 1.71% | ✅ đạt | 1440×1027 | 25a1eec |

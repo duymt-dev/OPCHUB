@@ -1,233 +1,73 @@
-# COMPLETION REPORT — TIP-V46-821
+# TIP-V46-821 — completion report
 
-**STATUS: IN-PROGRESS — not DONE.** P0 implemented and regression tests collected;
-B8/B7/B10 and the final full gate/browser/visual closure remain to be implemented.
+**DONE — implementation and functional gates complete.** Source Git commit: **c5848a37**; final evidence/documentation follows in the PR head. [PR #106](https://github.com/duymt-dev/OPCHUB/pull/106), base **dev**. No merge/main release or auto-merge performed. No CI checks were registered on this dev PR at verification; local green gates are not described as green CI.
 
-## Scope / owner decisions
+## Scope and approved decisions
 
-- Branch `feature/TIP-V46-821-finance-region`, approved TIP/defaults `502d2cc2`,
-  based on dev `714a1765` (TIP820 merged). Sequential build, no agents spawned.
-- Q821-1..10 approved as recorded in TIP; no repeated business questions.
-- Owner confirmed private812 dev/private801 integration, Memurai6381 DB3/DB2,
-  private820→821 rolling restart when needed and disposable821 chain DB.
-  Original DB/Redis6379/native HOLD remain outside command targets.
-- B9 closed without code: no refund/negative-share/reversal feature, NR-R01/D-110.
-- No release/main merge; user requested feature PR into dev only.
+D-139 B7/B8/B9/B10, sequential implementation from dev714a1765. Q821-1 through10 approved in TIP; Q821-11 explicitly approved by owner: expiry creates/reuses a new pending renewal at current price and a new GV code, atomically with mail/outbox. Old paid code never reused; no activation until real payment and existing review flow. No agents spawned. B9 reversal/refund/negative share remains closed without code under NR-R01. B6/B17/B18 and additional live AI-provider verification remain outside scope.
 
-## P0 — payee isolation
+CSV naming clarification Q821-12 has no owner response at report time. Baseline-preserving interpretation: export the existing visible affiliate code (ANOPC…), matching current table, prototype and SPEC17 same-visible-columns rule; header says “Mã affiliate”, not a falsely labelled TV code. This is not recorded as owner-approved. No money or permission rule depends on it.
 
-- Regression written first, executed against unchanged production: failed at the
-  assertion that a replacement director must have no bank. Red log retained at
-  `test-results/v46-821-p0-red.log` (1 failed,7.85s; synthetic fixture account only).
-- Revocation records its snapshot, saves a valid retired bank by `(region,userId)`
-  in the same transaction and clears slot bank fields. Appointment always clears
-  the slot account, never guesses/reuses the old payee account.
-- Current recipient uses only slot account; retired recipient uses explicit
-  ledger before prior payout/revocation snapshot. Summary uses the same ledger
-  precedence, avoiding a UI which still displays noBank after an audited write.
-- New strict PUT `admin/regional-directors/:region/payees/:userId/bank` checks
-  `affiliate.payout`, retired relationship or pending shares, locks regional slot,
-  saves and audits atomically with last4 only. Current-director bank remains the
-  existing regional configuration flow, not the retired-payee route.
-- Admin noBank retired-payee button/dialog reuses existing bank fields and explicit
-  Save; mutation invalidates regional share summary. MSW matches clearing/ledger
-  behavior and preserves only valid bank snapshots across its existing bridge.
+## Delivered / acceptance evidence
 
-### Technical file-list connections
+### P0 — bank isolation
 
-- Existing Admin director route is `/admin/gdv`, not `/admin/regional-directors`.
-  Dedicated thin payee-bank controller preserves all old paths while implementing
-  exactly the new TIP path, without aliasing unrelated existing endpoints.
-- Added repository isolates payee-ledger queries; summary repository must read
-  ledger too. Account Prisma relation and userId FK index are required for the
-  new table. Audit manifest adds the actual new action, no exemption/test weakening.
-- New separate mock module avoids cycles; existing bank snapshot helper validates
-  empty accounts before bridge persistence. Admin currently has only vi domain
-  catalog (other locales reuse it outside auth); new label follows that structure.
+Regression first failed against unchanged code; isolated first fix5b06f3ec. Revoke snapshots valid retired bank into regional_payee_banks and clears the slot in the same transaction; appoint never inherits predecessor bank. Explicit retiree ledger takes precedence over old payout/revoke snapshots. New strict PUT /admin/regional-directors/:region/payees/:userId/bank uses affiliate.payout, eligible relationship checks, regional lock and last4-only audit. Existing /admin/gdv routes preserved. Admin dialog saves only on explicit Save; MSW mirrors lifecycle/ledger behavior. Focused original/new regression7 integration, mock9, dialog1 passed. Real native synthetic retired-payee journey confirms save200/audit/cleanup/incumbent invariance at1440/390: [evidence](evidence/v46-821-native-payee.json). Private dev diagnostic found3 occupied bank slots and0 suspicious inherited slots; **not a production audit**. Owner must inspect production for historical revoke/reappoint incidents; migration never guesses incumbent ownership.
 
-### Evidence so far
+### B8 — automatic revocation
 
-- Real P0 + existing payout integration:2files/7cases PASS (14.32s), including
-  new-director409 until new bank, old payout retained, strict400/403/404/413 and
-  masked audit. Dialog focused unit1/1 PASS; shared new+legacy mock9/9 PASS.
-- Migration `20261120090000_v46_regional_payee_bank` deployed to both approved
-  private DBs.107 migrations empty-chain deploy →821 down →821 up: normalized
-  schema identical; owned chain DB dropped. No down/reset on reused DBs.
-- Create-only diagnostic again refused **pre-existing** modified applied checksum
-  `20261115090000_v46_regional_mail_kinds`; no reset, historical migration edit or
-  metadata repair. New additive SQL/down reviewed/authored separately.
-- Private dev data check:3 occupied slots with bank;0 suspected inherited regions.
-  Counts only, no account details printed; not a production audit and not proof
-  production has no affected director. Owner should inspect production if needed.
-- AI fingerprint before work: bot flags false, encrypted custom key retained,
-  real-provider call count127. No live-provider calls authorized/used by this TIP.
-- P0 commit gate: root lint8/typecheck8 PASS; full unit2248 passed+2 existing
-  adapter skips (6 tasks,5m5.156s); focused current mock9/9 and typed dialog1/1.
-  Depcheck both graphs PASS; no assertion or timeout relaxed. Initial test-only
-  matcher typing and required new-route audit-manifest entry were corrected.
+Account-owned bulk lifecycle projection, FOR SHARE plus regional NOWAIT locking, existing revokeWithin transition and atomic fee/bank/audit/outbox effects. Indefinite lock revokes, temporary lock does not, unlock never restores; deletion revokes without mail. Retired prior payable shares remain payable, vacant future region receives100% Media Soft. Real relay/processor5-case coverage includes replay, lock retry and outbox rollback. Commit b6585db3.
 
-## Remaining
+### B7 — local signed QR and fundraising expiry
 
-B8 automatic revocation, B7 mail QR /
-fundraising reminders, B10 logger/paged affiliates/CSV; SQL plan evidence, full
-lint/typecheck/unit/integration/depcheck/build/E2E/parity, final report, clean
-commit/push and review PR into dev. No claim of task completion at this stage.
+Approved MIT qrcode1.5.4 plus dev types1.5.6; local320px PNG, no remote QR API. MAIL_QR_SECRET in examples/Zod, mandatory production; domain-separated JWT fallback only dev/test. Signed canonical HMAC-SHA256 target, constant-time check,30-day expiry. Public image route60/IP/min, private cache; invalid/tampered/expired/paid/unknown404. Fee validUntil anchor invalidates old renewals, D1 image only; text bank fallback remains. T-14 current renewal price/end date enriched, expired fundraising adds new pending request/code and mail/inapp intent atomically, batched200 with locks/unique-open guard, existing pending reuse and paid/review exclusions. No automatic activation or extra milestones. Focused8 integration; independent ZXing-C++ decodes generated synthetic QR exactly ([proof](evidence/v46-821-qr-decode.json)); OpenCV alone did not detect it, so no false decoder claim.
 
-## B8 progress
+Follow-up e348e586 masks QR bearer in Pino url/originalUrl/params/query, error paths and referer. Native404 probe confirms marker absent and health200 ([proof](evidence/v46-821-native-log-redaction.json)); targeted security/mail/client-log integration11/11. Email clients blocking images still have textual transfer data. Production must configure a stable MAIL_QR_SECRET before deployment.
 
-- P0 committed/pushed separately as `5b06f3ec` before starting B8.
-- Account lifecycle port has optional deletion effect, dispatched by the real
-  AccountProcessor after durable session invalidation. Other domains' deletion
-  behavior is not broadened. Regional effect registers via existing registry.
-- Account-owned public directory bulk reads/locks lifecycle snapshots; regional
-  repository bulk locks eligible occupied slots NOWAIT. At most the three fixed
-  permanent slots use the original transactional revoke/fee/bank/audit/outbox
-  transition; no unbounded per-user query loop or cross-domain repository read.
-- Indefinite lock only; temporary lock retained; deletion always revokes. System
-  actor/role are literal `system`. Optional reason remains legacy-compatible;
-  absent reason is manual in mail/notification rendering. Deleted accounts get
-  history only, never revoked mail. Unlock does not appoint.
-- Real scoped relay tests execute production Account/Regional processors,
-  actual DB leasing/mark/backoff and replay, not Prisma mocks or unrelated old
-  outbox. Initial B8+legacy appointment19/19 PASS; final expanded B8 suite5/5
-  PASS including transactional rollback (7.06s). Root lint8/typecheck8 PASS,
-  full unit2249+2 existing skips PASS (4m14.275s), depcheck both graphs PASS.
+### B10 — bounded logger, regional paging/export
 
-## Additional owner-approved B7 connection
+Shared browser logger factory and thin app facades preserve local reportError; beacon max10/min/tab, fixed messages/allowlisted metadata, no query/stack/body/PII. Public strict endpoint20/min/IP, optional token verifies current auth/lock/version, warn/client label,204, no DB/Sentry. Backend current director relationship, active/nondeleted checks, no role-name authorization. Affiliate keyset50/page, backward-compatible first50 and more,24-month table unchanged. Order share DESC/name ASC/id ASC, validated bigint cursor; covering index plus LATERAL limited identity reads. No OFFSET. Aggregate rank is recomputed: **not** a claim of physical seek on a stored aggregate. CSV1000-row batches/cap20000+note, BOM/formula escaping, visible identity/province/statistics only, no email/phone, audited actual member actor. UI load more/retry/CSV,10 catalogs and MSW. Native130-row50/50/30 integration, export/audit/permissions, unit20k cap and browser mobile/read-only tests. [Query plans](TIP-V46-821-query-plans.md).
 
-- Q821-11 approved: expired paid GV code cannot be reused for a new payment.
-  Expiry job creates/reuses a **new pending renewal request with a new code**
-  and current price before sending its QR in the same transaction. It never
-  activates/extends without actual bank receipt. Owner explicitly approved
-  “Duyệt tạo khoản chờ gia hạn mới khi hết hạn”. No QR may target the old paid code.
+## Gate results and provenance
 
-## B7 progress
+[Machine-readable summary](evidence/v46-821-gates.json). Actual local logs retained under test-results/v46-821-*. No claim every gate ran at one SHA.
 
-- Locally rendered PNG320x320/M via approved pinned qrcode1.5.4 (MIT), no QR/image API.
-  First-party HMAC30day URL, strict shared token schema, production MAIL_QR_SECRET
-  required (>=32 chars), dev/test domain-separated JWT-key fallback. URL credentials
-  are removed from access logs by a narrowly scoped request serializer.
-- Domain resolvers read current invoices without mail->project/fee circular imports.
-  Fee PK is userId: signed expiry anchor identifies the unpaid renewal occurrence;
-  payment/new expiry invalidates its image. D1 only adds image; bank/text/OPCHUB
-  fallback remains. Malformed/tampered/expired/unknown/paid targets all return404.
-- T14 now includes project/date/current renewal price and no QR. Expiry transition,
-  new pending GV request, mail and in-app outbox are atomic. Project lock plus
-  unique open-request constraint and bulk sequence allocation prevent duplicate codes;
-  pre-existing pending requests are reused. No activation or extension before receipt.
-  Rejected paid requests remain blocked under D-113 rather than charged again.
-- Mail kind fundraising_expired migration is additive; its down retains mail history.
-  108 migrations deployed from empty disposable chain DB; both new821 migrations
-  down/up produce identical normalized schema; temporary DB dropped.
-- Final B7 integration3files/8cases PASS, including pending-code reuse through real
-  member start(), rollback on mail failure and concurrent expiry workers. Root
-  lint8/typecheck8, unit2254 passed+2 pre-existing adapter skips (6m42.564s),
-  depcheck both graphs PASS. One typecheck invocation omitted frontend mock/API env
-  and failed config validation; rerun with explicit MSW env passed, no code exemption.
-- Independent local ZXing-C++ decoder read generated synthetic PNG and reproduced
-  the exact EMVCo payload (hash/dimensions evidence), not merely PNG headers or an
-  encoder-to-itself comparison. OpenCV could not detect this valid code; independent
-  ZXing verification succeeded without adding any decoder dependency to the app.
-- Technical extra files: resolver registry/ports preserve domain ownership;
-  bulk renewal repository/delivery isolate approved Q821-11 from legacy scheduler;
-  account directory supplies bulk contacts; masked access logger protects signed URL;
-  Admin mail-kind label and enum schema expose the actual new kind.
+| Gate | Final result | Source / evidence log |
+|---|---|---|
+| pnpm lint | PASS,8 tasks | c5848a37; ui-lint |
+| pnpm typecheck | PASS,8 tasks | c5848a37; ui-type |
+| pnpm test | 2265 passed,2 existing adapter skips | c5848a37; ui-unit;6tasks,4cached |
+| pnpm test:int | 2315/2315 (DB145+server2170),0skip/cache;29m20.411s | 3bdce39b; full-int3 |
+| Post-integration security change | targeted integration11/11 plus root lint/type/unit/depcheck | e348e586; security-* |
+| pnpm depcheck | PASS, both graphs | c5848a37; ui-dep |
+| Forced native/MSW builds | PASS,3 tasks each,0cache;48.990/48.567s | c5848a37; build-*-verified |
+| Full MSW E2E | 403 passed,5 existing guarded skips,0fail/flaky;16.6min | c5848a37; msw-e2e-final |
+| Focused native E2E | 6/6;38.3s, no seed/reset | c5848a37; native-e2e-verified |
+| Retired-bank standalone browser journey | PASS, both viewports; separate from formal6 tests | c5848a37; native-payee |
+| Migration empty chain/down/up | 109 migrations,3 new down/up, schema identical; disposable DB dropped | [proof](evidence/v46-821-final-chain.json) |
+| Parity | 20 pairs measured,0journey errors; raw pixel exit1, D134 reference | [paired images/classification](TIP-V46-821-parity.md) |
 
-B10 is in progress. Full final integration/build/E2E/parity and report closure remain.
+Full integration preceded the log-only security hardening and final FE-only change; follow-up targeted integration covers security, final root unit/type/lint/build and both E2E lanes cover final UI. Integration was not rerun a second time after these narrow changes.
 
-## B10 progress
+## Failures found and resolved, not hidden
 
-- First-party Portal/Admin logger preserves local reportError, sends at most10
-  beacons/minute/tab, strips query and dynamic route segments, uses fixed safe
-  operation labels instead of forwarding arbitrary Error.message/stack/context.
-  Server strict public endpoint throttles20/minute/IP, defensively sanitizes again,
-  warns with client label; optional bearer session must pass signature and current
-  Redis lock/version checks. No database log sink, Sentry or third-party transport.
-- Regional affiliates retain historical financial scope/order, keyset50-page API,
-  legacy first50/more, existing24-month cap. Current director relationship plus
-  active/not-deleted status is checked from DB; non-director/locked/revoked403.
-- CSV batches1000/cap20000, BOM/formula-safe, no contact columns; actual member
-  actor audited under regional.affiliates.export. UI loads more with preserved rows
-  on error and explicit download; all10 catalogs and MSW mirrors updated.
-- Province display/CSV reuses D-128 earliest group through late join, not business
-  registration province. Existing table code remains affiliate code, unchanged.
-- Integration2files/6cases PASS (130-row paging50/50/30, strict cursor/limit,
-  CSV/BOM/no contacts/audit, real auth permissions and logger throttle). Focused
-  FE6/6, shared mock7/7 and backend hard-cap1/1 PASS. Root lint8/typecheck8,
-  unit2262 passed+2 existing adapter skips (6m21.675s), depcheck both graphs PASS.
-- All109 migrations from empty disposable DB, allthree new821 down/up, identical
-  normalized schema; temporary DB dropped. New index deployed to private test/dev.
-  Real10k-row EXPLAIN uses actual production builders; scope index-only, zero heap
-  fetches in vacuumed state. Aggregate ranking still requires scoped aggregation,
-  not a claimed seek on stored totals. See query-plan report/raw JSON.
-- Technical extras: shared browser factory/export avoids divergent logger security;
-  API download helper handles binary CSV separately from existing JSON parser;
-  separate paging service/projection and covering-index migration avoid expanding
-  existing domain files. System HTTP sink is REST-only; original housekeeping core
-  behavior is unchanged. New browser E2E is authored; execution remains pending.
+- New payee FK exposed demo reset child ordering: delete child ledger before slots/users; synthetic seed regression10/10. Private native dev never reset/reseeded.
+- Initial full integration exposed existing plan/exact deleted-identity assertions: restored production indexed LATERAL reads and omitted absent province. Assertions/plan constraints unchanged. A diagnostic long-running worker held the old cursor schema; fresh run proved overflow400. Final full integration green.
+- Initial MSW run401passed/2failed: old zero-button expectation conflicted with approved CSV. Updated only exact Download1 and Save/Payout0 expectations. Final403passed.
+- Actual mobile month wrapping was fixed, not excused as data. No prototype edits/masks/threshold relaxation; [parity report](TIP-V46-821-parity.md) distinguishes approved actions and fixture/canonical ledger differences from defects.
+- An unquoted PowerShell reporter argument caused CLI parsing error before execution; quoted argument corrected.
+- Prisma create-only diagnostic encountered pre-existing applied checksum mismatch20261115090000_v46_regional_mail_kinds. No old migration/metadata repair/reset. New additive SQL reviewed independently; deploy and entire109 migration chain passed.
 
-Code milestone only. Final full integration, both builds, full MSW E2E, focused
-native E2E/parity and final evidence/report/PR readiness remain; NOT DONE yet.
+## Migration / operation safety
 
-## Full-gate seed connection repair
+New migrations20261120090000_v46_regional_payee_bank,20261120091000_v46_fundraising_expired_mail,20261120092000_v46_region_affiliate_projection all deployed to approved private dev/test only; down tested only on disposable opchub_v46_821_chain_test. Payee ledger PK(region,user_id) and user FK index; historical covering index and regional projection partial covering index. No foreign-key bypass, production planner forcing or production timeout increases. Existing /admin/gdv behavior and domain ownership preserved with separate controllers/resolvers/repositories.
 
-The first root integration attempt stopped in DB seed tests: the new P0 payee-bank
-FK correctly prevents deleting a parent slot before its ledger child. Fixed only
-approved demo reset ordering (delete new ledger before slots/users) and added a
-regression that seeds a synthetic child before resetting. Existing assertions,
-DB guards and production FKs remain unchanged. Focused seed integration10/10,
-DB lint/typecheck PASS. This reset was executed only on approved integration DB,
-never on private native dev/HOLD. Full root integration must be rerun.
+Native private runtime now serves821: API4310/socket4311/Portal3710/Admin3711, DB opchub_v46_812_dev, Memurai6381 DB3. Integration opchub_v46_801_test/DB2. Original5432/6379/6381 and original HOLD3980/3981 PIDs/start times unchanged ([proof](evidence/v46-821-hold.json)); no claim of old API4300 continuity, none was listening at preflight. Current private health/login endpoints200; runtime remains HOLD, no shutdown. Synthetic payee fixture removed, incumbent bank unchanged; immutable audit intentionally preserved.
 
-## Regional regression closure before final fresh full run
+AI fingerprint and127-call count unchanged, encrypted custom key retained, all3bot flags disabled: [before](evidence/v46-821-ai-before.json), [after](evidence/v46-821-ai-after.json). **Zero live AI calls in821.** No credentials/real bank accounts committed.
 
-- Full root attempt2 ran all145 DB +2170 server cases (31m20.194s), with3 failures.
-  Existing query-plan assertions caught normal identity joins scanning affiliates;
-  restored narrow LATERAL LIMIT1 lookups in production, no assertion/fixture changes.
-- The exact deleted-account row assertion also caught an unnecessary new empty
-  province property. Absent province is now omitted in both native/mock responses,
-  preserving legacy shape; CSV still writes a blank province cell. Assertion kept.
-- Newly added malicious bigint cursor test observed the long-running worker's old
-  schema during that diagnostic run. Fresh focused execution verifies overflow400
-  with bounded shared schema (not SQL500), no status expectation relaxed.
-- Fresh5-file regional integration14/14 PASS (30.05s), including unchanged deployed
-  plan/limits,130-row paging/CSV/permissions and P0/B8. Shared schema/mock8/8 PASS.
-  Updated10k actual-query plans captured after the identity fix; fixture cleaned.
-- One final fresh root integration run and closure/build/E2E/parity remain. No DONE
-  claim based on the failed full run or the focused rerun alone.
+## Verify / handoff
 
-## Final core gates and log-hardening follow-up
+Run pnpm lint, pnpm typecheck, pnpm test, pnpm test:int, pnpm depcheck and the repository native/MSW build+Playwright configurations against explicitly approved isolated targets. Browse My Region at1440/390, load/export and verify no write controls; open noBank historical payee as authorized Admin and explicitly save; exercise indefinite/temporary lock/deletion and signed QR invalidation. Inspect the20 linked pairs and2 app-only dialog images. Never run down/reset against HOLD.
 
-- Fresh full root integration on3bdce39b:145 DB +2170 server =2315/2315 PASS,
-  no skipped cases or cache,29m20.411s. Final root lint8/type8/unit2263+2 existing
-  adapter skips/depcheck and forced native+MSW builds all PASS.
-- Private runtime rolled820->821; original PG5432/Redis6379/Memurai6381 and old
-  MSW HOLD3980/3981 preserved. All5 private HTTP health/login checks return200.
-- Native log inspection then identified Pino also copies the signed path into
-  params/query. Extended the existing new QR sanitizer to cover those copies and
-  originalUrl, including case-insensitive routing; error-filter paths use the same
-  helper. Referer is redacted so following a signed image cannot echo it later.
-  No endpoint/error status or unrelated path semantics changed.
-- Post-hardening root lint8/type8/unit2264+2 existing skips/depcheck PASS;
-  fresh mail/error-envelope/client-log integration3files/11cases PASS (16.95s).
-  Existing assertions/timeouts were kept. Builds/runtime and browser gates are
-  being refreshed; no all-gates/single-SHA/DONE claim yet.
-
-## Browser/parity UI correction
-
-- First full MSW run:401 passed,5 pre-existing skips,2 failures (16.9m), both the
-  old read-only test's blanket zero-button assertion. TIP821 intentionally adds
-  the read-only CSV export. Updated exactly that expectation to one named export
-  and still explicitly zero save/payout actions; all other assertions kept.
-- Native final build focused journeys3/3 PASS, no reset/seed. Native signed-URL
-  log probe proves URL/params/query/referer contain no synthetic bearer marker.
-- Initial native parity measured14 pairs (the ID selector also includes related
-  prefix scenarios):8 under3%,6 above. Actual images revealed a pre-existing
-  mobile month column squeezed to44px. Fixed only the three fixed widths to
-  prototype150/120/120, leaving90px at the480px minimum and a flexible desktop
-  month column. Added unit and real-browser width regression. No masks/baselines
-  or threshold changes. Province remains in CSV/API, not added to prototype row text.
-- Post-UI root lint8/type8/unit2265+2 existing skips/depcheck PASS. Source changes
-  are confined to the regional components and their browser regression; no ledger,
-  configuration or fee mutations. Both builds/full MSW/native/parity are refreshed
-  next; previous raw parity measurements are not presented as final results.
+Ready for owner review of PR106 into dev. Release dev→main remains a separate owner-reviewed PR under D-139; no auto-merge enabled.
