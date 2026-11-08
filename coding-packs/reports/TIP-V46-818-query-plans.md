@@ -10,18 +10,20 @@ planner forcing, disabled Seq Scan, changed statistics target or index hints.
 
 | Filter | ID-page access | Final payload | Execution |
 |---|---|---|---|
-| None | Index Only Scan `audit_logs_created_at_id_idx`,51 IDs | PK late join |0.976ms |
-| tag=member | Index Only Scan `audit_logs_tag_created_at_id_idx`,51 IDs | PK late join |0.729ms |
-| actorId=actor-3 | Index Only Scan `audit_logs_actor_id_created_at_id_idx`,51 IDs | PK late join |0.830ms |
-| actorId=system | Planner chose existing timestamp index,969 rows filtered before51 IDs | PK late join |0.720ms |
-| tag+actor+30 days | Planner chose existing timestamp index,3,241 rows filtered before51 IDs | PK late join |1.513ms |
+| None | Index Only Scan `audit_logs_created_at_id_idx`,51 IDs | PK late join |1.004ms |
+| tag=member | Index Only Scan `audit_logs_tag_created_at_id_idx`,51 IDs | PK late join |0.744ms |
+| actorId=actor-3 | Index Only Scan `audit_logs_actor_id_created_at_id_idx`,51 IDs | PK late join |0.808ms |
+| actorId=system | Planner chose existing timestamp index,969 rows filtered before51 IDs | PK late join |0.741ms |
+| tag+actor+30 days | Planner chose existing timestamp index,3,241 rows filtered before51 IDs | PK late join |1.620ms |
 
 Both new equality-first indexes are available and independently used. For the
 combined/system synthetic distributions the cost-based planner chose the old
 ordered index instead; this is disclosed rather than claiming a new-index seek
 or Index Only Scan that did not occur. No audit Seq Scan; LIMIT precedes payload
 fetch. These are fixture observations, not a production latency/SLO claim.
-Raw JSON: ignored `test-results/v46-818-audit-plans.json`.
+Raw JSON: [tracked actual rerun plans](evidence/v46-818-audit-plans.json).
+The initial ignored raw file was lost in external artifact cleanup; the same
+actual query builder and TEMP-fixture procedure were rerun to preserve evidence.
 
 ## Need candidates
 

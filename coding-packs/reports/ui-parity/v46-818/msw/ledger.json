@@ -1,0 +1,76 @@
+{
+  "implementation": "6c5800b4",
+  "backendImplementation": "4f90b24e",
+  "lane": "msw",
+  "harnessPassed": 4,
+  "capturesCompleted": 8,
+  "rawTestsPassed": 10,
+  "rawThresholdFailures": 2,
+  "exitCode": 1,
+  "rows": [
+    {
+      "id": "P-01",
+      "name": "Dashboard",
+      "viewport": 1440,
+      "diffPct": 1.00510382350005,
+      "size": "1440×1113",
+      "sha": "6c5800b4"
+    },
+    {
+      "id": "P-01",
+      "name": "Dashboard",
+      "viewport": 390,
+      "diffPct": 2.9669691145577257,
+      "size": "390×1721",
+      "sha": "6c5800b4"
+    },
+    {
+      "id": "P-V46-SEARCH",
+      "name": "Topbar · global search",
+      "viewport": 1440,
+      "diffPct": 0.9951388888888888,
+      "size": "1440×900",
+      "sha": "6c5800b4"
+    },
+    {
+      "id": "P-V46-SEARCH",
+      "name": "Topbar · global search",
+      "viewport": 390,
+      "diffPct": 0.10936930368209989,
+      "size": "390×844",
+      "sha": "6c5800b4"
+    },
+    {
+      "id": "D-75",
+      "name": "Cài đặt · Nhật ký hoạt động",
+      "viewport": 1440,
+      "diffPct": 12.270409494001044,
+      "size": "1440×1065",
+      "sha": "6c5800b4"
+    },
+    {
+      "id": "D-75",
+      "name": "Cài đặt · Nhật ký hoạt động",
+      "viewport": 390,
+      "diffPct": 10.536893964841564,
+      "size": "390×1832",
+      "sha": "6c5800b4"
+    },
+    {
+      "id": "D-V46-SEARCH",
+      "name": "Topbar · global search Admin",
+      "viewport": 1440,
+      "diffPct": 0.5063271604938272,
+      "size": "1440×900",
+      "sha": "6c5800b4"
+    },
+    {
+      "id": "D-V46-SEARCH",
+      "name": "Topbar · global search Admin",
+      "viewport": 390,
+      "diffPct": 0.34907036091870214,
+      "size": "390×844",
+      "sha": "6c5800b4"
+    }
+  ]
+}
