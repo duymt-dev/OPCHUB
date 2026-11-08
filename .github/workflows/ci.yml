@@ -44,4 +44,4 @@ jobs:
       - name: Run Tests
         # Each Vitest process already parallelizes files. Avoid competing worker
         # pools across packages on the shared runner; keep every test and timeout.
-        run: pnpm test --concurrency=1
+        run: pnpm exec turbo run test --concurrency=1
