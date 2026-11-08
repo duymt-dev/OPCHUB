@@ -1058,9 +1058,12 @@ both gates; owner real custom key untouched. The private817 runtime remains HOLD
   custom build artifacts and closed ignored logs as well; owned818 builds were
   forced/recovered. Do not infer uninterrupted old HOLD assets or fabricate lost
   logs/snapshots. Details and surviving evidence are in the completion report.
-- Pending scope question: legacy `moderation/violations.int.spec.ts` assumes
+- Resolved scope question: legacy `moderation/violations.int.spec.ts` assumes
   precisely `{autoLockDays:7}`. Full server2126/2127 leaves one mismatch because
   the earlier AI suite's merge-based restore retains `ai:false`. Unchanged
   ordered reproduction confirms AI7/7 then legacy4/5. Proposed snapshot/reset/
-  exact restore of only that fixture awaits owner approval; no production or
-  assertion/timeout edit made. Full MSW confirmation397 passed+5 existing skips.
+  exact restore of only that fixture was approved ("làm nốt đi") and implemented
+  in5c562e14. No production/original assertion/timeout edit; added cleanup equality
+  proves exact restoration including prior optional keys/timestamp or absence.
+  Ordered AI7/7 then legacy5/5 PASS; final root integration2271/2271, no skip/cache.
+  Full MSW confirmation397 passed+5 existing skips. PR104 ready for owner review.

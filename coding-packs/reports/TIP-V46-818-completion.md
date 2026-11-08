@@ -1,18 +1,18 @@
 # COMPLETION REPORT — TIP-V46-818
 
-**STATUS: PARTIAL** — implementation, static/unit/build/browser gates and parity
-classification complete; full server integration has one reproducible legacy
-fixture-isolation failure awaiting scope approval. Not a DONE claim.
+**STATUS: DONE** — implementation and required functional gates complete;
+full integration2271/2271 PASS. Parity measurements classified under D-134/D-139,
+with paired images retained for owner review (not all raw pixel checks green).
 
 - Branch: `feature/TIP-V46-818-admin-log-search`, from dev merge `dee26a97`;
   approved TIP/decision documentation at `7c4f917c`.
 - Scope: D-139; B11 audit filters/shared region labels, B13 keyboard navigation,
   B14 candidate selection/cache invalidation/notification links.
-- PR: [#104](https://github.com/duymt-dev/OPCHUB/pull/104), draft while final full
-  integration closure remains. No merge or release to `main` is authorized by this execution.
+- PR: [#104](https://github.com/duymt-dev/OPCHUB/pull/104), base dev, ready for
+  review. No merge or release to `main` is authorized by this execution.
 - Implementation: `4f90b24e`; URL persistence correction `6c5800b4`, both pushed
   with normal hooks. Scoped fixture corrections `6143cd97` also pushed; they
-  do not change production.
+  do not change production. Final approved fixture isolation: `5c562e14`.
 
 ## Approved environment
 
@@ -94,7 +94,7 @@ fixture-isolation failure awaiting scope approval. Not a DONE claim.
 | Strong old need survives250 newer province-only candidates | Focused integration PASS |
 | Close/delete/store-save invalidation and Redis fallback | Focused integration PASS |
 | Encoded notification link | Focused real notification integration PASS |
-| Full regression | MSW397+5 existing skips PASS; integration2126/2127, one legacy fixture failure |
+| Full regression | MSW397+5 existing skips PASS; full root integration2271/2271 PASS |
 
 ## Actual verification so far
 
@@ -129,12 +129,23 @@ fixture-isolation failure awaiting scope approval. Not a DONE claim.
   `{autoLockDays:7}` but receives `{autoLockDays:7,ai:false}`. Running unchanged
   AI-moderation first (7/7 PASS), then unchanged violations (4/5) reproduces it:
   the AI suite restores through a merging service, leaving the optional AI key.
-  Proposed exact-row snapshot/default/restore isolation for the legacy fixture
-  is awaiting owner approval; no extra file was modified without that approval.
+  Owner subsequently approved finishing the narrow isolation ("làm nốt đi").
+  The suite snapshots the exact prior moderation row, deletes only that fixture
+  key for its absent-row/default tests, then restores the exact value/timestamp
+  (or absence) in finally. A new cleanup equality assertion verifies restoration;
+  all original assertions and timeouts remain unchanged. No production edit.
   Root Turbo stops on server failure, so the second full batch did not complete
   its DB task; the separate final private-DB rerun passed **144/144**,29 files,
   49.85s, exit0. Server+DB observations total2270 passed/1 failed, not a clean
   root `pnpm test:int` pass.
+- **Final closure on `5c562e14`:** ordered AI7/7 then legacy5/5 PASS,
+  including exact-row restoration assertion. Changed-file ESLint and server
+  typecheck PASS. Fresh **root `pnpm test:int` PASS**, no cache: DB144/144
+  (29 files), server2127/2127 (240 files), total **2271/2271**,2 successful
+  Turbo tasks,28m12.984s, exit0. No skipped integration cases, increased timeout,
+  removed assertion or relaxed production schema. Log: ignored
+  `test-results/v46-818-int-closure.log`. This supersedes the failed historical
+  integration attempts without erasing their diagnoses.
 - Full MSW recovery:396 passed,1 failed,5 existing skips. EV-R02 used a static
   upcoming-event fixture that expired after16h08/11. Owner approved fixing only
   this case's browser date to16/10 in both modes, retaining native preparation
@@ -189,7 +200,7 @@ fixture-isolation failure awaiting scope approval. Not a DONE claim.
   snapshots were later lost in external cleanup; do not claim that baseline
   covers the subsequent recovery runs or fabricate a replacement baseline.
   No test in this TIP calls real AI or intentionally changes its configuration.
-  Final metadata at19:00 confirms all three bot flags false, custom provider
+  Final metadata confirms all three bot flags false, custom provider
   enabled with an encrypted key, and zero provider/bot/AI-setting updates after
   17:45. [Safe metadata](evidence/v46-818-final-ai-metadata.json) contains no key.
 
@@ -220,8 +231,23 @@ fixture-isolation failure awaiting scope approval. Not a DONE claim.
 - Six Q-V46-818 defaults remain unchanged. No mobile search, all-results action,
   new result domains, phone search, need detail page, new recommendation audience,
   purge,15-second unlock cycle or settings-tab redesign.
-- Remaining: approval and narrow isolation of the one legacy moderation fixture,
-  focused reproduction/regression plus a clean full integration rerun, then
-  final DONE report/task/debt updates and ready PR104. No production defect is
-  asserted from that extra optional-key fixture mismatch. PR remains draft.
-  Image approval belongs to owner review; paired classification is archived.
+- No required implementation or automated functional gate remains open.
+  Owner image review remains PR review; paired classification is archived.
+  Real production visual approval/9-language manual review and deliberately
+  closed B13/B14 product extensions are not fabricated as automated checks.
+  Final test-only isolation does not alter the production builds/captures on
+  frontend6c5800b4/backend4f90b24e; those artifacts were not mislabeled as rebuilt.
+
+## Builder quality gate
+
+- [x] Approved scope/defaults and narrow fixture exceptions recorded; all ACs
+  mapped above, all functional criteria PASS. No undeclared product behavior.
+- [x] Additive migration/down, empty chain105, actual audit/need query plans,
+  append-only retention, audit/outbox permission semantics verified.
+- [x] Static/unit/both builds/full MSW/native focused/full integration results
+  distinguished from prior failed attempts and reference-only pixel results.
+- [x] Modular files/strict typing/import boundaries retained; no dependency
+  family change, real AI call, secret exposure or native migration/reset.
+- [x] Progress row18, task818 and selected B11/B13/B14 debt status updated.
+- [x] Source committed/pushed with normal hooks; PR104 targets dev, no auto-merge
+  or main release. Final report commit and clean status supplied in handoff.

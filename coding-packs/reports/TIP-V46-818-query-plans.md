@@ -41,8 +41,8 @@ both windows overlap, so200 unique rows is correct; general maximum is400 IDs.
 - Store lookup: unique owner index and indexed item list,0.130ms.
 - Functional real-data regression separately proves an older industry+province
   match survives250 newer province-only needs and ranks first.
-- Full integration independently reruns these unchanged plan assertions; final
-  gate result remains to be recorded in the completion report.
+- Final full integration independently reran these unchanged plan assertions:
+  root2271/2271 PASS on5c562e14, including audit retention and need query plans.
 
 ## Migration verification
 
