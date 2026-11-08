@@ -110,5 +110,12 @@
   "upload": {
     "type": "Imej mestilah PNG/JPEG/WEBP",
     "failed": "Gagal memuat naik imej, sila cuba lagi"
+  },
+  "aiSuggest": {
+    "suggest": "Cadangan AI",
+    "use": "Gunakan cadangan",
+    "dismiss": "Abaikan",
+    "preview": "Cadangan kandungan",
+    "failed": "Cadangan tidak tersedia. Cuba lagi kemudian"
   }
 }

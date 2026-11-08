@@ -12,5 +12,6 @@
 | [0008](0008-llm-config-in-admin.md)           | Cấu hình nhà cung cấp AI (LLM) trong Admin thay cho biến môi trường        | Accepted   |
 | [0009](0009-multi-ai-providers.md)            | Nhiều nhà cung cấp AI, fallback và adapter tương thích                     | Accepted   |
 | [0010](0010-web-push.md)                      | Web Push VAPID, ledger giao nhận và PWA không lưu ngoại tuyến              | Accepted   |
+| [0011](0011-ai-operations.md)                 | Giữ chỗ ngân sách AI, nhật ký metadata và AI hỗ trợ soạn/kiểm duyệt        | Accepted   |
 
 Mẫu ADR mới: copy một file, tăng số, giữ 4 mục Context · Decision · Consequences · Status.

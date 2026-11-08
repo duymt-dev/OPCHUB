@@ -67,7 +67,7 @@ export const env = schema.parse({
   DIRECT_URL: process.env.DIRECT_URL || undefined,
 });
 
-/** Fail closed before any billable call; ordinary E2E does not invoke this guard. */
+/** Fail closed for live metadata and the explicitly isolated native AI-ops fixture. */
 export function liveDatabaseUrl(): URL {
   if (!env.DIRECT_URL) throw new Error('Live metadata requires a private DB connection');
   const url = new URL(env.DIRECT_URL);

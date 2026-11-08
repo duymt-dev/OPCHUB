@@ -5,6 +5,8 @@ import type { RedisService } from '@/common/redis/redis.service';
 import type { AiConfigCache } from '../ai-config-cache';
 import type { AiBudgetService } from './ai-budget.service';
 import { AiRouterService } from './ai-router.service';
+import type { AiReservationService } from './ai-reservation.service';
+import type { AiBudgetAlertService } from './ai-budget-alert.service';
 
 function fixture() {
   const settings: AiSettings = {
@@ -33,12 +35,21 @@ function fixture() {
   };
   const budget = { spend: vi.fn<AiBudgetService['spend']>().mockResolvedValue(0) };
   const evalRequest = vi.fn<RedisService['client']['eval']>().mockResolvedValue(1);
+  const reservations = {
+    take: vi
+      .fn<AiReservationService['take']>()
+      .mockResolvedValue({ month: '2026-11', token: 'unit' }),
+    release: vi.fn<AiReservationService['release']>().mockResolvedValue(),
+  };
+  const alerts = { check: vi.fn<AiBudgetAlertService['check']>().mockResolvedValue() };
   const router = new AiRouterService(
     cache as unknown as AiConfigCache,
     budget as unknown as AiBudgetService,
     { client: { eval: evalRequest } } as unknown as RedisService,
+    reservations as unknown as AiReservationService,
+    alerts as unknown as AiBudgetAlertService,
   );
-  return { settings, cache, budget, evalRequest, router };
+  return { settings, cache, budget, evalRequest, reservations, alerts, router };
 }
 
 async function failure(router: AiRouterService): Promise<IntegrationError> {
@@ -67,13 +78,17 @@ describe('A5 router failure classification', () => {
     f.cache.key.mockReturnValueOnce('present-at-routing');
     expect((await failure(f.router)).reason).toBe('not_configured');
     expect(f.cache.key).toHaveBeenCalledTimes(2);
-    expect(f.evalRequest).toHaveBeenCalledTimes(1);
+    expect(f.evalRequest).not.toHaveBeenCalled();
+    expect(f.reservations.take).not.toHaveBeenCalled();
   });
   it('does not classify an exhausted budget as missing configuration', async () => {
     const f = fixture();
     f.settings.budget = 1;
     f.budget.spend.mockResolvedValue(1);
-    expect((await failure(f.router)).reason).toBeUndefined();
+    f.cache.key.mockReturnValue('unit-key');
+    f.reservations.take.mockResolvedValue(null);
+    expect((await failure(f.router)).reason).toBe('budget_exhausted');
+    expect(f.alerts.check).toHaveBeenCalledWith(expect.any(String), f.settings, true);
     expect(f.evalRequest).not.toHaveBeenCalled();
   });
 });

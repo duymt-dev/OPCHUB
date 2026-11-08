@@ -48,6 +48,7 @@ export class AiBudgetService {
   }
   async record(row: AiCallRecord, log: boolean, month: string): Promise<void> {
     await this.calls.record(month, row, log);
+    if (row.cost === 0) return;
     try {
       // Invalidate rather than SET a pre-commit snapshot, avoiding budget undercount races.
       await this.redis.client

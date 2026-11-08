@@ -110,5 +110,12 @@
   "upload": {
     "type": "Dapat PNG/JPEG/WEBP ang larawan",
     "failed": "Nabigo ang pag-upload ng larawan, pakisubukang muli"
+  },
+  "aiSuggest": {
+    "suggest": "Magmungkahi gamit ang AI",
+    "use": "Gamitin ang mungkahi",
+    "dismiss": "Huwag gamitin",
+    "preview": "Mungkahing nilalaman",
+    "failed": "Hindi makapagmungkahi ngayon. Subukan muli mamaya"
   }
 }

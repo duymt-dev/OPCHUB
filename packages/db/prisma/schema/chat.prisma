@@ -43,6 +43,7 @@ model Message {
   pin       PinnedMessage?
   reports   Report[]
   flags     MessageFlag[]
+  aiModerationClaim ModerationAiClaim?
 
   /// S-12 idempotent (persona: UQ riêng theo persona_id, viết tay trong migration)
   @@unique([roomId, senderId, clientMsgId])

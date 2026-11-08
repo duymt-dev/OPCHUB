@@ -24,7 +24,15 @@ model LlmCall {
   latencyMs Int @map("latency_ms")
   status String
   errorCode String? @map("error_code")
+  actorRealm String @default("system") @map("actor_realm")
+  actorId String? @map("actor_id")
   @@index([createdAt, id])
+  /// Covering payload columns are handwritten in migration.
+  @@index([purpose, createdAt(sort: Desc), id(sort: Desc)], map: "ai_calls_purpose_page")
+  @@index([status, createdAt(sort: Desc), id(sort: Desc)], map: "ai_calls_status_page")
+  @@index([provider, createdAt(sort: Desc), id(sort: Desc)], map: "ai_calls_provider_page")
+  @@index([purpose, status, createdAt(sort: Desc), id(sort: Desc)], map: "ai_calls_purpose_status_page")
+  @@index([createdAt(sort: Desc), id(sort: Desc)], map: "ai_calls_metrics")
   @@map("llm_calls")
 }
 
@@ -34,5 +42,15 @@ model LlmUsageMonth {
   promptTokens BigInt @default(0) @map("prompt_tokens")
   completionTokens BigInt @default(0) @map("completion_tokens")
   calls BigInt @default(0)
+  warnedAt DateTime? @map("warned_at") @db.Timestamptz(6)
+  exhaustedAt DateTime? @map("exhausted_at") @db.Timestamptz(6)
   @@map("llm_usage_months")
+}
+
+// D-138: durable at-most-once classification claim, independent of call-log retention.
+model ModerationAiClaim {
+  messageId String @id @map("message_id")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  message Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  @@map("moderation_ai_claims")
 }

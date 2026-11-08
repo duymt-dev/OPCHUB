@@ -20,6 +20,25 @@ const config = () => ({
   })),
 });
 describe('REQ-628 strict multi-provider contracts', () => {
+  it('D-138 suggested/default models remain valid free-text configuration without mutating saved models', () => {
+    for (const id of AI_PROVIDER_IDS) {
+      const catalog = AI_PROVIDER_CATALOG[id];
+      expect(new Set(catalog.models).size).toBe(catalog.models.length);
+      for (const model of catalog.models) {
+        expect(aiVerifySchema.safeParse({ baseUrl: catalog.baseUrl, model }).success).toBe(true);
+      }
+      const defaultModel = catalog.models[0];
+      if (defaultModel) expect(catalog.models as readonly string[]).toContain(defaultModel);
+    }
+    expect(
+      aiSettingsUpdateSchema
+        .parse({
+          ...config(),
+          providers: config().providers.map((p) => ({ ...p, model: 'owner-saved-model' })),
+        })
+        .providers.every((p) => p.model === 'owner-saved-model'),
+    ).toBe(true);
+  });
   it('accepts six fixed providers and explicit defaults', () => {
     expect(aiSettingsUpdateSchema.parse(config()).providers).toHaveLength(6);
     expect(aiKeyLast4('abc')).toBe('••••');

@@ -67,6 +67,7 @@ export const jobs = {
     run: z.object({ exportJobId: z.string().min(1) }),
   },
   moderation: {
+    aiClassify: z.strictObject({ messageId: z.string().min(1) }),
     /** S-08: tin trúng từ khoá → tạo ca `auto` (không chặn đường gửi tin) */
     keywordHit: z.object({ messageId: z.string().min(1), hit: z.string().min(1).max(60) }),
   },

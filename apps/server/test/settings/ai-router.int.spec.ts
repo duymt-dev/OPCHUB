@@ -119,7 +119,7 @@ describe('REQ-628 multi-provider runtime through actual HTTP', () => {
     const config = aiDraft(a.url, 'test-primary-key', model);
     const providers = config.providers.map((p) =>
       p.id === 'custom'
-        ? { ...p, priceIn: 10000, priceOut: 30000 }
+        ? { ...p, priceIn: 20000, priceOut: 10000 }
         : p.id === 'usgate'
           ? { ...p, enabled: true, baseUrl: b.url, model, key: 'test-fallback-key' }
           : p,

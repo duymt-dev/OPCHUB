@@ -534,7 +534,10 @@
     "invalid": "Vui lòng kiểm tra cấu hình AI",
     "loading": "Đang tải…",
     "failed": "Không thể tải cấu hình AI",
-    "retry": "Thử lại"
+    "retry": "Thử lại",
+    "purposeModel": "Mô hình ({purpose})",
+    "providerDefault": "Mặc định của nhà cung cấp",
+    "budgetAlert": "Cảnh báo trong Admin khi chạm ngưỡng hoặc hết ngân sách; không gửi email."
   },
   "app": {
     "heading": "Ứng dụng di động & thông báo đẩy",
