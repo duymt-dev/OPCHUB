@@ -57,7 +57,15 @@ cho luồng TIP đụng tới; **parity ≤ 3% (1440 + 390) cho mọi màn TIP �
 | V46-815 | [TIP](tips/TIP-V46-815-live-ai-check.md) · nhánh `feature/TIP-V46-815-live-ai-check` · **TIP viết, chưa code** — B2: kiểm AI bằng key thật — lượt `@live` chạy tay, "Kiểm tra kết nối" từng nhà cung cấp có key, sửa adapter nếu lệch chuẩn OpenAI (D-137) | 811 | 814 | S–M | `e2e/llm/**`, `packages/integrations/src/llm/**` (chỉ khi lệch) |
 | V46-816 | [TIP](tips/TIP-V46-816-web-push-pwa.md) · nhánh `feature/TIP-V46-816-web-push-pwa` · **TIP viết, chưa code** — B1: Web Push + PWA thật qua dịch vụ đẩy của trình duyệt (VAPID, `web-push`, `push_subscriptions`, manifest + service worker, công tắc TV) (D-137, thay D-125) | 805 / 811 | 815 | L | `packages/db/prisma/schema/**`, `srv/notification/**`, `srv/settings/**`, `worker/**`, `portal/public/**`, `portal/features/{account,shell}/**`, `docs/adr/**` |
 
-Chạy tuần tự 813 → 814 → 815 → 816. B3 → B18 để sau (D-137). TIP viết lúc tới bước, dựa trên `dev` lúc ấy.
+Chạy tuần tự 813 → 814 → 815 → 816 — **đã xong**, release #99 lên production 08/11/2026.
+
+## V4.6 — VẬN HÀNH AI (D-138)
+
+| TIP | Tên | Nguồn nợ | Phụ thuộc | Ước lượng | Vùng file dự kiến (chốt trong TIP) |
+|---|---|---|---|---|---|
+| V46-817 | Vận hành AI: B3 nhật ký gọi AI (xem / lọc / xuất), B4 AI cho Soạn nội dung / Kiểm duyệt, B5 cảnh báo ngân sách + giữ chỗ chi phí + model theo chức năng | 811 | 816 | L | `srv/llm-config/**`, `srv/settings/**`, `packages/integrations/src/llm/**`, `admin/features/settings/**` |
+
+Các mục B khác để sau (D-138). TIP viết lúc tới bước, dựa trên `dev` lúc ấy.
 
 ## V4.6 — GIT (nhánh xếp chồng, không tự merge)
 
