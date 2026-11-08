@@ -1,0 +1,7 @@
+{
+  "target": "opchub_v46_812_dev",
+  "checkedAt": "2026-11-08T17:05:38.788Z",
+  "occupied_with_bank": 3,
+  "suspected_inherited_regions": 0,
+  "scope": "private DB only, not a production audit; counts only; no account details printed"
+}

@@ -116,6 +116,7 @@ export const adminAuditManifest: Readonly<Record<string, AdminAuditEntry>> = {
   'AdminFundraisingController.decide': 'project.fundraising_${decision}',
   'AdminRegionalDirectorsController.appoint': 'regional_director.${action}',
   'AdminRegionalDirectorsController.patch': 'regional_director.update',
+  'AdminRegionalPayeeBankController.save': 'regional_director.payee_bank',
   'AdminRegionalDirectorsController.revoke': 'regional_director.${action}',
   'AdminRegionalSharesController.record': 'regional_share.payout',
   'ConversionController.export': 'report.conversion_export',

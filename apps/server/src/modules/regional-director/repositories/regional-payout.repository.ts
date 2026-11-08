@@ -34,6 +34,11 @@ export class RegionalPayoutRepository {
       const bank = regionalBankSchema.safeParse(slot);
       return bank.success ? bank.data : null;
     }
+    const saved = await tx.regionalPayeeBank.findUnique({
+      where: { region_userId: { region, userId } },
+      select: { bankName: true, bankNo: true, bankHolder: true },
+    });
+    if (saved) return regionalBankSchema.parse(saved);
     const [previous] = await tx.$queryRaw<{ bank: unknown }[]>`
       SELECT bank FROM (
         (SELECT bank_snapshot AS bank, paid_at AS at FROM regional_payouts

@@ -185,6 +185,7 @@ export function mockRegionalRevoke(
     fee.validUntil = fee.status === 'pending_payment' ? null : (until?.toISOString() ?? null);
   }
   slot.member = null;
+  slot.bank = { bankName: '', bankNo: '', bankHolder: '' };
   previous.delete(id);
   log(region, id, 'revoke', actorRole, now);
   publishRegionalRevokeNotice(id, region, fee?.validUntil ?? null, now);
@@ -220,6 +221,7 @@ export function mockRegionalAppoint(
   fee.status = 'regional_director';
   fee.validUntil = null;
   slot.member = member;
+  slot.bank = { bankName: '', bankNo: '', bankHolder: '' };
   log(region, userId, 'appoint', actorRole, now);
   return ok({ updated: true });
 }

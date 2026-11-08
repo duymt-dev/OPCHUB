@@ -1,5 +1,6 @@
 import { mockDb, type MockDb } from './store';
 import type { RegionalRegion, RegionalSlot } from '../../api-domains/regional-directors';
+import { regionalBankSchema } from '../../api-domains/regional-directors';
 const banks = new WeakMap<MockDb, Map<string, RegionalSlot['bank']>>();
 export function regionalMockBanks() {
   let value = banks.get(mockDb());
@@ -14,5 +15,6 @@ export function rememberRegionalBank(
   userId: string,
   bank: RegionalSlot['bank'],
 ) {
-  regionalMockBanks().set(`${region}:${userId}`, { ...bank });
+  const parsed = regionalBankSchema.safeParse(bank);
+  if (parsed.success) regionalMockBanks().set(`${region}:${userId}`, parsed.data);
 }

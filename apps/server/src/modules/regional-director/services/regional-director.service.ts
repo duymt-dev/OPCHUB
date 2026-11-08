@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { type DbTx, Prisma, type RegionalDirectorModel as RegionalDirector } from '@opchub/db';
 import {
   REGIONAL_LABELS,
+  regionalBankSchema,
   type RegionalPatch,
   type RegionalRegion,
 } from '@opchub/shared/api-domains';
@@ -13,6 +14,7 @@ import { RegionalFeeService } from '@/modules/membership-fee';
 import { RegionalProjectionRepository } from '@/modules/reporting';
 import { RegionalValidationError, regionalSqlState } from '../domain/regional-director.rules';
 import { RegionalDirectorRepository } from '../repositories/regional-director.repository';
+import { RegionalPayeeBankRepository } from '../repositories/regional-payee-bank.repository';
 
 export interface RegionalActor {
   id: string;
@@ -29,6 +31,7 @@ export class RegionalDirectorService {
     private readonly audit: AuditService,
     private readonly outbox: OutboxService,
     private readonly projection: RegionalProjectionRepository,
+    private readonly payeeBanks: RegionalPayeeBankRepository,
   ) {}
 
   appoint(actor: RegionalActor, region: RegionalRegion, userId: string, now = new Date()) {
@@ -55,6 +58,9 @@ export class RegionalDirectorService {
         { ...slot, version },
         {
           userId,
+          bankName: null,
+          bankNo: null,
+          bankHolder: null,
           appointedAt: now,
           appointedBy: actor.id,
           prevFeeStatus: prev.prevStatus,
@@ -118,6 +124,9 @@ export class RegionalDirectorService {
     );
     await this.update(tx, slot, {
       userId: null,
+      bankName: null,
+      bankNo: null,
+      bankHolder: null,
       appointedAt: null,
       appointedBy: null,
       prevFeeStatus: null,
@@ -137,6 +146,8 @@ export class RegionalDirectorService {
         bankHolder: slot.bankHolder ?? '',
       },
     );
+    const bank = regionalBankSchema.safeParse(slot);
+    if (bank.success) await this.payeeBanks.save(tx, slot.region, slot.userId, bank.data, actor.id);
     await this.outbox.add(tx, 'regional_director.revoked', {
       region: slot.region,
       userId: slot.userId,

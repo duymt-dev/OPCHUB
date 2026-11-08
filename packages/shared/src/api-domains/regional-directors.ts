@@ -12,6 +12,9 @@ const PROVINCE_LABELS = REGION_LABEL_SHORT;
 export const regionalProvinces = (region: RegionalRegion) =>
   provinces.filter(([, label]) => label === PROVINCE_LABELS[region]).map(([name]) => name);
 export const regionalParamsSchema = z.object({ region: regionalRegionSchema });
+export const regionalPayeeBankParamsSchema = regionalParamsSchema.extend({
+  userId: z.string().min(1).max(200),
+});
 export const regionalAppointSchema = regionalParamsSchema.extend({ userId: z.string().min(1) });
 export const regionalCandidateQuerySchema = regionalParamsSchema.extend({
   q: z.string().trim().max(100).default(''),
