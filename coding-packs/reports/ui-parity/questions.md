@@ -1044,5 +1044,23 @@ both gates; owner real custom key untouched. The private817 runtime remains HOLD
   directory through `settings.log`; unpublished outbox includes the minimal
   industry/province/owner snapshot because deletion is physical. Transaction and
   existing consumer wiring recorded in the completion report.
-- D-139 audit controls have no prototype equivalent; classify their additional
-  height separately from genuine visual defects. Image review/results pending.
+- D-139 audit controls have no prototype equivalent; their additional height
+  and native append-only history are classified separately from genuine visual
+  defects. Eight pairs per lane archived; owner image review remains PR review.
+- Owner approved the narrow contract/settings fixture correction: send at most
+  50 non-super roles per batch, retain equality of the whole returned role list
+  and production limit50. Audit818 now removes only its own fixture accounts and
+  unused custom roles, not append-only audit history. Focused19/19 passed.
+- Owner approved EV-R02 browser clock at16/10 in both MSW/native after static
+  upcoming fixtures expired after16h08/11. Native preparation and all assertions
+  retained; MSW events9/9 and native EV-R02 1/1 passed before fresh full reruns.
+- Cache-only disk cleanup was requested. Subsequent external cleanup removed
+  custom build artifacts and closed ignored logs as well; owned818 builds were
+  forced/recovered. Do not infer uninterrupted old HOLD assets or fabricate lost
+  logs/snapshots. Details and surviving evidence are in the completion report.
+- Pending scope question: legacy `moderation/violations.int.spec.ts` assumes
+  precisely `{autoLockDays:7}`. Full server2126/2127 leaves one mismatch because
+  the earlier AI suite's merge-based restore retains `ai:false`. Unchanged
+  ordered reproduction confirms AI7/7 then legacy4/5. Proposed snapshot/reset/
+  exact restore of only that fixture awaits owner approval; no production or
+  assertion/timeout edit made. Full MSW confirmation397 passed+5 existing skips.

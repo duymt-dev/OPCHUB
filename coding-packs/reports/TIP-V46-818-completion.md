@@ -1,14 +1,18 @@
 # COMPLETION REPORT — TIP-V46-818
 
-**STATUS: IN-PROGRESS** — implementation and focused verification complete;
-full regression and parity runs are still in progress. Not a DONE claim.
+**STATUS: PARTIAL** — implementation, static/unit/build/browser gates and parity
+classification complete; full server integration has one reproducible legacy
+fixture-isolation failure awaiting scope approval. Not a DONE claim.
 
 - Branch: `feature/TIP-V46-818-admin-log-search`, from dev merge `dee26a97`;
   approved TIP/decision documentation at `7c4f917c`.
 - Scope: D-139; B11 audit filters/shared region labels, B13 keyboard navigation,
   B14 candidate selection/cache invalidation/notification links.
-- PR: pending. No merge or release to `main` is authorized by this execution.
-- Implementation: `4f90b24e`, committed with normal hooks and pushed.
+- PR: [#104](https://github.com/duymt-dev/OPCHUB/pull/104), draft while final full
+  integration closure remains. No merge or release to `main` is authorized by this execution.
+- Implementation: `4f90b24e`; URL persistence correction `6c5800b4`, both pushed
+  with normal hooks. Scoped fixture corrections `6143cd97` also pushed; they
+  do not change production.
 
 ## Approved environment
 
@@ -34,6 +38,10 @@ full regression and parity runs are still in progress. Not a DONE claim.
    first, so clearing filters cannot resurrect its previous page2/cursor. The
    regression preserves the original page append assertions and additionally
    checks that the old second page is absent after clearing.
+   URL state uses the existing validated URL-params hook, preserves unrelated
+   Settings keys, restores the audit tab and filters after reload, and sends
+   only the four validated fields to the API. Unit and both browser lanes cover
+   hydration/reload; unknown URL keys cannot leak into the strict API query.
 4. Admin directory supplies ID/name only at `GET /admin/audit-logs/actors` under
    unchanged `settings.log`. This narrow connection avoids requiring
    `settings.admins` or exposing account-management fields to a log-only reader.
@@ -79,34 +87,68 @@ full regression and parity runs are still in progress. Not a DONE claim.
 |---|---|
 | Audit tag/actor/date, system, keyset/90-day bounds | Focused integration PASS |
 | Filtered CSV, old queued params, audited filters | Focused integration + shared schema PASS |
-| Append-only retention | Unchanged; full integration pending |
-| FE filter/reset/export/empty/mobile390 | Unit4/4 and MSW/native E2E PASS |
+| Append-only retention | Unchanged; audit-retention suite PASS in full integration |
+| FE filter/reset/export/empty/mobile390/URL reload | Unit5/5 and MSW/native E2E PASS |
 | Unchanged short/director labels | Shared snapshot tests and production-map search PASS |
 | Keyboard across groups/wrap/Enter/ARIA/new results | UI tests and both E2E lanes PASS |
 | Strong old need survives250 newer province-only candidates | Focused integration PASS |
 | Close/delete/store-save invalidation and Redis fallback | Focused integration PASS |
 | Encoded notification link | Focused real notification integration PASS |
-| Full regression | Running; not yet claimed PASS |
+| Full regression | MSW397+5 existing skips PASS; integration2126/2127, one legacy fixture failure |
 
 ## Actual verification so far
 
 - `pnpm lint`:8 tasks PASS; final rerun after type extraction PASS.
 - `NEXT_PUBLIC_API_MOCKING=msw pnpm typecheck --env-mode=loose`:8 tasks PASS.
 - `pnpm depcheck`: both frontend/shared and server boundaries PASS.
-- `pnpm test`:6 tasks PASS (2221 passed,2 existing adapter skips) before the final
-  pager-reset correction. Latest-source Admin regression4/4 and shared733/733
-  (including both retained legacy pagination cases) PASS. Full latest-source
-  unit rerun is in progress; do not represent earlier counts as the final batch.
+- `pnpm test`:6 tasks PASS, no cache, **2224 passed +2 existing adapter skips**
+  on final production source6c5800b4: shared733, UI67, integrations126+2skip,
+  Portal455, server263, Admin580. Duration16m37.674s. Both legacy shared
+  pagination tests remain alongside the new cases. Nonfailing Vitest fork
+  termination warnings occurred in two Admin files; outer command exited0.
 - Focused real integration:4 files, **24/24 PASS** (audit page/export/actor
   permission, need matches/cap/invalidation, real notifications and need SQL plan).
-- MSW build:3 tasks PASS. Final MSW build uses explicit Portal origin3980 for the
-  Admin mock bridge; native build3 tasks PASS with separate dist directories.
+- Forced recovery MSW build:3 tasks PASS, no cache,1m9.654s, explicit Portal
+  origin3980 for the Admin mock bridge. Forced native build:3 tasks PASS,
+  no cache,1m41.643s. Both use separate dist directories on production6c5800b4.
 - Focused E2E: **7/7 MSW PASS**, **7/7 native PASS**, identical assertions;
   audit filter/CSV at1440/390, VN calendar dates, search in both apps and routing.
   Both7/7 lanes also reran successfully after rebuilding the final pager fix.
 - Migration chain:105 migrations on empty DB,818 down/up, schema dumps identical;
   both reused private DBs deployed105 migrations successfully.
-- `pnpm test:int`, full `pnpm e2e`, native/MSW parity: running/pending.
+- Full integration first run: server2121 passed,1 failed,5 blocked by a suite
+  bootstrap error; DB144/144 passed. Contract fixture sent53 roles to the valid
+  maximum50 schema. AI-router suite failed obtaining a transaction during
+  beforeAll; all five assertions passed unchanged in the focused rerun.
+  Owner approved bounding only that contract batch, preserving whole-response
+  equality and production limit50, plus exact-owned audit fixture cleanup.
+  All three affected suites reran **19/19 PASS**. Fresh full server run completed
+  **2126 passed /1 failed**,239/240 files passed,41m44.95s. All three repaired
+  suites passed in that full run; AI-router no longer has bootstrap skips.
+  Remaining failure: `moderation/violations.int.spec.ts:204` expects precisely
+  `{autoLockDays:7}` but receives `{autoLockDays:7,ai:false}`. Running unchanged
+  AI-moderation first (7/7 PASS), then unchanged violations (4/5) reproduces it:
+  the AI suite restores through a merging service, leaving the optional AI key.
+  Proposed exact-row snapshot/default/restore isolation for the legacy fixture
+  is awaiting owner approval; no extra file was modified without that approval.
+  Root Turbo stops on server failure, so the second full batch did not complete
+  its DB task; the separate final private-DB rerun passed **144/144**,29 files,
+  49.85s, exit0. Server+DB observations total2270 passed/1 failed, not a clean
+  root `pnpm test:int` pass.
+- Full MSW recovery:396 passed,1 failed,5 existing skips. EV-R02 used a static
+  upcoming-event fixture that expired after16h08/11. Owner approved fixing only
+  this case's browser date to16/10 in both modes, retaining native preparation
+  and every assertion. Events file **9/9 MSW**, EV-R02 **1/1 native** then passed.
+  The next full batch passed EV-R02 but ended396 passed/1 failed/5 existing
+  skips: the first auth-registration case remained on the login tab after its
+  click (expected registration heading absent). No auth/app/assertion change
+  was made. A fresh complete two-worker confirmation finished **397 passed,
+  5 existing skips,0 failures** in23.4min, exit0. Failed batches are not relabeled
+  PASS or hidden by focused-only retries. All402 cases remain collected.
+- Final native/MSW parity: all8 paired captures per lane completed, plus4
+  harness checks. Each raw result10 passed/2 pixel-threshold failures (exit1),
+  solely audit D-75, classified D-139 addition/data under D-134, not functional
+  failure. [Paired evidence and measurements](TIP-V46-818-parity.md).
 - Detailed command logs: ignored `test-results/v46-818-*`; final counts and
   screenshot evidence will be recorded before DONE.
 
@@ -133,8 +175,38 @@ full regression and parity runs are still in progress. Not a DONE claim.
   without reset/role escalation; deploy and blank migration chain succeeded.
 - D drive fell to about280MB after builds. Generated-cache cleanup was rejected
   by the execution tool; owner was asked to free only caches, not server/static.
-  No alternative deletion bypass was attempted. Remaining gates continue while
-  there is enough room for their output.
+  No alternative deletion bypass was attempted. External cleanup subsequently
+  removed custom build directories and many closed ignored logs/helpers, not
+  just caches. First full E2E was stopped after asset/login failures; EV-R02 had
+  already failed earlier and is separately diagnosed above. Both owned818
+  build variants were forced/rebuilt and frontends restored before recovery
+  gates. Original backend private818 processes remained running; no blanket
+  continuity claim is made for old HOLD assets removed externally. Tracked
+  reports/tool results preserve historical observations, not nonexistent logs.
+  Actual audit query plans were rerun and raw JSON is now tracked.
+- Private provider/settings before-after fingerprint equality was verified after
+  earlier focused native/parity runs, with all bot flags false. Those ignored
+  snapshots were later lost in external cleanup; do not claim that baseline
+  covers the subsequent recovery runs or fabricate a replacement baseline.
+  No test in this TIP calls real AI or intentionally changes its configuration.
+  Final metadata at19:00 confirms all three bot flags false, custom provider
+  enabled with an encrypted key, and zero provider/bot/AI-setting updates after
+  17:45. [Safe metadata](evidence/v46-818-final-ai-metadata.json) contains no key.
+
+## Runtime handoff / constraints
+
+- Recovered818 API4310 (PID16288), socket4311 (24076), worker (25868),
+  Portal3710 (13992), Admin3711 (28904) remain running. Health/login endpoints
+  returned200; listening sockets checked. These are owned private services only.
+- No main release or auto-merge. PR104 targets dev. GitHub workflows currently
+  trigger on main, so an empty dev-PR check list is **not** a CI-pass claim.
+- Builders/filters/schemas/hooks/types remain modular; lint enforces file caps.
+  No added `any`, ignore directive, inline massive test, secret or console log.
+  Permission checks remain backend permission-key based; actor directory exposes
+  only ID/name. Export audit and need-unpublish side effects retain same-tx
+  outbox/audit semantics. Queries are bounded/keyset/deferred-join with explicit
+  index plans; money/time semantics, fake external providers and import borders
+  are unchanged. Detailed evidence is above and in the query/parity companions.
 - First exploratory native Dashboard mobile parity captured a real error state
   during a transient Next-to-API ECONNRESET. It was not accepted as a data/design
   difference. An unchanged-harness Dashboard rerun completed6/6, including both
@@ -148,5 +220,8 @@ full regression and parity runs are still in progress. Not a DONE claim.
 - Six Q-V46-818 defaults remain unchanged. No mobile search, all-results action,
   new result domains, phone search, need detail page, new recommendation audience,
   purge,15-second unlock cycle or settings-tab redesign.
-- Remaining: full regression results, paired-image review/classification,
-  final clean commit/push and PR todev, completion counts/SHA.
+- Remaining: approval and narrow isolation of the one legacy moderation fixture,
+  focused reproduction/regression plus a clean full integration rerun, then
+  final DONE report/task/debt updates and ready PR104. No production defect is
+  asserted from that extra optional-key fixture mismatch. PR remains draft.
+  Image approval belongs to owner review; paired classification is archived.

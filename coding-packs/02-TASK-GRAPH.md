@@ -71,7 +71,7 @@ Các mục B khác để sau (D-138). TIP viết lúc tới bước, dựa trên
 
 | TIP | Tên | Nguồn nợ | Phụ thuộc | Ước lượng | Vùng file dự kiến (chốt trong TIP) |
 |---|---|---|---|---|---|
-| V46-818 | [TIP](tips/TIP-V46-818-admin-log-search.md) · nhánh `feature/TIP-V46-818-admin-log-search` · **IN-PROGRESS** — implemented, focused gates passed; full regression/parity pending. [Completion](reports/TIP-V46-818-completion.md) | 807 / 808 / 809 | 817 | M | `srv/settings/**`, `packages/shared/src/api-domains/{audit-log-page,regional-directors,reports}.ts`, `packages/ui/src/global-search/**`, `srv/local-business/**`, `admin/features/settings/**` |
+| V46-818 | [TIP](tips/TIP-V46-818-admin-log-search.md) · nhánh `feature/TIP-V46-818-admin-log-search` · **PARTIAL** — implementation/static/unit/build/MSW complete, parity classified; full integration2126/2127, one legacy fixture-isolation failure awaiting scope approval. [Completion](reports/TIP-V46-818-completion.md) | 807 / 808 / 809 | 817 | M | `srv/settings/**`, `packages/shared/src/api-domains/{audit-log-page,regional-directors,reports}.ts`, `packages/ui/src/global-search/**`, `srv/local-business/**`, `admin/features/settings/**` |
 | V46-820 | SEO trang công khai (B15) — chưa viết TIP | 810 | 818 | M | — |
 | V46-821 | Tài chính & vùng (B7 → B10) — chưa viết TIP | 801 → 805 | 820 | L | — |
 
