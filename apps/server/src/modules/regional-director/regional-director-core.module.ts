@@ -1,3 +1,4 @@
+import { MyRegionAffiliatesService } from './services/my-region-affiliates.service';
 import { MyRegionService } from './services/my-region.service';
 import { RegionalLockEffects } from './services/regional-lock.effects';
 import { RegionalPayeeBankService } from './services/regional-payee-bank.service';
@@ -30,6 +31,7 @@ const providers = [
   RegionalPayeeBankService,
   RegionalPayeeBankRepository,
   MyRegionService,
+  MyRegionAffiliatesService,
   RegionalShareRepository,
   RegionalPayoutRepository,
   RegionalShareSummaryRepository,

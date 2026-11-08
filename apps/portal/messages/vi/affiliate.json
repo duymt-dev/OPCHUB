@@ -163,6 +163,9 @@
     "statusLabels": {
       "paid": "Đã chi trả",
       "pending": "Chờ chi"
-    }
+    },
+    "loadMore": "Xem thêm ({count})",
+    "downloadCsv": "Tải CSV",
+    "loadError": "Không thể tải dữ liệu. Vui lòng thử lại."
   }
 }

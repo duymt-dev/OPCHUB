@@ -158,7 +158,10 @@
     "statusLabels": {
       "paid": "Dibayar",
       "pending": "Menunggu bayaran"
-    }
+    },
+    "loadMore": "Muat lagi ({count})",
+    "downloadCsv": "Muat turun CSV",
+    "loadError": "Tidak dapat memuatkan data. Sila cuba lagi."
   },
   "banner": {
     "title": "Anda Pengarah Wilayah {label} · {name}",

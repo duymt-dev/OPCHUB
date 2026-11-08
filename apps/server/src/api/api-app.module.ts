@@ -1,3 +1,4 @@
+import { SystemHttpModule } from '@/modules/system/system.module';
 import { SearchModule } from '@/modules/search';
 import { Module } from '@nestjs/common';
 import { RegionalDirectorHttpModule } from '@/modules/regional-director';
@@ -36,6 +37,7 @@ import { LlmConfigHttpModule } from '@/modules/llm-config';
 @Module({
   imports: [
     SearchModule,
+    SystemHttpModule,
     RegionalDirectorHttpModule,
     CoreModule,
     LlmConfigHttpModule,

@@ -1,4 +1,6 @@
 'use client';
+import { Button } from 'antd';
+import { useMyRegionAffiliates } from '../hooks/use-my-region-affiliates';
 import { AdminTable, EmptyState } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { formatVnd } from '@/features/membership';
@@ -7,13 +9,19 @@ import styles from './my-region.module.css';
 
 export function MyRegionAffiliates({ data }: { data: DirectorRegion }) {
   const t = useTranslations('affiliate.region');
+  const state = useMyRegionAffiliates(data);
   return (
     <section>
-      <h3>{t('affiliatesTitle')}</h3>
+      <div className={styles.actions}>
+        <h3>{t('affiliatesTitle')}</h3>
+        <Button onClick={() => void state.download()} loading={state.downloading}>
+          {t('downloadCsv')}
+        </Button>
+      </div>
       <div className={styles.table}>
         <AdminTable
           rowKey="id"
-          data={data.affiliates}
+          data={state.items}
           pagination={false}
           empty={<EmptyState title={t('empty')} />}
           columns={[
@@ -23,7 +31,10 @@ export function MyRegionAffiliates({ data }: { data: DirectorRegion }) {
               render: (_, r) => (
                 <div>
                   <b>{r.name}</b>
-                  <small>{r.code}</small>
+                  <small>
+                    {r.code}
+                    {r.province ? ` · ${r.province}` : ''}
+                  </small>
                 </div>
               ),
             },
@@ -45,7 +56,18 @@ export function MyRegionAffiliates({ data }: { data: DirectorRegion }) {
           ]}
         />
       </div>
-      {data.more > 0 ? <p className={styles.more}>{t('more', { count: data.more })}</p> : null}
+      {state.more > 0 ? (
+        <Button
+          className={styles.more ?? ''}
+          loading={state.query.isFetchingNextPage}
+          onClick={() => void state.query.fetchNextPage()}
+        >
+          {t('loadMore', { count: state.more })}
+        </Button>
+      ) : null}
+      {state.query.isFetchNextPageError || state.downloadError ? (
+        <p role="alert">{t('loadError')}</p>
+      ) : null}
     </section>
   );
 }

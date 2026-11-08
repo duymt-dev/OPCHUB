@@ -1,0 +1,1 @@
+DROP INDEX regional_share_affiliate_projection;

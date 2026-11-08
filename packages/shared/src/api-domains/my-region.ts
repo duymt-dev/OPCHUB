@@ -1,3 +1,4 @@
+import { myRegionAffiliateSchema } from './my-region-affiliates';
 import { z } from 'zod';
 import { regionalBankSchema, regionalRegionSchema } from './regional-directors';
 
@@ -29,18 +30,7 @@ export const myRegionSchema = z.discriminatedUnion('state', [
         }),
       )
       .length(4),
-    affiliates: z
-      .array(
-        z.object({
-          id: z.string(),
-          name: z.string(),
-          code: z.string(),
-          customers: amount,
-          revenue: amount,
-          share: amount,
-        }),
-      )
-      .max(50),
+    affiliates: z.array(myRegionAffiliateSchema).max(50),
     more: amount,
     months: z
       .array(

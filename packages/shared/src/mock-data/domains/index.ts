@@ -130,3 +130,8 @@ export * from './push';
 export { mockAiCall, mockAiCallsPage, mockAiCallsCsv } from './ai-ops';
 export { mockStoreSitemap } from './store-sitemap';
 export { recordMockGuestView } from './store-guest-views';
+export {
+  mockMyRegionAffiliateRows,
+  mockMyRegionAffiliatePage,
+  mockMyRegionAffiliateCsv,
+} from './my-region-affiliates';

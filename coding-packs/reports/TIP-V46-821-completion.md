@@ -134,3 +134,37 @@ commit/push and review PR into dev. No claim of task completion at this stage.
   Admin mail-kind label and enum schema expose the actual new kind.
 
 B10 is in progress. Full final integration/build/E2E/parity and report closure remain.
+
+## B10 progress
+
+- First-party Portal/Admin logger preserves local reportError, sends at most10
+  beacons/minute/tab, strips query and dynamic route segments, uses fixed safe
+  operation labels instead of forwarding arbitrary Error.message/stack/context.
+  Server strict public endpoint throttles20/minute/IP, defensively sanitizes again,
+  warns with client label; optional bearer session must pass signature and current
+  Redis lock/version checks. No database log sink, Sentry or third-party transport.
+- Regional affiliates retain historical financial scope/order, keyset50-page API,
+  legacy first50/more, existing24-month cap. Current director relationship plus
+  active/not-deleted status is checked from DB; non-director/locked/revoked403.
+- CSV batches1000/cap20000, BOM/formula-safe, no contact columns; actual member
+  actor audited under regional.affiliates.export. UI loads more with preserved rows
+  on error and explicit download; all10 catalogs and MSW mirrors updated.
+- Province display/CSV reuses D-128 earliest group through late join, not business
+  registration province. Existing table code remains affiliate code, unchanged.
+- Integration2files/6cases PASS (130-row paging50/50/30, strict cursor/limit,
+  CSV/BOM/no contacts/audit, real auth permissions and logger throttle). Focused
+  FE6/6, shared mock7/7 and backend hard-cap1/1 PASS. Root lint8/typecheck8,
+  unit2262 passed+2 existing adapter skips (6m21.675s), depcheck both graphs PASS.
+- All109 migrations from empty disposable DB, allthree new821 down/up, identical
+  normalized schema; temporary DB dropped. New index deployed to private test/dev.
+  Real10k-row EXPLAIN uses actual production builders; scope index-only, zero heap
+  fetches in vacuumed state. Aggregate ranking still requires scoped aggregation,
+  not a claimed seek on stored totals. See query-plan report/raw JSON.
+- Technical extras: shared browser factory/export avoids divergent logger security;
+  API download helper handles binary CSV separately from existing JSON parser;
+  separate paging service/projection and covering-index migration avoid expanding
+  existing domain files. System HTTP sink is REST-only; original housekeeping core
+  behavior is unchanged. New browser E2E is authored; execution remains pending.
+
+Code milestone only. Final full integration, both builds, full MSW E2E, focused
+native E2E/parity and final evidence/report/PR readiness remain; NOT DONE yet.

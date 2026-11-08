@@ -158,7 +158,10 @@
     "statusLabels": {
       "paid": "Paid",
       "pending": "Awaiting payment"
-    }
+    },
+    "loadMore": "Load more ({count})",
+    "downloadCsv": "Download CSV",
+    "loadError": "Unable to load data. Please try again."
   },
   "banner": {
     "title": "You are the Regional Director {label} · {name}",

@@ -158,7 +158,10 @@
     "statusLabels": {
       "paid": "Dibayar",
       "pending": "Menunggu pembayaran"
-    }
+    },
+    "loadMore": "Muat lainnya ({count})",
+    "downloadCsv": "Unduh CSV",
+    "loadError": "Tidak dapat memuat data. Silakan coba lagi."
   },
   "banner": {
     "title": "Anda adalah Direktur Wilayah {label} · {name}",
