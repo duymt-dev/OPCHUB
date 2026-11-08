@@ -158,7 +158,10 @@
     "statusLabels": {
       "paid": "จ่ายแล้ว",
       "pending": "รอจ่าย"
-    }
+    },
+    "loadMore": "ดูเพิ่มเติม ({count})",
+    "downloadCsv": "ดาวน์โหลด CSV",
+    "loadError": "โหลดข้อมูลไม่ได้ โปรดลองอีกครั้ง"
   },
   "banner": {
     "title": "คุณเป็นผู้อำนวยการภูมิภาค {label} · {name}",

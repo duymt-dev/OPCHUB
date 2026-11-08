@@ -27,13 +27,13 @@ export function MyRegionMonths({ rows }: { rows: DirectorRegion['months'] }) {
               title: t('amount'),
               key: 'amount',
               align: 'right',
-              width: 162,
+              width: 150,
               render: (_, r) => <b className={styles.money}>{formatVnd(r.amount)}</b>,
             },
             {
               title: t('status'),
               key: 'status',
-              width: 132,
+              width: 120,
               render: (_, r) => (
                 <StatusTag tone={r.status === 'paid' ? 'green' : 'amber'}>
                   {t(`statusLabels.${r.status}`)}
@@ -43,7 +43,7 @@ export function MyRegionMonths({ rows }: { rows: DirectorRegion['months'] }) {
             {
               title: t('paidAt'),
               key: 'paidAt',
-              width: 142,
+              width: 120,
               render: (_, r) => (r.paidAt ? formatDate(r.paidAt) : '—'),
             },
           ]}

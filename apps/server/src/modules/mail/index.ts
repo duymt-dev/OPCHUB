@@ -1,4 +1,6 @@
 export { DailyQuota, vnDay } from './daily-quota';
+export { MailQrToken } from './mail-qr-token';
+export { MailQrRegistry, type MailQrResolver } from './mail-qr.registry';
 export { DEFAULT_PRIORITY, MAIL_PRIORITY, priorityOf } from './mail-priority';
 export { EventMailHandler } from './event-mail.handler';
 export { ReceiptMailHandler } from './receipt-mail.handler';

@@ -1,3 +1,4 @@
+import { clientLogHandlers } from './client-log';
 import { searchHandlers } from './search';
 import { memberStatusHandlers } from './member-status';
 import { adminProjectHandlers } from './admin-projects';
@@ -78,3 +79,5 @@ handlers.unshift(...regionalShareHandlers);
 
 handlers.push(...searchHandlers);
 handlers.unshift(...aiOpsHandlers);
+
+handlers.unshift(...clientLogHandlers);

@@ -87,7 +87,8 @@
       "pay": "Chi trả",
       "cancel": "Hủy",
       "paidToast": "Đã chi trả {amount} cho GĐ Vùng {name} · {holder}",
-      "minRuleNever": "mức tối thiểu {percent}%"
+      "minRuleNever": "mức tối thiểu {percent}%",
+      "enterBank": "Nhập tài khoản nhận"
     }
   },
   "title": "Affiliate",

@@ -2011,17 +2011,17 @@
   "id": "P-V46-REG",
   "name": "Portal · Vùng của tôi",
   "viewport": 1440,
-  "diffPct": 5.716199417009602,
+  "diffPct": 4.630022576588934,
   "size": "1440×1944",
-  "sha": "ef7934ff"
+  "sha": "c5848a37"
  },
  {
   "id": "P-V46-REG",
   "name": "Portal · Vùng của tôi",
   "viewport": 390,
-  "diffPct": 10.394365550941751,
-  "size": "390×3353",
-  "sha": "ef7934ff"
+  "diffPct": 2.922341217091788,
+  "size": "390×3067",
+  "sha": "c5848a37"
  },
  {
   "id": "P-V46-REG-BANNER",
@@ -2029,7 +2029,7 @@
   "viewport": 1440,
   "diffPct": 1.2141284966009138,
   "size": "1440×997",
-  "sha": "ef7934ff"
+  "sha": "c5848a37"
  },
  {
   "id": "P-V46-REG-BANNER",
@@ -2037,7 +2037,7 @@
   "viewport": 390,
   "diffPct": 1.9626754489139813,
   "size": "390×1635",
-  "sha": "ef7934ff"
+  "sha": "c5848a37"
  },
  {
   "id": "P-V46-SEARCH",
@@ -2262,7 +2262,7 @@
   "viewport": 1440,
   "diffPct": 2.4128401360544216,
   "size": "1440×1274",
-  "sha": "ef7934ff"
+  "sha": "c5848a37"
  },
  {
   "id": "D-120-GCFG",
@@ -2270,7 +2270,7 @@
   "viewport": 390,
   "diffPct": 4.286709727931102,
   "size": "390×3275",
-  "sha": "ef7934ff"
+  "sha": "c5848a37"
  },
  {
   "id": "D-120-GCFG-RO",
@@ -2294,7 +2294,7 @@
   "viewport": 1440,
   "diffPct": 2.1060956790123457,
   "size": "1440×900",
-  "sha": "ef7934ff"
+  "sha": "c5848a37"
  },
  {
   "id": "D-120-GDV",
@@ -2302,7 +2302,7 @@
   "viewport": 390,
   "diffPct": 4.0290794773553396,
   "size": "390×1305",
-  "sha": "ef7934ff"
+  "sha": "c5848a37"
  },
  {
   "id": "D-120-GDV-OPEN",
@@ -2310,7 +2310,7 @@
   "viewport": 1440,
   "diffPct": 10.661933364435114,
   "size": "1440×1429",
-  "sha": "ef7934ff"
+  "sha": "c5848a37"
  },
  {
   "id": "D-120-GDV-OPEN",
@@ -2318,7 +2318,7 @@
   "viewport": 390,
   "diffPct": 5.725293803418804,
   "size": "390×1920",
-  "sha": "ef7934ff"
+  "sha": "c5848a37"
  },
  {
   "id": "D-13",

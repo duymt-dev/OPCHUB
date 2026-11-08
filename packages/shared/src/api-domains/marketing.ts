@@ -119,6 +119,7 @@ export const MAIL_LOG_KIND = [
   'service',
   /** V4-610: nhắc gia hạn / hết hạn Gói Gọi vốn */
   'fundraising',
+  'fundraising_expired',
   /** V4-611 (D-88): Admin nhắc hoàn tất hướng dẫn bắt đầu */
   'onboarding',
   /** V42-704 (D-113 F4): biên nhận phí thành viên / Gói Gọi vốn */

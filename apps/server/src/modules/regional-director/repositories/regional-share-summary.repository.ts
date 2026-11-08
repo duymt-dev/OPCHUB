@@ -30,6 +30,10 @@ export class RegionalShareSummaryRepository {
         WHERE director_user_id IN (${Prisma.join(ids)}) AND region IS NOT NULL
       ) owners JOIN LATERAL (
         SELECT bank FROM (
+          (SELECT jsonb_build_object('bankName',bank_name,'bankNo',bank_no,'bankHolder',bank_holder) AS bank,
+            'infinity'::timestamptz AS at FROM regional_payee_banks
+            WHERE region=owners.region AND user_id=owners.user_id)
+          UNION ALL
           (SELECT bank_snapshot AS bank,paid_at AS at FROM regional_payouts
             WHERE region=owners.region AND director_user_id=owners.user_id ORDER BY paid_at DESC,id DESC LIMIT 1)
           UNION ALL

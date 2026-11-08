@@ -1,0 +1,123 @@
+{
+  "lane": "native",
+  "pairs": 10,
+  "harnessChecks": 4,
+  "under3": 4,
+  "above3": 6,
+  "functionalJourneyErrors": 0,
+  "referenceStandard": "D-134",
+  "thresholdUnchanged": true,
+  "noAddedMasks": true,
+  "rows": [
+    {
+      "id": "P-V46-REG-BANNER",
+      "viewport": 1440,
+      "name": "Portal · GĐ Vùng · Banner",
+      "diffPct": 1.2701298339462832,
+      "size": "1440×997",
+      "source": "c5848a37",
+      "rawStatus": "passed",
+      "app": "ui-parity/captures/TIP-V46-821/native/P-V46-REG-BANNER-1440.app.png",
+      "prototype": "ui-parity/captures/TIP-V46-821/native/P-V46-REG-BANNER-1440.proto.png"
+    },
+    {
+      "id": "P-V46-REG-BANNER",
+      "viewport": 390,
+      "name": "Portal · GĐ Vùng · Banner",
+      "diffPct": 2.1242060691601976,
+      "size": "390×1635",
+      "source": "c5848a37",
+      "rawStatus": "passed",
+      "app": "ui-parity/captures/TIP-V46-821/native/P-V46-REG-BANNER-390.app.png",
+      "prototype": "ui-parity/captures/TIP-V46-821/native/P-V46-REG-BANNER-390.proto.png"
+    },
+    {
+      "id": "P-V46-REG",
+      "viewport": 1440,
+      "name": "Portal · Vùng của tôi",
+      "diffPct": 4.655385516689528,
+      "size": "1440×1944",
+      "source": "c5848a37",
+      "rawStatus": "failed",
+      "app": "ui-parity/captures/TIP-V46-821/native/P-V46-REG-1440.app.png",
+      "prototype": "ui-parity/captures/TIP-V46-821/native/P-V46-REG-1440.proto.png"
+    },
+    {
+      "id": "P-V46-REG",
+      "viewport": 390,
+      "name": "Portal · Vùng của tôi",
+      "diffPct": 3.003854096126675,
+      "size": "390×3067",
+      "source": "c5848a37",
+      "rawStatus": "failed",
+      "app": "ui-parity/captures/TIP-V46-821/native/P-V46-REG-390.app.png",
+      "prototype": "ui-parity/captures/TIP-V46-821/native/P-V46-REG-390.proto.png"
+    },
+    {
+      "id": "D-120-GDV",
+      "viewport": 1440,
+      "name": "GĐ Vùng · Sổ chia sẻ",
+      "diffPct": 2.110570987654321,
+      "size": "1440×900",
+      "source": "c5848a37",
+      "rawStatus": "passed",
+      "app": "ui-parity/captures/TIP-V46-821/native/D-120-GDV-1440.app.png",
+      "prototype": "ui-parity/captures/TIP-V46-821/native/D-120-GDV-1440.proto.png"
+    },
+    {
+      "id": "D-120-GDV",
+      "viewport": 390,
+      "name": "GĐ Vùng · Sổ chia sẻ",
+      "diffPct": 4.04204735239218,
+      "size": "390×1305",
+      "source": "c5848a37",
+      "rawStatus": "failed",
+      "app": "ui-parity/captures/TIP-V46-821/native/D-120-GDV-390.app.png",
+      "prototype": "ui-parity/captures/TIP-V46-821/native/D-120-GDV-390.proto.png"
+    },
+    {
+      "id": "D-120-GDV-OPEN",
+      "viewport": 1440,
+      "name": "GĐ Vùng · Khoản ghi nhận Miền Bắc",
+      "diffPct": 10.66047546847057,
+      "size": "1440×1429",
+      "source": "c5848a37",
+      "rawStatus": "failed",
+      "app": "ui-parity/captures/TIP-V46-821/native/D-120-GDV-OPEN-1440.app.png",
+      "prototype": "ui-parity/captures/TIP-V46-821/native/D-120-GDV-OPEN-1440.proto.png"
+    },
+    {
+      "id": "D-120-GDV-OPEN",
+      "viewport": 390,
+      "name": "GĐ Vùng · Khoản ghi nhận Miền Bắc",
+      "diffPct": 5.728632478632479,
+      "size": "390×1920",
+      "source": "c5848a37",
+      "rawStatus": "failed",
+      "app": "ui-parity/captures/TIP-V46-821/native/D-120-GDV-OPEN-390.app.png",
+      "prototype": "ui-parity/captures/TIP-V46-821/native/D-120-GDV-OPEN-390.proto.png"
+    },
+    {
+      "id": "D-120-GCFG",
+      "viewport": 1440,
+      "name": "Cấu hình Giám đốc Vùng",
+      "diffPct": 2.5057779522065236,
+      "size": "1440×1274",
+      "source": "c5848a37",
+      "rawStatus": "passed",
+      "app": "ui-parity/captures/TIP-V46-821/native/D-120-GCFG-1440.app.png",
+      "prototype": "ui-parity/captures/TIP-V46-821/native/D-120-GCFG-1440.proto.png"
+    },
+    {
+      "id": "D-120-GCFG",
+      "viewport": 390,
+      "name": "Cấu hình Giám đốc Vùng",
+      "diffPct": 4.41229203366608,
+      "size": "390×3275",
+      "source": "c5848a37",
+      "rawStatus": "failed",
+      "app": "ui-parity/captures/TIP-V46-821/native/D-120-GCFG-390.app.png",
+      "prototype": "ui-parity/captures/TIP-V46-821/native/D-120-GCFG-390.proto.png"
+    }
+  ]
+}

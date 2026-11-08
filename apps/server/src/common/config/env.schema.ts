@@ -70,6 +70,7 @@ export const envSchema = z.object({
   MAIL_OTP_RESERVE: z.coerce.number().int().min(0).default(20),
   /** BUG-036: HMAC link huỷ nhận thư chiến dịch (≥ 32 ký tự) — bắt buộc ở production */
   UNSUBSCRIBE_SECRET: z.string().min(32).optional(),
+  MAIL_QR_SECRET: z.string().min(32).optional(),
   SMTP_HOST: z.string().optional(),
   SMTP_PORT: z.coerce.number().int().optional(),
   SMTP_USER: z.string().optional(),
@@ -160,6 +161,9 @@ export function parseEnv(source: Record<string, string | undefined>): Env {
   }
   if (r.data.NODE_ENV === 'production' && !r.data.UNSUBSCRIBE_SECRET) {
     throw new Error('Env không hợp lệ — UNSUBSCRIBE_SECRET: bắt buộc ở production');
+  }
+  if (r.data.NODE_ENV === 'production' && !r.data.MAIL_QR_SECRET) {
+    throw new Error('Env không hợp lệ — MAIL_QR_SECRET: bắt buộc ở production');
   }
   if (r.data.NODE_ENV === 'production' && r.data.SSO_PROVIDER !== 'google') {
     throw new Error('Env không hợp lệ — SSO_PROVIDER: fake cấm dùng ở production');

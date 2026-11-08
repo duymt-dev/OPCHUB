@@ -1,3 +1,5 @@
+import { clientLogHandlers } from './client-log';
+import { myRegionAffiliateHandlers } from './my-region-affiliates';
 import { searchHandlers } from './search';
 import { aiComposeHandlers } from './ai-compose';
 import { accountHandlers } from './account';
@@ -51,3 +53,7 @@ handlers.push(...searchHandlers);
 handlers.push(...aiComposeHandlers);
 handlers.push(...pushHandlers);
 import { pushHandlers } from './push';
+
+handlers.unshift(...myRegionAffiliateHandlers);
+
+handlers.unshift(...clientLogHandlers);

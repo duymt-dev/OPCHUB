@@ -19,18 +19,36 @@ model RegionalDirector {
   version        Int                  @default(1)
   updatedAt      DateTime             @updatedAt @map("updated_at") @db.Timestamptz(6)
 
-  user      User?                      @relation(fields: [userId], references: [id])
-  provinces RegionalDirectorProvince[]
-  events    RegionalDirectorEvent[]
-  shares    RegionalShare[]
-  payouts   RegionalPayout[]
+  user       User?                      @relation(fields: [userId], references: [id])
+  provinces  RegionalDirectorProvince[]
+  events     RegionalDirectorEvent[]
+  shares     RegionalShare[]
+  payouts    RegionalPayout[]
+  payeeBanks RegionalPayeeBank[]
 
   @@map("regional_directors")
 }
 
+/// Retired payee accounts never become the next director's account.
+model RegionalPayeeBank {
+  region     Region
+  userId     String           @map("user_id")
+  bankName   String           @map("bank_name")
+  bankNo     String           @map("bank_no")
+  bankHolder String           @map("bank_holder")
+  updatedBy  String           @map("updated_by")
+  updatedAt  DateTime         @updatedAt @map("updated_at") @db.Timestamptz(6)
+  director   RegionalDirector @relation(fields: [region], references: [region])
+  user       User             @relation(fields: [userId], references: [id])
+
+  @@id([region, userId])
+  @@index([userId])
+  @@map("regional_payee_banks")
+}
+
 /// D-129: display coverage only; never determines the revenue recipient.
 model RegionalDirectorProvince {
-  province String @id
+  province String           @id
   region   Region
   director RegionalDirector @relation(fields: [region], references: [region])
 
@@ -39,17 +57,18 @@ model RegionalDirectorProvince {
 }
 
 model RegionalDirectorEvent {
-  bankSnapshot Json? @map("bank_snapshot")
-  id        String                 @id @default(uuid(7))
-  region    Region
-  userId    String                 @map("user_id")
-  userName  String                 @map("user_name")
-  action    RegionalDirectorAction
-  actorId   String                 @map("actor_id")
-  actorRole String                 @map("actor_role")
-  createdAt DateTime               @default(now()) @map("created_at") @db.Timestamptz(6)
-  director  RegionalDirector       @relation(fields: [region], references: [region])
+  bankSnapshot Json?                  @map("bank_snapshot")
+  id           String                 @id @default(uuid(7))
+  region       Region
+  userId       String                 @map("user_id")
+  userName     String                 @map("user_name")
+  action       RegionalDirectorAction
+  actorId      String                 @map("actor_id")
+  actorRole    String                 @map("actor_role")
+  createdAt    DateTime               @default(now()) @map("created_at") @db.Timestamptz(6)
+  director     RegionalDirector       @relation(fields: [region], references: [region])
 
   @@index([createdAt(sort: Desc), id(sort: Desc)])
+  @@index([region, userId, action, createdAt(sort: Desc), id(sort: Desc)], map: "regional_director_events_payee_bank")
   @@map("regional_director_events")
 }

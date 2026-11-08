@@ -5,7 +5,7 @@ import type { RenewalMilestone, RenewalSettings } from '@opchub/shared/api-domai
 import { ENV, type Env } from '@/common/config';
 import { bankTransferOf } from '@/common/integrations';
 import { OutboxService } from '@/common/outbox';
-import { MailService, renewalMail, vnDateText } from '../../mail';
+import { MailService, MailQrToken, renewalMail, vnDateText } from '../../mail';
 import type { RenewalCandidate } from '../repositories/renewal.repository';
 
 @Injectable()
@@ -13,6 +13,7 @@ export class RenewalDeliveryService {
   constructor(
     private readonly mail: MailService,
     private readonly outbox: OutboxService,
+    private readonly qr: MailQrToken,
     @Inject(ENV) private readonly env: Env,
   ) {}
 
@@ -35,7 +36,17 @@ export class RenewalDeliveryService {
             plan: r.plan,
             daysLeft: renewalDaysLeft(r.valid_until, now),
             trial: r.trial,
-            transfer: bankTransferOf(this.env, r.amount, transferContentOf(r.member_code, r.phone)),
+            transfer: {
+              ...bankTransferOf(this.env, r.amount, transferContentOf(r.member_code, r.phone)),
+              ...(milestone === 'D1'
+                ? {
+                    imageUrl: this.qr.imageUrl(
+                      { kind: 'fee', id: r.user_id, anchor: r.valid_until.toISOString() },
+                      now,
+                    ),
+                  }
+                : {}),
+            },
           });
           return { to: r.email, kind: 'fee_reminder' as const, subject: m.subject, html: m.html };
         }),

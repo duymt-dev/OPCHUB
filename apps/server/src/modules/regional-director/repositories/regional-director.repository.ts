@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { type DbTx, Prisma, type RegionalDirectorModel as RegionalDirector } from '@opchub/db';
 import type { RegionalRegion } from '@opchub/shared/api-domains';
 import { PrismaService } from '@/common/prisma/prisma.service';
+import { regionalDirectorLockQuery } from './regional-director-lock.query';
 
 @Injectable()
 export class RegionalDirectorRepository {
@@ -57,6 +58,15 @@ export class RegionalDirectorRepository {
 
   occupied(tx: DbTx, userId: string) {
     return tx.regionalDirector.findUnique({ where: { userId }, select: { region: true } });
+  }
+
+  async lockUsers(tx: DbTx, ids: string[]) {
+    if (!ids.length) return [];
+    await tx.$queryRaw(regionalDirectorLockQuery(ids));
+    return tx.regionalDirector.findMany({
+      where: { userId: { in: ids } },
+      orderBy: { region: 'asc' },
+    });
   }
 
   provinces(tx: DbTx, region: RegionalRegion) {

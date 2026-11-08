@@ -1,3 +1,4 @@
+import { ClientLogController } from './client-log.controller';
 import { LlmConfigCoreModule } from '@/modules/llm-config';
 import { Module } from '@nestjs/common';
 import { NotificationCoreModule } from '@/modules/notification';
@@ -23,3 +24,7 @@ import { HousekeepingService } from './housekeeping.service';
   exports: [HousekeepingService],
 })
 export class SystemCoreModule {}
+
+/** REST-only sink; workers do not expose browser telemetry. */
+@Module({ controllers: [ClientLogController] })
+export class SystemHttpModule {}

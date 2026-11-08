@@ -158,7 +158,10 @@
     "statusLabels": {
       "paid": "បានបង់",
       "pending": "រង់ចាំបង់"
-    }
+    },
+    "loadMore": "មើលបន្ថែម ({count})",
+    "downloadCsv": "ទាញយក CSV",
+    "loadError": "មិនអាចផ្ទុកទិន្នន័យបានទេ។ សូមព្យាយាមម្តងទៀត។"
   },
   "banner": {
     "title": "អ្នកជានាយកតំបន់ {label} · {name}",
