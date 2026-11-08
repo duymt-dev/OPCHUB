@@ -1,4 +1,5 @@
 import { accountLockedUntilMessage } from '@opchub/shared';
+import { Prisma } from '@opchub/db';
 import {
   chatMessagePageSchema,
   chatMessageSchema,
@@ -21,16 +22,41 @@ import { createTestApp, type TestApp } from '../setup/test-app';
 describe('Kiểm duyệt §26.6 — vi phạm, khoá N ngày, khôi phục (TIP-V4-612)', () => {
   let t: TestApp;
   let admin: string;
+  let settings: Awaited<ReturnType<TestApp['prisma']['db']['appSetting']['findUnique']>>;
+  let isolated = false;
   beforeAll(async () => {
     t = await createTestApp();
     await flushAuthState(t);
     admin = await tokenOf(t, await createUser(t, { systemRole: 'admin' }));
+    settings = await t.prisma.db.appSetting.findUnique({ where: { key: 'moderation' } });
+    // This suite verifies absent-row defaults, independently of earlier AI settings fixtures.
+    await t.prisma.db.appSetting.deleteMany({ where: { key: 'moderation' } });
+    isolated = true;
   });
   beforeEach(() => flushAuthState(t));
   afterAll(async () => {
-    await t.prisma.db.appSetting.deleteMany({ where: { key: 'moderation' } });
-    await removeTestGroups(t);
-    await t.close();
+    if (!t) return;
+    try {
+      await removeTestGroups(t);
+    } finally {
+      try {
+        if (isolated) {
+          await t.prisma.db.$transaction(async (tx) => {
+            await tx.appSetting.deleteMany({ where: { key: 'moderation' } });
+            if (settings) {
+              await tx.appSetting.create({
+                data: { ...settings, value: settings.value ?? Prisma.JsonNull },
+              });
+            }
+          });
+          expect(await t.prisma.db.appSetting.findUnique({ where: { key: 'moderation' } })).toEqual(
+            settings,
+          );
+        }
+      } finally {
+        await t.close();
+      }
+    }
   });
 
   async function setup() {
