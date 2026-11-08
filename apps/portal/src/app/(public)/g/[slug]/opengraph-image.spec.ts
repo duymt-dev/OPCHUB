@@ -9,14 +9,16 @@ vi.mock('@opchub/ui', () => ({
 }));
 import { mockStorePublicPage } from '@opchub/shared/mock-domains';
 import { fetchPublicStore } from '@/lib/server-api';
-import Image from './opengraph-image';
+import { GET } from './opengraph-image/route';
 beforeEach(() => vi.clearAllMocks());
 describe('REQ-627 B15 real OG rendering', () => {
   it('REQ-627 Vietnamese text renders to real PNG1200x630 with bundled font', async () => {
     const fixture = mockStorePublicPage('htx-ca-phe-hoa-phu');
     if (!fixture.ok) throw new Error('Missing fixture');
     vi.mocked(fetchPublicStore).mockResolvedValue({ ...fixture.data, coverUrl: null });
-    const response = await Image({ params: Promise.resolve({ slug: fixture.data.slug }) });
+    const response = await GET(new Request('https://opchub.community/g/store/opengraph-image'), {
+      params: Promise.resolve({ slug: fixture.data.slug }),
+    });
     expect(response.status).toBe(200);
     expect(response.headers.get('content-type')).toBe('image/png');
     const png = Buffer.from(await response.arrayBuffer());
@@ -26,7 +28,9 @@ describe('REQ-627 B15 real OG rendering', () => {
   });
   it('REQ-627 hidden/nonexistent store returns404 without a rendered name', async () => {
     vi.mocked(fetchPublicStore).mockResolvedValue(null);
-    const response = await Image({ params: Promise.resolve({ slug: 'hidden' }) });
+    const response = await GET(new Request('https://opchub.community/g/hidden/opengraph-image'), {
+      params: Promise.resolve({ slug: 'hidden' }),
+    });
     expect(response.status).toBe(404);
     expect(await response.text()).toBe('');
   });
