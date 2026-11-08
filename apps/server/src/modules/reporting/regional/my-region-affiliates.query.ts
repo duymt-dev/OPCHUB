@@ -25,13 +25,15 @@ export function myRegionAffiliatesQuery(
       GROUP BY s.affiliate_id
     ), named AS (
       SELECT g.*,COALESCE(u.full_name,'Thành viên đã xóa') AS name
-      FROM grouped g LEFT JOIN affiliates a ON a.id=g.id LEFT JOIN users u ON u.id=a.user_id
+      FROM grouped g
+      LEFT JOIN LATERAL (SELECT user_id FROM affiliates WHERE id=g.id LIMIT 1) a ON true
+      LEFT JOIN LATERAL (SELECT full_name FROM users WHERE id=a.user_id LIMIT 1) u ON true
     ), page AS (
       SELECT g.*,count(*) OVER ()::int AS total FROM named g ${after}
       ORDER BY g.share DESC,g.name,g.id LIMIT ${limit}
     )
     SELECT p.*,COALESCE(a.code,'') AS code,COALESCE(province.province_name,'') AS province
-    FROM page p LEFT JOIN affiliates a ON a.id=p.id
+    FROM page p LEFT JOIN LATERAL (SELECT user_id,code FROM affiliates WHERE id=p.id LIMIT 1) a ON true
     LEFT JOIN LATERAL (${earliestRegionalGroup(Prisma.sql`a.user_id`)}) province ON true
     ORDER BY p.share DESC,p.name,p.id`;
 }

@@ -19,8 +19,8 @@ planner forcing or disabled sequential scans.
 
 | Query | Scope access | Output | Execution |
 | --- | --- | ---: | ---: |
-| Keyset page | Index Only Scan `regional_share_affiliate_projection`, 0 heap fetches | 50 | 5.012 ms |
-| CSV batch | Same covering scoped index, 0 heap fetches | 1,000 | 3.776 ms |
+| Keyset page | Index Only Scan `regional_share_affiliate_projection`, 0 heap fetches | 50 | 6.196 ms |
+| CSV batch | Same covering scoped index, 0 heap fetches | 1,000 | 9.465 ms |
 | Bulk director lock | Seq Scan of the three permanent slots + LockRows NOWAIT | 0 matching fixture users | 0.024 ms |
 
 Index key order: `(region, director_user_id, affiliate_id)`;
@@ -38,3 +38,8 @@ director rows is also the sensible plan, not an indexing failure.
 
 Raw final plans: `evidence/v46-821-query-plans.json`. Measurements are local samples,
 not production latency guarantees. Migration up/down/up evidence is separate.
+
+Final identity lookup correction: narrow LATERAL LIMIT1 joins preserve the old
+no-Seq-Scan contract on20k users/10k affiliates. Existing plan and deleted-identity
+assertions remain unchanged; all14 regional focused integration cases pass.
+Absent province is omitted in legacy/page payloads and remains blank in CSV.

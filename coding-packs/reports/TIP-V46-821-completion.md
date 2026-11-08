@@ -178,3 +178,20 @@ regression that seeds a synthetic child before resetting. Existing assertions,
 DB guards and production FKs remain unchanged. Focused seed integration10/10,
 DB lint/typecheck PASS. This reset was executed only on approved integration DB,
 never on private native dev/HOLD. Full root integration must be rerun.
+
+## Regional regression closure before final fresh full run
+
+- Full root attempt2 ran all145 DB +2170 server cases (31m20.194s), with3 failures.
+  Existing query-plan assertions caught normal identity joins scanning affiliates;
+  restored narrow LATERAL LIMIT1 lookups in production, no assertion/fixture changes.
+- The exact deleted-account row assertion also caught an unnecessary new empty
+  province property. Absent province is now omitted in both native/mock responses,
+  preserving legacy shape; CSV still writes a blank province cell. Assertion kept.
+- Newly added malicious bigint cursor test observed the long-running worker's old
+  schema during that diagnostic run. Fresh focused execution verifies overflow400
+  with bounded shared schema (not SQL500), no status expectation relaxed.
+- Fresh5-file regional integration14/14 PASS (30.05s), including unchanged deployed
+  plan/limits,130-row paging/CSV/permissions and P0/B8. Shared schema/mock8/8 PASS.
+  Updated10k actual-query plans captured after the identity fix; fixture cleaned.
+- One final fresh root integration run and closure/build/E2E/parity remain. No DONE
+  claim based on the failed full run or the focused rerun alone.

@@ -21,11 +21,12 @@ export function mockMyRegionAffiliateRows(userId: string) {
     .map(([id, group]) => {
       const first = group[0],
         uid = first?.affiliateUserId ?? '';
+      const province = mockAffiliateRegion(uid)?.provinceName;
       return {
         id,
         name: first?.affiliateName ?? '',
         code: affiliateMockState().agents.get(uid)?.code ?? '',
-        province: mockAffiliateRegion(uid)?.provinceName ?? '',
+        ...(province ? { province } : {}),
         customers: new Set(group.map((r) => r.customerId)).size,
         revenue: group.reduce((n, r) => n + r.baseAmount, 0),
         share: group.reduce((n, r) => n + r.directorAmount, 0),
@@ -65,7 +66,14 @@ export function mockMyRegionAffiliateCsv(userId: string) {
   const cell = (v: string | number) => `"${String(v).replaceAll('"', '""')}"`;
   const lines: (string | number)[][] = rows
     .slice(0, 20_000)
-    .map((r) => [safe(r.name), safe(r.code), safe(r.province), r.customers, r.revenue, r.share]);
+    .map((r) => [
+      safe(r.name),
+      safe(r.code),
+      safe(r.province ?? ''),
+      r.customers,
+      r.revenue,
+      r.share,
+    ]);
   recordAudit(
     userId,
     'regional.affiliates.export',

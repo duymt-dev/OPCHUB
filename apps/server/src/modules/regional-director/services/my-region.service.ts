@@ -61,7 +61,7 @@ export class MyRegionService {
           id: r.id,
           name: r.name,
           code: r.code,
-          province: r.province,
+          ...(r.province ? { province: r.province } : {}),
           customers: r.customers,
           revenue: Number(r.revenue),
           share: Number(r.share),
