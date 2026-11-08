@@ -1,0 +1,45 @@
+{
+    "nativeDist":  ".next-v46-820-native-verified",
+    "checkedAt":  "2026-11-08T23:10:26.7369660+07:00",
+    "integration":  "opchub_v46_801_test",
+    "privateDev":  "opchub_v46_812_dev",
+    "source":  "3a199fb4",
+    "ownedPids":  {
+                      "api":  1948,
+                      "socket":  13420,
+                      "portal":  29672,
+                      "msw-portal":  23540,
+                      "admin":  25912,
+                      "worker":  27084,
+                      "msw-admin":  29976
+                  },
+    "mswDist":  ".next-v46-820-msw-verified",
+    "checks":  [
+                   {
+                       "status":  200,
+                       "url":  "http://127.0.0.1:4310/v1/health",
+                       "name":  "api"
+                   },
+                   {
+                       "status":  200,
+                       "url":  "http://localhost:3710/login",
+                       "name":  "portal"
+                   },
+                   {
+                       "status":  200,
+                       "url":  "http://localhost:3711/login",
+                       "name":  "admin"
+                   },
+                   {
+                       "status":  200,
+                       "url":  "http://localhost:3982/login",
+                       "name":  "msw-portal"
+                   },
+                   {
+                       "status":  200,
+                       "url":  "http://localhost:3983/login",
+                       "name":  "msw-admin"
+                   }
+               ],
+    "redis":  "Memurai6381 DB3/DB2"
+}

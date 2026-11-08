@@ -2,6 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { Prisma } from '@opchub/db';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { visibleStoreSql } from './search-visibility.query';
+import {
+  publicOwnerActiveSql,
+  storeOwnerSlugsQuery,
+  storeSitemapQuery,
+  type StoreSitemapRow,
+} from './store-sitemap.query';
 import type { StorePublicPatch, StorePublicPage } from '@opchub/shared/api-domains';
 
 /** Safe schema-derived row; JSON is validated/projected before any anonymous response. */
@@ -25,7 +31,7 @@ export const storePublicQuery = (slug: string, now: Date) => Prisma.sql`
         s.logo_url AS "logoUrl",s.cover_url AS "coverUrl",s.vision,s.mission,s.gallery,
         s.videos,s.team,s.certs,s.phone,s.email,s.website,s.address,s.phones,s.emails,
         s.addresses,s.socials,s.seo_index AS "seoIndex",s.seo_title AS "seoTitle",s.seo_desc AS "seoDesc"
-      FROM stores s WHERE s.slug=${slug} AND ${visibleStoreSql(now)}`;
+      FROM stores s WHERE s.slug=${slug} AND ${visibleStoreSql(now)} AND ${publicOwnerActiveSql}`;
 
 @Injectable()
 export class StorePublicRepository {
@@ -78,5 +84,27 @@ export class StorePublicRepository {
       where: { id: { in: [...ids] } },
       select: { slug: true },
     });
+  }
+
+  ownerSlugs(ids: readonly string[]) {
+    return this.prisma.db.$queryRaw<{ slug: string }[]>(storeOwnerSlugsQuery(ids));
+  }
+
+  sitemap(now: Date, cursor?: { at: string; id: string }) {
+    return this.prisma.db.$queryRaw<StoreSitemapRow[]>(storeSitemapQuery(now, cursor));
+  }
+
+  async guestTarget(slug: string, now: Date) {
+    const [row] = await this.prisma.db.$queryRaw<{ id: string; ownerId: string }[]>(Prisma.sql`
+      SELECT s.id,s.owner_id AS "ownerId" FROM stores s
+      WHERE s.slug=${slug} AND ${visibleStoreSql(now)} AND ${publicOwnerActiveSql}`);
+    return row ?? null;
+  }
+
+  async publicLogo(slug: string, now: Date) {
+    const [row] = await this.prisma.db.$queryRaw<{ logoUrl: string | null }[]>(Prisma.sql`
+      SELECT s.logo_url AS "logoUrl" FROM stores s
+      WHERE s.slug=${slug} AND ${visibleStoreSql(now)} AND ${publicOwnerActiveSql}`);
+    return row ?? null;
   }
 }

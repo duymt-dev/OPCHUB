@@ -13,3 +13,7 @@ export const storeViewDaysQuery = (storeId: string, from: string, to: string) =>
   SELECT to_char(day, 'YYYY-MM-DD') AS day, views
   FROM store_daily_views
   WHERE store_id = ${storeId} AND day BETWEEN ${from}::date AND ${to}::date`;
+
+export const storeGuestViewsQuery = (storeId: string, from: string, to: string) => Prisma.sql`
+  SELECT COALESCE(sum(views),0)::int AS views FROM store_daily_guest_views
+  WHERE store_id=${storeId} AND day BETWEEN ${from}::date AND ${to}::date`;

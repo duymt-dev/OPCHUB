@@ -7,6 +7,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } },
   test: {
+    alias: { 'server-only': fileURLToPath(new URL('./test/server-only.ts', import.meta.url)) },
     environment: 'jsdom',
     globals: true,
     css: false,

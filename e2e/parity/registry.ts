@@ -1,4 +1,5 @@
 import { GLOBAL_SEARCH } from './scenarios/global-search';
+import { PORTAL_STORE_SEO } from './scenarios/portal-store-seo';
 import { PORTAL_MY_REGION } from './scenarios/portal-my-region';
 import { env } from '../env';
 import { ADMIN_SCENARIOS } from './scenarios/admin';
@@ -8,6 +9,7 @@ import type { Scenario } from './types';
 import { ADMIN_REGIONAL } from './scenarios/admin-regional';
 
 export const ALL_SCENARIOS: Scenario[] = [
+  ...PORTAL_STORE_SEO,
   ...GLOBAL_SEARCH,
   ...PORTAL_MY_REGION,
   ...ADMIN_REGIONAL,

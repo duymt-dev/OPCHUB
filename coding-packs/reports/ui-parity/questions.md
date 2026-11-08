@@ -1067,3 +1067,24 @@ both gates; owner real custom key untouched. The private817 runtime remains HOLD
   proves exact restoration including prior optional keys/timestamp or absence.
   Ordered AI7/7 then legacy5/5 PASS; final root integration2271/2271, no skip/cache.
   Full MSW confirmation397 passed+5 existing skips. PR104 ready for owner review.
+## TIP-V46-820 — B15 / D-139 execution
+
+- Q820-1..7 approved in TIP before implementation: no slug editing, canonical host
+  only, public-field LocalBusiness, cover before generated OG, salted30min guest
+  dedup/no bots-owner, independent7-day guest KPI/no digest-push changes, TTL60.
+- Owner approved private812/private801test, Memurai6381 DB3/DB2, rolling only
+  private818 runtime to820 and disposable820 chain DB. Chain106/down/up identical.
+- Owner approved internal member soft-delete command with audit/user.deleted in
+  same transaction, no new deletion API/UI; there was no member-deletion emitter
+  to connect. Durable effects revoke sessions and invalidate public caches.
+- Stable OG alias is needed because installed Next16 hashes metadata-image paths.
+  Root sitemap keeps its first50000 URLs; generated extra chunks are listed in
+  robots, avoiding truncation. No existing rewrite contract was loosened.
+- New full-page P-V46-GUEST-KPI measurement retains all dashboard content and
+  the new counter; old P-109 greeting-only capture is unchanged. Prototype-only
+  fake activity/KPIs remain excluded from app by D-114; public config card and
+  new guest KPI have their approved feature origins, not fake prototype matches.
+  - Owner approved narrow mobile grid repair in820: full mobile image newly exposes
+    the pre-existing products grid (app1 column vs prototype2). Before
+  pair archived at `reports/evidence/v46-820-mobile-grid-before/`. Do not silently
+  classify that actual layout discrepancy as data or a new-feature exception.

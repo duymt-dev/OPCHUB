@@ -1,4 +1,5 @@
 import { MemberSearchRepository } from './repositories/member-global-search.query';
+import { UserDeletionService } from './services/user-deletion.service';
 import { MemberSearchService } from './services/member-search.service';
 import { ExportCoreModule } from '@/modules/export';
 import { Module } from '@nestjs/common';
@@ -50,6 +51,7 @@ import { ReferralRegistry } from './services/referral.registry';
 import { REFERRAL_PORT } from './ports';
 
 const providers = [
+  UserDeletionService,
   MemberSearchRepository,
   MemberSearchService,
   ReferralRegistry,

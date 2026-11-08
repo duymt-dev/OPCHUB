@@ -5,6 +5,22 @@ import { useTranslations } from 'next-intl';
 import { formatPrice } from '../../model';
 import d from './dashboard.module.css';
 
+/** Public guest traffic remains independent of member views/digest/push KPIs. */
+export function GuestViewsKpi({ views }: { views: number }) {
+  const t = useTranslations('stores.dash');
+  return (
+    <div className={d.kpi} data-kpi="guest-views">
+      <div className={d.kpiText}>
+        <span className={d.kpiLabel}>{t('guestViews')}</span>
+        <div className={d.kpiRow}>
+          <b className={d.kpiValue}>{views.toLocaleString('vi-VN')}</b>
+        </div>
+        <span className={d.kpiSub}>{t('viewsSub')}</span>
+      </div>
+    </div>
+  );
+}
+
 /** "Thông tin gian hàng": bìa, nhãn trạng thái, tên, "ngành · tỉnh", địa chỉ, giới thiệu 3 dòng, 2 nút */
 export function DashInfo(p: { store: StoreDetail; onEdit: () => void; onView: () => void }) {
   const t = useTranslations('stores');
@@ -55,7 +71,7 @@ export function DashItems(p: { store: StoreDetail; onManage: () => void }) {
           {t('dash.manage')}
         </button>
       </div>
-      <div className={d.prods}>
+      <div className={d.prods} data-block="store-dashboard-items">
         {items.map((i) => (
           <div key={i.id} className={d.prod}>
             <div className={d.prodImgBox}>

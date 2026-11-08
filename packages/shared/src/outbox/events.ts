@@ -146,6 +146,7 @@ export const outboxEvents = {
       .max(500),
   }),
   'user.locked': z.object({ userId: z.string(), reason: z.string().nullable() }),
+  'user.deleted': z.object({ userId: z.string() }),
   'user.session_revoked': z.object({
     userId: z.string(),
     reason: z.enum(SESSION_REVOKE_REASONS),
