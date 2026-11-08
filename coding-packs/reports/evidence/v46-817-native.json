@@ -1,0 +1,106 @@
+{
+  "tip": "TIP-V46-817",
+  "implementation": "fb0ecf62",
+  "headAtNativeRun": "ceaccaa3",
+  "recordedAt": "2026-11-08T08:41:30.895Z",
+  "nativeE2E": {
+    "passed": 2,
+    "failed": 0,
+    "exitCode": 0,
+    "durationSeconds": 14.5,
+    "log": "test-results/v46-817-e2e-native.log",
+    "assertions": [
+      "saved noncatalog model remains selected",
+      "explicit model save/reload",
+      "suggestion does not overwrite draft until acceptance",
+      "accepted suggestion reaches rich editor",
+      "live log filter and worker-backed CSV download",
+      "mobile drawer does not overflow"
+    ]
+  },
+  "nativeParity": {
+    "journeysCaptured": 6,
+    "harnessChecksPassed": 4,
+    "belowReference": 2,
+    "aboveReference": 4,
+    "rawExitCode": 1,
+    "classification": "D-134 reference; D-138 additions and live-state data; no masks or threshold changes",
+    "measurements": [
+      {
+        "id": "P-73",
+        "name": "Form đăng dự án",
+        "viewport": 1440,
+        "diffPct": 0.9755401234567902,
+        "size": "1440×900",
+        "sha": "ceaccaa3"
+      },
+      {
+        "id": "P-73",
+        "name": "Form đăng dự án",
+        "viewport": 390,
+        "diffPct": 2.1709806780896828,
+        "size": "390×844",
+        "sha": "ceaccaa3"
+      },
+      {
+        "id": "D-33",
+        "name": "Kiểm duyệt tin nhắn",
+        "viewport": 1440,
+        "diffPct": 3.4027777777777777,
+        "size": "1440×910",
+        "sha": "ceaccaa3"
+      },
+      {
+        "id": "D-33",
+        "name": "Kiểm duyệt tin nhắn",
+        "viewport": 390,
+        "diffPct": 9.614297517067444,
+        "size": "390×1769",
+        "sha": "ceaccaa3"
+      },
+      {
+        "id": "D-V46-AI",
+        "name": "Cài đặt · AI Provider",
+        "viewport": 1440,
+        "diffPct": 8.288393806485912,
+        "size": "1440×1672",
+        "sha": "ceaccaa3"
+      },
+      {
+        "id": "D-V46-AI",
+        "name": "Cài đặt · AI Provider",
+        "viewport": 390,
+        "diffPct": 10.611182084092512,
+        "size": "390×3673",
+        "sha": "ceaccaa3"
+      }
+    ],
+    "log": "test-results/v46-817-parity-native.log"
+  },
+  "restoration": {
+    "providerMetadataAndSettingsHashesMatched": true,
+    "botAutomation": {
+      "enabled": false,
+      "autoGenerate": false,
+      "replyToMembers": false
+    },
+    "realAiCalls": 0,
+    "realCustomCredentialChanged": false,
+    "secretsIncluded": false
+  },
+  "privateRuntime": {
+    "database": "opchub_v46_812_dev",
+    "redis": {
+      "port": 6381,
+      "db": 3
+    },
+    "ports": {
+      "api": 4310,
+      "socket": 4311,
+      "portal": 3710,
+      "admin": 3711
+    },
+    "keptRunning": true,
+    "originalHoldUntouched": true
+  }
+}

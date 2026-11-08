@@ -1019,3 +1019,12 @@ Owner chốt toàn bộ phương án mặc định Q-V46-807-1 → 5, Q808-1 →
 - Chọn drawer nhật ký từ nút **Xem nhật ký**; ba nút gợi ý, model theo chức năng,
   AI kiểm duyệt và drawer không có trạng thái tương ứng trong prototype. Thay đổi
   được D-138/TIP yêu cầu; giữ phép đo tham khảo và ảnh thật để owner review theo D-134.
+
+### TIP-V46-817 native closure
+
+The owner manually stopped the five old private816 processes. Combined startup
+commands were rejected, but standard managed process sessions started817; no
+permission escalation or new DB/port was required. Native E2E2/2 passed; six native
+paired journeys completed. D-138/data pixel differences remain reference-only
+under D-134. Provider/settings snapshot equality and bot-off flags verified after
+both gates; owner real custom key untouched. The private817 runtime remains HOLD.

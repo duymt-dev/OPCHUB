@@ -1,13 +1,12 @@
 # COMPLETION REPORT — TIP-V46-817
 
-**STATUS: PARTIAL — native verification blocked.** Implementation and all executed
-functional gates passed. Native 817 E2E/parity has not run because the environment
-rejected service control. The owner has now stopped the owned 816 runtime, but
-starting the approved 817 processes was also rejected. This is **not** a DONE/merge-ready declaration.
+**STATUS: DONE** - D-138 implementation, all functional gates and native verification
+completed. Pixel parity remains a D-134 reference with paired images and explicit
+D-138/data classifications; owner image review belongs to PR review.
 
 - Branch: `feature/TIP-V46-817-ai-ops`, base `dev` `7d5f8f0e`.
 - Implementation: **`fb0ecf62`**, committed with normal hooks and pushed to origin.
-- Draft PR to **dev**: [#102](https://github.com/duymt-dev/OPCHUB/pull/102).
+- PR to **dev**: [#102](https://github.com/duymt-dev/OPCHUB/pull/102).
 - Scope: D-138, B3 AI metadata log/export, B4 compose/moderation, B5 budget operations.
 - No real AI invocation is authorized or used by 817 tests. HTTP providers are
   loopback stubs. Existing real provider credentials are not copied into reports,
@@ -71,7 +70,7 @@ overwrites the existing `custom` real credential or enables the bot.
 Final reruns finished on 08/11/2026. Local evidence is under
 `test-results/v46-817-*`; raw local logs are not committed as a substitute for the reports.
 
-| Gate | Evidence so far |
+| Gate | Final evidence |
 |---|---|
 | `pnpm lint` | **PASS**, 8 tasks successful, `v46-817-lint-final.log`. |
 | `pnpm typecheck --env-mode=loose` | **PASS**, 8 tasks, mocking=msw, `v46-817-typecheck-final.log`. |
@@ -86,7 +85,8 @@ Final reruns finished on 08/11/2026. Local evidence is under
 | Migration chain | PASS, 104 migrations, both 817 down/up pairs and identical schema. |
 | SQL plans | Actual before/after measurements in linked report. |
 | MSW parity | Six paired captures +4 harness checks; raw 3 above/3 below 3% reference. D-134/D-138 classifications and images supplied, no masks/threshold changes. |
-| Native E2E | Not yet run on 817: owner manually stopped the five old private processes; starting817 is now also rejected by the execution environment. Manual startup instructions supplied. |
+| Native E2E | **2/2 PASS**, desktop1440/mobile390, actual API + worker + PostgreSQL + Redis, SKIP_SEED=1; 14.5s, native child exit0, `v46-817-e2e-native.log`. |
+| Native parity | Six paired captures +4 harness checks completed; raw exit1 only for4 pixel-reference comparisons, classified D-134/D-138/data; no failed journey, new masks or threshold changes. |
 
 The old Push subscription suite passed all five tests on its isolated rerun. Its
 full-run failure occurred while obtaining a login token, before device cleanup.
@@ -121,7 +121,7 @@ the native exit code explicitly. Probe logs: `v46-817-powershell-stderr-probe*.l
 | Member enqueue, concurrent durable claim, invalid/low-confidence skip, switch off, no automatic punishment or physical retry | `ai-moderation.int.spec.ts` **7/7** |
 | Existing AI/router/settings/runtime, keyword and architecture contracts | Full integration +263 server unit tests, including outbox consumer coverage |
 | Explicit model save, preserve saved noncatalog model, accept/dismiss suggestion | Admin AI unit **3/3**, shared UI button **2/2** |
-| Desktop/mobile model save, explicit rich-editor replacement, log filters/CSV and no-overflow | Final new MSW E2E **2/2**, screenshots in parity report |
+| Desktop/mobile model save, explicit rich-editor replacement, log filters/CSV and no-overflow | Final new MSW E2E **2/2** and native E2E **2/2**, screenshots in parity report |
 
 - [Actual SQL plans and migration-chain evidence](TIP-V46-817-query-plans.md).
 - Migration `--create-only` was attempted on the approved private development DB
@@ -164,20 +164,31 @@ so it retains only `auto`; custom has no fabricated suggestions.
 
 ## Git handoff
 
-Implementation `fb0ecf62` and evidence are pushed to draft [PR #102](https://github.com/duymt-dev/OPCHUB/pull/102),
-base **dev**. The final response supplies the report commit SHA and clean-tree result.
+Implementation `fb0ecf62` and evidence are pushed to [PR #102](https://github.com/duymt-dev/OPCHUB/pull/102),
+base **dev**. The final response supplies the final report commit SHA and clean-tree result.
 No merge, auto-merge, main push or production deployment was performed.
 
-## Required next action
+## Native closure / private HOLD
 
-The owner manually stopped all five identified owned816 processes. Preflight
-confirmed their PIDs were absent and ports4310/4311,3710/3711 were free.
-The environment then rejected the start command before launching any817 service.
-The exact private startup instructions were supplied to the owner.
+The owner stopped only the five identified private816 processes. Combined
+PowerShell service-control commands had been rejected; standard managed process
+sessions then successfully started all five817 services without a permission
+escalation. API and both Next apps returned HTTP200; socket4311 is listening.
+No old816 runtime was substituted for817 evidence.
 
-After manual startup, run native `admin-ai-ops.spec.ts` with `SKIP_SEED=1`,
-then scoped native parity. Preserve the existing real custom credential, keep
-bot automation off and restore the unused-provider stub fixture. A read-only
-preflight snapshot confirmed all three bot automation flags remained false.
-Do not replace native evidence with older runtime results. Only after these
-gates and report updates should the PR become ready/DONE.
+- Approved DB: `opchub_v46_812_dev`; Memurai6381 DB3. Native API/socket4310/4311;
+  Portal/Admin3710/3711. Original HOLD/native DB/Redis6379 were not altered.
+- Native E2E ran only the unused-provider loopback stub fixture, never the real
+  custom credential. Both CSV jobs completed through the actual817 worker.
+- Read-only before/after snapshots matched provider metadata and settings hashes
+  exactly after E2E and again after parity; no credential values are in reports.
+  Bot `enabled`, `autoGenerate`, `replyToMembers` remain **false**.
+- Live private817 processes remain running for independent verification. Local
+  process/session ownership is recorded in `test-results/v46-817-runtime-state.json`.
+- Public evidence: [native closure](evidence/v46-817-native.json),
+  [native image pairs/new UI](ui-parity/v46-817/native/). No seed/reset/down
+  was run on reused databases during the native gate.
+
+Remaining: owner PR/image review and merge into dev. No implementation or required
+verification work remains for817; this report does not claim owner image approval
+or a production deployment.

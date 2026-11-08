@@ -1,9 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt ngưỡng pixel 318/430 ảnh.
-> TIP-V46-816: chỉ 6 ảnh mới của P-89/P-93/D-V46-APP ở lane này. D-V46-APP được phân loại D-137 (khối Thiết bị này) + B16 đã để sau + dữ liệu; không phải lỗi chức năng theo D-134. CLI pixel vẫn exit 1, số đo/ảnh/assertion không đổi. Xem [báo cáo 816](../../TIP-V46-816-parity.md).
-
+> Đạt 315/430 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -169,8 +167,8 @@
 | P-67 | Góp ý · trống | 390 | 8.96% | ❌ chưa đạt | 390×2359 | 25a1eec |
 | P-68 | Dự án · repo riêng tư, đã xin quyền | 1440 | 6.83% | ❌ chưa đạt | 1440×2165 | 25a1eec |
 | P-68 | Dự án · repo riêng tư, đã xin quyền | 390 | 36.65% | ❌ chưa đạt | 390×3597 | 25a1eec |
-| P-73 | Form đăng dự án | 1440 | 0.57% | ✅ đạt | 1440×900 | 25a1eec |
-| P-73 | Form đăng dự án | 390 | 0.52% | ✅ đạt | 390×844 | 25a1eec |
+| P-73 | Form đăng dự án | 1440 | 0.98% | ✅ đạt | 1440×900 | ceaccaa3 |
+| P-73 | Form đăng dự án | 390 | 2.17% | ✅ đạt | 390×844 | ceaccaa3 |
 | P-74 | Form dự án · báo thiếu tên | 1440 | 1.52% | ✅ đạt | 1440×900 | 25a1eec |
 | P-74 | Form dự án · báo thiếu tên | 390 | 3.78% | ❌ chưa đạt | 390×844 | 25a1eec |
 | P-75 | Form dự án · mở gọi vốn | 1440 | 0.17% | ✅ đạt | 1440×900 | 25a1eec |
@@ -294,8 +292,8 @@
 | D-30 | Drawer sửa nhóm | 390 | 0.48% | ✅ đạt | 390×844 | 25a1eec |
 | D-31 | Modal xuất danh sách thành viên | 1440 | 0.17% | ✅ đạt | 1440×900 | 25a1eec |
 | D-31 | Modal xuất danh sách thành viên | 390 | 0.00% | ✅ đạt | 390×844 | 25a1eec |
-| D-33 | Kiểm duyệt tin nhắn | 1440 | 0.78% | ✅ đạt | 1440×900 | 25a1eec |
-| D-33 | Kiểm duyệt tin nhắn | 390 | 1.52% | ✅ đạt | 390×1457 | 25a1eec |
+| D-33 | Kiểm duyệt tin nhắn | 1440 | 3.40% | ❌ chưa đạt | 1440×910 | ceaccaa3 |
+| D-33 | Kiểm duyệt tin nhắn | 390 | 9.61% | ❌ chưa đạt | 390×1769 | ceaccaa3 |
 | D-34 | Kiểm duyệt · hết tin | 1440 | 0.06% | ✅ đạt | 1440×900 | 25a1eec |
 | D-34 | Kiểm duyệt · hết tin | 390 | 0.01% | ✅ đạt | 390×844 | 25a1eec |
 | D-35 | Kiểm duyệt · thêm từ khóa | 1440 | 0.78% | ✅ đạt | 1440×900 | 25a1eec |
@@ -427,10 +425,10 @@
 | D-88 | Tạo sự kiện · Link Google Meet (D-59) | 390 | 0.02% | ✅ đạt | 390×844 | 25a1eec |
 | D-89 | Gán vào nhóm · vai trò Giảng viên (GR-R01) | 1440 | 0.25% | ✅ đạt | 1440×900 | ef7934ff |
 | D-89 | Gán vào nhóm · vai trò Giảng viên (GR-R01) | 390 | 0.11% | ✅ đạt | 390×844 | ef7934ff |
-| D-V46-AI | Cài đặt · AI Provider | 1440 | 2.84% | ✅ đạt | 1440×1584 | ef7934ff |
-| D-V46-AI | Cài đặt · AI Provider | 390 | 6.88% | ❌ chưa đạt | 390×3478 | ef7934ff |
-| D-V46-APP | Cài đặt · Ứng dụng & thông báo | 1440 | 12.39% | ℹ️ D-137/B16 (tham khảo) | 1440×1065 | 584742ea |
-| D-V46-APP | Cài đặt · Ứng dụng & thông báo | 390 | 8.05% | ℹ️ D-137/B16 (tham khảo) | 390×1693 | 584742ea |
+| D-V46-AI | Cài đặt · AI Provider | 1440 | 8.29% | ❌ chưa đạt | 1440×1672 | ceaccaa3 |
+| D-V46-AI | Cài đặt · AI Provider | 390 | 10.61% | ❌ chưa đạt | 390×3673 | ceaccaa3 |
+| D-V46-APP | Cài đặt · Ứng dụng & thông báo | 1440 | 12.39% | ❌ chưa đạt | 1440×1065 | 584742ea |
+| D-V46-APP | Cài đặt · Ứng dụng & thông báo | 390 | 8.05% | ❌ chưa đạt | 390×1693 | 584742ea |
 | D-V46-BANK | Cài đặt · Đối soát ngân hàng | 1440 | 12.33% | ❌ chưa đạt | 1440×1065 | ef7934ff |
 | D-V46-BANK | Cài đặt · Đối soát ngân hàng | 390 | 7.79% | ❌ chưa đạt | 390×2164 | ef7934ff |
 | D-V46-RENEW | Cài đặt · Nhắc gia hạn | 1440 | 11.07% | ❌ chưa đạt | 1440×1065 | ef7934ff |
