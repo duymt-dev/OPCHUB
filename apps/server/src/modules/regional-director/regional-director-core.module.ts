@@ -1,4 +1,5 @@
 import { MyRegionService } from './services/my-region.service';
+import { RegionalLockEffects } from './services/regional-lock.effects';
 import { RegionalPayeeBankService } from './services/regional-payee-bank.service';
 import { RegionalPayeeBankRepository } from './repositories/regional-payee-bank.repository';
 import { AdminRegionalPayeeBankController } from './controllers/admin-regional-payee-bank.controller';
@@ -25,6 +26,7 @@ import { RegionalDirectorReadService } from './services/regional-director-read.s
 import { RegionalDirectorEventsHandler } from './services/regional-director-events.handler';
 
 const providers = [
+  RegionalLockEffects,
   RegionalPayeeBankService,
   RegionalPayeeBankRepository,
   MyRegionService,

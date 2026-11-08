@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
 import { memberSearchQuery } from '../repositories/member-search.query';
+import {
+  memberLifecycleQuery,
+  type MemberLifecycleRow,
+} from '../repositories/member-lifecycle.query';
 import type { AccountType } from '@opchub/shared';
 import { PrismaService } from '@/common/prisma/prisma.service';
 
@@ -26,6 +30,11 @@ const SELECT = {
 @Injectable()
 export class MemberDirectory {
   constructor(private readonly prisma: PrismaService) {}
+
+  /** Lifecycle consumers recheck current state under a share lock, not stale event data. */
+  lockLifecycle(tx: DbTx, ids: readonly string[]) {
+    return tx.$queryRaw<MemberLifecycleRow[]>(memberLifecycleQuery(ids));
+  }
 
   byIds(ids: readonly string[], tx?: DbTx) {
     return (tx ?? this.prisma.db).user.findMany({

@@ -10,6 +10,7 @@ export function publishRegionalRevokeNotice(
   region: RegionalRegion,
   validUntil: string | null,
   now: number,
+  reason: 'manual' | 'locked' = 'manual',
 ) {
   const fee = validUntil
     ? `Phí thành viên cũ còn hiệu lực đến ${new Date(validUntil).toLocaleDateString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })}`
@@ -18,7 +19,7 @@ export function publishRegionalRevokeNotice(
     id: `${REGIONAL_NOTICE_PREFIX}${crypto.randomUUID()}`,
     type: 'system',
     title: `Kết thúc vai trò GĐ Vùng ${REGIONAL_LABELS[region]}`,
-    body: `${fee}. Chia sẻ đã ghi nhận vẫn được chi.`,
+    body: `${reason === 'locked' ? 'Kết thúc vai trò do tài khoản bị khóa. ' : ''}${fee}. Chia sẻ đã ghi nhận vẫn được chi.`,
     link: '/affiliate',
     read: false,
     createdAt: new Date(now).toISOString(),

@@ -1088,3 +1088,23 @@ both gates; owner real custom key untouched. The private817 runtime remains HOLD
     the pre-existing products grid (app1 column vs prototype2). Before
   pair archived at `reports/evidence/v46-820-mobile-grid-before/`. Do not silently
   classify that actual layout discrepancy as data or a new-feature exception.
+
+## TIP-V46-821 — approved defaults / execution
+
+- Q821-1: B9 closed, no refund/reversal code.
+- Q821-2: retiree bank ledger, clear slot, never repair incumbent account by guess.
+- Q821-3: indefinite lock/deletion revoke; temporary locks do not; unlock never restores.
+- Q821-4: prior pending shares still payable to retired/locked director.
+- Q821-5: qrcode + types approved; local PNG, no outside QR service.
+- Q821-6: signed own-system image URL30days with textual bank fallback.
+- Q821-7: keep T-14 enrichment, add expired mail; no new reminder milestones/settings.
+- Q821-8: bounded first-party client logger, no Sentry/PII/DB storage.
+- Q821-9: region CSV only visible identity/stat columns, no email/phone, audited.
+- Q821-10: keep24-month monthly table limit.
+- Owner approved private812/dev, private801/test, Memurai6381 DB3/DB2, owned821
+  chain DB and private820→821 rolling restart only; original native/HOLD unchanged.
+- Q821-11: owner approved new pending fundraising renewal/code on expiry, current
+  price, same-transaction mail, activation only after real receipt. Old expired
+  package code is already paid and must never be reused for the renewal QR.
+- P0 diagnostic private dev:3 occupied accounts,0 suspicious inherited regions;
+  counts only, not a production audit. Owner must check production separately.

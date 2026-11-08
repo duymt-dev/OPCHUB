@@ -72,3 +72,31 @@ B8 automatic revocation, B7 mail QR /
 fundraising reminders, B10 logger/paged affiliates/CSV; SQL plan evidence, full
 lint/typecheck/unit/integration/depcheck/build/E2E/parity, final report, clean
 commit/push and review PR into dev. No claim of task completion at this stage.
+
+## B8 progress
+
+- P0 committed/pushed separately as `5b06f3ec` before starting B8.
+- Account lifecycle port has optional deletion effect, dispatched by the real
+  AccountProcessor after durable session invalidation. Other domains' deletion
+  behavior is not broadened. Regional effect registers via existing registry.
+- Account-owned public directory bulk reads/locks lifecycle snapshots; regional
+  repository bulk locks eligible occupied slots NOWAIT. At most the three fixed
+  permanent slots use the original transactional revoke/fee/bank/audit/outbox
+  transition; no unbounded per-user query loop or cross-domain repository read.
+- Indefinite lock only; temporary lock retained; deletion always revokes. System
+  actor/role are literal `system`. Optional reason remains legacy-compatible;
+  absent reason is manual in mail/notification rendering. Deleted accounts get
+  history only, never revoked mail. Unlock does not appoint.
+- Real scoped relay tests execute production Account/Regional processors,
+  actual DB leasing/mark/backoff and replay, not Prisma mocks or unrelated old
+  outbox. Initial B8+legacy appointment19/19 PASS; final expanded B8 suite5/5
+  PASS including transactional rollback (7.06s). Root lint8/typecheck8 PASS,
+  full unit2249+2 existing skips PASS (4m14.275s), depcheck both graphs PASS.
+
+## Additional owner-approved B7 connection
+
+- Q821-11 approved: expired paid GV code cannot be reused for a new payment.
+  Expiry job creates/reuses a **new pending renewal request with a new code**
+  and current price before sending its QR in the same transaction. It never
+  activates/extends without actual bank receipt. Owner explicitly approved
+  “Duyệt tạo khoản chờ gia hạn mới khi hết hạn”. No QR may target the old paid code.

@@ -51,6 +51,7 @@ export const outboxEvents = {
     provinces: z.array(z.string()),
   }),
   'regional_director.revoked': z.object({
+    reason: z.enum(['manual', 'locked', 'deleted']).optional(),
     region: z.enum(['north', 'central', 'south']),
     userId: z.string(),
     feeStatus: z.enum(MEMBERSHIP_FEE_STATUS),

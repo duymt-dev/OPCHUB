@@ -78,6 +78,7 @@ export const GROUP_ASSIGN_PORT = Symbol('GROUP_ASSIGN_PORT');
  * Phải IDEMPOTENT: relay outbox có thể gọi lại cùng lô.
  */
 export interface LockEffects {
+  onDeleted?(userIds: readonly string[]): Promise<void>;
   onLocked(userIds: readonly string[]): Promise<void>;
   onUnlocked(userIds: readonly string[]): Promise<void>;
 }

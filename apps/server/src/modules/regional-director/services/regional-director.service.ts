@@ -12,6 +12,7 @@ import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { RegionalFeeService } from '@/modules/membership-fee';
 import { RegionalProjectionRepository } from '@/modules/reporting';
+import { MemberDirectory } from '@/modules/account';
 import { RegionalValidationError, regionalSqlState } from '../domain/regional-director.rules';
 import { RegionalDirectorRepository } from '../repositories/regional-director.repository';
 import { RegionalPayeeBankRepository } from '../repositories/regional-payee-bank.repository';
@@ -32,6 +33,7 @@ export class RegionalDirectorService {
     private readonly outbox: OutboxService,
     private readonly projection: RegionalProjectionRepository,
     private readonly payeeBanks: RegionalPayeeBankRepository,
+    private readonly members: MemberDirectory,
   ) {}
 
   appoint(actor: RegionalActor, region: RegionalRegion, userId: string, now = new Date()) {
@@ -81,6 +83,29 @@ export class RegionalDirectorService {
     return this.write(async (tx) => this.revokeWithin(tx, actor, await this.slot(tx, region), now));
   }
 
+  revokeBySystem(ids: readonly string[], reason: 'locked' | 'deleted', now = new Date()) {
+    if (!ids.length) return Promise.resolve();
+    return this.prisma.db.$transaction(async (tx) => {
+      const states = await this.members.lockLifecycle(tx, ids);
+      const eligible = states.filter((s) =>
+        reason === 'deleted'
+          ? s.deletedAt !== null
+          : s.status === 'locked' && s.lockedUntil === null,
+      );
+      const slots = await this.repo.lockUsers(
+        tx,
+        eligible.map((s) => s.id),
+      );
+      const actor = { id: 'system', role: 'system', ip: null };
+      // Exactly three permanent regional slots: no unbounded per-user DB loop.
+      const revoke = (slot: RegionalDirector | undefined) =>
+        slot ? this.revokeWithin(tx, actor, slot, now, reason) : Promise.resolve();
+      await revoke(slots[0]);
+      await revoke(slots[1]);
+      await revoke(slots[2]);
+    });
+  }
+
   patch(actor: RegionalActor, region: RegionalRegion, input: RegionalPatch) {
     return this.write(async (tx) => {
       const slot = await this.slot(tx, region);
@@ -110,7 +135,13 @@ export class RegionalDirectorService {
     });
   }
 
-  private async revokeWithin(tx: DbTx, actor: RegionalActor, slot: RegionalDirector, now: Date) {
+  private async revokeWithin(
+    tx: DbTx,
+    actor: RegionalActor,
+    slot: RegionalDirector,
+    now: Date,
+    reason: 'manual' | 'locked' | 'deleted' = 'manual',
+  ) {
     if (!slot.userId) throw conflict('Vùng này chưa có GĐ Vùng');
     const member = await this.projection.member(tx, slot.userId);
     const fee = await this.fees.leave(
@@ -145,6 +176,7 @@ export class RegionalDirectorService {
         bankNo: slot.bankNo ?? '',
         bankHolder: slot.bankHolder ?? '',
       },
+      reason,
     );
     const bank = regionalBankSchema.safeParse(slot);
     if (bank.success) await this.payeeBanks.save(tx, slot.region, slot.userId, bank.data, actor.id);
@@ -154,6 +186,7 @@ export class RegionalDirectorService {
       feeStatus: fee.status,
       validUntil: fee.validUntil?.toISOString() ?? null,
       revokedAt: now.toISOString(),
+      reason,
     });
   }
 
@@ -166,6 +199,7 @@ export class RegionalDirectorService {
     action: 'appoint' | 'revoke',
     createdAt: Date,
     bankSnapshot?: Prisma.InputJsonValue,
+    reason: 'manual' | 'locked' | 'deleted' = 'manual',
   ) {
     await this.repo.event(tx, {
       region,
@@ -185,7 +219,7 @@ export class RegionalDirectorService {
       tag: 'affiliate',
       ip: actor.ip,
       summary: `${action === 'appoint' ? 'Bổ nhiệm' : 'Thu hồi'} ${userName} · ${REGIONAL_LABELS[region]}`,
-      diff: { region, userId, actorRole: actor.role },
+      diff: { region, userId, actorRole: actor.role, reason },
     });
   }
 

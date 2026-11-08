@@ -16,6 +16,7 @@ export function requestMockRegionalMail(
   region: RegionalRegion,
   action: 'appoint' | 'revoke',
   at: number,
+  reason: 'manual' | 'locked' = 'manual',
 ): void {
   const rows = mockRegionalMailLog();
   rows.unshift({
@@ -23,7 +24,7 @@ export function requestMockRegionalMail(
     kind: action === 'appoint' ? 'regional_director_appoint' : 'regional_director_revoke',
     to: member.email,
     name: member.fullName,
-    subject: `${action === 'appoint' ? 'Bổ nhiệm' : 'Thu hồi'} GĐ Vùng ${REGIONAL_LABELS[region]}`,
+    subject: `${action === 'appoint' ? 'Bổ nhiệm' : 'Thu hồi'} GĐ Vùng ${REGIONAL_LABELS[region]}${reason === 'locked' ? ' do tài khoản bị khóa' : ''}`,
     sentAt: new Date(at).toISOString(),
     status: 'sent',
     attempts: 1,

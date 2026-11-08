@@ -24,4 +24,8 @@ export class LockEffectsRegistry {
   async unlocked(userIds: readonly string[]): Promise<void> {
     for (const e of this.effects) await e.onUnlocked(userIds);
   }
+
+  async deleted(userIds: readonly string[]): Promise<void> {
+    for (const effect of this.effects) await effect.onDeleted?.(userIds);
+  }
 }

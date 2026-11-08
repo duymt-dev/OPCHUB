@@ -3,6 +3,7 @@ export {
   RegionalDirectorHttpModule,
 } from './regional-director-core.module';
 export { RegionalDirectorService } from './services/regional-director.service';
+export { RegionalLockEffects } from './services/regional-lock.effects';
 export { RegionalDirectorReadService } from './services/regional-director-read.service';
 export { RegionalDirectorEventsHandler } from './services/regional-director-events.handler';
 export { RegionalShareLedgerService } from './services/regional-share-ledger.service';
