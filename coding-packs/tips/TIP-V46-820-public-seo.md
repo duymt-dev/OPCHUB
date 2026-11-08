@@ -155,7 +155,7 @@ Hoàn thiện SEO cho trang công khai gian hàng `/g/<slug>`: `sitemap.xml` + `
   - thống kê nguồn truy cập (referrer), khách duy nhất dài hạn, biểu đồ lượt khách
   - B7 → B10 (821)
 
-## Câu hỏi chờ owner chốt (builder dùng mặc định nếu chưa có trả lời, ghi `questions.md` › TIP-V46-820)
+## Câu hỏi — **đã chốt theo mặc định** (owner, 08/11/2026: "chốt như mặc định"; ghi `questions.md` › TIP-V46-820)
 
 - **Q-V46-820-1 Sửa slug.** Mặc định: **không** cho sửa, không chuyển hướng (giữ D-136: slug cố định từ lúc tạo). Lý do: link đã chia sẻ không bao giờ gãy.
 - **Q-V46-820-2 Host `app.opchub.community`.** Mặc định: chặn index trên host này (`robots` `Disallow: /` + `X-Robots-Tag: noindex`), chỉ `opchub.community` được Google index.
