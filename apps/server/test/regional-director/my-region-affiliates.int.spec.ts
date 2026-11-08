@@ -1,6 +1,10 @@
 import { randomUUID } from 'node:crypto';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { myRegionAffiliatePageSchema, myRegionSchema } from '@opchub/shared/api-domains';
+import {
+  encodeMyRegionAffiliateCursor,
+  myRegionAffiliatePageSchema,
+  myRegionSchema,
+} from '@opchub/shared/api-domains';
 import { RegionalDirectorService } from '@/modules/regional-director';
 import { regionalShareFixture } from '../factories/regional-share.factory';
 import { tokenOf } from '../factories/group.factory';
@@ -125,6 +129,12 @@ describe('TIP-V46-821 B10 regional affiliate paging and private audited CSV', ()
   it('SPEC16 validates cursor/limit and denies non-director, locked and revoked accounts independent of claims', async () => {
     expect((await t.call('/me/gdv/affiliates?limit=51', { token })).status).toBe(400);
     expect((await t.call('/me/gdv/affiliates?cursor=broken', { token })).status).toBe(400);
+    const overflow = encodeMyRegionAffiliateCursor({
+      share: '9999999999999999999',
+      name: '',
+      id: 'fixture',
+    });
+    expect((await t.call(`/me/gdv/affiliates?cursor=${overflow}`, { token })).status).toBe(400);
     expect((await t.call('/me/gdv/affiliates')).status).toBe(401);
     const outsider = await tokenOf(t, f.agent);
     expect((await t.call('/me/gdv/affiliates', { token: outsider })).status).toBe(403);

@@ -12,7 +12,10 @@ export const myRegionAffiliateSchema = z.object({
 });
 export const myRegionAffiliateCursorSchema = z
   .object({
-    share: z.string().regex(/^\d{1,20}$/),
+    share: z
+      .string()
+      .regex(/^\d{1,19}$/)
+      .refine((value) => /^\d{1,19}$/.test(value) && BigInt(value) <= 9_223_372_036_854_775_807n),
     name: z.string().max(300),
     id: z.string().min(1).max(200),
   })
