@@ -3,6 +3,7 @@ import {
   GetObjectCommand,
   HeadObjectCommand,
   NotFound,
+  PutBucketPolicyCommand,
   PutObjectCommand,
   S3Client,
 } from '@aws-sdk/client-s3';
@@ -94,6 +95,34 @@ export class S3StorageProvider implements StorageProvider {
 
   publicUrl(key: string): string {
     return `${this.cfg.publicBaseUrl.replace(/\/$/, '')}/${key}`;
+  }
+
+  async ensurePublicPolicy(prefixes: readonly string[]): Promise<void> {
+    if (!prefixes.length) return;
+    const policy = {
+      Version: '2012-10-17',
+      Statement: [
+        {
+          Sid: 'PublicMediaRead',
+          Effect: 'Allow',
+          Principal: '*',
+          Action: ['s3:GetObject'],
+          Resource: prefixes.map(
+            (p) => `arn:aws:s3:::${this.cfg.bucket}/${p.replace(/^\/|\/$/g, '')}/*`,
+          ),
+        },
+      ],
+    };
+    try {
+      await this.client.send(
+        new PutBucketPolicyCommand({
+          Bucket: this.cfg.bucket,
+          Policy: JSON.stringify(policy),
+        }),
+      );
+    } catch {
+      // Bỏ qua nếu S3 provider không hỗ trợ policy hoặc quyền IAM bị hạn chế
+    }
   }
 
   private async wrap<T>(fn: () => Promise<T>): Promise<T> {

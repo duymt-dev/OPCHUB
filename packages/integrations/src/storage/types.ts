@@ -17,6 +17,8 @@ export interface StorageProvider {
   delete(key: string): Promise<void>;
   /** URL công khai (ảnh đại diện, ảnh bìa…) — qua Nginx / CDN */
   publicUrl(key: string): string;
+  /** Đảm bảo bucket cho phép đọc công khai (anonymous GET) với các tiền tố chỉ định */
+  ensurePublicPolicy?(prefixes: readonly string[]): Promise<void>;
 }
 
 export interface S3Config {
