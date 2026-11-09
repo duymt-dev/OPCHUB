@@ -34,6 +34,7 @@ export const adminMemberSchema = z.object({
   accountType: z.enum(ADMIN_MEMBER_TYPES),
   fullName: z.string(),
   email: z.string(),
+  avatarUrl: z.url().nullable().default(null),
   phone: z.string(),
   /** Mã quốc gia ISO-2 của số điện thoại (cờ) */
   country: z.string(),

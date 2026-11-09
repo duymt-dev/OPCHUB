@@ -44,7 +44,7 @@ export function MemberProfile({ m, groups }: { m: AdminMember; groups: GroupLook
   return (
     <div className={styles.body}>
       <div className={styles.who}>
-        <MemberAvatar name={m.fullName} size={56} />
+        <MemberAvatar name={m.fullName} src={m.avatarUrl} size={56} />
         <div className={styles.whoText}>
           <span className={styles.name}>{m.fullName}</span>
           <div className={styles.tags}>

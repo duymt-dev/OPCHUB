@@ -120,6 +120,7 @@ describe('mock Admin sự kiện', () => {
       accountType: 'business',
       fullName: 'Hoàng Văn An',
       email: 'an.hoang@example.com',
+      avatarUrl: null,
       phone: '0901234567',
       country: 'vn',
       organization: 'Công ty Công nghệ An Bình',
