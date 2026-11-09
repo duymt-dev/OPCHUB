@@ -74,6 +74,7 @@ export function EmailChangeModal({ flow, current }: { flow: EmailChange; current
         email={flow.newEmail.trim()}
         code={flow.code}
         error={flow.error}
+        submitting={flow.busy}
         labels={labels}
         onCode={flow.setCode}
         onSubmit={flow.submit}

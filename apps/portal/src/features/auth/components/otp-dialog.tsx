@@ -28,6 +28,8 @@ export function OtpDialog({ flow }: { flow: ReturnType<typeof useOtpFlow> }) {
       email={flow.email ?? ''}
       code={flow.code}
       error={flow.error}
+      submitting={flow.submitting}
+      resending={flow.resending}
       labels={labels}
       onCode={flow.setCode}
       onSubmit={() => void flow.submit()}
