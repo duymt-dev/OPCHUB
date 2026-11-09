@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import type { RefObject } from 'react';
 import { Icon } from '../icons';
 import styles from './otp-modal.module.css';
 
@@ -21,6 +22,8 @@ interface OtpModalProps {
   code: string;
   error?: string | undefined;
   labels: OtpLabels;
+  submitting?: boolean;
+  resending?: boolean;
   onCode: (code: string) => void;
   onSubmit: () => void;
   onResend: () => void;
@@ -30,7 +33,16 @@ interface OtpModalProps {
 const BOXES = [0, 1, 2, 3, 4, 5];
 
 /** A-21: nhập OTP 6 số — ô nhập ẩn phủ lên 6 hộp hiển thị */
-export function OtpModal({ open, email, code, error, labels, ...on }: OtpModalProps) {
+export function OtpModal({
+  open,
+  email,
+  code,
+  error,
+  labels,
+  submitting = false,
+  resending = false,
+  ...on
+}: OtpModalProps) {
   const input = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -42,49 +54,16 @@ export function OtpModal({ open, email, code, error, labels, ...on }: OtpModalPr
     <>
       <div className={styles.mask} />
       <div className={styles.dialog} role="dialog" aria-modal="true" aria-labelledby="otp-title">
-        <div className={styles.head}>
-          <span className={styles.badge}>
-            <Icon name="mailBox" size={22} />
-          </span>
-          <span className={styles.text}>
-            <span id="otp-title" className={styles.title}>
-              {labels.title}
-            </span>
-            <span className={styles.desc}>
-              {labels.descLead} <b>{email}</b>
-              {labels.descTail}
-            </span>
-          </span>
-          <button
-            type="button"
-            className={styles.close}
-            aria-label={labels.close}
-            onClick={on.onClose}
-          >
-            ×
-          </button>
-        </div>
-        <label className={styles.boxes}>
-          {BOXES.map((i) => (
-            <span key={i} className={styles.box} data-state={boxState(code, i)}>
-              {code[i] ?? ''}
-            </span>
-          ))}
-          <input
-            ref={input}
-            className={styles.hidden}
-            aria-label={labels.codeLabel}
-            value={code}
-            inputMode="numeric"
-            autoComplete="one-time-code"
-            maxLength={6}
-            onChange={(e) => on.onCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') on.onSubmit();
-              if (e.key === 'Escape') on.onClose();
-            }}
-          />
-        </label>
+        <OtpHeader email={email} labels={labels} onClose={on.onClose} />
+        <OtpBoxes
+          code={code}
+          label={labels.codeLabel}
+          submitting={submitting}
+          inputRef={input}
+          onCode={on.onCode}
+          onSubmit={on.onSubmit}
+          onClose={on.onClose}
+        />
         {error ? (
           <span role="alert" className={styles.error}>
             {error}
@@ -93,19 +72,103 @@ export function OtpModal({ open, email, code, error, labels, ...on }: OtpModalPr
         <button
           type="button"
           className={styles.submit}
-          data-ready={code.length === 6}
-          onClick={on.onSubmit}
+          data-ready={code.length === 6 && !submitting}
+          data-submitting={submitting}
+          disabled={code.length !== 6 || submitting}
+          onClick={() => {
+            if (!submitting && code.length === 6) on.onSubmit();
+          }}
         >
           {labels.submit}
         </button>
         <div className={styles.resend}>
           {labels.noCode}
-          <button type="button" className={styles.link} onClick={on.onResend}>
+          <button
+            type="button"
+            className={styles.link}
+            disabled={resending || submitting}
+            onClick={() => {
+              if (!resending && !submitting) on.onResend();
+            }}
+          >
             {labels.resend}
           </button>
         </div>
       </div>
     </>
+  );
+}
+
+function OtpHeader({
+  email,
+  labels,
+  onClose,
+}: {
+  email: string;
+  labels: Pick<OtpLabels, 'title' | 'descLead' | 'descTail' | 'close'>;
+  onClose: () => void;
+}) {
+  return (
+    <div className={styles.head}>
+      <span className={styles.badge}>
+        <Icon name="mailBox" size={22} />
+      </span>
+      <span className={styles.text}>
+        <span id="otp-title" className={styles.title}>
+          {labels.title}
+        </span>
+        <span className={styles.desc}>
+          {labels.descLead} <b>{email}</b>
+          {labels.descTail}
+        </span>
+      </span>
+      <button type="button" className={styles.close} aria-label={labels.close} onClick={onClose}>
+        ×
+      </button>
+    </div>
+  );
+}
+
+function OtpBoxes({
+  code,
+  label,
+  submitting,
+  inputRef,
+  onCode,
+  onSubmit,
+  onClose,
+}: {
+  code: string;
+  label: string;
+  submitting: boolean;
+  inputRef: RefObject<HTMLInputElement | null>;
+  onCode: (val: string) => void;
+  onSubmit: () => void;
+  onClose: () => void;
+}) {
+  return (
+    <label className={styles.boxes}>
+      {BOXES.map((i) => (
+        <span key={i} className={styles.box} data-state={boxState(code, i)}>
+          {code[i] ?? ''}
+        </span>
+      ))}
+      <input
+        ref={inputRef}
+        className={styles.hidden}
+        aria-label={label}
+        value={code}
+        inputMode="numeric"
+        autoComplete="one-time-code"
+        maxLength={6}
+        disabled={submitting}
+        onChange={(e) => onCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && !submitting && code.length === 6) onSubmit();
+          if (e.key === 'Escape') onClose();
+        }}
+      />
+    </label>
   );
 }
 

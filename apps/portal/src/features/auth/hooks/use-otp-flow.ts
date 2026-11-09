@@ -21,11 +21,15 @@ export function useOtpFlow() {
   const [email, setEmail] = useState<string>();
   const [code, setCode] = useState('');
   const [error, setError] = useState<string>();
+  const [submitting, setSubmitting] = useState(false);
+  const [resending, setResending] = useState(false);
 
   const open = (to: string) => {
     setEmail(to);
     setCode('');
     setError(undefined);
+    setSubmitting(false);
+    setResending(false);
     toast(t('sent', { email: to }));
   };
 
@@ -33,11 +37,15 @@ export function useOtpFlow() {
     setEmail(undefined);
     setCode('');
     setError(undefined);
+    setSubmitting(false);
+    setResending(false);
   };
 
   const submit = async () => {
-    if (!email) return;
+    if (!email || submitting) return;
     if (code.length !== 6) return setError(t('errLength'));
+    setSubmitting(true);
+    setError(undefined);
     try {
       const res = await verifyOtp({ email, code });
       setSession(res.accessToken, res.me);
@@ -47,21 +55,30 @@ export function useOtpFlow() {
     } catch (e) {
       if (e instanceof ApiError && e.code === 'OTP_INVALID') return setError(t('errInvalid'));
       throw e;
+    } finally {
+      setSubmitting(false);
     }
   };
 
   const resend = async () => {
-    if (!email) return;
+    if (!email || resending || submitting) return;
+    setResending(true);
     setCode('');
     setError(undefined);
-    await resendOtp(email);
-    toast(t('resent', { email }));
+    try {
+      await resendOtp(email);
+      toast(t('resent', { email }));
+    } finally {
+      setResending(false);
+    }
   };
 
   return {
     email,
     code,
     error,
+    submitting,
+    resending,
     open,
     close,
     submit,
