@@ -21,6 +21,7 @@ export const ADMIN_MEMBER_SELECT = {
   accountType: true,
   fullName: true,
   email: true,
+  avatarUrl: true,
   phone: true,
   country: true,
   registrationRole: true,

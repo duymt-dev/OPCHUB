@@ -68,7 +68,7 @@ function Row(p: {
         />
       </div>
       <div className={styles.who}>
-        <MemberAvatar name={m.fullName} size={32} />
+        <MemberAvatar name={m.fullName} src={m.avatarUrl} size={32} />
         <button type="button" className={styles.open} onClick={() => h.open(m)}>
           <b className={styles.name}>{m.fullName}</b>
           <span className={styles.meta}>{m.email}</span>
