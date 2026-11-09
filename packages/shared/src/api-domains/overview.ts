@@ -10,6 +10,22 @@ const kpi = z.object({
   spark: z.array(z.number().int()).length(7),
 });
 
+export const overviewPeriodSchema = z.enum(['week', 'month', 'year']);
+export type OverviewPeriod = z.infer<typeof overviewPeriodSchema>;
+
+export const adminOverviewQuerySchema = z.object({
+  from: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/)
+    .optional(),
+  to: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/)
+    .optional(),
+  period: overviewPeriodSchema.default('month'),
+});
+export type AdminOverviewQuery = z.infer<typeof adminOverviewQuerySchema>;
+
 export const adminOverviewSchema = z.object({
   /** BUG-029: khoảng số liệu = đầu tháng → hôm nay (giờ VN), dạng YYYY-MM-DD */
   range: z.object({ from: z.string(), to: z.string() }),
@@ -41,7 +57,7 @@ export const adminOverviewSchema = z.object({
     projects: z.object({ pending: z.number().int(), published: z.number().int() }),
     groups: z.number().int(),
   }),
-  /** Tháng VN, cũ → mới: nhãn "T4"…; số đang hoạt động / mới / chưa kích hoạt phí */
+  /** Nhãn chu kỳ VN (tháng "T4", tuần "W42", hoặc năm "2026"); số đang hoạt động / mới / chưa kích hoạt phí */
   growth: z
     .array(
       z.object({
@@ -51,7 +67,8 @@ export const adminOverviewSchema = z.object({
         inactive: z.number().int(),
       }),
     )
-    .length(7),
+    .min(1)
+    .max(12),
 });
 export type AdminOverview = z.infer<typeof adminOverviewSchema>;
 
