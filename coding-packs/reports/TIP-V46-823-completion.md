@@ -1,6 +1,7 @@
 # TIP-V46-823 — Completion Report: Admin Overview Interactive Controls
 
 **DONE — Implementation, verification, and code quality gates completed.**
+Commit: `26cf391d`
 Branch: `feature/TIP-V46-823-admin-overview-interactive-controls`
 Target PR: [PR #114](https://github.com/duymt-dev/OPCHUB/pull/114) (base: `dev`).
 
