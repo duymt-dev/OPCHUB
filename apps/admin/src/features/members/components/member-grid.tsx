@@ -38,7 +38,7 @@ export function MemberGrid({ rows, selected, groups, h, can }: Props) {
               </div>
             </div>
             <div className={styles.body}>
-              <MemberAvatar name={m.fullName} size={56} />
+              <MemberAvatar name={m.fullName} src={m.avatarUrl} size={56} />
               <span className={styles.name}>{m.fullName}</span>
               <span className={styles.email}>{m.email}</span>
               <TypeTag m={m} />

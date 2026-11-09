@@ -26,6 +26,7 @@ export function toAdminMember(
     accountType: u.accountType === 'business' ? 'business' : 'personal',
     fullName: u.fullName,
     email: u.email,
+    avatarUrl: u.avatarUrl ?? null,
     phone: formatPhone(u.phone, u.country),
     country: splitPhone(u.phone, u.country).country,
     organization: b?.companyName ?? '',

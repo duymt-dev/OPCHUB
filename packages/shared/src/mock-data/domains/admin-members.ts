@@ -59,6 +59,7 @@ function toAdminMember(m: MemberSeed): AdminMember {
     accountType: typeOf(m),
     fullName: m.name,
     email: m.email,
+    avatarUrl: (m as { avatarUrl?: string | null }).avatarUrl ?? null,
     phone: m.phone,
     country: m.cc || 'vn',
     organization: m.org ?? '',
