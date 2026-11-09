@@ -3,23 +3,58 @@
 import { useTranslations } from 'next-intl';
 import { barHeight, chartAxis, chartMax, formatCount, growthPct } from '../data';
 import { useOverview } from '../hooks/use-overview';
+import { useOverviewUrl } from '../hooks/use-overview-url';
 import styles from './overview.module.css';
+
+interface PeriodTabsProps {
+  current: string;
+  onChange: (period: 'week' | 'month' | 'year') => void;
+  label: string;
+  labels: { week: string; month: string; year: string };
+}
+
+function PeriodTabs({ current, onChange, label, labels }: PeriodTabsProps) {
+  const tabs: Array<{ id: 'week' | 'month' | 'year'; text: string }> = [
+    { id: 'week', text: labels.week },
+    { id: 'month', text: labels.month },
+    { id: 'year', text: labels.year },
+  ];
+  return (
+    <div className={styles.periods} role="tablist" aria-label={label}>
+      {tabs.map(({ id, text }) => (
+        <button
+          key={id}
+          type="button"
+          role="tab"
+          aria-selected={current === id}
+          className={`${styles.periodBtn} ${current === id ? styles.periodOn : ''}`}
+          onClick={() => onChange(id)}
+        >
+          {text}
+        </button>
+      ))}
+    </div>
+  );
+}
 
 /** Biểu đồ cột chồng tăng trưởng thành viên theo tháng; số tổng = thành viên đã kích hoạt phí (v4) */
 export function GrowthChart() {
   const t = useTranslations('overview.growth');
   const data = useOverview().data;
+  const { params, update } = useOverviewUrl();
+  const currentPeriod = params.period ?? 'month';
   const rows = data?.growth ?? [];
   const max = chartMax(rows);
   return (
     <div className={`${styles.card} ${styles.growth}`}>
       <div className={styles.growthHead}>
         <div className={styles.growthTitle}>{t('title')}</div>
-        <div className={styles.periods}>
-          <span>{t('week')}</span>
-          <span className={styles.periodOn}>{t('month')}</span>
-          <span>{t('year')}</span>
-        </div>
+        <PeriodTabs
+          current={currentPeriod}
+          onChange={(period) => update({ period })}
+          label={t('title')}
+          labels={{ week: t('week'), month: t('month'), year: t('year') }}
+        />
       </div>
       <div className={styles.summary}>
         <div className={styles.total}>{data ? formatCount(data.paid.value) : '—'}</div>

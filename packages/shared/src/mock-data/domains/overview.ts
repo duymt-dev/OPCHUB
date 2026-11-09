@@ -53,13 +53,40 @@ export const OVERVIEW_FIXTURE: Omit<AdminOverview, 'flow'> = {
 };
 
 /** `GET /admin/overview` (MSW): fixture prototype + "Luồng hệ thống" đếm từ các module giả */
-export function mockOverview(): AdminOverview {
+export function mockOverview(query?: {
+  period?: 'week' | 'month' | 'year' | undefined;
+  from?: string | undefined;
+  to?: string | undefined;
+}): AdminOverview {
   const fees = feeSummary();
   const st = adminMockStores({ status: 'all', page: 1 }).summary;
   const nd = adminMockNeeds({ status: 'all', page: 1 }).summary;
   const pj = projectCounts();
+  const period = query?.period ?? 'month';
+  const range =
+    query?.from && query?.to ? { from: query.from, to: query.to } : OVERVIEW_FIXTURE.range;
+
+  const growth =
+    period === 'week'
+      ? Array.from({ length: 7 }, (_, i) => ({
+          month: `W${40 + i}`,
+          active: 300 + i * 20,
+          fresh: 30 + i * 5,
+          inactive: 40 - i * 2,
+        }))
+      : period === 'year'
+        ? Array.from({ length: 7 }, (_, i) => ({
+            month: `${2020 + i}`,
+            active: 1000 + i * 500,
+            fresh: 300 + i * 50,
+            inactive: 200 - i * 10,
+          }))
+        : OVERVIEW_FIXTURE.growth;
+
   return {
     ...OVERVIEW_FIXTURE,
+    range,
+    growth,
     flow: {
       paidMembers: fees.paid,
       members: fees.total,

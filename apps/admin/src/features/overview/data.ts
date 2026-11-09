@@ -3,13 +3,24 @@ import {
   adminConversionSchema,
   csvFileSchema,
 } from '@opchub/shared/api-domains';
-import type { AdminOverview } from '@opchub/shared/api-domains';
+import type { AdminOverview, AdminOverviewQuery } from '@opchub/shared/api-domains';
 import type { ToneName } from '@opchub/ui';
 import { api } from '@/lib/api-client';
 
 /** D-01 Tổng quan — `GET /admin/overview` (B44) */
-export const overviewKeys = { all: ['admin-overview'] as const };
-export const fetchOverview = () => api('/admin/overview', { schema: adminOverviewSchema });
+export const overviewKeys = {
+  all: ['admin-overview'] as const,
+  list: (q?: AdminOverviewQuery) =>
+    ['admin-overview', q?.period ?? 'month', q?.from ?? '', q?.to ?? ''] as const,
+};
+export const fetchOverview = (q?: AdminOverviewQuery) => {
+  const params = new URLSearchParams();
+  if (q?.period && q.period !== 'month') params.set('period', q.period);
+  if (q?.from) params.set('from', q.from);
+  if (q?.to) params.set('to', q.to);
+  const qs = params.toString();
+  return api(`/admin/overview${qs ? `?${qs}` : ''}`, { schema: adminOverviewSchema });
+};
 export const fetchConversion = () =>
   api('/admin/overview/conversion', { schema: adminConversionSchema });
 export const exportConversion = () =>

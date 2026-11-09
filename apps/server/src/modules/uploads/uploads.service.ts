@@ -1,8 +1,9 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, type OnModuleInit } from '@nestjs/common';
 import type { StorageProvider } from '@opchub/integrations';
 import {
   FEE_UPLOAD_KINDS,
   MIME_EXT,
+  UPLOAD_KINDS,
   type PresignRequest,
   type PresignResult,
 } from '@opchub/shared/api-domains';
@@ -10,6 +11,7 @@ import { randomUUID } from 'node:crypto';
 import { AppError } from '@/common/errors';
 import { type AccessClaims, AuthStateService, isFeeUsable } from '@/common/auth';
 import { STORAGE } from '@/common/integrations';
+import { PRIVATE_PREFIXES } from './private-file-url.service';
 
 /** PUT có chữ ký sống 5 phút */
 const PUT_TTL_SEC = 300;
@@ -19,11 +21,20 @@ const PUT_TTL_SEC = 300;
  * (server sinh, không dùng tên tệp người dùng) để domain dùng tệp kiểm được tệp thuộc người gửi.
  */
 @Injectable()
-export class UploadsService {
+export class UploadsService implements OnModuleInit {
   constructor(
     @Inject(STORAGE) private readonly storage: StorageProvider,
     private readonly state: AuthStateService,
   ) {}
+
+  async onModuleInit(): Promise<void> {
+    if (this.storage.ensurePublicPolicy) {
+      const publicPrefixes = UPLOAD_KINDS.filter(
+        (k) => !PRIVATE_PREFIXES.some((p) => p.startsWith(k)),
+      );
+      await this.storage.ensurePublicPolicy(publicPrefixes);
+    }
+  }
 
   async presign(user: AccessClaims, req: PresignRequest): Promise<PresignResult> {
     if (FEE_UPLOAD_KINDS.includes(req.kind)) await this.assertFee(user);

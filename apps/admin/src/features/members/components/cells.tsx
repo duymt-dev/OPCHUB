@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import type { AdminMember } from '@opchub/shared/api-domains';
 import { colorOf } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
@@ -7,8 +8,29 @@ import { flagSrc, memberInitials } from '../model';
 import type { GroupChip } from '../types';
 import styles from './cells.module.css';
 
-/** Avatar chữ viết tắt — màu theo tên (avc của prototype) là dữ liệu, không phải token */
-export function MemberAvatar({ name, size }: { name: string; size: 32 | 56 }) {
+/** Avatar thành viên: hiện ảnh nếu có, fallback về chữ viết tắt trên nền màu */
+export function MemberAvatar({
+  name,
+  src,
+  size,
+}: {
+  name: string;
+  src?: string | null | undefined;
+  size: 32 | 56;
+}) {
+  const [failed, setFailed] = useState(false);
+  if (src && !failed) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element -- Ảnh thành viên từ object storage S3
+      <img
+        src={src}
+        alt=""
+        className={`${styles.avatar} ${size === 32 ? styles.av32 : styles.av56}`}
+        style={{ objectFit: 'cover' }}
+        onError={() => setFailed(true)}
+      />
+    );
+  }
   return (
     <span
       aria-hidden

@@ -36,4 +36,22 @@ describe('MSW B60 — Tổng quan + badge theo hợp đồng server', () => {
     expect(b.projects).toBeGreaterThanOrEqual(0);
     expect(b.requests).toBeGreaterThanOrEqual(0);
   });
+
+  it('GET /admin/overview?period=week trả nhãn tuần W40..W46 và ?from=...&to=... đổi range', async () => {
+    const oWeek = adminOverviewSchema.parse(await get('/admin/overview?period=week'));
+    expect(oWeek.growth.map((g) => g.month)).toEqual([
+      'W40',
+      'W41',
+      'W42',
+      'W43',
+      'W44',
+      'W45',
+      'W46',
+    ]);
+
+    const oCustom = adminOverviewSchema.parse(
+      await get('/admin/overview?from=2026-10-01&to=2026-10-15'),
+    );
+    expect(oCustom.range).toEqual({ from: '2026-10-01', to: '2026-10-15' });
+  });
 });
