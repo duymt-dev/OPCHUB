@@ -206,6 +206,8 @@ test.describe('Admin · Nội dung & Sự kiện', () => {
   test('EV-R02 REQ-342 khối Sắp diễn ra: Meet + Tiếp theo ≤3; mở chi tiết có link Meet', async ({
     page,
   }) => {
+    // Keep the static event fixture in its upcoming window in both runtime modes.
+    await page.clock.setFixedTime(new Date('2026-10-16T09:00:00+07:00'));
     acceptancePrerequisite('events-upcoming');
     await openEvents(page);
     const hero = page.getByRole('region', { name: 'Sắp diễn ra' });

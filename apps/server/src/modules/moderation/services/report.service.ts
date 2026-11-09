@@ -20,6 +20,24 @@ export class ReportService {
     private readonly violations: ViolationService,
     private readonly violationRepo: ViolationRepository,
   ) {}
+  /** D-138: classification creates a review case ONLY, never hides or counts violations. */
+  async aiHit(messageId: string, label: string): Promise<void> {
+    await this.prisma.db.$transaction(async (tx) => {
+      // The durable classification claim excludes concurrent/replayed AI writers.
+      const message = await tx.message.findFirst({
+        where: { id: messageId, hiddenAt: null, deletedAt: null },
+        select: { id: true },
+      });
+      if (!message || (await tx.report.count({ where: { messageId } }))) return;
+      await this.reports.upsertOpenCase(tx, {
+        messageId,
+        source: 'auto',
+        reason: 'other',
+        hit: `ai:${label}`,
+        bump: false,
+      });
+    });
+  }
 
   async report(user: AccessClaims, messageId: string, body: ReportMessageRequest): Promise<Report> {
     const msg = await this.prisma.db.message.findFirst({

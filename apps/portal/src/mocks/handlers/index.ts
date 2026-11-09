@@ -1,4 +1,7 @@
+import { clientLogHandlers } from './client-log';
+import { myRegionAffiliateHandlers } from './my-region-affiliates';
 import { searchHandlers } from './search';
+import { aiComposeHandlers } from './ai-compose';
 import { accountHandlers } from './account';
 import { affiliateHandlers } from './affiliate';
 import { authHandlers } from './auth';
@@ -47,5 +50,10 @@ import { affiliateDemoHandlers } from './affiliate-demo';
 handlers.unshift(...affiliateDemoHandlers);
 
 handlers.push(...searchHandlers);
+handlers.push(...aiComposeHandlers);
 handlers.push(...pushHandlers);
 import { pushHandlers } from './push';
+
+handlers.unshift(...myRegionAffiliateHandlers);
+
+handlers.unshift(...clientLogHandlers);

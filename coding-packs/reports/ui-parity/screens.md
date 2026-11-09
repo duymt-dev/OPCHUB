@@ -472,3 +472,8 @@ Không mask, không nới ngưỡng. Visibility/quyền theo TIP; không lộ d�
 Approved scope complete:486 MSW /110 native fresh captures (same source, paired artifacts preserved). Whole MSW568 tests excludes14 owner-approved legacy cases explicitly;78 unchanged/unreachable skips. Native118 tests includes4 harness cases/4 unreachable skips/110 captures. Whole failures and focused completion are recorded separately, never relabeled full PASS. No new mask/crop/threshold/timeout/retry/skip. D78-GDV alone newly unreachable under originalTIP. D93 mobile header fixed and actual calendar behavior PASS both lanes. Dashboard complete scope fixed; exact-zero scroll regression PASS. All remaining >3% measurements have data/decision causes, not app failure labels.
 
 [Causes](V4.6-causes.md), [acceptance](../V4.6-acceptance.md), [completion](../TIP-V46-812-completion.md). PR91 ready for owner review, no merge.
+
+### TIP-V46-821
+
+- Existing P-V46-REG-BANNER / P-V46-REG / D-120-GDV / D-120-GDV-OPEN / D-120-GCFG:1440/390, native and MSW;20 paired captures.
+- D-V46-RETIRED-BANK: app-only dialog1440/390, Q821-2, no prototype counterpart; explicit Save, masked audit, synthetic fixture removed. See [821 images](../TIP-V46-821-parity.md).

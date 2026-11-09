@@ -2,6 +2,15 @@ import type { useAppNotify } from './hooks/use-app-notify';
 import type { useBankReconcile } from './hooks/use-bank-reconcile';
 import type { AdminPermissionKey } from '@opchub/shared';
 import type { ConfirmRequest } from '@opchub/ui';
+import type { AuditLogFilters } from '@opchub/shared/api-domains';
+
+export interface AuditLogFiltersProps {
+  filters: AuditLogFilters;
+  onChange: (value: AuditLogFilters) => void;
+  actors: { id: string; name: string }[];
+  failed: boolean;
+  retry: () => void;
+}
 /** Tab màn Cài đặt — ghi trên URL `/settings?tab=` (data-state.md) */
 export const SETTINGS_TABS = [
   'general',

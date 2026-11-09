@@ -1,10 +1,10 @@
+import { mockMyRegionAffiliateRows } from './my-region-affiliates';
 import { myRegionSchema, type MyRegion } from '../../api-domains';
 import {
   regionalPayoutDate,
   regionalPercent,
   payoutMonthOf,
 } from '../../membership/regional-share';
-import { affiliateMockState } from './affiliate';
 import { mockRegionalDirectors } from './regional-directors';
 import { regionalShareState } from './regional-share-state';
 import { readMockAffiliatePolicy } from './affiliate-policy';
@@ -17,20 +17,7 @@ export function mockMyRegion(userId: string, now = new Date()): MyRegion {
   const sum = (items: typeof rows, key: 'baseAmount' | 'directorAmount') =>
     items.reduce((n, r) => n + r[key], 0);
   const paid = rows.filter((r) => r.status === 'paid');
-  const groups = [...new Set(rows.map((r) => r.affiliateId))]
-    .map((id) => {
-      const group = rows.filter((r) => r.affiliateId === id);
-      const first = group[0];
-      return {
-        id,
-        name: first?.affiliateName ?? '',
-        code: affiliateMockState().agents.get(first?.affiliateUserId ?? '')?.code ?? '',
-        customers: new Set(group.map((r) => r.customerId)).size,
-        revenue: sum(group, 'baseAmount'),
-        share: sum(group, 'directorAmount'),
-      };
-    })
-    .sort((a, b) => b.share - a.share || a.name.localeCompare(b.name) || a.id.localeCompare(b.id));
+  const groups = mockMyRegionAffiliateRows(userId) ?? [];
   const share = sum(rows, 'directorAmount'),
     paidAmount = sum(paid, 'directorAmount');
   return myRegionSchema.parse({

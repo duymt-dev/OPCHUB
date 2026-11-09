@@ -17,6 +17,14 @@ const providerFields = {
 export const aiSettingsSchema = z.strictObject({
   use: z.strictObject({ bot: choice, script: choice, content: choice, mod: choice }),
   fallback: choice,
+  models: z
+    .strictObject({
+      bot: z.string().trim().min(1).max(200).optional(),
+      script: z.string().trim().min(1).max(200).optional(),
+      content: z.string().trim().min(1).max(200).optional(),
+      mod: z.string().trim().min(1).max(200).optional(),
+    })
+    .optional(),
   temperature: z.number().min(0).max(1).multipleOf(0.1),
   maxTokens: llmLocalConfigSchema.shape.maxTokens,
   timeoutMs: llmLocalConfigSchema.shape.timeoutMs,

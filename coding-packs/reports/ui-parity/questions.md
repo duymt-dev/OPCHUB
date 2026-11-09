@@ -990,3 +990,123 @@ Owner chốt toàn bộ phương án mặc định Q-V46-807-1 → 5, Q808-1 →
   đã được TIP yêu cầu, không phải lỗi chức năng. D-134 giữ số đo pixel tham khảo và cặp ảnh để owner review.
 - Không sửa prototype, không mask/nới ngưỡng hay bỏ assertion parity. Real push/iOS cần owner
   cấu hình VAPID và kiểm thủ công production; test tự động chỉ fake/HTTP loopback stub theo D-103.
+
+## TIP-V46-817 — Vận hành AI (D-138, owner chốt 08/11/2026)
+
+- Q-V46-817-1 → 8 đã được owner chốt mặc định trong TIP trước execute:
+  ba ô Soạn nội dung; AI chỉ tạo ca chờ Admin, không tự phạt; cảnh báo Admin
+  không email; fallback dùng model riêng của provider; nhật ký chỉ realm/mã rút gọn;
+  10 lượt/người/giờ + trần chung; Redis lỗi không gọi AI; AI kiểm duyệt mặc định tắt.
+- Q-V46-817-9: owner duyệt DB riêng `opchub_v46_812_dev` / `opchub_v46_801_test`,
+  Memurai6381 DB3/DB2, rolling restart đúng runtime riêng 816→817, giữ native/HOLD gốc.
+  Duyệt tạo/xóa DB trắng `opchub_v46_817_chain_test` cho up→down→up, không down DB HOLD.
+- Q-V46-817-10: owner duyệt ID cảnh báo thêm ID sự kiện outbox sau tiền tố
+  `ai-budget:{month}:{warn|exhausted}` để retry không trùng nhưng tái kích hoạt vẫn gửi lại.
+- Q-V46-817-11: owner duyệt nút cho mô tả gian hàng, không thêm nút SEO. Khảo sát
+  bổ sung đã đính chính trong chat: ô thực tế là `step-media.tsx` / `intro` (giới hạn
+  nhập 4.000), không phải `step-info.tsx`; 500 là giới hạn gợi ý đã duyệt (và là giới hạn
+  mô tả sản phẩm trong schema cũ). Không đổi giới hạn nhập hoặc thêm ô thứ tư.
+- Q-V46-817-12: owner duyệt ledger `moderation_ai_claims(message_id PK, created_at)`
+  chống gọi lại dù tắt log/worker chết; migration bổ sung vì metadata migration đã deploy,
+  không sửa migration đã áp dụng. Dọn theo FK khi xóa vật lý tin.
+- Q-V46-817-13: owner duyệt cô lập auth fixture đúng một file
+  `push-subscriptions.int.spec.ts`, gọi `flushAuthState` sẵn có trước từng ca.
+  Giữ nguyên assertions/timeout/rate limit production; lỗi full run xảy ra khi lấy
+  token đăng nhập, trước logic purge; chạy riêng lại 5/5 qua.
+- Vận hành 817: lệnh rolling restart riêng bị môi trường chặn trước khi dừng
+  tiến trình. Đã yêu cầu owner dừng đúng 5 PID riêng 816 để tiếp tục native;
+  không tự đổi cổng/DB để lách ràng buộc worker hay chạm HOLD gốc.
+- Chọn drawer nhật ký từ nút **Xem nhật ký**; ba nút gợi ý, model theo chức năng,
+  AI kiểm duyệt và drawer không có trạng thái tương ứng trong prototype. Thay đổi
+  được D-138/TIP yêu cầu; giữ phép đo tham khảo và ảnh thật để owner review theo D-134.
+
+### TIP-V46-817 native closure
+
+The owner manually stopped the five old private816 processes. Combined startup
+commands were rejected, but standard managed process sessions started817; no
+permission escalation or new DB/port was required. Native E2E2/2 passed; six native
+paired journeys completed. D-138/data pixel differences remain reference-only
+under D-134. Provider/settings snapshot equality and bot-off flags verified after
+both gates; owner real custom key untouched. The private817 runtime remains HOLD.
+
+## TIP-V46-818 — D-139 approved defaults / execution notes
+
+- Q-V46-818-1: preserve both short and director region copy, centralize only.
+- Q-V46-818-2: tag/actor/date filters only; no free-text summary search.
+- Q-V46-818-3: arrow keys only; keep mobile search hidden and existing groups/caps.
+- Q-V46-818-4: two200-ID candidate windows; scoring/top3 remain unchanged.
+- Q-V46-818-5: encoded `/needs?q=<title>` list link, no detail page.
+- Q-V46-818-6: business store owners only, no personal/investor suggestions.
+- Owner approved reuse of private812 development/test801 integration databases,
+  Memurai6381 DB3/DB2, rolling private817 runtime to818 and disposable818 chain DB;
+  do not touch original HOLD/native services or release `main`.
+- Technical connections (no new business policy): names-only existing Admin
+  directory through `settings.log`; unpublished outbox includes the minimal
+  industry/province/owner snapshot because deletion is physical. Transaction and
+  existing consumer wiring recorded in the completion report.
+- D-139 audit controls have no prototype equivalent; their additional height
+  and native append-only history are classified separately from genuine visual
+  defects. Eight pairs per lane archived; owner image review remains PR review.
+- Owner approved the narrow contract/settings fixture correction: send at most
+  50 non-super roles per batch, retain equality of the whole returned role list
+  and production limit50. Audit818 now removes only its own fixture accounts and
+  unused custom roles, not append-only audit history. Focused19/19 passed.
+- Owner approved EV-R02 browser clock at16/10 in both MSW/native after static
+  upcoming fixtures expired after16h08/11. Native preparation and all assertions
+  retained; MSW events9/9 and native EV-R02 1/1 passed before fresh full reruns.
+- Cache-only disk cleanup was requested. Subsequent external cleanup removed
+  custom build artifacts and closed ignored logs as well; owned818 builds were
+  forced/recovered. Do not infer uninterrupted old HOLD assets or fabricate lost
+  logs/snapshots. Details and surviving evidence are in the completion report.
+- Resolved scope question: legacy `moderation/violations.int.spec.ts` assumes
+  precisely `{autoLockDays:7}`. Full server2126/2127 leaves one mismatch because
+  the earlier AI suite's merge-based restore retains `ai:false`. Unchanged
+  ordered reproduction confirms AI7/7 then legacy4/5. Proposed snapshot/reset/
+  exact restore of only that fixture was approved ("làm nốt đi") and implemented
+  in5c562e14. No production/original assertion/timeout edit; added cleanup equality
+  proves exact restoration including prior optional keys/timestamp or absence.
+  Ordered AI7/7 then legacy5/5 PASS; final root integration2271/2271, no skip/cache.
+  Full MSW confirmation397 passed+5 existing skips. PR104 ready for owner review.
+## TIP-V46-820 — B15 / D-139 execution
+
+- Q820-1..7 approved in TIP before implementation: no slug editing, canonical host
+  only, public-field LocalBusiness, cover before generated OG, salted30min guest
+  dedup/no bots-owner, independent7-day guest KPI/no digest-push changes, TTL60.
+- Owner approved private812/private801test, Memurai6381 DB3/DB2, rolling only
+  private818 runtime to820 and disposable820 chain DB. Chain106/down/up identical.
+- Owner approved internal member soft-delete command with audit/user.deleted in
+  same transaction, no new deletion API/UI; there was no member-deletion emitter
+  to connect. Durable effects revoke sessions and invalidate public caches.
+- Stable OG alias is needed because installed Next16 hashes metadata-image paths.
+  Root sitemap keeps its first50000 URLs; generated extra chunks are listed in
+  robots, avoiding truncation. No existing rewrite contract was loosened.
+- New full-page P-V46-GUEST-KPI measurement retains all dashboard content and
+  the new counter; old P-109 greeting-only capture is unchanged. Prototype-only
+  fake activity/KPIs remain excluded from app by D-114; public config card and
+  new guest KPI have their approved feature origins, not fake prototype matches.
+  - Owner approved narrow mobile grid repair in820: full mobile image newly exposes
+    the pre-existing products grid (app1 column vs prototype2). Before
+  pair archived at `reports/evidence/v46-820-mobile-grid-before/`. Do not silently
+  classify that actual layout discrepancy as data or a new-feature exception.
+
+## TIP-V46-821 — approved defaults / execution
+
+- Q821-1: B9 closed, no refund/reversal code.
+- Q821-2: retiree bank ledger, clear slot, never repair incumbent account by guess.
+- Q821-3: indefinite lock/deletion revoke; temporary locks do not; unlock never restores.
+- Q821-4: prior pending shares still payable to retired/locked director.
+- Q821-5: qrcode + types approved; local PNG, no outside QR service.
+- Q821-6: signed own-system image URL30days with textual bank fallback.
+- Q821-7: keep T-14 enrichment, add expired mail; no new reminder milestones/settings.
+- Q821-8: bounded first-party client logger, no Sentry/PII/DB storage.
+- Q821-9: region CSV only visible identity/stat columns, no email/phone, audited.
+- Q821-10: keep24-month monthly table limit.
+- Owner approved private812/dev, private801/test, Memurai6381 DB3/DB2, owned821
+  chain DB and private820→821 rolling restart only; original native/HOLD unchanged.
+- Q821-11: owner approved new pending fundraising renewal/code on expiry, current
+  price, same-transaction mail, activation only after real receipt. Old expired
+  package code is already paid and must never be reused for the renewal QR.
+- P0 diagnostic private dev:3 occupied accounts,0 suspicious inherited regions;
+  counts only, not a production audit. Owner must check production separately.
+
+- Q821-12 (optional, no owner response): literal “mã TV” conflicts with prototype/current visible affiliate code. Preserve visible affiliate code and label CSV “Mã affiliate” under D-89/SPEC17; not recorded as owner approval. Final parity measured20 pairs, plus2 app-only retired-bank captures; see TIP-V46-821-parity.md.

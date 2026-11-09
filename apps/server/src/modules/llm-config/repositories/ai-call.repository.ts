@@ -2,6 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { Prisma } from '@opchub/db';
 import type { AiPurpose, AiProviderId } from '@opchub/shared/api-domains';
 import { PrismaService } from '@/common/prisma/prisma.service';
+import type { AiCallItem, AiCallsQuery } from '@opchub/shared/api-domains';
+import { aiCallPageQuery, aiCallTotalsQuery } from './ai-call-page.query';
+
+type CallRow = Omit<AiCallItem, 'cost' | 'actor'> & {
+  cost: bigint;
+  actorRealm: 'member' | 'admin' | 'system';
+  actorId: string | null;
+};
 
 export interface AiCallRecord {
   purpose: AiPurpose;
@@ -13,6 +21,8 @@ export interface AiCallRecord {
   latencyMs: number;
   status: 'ok' | 'error' | 'fallback';
   errorCode: string | null;
+  actorRealm?: 'member' | 'admin' | 'system';
+  actorId?: string | null;
 }
 export const purgeAiCallsQuery = (before: Date) => Prisma.sql`
   DELETE FROM llm_calls c USING (
@@ -29,6 +39,22 @@ export const aiUsageQuery = (month: string, r: AiCallRecord) => Prisma.sql`
 @Injectable()
 export class AiCallRepository {
   constructor(private readonly prisma: PrismaService) {}
+  page(query: AiCallsQuery, size = query.limit + 1) {
+    return this.prisma.db.$queryRaw<CallRow[]>(aiCallPageQuery(query, size));
+  }
+  async totals(query: AiCallsQuery) {
+    const [row] = await this.prisma.db.$queryRaw<
+      {
+        calls: bigint;
+        cost: bigint;
+        promptTokens: bigint;
+        completionTokens: bigint;
+      }[]
+    >(aiCallTotalsQuery(query));
+    return Object.fromEntries(
+      Object.entries(row ?? {}).map(([key, value]) => [key, Number(value)]),
+    );
+  }
   async record(month: string, row: AiCallRecord, log: boolean): Promise<void> {
     await this.prisma.db.$transaction(async (tx) => {
       await tx.$executeRaw(aiUsageQuery(month, row));

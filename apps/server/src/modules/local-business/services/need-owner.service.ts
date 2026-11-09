@@ -98,11 +98,16 @@ export class NeedOwnerService {
   }
 
   async step(u: StoreOwner, id: string, action: 'close' | 'reopen'): Promise<Need> {
-    await this.owned(u, id);
+    const owned = await this.owned(u, id);
     await this.prisma.db.$transaction(async (tx) => {
       if (!(await this.repo.step(u.id, id, action, tx)))
         throw conflict('Nhu cầu đã thay đổi, vui lòng tải lại');
       if (action === 'reopen') await this.outbox.add(tx, 'need.published', { needId: id });
+      else
+        await this.outbox.add(tx, 'need.unpublished', {
+          needId: id,
+          audience: { ownerId: owned.ownerId, field: owned.field, province: owned.province },
+        });
     });
     await this.explore.invalidate();
     const row = await this.repo.byId(id);
@@ -113,8 +118,14 @@ export class NeedOwnerService {
   }
 
   async remove(u: StoreOwner, id: string): Promise<void> {
-    await this.owned(u, id);
-    if (!(await this.repo.remove(u.id, id))) throw conflict(NEED_MESSAGES.hidden);
+    const need = await this.owned(u, id);
+    await this.prisma.db.$transaction(async (tx) => {
+      if (!(await this.repo.remove(u.id, id, tx))) throw conflict(NEED_MESSAGES.hidden);
+      await this.outbox.add(tx, 'need.unpublished', {
+        needId: id,
+        audience: { ownerId: need.ownerId, field: need.field, province: need.province },
+      });
+    });
     await this.explore.invalidate();
   }
 }

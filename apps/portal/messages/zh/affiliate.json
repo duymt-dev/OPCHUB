@@ -158,7 +158,10 @@
     "statusLabels": {
       "paid": "已支付",
       "pending": "待支付"
-    }
+    },
+    "loadMore": "加载更多（{count}）",
+    "downloadCsv": "下载 CSV",
+    "loadError": "无法加载数据，请重试。"
   },
   "banner": {
     "title": "您是区域总监 {label} · {name}",

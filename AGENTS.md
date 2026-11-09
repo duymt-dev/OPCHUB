@@ -9,7 +9,7 @@ OPC Hub Community (opchub.community): nền tảng cộng đồng cho doanh nghi
 
 Nguồn sự thật, theo thứ tự ưu tiên khi mâu thuẫn:
 
-1. `coding-packs/01-REQUIREMENTS-MATRIX.md`: REQ-ID, **Decisions Log** (D-xx; số lớn hơn thay số nhỏ hơn khi trái nhau — mới nhất **D-137**), Open Questions (OQ-xx). Đối chiếu đặc tả ↔ code: `coding-packs/audit/SPEC-V4.6-DELTA.md`
+1. `coding-packs/01-REQUIREMENTS-MATRIX.md`: REQ-ID, **Decisions Log** (D-xx; số lớn hơn thay số nhỏ hơn khi trái nhau — mới nhất **D-139**), Open Questions (OQ-xx). Đối chiếu đặc tả ↔ code: `coding-packs/audit/SPEC-V4.6-DELTA.md`
 2. `docs/adr/`: quyết định kiến trúc
 3. `coding-packs/00-PROJECT-CONTEXT.md`: Scan Report + **Vision** (kiến trúc, nguyên tắc scale S-01 → S-12)
 4. Prototype `docs/spec/index.html` (v4.6): **thắng đặc tả khi lệch** về giao diện và hành vi (D-89, D-93). Nút prototype không bấm được vẫn làm đúng nghiệp vụ (D-95). Chỉ tham chiếu, **không copy code**.
@@ -94,8 +94,9 @@ pnpm e2e                                  # Playwright
 
 ## Quy trình mỗi task (TIP)
 
-Goal hiện hành: **trả nợ V4.6** — [`coding-packs/plans/V4.6-DEBT.md`](coding-packs/plans/V4.6-DEBT.md), phạm vi nhóm A + B1 + B2 (D-137): TIP-V46-813 (nợ code A1 → A12) → 814 (ổn định test + parity A13 → A22) → 815 (B2 kiểm AI bằng key thật, chạy tay) → 816 (B1 Web Push + PWA thật), tuần tự; B3 → B18 để sau. Tiến độ tiếp ở `coding-packs/reports/V4.6-progress.md` (dòng #13 trở đi).
-Goal trước: [`coding-packs/plans/GOAL-V4.6.md`](coding-packs/plans/GOAL-V4.6.md) — 12 TIP V46-801 → V46-812, **đã xong** (06/11/2026, release PR #93 lên `main`).
+Goal hiện hành: **V4.6 đợt 817 → 821, release một lượt** (D-138, D-139) — 817 Vận hành AI (**đã vào `dev`**) → 818 Nhật ký Admin + tìm kiếm / nhu cầu (B11, B13, B14 phần kỹ thuật) → 820 SEO (B15) → 821 Tài chính & vùng (B7 → B10); danh sách ở [`coding-packs/plans/V4.6-DEBT.md`](coding-packs/plans/V4.6-DEBT.md). **Không release `main` giữa chừng**: sau 821 mới mở PR `dev` → `main`. Tiến độ ở `coding-packs/reports/V4.6-progress.md` (dòng #17 trở đi).
+Goal trước: **trả nợ V4.6** (D-137, TIP-V46-813 → 816) **đã xong** (08/11/2026, release PR #99 lên `main`).
+Goal trước nữa: [`coding-packs/plans/GOAL-V4.6.md`](coding-packs/plans/GOAL-V4.6.md) — 12 TIP V46-801 → V46-812, **đã xong** (06/11/2026, release PR #93 lên `main`).
 
 ### Git flow
 

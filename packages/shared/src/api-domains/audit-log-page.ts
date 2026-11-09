@@ -1,5 +1,25 @@
 import { z } from 'zod';
-import { auditLogRowSchema } from './settings-admin';
+import { AUDIT_TAGS, auditLogRowSchema } from './settings-admin';
+
+const filterFields = {
+  tag: z.enum(AUDIT_TAGS).optional(),
+  actorId: z.string().min(1).max(200).optional(),
+  from: z.iso.datetime().optional(),
+  to: z.iso.datetime().optional(),
+};
+const validRange = (value: { from?: string | undefined; to?: string | undefined }) =>
+  !value.from || !value.to || Date.parse(value.from) <= Date.parse(value.to);
+const rangeError = { path: ['from'], message: 'Ngày bắt đầu phải trước hoặc bằng ngày kết thúc' };
+export const auditLogFiltersSchema = z.strictObject(filterFields).refine(validRange, rangeError);
+export type AuditLogFilters = z.infer<typeof auditLogFiltersSchema>;
+export const auditLogActorsSchema = z.object({
+  items: z.array(z.object({ id: z.string(), name: z.string() })),
+});
+export const auditLogExportBodySchema = z
+  .strictObject({
+    filters: auditLogFiltersSchema.optional(),
+  })
+  .prefault({});
 
 export const auditLogCursorSchema = z
   .object({ at: z.iso.datetime(), id: z.string().min(1).max(200) })
@@ -14,6 +34,7 @@ export function encodeAuditLogCursor(cursor: AuditLogCursor): string {
 }
 export const auditLogPageQuerySchema = z
   .object({
+    ...filterFields,
     cursor: z
       .string()
       .max(512)
@@ -32,7 +53,8 @@ export const auditLogPageQuerySchema = z
       .optional(),
     limit: z.coerce.number().int().min(1).max(100).default(50),
   })
-  .strict();
+  .strict()
+  .refine(validRange, rangeError);
 export type AuditLogPageQuery = z.infer<typeof auditLogPageQuerySchema>;
 export const auditLogPageSchema = z.object({
   items: z.array(auditLogRowSchema),

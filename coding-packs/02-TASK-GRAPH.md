@@ -57,7 +57,25 @@ cho luồng TIP đụng tới; **parity ≤ 3% (1440 + 390) cho mọi màn TIP �
 | V46-815 | [TIP](tips/TIP-V46-815-live-ai-check.md) · nhánh `feature/TIP-V46-815-live-ai-check` · **TIP viết, chưa code** — B2: kiểm AI bằng key thật — lượt `@live` chạy tay, "Kiểm tra kết nối" từng nhà cung cấp có key, sửa adapter nếu lệch chuẩn OpenAI (D-137) | 811 | 814 | S–M | `e2e/llm/**`, `packages/integrations/src/llm/**` (chỉ khi lệch) |
 | V46-816 | [TIP](tips/TIP-V46-816-web-push-pwa.md) · nhánh `feature/TIP-V46-816-web-push-pwa` · **TIP viết, chưa code** — B1: Web Push + PWA thật qua dịch vụ đẩy của trình duyệt (VAPID, `web-push`, `push_subscriptions`, manifest + service worker, công tắc TV) (D-137, thay D-125) | 805 / 811 | 815 | L | `packages/db/prisma/schema/**`, `srv/notification/**`, `srv/settings/**`, `worker/**`, `portal/public/**`, `portal/features/{account,shell}/**`, `docs/adr/**` |
 
-Chạy tuần tự 813 → 814 → 815 → 816. B3 → B18 để sau (D-137). TIP viết lúc tới bước, dựa trên `dev` lúc ấy.
+Chạy tuần tự 813 → 814 → 815 → 816 — **đã xong**, release #99 lên production 08/11/2026.
+
+## V4.6 — VẬN HÀNH AI (D-138)
+
+| TIP | Tên | Nguồn nợ | Phụ thuộc | Ước lượng | Vùng file dự kiến (chốt trong TIP) |
+|---|---|---|---|---|---|
+| V46-817 | [TIP](tips/TIP-V46-817-ai-ops.md) · nhánh `feature/TIP-V46-817-ai-ops` · **TIP viết, chưa code** — Vận hành AI: B3 nhật ký gọi AI (xem / lọc / xuất), B4 AI cho Soạn nội dung / Kiểm duyệt, B5 cảnh báo ngân sách + giữ chỗ chi phí + model theo chức năng | 811 | 816 | L | `srv/llm-config/**`, `srv/settings/**`, `packages/integrations/src/llm/**`, `admin/features/settings/**` |
+
+Các mục B khác để sau (D-138). TIP viết lúc tới bước, dựa trên `dev` lúc ấy.
+
+## V4.6 — ĐỢT 818 → 821 (D-139, release một lượt sau 821)
+
+| TIP | Tên | Nguồn nợ | Phụ thuộc | Ước lượng | Vùng file dự kiến (chốt trong TIP) |
+|---|---|---|---|---|---|
+| V46-818 | [TIP](tips/TIP-V46-818-admin-log-search.md) · nhánh `feature/TIP-V46-818-admin-log-search` · **DONE** - source5c562e14; static/unit/both builds PASS, full integration2271/2271, MSW397+5 existing skips, native focused PASS; parity D134/D139 classified, PR104 ready for review, no auto-merge. [Completion](reports/TIP-V46-818-completion.md) | 807 / 808 / 809 | 817 | M | `srv/settings/**`, `packages/shared/src/api-domains/{audit-log-page,regional-directors,reports}.ts`, `packages/ui/src/global-search/**`, `srv/local-business/**`, `admin/features/settings/**` |
+| V46-820 | [TIP](tips/TIP-V46-820-public-seo.md) · nhánh `feature/TIP-V46-820-public-seo` · **DONE** — SEO trang công khai (B15): sitemap, robots, JSON-LD, ảnh OG, lượt khách riêng, xóa cache theo phí / khóa / xóa TK | 810 | 818 | M | [Report](reports/TIP-V46-820-completion.md) · [PR105](https://github.com/duymt-dev/OPCHUB/pull/105) · `3a199fb4` |
+| V46-821 | [TIP](tips/TIP-V46-821-finance-region.md) · nhánh `feature/TIP-V46-821-finance-region` · **TIP viết, chưa code** — Tài chính & vùng (B7 → B10): sửa tài khoản nhận GĐ Vùng (P0), tự thu hồi khi khóa / xóa TK, QR trong mail + mail Gọi vốn hết hạn, logger client, trang + CSV affiliate vùng; B9 đóng | 801 → 805 | 820 | L | — |
+
+Số 819 không dùng (gộp vào 818 theo D-139).
 
 ## V4.6 — GIT (nhánh xếp chồng, không tự merge)
 

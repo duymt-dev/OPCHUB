@@ -6,6 +6,7 @@ export async function llmHttpStub() {
   const requests: { path: string; authorization: string; body: string }[] = [];
   let mode: 'ok' | 'unauthorized' | 'malformed' | 'timeout' | 'unavailable' | 'rate' = 'ok';
   let content = 'OK from local stub';
+  let delayMs = 0;
   let usage: { prompt_tokens: number; completion_tokens: number } | undefined;
   const server = createServer((req, res) => {
     void (async () => {
@@ -19,6 +20,7 @@ export async function llmHttpStub() {
         body: Buffer.concat(chunks).toString('utf8'),
       });
       if (mode === 'timeout') return;
+      if (delayMs) await new Promise((resolve) => setTimeout(resolve, delayMs));
       res.setHeader('content-type', 'application/json');
       if (mode === 'unavailable' || mode === 'rate') {
         res.statusCode = mode === 'rate' ? 429 : 503;
@@ -46,6 +48,9 @@ export async function llmHttpStub() {
   return {
     url: `http://127.0.0.1:${address.port}/v1`,
     requests,
+    setDelay(value: number) {
+      delayMs = value;
+    },
     setUsage(value: typeof usage) {
       usage = value;
     },

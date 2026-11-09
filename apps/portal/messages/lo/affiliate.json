@@ -158,7 +158,10 @@
     "statusLabels": {
       "paid": "ຈ່າຍແລ້ວ",
       "pending": "ລໍຖ້າຈ່າຍ"
-    }
+    },
+    "loadMore": "ເບິ່ງເພີ່ມ ({count})",
+    "downloadCsv": "ດາວໂຫຼດ CSV",
+    "loadError": "ບໍ່ສາມາດໂຫຼດຂໍ້ມູນໄດ້. ກະລຸນາລອງອີກຄັ້ງ."
   },
   "banner": {
     "title": "ທ່ານແມ່ນຜູ້ອຳນວຍການພາກ {label} · {name}",

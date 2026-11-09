@@ -164,3 +164,15 @@
     flex-direction: column;
   }
 }
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.actions h3 {
+  margin: 0;
+}

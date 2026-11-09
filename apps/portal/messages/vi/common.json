@@ -110,5 +110,12 @@
   "upload": {
     "type": "Ảnh phải là PNG/JPEG/WEBP",
     "failed": "Tải ảnh lên thất bại, vui lòng thử lại"
+  },
+  "aiSuggest": {
+    "suggest": "Gợi ý bằng AI",
+    "use": "Dùng gợi ý",
+    "dismiss": "Bỏ qua",
+    "preview": "Gợi ý nội dung",
+    "failed": "Chưa gợi ý được, vui lòng thử lại sau"
   }
 }

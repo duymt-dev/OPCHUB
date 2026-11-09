@@ -56,3 +56,9 @@ export * from './store-public';
 export * from './ai-providers';
 export * from './app-notify';
 export * from './push';
+export * from './ai-calls';
+export * from './ai-compose';
+export * from './mail-qr';
+
+export * from './client-log';
+export * from './my-region-affiliates';

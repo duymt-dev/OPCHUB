@@ -101,6 +101,7 @@ model Store {
   needs    Need[]
   favs     StoreFavorite[]
   views    StoreDailyView[]
+  guestViews StoreDailyGuestView[]
   /// TIP-V42-711 (QT-ST-PJ): dự án OPC đăng từ gian hàng này
   projects Project[]
 
@@ -114,6 +115,16 @@ model Store {
 }
 
 /// D-114 S6: lượt xem chi tiết theo ngày (Asia/Ho_Chi_Minh) — dashboard "Hiệu suất gian hàng · 7 ngày qua"
+model StoreDailyGuestView {
+  storeId String @map("store_id")
+  day DateTime @db.Date
+  views Int @default(0)
+  store Store @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  @@id([storeId, day])
+  @@map("store_daily_guest_views")
+}
+
 model StoreDailyView {
   storeId String   @map("store_id")
   day     DateTime @db.Date

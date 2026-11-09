@@ -19,23 +19,33 @@ export function regionalAppointedMail(
   };
 }
 
-export function regionalRevokeText(validUntil: string | null): string {
+export function regionalRevokeText(
+  validUntil: string | null,
+  reason: 'manual' | 'locked' | 'deleted' = 'manual',
+): string {
   const fee = validUntil
     ? `Phí thành viên cũ còn hiệu lực đến ${new Date(validUntil).toLocaleDateString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })}`
     : 'Vui lòng đóng phí thành viên để tiếp tục sử dụng.';
-  return `${fee}. Chia sẻ đã ghi nhận vẫn được chi.`;
+  const why =
+    reason === 'locked'
+      ? 'Kết thúc vai trò do tài khoản bị khóa. '
+      : reason === 'deleted'
+        ? 'Kết thúc vai trò do tài khoản đã bị xóa. '
+        : '';
+  return `${why}${fee}. Chia sẻ đã ghi nhận vẫn được chi.`;
 }
 
 export function regionalRevokedMail(
   region: RegionalRegion,
   validUntil: string | null,
   revokedAt: string,
+  reason: 'manual' | 'locked' | 'deleted' = 'manual',
 ): RenderedMail {
   const fee = validUntil
     ? `phí thành viên còn hiệu lực đến ${new Date(validUntil).toLocaleDateString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })}`
     : 'vui lòng đóng phí thành viên';
   const subject = `[OPC Hub] Kết thúc vai trò GĐ Vùng ${REGIONAL_LABELS[region]} · ${fee}`;
   const at = new Date(revokedAt).toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
-  const text = `Kết thúc vai trò GĐ Vùng ${REGIONAL_LABELS[region]} lúc ${at}. ${regionalRevokeText(validUntil)}`;
+  const text = `Kết thúc vai trò GĐ Vùng ${REGIONAL_LABELS[region]} lúc ${at}. ${regionalRevokeText(validUntil, reason)}`;
   return { subject, text, html: layout('Kết thúc vai trò Giám đốc Vùng', `<p>${esc(text)}</p>`) };
 }

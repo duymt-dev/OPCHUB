@@ -5,13 +5,14 @@ import { useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useModerationSettings } from '../hooks/use-moderation';
 import styles from './moderation.module.css';
+import { Switch } from 'antd';
 
 /** "Quy tắc xử lý vi phạm" + chọn "Thời gian khóa" (prototype v4 2850, D-77/D-83) */
 export function ModerationRules() {
   const t = useTranslations('groups.mod');
   const tt = useTranslations('groups.toast');
   const toast = useToast();
-  const { days, save } = useModerationSettings();
+  const { days, save, ai, aiSave } = useModerationSettings();
   const onChange = (raw: string) => {
     const next = lockDaysSchema.safeParse(Number(raw));
     if (!next.success) return;
@@ -21,6 +22,16 @@ export function ModerationRules() {
   return (
     <div className={styles.rules}>
       <span className={styles.kwTitle}>{t('rules')}</span>
+      <label className={styles.lockTime} htmlFor="ai-moderation-enabled">
+        Dùng AI phân loại tin vi phạm
+        <Switch
+          id="ai-moderation-enabled"
+          aria-label="Dùng AI phân loại tin vi phạm"
+          checked={ai}
+          loading={aiSave.isPending}
+          onChange={(value) => aiSave.mutate({ autoLockDays: days, ai: value })}
+        />
+      </label>
       <div className={styles.ruleGrid}>
         <b>{t('rule1Label')}</b>
         <span>{t('rule1')}</span>

@@ -1,9 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt ngưỡng pixel 318/430 ảnh.
-> TIP-V46-816: chỉ 6 ảnh mới của P-89/P-93/D-V46-APP ở lane này. D-V46-APP được phân loại D-137 (khối Thiết bị này) + B16 đã để sau + dữ liệu; không phải lỗi chức năng theo D-134. CLI pixel vẫn exit 1, số đo/ảnh/assertion không đổi. Xem [báo cáo 816](../../TIP-V46-816-parity.md).
-
+> Đạt 315/432 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -51,8 +49,8 @@
 | A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 390 | 0.20% | ✅ đạt | 390×2130 | f821b0e |
 | A-32 | Đăng ký · mã giới thiệu không tồn tại | 1440 | 0.09% | ✅ đạt | 1440×1769 | f821b0e |
 | A-32 | Đăng ký · mã giới thiệu không tồn tại | 390 | 0.17% | ✅ đạt | 390×2130 | f821b0e |
-| P-01 | Dashboard | 1440 | 1.01% | ✅ đạt | 1440×1113 | ef7934ff |
-| P-01 | Dashboard | 390 | 2.97% | ✅ đạt | 390×1721 | ef7934ff |
+| P-01 | Dashboard | 1440 | 1.06% | ✅ đạt | 1440×1113 | 6c5800b4 |
+| P-01 | Dashboard | 390 | 2.97% | ✅ đạt | 390×1721 | 6c5800b4 |
 | P-05 | Modal mail chào mừng | 1440 | 4.72% | ❌ chưa đạt | 1440×900 | 25a1eec |
 | P-05 | Modal mail chào mừng | 390 | 4.47% | ❌ chưa đạt | 390×844 | 25a1eec |
 | P-07 | Thông báo | 1440 | 2.76% | ✅ đạt | 1440×900 | 25a1eec |
@@ -63,8 +61,8 @@
 | P-09 | Thông báo · trống | 390 | 0.66% | ✅ đạt | 390×844 | 25a1eec |
 | P-10 | Thông báo · mở nhắc tên | 1440 | 0.78% | ✅ đạt | 1440×900 | 25a1eec |
 | P-10 | Thông báo · mở nhắc tên | 390 | 0.41% | ✅ đạt | 390×844 | 25a1eec |
-| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 1440 | 2.68% | ✅ đạt | 1440×900 | ef7934ff |
-| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 390 | 0.37% | ✅ đạt | 390×844 | ef7934ff |
+| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 1440 | 2.75% | ✅ đạt | 1440×900 | 3a199fb4 |
+| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 390 | 0.37% | ✅ đạt | 390×844 | 3a199fb4 |
 | P-108-PROJECT-FORM | Gian hàng của tôi · form đăng dự án điền sẵn | 1440 | 0.56% | ✅ đạt | 1440×900 | ef7934ff |
 | P-108-PROJECT-FORM | Gian hàng của tôi · form đăng dự án điền sẵn | 390 | 2.43% | ✅ đạt | 390×844 | ef7934ff |
 | P-108-PROJECTS | Gian hàng của tôi · khối Dự án OPC | 1440 | 0.00% | ✅ đạt | 1136×202 | ef7934ff |
@@ -169,8 +167,8 @@
 | P-67 | Góp ý · trống | 390 | 8.96% | ❌ chưa đạt | 390×2359 | 25a1eec |
 | P-68 | Dự án · repo riêng tư, đã xin quyền | 1440 | 6.83% | ❌ chưa đạt | 1440×2165 | 25a1eec |
 | P-68 | Dự án · repo riêng tư, đã xin quyền | 390 | 36.65% | ❌ chưa đạt | 390×3597 | 25a1eec |
-| P-73 | Form đăng dự án | 1440 | 0.57% | ✅ đạt | 1440×900 | 25a1eec |
-| P-73 | Form đăng dự án | 390 | 0.52% | ✅ đạt | 390×844 | 25a1eec |
+| P-73 | Form đăng dự án | 1440 | 0.98% | ✅ đạt | 1440×900 | ceaccaa3 |
+| P-73 | Form đăng dự án | 390 | 2.17% | ✅ đạt | 390×844 | ceaccaa3 |
 | P-74 | Form dự án · báo thiếu tên | 1440 | 1.52% | ✅ đạt | 1440×900 | 25a1eec |
 | P-74 | Form dự án · báo thiếu tên | 390 | 3.78% | ❌ chưa đạt | 390×844 | 25a1eec |
 | P-75 | Form dự án · mở gọi vốn | 1440 | 0.17% | ✅ đạt | 1440×900 | 25a1eec |
@@ -216,14 +214,16 @@
 | P-97 | Portal · Affiliate | 390 | 4.15% | ❌ chưa đạt | 390×1909 | ef7934ff |
 | P-98 | Portal · Affiliate · Lịch sử nhận tiền | 1440 | 1.27% | ✅ đạt | 1440×900 | ef7934ff |
 | P-98 | Portal · Affiliate · Lịch sử nhận tiền | 390 | 3.86% | ❌ chưa đạt | 390×1632 | ef7934ff |
-| P-V46-PUBLIC-CARD | Trang công khai · khối trong trình sửa | 1440 | 1.57% | ✅ đạt | 1136×250 | ef7934ff |
-| P-V46-PUBLIC-CARD | Trang công khai · khối trong trình sửa | 390 | 2.50% | ✅ đạt | 366×396 | ef7934ff |
-| P-V46-REG | Portal · Vùng của tôi | 1440 | 5.74% | ❌ chưa đạt | 1440×1944 | ef7934ff |
-| P-V46-REG | Portal · Vùng của tôi | 390 | 10.47% | ❌ chưa đạt | 390×3353 | ef7934ff |
-| P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 1440 | 1.27% | ✅ đạt | 1440×997 | ef7934ff |
-| P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 390 | 2.12% | ✅ đạt | 390×1635 | ef7934ff |
-| P-V46-SEARCH | Topbar · global search | 1440 | 0.74% | ✅ đạt | 1440×900 | ef7934ff |
-| P-V46-SEARCH | Topbar · global search | 390 | 0.11% | ✅ đạt | 390×844 | ef7934ff |
+| P-V46-GUEST-KPI | B15 complete store dashboard, independent guest-view KPI | 1440 | 12.16% | ❌ chưa đạt | 1440×1532 | 3a199fb4 |
+| P-V46-GUEST-KPI | B15 complete store dashboard, independent guest-view KPI | 390 | 46.67% | ❌ chưa đạt | 390×3383 | 3a199fb4 |
+| P-V46-PUBLIC-CARD | Trang công khai · khối trong trình sửa | 1440 | 1.57% | ✅ đạt | 1136×250 | 3a199fb4 |
+| P-V46-PUBLIC-CARD | Trang công khai · khối trong trình sửa | 390 | 2.50% | ✅ đạt | 366×396 | 3a199fb4 |
+| P-V46-REG | Portal · Vùng của tôi | 1440 | 4.66% | ❌ chưa đạt | 1440×1944 | c5848a37 |
+| P-V46-REG | Portal · Vùng của tôi | 390 | 3.00% | ❌ chưa đạt | 390×3067 | c5848a37 |
+| P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 1440 | 1.27% | ✅ đạt | 1440×997 | c5848a37 |
+| P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 390 | 2.12% | ✅ đạt | 390×1635 | c5848a37 |
+| P-V46-SEARCH | Topbar · global search | 1440 | 0.88% | ✅ đạt | 1440×900 | 6c5800b4 |
+| P-V46-SEARCH | Topbar · global search | 390 | 0.11% | ✅ đạt | 390×844 | 6c5800b4 |
 | D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 2.45% | ✅ đạt | 1440×1344 | ef7934ff |
 | D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 2.32% | ✅ đạt | 390×2279 | ef7934ff |
 | D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.44% | ✅ đạt | 1440×900 | ef7934ff |
@@ -248,14 +248,14 @@
 | D-11 | Thành viên · khóa hàng loạt | 390 | 3.17% | ❌ chưa đạt | 390×2810 | 25a1eec |
 | D-12 | Modal gán vào nhóm | 1440 | 0.98% | ✅ đạt | 1440×900 | 25a1eec |
 | D-12 | Modal gán vào nhóm | 390 | 0.71% | ✅ đạt | 390×844 | 25a1eec |
-| D-120-GCFG | Cấu hình Giám đốc Vùng | 1440 | 2.51% | ✅ đạt | 1440×1274 | ef7934ff |
-| D-120-GCFG | Cấu hình Giám đốc Vùng | 390 | 4.41% | ❌ chưa đạt | 390×3275 | ef7934ff |
+| D-120-GCFG | Cấu hình Giám đốc Vùng | 1440 | 2.51% | ✅ đạt | 1440×1274 | c5848a37 |
+| D-120-GCFG | Cấu hình Giám đốc Vùng | 390 | 4.41% | ❌ chưa đạt | 390×3275 | c5848a37 |
 | D-120-GCFG-RO | Cấu hình GĐ Vùng · Kế toán chỉ xem | 1440 | 2.14% | ✅ đạt | 1440×1395 | ef7934ff |
 | D-120-GCFG-RO | Cấu hình GĐ Vùng · Kế toán chỉ xem | 390 | 3.91% | ❌ chưa đạt | 390×3401 | ef7934ff |
-| D-120-GDV | GĐ Vùng · Sổ chia sẻ | 1440 | 2.12% | ✅ đạt | 1440×900 | ef7934ff |
-| D-120-GDV | GĐ Vùng · Sổ chia sẻ | 390 | 4.05% | ❌ chưa đạt | 390×1305 | ef7934ff |
-| D-120-GDV-OPEN | GĐ Vùng · Khoản ghi nhận Miền Bắc | 1440 | 10.66% | ❌ chưa đạt | 1440×1429 | ef7934ff |
-| D-120-GDV-OPEN | GĐ Vùng · Khoản ghi nhận Miền Bắc | 390 | 5.73% | ❌ chưa đạt | 390×1920 | ef7934ff |
+| D-120-GDV | GĐ Vùng · Sổ chia sẻ | 1440 | 2.11% | ✅ đạt | 1440×900 | c5848a37 |
+| D-120-GDV | GĐ Vùng · Sổ chia sẻ | 390 | 4.04% | ❌ chưa đạt | 390×1305 | c5848a37 |
+| D-120-GDV-OPEN | GĐ Vùng · Khoản ghi nhận Miền Bắc | 1440 | 10.66% | ❌ chưa đạt | 1440×1429 | c5848a37 |
+| D-120-GDV-OPEN | GĐ Vùng · Khoản ghi nhận Miền Bắc | 390 | 5.73% | ❌ chưa đạt | 390×1920 | c5848a37 |
 | D-13 | Thành viên · menu dòng | 1440 | 2.16% | ✅ đạt | 1440×900 | 25a1eec |
 | D-13 | Thành viên · menu dòng | 390 | 3.79% | ❌ chưa đạt | 390×844 | 25a1eec |
 | D-14 | Thành viên · đã khóa 1 dòng | 1440 | 1.71% | ✅ đạt | 1440×1027 | 25a1eec |
@@ -294,8 +294,8 @@
 | D-30 | Drawer sửa nhóm | 390 | 0.48% | ✅ đạt | 390×844 | 25a1eec |
 | D-31 | Modal xuất danh sách thành viên | 1440 | 0.17% | ✅ đạt | 1440×900 | 25a1eec |
 | D-31 | Modal xuất danh sách thành viên | 390 | 0.00% | ✅ đạt | 390×844 | 25a1eec |
-| D-33 | Kiểm duyệt tin nhắn | 1440 | 0.78% | ✅ đạt | 1440×900 | 25a1eec |
-| D-33 | Kiểm duyệt tin nhắn | 390 | 1.52% | ✅ đạt | 390×1457 | 25a1eec |
+| D-33 | Kiểm duyệt tin nhắn | 1440 | 3.40% | ❌ chưa đạt | 1440×910 | ceaccaa3 |
+| D-33 | Kiểm duyệt tin nhắn | 390 | 9.61% | ❌ chưa đạt | 390×1769 | ceaccaa3 |
 | D-34 | Kiểm duyệt · hết tin | 1440 | 0.06% | ✅ đạt | 1440×900 | 25a1eec |
 | D-34 | Kiểm duyệt · hết tin | 390 | 0.01% | ✅ đạt | 390×844 | 25a1eec |
 | D-35 | Kiểm duyệt · thêm từ khóa | 1440 | 0.78% | ✅ đạt | 1440×900 | 25a1eec |
@@ -376,8 +376,8 @@
 | D-73 | Cài đặt · Tài khoản quản trị | 390 | 0.33% | ✅ đạt | 390×2297 | ef7934ff |
 | D-74 | Tài khoản quản trị · hộp thoại tạo TK (§21 RB-R02) | 1440 | 0.79% | ✅ đạt | 1440×900 | ef7934ff |
 | D-74 | Tài khoản quản trị · hộp thoại tạo TK (§21 RB-R02) | 390 | 1.72% | ✅ đạt | 390×844 | ef7934ff |
-| D-75 | Cài đặt · Nhật ký hoạt động | 1440 | 69.59% | ❌ chưa đạt | 1440×3151 | ef7934ff |
-| D-75 | Cài đặt · Nhật ký hoạt động | 390 | 67.22% | ❌ chưa đạt | 390×5324 | ef7934ff |
+| D-75 | Cài đặt · Nhật ký hoạt động | 1440 | 70.06% | ❌ chưa đạt | 1440×3207 | 6c5800b4 |
+| D-75 | Cài đặt · Nhật ký hoạt động | 390 | 67.90% | ❌ chưa đạt | 390×5476 | 6c5800b4 |
 | D-80 | Toast toàn cục | 1440 | 0.16% | ✅ đạt | 1440×900 | 25a1eec |
 | D-80 | Toast toàn cục | 390 | 5.25% | ❌ chưa đạt | 390×844 | 25a1eec |
 | D-81 | Xem thử vai trò Kế toán · menu + dải cam (RB-R09, AT-RB02) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.74% | ✅ đạt | 1440×900 | 25a1eec |
@@ -427,16 +427,16 @@
 | D-88 | Tạo sự kiện · Link Google Meet (D-59) | 390 | 0.02% | ✅ đạt | 390×844 | 25a1eec |
 | D-89 | Gán vào nhóm · vai trò Giảng viên (GR-R01) | 1440 | 0.25% | ✅ đạt | 1440×900 | ef7934ff |
 | D-89 | Gán vào nhóm · vai trò Giảng viên (GR-R01) | 390 | 0.11% | ✅ đạt | 390×844 | ef7934ff |
-| D-V46-AI | Cài đặt · AI Provider | 1440 | 2.84% | ✅ đạt | 1440×1584 | ef7934ff |
-| D-V46-AI | Cài đặt · AI Provider | 390 | 6.88% | ❌ chưa đạt | 390×3478 | ef7934ff |
-| D-V46-APP | Cài đặt · Ứng dụng & thông báo | 1440 | 12.39% | ℹ️ D-137/B16 (tham khảo) | 1440×1065 | 584742ea |
-| D-V46-APP | Cài đặt · Ứng dụng & thông báo | 390 | 8.05% | ℹ️ D-137/B16 (tham khảo) | 390×1693 | 584742ea |
+| D-V46-AI | Cài đặt · AI Provider | 1440 | 8.29% | ❌ chưa đạt | 1440×1672 | ceaccaa3 |
+| D-V46-AI | Cài đặt · AI Provider | 390 | 10.61% | ❌ chưa đạt | 390×3673 | ceaccaa3 |
+| D-V46-APP | Cài đặt · Ứng dụng & thông báo | 1440 | 12.39% | ❌ chưa đạt | 1440×1065 | 584742ea |
+| D-V46-APP | Cài đặt · Ứng dụng & thông báo | 390 | 8.05% | ❌ chưa đạt | 390×1693 | 584742ea |
 | D-V46-BANK | Cài đặt · Đối soát ngân hàng | 1440 | 12.33% | ❌ chưa đạt | 1440×1065 | ef7934ff |
 | D-V46-BANK | Cài đặt · Đối soát ngân hàng | 390 | 7.79% | ❌ chưa đạt | 390×2164 | ef7934ff |
 | D-V46-RENEW | Cài đặt · Nhắc gia hạn | 1440 | 11.07% | ❌ chưa đạt | 1440×1065 | ef7934ff |
 | D-V46-RENEW | Cài đặt · Nhắc gia hạn | 390 | 15.52% | ❌ chưa đạt | 390×2012 | ef7934ff |
-| D-V46-SEARCH | Topbar · global search Admin | 1440 | 0.55% | ✅ đạt | 1440×900 | ef7934ff |
-| D-V46-SEARCH | Topbar · global search Admin | 390 | 0.35% | ✅ đạt | 390×844 | ef7934ff |
+| D-V46-SEARCH | Topbar · global search Admin | 1440 | 0.56% | ✅ đạt | 1440×900 | 6c5800b4 |
+| D-V46-SEARCH | Topbar · global search Admin | 390 | 0.50% | ✅ đạt | 390×844 | 6c5800b4 |
 
 ## Không đo được trên prototype (unreachable, 39 màn)
 

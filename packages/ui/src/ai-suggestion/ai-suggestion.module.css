@@ -1,0 +1,9 @@
+.preview {
+  width: min(320px, calc(100vw - 64px));
+}
+.text {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 280px;
+  overflow-y: auto;
+}

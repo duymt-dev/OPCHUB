@@ -11,6 +11,7 @@ import {
   groupKeys,
   removeKeyword,
   saveModerationSettings,
+  saveAiModerationSettings,
 } from '../api';
 import { useErrorToast } from './use-groups';
 
@@ -30,8 +31,15 @@ export function useReportAction() {
   const qc = useQueryClient();
   const onError = useErrorToast();
   return useMutation({
-    mutationFn: ({ r, action, days }: { r: Report; action: 'restore' | 'lock'; days?: LockDays }) =>
-      actOnReport(r.id, action, days),
+    mutationFn: ({
+      r,
+      action,
+      days,
+    }: {
+      r: Report;
+      action: 'restore' | 'lock' | 'hide' | 'dismiss';
+      days?: LockDays;
+    }) => actOnReport(r.id, action, days),
     onSuccess: () => qc.invalidateQueries({ queryKey: groupKeys.reports() }),
     onError,
   });
@@ -50,7 +58,17 @@ export function useModerationSettings() {
     onSuccess: (s) => qc.setQueryData(groupKeys.modSettings(), s),
     onError,
   });
-  return { days: query.data?.autoLockDays ?? MODERATION_DEFAULTS.autoLockDays, save };
+  const aiSave = useMutation({
+    mutationFn: saveAiModerationSettings,
+    onSuccess: (s) => qc.setQueryData(groupKeys.modSettings(), s),
+    onError,
+  });
+  return {
+    days: query.data?.autoLockDays ?? MODERATION_DEFAULTS.autoLockDays,
+    save,
+    ai: query.data?.ai ?? false,
+    aiSave,
+  };
 }
 
 export function useKeywords() {

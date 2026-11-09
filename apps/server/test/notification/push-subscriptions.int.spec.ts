@@ -1,8 +1,8 @@
 import { randomUUID } from 'node:crypto';
-import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { DEFAULT_APP_NOTIFY, pushPublicConfigSchema } from '@opchub/shared/api-domains';
 import { PushSubscriptionRepository } from '@/modules/notification';
-import { createUser } from '../factories/user.factory';
+import { createUser, flushAuthState } from '../factories/user.factory';
 import { tokenOf } from '../factories/group.factory';
 import { clearPushFixtures, device, pushTestApp, setPushSettings } from './push-test.helpers';
 
@@ -11,6 +11,9 @@ describe('D-137 authenticated device subscriptions', () => {
   const users: string[] = [];
   beforeAll(async () => {
     f = await pushTestApp();
+  });
+  beforeEach(async () => {
+    await flushAuthState(f.t);
   });
   afterAll(async () => {
     if (!f) return;

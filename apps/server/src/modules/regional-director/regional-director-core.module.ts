@@ -1,4 +1,9 @@
+import { MyRegionAffiliatesService } from './services/my-region-affiliates.service';
 import { MyRegionService } from './services/my-region.service';
+import { RegionalLockEffects } from './services/regional-lock.effects';
+import { RegionalPayeeBankService } from './services/regional-payee-bank.service';
+import { RegionalPayeeBankRepository } from './repositories/regional-payee-bank.repository';
+import { AdminRegionalPayeeBankController } from './controllers/admin-regional-payee-bank.controller';
 import { MeRegionalController } from './controllers/me-regional.controller';
 import { Module } from '@nestjs/common';
 import { AffiliateCoreModule } from '@/modules/affiliate';
@@ -22,7 +27,11 @@ import { RegionalDirectorReadService } from './services/regional-director-read.s
 import { RegionalDirectorEventsHandler } from './services/regional-director-events.handler';
 
 const providers = [
+  RegionalLockEffects,
+  RegionalPayeeBankService,
+  RegionalPayeeBankRepository,
   MyRegionService,
+  MyRegionAffiliatesService,
   RegionalShareRepository,
   RegionalPayoutRepository,
   RegionalShareSummaryRepository,
@@ -52,6 +61,7 @@ export class RegionalDirectorCoreModule {}
 @Module({
   imports: [RegionalDirectorCoreModule],
   controllers: [
+    AdminRegionalPayeeBankController,
     MeRegionalController,
     AdminRegionalDirectorsController,
     AdminRegionalSharesController,

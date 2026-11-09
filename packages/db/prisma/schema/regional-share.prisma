@@ -46,6 +46,8 @@ model RegionalShare {
 
   @@unique([source, sourceId])
   @@index([region, recordedAt(sort: Desc), id(sort: Desc)])
+  /// Covering INCLUDE payload and partial predicate are authored in SQL.
+  @@index([region, directorUserId, affiliateId], map: "regional_share_affiliate_projection")
   @@map("regional_shares")
 }
 

@@ -14,7 +14,7 @@ const HOUR = 60 * MIN;
 const DAY = 24 * HOUR;
 
 interface LogState {
-  log: AuditLogRow[];
+  log: (AuditLogRow & { actorId?: string | null })[];
 }
 
 /** Ảnh người thao tác trong nhật ký seed (prototype) */
@@ -40,9 +40,15 @@ function seedState(): LogState {
     const ph = PHOTO[who];
     return ph ? avatarUrl(ph) : null;
   };
-  const log = LOG_SEED.map(([actorName, summary, tag, ago], i): AuditLogRow => ({
+  const log = LOG_SEED.map(([actorName, summary, tag, ago], i) => ({
     id: `lg${i + 1}`,
     actorName,
+    actorId:
+      actorName === 'Nguyễn Văn An'
+        ? 'admin'
+        : actorName === 'Lê Minh Anh'
+          ? 'adm-trang'
+          : 'adm-yen',
     actorAvatarUrl: photo(actorName),
     summary,
     tag,
@@ -87,6 +93,7 @@ export function logSetting(
   recordAudit(actorId, action, target, summary, diff);
   state().log.unshift({
     id: nextId('lg'),
+    actorId,
     actorName: actorId === null ? 'Hệ thống' : (ACTOR_NAMES[actorId] ?? actorId),
     actorAvatarUrl: null,
     summary,
@@ -96,7 +103,7 @@ export function logSetting(
 }
 
 /** 90 ngày gần nhất (prototype: "Ghi lại … trong 90 ngày") */
-export function listSettingsLog(): AuditLogRow[] {
+export function listSettingsLog() {
   const since = Date.now() - 90 * DAY;
   return state().log.filter((r) => Date.parse(r.at) >= since);
 }

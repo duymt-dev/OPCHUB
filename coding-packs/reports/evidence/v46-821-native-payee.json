@@ -1,0 +1,15 @@
+{
+  "source": "c5848a37",
+  "privateTarget": "opchub_v46_812_dev",
+  "viewports": [
+    1440,
+    390
+  ],
+  "explicitSaveOnly": true,
+  "httpSaveStatus": 200,
+  "auditMasked": true,
+  "syntheticFixtureCleaned": true,
+  "incumbentSlotAndBankUnchanged": true,
+  "immutableAuditPreserved": true,
+  "prototypeCounterpart": false
+}

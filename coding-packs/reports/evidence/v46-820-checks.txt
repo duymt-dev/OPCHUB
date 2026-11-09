@@ -1,0 +1,236 @@
+=== v46-820-lint-final.log ===
+   • Remote caching disabled
+
+@opchub/portal:lint: cache miss, executing 86d9a6c7c4ead220
+@opchub/e2e:lint: cache miss, executing a5f1a40eafaca4f1
+@opchub/shared:lint: cache hit, replaying logs 6c5f5377a5416dae
+@opchub/shared:lint: $ eslint src
+@opchub/server:lint: cache hit, replaying logs 6b7a4e305d4d7558
+@opchub/server:lint: $ eslint src test
+@opchub/integrations:lint: cache hit, replaying logs 92bf24dc4e585dce
+@opchub/integrations:lint: $ eslint src
+@opchub/db:lint: cache hit, replaying logs 53a98db68844e5f7
+@opchub/db:lint: $ eslint src seed test
+@opchub/admin:lint: cache hit, replaying logs 8f44dc39c3c79c86
+@opchub/admin:lint: $ eslint src
+@opchub/ui:lint: cache hit, replaying logs de6f68abbf09f777
+@opchub/ui:lint: $ eslint src
+@opchub/portal:lint: $ eslint src
+@opchub/e2e:lint: $ eslint parity behavior audit server llm env.ts urls.ts
+
+ Tasks:    8 successful, 8 total
+Cached:    6 cached, 8 total
+  Time:    1m19.228s 
+
+
+
+=== v46-820-typecheck-final.log ===
+@opchub/db:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/integrations:typecheck: cache hit, replaying logs f0ef06c94f6b1248
+@opchub/integrations:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/server:typecheck: cache hit, replaying logs 057e13474d9b482b
+@opchub/server:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/e2e:typecheck: cache miss, executing 22e5ff336c0b4f40
+@opchub/ui:typecheck: cache hit, replaying logs 317184441688a551
+@opchub/ui:typecheck: $ tsc -p tsconfig.json
+@opchub/admin:typecheck: cache hit, replaying logs d9472b4293c3c8b2
+@opchub/admin:typecheck: $ next typegen && tsc --noEmit
+@opchub/admin:typecheck: Generating route types...
+@opchub/admin:typecheck: ✓ Types generated successfully
+@opchub/shared:typecheck: cache hit, replaying logs 5790cd281037ef18
+@opchub/shared:typecheck: $ tsc -p tsconfig.json
+@opchub/portal:typecheck: $ next typegen && tsc --noEmit
+@opchub/e2e:typecheck: $ tsc -p tsconfig.json
+@opchub/portal:typecheck: Generating route types...
+@opchub/portal:typecheck: ✓ Types generated successfully
+
+ Tasks:    8 successful, 8 total
+Cached:    6 cached, 8 total
+  Time:    41.532s 
+
+
+
+=== v46-820-depcheck-final.log ===
+node.exe : $ depcruise apps/portal apps/admin packages e2e --config .dependency-cruiser.cjs && depcruise apps/server 
+--config .dependency-cruiser.cjs --ts-config tsconfig.depcruise.server.json
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ depcruise app...ise.server.json:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+✔ no dependency violations found (2585 modules, 7819 dependencies cruised)
+
+
+✔ no dependency violations found (1217 modules, 5771 dependencies cruised)
+
+
+
+=== v46-820-unit-final.log ===
+@opchub/server:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
+@opchub/server:test: 
+@opchub/portal:test: cache miss, executing ab3185b222516f81
+@opchub/portal:test: $ vitest run --passWithNoTests
+@opchub/portal:test: 
+@opchub/portal:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/portal
+@opchub/portal:test: 
+@opchub/portal:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/portal:test: 
+@opchub/portal:test:  Test Files  82 passed (82)
+@opchub/portal:test:       Tests  471 passed (471)
+@opchub/portal:test:    Start at  22:21:28
+@opchub/portal:test:    Duration  233.27s (environment 52%, import 43%, tests 3%, transform 1%)
+@opchub/portal:test: 
+@opchub/portal:test:      Import  786 modules were evaluated 4615 times · 272.00s total, 43% of tracked time
+@opchub/portal:test:              ~56.78s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/portal:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
+@opchub/portal:test: 
+
+ Tasks:    6 successful, 6 total
+Cached:    5 cached, 6 total
+  Time:    3m57.473s 
+
+
+
+=== v46-820-build-native-verified.log ===
+@opchub/portal:build: ├ ƒ /r/[code]
+@opchub/portal:build: ├ ƒ /register
+@opchub/portal:build: ├ ƒ /reset-password
+@opchub/portal:build: ├ ƒ /robots.txt
+@opchub/portal:build: ├ ƒ /services/[[...slug]]
+@opchub/portal:build: ├ ƒ /sitemap.xml
+@opchub/portal:build: ├ ƒ /sso/callback
+@opchub/portal:build: ├ ƒ /sso/callback/[provider]
+@opchub/portal:build: ├ ƒ /store-sitemaps/sitemap/[__metadata_id__]
+@opchub/portal:build: ├ ƒ /stores
+@opchub/portal:build: ├ ƒ /stores/[id]
+@opchub/portal:build: ├ ƒ /stores/mine
+@opchub/portal:build: └ ƒ /unsubscribe
+@opchub/portal:build: 
+@opchub/portal:build: 
+@opchub/portal:build: ○  (Static)   prerendered as static content
+@opchub/portal:build: ƒ  (Dynamic)  server-rendered on demand
+@opchub/portal:build: 
+
+ Tasks:    3 successful, 3 total
+Cached:    0 cached, 3 total
+  Time:    1m20.977s 
+
+
+
+=== v46-820-build-msw-verified.log ===
+@opchub/admin:build: ├ ƒ /groups/[id]/chat
+@opchub/admin:build: ├ ƒ /investors
+@opchub/admin:build: ├ ƒ /login
+@opchub/admin:build: ├ ƒ /marketing
+@opchub/admin:build: ├ ƒ /members
+@opchub/admin:build: ├ ƒ /needs
+@opchub/admin:build: ├ ƒ /overview
+@opchub/admin:build: ├ ƒ /projects/[[...slug]]
+@opchub/admin:build: ├ ƒ /reports
+@opchub/admin:build: ├ ƒ /requests/[[...tab]]
+@opchub/admin:build: ├ ƒ /reset-password
+@opchub/admin:build: ├ ƒ /settings
+@opchub/admin:build: ├ ƒ /stores
+@opchub/admin:build: └ ƒ /two-factor
+@opchub/admin:build: 
+@opchub/admin:build: 
+@opchub/admin:build: ƒ  (Dynamic)  server-rendered on demand
+@opchub/admin:build: 
+
+ Tasks:    3 successful, 3 total
+Cached:    0 cached, 3 total
+  Time:    1m42.254s 
+
+
+
+=== v46-820-e2e-verified.log ===
+  ok 390 [behavior] › behavior\store-public-seo.spec.ts:5:1 › REQ-627 B15 public SEO: JSON-LD matches visible business and canonical/OG/Twitter (933ms)
+  ok 389 [behavior] › behavior\store-public-page.spec.ts:156:1 › BR-494 not found: unknown and unpublished links noindex, draft warning, other Portal noindex (3.9s)
+  ok 393 [behavior] › behavior\stores-responsive-header.spec.ts:6:3 › TIP-812 Stores title and usable date range share a row at 390px (3.8s)
+  ok 395 [behavior] › behavior\stores.spec.ts:28:3 › Gian hàng địa phương › UP-08: menu → Khám phá, tìm / lọc / đặt lại; mở chi tiết có Email · Zalo · Gọi (3.0s)
+  ok 394 [behavior] › behavior\stores-responsive-header.spec.ts:6:3 › TIP-812 Stores title and usable date range share a row at 1440px (4.0s)
+  -  398 [behavior] › behavior\tax-lookup-dlpl.spec.ts:56:3 › D-65 tra MST qua DLPL (stub) › D-65 khai báo DN: tra MST qua DLPL → tự điền tên + ngành, lưu → hồ sơ DN
+  -  399 [behavior] › behavior\tax-lookup-dlpl.spec.ts:71:3 › D-65 tra MST qua DLPL (stub) › D-65 DLPL hết lượt (MST …429) → báo không tra cứu được, nhập tay vẫn lưu được
+  -  400 [behavior] › behavior\tax-lookup-dlpl.spec.ts:85:3 › D-65 tra MST qua DLPL (stub) › D-65 tra lại MST lỗi không bị cache "không thấy"
+  -  401 [behavior] › behavior\tax-lookup-dlpl.spec.ts:106:3 › D-65 tra MST thật qua DLPL @live › D-65 @live tra 1 MST công khai → có tên DN
+  ok 402 [behavior] › behavior\unsubscribe.spec.ts:10:3 › Huỷ đăng ký nhận email (BUG-036) › BUG-036 trang huỷ đăng ký công khai (2.6s)
+  ok 403 [behavior] › behavior\unsubscribe.spec.ts:29:3 › Huỷ đăng ký nhận email (BUG-036) › BUG-036 link bị sửa / thiếu token → báo không hợp lệ (2.2s)
+  ok 397 [behavior] › behavior\stores.spec.ts:111:3 › Gian hàng địa phương › D-89 P-105: thẻ có lượt xem, "Nổi bật"; tim yêu thích giữ sau F5, mở chi tiết tăng lượt xem (6.1s)
+  ok 396 [behavior] › behavior\stores.spec.ts:70:3 › Gian hàng địa phương › D-114 S6/S8: dashboard số thật → sửa gian hàng đang hiển thị (đủ 5 bước); Admin ẩn → biến mất, hiện lại (8.6s)
+  -  406 [behavior] › behavior\web-push.spec.ts:149:1 › D-137 Admin real outbox -> fake HTTP push; 503 retry does not resend successful device
+  ok 404 [behavior] › behavior\web-push.spec.ts:72:3 › D-137 Portal push preferences and PWA manifest at 1440px (3.5s)
+  ok 405 [behavior] › behavior\web-push.spec.ts:72:3 › D-137 Portal push preferences and PWA manifest at 390px (3.1s)
+  ok 213 [behavior] › behavior\bot-auto-lifecycle.spec.ts:30:1 › UAT-15 REQ-208 REQ-411 P5-PLAN-01 full automatic three-turn conversation closes with its opener and persists in the group chat (10.3m)
+
+  Slow test file: [behavior] › behavior\bot-auto-lifecycle.spec.ts (10.3m)
+  Slow test file: [behavior] › behavior\bot-emergency.spec.ts (5.5m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  5 skipped
+  401 passed (15.8m)
+
+
+=== v46-820-native-closure.log ===
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ playwright te...-native-closure:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[WebServer] (node:33756) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:1864) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:32288) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:28108) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\store-dashboard-responsive.spec.ts:5:1 › B15 dashboard products preserve two mobile columns without horizontal overflow (6.9s)
+  ok 2 [behavior] › behavior\store-public-seo.spec.ts:5:1 › REQ-627 B15 public SEO: JSON-LD matches visible business and canonical/OG/Twitter (3.7s)
+  ok 3 [behavior] › behavior\store-public-seo.spec.ts:38:1 › REQ-627 B15 robots isolate duplicate hosts and sitemap contains only public URLs (254ms)
+  ok 4 [behavior] › behavior\store-public-seo.spec.ts:67:1 › REQ-627 B15 generated OG is PNG1200x630; unknown store has no image disclosure (453ms)
+
+  4 passed (34.5s)
+
+
+=== v46-820-int-bootstrap-recheck.log ===
+Private DB target: opchub_v46_801_test
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  22:36:28
+   Duration  10.24s (import 56%, transform 28%, tests 16%)
+
+
+
+=== v46-820-db-int-final.log ===
+106 migrations found in prisma/migrations
+
+
+No pending migrations to apply.
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/db
+
+Isolated acceptance prerequisite ready: pending-project
+Isolated acceptance prerequisite ready: events-list
+Isolated acceptance prerequisite ready: events-open
+Isolated acceptance prerequisite ready: events-portal
+Isolated acceptance prerequisite ready: events-upcoming
+Isolated acceptance prerequisite ready: marketing-summary
+
+ Test Files  29 passed (29)
+      Tests  144 passed (144)
+   Start at  22:36:43
+   Duration  82.62s (tests 65%, import 32%, transform 2%, worker 1%)
+
+     Import  358 modules were evaluated 639 times · 22.55s total, 32% of tracked time
+             ~9.92s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+             learn more: https://vitest.dev/guide/improving-performance#test-isolation
+

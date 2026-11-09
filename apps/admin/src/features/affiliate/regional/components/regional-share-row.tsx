@@ -7,6 +7,7 @@ import { affiliateMoney } from '../../format';
 import { RegionalShareItems } from './regional-share-items';
 import { RegionalPayoutHistory } from './regional-payout-history';
 import { RegionalPayoutDialog } from './regional-payout-dialog';
+import { RegionalPayeeBankDialog } from './regional-payee-bank-dialog';
 import styles from './regional-share.module.css';
 export function RegionalShareRow({ row }: { row: Row }) {
   const t = useTranslations('affiliate.regional.share');
@@ -43,7 +44,13 @@ export function RegionalShareRow({ row }: { row: Row }) {
           {canPay && row.payees.some((p) => p.due > 0) ? (
             row.payees
               .filter((p) => p.due > 0)
-              .map((p) => <RegionalPayoutDialog key={p.userId} region={row.region} payee={p} />)
+              .map((p) =>
+                !p.bank && p.userId !== row.member?.id ? (
+                  <RegionalPayeeBankDialog key={p.userId} region={row.region} payee={p} />
+                ) : (
+                  <RegionalPayoutDialog key={p.userId} region={row.region} payee={p} />
+                ),
+              )
           ) : (
             <small>{t('noPending')}</small>
           )}

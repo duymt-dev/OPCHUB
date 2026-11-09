@@ -12,6 +12,16 @@ export class NeedMatchService {
     private readonly redis: RedisService,
   ) {}
 
+  /** Cache is noncritical: one multi-key DEL, TTL is the fallback when Redis is unavailable. */
+  async invalidate(userIds: readonly string[]) {
+    if (!userIds.length) return;
+    try {
+      await this.redis.client.del(...new Set(userIds.map((id) => `need-matches:${id}`)));
+    } catch {
+      this.logger.warn('Need matches cache invalidation failed; TTL fallback');
+    }
+  }
+
   async matches(user: { id: string; accountType: string }, now = new Date()): Promise<NeedMatches> {
     const empty = { hasStore: false, storeField: null, rows: [] };
     if (user.accountType !== 'business') return empty;

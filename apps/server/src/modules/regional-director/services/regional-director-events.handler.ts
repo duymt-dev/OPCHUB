@@ -46,9 +46,10 @@ export class RegionalDirectorEventsHandler {
   }
 
   async revoked(p: OutboxPayload<'regional_director.revoked'>, id: string) {
+    if (p.reason === 'deleted') return; // Deleted account: durable history only, never mail.
     const member = await this.members.byId(p.userId);
     if (!member) return;
-    const mail = regionalRevokedMail(p.region, p.validUntil, p.revokedAt);
+    const mail = regionalRevokedMail(p.region, p.validUntil, p.revokedAt, p.reason);
     await this.prisma.db.$transaction((tx) =>
       this.mail.requestOnce(tx, `regional-mail-${id}`, {
         to: member.email,
@@ -62,7 +63,7 @@ export class RegionalDirectorEventsHandler {
         userId: p.userId,
         type: 'system',
         title: `Kết thúc vai trò GĐ Vùng ${REGIONAL_LABELS[p.region]}`,
-        body: regionalRevokeText(p.validUntil),
+        body: regionalRevokeText(p.validUntil, p.reason),
         link: '/affiliate',
       },
     ]);

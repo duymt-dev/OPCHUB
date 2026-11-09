@@ -3,9 +3,21 @@ import {
   regionalSharePageSchema,
   regionalPayoutHistorySchema,
   regionalPayoutResultSchema,
+  regionalWriteResultSchema,
+  type RegionalSlot,
   type RegionalRegion,
 } from '@opchub/shared/api-domains';
 import { api } from '@/lib/api-client';
+export const saveRegionalPayeeBank = (
+  region: RegionalRegion,
+  userId: string,
+  bank: RegionalSlot['bank'],
+) =>
+  api(`/admin/regional-directors/${region}/payees/${encodeURIComponent(userId)}/bank`, {
+    method: 'PUT',
+    body: bank,
+    schema: regionalWriteResultSchema,
+  });
 export const regionalShareKey = ['admin-regional-shares'] as const;
 export const fetchRegionalShares = (q: string) =>
   api(`/admin/gdv/shares?${new URLSearchParams({ q })}`, { schema: regionalShareSummarySchema });

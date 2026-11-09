@@ -274,6 +274,15 @@
     }
   },
   "log": {
+    "filterTag": "Nhóm",
+    "filterActor": "Người thực hiện",
+    "filterRange": "Khoảng ngày",
+    "from": "Từ ngày",
+    "to": "Đến ngày",
+    "system": "Hệ thống",
+    "clearFilters": "Xóa lọc",
+    "retryActors": "Tải lại người thực hiện",
+    "emptyFiltered": "Không có thao tác phù hợp",
     "heading": "Nhật ký hoạt động quản trị",
     "headingSub": "Tự động ghi mọi thao tác của quản trị viên (khóa, duyệt, chi trả, đổi cấu hình…) trong 90 ngày.",
     "empty": "Chưa có hoạt động nào",
@@ -534,7 +543,10 @@
     "invalid": "Vui lòng kiểm tra cấu hình AI",
     "loading": "Đang tải…",
     "failed": "Không thể tải cấu hình AI",
-    "retry": "Thử lại"
+    "retry": "Thử lại",
+    "purposeModel": "Mô hình ({purpose})",
+    "providerDefault": "Mặc định của nhà cung cấp",
+    "budgetAlert": "Cảnh báo trong Admin khi chạm ngưỡng hoặc hết ngân sách; không gửi email."
   },
   "app": {
     "heading": "Ứng dụng di động & thông báo đẩy",

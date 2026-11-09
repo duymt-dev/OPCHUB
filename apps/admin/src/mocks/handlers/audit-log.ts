@@ -1,6 +1,8 @@
 import {
   auditLogPageQuerySchema,
   auditLogPageSchema,
+  auditLogActorsSchema,
+  auditLogExportBodySchema,
   exportStatusSchema,
 } from '@opchub/shared/api-domains';
 import {
@@ -9,10 +11,11 @@ import {
   logSetting,
   mockDb,
   nextId,
+  listMockAdminAccounts,
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
 import { mockAdminGuard } from './admin-guard';
-import { parseQuery, param, userIdOf } from './domain-util';
+import { parseQuery, parseBody, param, userIdOf } from './domain-util';
 import { API, apiError } from './util';
 
 type Job = { actor: string; csv: string; rows: number; polls: number };
@@ -27,19 +30,33 @@ const jobs = () => {
   return s;
 };
 export const auditLogHandlers = [
+  http.get(`${API}/admin/audit-logs/actors`, ({ request }) => {
+    const denied = mockAdminGuard(request, 'settings.log');
+    if (denied) return denied;
+    return HttpResponse.json(
+      auditLogActorsSchema.parse({
+        items: listMockAdminAccounts().map(({ id, name }) => ({ id, name })),
+      }),
+    );
+  }),
   http.get(`${API}/admin/audit-logs`, ({ request }) => {
     const denied = mockAdminGuard(request, 'settings.log');
     if (denied) return denied;
     const q = parseQuery(request.url, auditLogPageQuerySchema);
     return q.ok ? HttpResponse.json(auditLogPageSchema.parse(mockAuditLogPage(q.data))) : q.res;
   }),
-  http.post(`${API}/admin/audit-logs/export`, ({ request }) => {
+  http.post(`${API}/admin/audit-logs/export`, async ({ request }) => {
     const denied = mockAdminGuard(request, 'settings.log');
     if (denied) return denied;
+    const parsed = await parseBody(request, auditLogExportBodySchema);
+    if (!parsed.ok) return parsed.res;
     const actor = userIdOf(request),
       jobId = nextId('audit-job');
-    logSetting(actor, 'export.audit', jobId, 'xuất nhật ký hoạt động 90 ngày', 'settings');
-    jobs().set(jobId, { actor, ...mockAuditCsv(), polls: 0 });
+    const filters = parsed.data.filters ?? {};
+    logSetting(actor, 'export.audit', jobId, 'xuất nhật ký hoạt động 90 ngày', 'settings', {
+      filters,
+    });
+    jobs().set(jobId, { actor, ...mockAuditCsv(filters), polls: 0 });
     return HttpResponse.json({ jobId, status: 'queued' }, { status: 202 });
   }),
   http.get(`${API}/admin/exports/:id`, ({ request, params }) => {

@@ -1,0 +1,13 @@
+Aggregate  (cost=31.38..31.39 rows=1 width=4) (actual time=0.134..0.135 rows=1 loops=1)
+  Buffers: local read=10
+  ->  Bitmap Heap Scan on store_daily_guest_views  (cost=4.51..31.36 rows=7 width=4) (actual time=0.075..0.128 rows=7 loops=1)
+        Recheck Cond: ((store_id = 'guest-4242'::text) AND (day >= '2026-11-01'::date) AND (day <= '2026-11-07'::date))
+        Heap Blocks: exact=7
+        Buffers: local read=10
+        ->  Bitmap Index Scan on store_daily_guest_views_pkey  (cost=0.00..4.51 rows=7 width=0) (actual time=0.064..0.064 rows=7 loops=1)
+              Index Cond: ((store_id = 'guest-4242'::text) AND (day >= '2026-11-01'::date) AND (day <= '2026-11-07'::date))
+              Buffers: local read=3
+Planning:
+  Buffers: shared hit=37, local read=1
+Planning Time: 5.888 ms
+Execution Time: 0.187 ms

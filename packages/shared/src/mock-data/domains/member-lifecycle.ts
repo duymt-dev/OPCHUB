@@ -5,6 +5,7 @@ import type { MockDb } from './store-types';
 import { logSetting } from './settings-log';
 import { revokeMockMemberSessions } from './member-sessions';
 import { enqueueMockGroupOwnerLock } from './group-lock-jobs';
+import { mockRegionalSystemRevoke } from './regional-lock';
 import { conflict, notFound, ok, type MockResult } from './util';
 
 const reasons = new WeakMap<MockDb, Map<string, string | null>>();
@@ -55,6 +56,7 @@ export function setMockMemberStatus(
   else mockLocks().delete(userId);
   revokeMockMemberSessions(userId);
   if (status === 'locked') enqueueMockGroupOwnerLock(userId);
+  if (status === 'locked' && lock.until === null) mockRegionalSystemRevoke(userId, 'locked');
   const name =
     members.find((row) => row.id === userId)?.name ??
     db.fees.find((row) => row.userId === userId)?.fullName ??

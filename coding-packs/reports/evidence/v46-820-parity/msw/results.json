@@ -1,0 +1,50 @@
+[
+  {
+    "id": "P-108",
+    "name": "Chi tiết gian hàng (HTX Cà phê Hòa Phú)",
+    "viewport": 1440,
+    "diffPct": 2.677932098765432,
+    "size": "1440×900",
+    "sha": "3a199fb4"
+  },
+  {
+    "id": "P-108",
+    "name": "Chi tiết gian hàng (HTX Cà phê Hòa Phú)",
+    "viewport": 390,
+    "diffPct": 0.3679061854417305,
+    "size": "390×844",
+    "sha": "3a199fb4"
+  },
+  {
+    "id": "P-V46-GUEST-KPI",
+    "name": "B15 complete store dashboard, independent guest-view KPI",
+    "viewport": 1440,
+    "diffPct": 12.124809617058311,
+    "size": "1440×1532",
+    "sha": "3a199fb4"
+  },
+  {
+    "id": "P-V46-GUEST-KPI",
+    "name": "B15 complete store dashboard, independent guest-view KPI",
+    "viewport": 390,
+    "diffPct": 46.66954682916847,
+    "size": "390×3383",
+    "sha": "3a199fb4"
+  },
+  {
+    "id": "P-V46-PUBLIC-CARD",
+    "name": "Trang công khai · khối trong trình sửa",
+    "viewport": 1440,
+    "diffPct": 1.4929577464788732,
+    "size": "1136×250",
+    "sha": "3a199fb4"
+  },
+  {
+    "id": "P-V46-PUBLIC-CARD",
+    "name": "Trang công khai · khối trong trình sửa",
+    "viewport": 390,
+    "diffPct": 2.4804051443395707,
+    "size": "366×396",
+    "sha": "3a199fb4"
+  }
+]

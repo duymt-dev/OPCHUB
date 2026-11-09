@@ -13,6 +13,7 @@ export const ADMIN_GRANTS_PORT = Symbol('ADMIN_GRANTS_PORT');
  * có một khoá quyền (@nhắc phiếu YC). admin-account hiện thực — domain khác không import ngược.
  */
 export interface AdminDirectoryPort {
+  listNames(): Promise<{ id: string; name: string }[]>;
   namesOf(ids: readonly string[]): Promise<Map<string, string>>;
   withPermission(key: AdminPermissionKey): Promise<{ id: string; name: string }[]>;
 }

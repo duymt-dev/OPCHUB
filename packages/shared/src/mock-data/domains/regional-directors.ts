@@ -152,6 +152,7 @@ function log(
   action: 'appoint' | 'revoke',
   actorRole: string,
   now: number,
+  reason: 'manual' | 'locked' | 'deleted' = 'manual',
 ) {
   const { data } = state();
   data.history.unshift({
@@ -164,13 +165,14 @@ function log(
     createdAt: new Date(now).toISOString(),
   });
   const member = person(userId);
-  if (member) requestMockRegionalMail(member, region, action, now);
+  if (member && reason !== 'deleted') requestMockRegionalMail(member, region, action, now, reason);
 }
 
 export function mockRegionalRevoke(
   region: RegionalRegion,
   actorRole: string,
   now = MOCK_NOW,
+  reason: 'manual' | 'locked' | 'deleted' = 'manual',
 ): MockResult<{ updated: true }> {
   const { data, previous } = state();
   const slot = data.items.find((s) => s.region === region);
@@ -185,9 +187,11 @@ export function mockRegionalRevoke(
     fee.validUntil = fee.status === 'pending_payment' ? null : (until?.toISOString() ?? null);
   }
   slot.member = null;
+  slot.bank = { bankName: '', bankNo: '', bankHolder: '' };
   previous.delete(id);
-  log(region, id, 'revoke', actorRole, now);
-  publishRegionalRevokeNotice(id, region, fee?.validUntil ?? null, now);
+  log(region, id, 'revoke', actorRole, now, reason);
+  if (reason !== 'deleted')
+    publishRegionalRevokeNotice(id, region, fee?.validUntil ?? null, now, reason);
   return ok({ updated: true });
 }
 
@@ -220,6 +224,7 @@ export function mockRegionalAppoint(
   fee.status = 'regional_director';
   fee.validUntil = null;
   slot.member = member;
+  slot.bank = { bankName: '', bankNo: '', bankHolder: '' };
   log(region, userId, 'appoint', actorRole, now);
   return ok({ updated: true });
 }

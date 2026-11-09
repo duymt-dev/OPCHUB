@@ -14,7 +14,9 @@
     "./socket": "./src/socket/index.ts",
     "./queues": "./src/queues/index.ts",
     "./outbox": "./src/outbox/index.ts",
-    "./reports": "./src/reports/index.ts"
+    "./reports": "./src/reports/index.ts",
+    "./seo": "./src/seo/index.ts",
+    "./client-logger": "./src/client-logger/index.ts"
   },
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",

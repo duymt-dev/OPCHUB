@@ -67,6 +67,31 @@ export const storePublicPageSchema = z.object({
 });
 export type StorePublicPage = z.infer<typeof storePublicPageSchema>;
 
+const sitemapCursor = z.object({
+  at: z.iso.datetime({ offset: true }),
+  id: z.string().min(1).max(100),
+});
+export const storeSitemapQuerySchema = z.strictObject({
+  cursor: z
+    .string()
+    .max(2048)
+    .regex(/^[A-Za-z0-9_-]+$/)
+    .transform((raw, ctx) => {
+      try {
+        return sitemapCursor.parse(JSON.parse(atob(raw.replace(/-/g, '+').replace(/_/g, '/'))));
+      } catch {
+        ctx.addIssue({ code: 'custom', message: 'Invalid sitemap cursor' });
+        return z.NEVER;
+      }
+    })
+    .optional(),
+});
+export const storeSitemapPageSchema = z.object({
+  items: z.array(z.object({ slug: storePublicSlugSchema, updatedAt: z.iso.datetime() })).max(1000),
+  nextCursor: z.string().nullable(),
+});
+export const storeGuestViewBodySchema = z.strictObject({});
+
 export function defaultStoreSeo(s: {
   name: string;
   field: string;

@@ -16,6 +16,7 @@ import { Pic } from './bits';
 import { ProvinceField } from './form-province';
 import styles from './form.module.css';
 import { LocalizedRichTextField } from '@/i18n/localized-ui';
+import { PortalAiSuggestButton } from '@/features/shell';
 
 interface Props {
   f: ProjectFormState;
@@ -177,6 +178,15 @@ export function BasicSection({ f, set, pickImage, err }: Props & Err & { pickIma
           onChange={(e) => set('summary', e.target.value)}
         />
         <FieldErrorOf e={err('summary')} />
+        <PortalAiSuggestButton
+          kind="project_summary"
+          input={{
+            title: f.name.slice(0, 300),
+            description: f.summary.slice(0, 1500),
+            category: f.category.slice(0, 200),
+          }}
+          apply={(text) => set('summary', text)}
+        />
       </div>
       <div className={styles.field}>
         {t('form.description')}

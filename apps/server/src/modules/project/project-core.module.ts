@@ -1,4 +1,7 @@
 import { ProjectSearchRepository } from './repositories/project-search.query';
+import { FundraisingMailQrResolver } from './services/fundraising-mail-qr.resolver';
+import { FundraisingRenewalRepository } from './repositories/fundraising-renewal.repository';
+import { FundraisingReminderDeliveryService } from './services/fundraising-reminder-delivery.service';
 import { ProjectSearchService } from './services/project-search.service';
 import { Global, Module } from '@nestjs/common';
 import { AccountCoreModule } from '../account';
@@ -31,6 +34,9 @@ import { ProjectWriteService } from './services/project-write.service';
 import { ProjectProfileStats } from './services/profile-stats.provider';
 
 const services = [
+  FundraisingRenewalRepository,
+  FundraisingReminderDeliveryService,
+  FundraisingMailQrResolver,
   ProjectSearchRepository,
   ProjectSearchService,
   ProjectRepository,

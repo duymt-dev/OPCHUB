@@ -10,6 +10,7 @@ import m from './media.module.css';
 import { AddTile, CoverTile } from './media-tiles';
 import { Field, Label } from './step-info';
 import { StepReels } from './step-reels';
+import { PortalAiSuggestButton } from '@/features/shell';
 
 interface Props {
   draft: StoreUpsert;
@@ -116,6 +117,15 @@ export function StepMedia(p: Props) {
           {t('introLen', { n: len })}
         </span>
       </Field>
+      <PortalAiSuggestButton
+        kind="store_description"
+        input={{
+          title: draft.name.slice(0, 300),
+          description: draft.intro.slice(0, 1500),
+          category: draft.field.slice(0, 200),
+        }}
+        apply={(text) => set({ intro: text })}
+      />
       <span className={f.section}>{t('visionMission')}</span>
       <div className={f.grid200}>
         <Field label={t('vision')}>

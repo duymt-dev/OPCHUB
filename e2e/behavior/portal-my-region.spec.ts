@@ -54,7 +54,14 @@ for (const width of [1440, 390]) {
       'aria-selected',
       'true',
     );
-    await expect(page.getByRole('tabpanel').getByRole('button')).toHaveCount(0);
+    // TIP821 adds a read-only export; financial/configuration mutations remain absent.
+    await expect(page.getByRole('tabpanel').getByRole('button')).toHaveCount(1);
+    await expect(
+      page.getByRole('tabpanel').getByRole('button', { name: 'Tải CSV', exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('tabpanel').getByRole('button', { name: /Lưu|Chi trả/ }),
+    ).toHaveCount(0);
   });
 }
 test('TIP-V46-804 ordinary affiliate has two tabs and safe reg URL fallback', async ({ page }) => {

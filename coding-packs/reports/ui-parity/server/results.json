@@ -355,17 +355,17 @@
   "id": "P-01",
   "name": "Dashboard",
   "viewport": 1440,
-  "diffPct": 1.010968852949985,
+  "diffPct": 1.0634421483478087,
   "size": "1440×1113",
-  "sha": "ef7934ff"
+  "sha": "6c5800b4"
  },
  {
   "id": "P-01",
   "name": "Dashboard",
   "viewport": 390,
-  "diffPct": 2.967118103666622,
+  "diffPct": 2.968310016537791,
   "size": "390×1721",
-  "sha": "ef7934ff"
+  "sha": "6c5800b4"
  },
  {
   "id": "P-05",
@@ -451,17 +451,17 @@
   "id": "P-108",
   "name": "Chi tiết gian hàng (HTX Cà phê Hòa Phú)",
   "viewport": 1440,
-  "diffPct": 2.68233024691358,
+  "diffPct": 2.746990740740741,
   "size": "1440×900",
-  "sha": "ef7934ff"
+  "sha": "3a199fb4"
  },
  {
   "id": "P-108",
   "name": "Chi tiết gian hàng (HTX Cà phê Hòa Phú)",
   "viewport": 390,
-  "diffPct": 0.3676023818203913,
+  "diffPct": 0.3666909709563738,
   "size": "390×844",
-  "sha": "ef7934ff"
+  "sha": "3a199fb4"
  },
  {
   "id": "P-108-PROJECT-FORM",
@@ -1299,17 +1299,17 @@
   "id": "P-73",
   "name": "Form đăng dự án",
   "viewport": 1440,
-  "diffPct": 0.569212962962963,
+  "diffPct": 0.9755401234567902,
   "size": "1440×900",
-  "sha": "25a1eec"
+  "sha": "ceaccaa3"
  },
  {
   "id": "P-73",
   "name": "Form đăng dự án",
   "viewport": 390,
-  "diffPct": 0.5164661562765828,
+  "diffPct": 2.1709806780896828,
   "size": "390×844",
-  "sha": "25a1eec"
+  "sha": "ceaccaa3"
  },
  {
   "id": "P-74",
@@ -1672,12 +1672,28 @@
   "sha": "ef7934ff"
  },
  {
+  "id": "P-V46-GUEST-KPI",
+  "name": "B15 complete store dashboard, independent guest-view KPI",
+  "viewport": 1440,
+  "diffPct": 12.162931534667827,
+  "size": "1440×1532",
+  "sha": "3a199fb4"
+ },
+ {
+  "id": "P-V46-GUEST-KPI",
+  "name": "B15 complete store dashboard, independent guest-view KPI",
+  "viewport": 390,
+  "diffPct": 46.667121429166954,
+  "size": "390×3383",
+  "sha": "3a199fb4"
+ },
+ {
   "id": "P-V46-PUBLIC-CARD",
   "name": "Trang công khai · khối trong trình sửa",
   "viewport": 1440,
   "diffPct": 1.5683098591549296,
   "size": "1136×250",
-  "sha": "ef7934ff"
+  "sha": "3a199fb4"
  },
  {
   "id": "P-V46-PUBLIC-CARD",
@@ -1685,23 +1701,23 @@
   "viewport": 390,
   "diffPct": 2.504553734061931,
   "size": "366×396",
-  "sha": "ef7934ff"
+  "sha": "3a199fb4"
  },
  {
   "id": "P-V46-REG",
   "name": "Portal · Vùng của tôi",
   "viewport": 1440,
-  "diffPct": 5.740204903978052,
+  "diffPct": 4.655385516689528,
   "size": "1440×1944",
-  "sha": "ef7934ff"
+  "sha": "c5848a37"
  },
  {
   "id": "P-V46-REG",
   "name": "Portal · Vùng của tôi",
   "viewport": 390,
-  "diffPct": 10.469537421520721,
-  "size": "390×3353",
-  "sha": "ef7934ff"
+  "diffPct": 3.003854096126675,
+  "size": "390×3067",
+  "sha": "c5848a37"
  },
  {
   "id": "P-V46-REG-BANNER",
@@ -1709,31 +1725,31 @@
   "viewport": 1440,
   "diffPct": 1.2701298339462832,
   "size": "1440×997",
-  "sha": "ef7934ff"
+  "sha": "c5848a37"
  },
  {
   "id": "P-V46-REG-BANNER",
   "name": "Portal · GĐ Vùng · Banner",
   "viewport": 390,
-  "diffPct": 2.124049243315298,
+  "diffPct": 2.1242060691601976,
   "size": "390×1635",
-  "sha": "ef7934ff"
+  "sha": "c5848a37"
  },
  {
   "id": "P-V46-SEARCH",
   "name": "Topbar · global search",
   "viewport": 1440,
-  "diffPct": 0.7437499999999999,
+  "diffPct": 0.8787808641975309,
   "size": "1440×900",
-  "sha": "ef7934ff"
+  "sha": "6c5800b4"
  },
  {
   "id": "P-V46-SEARCH",
   "name": "Topbar · global search",
   "viewport": 390,
-  "diffPct": 0.10906550006076074,
+  "diffPct": 0.11149592903147405,
   "size": "390×844",
-  "sha": "ef7934ff"
+  "sha": "6c5800b4"
  },
  {
   "id": "D-01",
@@ -1940,17 +1956,17 @@
   "id": "D-120-GCFG",
   "name": "Cấu hình Giám đốc Vùng",
   "viewport": 1440,
-  "diffPct": 2.5093210361067504,
+  "diffPct": 2.5057779522065236,
   "size": "1440×1274",
-  "sha": "ef7934ff"
+  "sha": "c5848a37"
  },
  {
   "id": "D-120-GCFG",
   "name": "Cấu hình Giám đốc Vùng",
   "viewport": 390,
-  "diffPct": 4.414171070659621,
+  "diffPct": 4.41229203366608,
   "size": "390×3275",
-  "sha": "ef7934ff"
+  "sha": "c5848a37"
  },
  {
   "id": "D-120-GCFG-RO",
@@ -1972,33 +1988,33 @@
   "id": "D-120-GDV",
   "name": "GĐ Vùng · Sổ chia sẻ",
   "viewport": 1440,
-  "diffPct": 2.1155864197530865,
+  "diffPct": 2.110570987654321,
   "size": "1440×900",
-  "sha": "ef7934ff"
+  "sha": "c5848a37"
  },
  {
   "id": "D-120-GDV",
   "name": "GĐ Vùng · Sổ chia sẻ",
   "viewport": 390,
-  "diffPct": 4.051478534237155,
+  "diffPct": 4.04204735239218,
   "size": "390×1305",
-  "sha": "ef7934ff"
+  "sha": "c5848a37"
  },
  {
   "id": "D-120-GDV-OPEN",
   "name": "GĐ Vùng · Khoản ghi nhận Miền Bắc",
   "viewport": 1440,
-  "diffPct": 10.663634243060416,
+  "diffPct": 10.66047546847057,
   "size": "1440×1429",
-  "sha": "ef7934ff"
+  "sha": "c5848a37"
  },
  {
   "id": "D-120-GDV-OPEN",
   "name": "GĐ Vùng · Khoản ghi nhận Miền Bắc",
   "viewport": 390,
-  "diffPct": 5.726495726495727,
+  "diffPct": 5.728632478632479,
   "size": "390×1920",
-  "sha": "ef7934ff"
+  "sha": "c5848a37"
  },
  {
   "id": "D-13",
@@ -2308,17 +2324,17 @@
   "id": "D-33",
   "name": "Kiểm duyệt tin nhắn",
   "viewport": 1440,
-  "diffPct": 0.7785493827160493,
-  "size": "1440×900",
-  "sha": "25a1eec"
+  "diffPct": 3.4027777777777777,
+  "size": "1440×910",
+  "sha": "ceaccaa3"
  },
  {
   "id": "D-33",
   "name": "Kiểm duyệt tin nhắn",
   "viewport": 390,
-  "diffPct": 1.5161114337504178,
-  "size": "390×1457",
-  "sha": "25a1eec"
+  "diffPct": 9.614297517067444,
+  "size": "390×1769",
+  "sha": "ceaccaa3"
  },
  {
   "id": "D-34",
@@ -2964,17 +2980,17 @@
   "id": "D-75",
   "name": "Cài đặt · Nhật ký hoạt động",
   "viewport": 1440,
-  "diffPct": 69.58917363094609,
-  "size": "1440×3151",
-  "sha": "ef7934ff"
+  "diffPct": 70.0630998163739,
+  "size": "1440×3207",
+  "sha": "6c5800b4"
  },
  {
   "id": "D-75",
   "name": "Cài đặt · Nhật ký hoạt động",
   "viewport": 390,
-  "diffPct": 67.221387427999,
-  "size": "390×5324",
-  "sha": "ef7934ff"
+  "diffPct": 67.90367290367291,
+  "size": "390×5476",
+  "sha": "6c5800b4"
  },
  {
   "id": "D-80",
@@ -3375,17 +3391,17 @@
   "id": "D-V46-AI",
   "name": "Cài đặt · AI Provider",
   "viewport": 1440,
-  "diffPct": 2.8375333193041525,
-  "size": "1440×1584",
-  "sha": "ef7934ff"
+  "diffPct": 8.288393806485912,
+  "size": "1440×1672",
+  "sha": "ceaccaa3"
  },
  {
   "id": "D-V46-AI",
   "name": "Cài đặt · AI Provider",
   "viewport": 390,
-  "diffPct": 6.881644328452839,
-  "size": "390×3478",
-  "sha": "ef7934ff"
+  "diffPct": 10.611182084092512,
+  "size": "390×3673",
+  "sha": "ceaccaa3"
  },
  {
   "id": "D-V46-APP",
@@ -3439,16 +3455,16 @@
   "id": "D-V46-SEARCH",
   "name": "Topbar · global search Admin",
   "viewport": 1440,
-  "diffPct": 0.5542438271604938,
+  "diffPct": 0.558641975308642,
   "size": "1440×900",
-  "sha": "ef7934ff"
+  "sha": "6c5800b4"
  },
  {
   "id": "D-V46-SEARCH",
   "name": "Topbar · global search Admin",
   "viewport": 390,
-  "diffPct": 0.34907036091870214,
+  "diffPct": 0.4964151172681978,
   "size": "390×844",
-  "sha": "ef7934ff"
+  "sha": "6c5800b4"
  }
 ]

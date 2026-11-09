@@ -110,5 +110,12 @@
   "upload": {
     "type": "Image must be PNG/JPEG/WEBP",
     "failed": "Image upload failed, please try again"
+  },
+  "aiSuggest": {
+    "suggest": "Suggest with AI",
+    "use": "Use suggestion",
+    "dismiss": "Dismiss",
+    "preview": "Content suggestion",
+    "failed": "Unable to suggest now. Please try again later"
   }
 }

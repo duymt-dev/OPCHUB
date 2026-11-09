@@ -14,6 +14,7 @@ import { RedisService } from '@/common/redis/redis.service';
 import { BUSINESS_ONLY, HIDDEN_BY_ADMIN, NO_STORE_YET } from '../domain/store-status';
 import { StorePublicRepository } from '../repositories/store-public.repository';
 import type { StoreOwner } from '../domain/store-owner.types';
+import { StoreSitemapService } from './store-sitemap.service';
 
 const key = (slug: string) => `store-public:${slug}`;
 
@@ -23,6 +24,7 @@ export class StorePublicService {
   constructor(
     private readonly repo: StorePublicRepository,
     private readonly redis: RedisService,
+    private readonly sitemap: StoreSitemapService,
     @Inject(ENV) private readonly env: Env,
   ) {}
 
@@ -87,6 +89,7 @@ export class StorePublicService {
   }
 
   async invalidate(slug: string | null) {
+    await this.sitemap.invalidate().catch(() => this.logger.warn('Sitemap invalidation failed'));
     if (slug)
       await this.redis.client.del(key(slug)).catch(() => {
         this.logger.warn('Public store cache invalidation failed');
@@ -95,11 +98,20 @@ export class StorePublicService {
 
   async invalidateStores(ids: readonly string[]) {
     if (!ids.length) return;
+    await this.sitemap.invalidate().catch(() => this.logger.warn('Sitemap invalidation failed'));
     const rows = await this.repo.slugs(ids);
     const keys = rows.flatMap((r) => (r.slug ? [key(r.slug)] : []));
     if (keys.length)
       await this.redis.client.del(...keys).catch(() => {
         this.logger.warn('Public store cache invalidation failed');
       });
+  }
+
+  /** Outbox consumer deliberately propagates failure so relay retries privacy invalidation. */
+  async invalidateOwner(userIds: readonly string[]) {
+    if (!userIds.length) return;
+    const rows = await this.repo.ownerSlugs(userIds);
+    if (rows.length) await this.redis.client.del(...rows.map((r) => key(r.slug)));
+    await this.sitemap.invalidate();
   }
 }

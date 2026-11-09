@@ -1,0 +1,9 @@
+{
+  "target": "opchub_v46_820_chain_test",
+  "migrations": 106,
+  "chainDeploy": "PASS",
+  "down": "PASS",
+  "up": "PASS",
+  "schemaIdentical": true,
+  "originalDatabasesUntouched": true
+}

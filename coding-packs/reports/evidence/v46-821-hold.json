@@ -1,0 +1,67 @@
+{
+  "original": [
+    {
+      "port": 5432,
+      "pid": 5084,
+      "started": "/Date(1794027750327)/",
+      "unchanged": true
+    },
+    {
+      "port": 6379,
+      "pid": 3748,
+      "started": "/Date(1794027749861)/",
+      "unchanged": true
+    },
+    {
+      "port": 6381,
+      "pid": 2104,
+      "started": "/Date(1794030742611)/",
+      "unchanged": true
+    },
+    {
+      "port": 3980,
+      "pid": 27868,
+      "started": "/Date(1794137085884)/",
+      "unchanged": true
+    },
+    {
+      "port": 3981,
+      "pid": 31932,
+      "started": "/Date(1794137085894)/",
+      "unchanged": true
+    }
+  ],
+  "privateRuntime": [
+    {
+      "port": 3710,
+      "pid": 29880,
+      "started": "/Date(1794168418579)/"
+    },
+    {
+      "port": 3711,
+      "pid": 30752,
+      "started": "/Date(1794168418585)/"
+    },
+    {
+      "port": 3982,
+      "pid": 17012,
+      "started": "/Date(1794168418585)/"
+    },
+    {
+      "port": 3983,
+      "pid": 27864,
+      "started": "/Date(1794168418579)/"
+    },
+    {
+      "port": 4310,
+      "pid": 5032,
+      "started": "/Date(1794167137671)/"
+    },
+    {
+      "port": 4311,
+      "pid": 30228,
+      "started": "/Date(1794167137674)/"
+    }
+  ],
+  "downOnlyOnDisposableChain": true
+}

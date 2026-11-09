@@ -3,18 +3,34 @@ import {
   regionalPayoutBodySchema,
   regionalShareQuerySchema,
   regionalSharePageQuerySchema,
+  regionalPayeeBankParamsSchema,
+  regionalBankSchema,
 } from '@opchub/shared/api-domains';
 import {
   mockRegionalShares,
   mockRegionalSharePage,
   mockRegionalPayoutHistory,
   mockPayRegional,
+  mockRegionalPayeeBank,
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
 import { mockAdminGuard } from './admin-guard';
 import { parseBody, parseQuery, reply, userIdOf } from './domain-util';
 import { API } from './util';
 export const regionalShareHandlers = [
+  http.put(
+    `${API}/admin/regional-directors/:region/payees/:userId/bank`,
+    async ({ request, params }) => {
+      const denied = mockAdminGuard(request, 'affiliate.payout');
+      if (denied) return denied;
+      const p = regionalPayeeBankParamsSchema.safeParse(params);
+      if (!p.success) return new HttpResponse(null, { status: 400 });
+      const bank = await parseBody(request, regionalBankSchema.strict());
+      return bank.ok
+        ? reply(mockRegionalPayeeBank(p.data.region, p.data.userId, bank.data, userIdOf(request)))
+        : bank.res;
+    },
+  ),
   http.get(`${API}/admin/gdv/shares`, ({ request }) => {
     const denied = mockAdminGuard(request, 'affiliate.view');
     if (denied) return denied;

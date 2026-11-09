@@ -3,7 +3,11 @@ import type { StoreDashboard } from '@opchub/shared/api-domains';
 import { forbidden, notFound } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { BUSINESS_ONLY, NO_STORE_YET } from '../domain/store-status';
-import { storeViewDaysQuery, type StoreViewDayRow } from '../repositories/store-views.query';
+import {
+  storeViewDaysQuery,
+  storeGuestViewsQuery,
+  type StoreViewDayRow,
+} from '../repositories/store-views.query';
 import type { StoreOwner } from './store-owner.service';
 
 const DAY_MS = 86_400_000;
@@ -28,9 +32,10 @@ export class StoreDashboardService {
     });
     if (!store) throw notFound(NO_STORE_YET);
     const day = (i: number) => vnDay(now.getTime() - i * DAY_MS);
-    const [rows, openNeeds] = await Promise.all([
+    const [rows, openNeeds, guest] = await Promise.all([
       this.prisma.db.$queryRaw<StoreViewDayRow[]>(storeViewDaysQuery(store.id, day(13), day(0))),
       this.prisma.db.need.count({ where: { storeId: store.id, status: 'open' } }),
+      this.prisma.db.$queryRaw<{ views: number }[]>(storeGuestViewsQuery(store.id, day(6), day(0))),
     ]);
     const at = new Map(rows.map((r) => [r.day, r.views]));
     const n = (i: number) => at.get(day(i)) ?? 0;
@@ -40,6 +45,7 @@ export class StoreDashboardService {
       views7: days.reduce((a, d) => a + d.views, 0),
       viewsPrev7: [13, 12, 11, 10, 9, 8, 7].reduce((a, i) => a + n(i), 0),
       openNeeds,
+      guestViews7d: guest[0]?.views ?? 0,
     };
   }
 }

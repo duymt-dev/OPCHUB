@@ -22,8 +22,22 @@ const fundraisingRef = z.object({
 });
 
 export const outboxEvents = {
+  'ai.budget_warned': z.strictObject({
+    month: z.string().regex(/^\d{4}-\d{2}$/),
+    pct: z.number().int().min(1).max(100),
+  }),
+  'ai.budget_exhausted': z.strictObject({ month: z.string().regex(/^\d{4}-\d{2}$/) }),
   'push.requested': z.strictObject({ notificationIds: z.array(z.string().min(1)).min(1).max(500) }),
   'need.published': z.strictObject({ needId: z.string().min(1) }),
+  // Snapshot survives hard deletion; worker reuses the 816 audience query without reading a missing need.
+  'need.unpublished': z.strictObject({
+    needId: z.string().min(1),
+    audience: z.strictObject({
+      ownerId: z.string().min(1),
+      field: z.string(),
+      province: z.string(),
+    }),
+  }),
   'store.digest_due': z.strictObject({ day: z.iso.date() }),
   'regional_share.recorded': z.object({ shareId: z.string() }),
   'regional_share.payout_recorded': z.object({
@@ -37,6 +51,7 @@ export const outboxEvents = {
     provinces: z.array(z.string()),
   }),
   'regional_director.revoked': z.object({
+    reason: z.enum(['manual', 'locked', 'deleted']).optional(),
     region: z.enum(['north', 'central', 'south']),
     userId: z.string(),
     feeStatus: z.enum(MEMBERSHIP_FEE_STATUS),
@@ -132,6 +147,7 @@ export const outboxEvents = {
       .max(500),
   }),
   'user.locked': z.object({ userId: z.string(), reason: z.string().nullable() }),
+  'user.deleted': z.object({ userId: z.string() }),
   'user.session_revoked': z.object({
     userId: z.string(),
     reason: z.enum(SESSION_REVOKE_REASONS),

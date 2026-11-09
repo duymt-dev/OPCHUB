@@ -158,7 +158,10 @@
     "statusLabels": {
       "paid": "Nabayaran",
       "pending": "Naghihintay ng bayad"
-    }
+    },
+    "loadMore": "Tumingin pa ({count})",
+    "downloadCsv": "I-download ang CSV",
+    "loadError": "Hindi ma-load ang data. Pakisubukang muli."
   },
   "banner": {
     "title": "Ikaw ang Direktor ng Rehiyon {label} · {name}",

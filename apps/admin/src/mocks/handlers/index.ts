@@ -1,3 +1,4 @@
+import { clientLogHandlers } from './client-log';
 import { searchHandlers } from './search';
 import { memberStatusHandlers } from './member-status';
 import { adminProjectHandlers } from './admin-projects';
@@ -24,6 +25,7 @@ import { serviceRequestHandlers } from './service-requests';
 import { settingsHandlers } from './settings';
 import { priceConfigHandlers } from './price-config';
 import { aiProviderHandlers } from './ai-providers';
+import { aiOpsHandlers } from './ai-ops';
 import { appNotifyHandlers } from './app-notify';
 import { shellHandlers } from './shell';
 import { uploadHandlers } from './uploads';
@@ -76,3 +78,6 @@ import { regionalShareHandlers } from './regional-shares';
 handlers.unshift(...regionalShareHandlers);
 
 handlers.push(...searchHandlers);
+handlers.unshift(...aiOpsHandlers);
+
+handlers.unshift(...clientLogHandlers);

@@ -3,11 +3,14 @@ import type { Request } from 'express';
 import {
   auditLogPageSchema,
   auditLogPageQuerySchema,
+  auditLogExportBodySchema,
+  auditLogActorsSchema,
   exportJobSchema,
   type AuditLogPageQuery,
 } from '@opchub/shared/api-domains';
 import { RequireAdmin, CurrentUser, type AccessClaims } from '@/common/auth';
-import { respond, ZodQuery } from '@/common/http/zod';
+import { respond, ZodBody, ZodQuery } from '@/common/http/zod';
+import type { z } from 'zod';
 import { AuditLogService } from '../services/audit-log.service';
 import { AuditLogExportService } from '../services/audit-log-export.service';
 
@@ -26,12 +29,22 @@ export class RolesController {
   }
 
   @RequireAdmin('settings.log')
+  @Get('audit-logs/actors')
+  async actors() {
+    return respond(auditLogActorsSchema, { items: await this.audit.actors() });
+  }
+
+  @RequireAdmin('settings.log')
   @Post('audit-logs/export')
   @HttpCode(202)
-  async export(@CurrentUser() actor: AccessClaims, @Req() req: Request) {
+  async export(
+    @CurrentUser() actor: AccessClaims,
+    @Req() req: Request,
+    @ZodBody(auditLogExportBodySchema) body: z.infer<typeof auditLogExportBodySchema>,
+  ) {
     return respond(
       exportJobSchema,
-      await this.exports.request({ id: actor.sub, ip: req.ip ?? null }),
+      await this.exports.request({ id: actor.sub, ip: req.ip ?? null }, body.filters),
     );
   }
 }
