@@ -79,5 +79,11 @@ export const shellHandlers = [
     return HttpResponse.json({ ok: r.ok }, { status: r.ok ? 201 : 400 });
   }),
   /** B44 `GET /admin/overview`: số liệu prototype v4 + Luồng hệ thống từ CSDL giả (D-01, D-89) */
-  http.get(`${API}/admin/overview`, () => HttpResponse.json(mockOverview())),
+  http.get(`${API}/admin/overview`, ({ request }) => {
+    const url = new URL(request.url);
+    const period = (url.searchParams.get('period') as 'week' | 'month' | 'year') || undefined;
+    const from = url.searchParams.get('from') || undefined;
+    const to = url.searchParams.get('to') || undefined;
+    return HttpResponse.json(mockOverview({ period, from, to }));
+  }),
 ];

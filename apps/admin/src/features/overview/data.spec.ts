@@ -7,6 +7,7 @@ import {
   growthPct,
   rangeLabel,
   sparkPoints,
+  overviewKeys,
 } from './data';
 
 describe('overview data helpers (B60)', () => {
@@ -37,5 +38,15 @@ describe('overview data helpers (B60)', () => {
     expect(chartAxis(600)).toEqual([600, 400, 200, 0]);
     expect(barHeight(300, 600)).toBe(115);
     expect(rangeLabel({ from: '2026-10-01', to: '2026-10-20' })).toBe('01/10/2026 – 20/10/2026');
+  });
+
+  it('overviewKeys.list: tạo key cô lập theo period và khoảng ngày', () => {
+    expect(overviewKeys.list()).toEqual(['admin-overview', 'month', '', '']);
+    expect(overviewKeys.list({ period: 'week', from: '2026-10-01', to: '2026-10-20' })).toEqual([
+      'admin-overview',
+      'week',
+      '2026-10-01',
+      '2026-10-20',
+    ]);
   });
 });
