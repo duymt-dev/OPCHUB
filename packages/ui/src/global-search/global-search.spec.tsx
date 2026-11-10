@@ -26,6 +26,41 @@ function mount(overrides: Partial<GlobalSearchProps> = {}) {
   };
 }
 describe('GlobalSearch BR-491 interaction', () => {
+  it('REQ-625 hint threshold and keyboard without selectable hint or stale hits', () => {
+    const { input, onPick } = mount({ hintText: 'Type two characters' });
+    fireEvent.focus(input);
+    expect(screen.getByRole('status').textContent).toBe('Type two characters');
+    fireEvent.change(input, { target: { value: ' a ' } });
+    expect(screen.queryByRole('option')).toBeNull();
+    fireEvent.submit(screen.getByRole('search'));
+    expect(onPick).not.toHaveBeenCalled();
+    fireEvent.keyDown(input, { key: 'Escape' });
+    expect(screen.queryByRole('status')).toBeNull();
+    fireEvent.focus(input);
+    expect(screen.getByRole('status')).toBeTruthy();
+    fireEvent.mouseDown(document.body);
+    expect(screen.queryByRole('status')).toBeNull();
+  });
+  it('REQ-625 loading and error are not empty results or navigable stale rows', () => {
+    const loading = mount({ loading: true, loadingText: 'Loading' });
+    fireEvent.change(loading.input, { target: { value: 'co' } });
+    expect(screen.getByRole('status').textContent).toBe('Loading');
+    fireEvent.submit(screen.getByRole('search'));
+    expect(loading.onPick).not.toHaveBeenCalled();
+    cleanup();
+    const failed = mount({ errorText: 'Failed' });
+    fireEvent.change(failed.input, { target: { value: 'co' } });
+    expect(screen.getByRole('alert').textContent).toBe('Failed');
+    expect(screen.queryByRole('listbox')).toBeNull();
+  });
+  it('REQ-625 keyword empty state is text and Enter does not navigate', () => {
+    const { input, onPick } = mount({ groups: [], emptyQueryText: (q) => `No results for ${q}` });
+    fireEvent.change(input, { target: { value: '<script>' } });
+    expect(screen.getByRole('listbox').textContent).toBe('No results for <script>');
+    expect(document.querySelector('script')).toBeNull();
+    fireEvent.submit(screen.getByRole('search'));
+    expect(onPick).not.toHaveBeenCalled();
+  });
   const groups: GlobalSearchProps['groups'] = [
     {
       kind: 'store',

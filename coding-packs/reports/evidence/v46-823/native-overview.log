@@ -1,0 +1,64 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+ ❯ |int| test/reporting/overview.int.spec.ts (10 tests | 10 skipped) 831ms
+pnpm.cmd : 
+At line:2 char:83
++ ...  $env:PATH; pnpm.cmd --filter @opchub/server exec vitest run --projec ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |int| test/reporting/overview.int.spec.ts > Admin Tổng quan + stats_daily + badge (B44)
+PrismaClientKnownRequestError: 
+Invalid `prisma.appSetting.findUniqueOrThrow()` invocation:
+
+
+An operation failed because it depends on one or more records that were required but not found. No record was found 
+for a query.
+ ❯ vn.handleRequestError ../../node_modules/.pnpm/@prisma+client@7.10.1_prism_f29308a4d7ad013be37d690f9ce8ab9c/node_mod
+ules/@prisma/client/src/runtime/RequestHandler.ts:238:13
+ ❯ vn.handleAndLogRequestError ../../node_modules/.pnpm/@prisma+client@7.10.1_prism_f29308a4d7ad013be37d690f9ce8ab9c/no
+de_modules/@prisma/client/src/runtime/RequestHandler.ts:184:12
+ ❯ vn.request ../../node_modules/.pnpm/@prisma+client@7.10.1_prism_f29308a4d7ad013be37d690f9ce8ab9c/node_modules/@prism
+a/client/src/runtime/RequestHandler.ts:153:12
+ ❯ a ../../node_modules/.pnpm/@prisma+client@7.10.1_prism_f29308a4d7ad013be37d690f9ce8ab9c/node_modules/@prisma/client/
+src/runtime/getPrismaClient.ts:1012:24
+ ❯ prisma.db.$transaction.isolationLevel src/modules/llm-config/ai-config-cache.ts:32:21
+     30|     return this.prisma.db.$transaction(
+     31|       async (tx) => {
+     32|         const row = await tx.appSetting.findUniqueOrThrow({
+       |                     ^
+     33|           where: { key: 'ai' },
+     34|           select: { value: true },
+ ❯ Proxy._transactionWithCallback ../../node_modules/.pnpm/@prisma+client@7.10.1_prism_f29308a4d7ad013be37d690f9ce8ab9c
+/node_modules/@prisma/client/src/runtime/getPrismaClient.ts:859:18
+ ❯ AiModerationQueueService.reload src/modules/moderation/services/ai-moderation-queue.service.ts:25:32
+ ❯ AiModerationQueueService.onModuleInit src/modules/moderation/services/ai-moderation-queue.service.ts:35:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  |int| test/reporting/overview.int.spec.ts > Admin Tổng quan + stats_daily + badge (B44)
+TypeError: Cannot read properties of undefined (reading 'prisma')
+ ❯ test/reporting/overview.int.spec.ts:30:13
+     28|   });
+     29|   afterAll(async () => {
+     30|     await t.prisma.db.statsDaily.deleteMany({ where: { day: { lt: new …
+       |             ^
+     31|     await t.close();
+     32|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  10 skipped (10)
+   Start at  14:34:03
+   Duration  7.95s (import 59%, transform 29%, tests 11%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\server
+

@@ -1,0 +1,853 @@
+{
+  "rows": 905275,
+  "source": "OverviewSeriesRepository.series via Prisma onQuery; no planner forcing",
+  "plans": [
+    {
+      "period": "week",
+      "sql": "\n        SELECT DISTINCT ON (ym, metric) to_char(day, $1) AS ym, metric, value\n        FROM stats_daily\n        WHERE day BETWEEN $2::date AND $3::date AND dimension = ''\n          AND metric IN ($4,$5,$6,$7,$8,$9)\n        ORDER BY ym, metric, day DESC",
+      "parameters": [
+        "IYYY-\"W\"IW",
+        "2080-01-01",
+        "2080-02-12",
+        "members_total",
+        "members_active",
+        "members_inactive",
+        "groups",
+        "projects_live",
+        "events_upcoming"
+      ],
+      "plan": [
+        {
+          "Plan": {
+            "Node Type": "Unique",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 1007.51,
+            "Total Cost": 1009.41,
+            "Plan Rows": 252,
+            "Plan Width": 57,
+            "Actual Startup Time": 1.188,
+            "Actual Total Time": 1.226,
+            "Actual Rows": 42,
+            "Actual Loops": 1,
+            "Shared Hit Blocks": 323,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0,
+            "Plans": [
+              {
+                "Node Type": "Sort",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Startup Cost": 1007.51,
+                "Total Cost": 1008.15,
+                "Plan Rows": 253,
+                "Plan Width": 57,
+                "Actual Startup Time": 1.187,
+                "Actual Total Time": 1.195,
+                "Actual Rows": 258,
+                "Actual Loops": 1,
+                "Sort Key": [
+                  "(to_char((day)::timestamp with time zone, 'IYYY-\"W\"IW'::text))",
+                  "metric",
+                  "day DESC"
+                ],
+                "Sort Method": "quicksort",
+                "Sort Space Used": 41,
+                "Sort Space Type": "Memory",
+                "Shared Hit Blocks": 323,
+                "Shared Read Blocks": 0,
+                "Shared Dirtied Blocks": 0,
+                "Shared Written Blocks": 0,
+                "Local Hit Blocks": 0,
+                "Local Read Blocks": 0,
+                "Local Dirtied Blocks": 0,
+                "Local Written Blocks": 0,
+                "Temp Read Blocks": 0,
+                "Temp Written Blocks": 0,
+                "Plans": [
+                  {
+                    "Node Type": "Index Scan",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Scan Direction": "Forward",
+                    "Index Name": "stats_daily_pkey",
+                    "Relation Name": "stats_daily",
+                    "Alias": "stats_daily",
+                    "Startup Cost": 0.42,
+                    "Total Cost": 997.41,
+                    "Plan Rows": 253,
+                    "Plan Width": 57,
+                    "Actual Startup Time": 0.021,
+                    "Actual Total Time": 0.96,
+                    "Actual Rows": 258,
+                    "Actual Loops": 1,
+                    "Index Cond": "((day >= '2080-01-01'::date) AND (day <= '2080-02-12'::date) AND (dimension = ''::text))",
+                    "Rows Removed by Index Recheck": 0,
+                    "Filter": "(metric = ANY ('{members_total,members_active,members_inactive,groups,projects_live,events_upcoming}'::text[]))",
+                    "Rows Removed by Filter": 43,
+                    "Shared Hit Blocks": 320,
+                    "Shared Read Blocks": 0,
+                    "Shared Dirtied Blocks": 0,
+                    "Shared Written Blocks": 0,
+                    "Local Hit Blocks": 0,
+                    "Local Read Blocks": 0,
+                    "Local Dirtied Blocks": 0,
+                    "Local Written Blocks": 0,
+                    "Temp Read Blocks": 0,
+                    "Temp Written Blocks": 0
+                  }
+                ]
+              }
+            ]
+          },
+          "Planning": {
+            "Shared Hit Blocks": 13,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning Time": 0.15,
+          "Triggers": [],
+          "Execution Time": 1.248
+        }
+      ]
+    },
+    {
+      "period": "week",
+      "sql": "\n        SELECT to_char(day, $1) AS ym, sum(value)::bigint AS value\n        FROM stats_daily\n        WHERE day BETWEEN $2::date AND $3::date AND dimension = ''\n          AND metric = 'members_new'\n        GROUP BY 1",
+      "parameters": [
+        "IYYY-\"W\"IW",
+        "2080-01-01",
+        "2080-02-12"
+      ],
+      "plan": [
+        {
+          "Plan": {
+            "Node Type": "Aggregate",
+            "Strategy": "Sorted",
+            "Partial Mode": "Simple",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 583.96,
+            "Total Cost": 585.12,
+            "Plan Rows": 42,
+            "Plan Width": 40,
+            "Actual Startup Time": 0.629,
+            "Actual Total Time": 0.639,
+            "Actual Rows": 7,
+            "Actual Loops": 1,
+            "Group Key": [
+              "(to_char((day)::timestamp with time zone, 'IYYY-\"W\"IW'::text))"
+            ],
+            "Shared Hit Blocks": 131,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0,
+            "Plans": [
+              {
+                "Node Type": "Sort",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Startup Cost": 583.96,
+                "Total Cost": 584.07,
+                "Plan Rows": 42,
+                "Plan Width": 40,
+                "Actual Startup Time": 0.618,
+                "Actual Total Time": 0.62,
+                "Actual Rows": 43,
+                "Actual Loops": 1,
+                "Sort Key": [
+                  "(to_char((day)::timestamp with time zone, 'IYYY-\"W\"IW'::text))"
+                ],
+                "Sort Method": "quicksort",
+                "Sort Space Used": 27,
+                "Sort Space Type": "Memory",
+                "Shared Hit Blocks": 131,
+                "Shared Read Blocks": 0,
+                "Shared Dirtied Blocks": 0,
+                "Shared Written Blocks": 0,
+                "Local Hit Blocks": 0,
+                "Local Read Blocks": 0,
+                "Local Dirtied Blocks": 0,
+                "Local Written Blocks": 0,
+                "Temp Read Blocks": 0,
+                "Temp Written Blocks": 0,
+                "Plans": [
+                  {
+                    "Node Type": "Index Scan",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Scan Direction": "Forward",
+                    "Index Name": "stats_daily_pkey",
+                    "Relation Name": "stats_daily",
+                    "Alias": "stats_daily",
+                    "Startup Cost": 0.42,
+                    "Total Cost": 582.83,
+                    "Plan Rows": 42,
+                    "Plan Width": 40,
+                    "Actual Startup Time": 0.022,
+                    "Actual Total Time": 0.597,
+                    "Actual Rows": 43,
+                    "Actual Loops": 1,
+                    "Index Cond": "((day >= '2080-01-01'::date) AND (day <= '2080-02-12'::date) AND (metric = 'members_new'::text) AND (dimension = ''::text))",
+                    "Rows Removed by Index Recheck": 0,
+                    "Shared Hit Blocks": 131,
+                    "Shared Read Blocks": 0,
+                    "Shared Dirtied Blocks": 0,
+                    "Shared Written Blocks": 0,
+                    "Local Hit Blocks": 0,
+                    "Local Read Blocks": 0,
+                    "Local Dirtied Blocks": 0,
+                    "Local Written Blocks": 0,
+                    "Temp Read Blocks": 0,
+                    "Temp Written Blocks": 0
+                  }
+                ]
+              }
+            ]
+          },
+          "Planning": {
+            "Shared Hit Blocks": 8,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning Time": 0.131,
+          "Triggers": [],
+          "Execution Time": 0.662
+        }
+      ]
+    },
+    {
+      "period": "month",
+      "sql": "\n        SELECT to_char(day, $1) AS ym, sum(value)::bigint AS value\n        FROM stats_daily\n        WHERE day BETWEEN $2::date AND $3::date AND dimension = ''\n          AND metric = 'members_new'\n        GROUP BY 1",
+      "parameters": [
+        "YYYY-MM",
+        "2079-08-01",
+        "2080-02-12"
+      ],
+      "plan": [
+        {
+          "Plan": {
+            "Node Type": "Aggregate",
+            "Strategy": "Sorted",
+            "Partial Mode": "Simple",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 2638.84,
+            "Total Cost": 2644.02,
+            "Plan Rows": 187,
+            "Plan Width": 40,
+            "Actual Startup Time": 2.569,
+            "Actual Total Time": 2.606,
+            "Actual Rows": 7,
+            "Actual Loops": 1,
+            "Group Key": [
+              "(to_char((day)::timestamp with time zone, 'YYYY-MM'::text))"
+            ],
+            "Shared Hit Blocks": 590,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0,
+            "Plans": [
+              {
+                "Node Type": "Sort",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Startup Cost": 2638.84,
+                "Total Cost": 2639.32,
+                "Plan Rows": 192,
+                "Plan Width": 40,
+                "Actual Startup Time": 2.555,
+                "Actual Total Time": 2.562,
+                "Actual Rows": 196,
+                "Actual Loops": 1,
+                "Sort Key": [
+                  "(to_char((day)::timestamp with time zone, 'YYYY-MM'::text))"
+                ],
+                "Sort Method": "quicksort",
+                "Sort Space Used": 32,
+                "Sort Space Type": "Memory",
+                "Shared Hit Blocks": 590,
+                "Shared Read Blocks": 0,
+                "Shared Dirtied Blocks": 0,
+                "Shared Written Blocks": 0,
+                "Local Hit Blocks": 0,
+                "Local Read Blocks": 0,
+                "Local Dirtied Blocks": 0,
+                "Local Written Blocks": 0,
+                "Temp Read Blocks": 0,
+                "Temp Written Blocks": 0,
+                "Plans": [
+                  {
+                    "Node Type": "Index Scan",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Scan Direction": "Forward",
+                    "Index Name": "stats_daily_pkey",
+                    "Relation Name": "stats_daily",
+                    "Alias": "stats_daily",
+                    "Startup Cost": 0.42,
+                    "Total Cost": 2631.56,
+                    "Plan Rows": 192,
+                    "Plan Width": 40,
+                    "Actual Startup Time": 0.024,
+                    "Actual Total Time": 2.498,
+                    "Actual Rows": 196,
+                    "Actual Loops": 1,
+                    "Index Cond": "((day >= '2079-08-01'::date) AND (day <= '2080-02-12'::date) AND (metric = 'members_new'::text) AND (dimension = ''::text))",
+                    "Rows Removed by Index Recheck": 0,
+                    "Shared Hit Blocks": 590,
+                    "Shared Read Blocks": 0,
+                    "Shared Dirtied Blocks": 0,
+                    "Shared Written Blocks": 0,
+                    "Local Hit Blocks": 0,
+                    "Local Read Blocks": 0,
+                    "Local Dirtied Blocks": 0,
+                    "Local Written Blocks": 0,
+                    "Temp Read Blocks": 0,
+                    "Temp Written Blocks": 0
+                  }
+                ]
+              }
+            ]
+          },
+          "Planning": {
+            "Shared Hit Blocks": 4,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning Time": 0.111,
+          "Triggers": [],
+          "Execution Time": 2.628
+        }
+      ]
+    },
+    {
+      "period": "month",
+      "sql": "\n        SELECT DISTINCT ON (ym, metric) to_char(day, $1) AS ym, metric, value\n        FROM stats_daily\n        WHERE day BETWEEN $2::date AND $3::date AND dimension = ''\n          AND metric IN ($4,$5,$6,$7,$8,$9)\n        ORDER BY ym, metric, day DESC",
+      "parameters": [
+        "YYYY-MM",
+        "2079-08-01",
+        "2080-02-12",
+        "members_total",
+        "members_active",
+        "members_inactive",
+        "groups",
+        "projects_live",
+        "events_upcoming"
+      ],
+      "plan": [
+        {
+          "Plan": {
+            "Node Type": "Unique",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 4420.5,
+            "Total Cost": 4429.1,
+            "Plan Rows": 1123,
+            "Plan Width": 57,
+            "Actual Startup Time": 5.326,
+            "Actual Total Time": 5.483,
+            "Actual Rows": 42,
+            "Actual Loops": 1,
+            "Shared Hit Blocks": 1461,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0,
+            "Plans": [
+              {
+                "Node Type": "Sort",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Startup Cost": 4420.5,
+                "Total Cost": 4423.37,
+                "Plan Rows": 1147,
+                "Plan Width": 57,
+                "Actual Startup Time": 5.325,
+                "Actual Total Time": 5.363,
+                "Actual Rows": 1176,
+                "Actual Loops": 1,
+                "Sort Key": [
+                  "(to_char((day)::timestamp with time zone, 'YYYY-MM'::text))",
+                  "metric",
+                  "day DESC"
+                ],
+                "Sort Method": "quicksort",
+                "Sort Space Used": 122,
+                "Sort Space Type": "Memory",
+                "Shared Hit Blocks": 1461,
+                "Shared Read Blocks": 0,
+                "Shared Dirtied Blocks": 0,
+                "Shared Written Blocks": 0,
+                "Local Hit Blocks": 0,
+                "Local Read Blocks": 0,
+                "Local Dirtied Blocks": 0,
+                "Local Written Blocks": 0,
+                "Temp Read Blocks": 0,
+                "Temp Written Blocks": 0,
+                "Plans": [
+                  {
+                    "Node Type": "Index Scan",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Scan Direction": "Forward",
+                    "Index Name": "stats_daily_pkey",
+                    "Relation Name": "stats_daily",
+                    "Alias": "stats_daily",
+                    "Startup Cost": 0.42,
+                    "Total Cost": 4362.21,
+                    "Plan Rows": 1147,
+                    "Plan Width": 57,
+                    "Actual Startup Time": 0.029,
+                    "Actual Total Time": 4.054,
+                    "Actual Rows": 1176,
+                    "Actual Loops": 1,
+                    "Index Cond": "((day >= '2079-08-01'::date) AND (day <= '2080-02-12'::date) AND (dimension = ''::text))",
+                    "Rows Removed by Index Recheck": 0,
+                    "Filter": "(metric = ANY ('{members_total,members_active,members_inactive,groups,projects_live,events_upcoming}'::text[]))",
+                    "Rows Removed by Filter": 196,
+                    "Shared Hit Blocks": 1461,
+                    "Shared Read Blocks": 0,
+                    "Shared Dirtied Blocks": 0,
+                    "Shared Written Blocks": 0,
+                    "Local Hit Blocks": 0,
+                    "Local Read Blocks": 0,
+                    "Local Dirtied Blocks": 0,
+                    "Local Written Blocks": 0,
+                    "Temp Read Blocks": 0,
+                    "Temp Written Blocks": 0
+                  }
+                ]
+              }
+            ]
+          },
+          "Planning": {
+            "Shared Hit Blocks": 4,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning Time": 0.158,
+          "Triggers": [],
+          "Execution Time": 5.509
+        }
+      ]
+    },
+    {
+      "period": "year",
+      "sql": "\n        SELECT to_char(day, $1) AS ym, sum(value)::bigint AS value\n        FROM stats_daily\n        WHERE day BETWEEN $2::date AND $3::date AND dimension = ''\n          AND metric = 'members_new'\n        GROUP BY 1",
+      "parameters": [
+        "YYYY",
+        "2076-01-01",
+        "2080-02-12"
+      ],
+      "plan": [
+        {
+          "Plan": {
+            "Node Type": "Aggregate",
+            "Strategy": "Sorted",
+            "Partial Mode": "Finalize",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 16085.49,
+            "Total Cost": 16276.11,
+            "Plan Rows": 1216,
+            "Plan Width": 40,
+            "Actual Startup Time": 59.119,
+            "Actual Total Time": 73.468,
+            "Actual Rows": 5,
+            "Actual Loops": 1,
+            "Group Key": [
+              "(to_char((day)::timestamp with time zone, 'YYYY'::text))"
+            ],
+            "Shared Hit Blocks": 7586,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0,
+            "Plans": [
+              {
+                "Node Type": "Gather Merge",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Startup Cost": 16085.49,
+                "Total Cost": 16242.58,
+                "Plan Rows": 1228,
+                "Plan Width": 64,
+                "Actual Startup Time": 59.071,
+                "Actual Total Time": 73.453,
+                "Actual Rows": 14,
+                "Actual Loops": 1,
+                "Workers Planned": 2,
+                "Workers Launched": 2,
+                "Shared Hit Blocks": 7586,
+                "Shared Read Blocks": 0,
+                "Shared Dirtied Blocks": 0,
+                "Shared Written Blocks": 0,
+                "Local Hit Blocks": 0,
+                "Local Read Blocks": 0,
+                "Local Dirtied Blocks": 0,
+                "Local Written Blocks": 0,
+                "Temp Read Blocks": 0,
+                "Temp Written Blocks": 0,
+                "Plans": [
+                  {
+                    "Node Type": "Aggregate",
+                    "Strategy": "Sorted",
+                    "Partial Mode": "Partial",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Startup Cost": 15085.46,
+                    "Total Cost": 15100.81,
+                    "Plan Rows": 614,
+                    "Plan Width": 64,
+                    "Actual Startup Time": 26.392,
+                    "Actual Total Time": 26.462,
+                    "Actual Rows": 5,
+                    "Actual Loops": 3,
+                    "Group Key": [
+                      "(to_char((day)::timestamp with time zone, 'YYYY'::text))"
+                    ],
+                    "Shared Hit Blocks": 7586,
+                    "Shared Read Blocks": 0,
+                    "Shared Dirtied Blocks": 0,
+                    "Shared Written Blocks": 0,
+                    "Local Hit Blocks": 0,
+                    "Local Read Blocks": 0,
+                    "Local Dirtied Blocks": 0,
+                    "Local Written Blocks": 0,
+                    "Temp Read Blocks": 0,
+                    "Temp Written Blocks": 0,
+                    "Workers": [],
+                    "Plans": [
+                      {
+                        "Node Type": "Sort",
+                        "Parent Relationship": "Outer",
+                        "Parallel Aware": false,
+                        "Async Capable": false,
+                        "Startup Cost": 15085.46,
+                        "Total Cost": 15087,
+                        "Plan Rows": 614,
+                        "Plan Width": 40,
+                        "Actual Startup Time": 26.362,
+                        "Actual Total Time": 26.378,
+                        "Actual Rows": 501,
+                        "Actual Loops": 3,
+                        "Sort Key": [
+                          "(to_char((day)::timestamp with time zone, 'YYYY'::text))"
+                        ],
+                        "Sort Method": "quicksort",
+                        "Sort Space Used": 55,
+                        "Sort Space Type": "Memory",
+                        "Shared Hit Blocks": 7586,
+                        "Shared Read Blocks": 0,
+                        "Shared Dirtied Blocks": 0,
+                        "Shared Written Blocks": 0,
+                        "Local Hit Blocks": 0,
+                        "Local Read Blocks": 0,
+                        "Local Dirtied Blocks": 0,
+                        "Local Written Blocks": 0,
+                        "Temp Read Blocks": 0,
+                        "Temp Written Blocks": 0,
+                        "Workers": [
+                          {
+                            "Worker Number": 0,
+                            "Sort Method": "quicksort",
+                            "Sort Space Used": 42,
+                            "Sort Space Type": "Memory"
+                          },
+                          {
+                            "Worker Number": 1,
+                            "Sort Method": "quicksort",
+                            "Sort Space Used": 36,
+                            "Sort Space Type": "Memory"
+                          }
+                        ],
+                        "Plans": [
+                          {
+                            "Node Type": "Seq Scan",
+                            "Parent Relationship": "Outer",
+                            "Parallel Aware": true,
+                            "Async Capable": false,
+                            "Relation Name": "stats_daily",
+                            "Alias": "stats_daily",
+                            "Startup Cost": 0,
+                            "Total Cost": 15057.03,
+                            "Plan Rows": 614,
+                            "Plan Width": 40,
+                            "Actual Startup Time": 10.209,
+                            "Actual Total Time": 26.138,
+                            "Actual Rows": 501,
+                            "Actual Loops": 3,
+                            "Filter": "((day >= '2076-01-01'::date) AND (day <= '2080-02-12'::date) AND (dimension = ''::text) AND (metric = 'members_new'::text))",
+                            "Rows Removed by Filter": 301257,
+                            "Shared Hit Blocks": 7510,
+                            "Shared Read Blocks": 0,
+                            "Shared Dirtied Blocks": 0,
+                            "Shared Written Blocks": 0,
+                            "Local Hit Blocks": 0,
+                            "Local Read Blocks": 0,
+                            "Local Dirtied Blocks": 0,
+                            "Local Written Blocks": 0,
+                            "Temp Read Blocks": 0,
+                            "Temp Written Blocks": 0,
+                            "Workers": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "Planning": {
+            "Shared Hit Blocks": 4,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning Time": 0.126,
+          "Triggers": [],
+          "Execution Time": 73.497
+        }
+      ]
+    },
+    {
+      "period": "year",
+      "sql": "\n        SELECT DISTINCT ON (ym, metric) to_char(day, $1) AS ym, metric, value\n        FROM stats_daily\n        WHERE day BETWEEN $2::date AND $3::date AND dimension = ''\n          AND metric IN ($4,$5,$6,$7,$8,$9)\n        ORDER BY ym, metric, day DESC",
+      "parameters": [
+        "YYYY",
+        "2076-01-01",
+        "2080-02-12",
+        "members_total",
+        "members_active",
+        "members_inactive",
+        "groups",
+        "projects_live",
+        "events_upcoming"
+      ],
+      "plan": [
+        {
+          "Plan": {
+            "Node Type": "Unique",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 18175.76,
+            "Total Cost": 19246.24,
+            "Plan Rows": 7499,
+            "Plan Width": 57,
+            "Actual Startup Time": 71.036,
+            "Actual Total Time": 78.534,
+            "Actual Rows": 30,
+            "Actual Loops": 1,
+            "Shared Hit Blocks": 7602,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0,
+            "Plans": [
+              {
+                "Node Type": "Gather Merge",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Startup Cost": 18175.76,
+                "Total Cost": 19202.18,
+                "Plan Rows": 8813,
+                "Plan Width": 57,
+                "Actual Startup Time": 71.035,
+                "Actual Total Time": 77.717,
+                "Actual Rows": 9024,
+                "Actual Loops": 1,
+                "Workers Planned": 2,
+                "Workers Launched": 2,
+                "Shared Hit Blocks": 7602,
+                "Shared Read Blocks": 0,
+                "Shared Dirtied Blocks": 0,
+                "Shared Written Blocks": 0,
+                "Local Hit Blocks": 0,
+                "Local Read Blocks": 0,
+                "Local Dirtied Blocks": 0,
+                "Local Written Blocks": 0,
+                "Temp Read Blocks": 0,
+                "Temp Written Blocks": 0,
+                "Plans": [
+                  {
+                    "Node Type": "Sort",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Startup Cost": 17175.73,
+                    "Total Cost": 17184.91,
+                    "Plan Rows": 3672,
+                    "Plan Width": 57,
+                    "Actual Startup Time": 32.493,
+                    "Actual Total Time": 32.614,
+                    "Actual Rows": 3008,
+                    "Actual Loops": 3,
+                    "Sort Key": [
+                      "(to_char((day)::timestamp with time zone, 'YYYY'::text))",
+                      "metric",
+                      "day DESC"
+                    ],
+                    "Sort Method": "quicksort",
+                    "Sort Space Used": 574,
+                    "Sort Space Type": "Memory",
+                    "Shared Hit Blocks": 7602,
+                    "Shared Read Blocks": 0,
+                    "Shared Dirtied Blocks": 0,
+                    "Shared Written Blocks": 0,
+                    "Local Hit Blocks": 0,
+                    "Local Read Blocks": 0,
+                    "Local Dirtied Blocks": 0,
+                    "Local Written Blocks": 0,
+                    "Temp Read Blocks": 0,
+                    "Temp Written Blocks": 0,
+                    "Workers": [
+                      {
+                        "Worker Number": 0,
+                        "Sort Method": "quicksort",
+                        "Sort Space Used": 50,
+                        "Sort Space Type": "Memory"
+                      },
+                      {
+                        "Worker Number": 1,
+                        "Sort Method": "quicksort",
+                        "Sort Space Used": 242,
+                        "Sort Space Type": "Memory"
+                      }
+                    ],
+                    "Plans": [
+                      {
+                        "Node Type": "Seq Scan",
+                        "Parent Relationship": "Outer",
+                        "Parallel Aware": true,
+                        "Async Capable": false,
+                        "Relation Name": "stats_daily",
+                        "Alias": "stats_daily",
+                        "Startup Cost": 0,
+                        "Total Cost": 16958.31,
+                        "Plan Rows": 3672,
+                        "Plan Width": 57,
+                        "Actual Startup Time": 10.078,
+                        "Actual Total Time": 28.288,
+                        "Actual Rows": 3008,
+                        "Actual Loops": 3,
+                        "Filter": "((day >= '2076-01-01'::date) AND (day <= '2080-02-12'::date) AND (dimension = ''::text) AND (metric = ANY ('{members_total,members_active,members_inactive,groups,projects_live,events_upcoming}'::text[])))",
+                        "Rows Removed by Filter": 298750,
+                        "Shared Hit Blocks": 7510,
+                        "Shared Read Blocks": 0,
+                        "Shared Dirtied Blocks": 0,
+                        "Shared Written Blocks": 0,
+                        "Local Hit Blocks": 0,
+                        "Local Read Blocks": 0,
+                        "Local Dirtied Blocks": 0,
+                        "Local Written Blocks": 0,
+                        "Temp Read Blocks": 0,
+                        "Temp Written Blocks": 0,
+                        "Workers": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "Planning": {
+            "Shared Hit Blocks": 4,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning Time": 0.131,
+          "Triggers": [],
+          "Execution Time": 78.658
+        }
+      ]
+    }
+  ]
+}

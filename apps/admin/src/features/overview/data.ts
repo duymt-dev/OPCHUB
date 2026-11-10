@@ -63,7 +63,7 @@ export function statCards(o: AdminOverview): StatCard[] {
     {
       key: 'fresh',
       value: o.newThisMonth,
-      spark: o.growth.map((g) => g.fresh),
+      spark: o.newMembersSpark,
       delta: { month: `${m ?? ''}/${y ?? ''}` },
     },
     {

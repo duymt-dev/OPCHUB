@@ -27,6 +27,21 @@ function PeriodTabs({ current, onChange, label, labels }: PeriodTabsProps) {
           type="button"
           role="tab"
           aria-selected={current === id}
+          tabIndex={current === id ? 0 : -1}
+          onKeyDown={(event) => {
+            const step = event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0;
+            if (!step && event.key !== 'Home' && event.key !== 'End') return;
+            event.preventDefault();
+            const next =
+              event.key === 'Home'
+                ? 0
+                : event.key === 'End'
+                  ? 2
+                  : (tabs.findIndex((t) => t.id === id) + step + 3) % 3;
+            const target = tabs[next];
+            if (target) onChange(target.id);
+            (event.currentTarget.parentElement?.children[next] as HTMLElement | undefined)?.focus();
+          }}
           className={`${styles.periodBtn} ${current === id ? styles.periodOn : ''}`}
           onClick={() => onChange(id)}
         >
@@ -62,7 +77,9 @@ export function GrowthChart() {
           {t('delta', { pct: Math.round(data?.paid.deltaPct ?? 0) })}
         </span>
         <span className={styles.deltaNote}>
-          {t('deltaNote', { n: formatCount(data?.paid.newThisMonth ?? 0) })}
+          {t(params.from ? 'rangeDeltaNote' : 'deltaNote', {
+            n: formatCount(data?.paid.newThisMonth ?? 0),
+          })}
         </span>
         <div className={styles.legend}>
           <span>

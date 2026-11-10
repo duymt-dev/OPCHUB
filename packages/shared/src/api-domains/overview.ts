@@ -13,17 +13,24 @@ const kpi = z.object({
 export const overviewPeriodSchema = z.enum(['week', 'month', 'year']);
 export type OverviewPeriod = z.infer<typeof overviewPeriodSchema>;
 
-export const adminOverviewQuerySchema = z.object({
-  from: z
-    .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/)
-    .optional(),
-  to: z
-    .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/)
-    .optional(),
-  period: overviewPeriodSchema.default('month'),
-});
+export const adminOverviewQuerySchema = z
+  .object({
+    from: z.iso.date().optional(),
+    to: z.iso.date().optional(),
+    period: overviewPeriodSchema.default('month'),
+  })
+  .superRefine(({ from, to }, ctx) => {
+    if (!!from !== !!to) {
+      ctx.addIssue({
+        code: 'custom',
+        path: [from ? 'to' : 'from'],
+        message: 'Required with the other date',
+      });
+    }
+    if (from && to && from > to) {
+      ctx.addIssue({ code: 'custom', path: ['to'], message: 'Must be on or after from' });
+    }
+  });
 export type AdminOverviewQuery = z.infer<typeof adminOverviewQuerySchema>;
 
 export const adminOverviewSchema = z.object({
@@ -32,6 +39,8 @@ export const adminOverviewSchema = z.object({
   /** % thành viên mới tháng này so với tổng đầu tháng (1 chữ số thập phân) */
   membersDeltaPct: z.number(),
   newThisMonth: z.number().int(),
+  /** 7 tháng gần nhất, độc lập period/range (D-140). */
+  newMembersSpark: z.array(z.number().int()).length(7),
   communitiesNew: z.number().int(),
   members: kpi,
   communities: kpi,

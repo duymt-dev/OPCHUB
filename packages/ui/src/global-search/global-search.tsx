@@ -4,7 +4,7 @@ import { useId, useRef, useState } from 'react';
 import { usePopover } from '../app-shell/use-popover';
 import { SearchResults } from './search-results';
 import { useSearchKeyboard } from './hooks/use-search-keyboard';
-import { Icon } from '../icons';
+import { SearchInput } from './components/search-input';
 import type { GlobalSearchProps } from './types';
 import styles from './global-search.module.css';
 
@@ -14,7 +14,10 @@ export function GlobalSearch(props: GlobalSearchProps) {
   const root = useRef<HTMLFormElement>(null);
   const popover = usePopover(root);
   const id = useId();
-  const shown = props.open && popover.open && query.trim().length >= 2;
+  const short = query.trim().length < 2;
+  const shown = props.open && popover.open && !short && !props.loading && !props.errorText;
+  const statusText = short ? props.hintText : props.loading ? props.loadingText : props.errorText;
+  const statusShown = popover.open && !!statusText && (short || props.open);
   const clear = () => {
     setQuery('');
     props.onQuery('');
@@ -31,6 +34,9 @@ export function GlobalSearch(props: GlobalSearchProps) {
       role="search"
       aria-label={props.placeholder}
       className={styles.wrap}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) popover.close();
+      }}
       onSubmit={(event) => {
         event.preventDefault();
         const selected = keyboard.selected;
@@ -38,42 +44,40 @@ export function GlobalSearch(props: GlobalSearchProps) {
       }}
     >
       <div className={styles.box}>
-        <div className={styles.inputBox}>
-          <Icon name="search" size={16} />
-          <input
-            role="combobox"
-            aria-expanded={shown}
-            aria-controls={id}
-            aria-activedescendant={
-              shown && keyboard.index >= 0 ? `${id}-${keyboard.index}` : undefined
-            }
-            aria-autocomplete="list"
-            aria-label={props.placeholder}
-            placeholder={props.placeholder}
-            maxLength={100}
-            value={query}
-            onKeyDown={keyboard.onKeyDown}
-            onChange={(event) => {
-              keyboard.select(-1);
-              setQuery(event.target.value);
-              props.onQuery(event.target.value);
-              if (!popover.open) popover.toggle();
-            }}
-            onFocus={() => {
-              if (!popover.open && query.trim().length >= 2) popover.toggle();
-            }}
-          />
-          {shown && (
-            <button type="button" aria-label={props.clearLabel} onClick={clear}>
-              ×
-            </button>
-          )}
-        </div>
+        <SearchInput
+          shown={shown}
+          id={id}
+          index={keyboard.index}
+          value={query}
+          placeholder={props.placeholder}
+          clearLabel={props.clearLabel}
+          statusId={statusShown ? id + '-status' : undefined}
+          onClear={clear}
+          onKeyDown={keyboard.onKeyDown}
+          onChange={(value) => {
+            keyboard.select(-1);
+            setQuery(value);
+            props.onQuery(value);
+            if (!popover.open) popover.toggle();
+          }}
+          onFocus={() => {
+            if (!popover.open && (!short || props.hintText)) popover.toggle();
+          }}
+        />
+        {statusShown && (
+          <div
+            id={`${id}-status`}
+            role={props.errorText && !short ? 'alert' : 'status'}
+            className={styles.dropdown}
+          >
+            <div className={styles.empty}>{statusText}</div>
+          </div>
+        )}
         {shown && (
           <div id={id} role="listbox" aria-label={props.placeholder} className={styles.dropdown}>
             <SearchResults
               groups={props.groups}
-              emptyText={props.emptyText}
+              emptyText={props.emptyQueryText?.(query.trim()) ?? props.emptyText}
               onPick={pick}
               id={id}
               selected={keyboard.index}

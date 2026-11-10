@@ -30,6 +30,11 @@ export function AdminSearch() {
       placeholder={t('placeholder')}
       emptyText={t('empty')}
       clearLabel={t('clear')}
+      hintText={t('hint')}
+      loading={search.loading}
+      loadingText={t('loading')}
+      {...(search.failed ? { errorText: t('failed') } : {})}
+      emptyQueryText={(query) => t('emptyQuery', { query })}
       open={search.open}
       onQuery={search.onQuery}
       groups={search.groups

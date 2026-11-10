@@ -1,0 +1,1 @@
+DROP INDEX idx_stats_daily_overview_metric_day;

@@ -3,6 +3,7 @@ import { ExportCoreModule } from '@/modules/export';
 import { OverviewController } from './overview.controller';
 import { OverviewFlowRepository } from './overview-flow.repository';
 import { OverviewService } from './overview.service';
+import { OverviewSeriesRepository } from './overview-series.repository';
 import { ReportExportService } from './report-export.service';
 import { ReportMetricsRepository } from './report-metrics.repository';
 import { ReportsController } from './reports.controller';
@@ -15,6 +16,7 @@ const providers = [
   ConversionRepository,
   ConversionService,
   OverviewService,
+  OverviewSeriesRepository,
   OverviewFlowRepository,
   StatsDailyService,
   ReportMetricsRepository,

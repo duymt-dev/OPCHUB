@@ -262,8 +262,8 @@
 | P-V46-REG-BANNER | Portal · GĐ Vùng · Banner | 390 | 1.96% | ✅ đạt | 390×1635 | c5848a37 |
 | P-V46-SEARCH | Topbar · global search | 1440 | 1.00% | ✅ đạt | 1440×900 | 6c5800b4 |
 | P-V46-SEARCH | Topbar · global search | 390 | 0.11% | ✅ đạt | 390×844 | 6c5800b4 |
-| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 2.29% | ✅ đạt | 1440×1344 | ef7934ff |
-| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 1.90% | ✅ đạt | 390×2279 | ef7934ff |
+| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 2.48% | ✅ đạt | 1440×1344 | 7c44fcab |
+| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 2.36% | ✅ đạt | 390×2279 | 7c44fcab |
 | D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.23% | ✅ đạt | 1440×900 | ef7934ff |
 | D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 0.22% | ✅ đạt | 390×844 | ef7934ff |
 | D-03 | Admin · Hồ sơ cá nhân (không đổi màn) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 2.29% | ✅ đạt | 1440×1344 | ef7934ff |

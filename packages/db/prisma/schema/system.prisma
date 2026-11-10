@@ -45,6 +45,7 @@ model OutboxEvent {
 }
 
 model StatsDaily {
+  // SQL-managed partial covering index: overview metric/day INCLUDE value WHERE dimension = ''.
   day       DateTime @db.Date
   metric    String
   dimension String   @default("")

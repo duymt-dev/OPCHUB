@@ -8,9 +8,19 @@ import {
   rangeLabel,
   sparkPoints,
   overviewKeys,
+  statCards,
 } from './data';
+import { mockOverview } from '@opchub/shared/mock-domains';
 
 describe('overview data helpers (B60)', () => {
+  it('REQ-122 all four sparklines stay monthly across week and year tabs', () => {
+    const now = new Date('2026-10-16T08:00:00Z');
+    const month = statCards(mockOverview({ period: 'month' }, now)).map((c) => c.spark);
+    for (const period of ['week', 'year'] as const) {
+      expect(statCards(mockOverview({ period }, now)).map((c) => c.spark)).toEqual(month);
+    }
+    expect(month.every((s) => s.length === 7)).toBe(true);
+  });
   it('sparkPoints: 7 điểm trong khung 52×22, lớn nhất ở trên', () => {
     const pts = sparkPoints([1, 2, 3, 4, 5, 6, 7]).split(' ');
     expect(pts).toHaveLength(7);
