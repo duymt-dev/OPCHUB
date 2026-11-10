@@ -31,6 +31,12 @@
 | `apps/server/src/modules/reporting/reporting.module.ts` | modify: đăng ký repository mới |
 | `apps/server/src/modules/reporting/index.ts` | modify nếu cần: giữ public exports hiện có |
 | `apps/server/test/reporting/overview.int.spec.ts` | modify: query/guard/range/cache/SQL thật qua biên năm |
+| `apps/server/test/reporting/overview-query-plan.int.spec.ts` | create: EXPLAIN đúng SQL repository trên >10k dòng; fixture riêng, cleanup có guard |
+| `coding-packs/reports/evidence/v46-823/native-query-plans.json` | create: PostgreSQL execution plans thật cho week/month/year |
+| `coding-packs/reports/evidence/v46-823/native-query-plans-before.json` | create: baseline 905275 dòng, year còn Seq Scan trước index |
+| `packages/db/prisma/schema/system.prisma` | modify: ghi chú partial covering index quản lý bằng SQL |
+| `packages/db/prisma/migrations/20261120093000_v46_overview_series_covering/migration.sql` | create: partial metric/day INCLUDE value cho overview dimension rỗng |
+| `packages/db/prisma/migrations/20261120093000_v46_overview_series_covering/down.sql` | create: rollback index, không xóa dữ liệu |
 | `apps/admin/src/features/overview/components/overview-screen.tsx` | modify: orchestrator, truyền range/preset VN |
 | `apps/admin/src/features/overview/components/overview-range-control.tsx` | create: tách picker khỏi screen orchestrator |
 | `apps/admin/src/features/overview/components/growth-chart.tsx` | modify: tabs/a11y, nhãn custom range |
@@ -56,6 +62,11 @@
 | `apps/admin/messages/vi/common.json` | modify: chỉ thêm key hint/empty-with-query, giữ key cũ |
 | `apps/admin/messages/vi/overview.json` | modify: chỉ thêm key custom range |
 | `e2e/behavior/admin-overview.spec.ts` | modify: range/period, giữ conversion regression |
+| `e2e/playwright.tip823.config.ts` | create: native verification dùng build folder riêng, kế thừa toàn bộ assertions/fixtures chuẩn |
+| `coding-packs/reports/evidence/v46-823/server-D-01-1440-unmasked.png` | create: ảnh native desktop không che biểu đồ |
+| `coding-packs/reports/evidence/v46-823/server-D-01-390-unmasked.png` | create: ảnh native mobile không che biểu đồ |
+| `coding-packs/reports/evidence/v46-823/msw-D-01-1440-unmasked.png` | create: ảnh MSW desktop không che biểu đồ |
+| `coding-packs/reports/evidence/v46-823/msw-D-01-390-unmasked.png` | create: ảnh MSW mobile không che biểu đồ |
 | `e2e/behavior/global-search.spec.ts` | modify: Admin hint/empty, hồi quy Portal/mobile |
 | `coding-packs/reports/TIP-V46-823-completion.md` | modify khi thực thi: kết quả/evidence thật thay claim sai |
 | `coding-packs/02-TASK-GRAPH.md` | modify khi cập nhật tiến độ implementation thực tế |
@@ -71,6 +82,12 @@
 | `coding-packs/reports/evidence/v46-823/build-portal.log` | create: isolated MSW build output |
 | `coding-packs/reports/evidence/v46-823/build-server.log` | create: server build output |
 | `coding-packs/reports/evidence/v46-823/native-overview.log` | create: failed bootstrap, chưa chạy được native AC |
+| `coding-packs/reports/evidence/v46-823/native-verification.log` | create: final native overview/search/SQL integration result |
+| `coding-packs/reports/evidence/v46-823/native-behavior.log` | create: same browser assertions against native API |
+| `coding-packs/reports/evidence/v46-823/build-admin-native.log` | create: native Admin production build |
+| `coding-packs/reports/evidence/v46-823/build-portal-native.log` | create: native Portal production build |
+| `coding-packs/reports/evidence/v46-823/native-migrations.log` | create: isolated databases migration status and transactional down.sql check |
+| `coding-packs/reports/evidence/v46-823/native-runtime.json` | create: public local ports/isolation notes, no credentials |
 | `coding-packs/reports/evidence/v46-823/msw-behavior.log` | create: behavior suite output |
 | `coding-packs/reports/evidence/v46-823/parity.log` | create: D-01 harness output |
 | `coding-packs/reports/evidence/v46-823/D-01-1440.app.png` | create: owner review screenshot |
@@ -113,6 +130,8 @@ Tài liệu review hiện tại: modify chính TIP này và `coding-packs/01-REQ
 - [query-indexing](../standards/database/query-indexing.md), [testing](../standards/testing/testing.md): equality trước range, bounded query, test truy vết, MSW/native cùng assertion.
 
 ## TASK
+
+Performance review khi chạy native: 905275 dòng (11 năm × 7 metrics × 35 dimensions), planner chọn Seq Scan cho cả hai query year (~73/79 ms). Bổ sung index partial `(metric, day DESC) INCLUDE(value) WHERE dimension = ''`: equality metric trước range day, chỉ đánh index tập overview, giữ snapshot sort trong SQL. Không ép planner. Chỉ migrate runtime PostgreSQL tách biệt; DB/cổng cũ vẫn HOLD. So lại cả 6 query trước/sau index bằng đúng SQL repository.
 
 1. Áp dụng quyết định D-140, sửa range validation/preset VN/URL và KPI theo contract bên dưới.
 2. Chốt 7 tuần/7 tháng/5 năm, sửa biên aggregation, tách SQL và bổ sung monthly sparkline độc lập.

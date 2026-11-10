@@ -4,6 +4,9 @@ import { ADMIN_URL } from '../urls';
 import { csvDownload } from './helpers/csv-download';
 import { adminConversionSchema } from '@opchub/shared/api-domains';
 import { adminOverviewSchema } from '@opchub/shared/api-domains';
+import { mkdirSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { env } from '../env';
 
 test('REQ-623 BR-475-477 conversion table matches API, CSV3 regions has BOM and mobile scroll stays contained', async ({
   page,
@@ -75,6 +78,19 @@ test('REQ-122 overview range and periods preserve independent monthly sparklines
   page,
 }) => {
   await openOverview(page);
+  await expect(page.locator('[data-m="bars"] > div')).toHaveCount(7);
+  await expect(page.getByText('Đăng nhập Admin Dashboard', { exact: true })).toBeHidden();
+  const evidence = resolve(import.meta.dirname, '../../coding-packs/reports/evidence/v46-823');
+  mkdirSync(evidence, { recursive: true });
+  for (const width of [1440, 390]) {
+    await page.setViewportSize({ width, height: width === 1440 ? 900 : 844 });
+    await page.screenshot({
+      path: resolve(evidence, `${env.E2E_TARGET}-D-01-${width}-unmasked.png`),
+      fullPage: true,
+      animations: 'disabled',
+    });
+  }
+  await page.setViewportSize({ width: 1440, height: 900 });
   await page.locator('.ant-picker-range input').first().click();
   for (const preset of ['Hôm nay', '7 ngày qua', '30 ngày qua', 'Tháng này', 'Tháng trước']) {
     await expect(page.getByText(preset, { exact: true })).toBeVisible();

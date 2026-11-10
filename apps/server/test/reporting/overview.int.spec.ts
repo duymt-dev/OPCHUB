@@ -23,8 +23,8 @@ describe('Admin Tổng quan + stats_daily + badge (B44)', () => {
   });
   beforeEach(async () => {
     await flushAuthState(t);
-    const keys = await t.redis.client.keys('admin:overview*');
-    if (keys.length) await t.redis.client.del(...keys);
+    const keys = await t.redis.client.keys('opchub:admin:overview*');
+    if (keys.length) await t.redis.client.del(...keys.map((key) => key.replace(/^opchub:/, '')));
   });
   afterAll(async () => {
     await t.prisma.db.statsDaily.deleteMany({ where: { day: { lt: new Date('2002-01-01') } } });
@@ -87,9 +87,22 @@ describe('Admin Tổng quan + stats_daily + badge (B44)', () => {
     const o = adminOverviewSchema.parse(await r.json());
     expect(o.communities.value).toBe(await t.prisma.db.group.count({ where: { deletedAt: null } }));
     expect(o.growth).toHaveLength(7);
-    expect(await t.app.get(RedisService).client.ttl('admin:overview')).toBeGreaterThan(0);
+    const ttl = await t.app
+      .get(RedisService)
+      .client.ttl(`admin:overview:v2:month:${o.range.from}:${o.range.to}`);
+    expect(ttl).toBeGreaterThan(0);
+    expect(ttl).toBeLessThanOrEqual(60);
     const m = await tokenOf(t, await createUser(t));
     expect((await t.call('/admin/overview', { token: m })).status).toBe(403);
+    const hit = adminOverviewSchema.parse(
+      await (await t.call('/admin/overview?period=month', { token: admin })).json(),
+    );
+    expect(hit).toEqual(o);
+    const other = adminOverviewSchema.parse(
+      await (await t.call('/admin/overview?period=year', { token: admin })).json(),
+    );
+    expect(other.members.value).toBe(o.members.value + 1);
+    expect(other.growth).toHaveLength(5);
   });
 
   it('BUG-029 CR-15 delta % và thành viên mới tháng này thật; range = đầu tháng → hôm nay (VN)', async () => {
@@ -109,7 +122,9 @@ describe('Admin Tổng quan + stats_daily + badge (B44)', () => {
     expect(o.members.value).toBe(total);
     expect(o.newThisMonth).toBe(fresh);
     expect(o.newThisMonth).toBeGreaterThanOrEqual(1);
-    expect(o.membersDeltaPct).toBe(Math.round((fresh / (total - fresh)) * 1000) / 10);
+    expect(o.membersDeltaPct).toBe(
+      total > fresh ? Math.round((fresh / (total - fresh)) * 1000) / 10 : 0,
+    );
     const today = vn.toISOString().slice(0, 10);
     expect(o.range).toEqual({ from: `${today.slice(0, 8)}01`, to: today });
   });
@@ -192,37 +207,50 @@ describe('Admin Tổng quan + stats_daily + badge (B44)', () => {
 
   it('REQ-122 D-140 range semantics and VN microsecond boundaries', async () => {
     const token = await tokenOf(t, await createUser(t, { systemRole: 'admin' }));
+    const get = async (q: string) =>
+      adminOverviewSchema.parse(await (await t.call(`/admin/overview${q}`, { token })).json());
+    const before = await get('?period=week&from=2000-02-29&to=2000-02-29');
     const users = await Promise.all(
       Array.from({ length: 4 }, () => createUser(t, { fee: 'active' })),
     );
-    const at = [
-      '2000-02-28T16:59:59.999999Z',
-      '2000-02-28T17:00:00Z',
-      '2000-02-29T16:59:59.999999Z',
-      '2000-02-29T17:00:00Z',
-    ];
-    await Promise.all(
-      users.map(async (user, i) => {
-        await t.prisma.db
-          .$executeRaw`UPDATE users SET created_at = ${at[i]}::timestamptz WHERE id = ${user.id}`;
-        await t.prisma.db
-          .$executeRaw`UPDATE membership_fees SET paid_at = ${at[i]}::timestamptz WHERE user_id = ${user.id}`;
-      }),
-    );
-    const get = async (q: string) =>
-      adminOverviewSchema.parse(await (await t.call(`/admin/overview${q}`, { token })).json());
-    const live = await get('');
-    const selected = await get('?from=2000-02-29&to=2000-02-29');
-    expect(selected.newThisMonth).toBe(2);
-    expect(selected.paid.newThisMonth).toBe(2);
-    expect(selected.flow).toEqual(live.flow);
-    expect(selected.members).toEqual(live.members);
-    expect(selected.events).toEqual(live.events);
-    expect(selected.paid.value).toBe(live.paid.value);
-    expect(selected.membersDeltaPct).toBe(Math.round((2 / (live.members.value - 2)) * 1000) / 10);
-    const year = await get('?period=year&from=2000-02-29&to=2000-02-29');
-    expect(year.growth).toHaveLength(5);
-    expect(year.newMembersSpark).toEqual(live.newMembersSpark);
+    try {
+      const at = [
+        '2000-02-28T16:59:59.999999Z',
+        '2000-02-28T17:00:00Z',
+        '2000-02-29T16:59:59.999999Z',
+        '2000-02-29T17:00:00Z',
+      ];
+      await Promise.all(
+        users.map(async (user, i) => {
+          await t.prisma.db
+            .$executeRaw`UPDATE users SET created_at = ${at[i]}::timestamptz WHERE id = ${user.id}`;
+          await t.prisma.db
+            .$executeRaw`UPDATE membership_fees SET paid_at = ${at[i]}::timestamptz WHERE user_id = ${user.id}`;
+        }),
+      );
+      const live = await get('');
+      const selected = await get('?from=2000-02-29&to=2000-02-29');
+      expect(selected.newThisMonth - before.newThisMonth).toBe(2);
+      expect(selected.paid.newThisMonth - before.paid.newThisMonth).toBe(2);
+      expect(selected.flow).toEqual(live.flow);
+      expect(selected.members).toEqual(live.members);
+      expect(selected.events).toEqual(live.events);
+      expect(selected.paid.value).toBe(live.paid.value);
+      expect(selected.membersDeltaPct).toBe(
+        Math.round((selected.newThisMonth / (live.members.value - selected.newThisMonth)) * 1000) /
+          10,
+      );
+      const year = await get('?period=year&from=2000-02-29&to=2000-02-29');
+      expect(year.growth).toHaveLength(5);
+      expect(
+        year.growth.every((row) => row.active === 0 && row.fresh === 0 && row.inactive === 0),
+      ).toBe(true);
+      expect(year.newMembersSpark).toEqual(live.newMembersSpark);
+    } finally {
+      const ids = users.map((user) => user.id);
+      await t.prisma.db.membershipFee.deleteMany({ where: { userId: { in: ids } } });
+      await t.prisma.db.user.deleteMany({ where: { id: { in: ids } } });
+    }
   });
 
   it('REQ-122 aggregates periods across ISO year: first bucket includes previous December', async () => {
