@@ -206,17 +206,17 @@ export const adminMeSchema = z.object({
 
 ## BUILDER-CHECKLIST
 
-- [ ] 1. Mở rộng `packages/shared/src/api/admin-auth.ts`: cập nhật `adminMeSchema`, thêm `adminUpdateProfileSchema` và `adminChangePasswordSchema`.
-- [ ] 2. Cập nhật `mockAdminMeOf` trong `packages/shared/src/mock-data/domains/admin-rbac.ts`.
-- [ ] 3. Mở rộng `ADMIN_SESSION_SELECT` trong `admin-user.repository.ts`, thêm hàm `updateProfile` và `updatePassword`.
-- [ ] 4. Mở rộng `admin-session.service.ts` và `admin-auth.service.ts`: bổ sung logic cập nhật hồ sơ và đổi mật khẩu.
-- [ ] 5. Bổ sung 2 route `PATCH me` và `POST change-password` trong `admin-auth.controller.ts`.
-- [ ] 6. Cập nhật `media-gc.service.ts`: thêm `admin_users.avatar_url` vào `stillReferenced`.
-- [ ] 7. Cập nhật `admin-shell.tsx`: truyền `avatarUrl` và `onProfile` vào `AppShell`.
-- [ ] 8. Dựng trang `apps/admin/src/app/(admin)/profile/page.tsx` và component `AdminProfileScreen`.
-- [ ] 9. Viết hook `useAdminProfile` và API client gọi backend.
-- [ ] 10. Viết test tích hợp server `admin-profile.int.spec.ts` và unit test `admin-profile.spec.tsx`.
-- [ ] 11. Chạy kiểm tra chất lượng toàn diện: `pnpm lint && pnpm typecheck && pnpm test`.
+- [x] 1. Mở rộng `packages/shared/src/api/admin-auth.ts`: cập nhật `adminMeSchema`, thêm `adminUpdateProfileSchema` và `adminChangePasswordSchema`.
+- [x] 2. Cập nhật `mockAdminMeOf` trong `packages/shared/src/mock-data/domains/admin-rbac.ts`.
+- [x] 3. Mở rộng `ADMIN_SESSION_SELECT`; hàm `updateProfile`/`updatePassword` ở repository profile riêng.
+- [x] 4. Map `admin-session.service.ts`; logic profile/password tách vào `AdminProfileService`, giữ auth service hiện có.
+- [x] 5. Bổ sung 2 route `PATCH me` và `POST change-password` qua `AdminProfileController` riêng.
+- [x] 6. Cập nhật `media-gc.service.ts`: thêm `admin_users.avatar_url` vào `stillReferenced`.
+- [x] 7. Cập nhật `admin-shell.tsx`: truyền `avatarUrl` và `onProfile` vào `AppShell`.
+- [x] 8. Dựng trang `apps/admin/src/app/(admin)/profile/page.tsx` và component `AdminProfileScreen`.
+- [x] 9. Viết hook `useAdminProfile` và API client gọi backend.
+- [x] 10. Viết test tích hợp server `admin-profile.int.spec.ts` và unit test `admin-profile.spec.tsx`.
+- [x] 11. Chạy kiểm tra chất lượng toàn diện: `pnpm lint && pnpm typecheck && pnpm test`.
 
 ### Execution manifest supplement (10/11/2026, before implementation)
 
@@ -276,3 +276,7 @@ UI source check: prototype menu explicitly navigates into Portal, not an Admin p
 
 - coding-packs/reports/evidence/v46-822/focused.log (create): final component/MSW rerun including visible avatar errors.
 - coding-packs/reports/evidence/v46-822/native-restore.log (create): isolated demo seed/password and Redis dev-cache restore after browser verification.
+
+## Completion (10/11/2026)
+
+Technical DONE at source commit `b843efb0`: 2308 unit passed + 2 existing S3 skips; native 27; identical native/MSW browser 2+2; lint/typecheck/build/depcheck passed. Owner reviews actual Admin Profile desktop/mobile images and decides merge into dev. No original DB reset/repair or automatic release. See completion report for exact evidence and commands.
