@@ -1,9 +1,9 @@
-﻿# TIP-V46-823 — Completion Report
+# TIP-V46-823 — Completion Report
 
-**STATUS: PARTIAL — implementation + unit/MSW/UI verified; native verification chưa đạt.**
+**STATUS: DONE — corrective implementation, native verification and SQL plans complete. Owner PR/image review remains with owner; no merge/release performed.**
 
 - Ngày: 10/11/2026.
-- Implementation: `7c44fcab` trên `feature/TIP-V46-823-admin-overview-interactive-controls`, đã push.
+- Implementation: `7c44fcab`; native test hardening + covering index: `1c8006d4`, trên `feature/TIP-V46-823-admin-overview-interactive-controls`.
 - Nguồn: TIP bản review `7d12222a`, REQ-122/625, D-140; D-107/134/139 giữ nguyên.
 - Không merge `dev`/`main`, không release. PR #114 là liên kết được ghi từ baseline, không xác nhận trạng thái PR hiện tại.
 - Báo cáo này thay kết luận DONE cũ của implementation `26cf391d` / report `f2c31796`. Kết quả cũ không chứng minh AC của TIP sau review.
@@ -48,90 +48,102 @@ Manifest đầy đủ từng file (create/modify) ở [TIP](../tips/TIP-V46-823-
 
 **Modified:** shared overview schema/mock; reporting service/flow repository/module/public facade/service tests/native overview tests; Admin overview screen/chart/cards/data/data tests/URL hook; Admin search caller/hook; MSW handler/tests; shared global-search component/types/tests; Admin common/overview translations; existing overview/search behavior specs; TIP manifest.
 
-**Evidence/report follow-up:** completion report, only TIP-823 task row, TIP checklist, D-01 parity rows and [evidence directory](evidence/v46-823/). No dependencies, stack changes, new migration or environment secrets in source.
+**Native follow-up (`1c8006d4`):** correct Redis-prefixed cache cleanup and v2 TTL assertion; repeatable microsecond fixtures with cleanup; real SQL plan integration test; isolated native Playwright config; unmasked desktop/mobile captures. Add partial covering index `idx_stats_daily_overview_metric_day` via migration `20261120093000_v46_overview_series_covering` with `down.sql`; document SQL-managed index in Prisma schema. No business formula, dependency or stack change.
+
+**Evidence/report follow-up:** completion report, only TIP-823 task row, TIP checklist, D-01 parity rows and [evidence directory](evidence/v46-823/). No environment secrets in source.
 
 ## 3. Verification commands and evidence
 
-The global pnpm launcher had a broken managed-version store path. Commands used the **same pinned pnpm 12.11.2**, from the existing Corepack cache, via a process-local TEMP PATH wrapper. No repo package-manager version/config changes and no hook bypass.
+Commands used the same pinned pnpm **12.11.2** from the existing Corepack cache via a process-local TEMP PATH wrapper because the global launcher had a broken managed-version store. No package-manager change or hook bypass.
 
 | Gate | Observed result | Evidence |
 |---|---|---|
 | `pnpm lint` | PASS, 8 tasks, 7 cached | [lint.log](evidence/v46-823/lint.log) |
-| `pnpm typecheck` | PASS, 8 tasks, 6 cached | [typecheck.log](evidence/v46-823/typecheck.log) |
-| `pnpm test` | PASS, 6 tasks, 1 cached; **2297 passed, 2 skipped** | [unit.log](evidence/v46-823/unit.log) |
-| Focused tests after final edits | PASS: server 6, UI 11, shared 8, Admin overview/MSW 22 = **47 tests** | Commands/counts below; full suite includes the same test files |
-| `pnpm depcheck` | PASS: 2619 frontend/shared modules, 1253 server modules | [depcheck.log](evidence/v46-823/depcheck.log) |
-| Admin build | PASS, isolated `.next-msw-tip823` | [build-admin.log](evidence/v46-823/build-admin.log) |
-| Portal build | PASS, isolated `.next-msw-tip823` | [build-portal.log](evidence/v46-823/build-portal.log) |
+| `pnpm typecheck` | PASS, 8 tasks, 7 cached | [typecheck.log](evidence/v46-823/typecheck.log) |
+| `pnpm test` | PASS, 6 tasks, 3 cached; **2297 passed, 2 pre-existing S3 skips**, 9m0.694s | [unit.log](evidence/v46-823/unit.log) |
+| `pnpm depcheck` | PASS, no violations: 2620 frontend/shared modules + 1254 server modules | [depcheck.log](evidence/v46-823/depcheck.log) |
+| Admin / Portal MSW builds | PASS, `.next-msw-tip823` | [Admin](evidence/v46-823/build-admin.log), [Portal](evidence/v46-823/build-portal.log) |
+| Admin / Portal native builds | PASS, `.next-server-tip823` | [Admin native](evidence/v46-823/build-admin-native.log), [Portal native](evidence/v46-823/build-portal-native.log) |
 | Server build | PASS | [build-server.log](evidence/v46-823/build-server.log) |
-| MSW Playwright overview + search | **10 passed**, 29.7s | [msw-behavior.log](evidence/v46-823/msw-behavior.log) |
-| D-01 parity 1440/390 | **2 passed**, 16.5s | [parity.log](evidence/v46-823/parity.log) |
-| Native overview integration | **FAILED at app bootstrap; 10 skipped**, not PASS | [native-overview.log](evidence/v46-823/native-overview.log) |
-| Native e2e / search regression / SQL plans >=10k rows | **NOT RUN / UNVERIFIED** | DB hold below |
+| MSW Playwright overview + search | **10 passed**, 1.7m | [msw-behavior.log](evidence/v46-823/msw-behavior.log) |
+| Native Playwright, identical behavior specs/assertions | **10 passed**, 1.7m, tracked `playwright.tip823.config.ts` | [native-behavior.log](evidence/v46-823/native-behavior.log) |
+| Native overview + search + actual SQL plans | **26 passed / 3 files**, 130.91s: overview 10, search 15, plan 1 | [native-verification.log](evidence/v46-823/native-verification.log) |
+| Native migration chain / rollback | PASS: both isolated DBs have all **110 migrations**, no pending; actual `down.sql` drops index inside transaction, rollback restores it | [native-migrations.log](evidence/v46-823/native-migrations.log) |
+| D-01 parity 1440/390 | **2 passed**, existing measurement at `7c44fcab` (no subsequent UI logic/style changes) | [parity.log](evidence/v46-823/parity.log) |
 
-Full unit breakdown: server 276; integrations 126 + 2 pre-existing S3 skips; shared 753; Portal 476 (cache replay); UI 72; Admin 594. Focused rerun used the commands below, **without** an extra `--` before file filters:
+Unit breakdown: server 276, integrations 126 + 2 existing skips, shared 753, Portal 476, UI 72, Admin 594. Unit results include replayed package-cache logs; native integration and both browser lanes ran against live local processes, not cache replay. Final source formatting check passed. Published logs are UTF-8/LF with trailing whitespace normalized; output/results are unchanged.
+
+Native commands after loading isolated runtime environment (see section 6):
 
 ```text
-pnpm --filter @opchub/server exec vitest run --project unit src/modules/reporting/overview.service.spec.ts src/modules/reporting/overview-intervals.spec.ts
-pnpm --filter @opchub/ui exec vitest run src/global-search/global-search.spec.tsx
-pnpm --filter @opchub/shared exec vitest run src/api-domains/overview.spec.ts
-pnpm --filter @opchub/admin exec vitest run src/features/overview src/mocks/overview-handlers.spec.ts
-pnpm --filter @opchub/server exec vitest run --project int test/reporting/overview.int.spec.ts
-pnpm --filter @opchub/e2e exec playwright test --project=behavior behavior/admin-overview.spec.ts behavior/global-search.spec.ts --workers=1
-PARITY_IDS=D-01 pnpm --filter @opchub/e2e exec playwright test --project=parity parity/parity.spec.ts --workers=1
+pnpm --filter @opchub/db exec prisma migrate deploy
+pnpm --filter @opchub/server exec vitest run --project int test/reporting/overview.int.spec.ts test/search/global-search.int.spec.ts test/reporting/overview-query-plan.int.spec.ts
+pnpm --filter @opchub/admin build
+pnpm --filter @opchub/portal build
+pnpm --filter @opchub/e2e exec playwright test -c playwright.tip823.config.ts --project=behavior behavior/admin-overview.spec.ts behavior/global-search.spec.ts --workers=1
 ```
 
-MSW builds/runs used `NEXT_PUBLIC_API_MOCKING=msw`, `NEXT_DIST_DIR=.next-msw-tip823`, free runtime ports from environment, and `NEXT_PUBLIC_PORTAL_URL` pointing to the local Portal origin used by the existing mock relay. The first MSW attempt lacked that build-time relay origin and returned 503 at login; rebuilt with the correct local configuration, then all 10 tests passed. No assertion was relaxed or bypassed.
+MSW uses the same two behavior specs with the standard Playwright config and `NEXT_PUBLIC_API_MOCKING=msw`, `NEXT_DIST_DIR=.next-msw-tip823`; native uses `off`. Both use free local ports and the correct build-time Portal origin for the existing mock relay. No test assertion was weakened, replaced by a label-only check, or skipped by target. Native screenshots reflect the seeded native database, not prototype totals.
 
 ## 4. AC traceability
 
-PASS below means the stated unit/MSW checks ran. **PARTIAL** means the criterion also requires native evidence which is absent; helper tests are not represented as executed SQL/API tests.
+All 13 criteria are verified through the combined unit, native API/SQL, and browser lanes. Native evidence supersedes the previous PARTIAL verdict; historical bootstrap failure is retained, not presented as a pass.
 
-| AC | Verdict | Evidence / gap |
+| AC | Verdict | Evidence |
 |---|---|---|
-| AC823-01 | PASS (unit/MSW) | `BUG-029 VN defaults and fresh presets independent of browser timezone`; real picker presets exercised in overview behavior spec |
-| AC823-02 | PASS (unit/MSW) | URL hook atomic fallback, preserve filters, reload and reset; behavior reload keeps year+range |
-| AC823-03 | PARTIAL | Shared schema 8 tests + MSW invalid query 400 pass; native API validation not reached |
-| AC823-04 | PARTIAL | MSW unauthenticated 401 pass; native 401/403/permission test added, not executed |
-| AC823-05 | PARTIAL | Service fake verifies bounded VN cohort args, totals/flow; MSW historical cohort test pass. PostgreSQL microsecond-boundary test added but unexecuted |
-| AC823-06 | PARTIAL | 7/7/5 helpers, service response and mock aggregation verified; SQL latest snapshot/SUM native assertions unexecuted |
-| AC823-07 | PARTIAL | Exact 12/02/2026 -> 29/12/2025 ISO lower bound verified in unit test. Native repository test uses equivalent isolated 2003/2004 boundary, not executed |
-| AC823-08 | PASS (unit) | Cache isolation/default alias-equivalence, TTL60, stale payload missing spark and malformed JSON tests pass; Redis is mocked, not a native TTL observation |
-| AC823-09 | PASS (unit/MSW) | Real picker/tab behavior, URL, selected state, 7/5 columns and all 4 unchanged monthly sparkline polylines; loading/error unit checks |
-| AC823-10 | PASS (unit/MSW) | Hint, threshold, zero requests inside debounce window, Esc, Enter/arrow navigation |
-| AC823-11 | PASS (unit/MSW) | Keyword empty text/HTML safety, no Enter route, pending/error not empty results |
-| AC823-12 | PARTIAL | Portal targets, mobile hiding and existing keyboard behavior pass in MSW; native search/permission regression not run |
-| AC823-13 | PARTIAL | MSW values change (not range echo), historical zero cohorts/live flow and conversion/CSV regression pass; native lane not run |
+| AC823-01 | PASS | VN fresh presets/defaults under differing timezone in controls tests; real picker in both browser lanes |
+| AC823-02 | PASS | URL normalization, atomic invalid-range fallback, filter preservation/reset/reload in hook + browser tests |
+| AC823-03 | PASS | Shared schema and native query validation: malformed/impossible/reversed/unpaired dates, invalid period; valid leap/same day |
+| AC823-04 | PASS | Native API missing-token 401, missing `overview.view` 403, permitted response schema |
+| AC823-05 | PASS | Native synthetic microsecond boundaries: before/start/end/next-day, exactly two cohort members/fees; live totals/flow unchanged; D-140 percentage |
+| AC823-06 | PASS | Native latest snapshots and fresh SUM across year; empty buckets zero; 7 weeks/7 months/5 years; plan fixture checks actual returned values for all periods |
+| AC823-07 | PASS | Exact 12/02/2026 -> 29/12/2025 bound in helper unit test; actual repository SQL verifies equivalent isolated 2003/2004 ISO-boundary data |
+| AC823-08 | PASS | Unit cache query suppression, alias/key isolation and stale/malformed payload; native Redis v2-key TTL >0 and <=60, live mutation stays cached in month but changes year response |
+| AC823-09 | PASS | UI loading/error/keyboard state; both browser lanes test URL, 7/5 columns and unchanged four monthly sparkline polylines |
+| AC823-10 | PASS | UI debounce/hint/threshold/Enter/arrows/Esc; real Admin browser hint threshold/escape tests |
+| AC823-11 | PASS | Keyword escaped as text; no Enter route on empty; loading/error not false-empty; browser keyword empty state |
+| AC823-12 | PASS | Existing mobile/Portal/keyboard regression; native search 15 tests exercise scope/permissions, both browser lanes exercise Portal/Admin and group/store/need targets |
+| AC823-13 | PASS | Same browser assertions in MSW/native: historical cohorts/live totals, period values/columns, unchanged sparks, conversion/CSV regression |
 
-**6 AC verified at unit/MSW level; 7 PARTIAL. No overall DONE/READY verdict.**
+### Actual SQL performance / index decision
+
+- Fixture: **905275** `stats_daily` rows, seven metrics and 35 dimensions over 2070-2080. Guard requires a test DB and an empty owned date range; fixture cleanup runs in `finally`.
+- Capture the actual two SQL queries from `OverviewSeriesRepository.series` using Prisma query events for each of week/month/year, rebind parameters safely, then execute `EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON)`. No planner forcing or invented query.
+- [Before index](evidence/v46-823/native-query-plans-before.json): year queries used sequential scans. [After index](evidence/v46-823/native-query-plans.json): **all six queries use Index Only Scan, Heap Fetches 0, no Seq Scan**. Raw SQL, parameters, row counts, timings and buffers are retained; timings are local measurements, not an SLA.
+- Add `(metric, day DESC) INCLUDE (value) WHERE dimension = ''`: equality before date range, payload covered, provincial dimensions excluded. Prisma comment records SQL-managed partial index. No wide-row pagination/deferred join is needed for this bounded aggregate query.
+- Native checks caught stale Redis cleanup/old TTL assertions and repeatability issues in synthetic test data; corrected test harness rather than relaxing business expectations.
 
 ## 5. UI parity / owner review
 
-| Viewport | Current measurement | Pair |
+| Viewport | Existing parity measurement | Pair |
 |---|---|---|
 | 1440 | **2.4831555886%** | [app](evidence/v46-823/D-01-1440.app.png) / [prototype](evidence/v46-823/D-01-1440.proto.png) / [diff](evidence/v46-823/D-01-1440.diff.png) |
 | 390 | **2.3593343909%** | [app](evidence/v46-823/D-01-390.app.png) / [prototype](evidence/v46-823/D-01-390.proto.png) / [diff](evidence/v46-823/D-01-390.diff.png) |
 
-- Measured at implementation `7c44fcab`; agent viewed both app/prototype pairs. Main blocks, picker, period underline and responsive conversion table are present. Owner image approval is **pending**, not implied by passing the pixel threshold (D-134).
-- The harness uses its **pre-existing** `OVERVIEW_CHART_MASK` (DV-V2-307-4) for live charts/sparklines. No new masks, baseline changes or threshold changes. The chart area is therefore **not visually verified by the pixel percentage**; behavior tests separately assert column counts and unchanged sparkline points.
-- Differences include live mock counts vs prototype constants, current VN day vs fixed prototype date, actual fee/conversion statuses and the pre-existing flag-vs-globe shell difference. Do not change business data to imitate prototype totals.
-- D-01 row updates in shared parity results refer to this measured commit; no unrelated scenario was remeasured.
+The old parity harness retains its pre-existing `OVERVIEW_CHART_MASK` (DV-V2-307-4), hence magenta chart regions in those comparison captures. No new masks, threshold/baseline changes or false pixel-based chart approval. New **unmasked** captures show actual charts/sparklines, after waiting for the login toast to disappear naturally:
 
-## 6. Native blocker and owner's hold
+- Native: [1440](evidence/v46-823/server-D-01-1440-unmasked.png) / [390](evidence/v46-823/server-D-01-390-unmasked.png).
+- MSW: [1440](evidence/v46-823/msw-D-01-1440-unmasked.png) / [390](evidence/v46-823/msw-D-01-390-unmasked.png).
 
-Initial native test reaches PostgreSQL but cannot initialize `ApiAppModule`: required `app_settings` record `ai` is absent (`appSetting.findUniqueOrThrow`). Required seed then reports missing `affiliate_policy.renewal_rate`. A guarded deploy attempt targeted **only `opchub_test`**, but migration `20261104090000_v46_regional_directors` fails P3018 / 42710 because enum label `regional_director` already exists. This is existing schema/migration drift, not a TIP migration.
+Agent inspected native desktop/mobile and MSW desktop captures. Layout, chart stacks, sparks and contained conversion table are visible. Live counts/date differ from fixed prototype numbers; do not fake business values to match the prototype. The existing flag-vs-globe shell difference remains documented.
 
-Owner response on 10/11/2026: **“Giữ DB test, ghi native verification chưa đạt”**. After that response, no further DB migration/seed/reset was attempted. No DB drop, force reset, migration resolve, manual schema repair or development DB mutation. The failed deploy may leave a failed migration record in `_prisma_migrations`; enum/data were not cleared. Existing native services were not stopped/reconfigured; Playwright managed only its own isolated MSW servers.
+**Owner image/PR approval is pending**, not claimed by the agent. Under D-134 the pixel percentage is advisory, not a technical DONE blocker; owner still reviews images and decides merge. These are Admin dashboard screenshots: TIP-823 does not implement a member profile screen.
 
-Pending before implementation can be called DONE:
+## 6. Original DB hold preserved; native gap resolved by isolation
 
-1. Owner/environment maintainer repairs migration history/schema and required seed, with separate authorization; do not reset under this TIP's current hold.
-2. Run native overview integration + search regression, fix any real failures, then run the same behavior specs in native lane with unchanged assertions.
-3. Run `EXPLAIN (ANALYZE, BUFFERS)` for week/month/year on >=10k representative rows; review indexes based on those plans. **No performance PASS or index-only scan claim** is made now.
-4. Review captured UI pairs; masked charts still need unmasked visual inspection if required for approval.
+Historical initial run failed bootstrap on missing `app_settings.ai`; seed found absent `affiliate_policy.renewal_rate`; migration drift produced an existing `regional_director` enum conflict. Owner instructed: **“Giữ DB test, ghi native verification chưa đạt”**. [Original failure log](evidence/v46-823/native-overview.log) remains historical evidence.
+
+To finish verification without resetting or repairing that DB, created a **new native PostgreSQL 16 cluster** in TEMP and separate loopback Memurai instance on free ports. Original PostgreSQL 5432 databases, migration history/data and original services remain unchanged. The new cluster's database names are the same `opchub_test`/`opchub_dev`, but on a different server/port; these are not the original databases. Fresh migrations/seed and demo fixture resets applied only to this isolated cluster.
+
+[Runtime record](evidence/v46-823/native-runtime.json): PostgreSQL 53790, Redis 53791, API 53792, Portal 53794, Admin 53795. Integration uses isolated `opchub_test` + Redis DB2; native browser uses isolated `opchub_dev` + Redis DB1. Fake providers/local storage, no production secrets committed. API ran natively; no Docker or mocked native API.
+
+Reproduce by provisioning a separate native PG16/Redis instance, loading valid local env, and overriding **all** `DATABASE_URL`, `DIRECT_URL`, `TEST_DATABASE_URL`, Redis URL/DB and API/Next origin/port variables before migration/seed/tests. Build with `NODE_ENV=production`, `NEXT_PUBLIC_API_MOCKING=off`, `NEXT_DIST_DIR=.next-server-tip823`; run API with local development config and native Playwright config above. Do not point seed/reset or large-fixture tests at a retained DB. Local TEMP runner/config remains available via `%TEMP%/opchub-tip823-native-current.json` for independent verification; it is not a repository prerequisite.
+
+Deployment: apply additive migration `20261120093000_v46_overview_series_covering` through the normal migration pipeline before runtime verification. Rollback removes only that index via `down.sql`; no data rewrite. Original DB drift is not repaired by this TIP and must be handled separately before running migrations on that original environment. No production/dev release or PR merge performed.
 
 ## Quality Gate — Self-Review
 
-- Scope/architecture: D-140 contract, shared zod, modular helpers/repository, frontend orchestrators, file caps, no new dependencies/migration; code committed/pushed with normal hooks.
-- Verified: lint/typecheck/unit/depcheck/builds; focused tests; MSW behavior; existing D-01 parity measurement.
-- Gaps: 7 AC need native evidence, SQL performance plans absent, owner UI approval pending. Overall **PARTIAL**, not DONE; no merge/release requested or performed.
+- Scope: D-140 contract retained; no new profile screen/search scope, dependencies or stack changes. Production follow-up is the measured covering index; test fixes preserve business assertions.
+- Architecture: modular repository/helpers, shared zod, separate tests, file caps and import boundaries pass. SQL uses bounded aggregation and measured partial covering index.
+- Verification: all 13 AC mapped; full lint/typecheck/unit/depcheck, builds, native 26, identical MSW/native browser 10+10, actual six SQL plans and migration rollback evidence.
+- Status: **DONE technically**, ready for owner PR/image review and merge into `dev`; no autonomous merge/release. Original DB hold preserved. Original environment drift remains an environment-specific operational issue, not an unrun native verification claim.

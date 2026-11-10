@@ -1,0 +1,45 @@
+## migration-final-test.log
+node : Loaded Prisma config from prisma.config.ts.
+At line:2 char:83
++ ... tFrom-Json; node (Join-Path $c.base 'run.cjs') test --filter @opchub/ ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Loaded Prisma c...isma.config.ts.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+Prisma schema loaded from prisma\schema.
+Datasource "db": PostgreSQL database "opchub_test", schema "public" at "127.0.0.1:53790"
+
+110 migrations found in prisma/migrations
+
+
+No pending migrations to apply.
+
+## migration-final-dev.log
+node : Loaded Prisma config from prisma.config.ts.
+At line:2 char:270
++ ... EXITCODE }; node (Join-Path $c.base 'run.cjs') dev --filter @opchub/d ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Loaded Prisma c...isma.config.ts.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+Prisma schema loaded from prisma\schema.
+Datasource "db": PostgreSQL database "opchub_dev", schema "public" at "127.0.0.1:53790"
+
+110 migrations found in prisma/migrations
+
+
+No pending migrations to apply.
+
+## migration-down.log
+BEGIN
+DROP INDEX
+DO
+ROLLBACK
+DO
+                             verification
+----------------------------------------------------------------------
+ down.sql and transaction rollback verified; original index preserved
+(1 row)
+
