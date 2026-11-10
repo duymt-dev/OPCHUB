@@ -1,0 +1,111 @@
+pnpm.cmd : $ tsdown
+At line:2 char:551
++ ... ; exit 1 }; pnpm.cmd --filter @opchub/server build *> (Join-Path $env ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ tsdown:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+ℹ tsdown v0.23.1 powered by rolldown v1.2.14
+ℹ config file: D:\CODING\OPCHUB\CODING\apps\server\tsdown.config.ts 
+ℹ entry: src/main-api.ts, src/main-socket.ts, src/main-worker.ts
+ℹ target: node24
+ℹ tsconfig: tsconfig.json
+
+ WARN  `noExternal` is deprecated. Use `deps.alwaysBundle` instead.
+
+ℹ Build start
+ℹ Cleaning 18 files
+ℹ Hint: consider adding deps.onlyBundle option to avoid unintended bundling of dependencies, or set deps.onlyBundle: false to disable this hint.
+See more at https://tsdown.dev/options/dependencies#deps-onlybundle
+Detected dependencies in bundle:
+- bowser
+- @prisma/debug
+- @prisma/driver-adapter-utils
+- postgres-array
+- pg-types
+- postgres-date
+- xtend
+- postgres-interval
+- postgres-bytea
+- pg-int8
+- pg
+- pg-connection-string
+- pg-protocol
+- pg-cloudflare
+- split2
+- pgpass
+- pg-pool
+- @prisma/adapter-pg
+- @prisma/client-runtime-utils
+- @prisma/client
+- nodemailer
+- @aws-sdk/checksums
+- @aws-sdk/core
+- @smithy/core
+- @smithy/types
+- @aws/lambda-invoke-store
+- @aws-sdk/middleware-sdk-s3
+- @smithy/signature-v4
+- @aws-sdk/signature-v4-multi-region
+- @aws-sdk/xml-builder
+- @aws-sdk/credential-provider-env
+- @smithy/credential-provider-imds
+- @smithy/node-http-handler
+- @aws-sdk/credential-provider-http
+- @aws-sdk/nested-clients
+- @aws-sdk/token-providers
+- @aws-sdk/credential-provider-sso
+- @aws-sdk/credential-provider-login
+- @aws-sdk/credential-provider-process
+- @aws-sdk/credential-provider-web-identity
+- @aws-sdk/credential-provider-ini
+- @aws-sdk/credential-provider-node
+- @aws-sdk/client-s3
+- @aws-sdk/s3-request-presigner
+- bn.js
+- inherits
+- safer-buffer
+- asn1.js
+- minimalistic-assert
+- safe-buffer
+- jws
+- ecdsa-sig-formatter
+- buffer-equal-constant-time
+- jwa
+- web-push
+- http_ece
+- ms
+- debug
+- has-flag
+- supports-color
+- agent-base
+- https-proxy-agent
+ℹ dist\main-api.mjs                                                     74.87 kB │ gzip:  18.03 kB
+ℹ dist\main-worker.mjs                                                  40.84 kB │ gzip:   8.90 kB
+ℹ dist\main-socket.mjs                                                  20.70 kB │ gzip:   5.93 kB
+ℹ dist\moderation-COVRIWt2.mjs.map                                       7.16 MB
+ℹ dist\query_compiler_fast_bg.postgresql.wasm-base64-9RCx-WZl.mjs.map    4.58 MB
+ℹ dist\query_compiler_fast_bg.postgresql.wasm-base64-9RCx-WZl.mjs        4.58 MB
+ℹ dist\moderation-COVRIWt2.mjs                                           4.01 MB
+ℹ dist\bot-mcOd5Qld.mjs.map                                              1.20 MB
+ℹ dist\bot-mcOd5Qld.mjs                                                668.49 kB │ gzip: 147.03 kB
+ℹ dist\main-api.mjs.map                                                126.40 kB │ gzip:  30.35 kB
+ℹ dist\es5-BqvRkxVH.mjs.map                                             74.63 kB │ gzip:  12.16 kB
+ℹ dist\main-worker.mjs.map                                              66.95 kB │ gzip:  14.46 kB
+ℹ dist\es5-BqvRkxVH.mjs                                                 52.95 kB │ gzip:   8.52 kB
+ℹ dist\main-socket.mjs.map                                              37.99 kB │ gzip:  10.74 kB
+ℹ dist\query_compiler_fast_bg.postgresql-CSn7Eg8Y.mjs.map               13.03 kB │ gzip:   3.94 kB
+ℹ dist\query_compiler_fast_bg.postgresql-CSn7Eg8Y.mjs                    7.77 kB │ gzip:   2.89 kB
+ℹ dist\rolldown-runtime-1p2KPIdQ.mjs                                     1.94 kB │ gzip:   0.87 kB
+ℹ 17 files, total: 22.73 MB
+[33m[PLUGIN_TIMINGS] [0mJavaScript callbacks ran for 30.7s of this 33.2s build (92%).
+The slowest callbacks, timed inside each callback (the wait before a callback starts is excluded, the time it awaits 
+is included):
+  - plugin tsdown:deps generateBundle (86%, 28.6s, 1 call)
+Additional callback time came from the callbacks below and from callbacks under 1s.
+1 callback is listed without a time. Its calls overlapped, so the time inside one call includes work from other calls. 
+To find its cost, profile the build with `node --cpu-prof`:
+  - plugin tsdown:deps resolveId (5992 calls)
+See https://rolldown.rs/reference/InputOptions.checks#bundlertimings for more details.
+
+✔ Build complete in 33334ms

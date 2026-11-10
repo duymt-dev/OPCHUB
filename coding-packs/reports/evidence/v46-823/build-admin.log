@@ -1,0 +1,54 @@
+pnpm.cmd : $ next build
+At line:2 char:311
++ ... KING='msw'; pnpm.cmd --filter @opchub/admin build *> (Join-Path $env: ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ next build:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 409ms
+- Experiments (use with caution):
+  · optimizePackageImports
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1769ms
+  Running TypeScript ...
+  Finished TypeScript in 9.8s ...
+  Collecting page data using 5 workers ...
+  Generating static pages using 5 workers (0/9) ...
+  Generating static pages using 5 workers (2/9) 
+  Generating static pages using 5 workers (4/9) 
+  Generating static pages using 5 workers (6/9) 
+✓ Generating static pages using 5 workers (9/9) in 396ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /affiliate/[[...slug]]
+├ ƒ /bots/[[...slug]]
+├ ƒ /events
+├ ƒ /fees
+├ ƒ /fees/transactions
+├ ƒ /first-password
+├ ƒ /forgot-password
+├ ƒ /groups
+├ ƒ /groups/[id]/chat
+├ ƒ /investors
+├ ƒ /login
+├ ƒ /marketing
+├ ƒ /members
+├ ƒ /needs
+├ ƒ /overview
+├ ƒ /projects/[[...slug]]
+├ ƒ /reports
+├ ƒ /requests/[[...tab]]
+├ ƒ /reset-password
+├ ƒ /settings
+├ ƒ /stores
+└ ƒ /two-factor
+
+
+ƒ  (Dynamic)  server-rendered on demand
+

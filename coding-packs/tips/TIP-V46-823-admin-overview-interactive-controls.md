@@ -7,7 +7,7 @@
 - Module: Admin overview / server reporting / shared overview contract / shared global-search
 - Priority: **P2** · Estimated: M · Depends on: V46-818, V46-821
 - Branch: `feature/TIP-V46-823-admin-overview-interactive-controls`; tích hợp về `dev`, không tự merge/release `main`.
-- **Review 10/11/2026: tài liệu đã chốt phạm vi theo D-140; implementation cần sửa và verify lại.** Đây không phải xác nhận implementation đạt AC.
+- **Review 10/11/2026: tài liệu đã chốt phạm vi theo D-140; implementation `7c44fcab` đã sửa, unit/MSW verified; PARTIAL chờ native verification theo chỉ đạo giữ DB test.** Đây không phải xác nhận implementation đạt AC.
 - Baseline đã đọc: implementation `26cf391d`, report `f2c31796`. Nhãn DONE trong report/task graph là kết quả báo cáo cũ; không thay thế AC của bản review này.
 - REQ / D: **REQ-122**, **REQ-625**, BR-491 (§33.4), BUG-029 (TIP-V2-305), D-89 / D-93 / D-95 (prototype và chốt backend), D-107 (phí thật, không trial), D-134 (parity tham khảo + owner duyệt ảnh), D-139 (không mở rộng tìm kiếm), **D-140** (tổng hiện tại, phát sinh theo khoảng); S-03 (cache).
 - **Parallel-safe with:** none; tránh sửa đồng thời reporting, overview, global-search và message keys liên quan.
@@ -59,6 +59,26 @@
 | `e2e/behavior/global-search.spec.ts` | modify: Admin hint/empty, hồi quy Portal/mobile |
 | `coding-packs/reports/TIP-V46-823-completion.md` | modify khi thực thi: kết quả/evidence thật thay claim sai |
 | `coding-packs/02-TASK-GRAPH.md` | modify khi cập nhật tiến độ implementation thực tế |
+| `coding-packs/reports/ui-parity/results.json` | modify: harness cập nhật riêng kết quả D-01 |
+| `coding-packs/reports/ui-parity/results.md` | modify: báo cáo sinh tự động từ harness |
+| `coding-packs/reports/ui-parity/diffs/D-01-1440.png` | create/modify nếu harness giữ diff >3% |
+| `coding-packs/reports/ui-parity/diffs/D-01-390.png` | create/modify nếu harness giữ diff >3% |
+| `coding-packs/reports/evidence/v46-823/lint.log` | create: gate output |
+| `coding-packs/reports/evidence/v46-823/typecheck.log` | create: gate output |
+| `coding-packs/reports/evidence/v46-823/unit.log` | create: full unit suite output |
+| `coding-packs/reports/evidence/v46-823/depcheck.log` | create: boundary gate output |
+| `coding-packs/reports/evidence/v46-823/build-admin.log` | create: isolated MSW build output |
+| `coding-packs/reports/evidence/v46-823/build-portal.log` | create: isolated MSW build output |
+| `coding-packs/reports/evidence/v46-823/build-server.log` | create: server build output |
+| `coding-packs/reports/evidence/v46-823/native-overview.log` | create: failed bootstrap, chưa chạy được native AC |
+| `coding-packs/reports/evidence/v46-823/msw-behavior.log` | create: behavior suite output |
+| `coding-packs/reports/evidence/v46-823/parity.log` | create: D-01 harness output |
+| `coding-packs/reports/evidence/v46-823/D-01-1440.app.png` | create: owner review screenshot |
+| `coding-packs/reports/evidence/v46-823/D-01-1440.proto.png` | create: owner review screenshot |
+| `coding-packs/reports/evidence/v46-823/D-01-1440.diff.png` | create: measured diff |
+| `coding-packs/reports/evidence/v46-823/D-01-390.app.png` | create: owner review screenshot |
+| `coding-packs/reports/evidence/v46-823/D-01-390.proto.png` | create: owner review screenshot |
+| `coding-packs/reports/evidence/v46-823/D-01-390.diff.png` | create: measured diff |
 
 Tài liệu review hiện tại: modify chính TIP này và `coding-packs/01-REQUIREMENTS-MATRIX.md` (D-140). Không mặc định sửa DateRangePicker chung hay Portal caller: truyền preset VN từ feature, props UI mới tương thích ngược. Nếu cần thêm migration/index hoặc đổi các bản dịch khác, ghi từng đường dẫn/lý do trước khi code, không dùng wildcard làm manifest.
 
@@ -185,11 +205,15 @@ Tên test dưới đây là **yêu cầu bổ sung**, không khẳng định đ�
 
 ## BUILDER-CHECKLIST
 
-- [ ] Đọc D-140 và bản TIP review này, không lấy DONE cũ làm bằng chứng nghiệm thu.
-- [ ] Kiểm pwd/branch/status; tiếp tục đúng nhánh TIP từ dev, không tạo lại feature từ main/ghi đè thay đổi người khác.
+- [x] Đọc D-140 và bản TIP review này, không lấy DONE cũ làm bằng chứng nghiệm thu.
+- [x] Kiểm pwd/branch/status; tiếp tục đúng nhánh TIP từ dev, không tạo lại feature từ main/ghi đè thay đổi người khác.
 - [ ] AC823-01 → 13 có test mang REQ/BUG tương ứng và evidence từng ca, không đánh dấu PASS bằng source review.
-- [ ] `pnpm lint && pnpm typecheck && pnpm test`, `pnpm depcheck` pass; ghi output thật, phân biệt cache replay và chạy mới.
+- [x] `pnpm lint && pnpm typecheck && pnpm test`, `pnpm depcheck` pass; ghi output thật, phân biệt cache replay và chạy mới.
 - [ ] Native overview integration + search regression pass; e2e MSW/native cùng assertion, không weaken/skip theo chế độ.
 - [ ] Build app bị ảnh hưởng pass; SQL plans cho cả 3 period; TTL/key có test.
 - [ ] Parity Tổng quan/topbar 1440/390 ghi số đo/cặp ảnh/nguyên nhân; lệch giao diện thật phải sửa. Pixel % không chặn DONE theo D-134, owner duyệt ảnh.
 - [ ] Report sửa claim TTL/số năm/search hint/test coverage; task graph phản ánh tiến độ mới. Commit/push đường dẫn cụ thể, status sạch, báo implementation DONE kèm Git SHA.
+
+### Execution note (10/11/2026)
+
+Implementation: `7c44fcab`, unit/MSW/builds verified. Native overview bootstrap failed on existing test DB drift; owner chose to preserve the test DB. No reset/repair authorized. See the completion report AC table: 6 verified at unit/MSW level, 7 PARTIAL. SQL plans and native e2e remain unverified.
