@@ -5,7 +5,7 @@
 - Ngày: 10/11/2026.
 - Implementation: `7c44fcab`; native test hardening + covering index: `1c8006d4`, trên `feature/TIP-V46-823-admin-overview-interactive-controls`.
 - Nguồn: TIP bản review `7d12222a`, REQ-122/625, D-140; D-107/134/139 giữ nguyên.
-- Không merge `dev`/`main`, không release. PR #114 là liên kết được ghi từ baseline, không xác nhận trạng thái PR hiện tại.
+- Không merge `dev`/`main`, không release. Đã kiểm PR #114: MERGED (bản cũ). Corrective follow-up nằm ở [PR #116 → dev](https://github.com/duymt-dev/OPCHUB/pull/116), owner review và tự merge.
 - Báo cáo này thay kết luận DONE cũ của implementation `26cf391d` / report `f2c31796`. Kết quả cũ không chứng minh AC của TIP sau review.
 
 Dependency check: commits `4f90b24e` (818) and `c5848a37` (821) are ancestors of the current branch (`git merge-base --is-ancestor` returned 0 for each). Existing keyboard navigation and conversion/CSV behavior were inspected and exercised in MSW regression. The old 821 task-row label is stale; only the 823 row was updated here.
