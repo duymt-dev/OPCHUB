@@ -45,6 +45,21 @@ export class AuthStateService {
     await this.redis.client.set(KEY.permVersion(userId, realm), String(version), 'EX', TTL_SEC);
   }
 
+  /** Durable concurrent replay may never restore an older security version. */
+  async setPermVersionAtLeast(userId: string, version: number, realm: Realm): Promise<void> {
+    await this.redis.client.eval(
+      `local current = tonumber(redis.call('GET', KEYS[1]) or '-1')
+       if current < tonumber(ARGV[1]) then
+         redis.call('SET', KEYS[1], ARGV[1], 'EX', ARGV[2])
+       end
+       return 1`,
+      1,
+      KEY.permVersion(userId, realm),
+      String(version),
+      String(TTL_SEC),
+    );
+  }
+
   async isLocked(userId: string, realm: Realm = 'member'): Promise<boolean> {
     return (await this.redis.client.exists(KEY.locked(userId, realm))) === 1;
   }

@@ -1,0 +1,36 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+ ✓ |int| test/admin-account/admin-auth.int.spec.ts > Đăng nhập Admin qua admin_users (TIP-V2-202, D-62, SEC-R01…R03) > AT-SEC01 MK tạm → phiên hạn chế 830ms
+ ✓ |int| test/admin-account/admin-auth.int.spec.ts > Đăng nhập Admin qua admin_users (TIP-V2-202, D-62, SEC-R01…R03) > AT-SEC01 MK yếu/không khớp/trùng MK tạm bị từ chối 1408ms
+ ✓ |int| test/admin-account/admin-auth.int.spec.ts > Đăng nhập Admin qua admin_users (TIP-V2-202, D-62, SEC-R01…R03) > AT-RB04 TK khoá không đăng nhập được 406ms
+ ✓ |int| test/admin-account/admin-auth.int.spec.ts > Đăng nhập Admin qua admin_users (TIP-V2-202, D-62, SEC-R01…R03) > REQ-215 khoá tạm 5 lần sai TK quản trị 747ms
+ ✓ |int| test/admin-account/admin-auth.int.spec.ts > Đăng nhập Admin qua admin_users (TIP-V2-202, D-62, SEC-R01…R03) > REQ-201 realm member gọi /admin 403, realm admin gọi Portal 403 480ms
+ ✓ |int| test/admin-account/admin-auth.int.spec.ts > Đăng nhập Admin qua admin_users (TIP-V2-202, D-62, SEC-R01…R03) > NA-01 D-62 đăng nhập sai cổng: chỉ báo WRONG_PORTAL khi mật khẩu đúng, không tạo phiên 818ms
+ ✓ |int| test/admin-account/admin-auth.int.spec.ts > Đăng nhập Admin qua admin_users (TIP-V2-202, D-62, SEC-R01…R03) > REQ-217 SSO email quản trị 409 195ms
+ ✓ |int| test/admin-account/admin-auth.int.spec.ts > Đăng nhập Admin qua admin_users (TIP-V2-202, D-62, SEC-R01…R03) > refresh xoay vòng bằng cookie opchub_art; logout thu hồi + audit 319ms
+ ✓ |int| test/admin-account/admin-auth.int.spec.ts > Đăng nhập Admin qua admin_users (TIP-V2-202, D-62, SEC-R01…R03) > REQ-352 bật 2FA rồi đăng nhập cần mã 435ms
+ ✓ |int| test/admin-account/admin-auth.int.spec.ts > Đăng nhập Admin qua admin_users (TIP-V2-202, D-62, SEC-R01…R03) > REQ-352 requireAdmin2fa bắt thiết lập 310ms
+ ✓ |int| test/admin-account/admin-auth.int.spec.ts > Đăng nhập Admin qua admin_users (TIP-V2-202, D-62, SEC-R01…R03) > Portal vẫn đăng nhập thành viên bình thường (không đổi hợp đồng loginResponse) 273ms
+ ✓ |int| test/admin-account/admin-profile.int.spec.ts > TIP-V46-822 REQ-322 REQ-323 REQ-351 RB-R02/RB-R03 Admin self profile and SEC-R01 password > AC-01/02 only self, persisted fields, audit and unchanged identity/role 650ms
+ ✓ |int| test/admin-account/admin-profile.int.spec.ts > TIP-V46-822 REQ-322 REQ-323 REQ-351 RB-R02/RB-R03 Admin self profile and SEC-R01 password > AC-02 security negatives: token/realm/setup/locked/deleted and fields/413 769ms
+ ✓ |int| test/admin-account/admin-profile.int.spec.ts > TIP-V46-822 REQ-322 REQ-323 REQ-351 RB-R02/RB-R03 Admin self profile and SEC-R01 password > AC-03/06 presign upload, GC protection, replacement and removal in storage_gc 318ms
+ ✓ |int| test/admin-account/admin-profile.int.spec.ts > TIP-V46-822 REQ-322 REQ-323 REQ-351 RB-R02/RB-R03 Admin self profile and SEC-R01 password > AC-03 rejects foreign/external/missing/bad MIME/oversized avatar 334ms
+ ✓ |int| test/admin-account/admin-profile.int.spec.ts > TIP-V46-822 REQ-322 REQ-323 REQ-351 RB-R02/RB-R03 Admin self profile and SEC-R01 password > AC-04 SEC-R01 new hash/version/session; both old refresh chains and access tokens revoked, durable relay idempotent 978ms
+ ✓ |int| test/admin-account/admin-profile.int.spec.ts > TIP-V46-822 REQ-322 REQ-323 REQ-351 RB-R02/RB-R03 Admin self profile and SEC-R01 password > AC-04 durable concurrent replay never lowers Redis security version 120ms
+ ✓ |int| test/admin-account/admin-profile.int.spec.ts > TIP-V46-822 REQ-322 REQ-323 REQ-351 RB-R02/RB-R03 Admin self profile and SEC-R01 password > AC-05 SEC-R01 rejects wrong current at field; no write/audit 211ms
+ ✓ |int| test/admin-account/admin-profile.int.spec.ts > TIP-V46-822 REQ-322 REQ-323 REQ-351 RB-R02/RB-R03 Admin self profile and SEC-R01 password > AC-05 SEC-R01 rejects weak at field; no write/audit 124ms
+ ✓ |int| test/admin-account/admin-profile.int.spec.ts > TIP-V46-822 REQ-322 REQ-323 REQ-351 RB-R02/RB-R03 Admin self profile and SEC-R01 password > AC-05 SEC-R01 rejects same at field; no write/audit 143ms
+ ✓ |int| test/admin-account/admin-profile.int.spec.ts > TIP-V46-822 REQ-322 REQ-323 REQ-351 RB-R02/RB-R03 Admin self profile and SEC-R01 password > AC-05 SEC-R01 rejects mismatch at field; no write/audit 137ms
+ ✓ |int| test/admin-account/admin-profile.int.spec.ts > TIP-V46-822 REQ-322 REQ-323 REQ-351 RB-R02/RB-R03 Admin self profile and SEC-R01 password > AC-05 password endpoint limits five requests per minute 607ms
+ ✓ |int| test/admin-account/admin-security.int.spec.ts > Khoá / mở / thu hồi / đổi vai trò TK quản trị (TIP-V2-202, RB-R04, RB-R08, SEC-R03) > REQ-328 khoá/mở/đổi vai trò/thu hồi ghi audit 567ms
+ ✓ |int| test/admin-account/admin-security.int.spec.ts > Khoá / mở / thu hồi / đổi vai trò TK quản trị (TIP-V2-202, RB-R04, RB-R08, SEC-R03) > REQ-353 khoá thu hồi refresh + phiên đang mở 403 528ms
+ ✓ |int| test/admin-account/admin-security.int.spec.ts > Khoá / mở / thu hồi / đổi vai trò TK quản trị (TIP-V2-202, RB-R04, RB-R08, SEC-R03) > REQ-353 thu hồi: phiên đang mở bị từ chối, không đăng nhập lại được 315ms
+ ✓ |int| test/admin-account/admin-security.int.spec.ts > Khoá / mở / thu hồi / đổi vai trò TK quản trị (TIP-V2-202, RB-R04, RB-R08, SEC-R03) > RB-R04 đổi vai trò: token cũ 401, refresh (không đăng nhập lại) nhận quyền vai trò mới 317ms
+ ✓ |int| test/admin-account/admin-security.int.spec.ts > Khoá / mở / thu hồi / đổi vai trò TK quản trị (TIP-V2-202, RB-R04, RB-R08, SEC-R03) > REQ-324 Super Admin không khoá/thu hồi được 260ms
+
+ Test Files  3 passed (3)
+      Tests  27 passed (27)
+   Start at  16:40:52
+   Duration  38.13s (import 50%, tests 42%, transform 7%)
+

@@ -811,3 +811,14 @@ old manual fee behavior stays asserted. Final gate counts and native/MSW evidenc
 
 REQ-628: shared ai-providers/mask-pii specs, adapter local.spec, settings ai-settings/ai-router/ai-migration/ai-plans integration, retained llm-config/runtime and bot-bulk-worker checks, housekeeping aiCalls, Admin ai-tab/MSW tests and identical ai-providers E2E. Full/native gates tracked in TIP-V46-811-completion.md until finalization.
 REQ-629: app-notify shared/API/UI specs and identical app-notify E2E, permission/input/413/audit and acting-Admin notification tests. D125 configuration only, no Web Push delivery claimed.
+
+## TIP-V46-822 — REQ-322/323/351, RB-R02/RB-R03, NA-26
+
+Self Admin profile and SEC-R01 in-session password: shared `api/admin-auth.spec.ts`;
+Admin `features/profile/admin-profile.spec.tsx` and `mocks/admin-profile-handlers.spec.ts`;
+native `test/admin-account/admin-profile.int.spec.ts` plus retained admin-auth/security suites;
+identical MSW/native `e2e/behavior/admin-profile.spec.ts`. Includes account/realm/restricted
+session negatives, validation/413/429, immutable identity/role, real storage ownership and GC,
+Argon2/version/refresh revocation/new current session, transactional audit/outbox and idempotent
+monotonic Redis replay. Actual gate counts and verification status are authoritative in
+`coding-packs/reports/TIP-V46-822-completion.md`; no unrelated historical gap is closed here.

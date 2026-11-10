@@ -1,0 +1,16 @@
+node : $ tsx --env-file-if-exists=.env seed/demo.ts
+At line:2 char:592
++ ...  runtime'}; node (Join-Path $c.base 'run.cjs') dev --filter @opchub/d ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ tsx --env-fil...nv seed/demo.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+Seed demo xong trên opchub_dev (1725 ms)
+node : $ node scripts/flush-dev-cache.mjs
+At line:2 char:746
++ ... TEXITCODE}; node (Join-Path $c.base 'run.cjs') dev --filter @opchub/s ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ node scripts/flush-dev-cache.mjs:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+flush:dev-cache: xoá 6 khoá trên db 1

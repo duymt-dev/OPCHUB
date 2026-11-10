@@ -1,4 +1,9 @@
 import { Global, Module } from '@nestjs/common';
+import { UploadsCoreModule } from '@/modules/uploads';
+import { AdminProfileController } from './controllers/admin-profile.controller';
+import { AdminProfileService } from './services/admin-profile.service';
+import { AdminProfileRepository } from './repositories/admin-profile.repository';
+import { AdminSessionSyncHandler } from './services/admin-session-sync.handler';
 import { ADMIN_DIRECTORY_PORT, ADMIN_GRANTS_PORT } from '@/common/auth';
 import { ADMIN_EMAIL_PORT, AccountCoreModule } from '@/modules/account';
 import { MailCoreModule } from '@/modules/mail';
@@ -19,6 +24,7 @@ import { AdminRolesService } from './services/admin-roles.service';
 import { RoleGrantsService } from './services/role-grants.service';
 
 const core = [
+  AdminSessionSyncHandler,
   AdminUserRepository,
   AdminRoleRepository,
   AdminRefreshTokenRepository,
@@ -46,15 +52,22 @@ export class AdminAccountCoreModule {}
 
 /** Process api: tab "Tài khoản quản trị" + "Vai trò & phân quyền" */
 @Module({
-  imports: [AdminAccountCoreModule, AccountCoreModule, MailCoreModule],
+  imports: [AdminAccountCoreModule, AccountCoreModule, MailCoreModule, UploadsCoreModule],
   providers: [
     AdminAccountsService,
+    AdminProfileRepository,
+    AdminProfileService,
     AdminRolesService,
     AdminSessionService,
     AdminMfaService,
     AdminAuthService,
     AdminSecurityService,
   ],
-  controllers: [AdminAuthController, AdminAccountsController, AdminRolesController],
+  controllers: [
+    AdminAuthController,
+    AdminProfileController,
+    AdminAccountsController,
+    AdminRolesController,
+  ],
 })
 export class AdminAccountHttpModule {}

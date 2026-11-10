@@ -22,6 +22,8 @@ const fundraisingRef = z.object({
 });
 
 export const outboxEvents = {
+  // Admin IDs include legacy/demo text identifiers, just like adminMeSchema.id.
+  'admin.session_changed': z.strictObject({ adminId: z.string().min(1).max(100) }),
   'ai.budget_warned': z.strictObject({
     month: z.string().regex(/^\d{4}-\d{2}$/),
     pct: z.number().int().min(1).max(100),

@@ -26,6 +26,8 @@ export const ADMIN_SESSION_SELECT = {
   id: true,
   name: true,
   email: true,
+  phone: true,
+  avatarUrl: true,
   roleId: true,
   status: true,
   mustChangePwd: true,

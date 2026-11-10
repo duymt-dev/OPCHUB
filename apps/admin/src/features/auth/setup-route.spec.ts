@@ -6,6 +6,8 @@ const me = (o: Partial<AdminMe>): AdminMe => ({
   id: 'a',
   name: 'A',
   email: 'a@x.vn',
+  phone: null,
+  avatarUrl: null,
   roleId: 'r',
   roleName: 'Giảng viên',
   isSuperAdmin: false,
