@@ -59,6 +59,8 @@ export class AdminSessionService {
       id: a.id,
       name: a.name,
       email: a.email,
+      phone: a.phone,
+      avatarUrl: a.avatarUrl,
       roleId: a.roleId,
       roleName: a.role?.name ?? null,
       isSuperAdmin: a.role?.key === 'super_admin',

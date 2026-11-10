@@ -1,4 +1,4 @@
-import type { AdminMe } from '../../api';
+import type { AdminMe, AdminUpdateProfileRequest } from '../../api';
 import {
   ADMIN_RBAC_ERRORS as ERR,
   type AdminAccountCreateParsed,
@@ -157,6 +157,8 @@ export function mockAdminMeOf(id: string, require2fa = false): AdminMe | null {
     id: a.id,
     name: a.name,
     email: a.email,
+    phone: a.phone,
+    avatarUrl: a.avatarUrl,
     roleId: a.roleId,
     roleName: r?.name ?? null,
     isSuperAdmin: r?.key === 'super_admin',
@@ -188,7 +190,31 @@ export function mockAdminEnable2fa(id: string): void {
   if (a) a.twoFactor = true;
 }
 
+export function changeMockAdminPassword(id: string, password: string): void {
+  mockAdminFirstPassword(id, password);
+  logSetting(
+    id,
+    'admin_account.change_password',
+    id,
+    'đổi mật khẩu quản trị cá nhân',
+    'permission',
+  );
+}
+
 export const mockAdminPassword = (id: string) => state().admins.find((x) => x.id === id)?.password;
+
+/** TIP-V46-822: identity and role cannot be changed through self-service. */
+export function updateMockAdminProfile(id: string, body: AdminUpdateProfileRequest): void {
+  const account = state().admins.find((a) => a.id === id);
+  if (account) Object.assign(account, body);
+  logSetting(
+    id,
+    'admin_account.update_profile',
+    id,
+    'cập nhật hồ sơ quản trị cá nhân',
+    'permission',
+  );
+}
 
 /** TK quản trị active có khoá `key` (D-63: nhân sự phụ trách = `services.action`) */
 export function mockAdminsWith(key: AdminPermissionKey): { id: string; name: string }[] {

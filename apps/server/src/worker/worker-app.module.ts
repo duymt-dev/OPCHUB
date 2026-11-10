@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { AdminSessionProcessor } from './processors/admin-session.processor';
 import { PushProcessor } from './processors/push.processor';
 import { AiBudgetProcessor } from './processors/ai-budget.processor';
 import { AiBudgetNotifyHandler } from '@/modules/llm-config';
@@ -99,6 +100,7 @@ import { OnboardingProcessor } from './processors/onboarding.processor';
     HtmlBackfillService,
     HtmlBackfillProcessor,
     AccountProcessor,
+    AdminSessionProcessor,
     EventProcessor,
     HousekeepingProcessor,
     AffiliateProcessor,

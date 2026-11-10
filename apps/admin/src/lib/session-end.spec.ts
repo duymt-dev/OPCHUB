@@ -10,6 +10,8 @@ const ME: AdminMe = {
   id: 'm1',
   name: 'Nguyễn An',
   email: 'an@example.vn',
+  phone: null,
+  avatarUrl: null,
   roleId: 'r-admin',
   roleName: 'Quản trị viên',
   isSuperAdmin: false,

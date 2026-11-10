@@ -1,4 +1,5 @@
 import { clientLogHandlers } from './client-log';
+import { adminProfileHandlers } from './admin-profile';
 import { searchHandlers } from './search';
 import { memberStatusHandlers } from './member-status';
 import { adminProjectHandlers } from './admin-projects';
@@ -34,6 +35,7 @@ import { affiliateWriteHandlers } from './affiliate-write';
 import { affiliateDemoHandlers } from './affiliate-demo';
 
 export const handlers = [...authHandlers, ...shellHandlers];
+handlers.unshift(...adminProfileHandlers);
 handlers.push(...aiProviderHandlers, ...appNotifyHandlers);
 // Handler theo màn đứng trước listHandlers để thay bản danh sách cơ bản (cùng đường dẫn)
 handlers.push(...memberHandlers);

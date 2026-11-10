@@ -3,7 +3,7 @@
 import { AdminSearch } from './admin-search';
 import { AppShell, LanguageSwitch, useToast } from '@opchub/ui';
 import { useLocale, useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { languageOptions, LOCALE_COOKIE } from '@opchub/shared/fixtures';
 import { logout } from '@/features/auth';
@@ -76,6 +76,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
   const tAuth = useTranslations('auth');
   const locale = useLocale();
   const router = useRouter();
+  const pathname = usePathname();
   const me = useAuthStore((s) => s.me);
   const signOut = useAuthStore((s) => s.signOut);
   const toast = useToast();
@@ -108,12 +109,14 @@ export function AdminShell({ children }: { children: ReactNode }) {
         ...(badges[n.key] ? { badge: badges[n.key] } : {}),
       }))}
       activeKey={active?.key ?? 'overview'}
-      pageTitle={t(`nav.${active?.key ?? 'overview'}`)}
+      pageTitle={
+        pathname === '/profile' ? t('shell.profile') : t(`nav.${active?.key ?? 'overview'}`)
+      }
       user={{
         name: me.name,
         subtitle: me.roleName ?? '',
         avatarColor: '#722ED1',
-        avatarText: 'QT',
+        ...(me.avatarUrl ? { avatarUrl: me.avatarUrl } : {}),
       }}
       labels={labels}
       notifications={<AdminNotifications />}
@@ -128,6 +131,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
       }
       search={<AdminSearch />}
       onNavigate={(href) => router.push(href)}
+      onProfile={() => router.push('/profile')}
       {...(canSettings ? { onSettings: () => router.push('/settings') } : {})}
       onBack={() => router.push('/overview')}
       onLogout={() => {
