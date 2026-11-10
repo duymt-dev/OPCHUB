@@ -1,0 +1,14 @@
+pnpm.cmd : $ depcruise apps/portal apps/admin packages e2e --config .dependency-cruiser.cjs && depcruise apps/server
+--config .dependency-cruiser.cjs --ts-config tsconfig.depcruise.server.json
+At line:2 char:518
++ ... TEXITCODE}; pnpm.cmd depcheck *> $env:TEMP/tip822-depcheck.log; Get-C ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ depcruise app...ise.server.json:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+✔ no dependency violations found (2638 modules, 7998 dependencies cruised)
+
+
+✔ no dependency violations found (1260 modules, 5995 dependencies cruised)
+

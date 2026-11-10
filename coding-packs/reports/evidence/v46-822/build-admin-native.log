@@ -1,0 +1,55 @@
+node : $ next build
+At line:2 char:83
++ ... tFrom-Json; node (Join-Path $c.base 'run.cjs') dev --filter @opchub/a ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ next build:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 1077ms
+- Experiments (use with caution):
+  · optimizePackageImports
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 11.2s
+  Running TypeScript ...
+  Finished TypeScript in 46s ...
+  Collecting page data using 5 workers ...
+  Generating static pages using 5 workers (0/10) ...
+  Generating static pages using 5 workers (2/10)
+  Generating static pages using 5 workers (4/10)
+  Generating static pages using 5 workers (7/10)
+✓ Generating static pages using 5 workers (10/10) in 1816ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /affiliate/[[...slug]]
+├ ƒ /bots/[[...slug]]
+├ ƒ /events
+├ ƒ /fees
+├ ƒ /fees/transactions
+├ ƒ /first-password
+├ ƒ /forgot-password
+├ ƒ /groups
+├ ƒ /groups/[id]/chat
+├ ƒ /investors
+├ ƒ /login
+├ ƒ /marketing
+├ ƒ /members
+├ ƒ /needs
+├ ƒ /overview
+├ ƒ /profile
+├ ƒ /projects/[[...slug]]
+├ ƒ /reports
+├ ƒ /requests/[[...tab]]
+├ ƒ /reset-password
+├ ƒ /settings
+├ ƒ /stores
+└ ƒ /two-factor
+
+
+ƒ  (Dynamic)  server-rendered on demand
+

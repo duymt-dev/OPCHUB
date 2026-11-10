@@ -30,6 +30,8 @@ export const adminMeSchema = z.object({
   id: z.string(),
   name: z.string(),
   email: z.string(),
+  phone: z.string().nullable().default(null),
+  avatarUrl: z.string().nullable().default(null),
   roleId: z.string().nullable(),
   roleName: z.string().nullable(),
   isSuperAdmin: z.boolean(),
@@ -42,6 +44,47 @@ export const adminMeSchema = z.object({
   twoFactorRequired: z.boolean(),
 });
 export type AdminMe = z.infer<typeof adminMeSchema>;
+
+/** TIP-V46-822: reject email, role and a caller-supplied target id. */
+export const adminUpdateProfileSchema = z.strictObject({
+  name: z.string().trim().min(2, 'Họ tên tối thiểu 2 ký tự').max(100, 'Họ tên tối đa 100 ký tự'),
+  phone: z
+    .string()
+    .trim()
+    .max(30, 'Số điện thoại tối đa 30 ký tự')
+    .transform((value) => value || null)
+    .nullable()
+    .optional(),
+  avatarUrl: z.url('URL ảnh không hợp lệ').max(2048).nullable().optional(),
+});
+export type AdminUpdateProfileRequest = z.infer<typeof adminUpdateProfileSchema>;
+
+export const adminChangePasswordSchema = z
+  .strictObject({
+    currentPassword: z.string().min(1, 'Vui lòng nhập mật khẩu hiện tại').max(128),
+    newPassword: z
+      .string()
+      .max(128)
+      .refine(isStrongAdminPassword, ADMIN_AUTH_MESSAGES.weakPassword),
+    confirmPassword: z.string().min(1, 'Vui lòng xác nhận mật khẩu mới').max(128),
+  })
+  .superRefine((body, ctx) => {
+    if (body.newPassword !== body.confirmPassword) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['confirmPassword'],
+        message: ADMIN_AUTH_MESSAGES.mismatch,
+      });
+    }
+    if (body.newPassword === body.currentPassword) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['newPassword'],
+        message: 'Mật khẩu mới phải khác mật khẩu hiện tại',
+      });
+    }
+  });
+export type AdminChangePasswordRequest = z.infer<typeof adminChangePasswordSchema>;
 
 /** Phiên Admin FE (TIP-V2-204): quyền tính từ `admin.permissions`, không còn `me.systemRole` */
 export const adminLoginResponseSchema = z.object({

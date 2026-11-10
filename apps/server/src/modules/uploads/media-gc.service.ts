@@ -97,6 +97,7 @@ export class MediaGcService {
   private async stillReferenced(urls: string[]): Promise<Set<string>> {
     const rows = await this.prisma.db.$queryRaw<{ url: string }[]>`
       SELECT avatar_url AS url FROM users WHERE avatar_url = ANY(${urls})
+      UNION ALL SELECT avatar_url FROM admin_users WHERE avatar_url = ANY(${urls})
       UNION ALL SELECT cover_url FROM groups WHERE cover_url = ANY(${urls})
       UNION ALL SELECT cover_url FROM events WHERE cover_url = ANY(${urls})
       UNION ALL SELECT cover_url FROM projects WHERE cover_url = ANY(${urls})

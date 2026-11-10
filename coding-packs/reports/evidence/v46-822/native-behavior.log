@@ -1,0 +1,36 @@
+node : [WebServer] (node:14844) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At line:2 char:301
++ ... TEXITCODE}; node (Join-Path $c.base 'run.cjs') dev --filter @opchub/e ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:27844) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:25148) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:21856) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:17308) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:25668) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (2150 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 6 khoá trên db 1
+(node:11536) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:31384) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:31384) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+  ok 1 [behavior] › behavior\admin-profile.spec.ts:19:1 › TIP-V46-822 AC-01/02/03 Admin profile menu, own info, avatar upload/removal and topbar sync (13.7s)
+  ok 2 [behavior] › behavior\admin-profile.spec.ts:67:1 › TIP-V46-822 AC-04/05 password field errors then successful change preserves current session (10.9s)
+
+  2 passed (1.2m)

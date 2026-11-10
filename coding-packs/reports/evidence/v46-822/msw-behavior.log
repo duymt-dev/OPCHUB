@@ -1,0 +1,21 @@
+pnpm.cmd : [WebServer] (node:22368) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At line:2 char:605
++ ... PROTO_PORT; pnpm.cmd --filter @opchub/e2e exec playwright test --proj ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:4596) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:23248) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:21316) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\admin-profile.spec.ts:19:1 › TIP-V46-822 AC-01/02/03 Admin profile menu, own info, avatar upload/removal and topbar sync (6.2s)
+  ok 2 [behavior] › behavior\admin-profile.spec.ts:67:1 › TIP-V46-822 AC-04/05 password field errors then successful change preserves current session (4.6s)
+
+  2 passed (46.8s)

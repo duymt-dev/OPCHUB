@@ -206,14 +206,77 @@ export const adminMeSchema = z.object({
 
 ## BUILDER-CHECKLIST
 
-- [ ] 1. Mở rộng `packages/shared/src/api/admin-auth.ts`: cập nhật `adminMeSchema`, thêm `adminUpdateProfileSchema` và `adminChangePasswordSchema`.
-- [ ] 2. Cập nhật `mockAdminMeOf` trong `packages/shared/src/mock-data/domains/admin-rbac.ts`.
-- [ ] 3. Mở rộng `ADMIN_SESSION_SELECT` trong `admin-user.repository.ts`, thêm hàm `updateProfile` và `updatePassword`.
-- [ ] 4. Mở rộng `admin-session.service.ts` và `admin-auth.service.ts`: bổ sung logic cập nhật hồ sơ và đổi mật khẩu.
-- [ ] 5. Bổ sung 2 route `PATCH me` và `POST change-password` trong `admin-auth.controller.ts`.
-- [ ] 6. Cập nhật `media-gc.service.ts`: thêm `admin_users.avatar_url` vào `stillReferenced`.
-- [ ] 7. Cập nhật `admin-shell.tsx`: truyền `avatarUrl` và `onProfile` vào `AppShell`.
-- [ ] 8. Dựng trang `apps/admin/src/app/(admin)/profile/page.tsx` và component `AdminProfileScreen`.
-- [ ] 9. Viết hook `useAdminProfile` và API client gọi backend.
-- [ ] 10. Viết test tích hợp server `admin-profile.int.spec.ts` và unit test `admin-profile.spec.tsx`.
-- [ ] 11. Chạy kiểm tra chất lượng toàn diện: `pnpm lint && pnpm typecheck && pnpm test`.
+- [x] 1. Mở rộng `packages/shared/src/api/admin-auth.ts`: cập nhật `adminMeSchema`, thêm `adminUpdateProfileSchema` và `adminChangePasswordSchema`.
+- [x] 2. Cập nhật `mockAdminMeOf` trong `packages/shared/src/mock-data/domains/admin-rbac.ts`.
+- [x] 3. Mở rộng `ADMIN_SESSION_SELECT`; hàm `updateProfile`/`updatePassword` ở repository profile riêng.
+- [x] 4. Map `admin-session.service.ts`; logic profile/password tách vào `AdminProfileService`, giữ auth service hiện có.
+- [x] 5. Bổ sung 2 route `PATCH me` và `POST change-password` qua `AdminProfileController` riêng.
+- [x] 6. Cập nhật `media-gc.service.ts`: thêm `admin_users.avatar_url` vào `stillReferenced`.
+- [x] 7. Cập nhật `admin-shell.tsx`: truyền `avatarUrl` và `onProfile` vào `AppShell`.
+- [x] 8. Dựng trang `apps/admin/src/app/(admin)/profile/page.tsx` và component `AdminProfileScreen`.
+- [x] 9. Viết hook `useAdminProfile` và API client gọi backend.
+- [x] 10. Viết test tích hợp server `admin-profile.int.spec.ts` và unit test `admin-profile.spec.tsx`.
+- [x] 11. Chạy kiểm tra chất lượng toàn diện: `pnpm lint && pnpm typecheck && pnpm test`.
+
+### Execution manifest supplement (10/11/2026, before implementation)
+
+Approved TIP implemented with separate modules rather than growing authentication orchestration. Existing upload endpoint is **POST /uploads/presign + PUT storage**, not the nonexistent `/uploads/avatar`; reuse that exact upload contract and ImageRefService ownership/MIME/size validation. Normal full Admin guard protects profile/password (restricted setup sessions still finish existing first-password/2FA routes). Password body uses raw zod parsing so HTML-like password characters are never sanitized. Strong-password/mismatch/same rules live in shared zod. Name/phone bounded, empty phone normalized to null; unknown email/role/id fields rejected. All self writes audit transactionally; avatar replacement enqueues GC transactionally. Conditional password-hash update handles races; refresh revoke/version bump/audit/outbox in one transaction; current session is reissued, durable consumer reloads latest version (never replays an older version).
+
+Additional exact paths (create unless marked modify):
+- `packages/shared/src/api/admin-auth.spec.ts`: validation/compatibility tests.
+- `apps/server/src/modules/admin-account/controllers/admin-profile.controller.ts`: two thin routes; original auth controller unchanged.
+- `apps/server/src/modules/admin-account/services/admin-profile.service.ts`: self-service orchestration; original auth service unchanged.
+- `apps/server/src/modules/admin-account/repositories/admin-profile.repository.ts`: conditional self writes; base repository only session projection changes.
+- `apps/server/src/modules/admin-account/services/admin-session-sync.handler.ts`: durable Redis version synchronization from latest DB row.
+- `apps/server/src/modules/admin-account/admin-account.module.ts` (modify): profile providers/controller + uploads dependency, sync handler core export.
+- `apps/server/src/modules/admin-account/index.ts` (modify): public sync handler export.
+- `packages/shared/src/outbox/events.ts` (modify): admin.session_changed event, no credential payload.
+- `apps/server/src/worker/processors/admin-session.processor.ts`: register idempotent consumer.
+- `apps/server/src/worker/worker-app.module.ts` (modify): register processor.
+- `apps/admin/src/features/profile/index.ts`: public feature export.
+- `apps/admin/src/features/profile/types.ts`: hook/component contracts.
+- `apps/admin/src/features/profile/components/profile-details.tsx`: extracted personal-info card.
+- `apps/admin/src/features/profile/components/password-card.tsx`: extracted password form.
+- `apps/admin/src/features/profile/components/security-card.tsx`: extracted read-only security card.
+- `apps/admin/src/features/profile/hooks/use-profile-password.ts`: password mutation/form, field errors and new session.
+- `apps/admin/src/features/profile/form-errors.ts`: safe form error mapping.
+- `apps/admin/src/mocks/admin-profile-handlers.spec.ts`: same shared validation and persistence tests.
+- `e2e/behavior/admin-profile.spec.ts`: same native/MSW browser assertions + desktop/mobile screenshots.
+- `coding-packs/reports/TIP-V46-822-completion.md`: actual results/AC traceability.
+- `coding-packs/02-TASK-GRAPH.md` (modify): only 822 row.
+
+Existing `admin-rbac.ts` (361 lines) receives only compact profile-mutation export and session fields, remains below cap. No table/migration/dependency added. Existing MSW session/GET me reads the same account data. Native verification reuses the separate TIP823 cluster, never resets/repairs original 5432 DB. Screenshots/evidence exact paths will be recorded before capture.
+
+- pps/admin/src/mocks/handlers/uploads.ts (modify): expose ownership/size/MIME verification of fake uploaded avatars; profile mock rejects foreign/unuploaded URLs like native.
+
+- pps/admin/src/features/auth/setup-route.spec.ts (modify): add nullable fields to existing typed session fixture.
+- pps/admin/src/lib/session-end.spec.ts (modify): same additive AdminMe fixture compatibility.
+
+Evidence manifest before capture (create):
+- `coding-packs/reports/evidence/v46-822/server-profile-1440.png`
+- `coding-packs/reports/evidence/v46-822/server-profile-390.png`
+- `coding-packs/reports/evidence/v46-822/msw-profile-1440.png`
+- `coding-packs/reports/evidence/v46-822/msw-profile-390.png`
+- `coding-packs/reports/evidence/v46-822/lint.log`
+- `coding-packs/reports/evidence/v46-822/typecheck.log`
+- `coding-packs/reports/evidence/v46-822/unit.log`
+- `coding-packs/reports/evidence/v46-822/depcheck.log`
+- `coding-packs/reports/evidence/v46-822/native-integration.log`
+- `coding-packs/reports/evidence/v46-822/native-behavior.log`
+- `coding-packs/reports/evidence/v46-822/msw-behavior.log`
+- `coding-packs/reports/evidence/v46-822/build-server.log`
+- `coding-packs/reports/evidence/v46-822/build-admin-native.log`
+- `coding-packs/reports/evidence/v46-822/build-admin-msw.log`
+
+- pps/server/src/common/auth/auth-state.service.ts (modify): monotonic Redis version setter for durable replay; older concurrent delivery cannot downgrade the current security version.
+
+UI source check: prototype menu explicitly navigates into Portal, not an Admin profile. This TIP supplies the approved Admin-only layout, using the existing AppShell content padding and AntD cards. No comparable Admin prototype screen exists; capture real desktop/mobile screenshots, do not invent a parity percentage or copy Portal authentication behavior.
+
+- coding-packs/audit/W1/TEST-GAPS.md (modify): append only TIP822 REQ-322/323/351/NA-26 test traceability; older findings untouched.
+
+- coding-packs/reports/evidence/v46-822/focused.log (create): final component/MSW rerun including visible avatar errors.
+- coding-packs/reports/evidence/v46-822/native-restore.log (create): isolated demo seed/password and Redis dev-cache restore after browser verification.
+
+## Completion (10/11/2026)
+
+Technical DONE at source commit `b843efb0`: 2308 unit passed + 2 existing S3 skips; native 27; identical native/MSW browser 2+2; lint/typecheck/build/depcheck passed. Owner reviews actual Admin Profile desktop/mobile images and decides merge into dev. No original DB reset/repair or automatic release. See completion report for exact evidence and commands.
