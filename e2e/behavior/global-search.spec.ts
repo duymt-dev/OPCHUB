@@ -43,7 +43,9 @@ for (const admin of [false, true]) {
     await expect(search).toHaveValue('');
     await expect(list).toHaveCount(0);
     await search.fill('zzqxnotfound');
-    await expect(list).toHaveText('Không tìm thấy kết quả');
+    await expect(list).toHaveText(
+      admin ? 'Không tìm thấy kết quả cho ‘zzqxnotfound’' : 'Không tìm thấy kết quả',
+    );
     await search.press('Enter');
     await expect(page).toHaveURL(start);
     await search.fill('MediaSoft');
@@ -57,6 +59,26 @@ for (const admin of [false, true]) {
     await expect(search).toBeVisible();
   });
 }
+
+test('REQ-625 Admin hint threshold, Escape and keyword empty state', async ({ page }) => {
+  await login(page, true);
+  const search = page.getByRole('combobox', { name: /^Tìm thành viên/ });
+  let requests = 0;
+  page.on('request', (request) => {
+    if (new URL(request.url()).pathname === '/v1/admin/search') requests += 1;
+  });
+  await search.focus();
+  await expect(page.getByRole('status').filter({ hasText: 'Nhập ít nhất 2 ký tự' })).toBeVisible();
+  await search.fill('a');
+  await search.press('Enter');
+  await page.waitForTimeout(350); // verify the debounce window does not send an under-threshold request
+  expect(requests).toBe(0);
+  await expect(page.getByRole('listbox')).toHaveCount(0);
+  await search.press('Escape');
+  await expect(page.getByText('Nhập ít nhất 2 ký tự để tìm kiếm...')).toHaveCount(0);
+  await search.fill('zzqxnotfound');
+  await expect(page.getByRole('listbox')).toHaveText('Không tìm thấy kết quả cho ‘zzqxnotfound’');
+});
 
 test('Portal BR-491 group target: joined opens chat, unjoined opens join dialog', async ({
   page,

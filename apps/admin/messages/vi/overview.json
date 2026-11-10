@@ -4,6 +4,8 @@
   "stats": {
     "members": "Thành viên",
     "membersDelta": "+{pct}% tháng này",
+    "membersRangeDelta": "+{pct}% trong khoảng đã chọn",
+    "freshRangeDelta": "Trong khoảng đã chọn",
     "communities": "Cộng đồng",
     "communitiesDelta": "+{n} nhóm mới",
     "fresh": "Thành viên mới",
@@ -18,6 +20,7 @@
     "year": "Năm",
     "delta": "+{pct}%",
     "deltaNote": "+{n} thành viên tháng này",
+    "rangeDeltaNote": "+{n} thành viên trong khoảng đã chọn",
     "active": "Đang hoạt động",
     "new": "Mới",
     "inactive": "Chưa kích hoạt"

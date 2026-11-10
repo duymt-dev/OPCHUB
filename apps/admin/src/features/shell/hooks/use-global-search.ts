@@ -1,6 +1,6 @@
 'use client';
 
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { ApiError } from '@/lib/api-client';
 import { useAuthStore } from '@/lib/auth-store';
@@ -21,19 +21,15 @@ export function useGlobalSearch() {
     queryFn: () => fetchGlobalSearch(debounced),
     enabled: !!userId && debounced.length >= 2,
     staleTime: 30_000,
-    placeholderData: (previous, previousQuery) =>
-      previousQuery &&
-      previousQuery.queryKey[1] === userId &&
-      previousQuery.queryKey[2] === permissions
-        ? keepPreviousData(previous)
-        : undefined,
     retry: false,
   });
   const forbidden =
     result.error instanceof ApiError && [401, 402, 403].includes(result.error.status);
   return {
     onQuery: setQuery,
+    loading: query.trim() !== debounced || result.isPending,
+    failed: query.trim() === debounced && result.isError,
     open: query.trim().length >= 2 && !forbidden,
-    groups: result.isError ? [] : (result.data?.groups ?? []),
+    groups: query.trim() !== debounced || result.isError ? [] : (result.data?.groups ?? []),
   };
 }

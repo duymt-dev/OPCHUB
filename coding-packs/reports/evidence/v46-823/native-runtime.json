@@ -1,0 +1,24 @@
+{
+    "date":  "2026-11-10",
+    "postgres":  "PostgreSQL 16, separate native initdb cluster",
+    "redis":  "Separate native Memurai instance, loopback only",
+    "ports":  {
+                  "api":  53792,
+                  "socket":  53793,
+                  "portal":  53794,
+                  "redis":  53791,
+                  "proto":  53796,
+                  "admin":  53795,
+                  "stub":  53797,
+                  "pg":  53790
+              },
+    "integrationDatabase":  "opchub_test in the separate cluster",
+    "browserDatabase":  "opchub_dev in the separate cluster",
+    "integrationRedisDb":  2,
+    "browserRedisDb":  1,
+    "originalDatabases":  "Original PostgreSQL 5432 databases and services preserved; no reset/repair",
+    "migrationCount":  110,
+    "nextDistDir":  ".next-server-tip823",
+    "browserConfig":  "e2e/playwright.tip823.config.ts",
+    "externalProviders":  "fake/local; no external paid services"
+}

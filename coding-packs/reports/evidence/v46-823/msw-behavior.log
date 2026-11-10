@@ -1,0 +1,29 @@
+pnpm.cmd : [WebServer] (node:15368) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At line:2 char:442
++ ... KING='msw'; pnpm.cmd --filter @opchub/e2e exec playwright test --proj ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:12916) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:10504) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 10 tests using 1 worker
+
+(node:31588) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [behavior] › behavior\admin-overview.spec.ts:11:1 › REQ-623 BR-475-477 conversion table matches API, CSV3 regions has BOM and mobile scroll stays contained (4.5s)
+  ok  2 [behavior] › behavior\admin-overview.spec.ts:77:1 › REQ-122 overview range and periods preserve independent monthly sparklines (11.7s)
+  ok  3 [behavior] › behavior\admin-overview.spec.ts:142:1 › REQ-122 D-140 historical range changes cohorts, not live totals or flow (5.1s)
+  ok  4 [behavior] › behavior\admin-overview.spec.ts:159:3 › Admin · Tổng quan v4 › Luồng hệ thống: 5 thẻ theo số API, nhãn Hoàn tất / Cần làm (3.0s)
+  ok  5 [behavior] › behavior\admin-overview.spec.ts:178:3 › Admin · Tổng quan v4 › bấm "Duyệt dự án" mở tab Chờ duyệt; "Gian hàng" mở Gian hàng (3.9s)
+  ok  6 [behavior] › behavior\global-search.spec.ts:17:3 › Portal BR-491 topbar searches across domains without changing current page (4.0s)
+  ok  7 [behavior] › behavior\global-search.spec.ts:17:3 › Admin BR-491 topbar searches across domains without changing current page (4.5s)
+  ok  8 [behavior] › behavior\global-search.spec.ts:63:1 › REQ-625 Admin hint threshold, Escape and keyword empty state (3.5s)
+  ok  9 [behavior] › behavior\global-search.spec.ts:83:1 › Portal BR-491 group target: joined opens chat, unjoined opens join dialog (4.0s)
+  ok 10 [behavior] › behavior\global-search.spec.ts:104:1 › TC-491 literal cà phê groups stores and needs and opens the selected targets (2.9s)
+
+  10 passed (1.7m)

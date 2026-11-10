@@ -38,6 +38,7 @@ export const OVERVIEW_FIXTURE: Omit<AdminOverview, 'flow'> = {
   range: { from: `${today.slice(0, 8)}01`, to: today },
   membersDeltaPct: deltaPct(MEMBERS, NEW_THIS_MONTH),
   newThisMonth: NEW_THIS_MONTH,
+  newMembersSpark: GROWTH.map((g) => g[1]),
   communitiesNew: 2,
   members: { value: MEMBERS, spark: [17100, 17600, 18100, 17900, 18700, 19100, 20000] },
   communities: { value: 120, spark: [111, 113, 112, 115, 116, 117, 120] },
@@ -52,48 +53,111 @@ export const OVERVIEW_FIXTURE: Omit<AdminOverview, 'flow'> = {
   })),
 };
 
-/** `GET /admin/overview` (MSW): fixture prototype + "Luồng hệ thống" đếm từ các module giả */
-export function mockOverview(query?: {
-  period?: 'week' | 'month' | 'year' | undefined;
-  from?: string | undefined;
-  to?: string | undefined;
-}): AdminOverview {
+/** Calendar aggregation of the same monthly snapshots used by native demo seed. */
+function periodKey(day: string, period: 'week' | 'month' | 'year'): string {
+  if (period === 'month') return day.slice(0, 7);
+  if (period === 'year') return day.slice(0, 4);
+  const date = new Date(day + 'T00:00:00Z');
+  date.setUTCDate(date.getUTCDate() + 4 - (date.getUTCDay() || 7));
+  const year = date.getUTCFullYear();
+  const week = Math.ceil(((date.getTime() - Date.UTC(year, 0, 1)) / 864e5 + 1) / 7);
+  return year + '-W' + String(week).padStart(2, '0');
+}
+
+function mockSeries(period: 'week' | 'month' | 'year', now: Date) {
+  const vn = new Date(now.getTime() + 7 * 3_600_000);
+  const seed = new Date(MOCK_NOW + 7 * 3_600_000);
+  const snapshots = GROWTH.map(([active, fresh, inactive], i) => {
+    const date =
+      i === 6 ? seed : new Date(Date.UTC(seed.getUTCFullYear(), seed.getUTCMonth() - 5 + i, 0));
+    return { day: date.toISOString().slice(0, 10), active, fresh, inactive, index: i };
+  });
+  return Array.from({ length: period === 'year' ? 5 : 7 }, (_, i) => {
+    const date =
+      period === 'week'
+        ? new Date(vn.getTime() - (6 - i) * 7 * 864e5)
+        : new Date(
+            Date.UTC(
+              vn.getUTCFullYear() - (period === 'year' ? 4 - i : 0),
+              period === 'month' ? vn.getUTCMonth() - 6 + i : 0,
+              1,
+            ),
+          );
+    const key = periodKey(date.toISOString().slice(0, 10), period);
+    const rows = snapshots.filter(
+      (r) => r.day <= vn.toISOString().slice(0, 10) && periodKey(r.day, period) === key,
+    );
+    const last = rows.at(-1);
+    return {
+      month: period === 'month' ? 'T' + (date.getUTCMonth() + 1) : key.replace(/^.*-W0?/, 'W'),
+      active: last?.active ?? 0,
+      fresh: rows.reduce((sum, r) => sum + r.fresh, 0),
+      inactive: last?.inactive ?? 0,
+      index: last?.index,
+    };
+  });
+}
+
+/** D-140: live totals and bounded new-member/paid cohorts, not historical snapshots. */
+export function mockOverview(
+  query?: {
+    period?: 'week' | 'month' | 'year' | undefined;
+    from?: string | undefined;
+    to?: string | undefined;
+  },
+  now = new Date(),
+): AdminOverview {
   const fees = feeSummary();
+  const db = mockDb();
   const st = adminMockStores({ status: 'all', page: 1 }).summary;
   const nd = adminMockNeeds({ status: 'all', page: 1 }).summary;
   const pj = projectCounts();
-  const period = query?.period ?? 'month';
-  const range =
-    query?.from && query?.to ? { from: query.from, to: query.to } : OVERVIEW_FIXTURE.range;
-
-  const growth =
-    period === 'week'
-      ? Array.from({ length: 7 }, (_, i) => ({
-          month: `W${40 + i}`,
-          active: 300 + i * 20,
-          fresh: 30 + i * 5,
-          inactive: 40 - i * 2,
-        }))
-      : period === 'year'
-        ? Array.from({ length: 7 }, (_, i) => ({
-            month: `${2020 + i}`,
-            active: 1000 + i * 500,
-            fresh: 300 + i * 50,
-            inactive: 200 - i * 10,
-          }))
-        : OVERVIEW_FIXTURE.growth;
-
+  const today = new Date(now.getTime() + 7 * 3_600_000).toISOString().slice(0, 10);
+  const range = { from: query?.from ?? today.slice(0, 8) + '01', to: query?.to ?? today };
+  const start = Date.parse(range.from + 'T00:00:00+07:00');
+  const end = Date.parse(range.to + 'T00:00:00+07:00') + 864e5;
+  const inside = (at: string | null) =>
+    at !== null && Date.parse(at) >= start && Date.parse(at) < end;
+  const fresh = db.fees.filter((f) => inside(f.joinedAt)).length;
+  const newPaid = db.fees.filter(
+    (f) => ['active', 'expiring'].includes(f.status) && inside(f.paidAt),
+  ).length;
+  const months = mockSeries('month', now);
+  const spark = (values: number[]) =>
+    months.map((m) => (m.index === undefined ? 0 : (values[m.index] ?? 0)));
   return {
     ...OVERVIEW_FIXTURE,
     range,
-    growth,
+    newThisMonth: fresh,
+    newMembersSpark: months.map((m) => m.fresh),
+    membersDeltaPct: deltaPct(fees.total, fresh),
+    communitiesNew: MOCK_NOW >= start && MOCK_NOW < end ? db.groups.length : 0,
+    members: { value: fees.total, spark: spark(OVERVIEW_FIXTURE.members.spark) },
+    communities: { value: db.groups.length, spark: spark(OVERVIEW_FIXTURE.communities.spark) },
+    projects: {
+      value: pj.published,
+      pending: pj.pending_review,
+      spark: spark(OVERVIEW_FIXTURE.projects.spark),
+    },
+    events: {
+      value: db.events.length,
+      upcoming: db.events.filter((e) => Date.parse(e.startsAt) >= now.getTime()).length,
+      spark: spark(OVERVIEW_FIXTURE.events.spark),
+    },
+    paid: { value: fees.paid, newThisMonth: newPaid, deltaPct: deltaPct(fees.paid, newPaid) },
+    growth: mockSeries(query?.period ?? 'month', now).map(({ month, active, fresh, inactive }) => ({
+      month,
+      active,
+      fresh,
+      inactive,
+    })),
     flow: {
       paidMembers: fees.paid,
       members: fees.total,
       stores: { published: st.published, hidden: st.hidden, draft: st.draft },
       needs: { open: nd.open, closed: nd.closed },
       projects: { pending: pj.pending_review, published: pj.published },
-      groups: mockDb().groups.length,
+      groups: db.groups.length,
     },
   };
 }
