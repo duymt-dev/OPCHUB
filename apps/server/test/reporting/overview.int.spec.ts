@@ -3,6 +3,8 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { RedisService } from '@/common/redis/redis.service';
 import {
   lastMonths,
+  lastWeeks,
+  OverviewSeriesRepository,
   ReportingCoreModule,
   StatsDailyService,
   vnYesterday,
@@ -19,7 +21,11 @@ describe('Admin Tổng quan + stats_daily + badge (B44)', () => {
   beforeAll(async () => {
     t = await createTestApp({ imports: [ReportingCoreModule] });
   });
-  beforeEach(() => flushAuthState(t));
+  beforeEach(async () => {
+    await flushAuthState(t);
+    const keys = await t.redis.client.keys('admin:overview*');
+    if (keys.length) await t.redis.client.del(...keys);
+  });
   afterAll(async () => {
     await t.prisma.db.statsDaily.deleteMany({ where: { day: { lt: new Date('2002-01-01') } } });
     await t.close();
@@ -159,5 +165,96 @@ describe('Admin Tổng quan + stats_daily + badge (B44)', () => {
     expect(ba.reports).toBe(await t.prisma.db.report.count({ where: { status: 'open' } }));
     const m = await tokenOf(t, await createUser(t));
     expect((await t.call('/admin/badges', { token: m })).status).toBe(403);
+  });
+
+  it('REQ-122 validates overview query and enforces overview permission key', async () => {
+    expect((await t.call('/admin/overview')).status).toBe(401);
+    const denied = await tokenOf(t, await createUser(t, { adminPermissions: ['members.view'] }));
+    expect((await t.call('/admin/overview?period=year', { token: denied })).status).toBe(403);
+    const token = await tokenOf(t, await createUser(t, { systemRole: 'admin' }));
+    for (const query of [
+      'from=2026-02-29&to=2026-03-01',
+      'from=2026-10-02&to=2026-10-01',
+      'from=2026-10-01',
+      'to=2026-10-01',
+      'period=quarter',
+    ]) {
+      const response = await t.call(`/admin/overview?${query}`, { token });
+      expect(response.status).toBe(400);
+      const error: unknown = await response.json();
+      expect(error).toMatchObject({ error: { code: 'VALIDATION_ERROR' } });
+      expect(error).toHaveProperty('error.fields');
+    }
+    expect((await t.call('/admin/overview?from=2024-02-29&to=2024-02-29', { token })).status).toBe(
+      200,
+    );
+  });
+
+  it('REQ-122 D-140 range semantics and VN microsecond boundaries', async () => {
+    const token = await tokenOf(t, await createUser(t, { systemRole: 'admin' }));
+    const users = await Promise.all(
+      Array.from({ length: 4 }, () => createUser(t, { fee: 'active' })),
+    );
+    const at = [
+      '2000-02-28T16:59:59.999999Z',
+      '2000-02-28T17:00:00Z',
+      '2000-02-29T16:59:59.999999Z',
+      '2000-02-29T17:00:00Z',
+    ];
+    await Promise.all(
+      users.map(async (user, i) => {
+        await t.prisma.db
+          .$executeRaw`UPDATE users SET created_at = ${at[i]}::timestamptz WHERE id = ${user.id}`;
+        await t.prisma.db
+          .$executeRaw`UPDATE membership_fees SET paid_at = ${at[i]}::timestamptz WHERE user_id = ${user.id}`;
+      }),
+    );
+    const get = async (q: string) =>
+      adminOverviewSchema.parse(await (await t.call(`/admin/overview${q}`, { token })).json());
+    const live = await get('');
+    const selected = await get('?from=2000-02-29&to=2000-02-29');
+    expect(selected.newThisMonth).toBe(2);
+    expect(selected.paid.newThisMonth).toBe(2);
+    expect(selected.flow).toEqual(live.flow);
+    expect(selected.members).toEqual(live.members);
+    expect(selected.events).toEqual(live.events);
+    expect(selected.paid.value).toBe(live.paid.value);
+    expect(selected.membersDeltaPct).toBe(Math.round((2 / (live.members.value - 2)) * 1000) / 10);
+    const year = await get('?period=year&from=2000-02-29&to=2000-02-29');
+    expect(year.growth).toHaveLength(5);
+    expect(year.newMembersSpark).toEqual(live.newMembersSpark);
+  });
+
+  it('REQ-122 aggregates periods across ISO year: first bucket includes previous December', async () => {
+    const repo = t.app.get(OverviewSeriesRepository);
+    const intervals = lastWeeks(new Date('2004-02-12T08:00:00Z'));
+    expect(intervals[0]?.start).toBe('2003-12-29');
+    const rows = [
+      ['2003-12-29', 'members_new', 2n],
+      ['2003-12-31', 'members_new', 3n],
+      ['2004-01-04', 'members_new', 5n],
+      ['2004-01-05', 'members_new', 7n],
+      ['2003-12-29', 'members_active', 11n],
+      ['2004-01-04', 'members_active', 19n],
+    ] as const;
+    try {
+      await t.prisma.db.statsDaily.createMany({
+        data: rows.map(([day, metric, value]) => ({
+          day: new Date(day),
+          metric,
+          value,
+          dimension: '',
+        })),
+      });
+      const result = await repo.series(intervals, 'week');
+      expect(result.get('2004-W01|members_new_sum')).toBe(10);
+      expect(result.get('2004-W01|members_active')).toBe(19);
+      expect(result.get('2004-W02|members_new_sum')).toBe(7);
+      expect(result.has('2004-W03|members_new_sum')).toBe(false);
+    } finally {
+      await t.prisma.db.statsDaily.deleteMany({
+        where: { day: { gte: new Date('2003-12-29'), lte: new Date('2004-01-05') }, dimension: '' },
+      });
+    }
   });
 });

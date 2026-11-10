@@ -1,22 +1,24 @@
 'use client';
 
-import { z } from 'zod';
+import type { z } from 'zod';
+import { useEffect } from 'react';
 import { useUrlParams } from '@/lib/use-url-params';
-
-const overviewParamsSchema = z.object({
-  from: z
-    .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/)
-    .catch(''),
-  to: z
-    .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/)
-    .catch(''),
-  period: z.enum(['week', 'month', 'year']).catch('month'),
-});
+import { overviewParamsSchema } from './overview-range';
 
 export type OverviewParams = z.infer<typeof overviewParamsSchema>;
 
 export function useOverviewUrl() {
-  return useUrlParams<OverviewParams>(overviewParamsSchema);
+  const state = useUrlParams<OverviewParams>(overviewParamsSchema);
+  const { from, to, period } = state.params;
+  const { update } = state;
+  useEffect(() => {
+    const raw = new URLSearchParams(window.location.search);
+    if (
+      (raw.get('from') ?? '') !== from ||
+      (raw.get('to') ?? '') !== to ||
+      (raw.get('period') ?? 'month') !== period
+    )
+      update({ from, to, period });
+  }, [from, to, period, update]);
+  return state;
 }

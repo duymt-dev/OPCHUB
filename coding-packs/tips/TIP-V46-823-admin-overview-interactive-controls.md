@@ -32,18 +32,21 @@
 | `apps/server/src/modules/reporting/index.ts` | modify nếu cần: giữ public exports hiện có |
 | `apps/server/test/reporting/overview.int.spec.ts` | modify: query/guard/range/cache/SQL thật qua biên năm |
 | `apps/admin/src/features/overview/components/overview-screen.tsx` | modify: orchestrator, truyền range/preset VN |
+| `apps/admin/src/features/overview/components/overview-range-control.tsx` | create: tách picker khỏi screen orchestrator |
 | `apps/admin/src/features/overview/components/growth-chart.tsx` | modify: tabs/a11y, nhãn custom range |
 | `apps/admin/src/features/overview/components/overview.module.css` | modify: underline/hover/focus theo prototype |
 | `apps/admin/src/features/overview/components/stat-cards.tsx` | modify: nhãn custom range |
 | `apps/admin/src/features/overview/components/overview-controls.spec.tsx` | create: picker/tabs/loading/error/URL |
 | `apps/admin/src/features/overview/hooks/use-overview-url.ts` | modify: validation/normalization dựa contract chung |
 | `apps/admin/src/features/overview/hooks/use-overview-url.spec.tsx` | create: URL lỗi, F5, range/period giữ nhau |
+| `apps/admin/src/features/overview/hooks/overview-range.ts` | create: preset VN tính mới khi dùng, normalize URL qua shared contract |
 | `apps/admin/src/features/overview/hooks/use-overview.ts` | modify nếu cần: query key/polling/trạng thái response |
 | `apps/admin/src/features/overview/data.ts` | modify: fetch/nhãn/sparkline không đổi theo tab |
 | `apps/admin/src/features/overview/data.spec.ts` | modify: serialization, label, sparkline regression |
 | `apps/admin/src/mocks/handlers/shell.ts` | modify: parse cùng schema, lỗi như server |
 | `apps/admin/src/mocks/overview-handlers.spec.ts` | modify: invalid query + số liệu đổi thật theo filter |
 | `packages/ui/src/global-search/global-search.tsx` | modify: hint riêng, không hiện stale hits dưới ngưỡng |
+| `packages/ui/src/global-search/components/search-input.tsx` | create: tách input/ARIA khỏi orchestrator, giữ function dưới 80 dòng |
 | `packages/ui/src/global-search/search-results.tsx` | modify nếu cần: empty state có từ khóa |
 | `packages/ui/src/global-search/types.ts` | modify: props hint/loading/error tương thích caller cũ |
 | `packages/ui/src/global-search/global-search.module.css` | modify nếu cần: hint cùng visual system |

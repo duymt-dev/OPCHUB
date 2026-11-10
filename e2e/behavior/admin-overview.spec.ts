@@ -3,6 +3,7 @@ import type { Page } from '../server/test';
 import { ADMIN_URL } from '../urls';
 import { csvDownload } from './helpers/csv-download';
 import { adminConversionSchema } from '@opchub/shared/api-domains';
+import { adminOverviewSchema } from '@opchub/shared/api-domains';
 
 test('REQ-623 BR-475-477 conversion table matches API, CSV3 regions has BOM and mobile scroll stays contained', async ({
   page,
@@ -69,6 +70,74 @@ async function openOverview(page: Page): Promise<Flow> {
 
 const flowCard = (page: Page, name: string) =>
   page.getByRole('region', { name: 'Luồng hệ thống' }).getByRole('link').filter({ hasText: name });
+
+test('REQ-122 overview range and periods preserve independent monthly sparklines', async ({
+  page,
+}) => {
+  await openOverview(page);
+  await page.locator('.ant-picker-range input').first().click();
+  for (const preset of ['Hôm nay', '7 ngày qua', '30 ngày qua', 'Tháng này', 'Tháng trước']) {
+    await expect(page.getByText(preset, { exact: true })).toBeVisible();
+  }
+  const changed = page.waitForResponse((r) => {
+    const url = new URL(r.url());
+    return url.pathname === '/v1/admin/overview' && url.searchParams.has('from') && r.ok();
+  });
+  await page.getByText('30 ngày qua', { exact: true }).click();
+  const data = adminOverviewSchema.parse(await (await changed).json());
+  await expect(page).toHaveURL(
+    (url) =>
+      url.searchParams.get('from') === data.range.from &&
+      url.searchParams.get('to') === data.range.to,
+  );
+  await expect(page.getByText('Thành viên mới', { exact: true }).locator('..')).toContainText(
+    data.newThisMonth.toLocaleString('vi-VN'),
+  );
+  const sparks = page.locator('main svg[viewBox="0 0 52 22"] polyline');
+  const points = await sparks.evaluateAll((els) => els.map((e) => e.getAttribute('points')));
+  for (const [name, period, count] of [
+    ['Tuần', 'week', 7],
+    ['Năm', 'year', 5],
+  ] as const) {
+    await page.getByRole('tab', { name, exact: true }).click();
+    await expect(page.getByRole('tab', { name, exact: true })).toHaveAttribute(
+      'aria-selected',
+      'true',
+    );
+    await expect(page.locator('[data-m="bars"] > div')).toHaveCount(count);
+    await expect(page).toHaveURL(
+      (url) =>
+        url.searchParams.get('period') === period &&
+        url.searchParams.get('from') === data.range.from &&
+        url.searchParams.get('to') === data.range.to,
+    );
+    expect(await sparks.evaluateAll((els) => els.map((e) => e.getAttribute('points')))).toEqual(
+      points,
+    );
+  }
+  await page.reload();
+  await expect(page.getByRole('tab', { name: 'Năm', exact: true })).toHaveAttribute(
+    'aria-selected',
+    'true',
+  );
+  await expect(page.locator('[data-m="bars"] > div')).toHaveCount(5);
+});
+
+test('REQ-122 D-140 historical range changes cohorts, not live totals or flow', async ({
+  page,
+}) => {
+  const initial = await openOverview(page);
+  const loaded = page.waitForResponse(
+    (r) => new URL(r.url()).pathname === '/v1/admin/overview' && r.ok(),
+  );
+  await page.goto(`${ADMIN_URL}/overview?from=1800-01-01&to=1800-01-01`);
+  const data = adminOverviewSchema.parse(await (await loaded).json());
+  expect(data.newThisMonth).toBe(0);
+  expect(data.paid.newThisMonth).toBe(0);
+  expect(data.flow).toEqual(initial);
+  await expect(page.getByText('Thành viên mới', { exact: true }).locator('..')).toContainText('0');
+  await expect(page.getByText('Trong khoảng đã chọn', { exact: true })).toBeVisible();
+});
 
 test.describe('Admin · Tổng quan v4', () => {
   test('Luồng hệ thống: 5 thẻ theo số API, nhãn Hoàn tất / Cần làm', async ({ page }) => {

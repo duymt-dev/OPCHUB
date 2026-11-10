@@ -1,10 +1,9 @@
 'use client';
 
-import dayjs from 'dayjs';
-import { DateRangePicker, PageHeader, type DateRangeValue } from '@opchub/ui';
+import { PageHeader } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useOverview } from '../hooks/use-overview';
-import { useOverviewUrl } from '../hooks/use-overview-url';
+import { OverviewRangeControl } from './overview-range-control';
 import { GrowthChart } from './growth-chart';
 import { ConversionTable } from './conversion-table';
 import styles from './overview.module.css';
@@ -14,41 +13,32 @@ import { SystemFlow } from './system-flow';
 /** D-01 Tổng quan v4: Luồng hệ thống + 4 thẻ số + tăng trưởng (D-89) */
 export function OverviewScreen() {
   const t = useTranslations('overview');
-  const { data } = useOverview();
-  const { params, update } = useOverviewUrl();
-
-  const range = data?.range;
-  const pickerValue: DateRangeValue | null =
-    params.from && params.to
-      ? [dayjs(params.from), dayjs(params.to)]
-      : range
-        ? [dayjs(range.from), dayjs(range.to)]
-        : null;
-
+  const query = useOverview();
+  const { data } = query;
+  const status = useTranslations('common.state');
   return (
     <>
       <PageHeader
         title={t('title')}
         subtitle={t('sub')}
-        extra={
-          <DateRangePicker
-            value={pickerValue}
-            onChange={(dates) => {
-              if (dates?.[0] && dates?.[1]) {
-                update({
-                  from: dates[0].format('YYYY-MM-DD'),
-                  to: dates[1].format('YYYY-MM-DD'),
-                });
-              } else {
-                update({ from: '', to: '' });
-              }
-            }}
-          />
-        }
+        extra={<OverviewRangeControl range={data?.range} />}
       />
-      <div className={styles.wrap}>
-        <SystemFlow />
-        <StatCards />
+      {query.isPending ? <div role="status">{status('loading')}</div> : null}
+      {query.isError ? (
+        <div role="alert">
+          {status('error')}{' '}
+          <button type="button" onClick={() => void query.refetch()}>
+            {status('retry')}
+          </button>
+        </div>
+      ) : null}
+      <div className={styles.wrap} aria-busy={query.isFetching}>
+        {data ? (
+          <>
+            <SystemFlow />
+            <StatCards />
+          </>
+        ) : null}
         <GrowthChart />
         <ConversionTable />
       </div>

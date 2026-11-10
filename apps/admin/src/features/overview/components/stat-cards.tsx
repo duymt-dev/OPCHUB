@@ -4,11 +4,13 @@ import { tones } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { formatCount, sparkPoints, statCards, STAT_TONES } from '../data';
 import { useOverview } from '../hooks/use-overview';
+import { useOverviewUrl } from '../hooks/use-overview-url';
 import styles from './overview.module.css';
 
 export function StatCards() {
   const t = useTranslations('overview.stats');
   const { data } = useOverview();
+  const custom = !!useOverviewUrl().params.from;
   return (
     <div className={`${styles.card} ${styles.stats}`}>
       {data &&
@@ -35,7 +37,14 @@ export function StatCards() {
                 </svg>
               </div>
               <div className={styles.statDelta} style={{ color: tone.fg }}>
-                {t(`${s.key}Delta`, s.delta)}
+                {t(
+                  custom && s.key === 'members'
+                    ? 'membersRangeDelta'
+                    : custom && s.key === 'fresh'
+                      ? 'freshRangeDelta'
+                      : `${s.key}Delta`,
+                  s.delta,
+                )}
               </div>
             </div>
           );

@@ -14,11 +14,13 @@ export class OverviewFlowRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   /** Thành viên đang có phí hiệu lực + số đóng phí (kích hoạt / gia hạn) từ đầu tháng VN */
-  async paid(start: Date): Promise<{ value: number; newThisMonth: number }> {
+  async paid(start: Date, end: Date): Promise<{ value: number; newThisMonth: number }> {
     const db = this.prisma.db;
     const [value, newThisMonth] = await Promise.all([
       db.membershipFee.count({ where: { status: { in: [...PAID] } } }),
-      db.membershipFee.count({ where: { status: { in: [...PAID] }, paidAt: { gte: start } } }),
+      db.membershipFee.count({
+        where: { status: { in: [...PAID] }, paidAt: { gte: start, lt: end } },
+      }),
     ]);
     return { value, newThisMonth };
   }

@@ -18,6 +18,10 @@
       "placeholder": "Tìm thành viên, gian hàng, nhu cầu, dự án, nhóm…",
       "empty": "Không tìm thấy kết quả",
       "clear": "Xóa tìm kiếm",
+      "hint": "Nhập ít nhất 2 ký tự để tìm kiếm...",
+      "emptyQuery": "Không tìm thấy kết quả cho ‘{query}’",
+      "loading": "Đang tìm kiếm…",
+      "failed": "Không tải được kết quả tìm kiếm",
       "groups": {
         "store": "Gian hàng",
         "need": "Nhu cầu địa phương",
