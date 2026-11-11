@@ -51,7 +51,9 @@ for (const width of [1440, 390])
         const query = new URLSearchParams(search);
         expect(query.get('from')).toBe(from);
         expect(query.get('to')).toBe(to);
-        expect(query.get('period')).toBe('month');
+        // Existing serializer omits the default; URL state still retains explicit period=month.
+        expect(query.get('period')).toBeNull();
+        expect([...query.keys()].sort()).toEqual(['from', 'to']);
       }
       // F5 must keep selected alias identity and canonical range, not locale-formatted URL values.
       await page.reload({ waitUntil: 'networkidle' });

@@ -1092,6 +1092,8 @@ Observed native sidebar badge test readiness race: initial count snapshot ran be
 
 Reduced-ICU follow-up: keep picker display patterns deterministic for the existing twelve approved locale profiles, not inferred from optional browser ICU coverage. This fixes numeric picker order only, not general Intl date/number/month-name support. No dependency added: the inspected FormatJS package would require separate lifecycle/data/payload design; no polyfill or global Intl replacement is introduced here. Canonical YYYY-MM-DD URL/API values and Vietnam-calendar preset behavior remain unchanged. The full reduced-ICU formatter defect remains open until separately fixed and verified.
 
+Picker browser harness correction: existing fetchOverview intentionally omits default period=month from the API query while retaining the explicit URL parameter. Assert exactly null plus only from/to API keys, not a permissive null-or-month alternative; keep URL period=month, range, locale, guard and F5 assertions unchanged. Preserve the initial six-case diagnostic failure; no production/query behavior change.
+
 | Operation | File | Scope |
 |---|---|---|
 | create | `apps/admin/src/i18n/date-picker-format.spec.ts` | Fixed twelve-profile patterns with Intl unavailable/unsupported, invalid-cookie fallback; no locale discovery. |
