@@ -7,20 +7,20 @@ At line:2 char:180
 
 ▲ Next.js 16.4.2 (Turbopack)
 - Environments: .env.local
-✓ Running next.config.ts took 729ms
+✓ Running next.config.ts took 742ms
 - Experiments (use with caution):
   · optimizePackageImports
 
   Creating an optimized production build ...
-✓ Compiled successfully in 31.8s
+✓ Compiled successfully in 10.1s
   Running TypeScript ...
-  Finished TypeScript in 44s ...
+  Finished TypeScript in 46s ...
   Collecting page data using 5 workers ...
   Generating static pages using 5 workers (0/10) ...
   Generating static pages using 5 workers (2/10)
   Generating static pages using 5 workers (4/10)
   Generating static pages using 5 workers (7/10)
-✓ Generating static pages using 5 workers (10/10) in 1047ms
+✓ Generating static pages using 5 workers (10/10) in 855ms
   Finalizing page optimization ...
 
 Route (app)
