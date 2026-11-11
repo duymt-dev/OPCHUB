@@ -86,6 +86,22 @@ for (const option of languageOptions) {
       await page.keyboard.press('Escape');
       await expect(page.getByRole('option')).toHaveCount(0);
       expect(faults).toEqual([]);
+      if (option.code === 'th') {
+        // Auth/meta only: full Thai raw inventory does not prove all-screen browser acceptance.
+        await expect(
+          page.getByRole('heading', { name: 'ยินดีต้อนรับกลับมา!', exact: true }),
+        ).toBeVisible();
+        await expect(page).toHaveTitle(/^เข้าสู่ระบบ/);
+        const directory = fileURLToPath(
+          new URL('../../coding-packs/reports/evidence/v46-824/', import.meta.url),
+        );
+        mkdirSync(directory, { recursive: true });
+        await page.screenshot({
+          path: resolve(directory, `th-auth-${env.E2E_TARGET}-${width}.png`),
+          fullPage: true,
+          animations: 'disabled',
+        });
+      }
       if (option.code === 'fil') {
         // Auth/meta rendering only; complete raw files do not prove all-screen browser acceptance.
         await expect(

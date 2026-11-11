@@ -4,6 +4,19 @@ Mandatory HEADER appendix to [TIP-V46-824](TIP-V46-824-admin-i18n.md). This is N
 
 ## Ownership and scope
 
+### Thai raw/auth implementation checkpoint (not whole-TIP acceptance)
+
+All25 already-declared Thai catalog paths are implemented in this lane; the initial12 were followed by the remaining13 before committing. All original ACs remain required. Preserve source/canonical values and Portal code. Reuse only unambiguous exact-source Portal translations after Admin-context review; no filler/fallback counts as translated. No font binary change is planned: verify every staged character against the existing Thai plus Latin cmap first.
+
+| Operation | File | Scope |
+|---|---|---|
+| create | `apps/admin/src/i18n/tests/thai-catalog.spec.ts` | Fixed25-file inventory, raw ICU/shape/NFC/no-copy, canonical/neutral and Admin-context/glyph cases; not final10-bundle readiness. |
+| create | `coding-packs/reports/evidence/v46-824/thai.log` | Actual complete Thai raw/context/glyph outputs and whole10-bundle incomplete inventory/provenance. |
+| create | `coding-packs/reports/evidence/v46-824/th-auth-msw-1440.png` | Actual unmasked Thai auth-only image; not Profile or whole bundle. |
+| create | `coding-packs/reports/evidence/v46-824/th-auth-msw-390.png` | Actual unmasked Thai auth-only image; not Profile or whole bundle. |
+| create | `coding-packs/reports/evidence/v46-824/th-auth-server-1440.png` | Actual unmasked mocking-off Thai auth-only image, no native API acceptance claimed. |
+| create | `coding-packs/reports/evidence/v46-824/th-auth-server-390.png` | Actual unmasked mocking-off Thai auth-only image, no native API acceptance claimed. |
+
 ### Approved optional sidebar badge formatter — 11/11/2026
 
 Owner: “Đồng ý thêm callback tùy chọn, giữ nguyên Portal”. Presentation only; raw badge counts, visibility, href/navigation callbacks and Portal defaults stay unchanged. AppShell already forwards its props to Sidebar, so its implementation needs no change. These exact additions are declared before implementation; existing AdminShell path remains owned.
@@ -1051,3 +1064,26 @@ AC824-06/08 inventory and verification tooling: inspect all Admin production TS/
 | create | `apps/admin/src/features/affiliate/regional/components/regional-labels-i18n.spec.tsx` | Actual summary/assignment labels and accessible selector live-switch by region enum, preserving raw member data and callback values. |
 
 Native browser clarification: the already-owned bots.module.css also bounds existing AntD skeleton placeholder widths inside Bot cards at390, discovered while checking translated tabs. Keep shared PageSkeleton/Portal untouched; no hiding real text, viewport masks or assertion tolerance changes.
+
+
+### Thai actual three-screen browser proof (same assertions both modes)
+
+Observed native sidebar badge test readiness race: initial count snapshot ran before the real asynchronous badge response. The already-owned admin-i18n-sidebar.spec.ts must await the first actual badge's attachment before reading its numeric baseline, in both modes. Keep every positive/raw-count/geometry assertion and default timeout; no fixtures, backend or production behavior change.
+
+| Operation | File | Scope |
+|---|---|---|
+| create | `e2e/behavior/admin-i18n-thai.spec.ts` | Authenticated Thai Overview/Profile/Settings1440/390, real login/read-only guard and unmasked images; not all-language acceptance. |
+| create | `coding-packs/reports/evidence/v46-824/thai-msw.log` | Actual6-case Thai browser output. |
+| create | `coding-packs/reports/evidence/v46-824/thai-native.log` | Same6 assertions against approved isolated native API, no reset/seed/SQL/original service change. |
+| create | `coding-packs/reports/evidence/v46-824/th-overview-msw-1440.png` | Actual unmasked Thai overview image, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/th-overview-msw-390.png` | Actual unmasked Thai overview image, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/th-overview-server-1440.png` | Actual unmasked Thai overview image, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/th-overview-server-390.png` | Actual unmasked Thai overview image, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/th-profile-msw-1440.png` | Actual unmasked Thai profile image, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/th-profile-msw-390.png` | Actual unmasked Thai profile image, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/th-profile-server-1440.png` | Actual unmasked Thai profile image, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/th-profile-server-390.png` | Actual unmasked Thai profile image, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/th-settings-msw-1440.png` | Actual unmasked Thai settings image, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/th-settings-msw-390.png` | Actual unmasked Thai settings image, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/th-settings-server-1440.png` | Actual unmasked Thai settings image, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/th-settings-server-390.png` | Actual unmasked Thai settings image, not owner/native-human approval. |

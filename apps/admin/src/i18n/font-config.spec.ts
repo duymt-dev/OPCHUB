@@ -84,7 +84,7 @@ describe('D-141 AC824-15/16 self-hosted font contracts (not browser acceptance)'
     expect(receipt.assets.LanguageMenu.bytes).toBeLessThan(70_000);
   });
 
-  it.each(['vi', 'en', 'zh', 'id', 'ms', 'fil'])(
+  it.each(['vi', 'en', 'zh', 'id', 'ms', 'fil', 'th'])(
     'covers letter/mark/number/punctuation/currency glyphs in current %s catalogs',
     (locale) => {
       const catalogs = files(join(__dirname, '../../messages', locale));
@@ -96,7 +96,9 @@ describe('D-141 AC824-15/16 self-hosted font contracts (not browser acceptance)'
         if (/[\p{L}\p{M}\p{N}\p{P}\p{Sc}]/u.test(char)) {
           const point = char.codePointAt(0) ?? -1;
           expect(
-            hasGlyph('NotoSans', point) || (locale === 'zh' && hasGlyph('NotoSansSC', point)),
+            hasGlyph('NotoSans', point) ||
+              (locale === 'zh' && hasGlyph('NotoSansSC', point)) ||
+              (locale === 'th' && hasGlyph('NotoSansThai', point)),
             `${locale}: ${char}`,
           ).toBe(true);
         }

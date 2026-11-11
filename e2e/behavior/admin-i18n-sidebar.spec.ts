@@ -16,6 +16,7 @@ for (const width of [1440, 390]) {
     await openLocalized(page, '/profile?badge=raw#locale', 'en');
     const sidebar = page.locator('aside[data-mini]');
     const badges = sidebar.locator('nav > a:has(> span:nth-of-type(2))');
+    await expect(badges.first()).toBeAttached();
     const original = await badges.evaluateAll((links) =>
       links.map((link) => ({
         href: link.getAttribute('href'),

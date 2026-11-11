@@ -126,6 +126,28 @@ describe('D-141 AC824-01/04 request-scoped messages, no authOverrides', () => {
     expect(logger.warn).not.toHaveBeenCalled();
   });
 
+  it('D-141 AC824-07 loads actual Thai domains and all six settings parts without fallback', async () => {
+    mocks.cookie = 'th';
+    const result = await config();
+    expect(result.locale).toBe('th');
+    expect(result.messages).toMatchObject({
+      auth: { login: { submit: 'เข้าสู่ระบบ' } },
+      common: { adminProfile: { title: 'โปรไฟล์ส่วนตัว' } },
+      overview: { title: 'ภาพรวม' },
+      reports: { title: 'รายงาน' },
+      settings: {
+        general: { heading: 'ข้อมูลแพลตฟอร์ม' },
+        roles: { heading: 'บทบาทและสิทธิ์' },
+        mail: { heading: 'อีเมลต้อนรับ' },
+        log: { heading: 'บันทึกกิจกรรมผู้ดูแล' },
+        price: { heading: 'ตั้งค่าราคา' },
+        ai: { heading: 'ผู้ให้บริการ AI' },
+      },
+    });
+    expect(messages.auth.login.submit).toBe('Đăng nhập');
+    expect(logger.warn).not.toHaveBeenCalled();
+  });
+
   it('D-141 AC824-07 loads actual Chinese domains and all six settings parts without changing source', async () => {
     const read = async (bundle: string, file: string): Promise<unknown> =>
       import(`../../messages/${bundle}/${file}.json`);

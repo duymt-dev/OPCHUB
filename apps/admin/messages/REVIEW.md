@@ -31,16 +31,9 @@
 
 ## Raw presence snapshot (not completion)
 
-- vi: 25/25 files, 2666/2666 source string leaves present.
-- en: 25/25 files, 2666/2666 source string leaves present;25 raw contract cases pass.
-- zh: 25/25 files, 2666/2666 source string leaves present; complete raw bundle, not full browser acceptance.
-- id: 25/25 files, 2666/2666 source string leaves present; complete raw bundle, not full browser acceptance.
-- th: 0/25 files, 0/2666 source string leaves present.
-- ms: 25/25 files, 2666/2666 source string leaves present; complete raw bundle, not full browser acceptance.
-- fil: 0/25 files, 0/2666 source string leaves present.
-- km: 0/25 files, 0/2666 source string leaves present.
-- lo: 0/25 files, 0/2666 source string leaves present.
-- my: 0/25 files, 0/2666 source string leaves present.
+- vi/en/zh/id/ms/fil/th:25/25 files and2667/2667 source string leaves each.
+- km/lo/my:0/25 files and0/2667 leaves each.
+- Total physical presence175/250, not raw readiness PASS; missing files never count through runtime fallback.
 
 ## Content boundaries / exact exceptions
 
@@ -194,3 +187,36 @@ The expanded glossary retains the earlier terminology. Conversation review = Nag
 Fixed25-file raw tests plus50 Admin-context cases,6 canonical-copy cases and one all2667-leaf Latin-cmap check pass (82). Request configuration covers actual Filipino auth/Profile/Overview/reports and all six merged settings domains without a fallback warning. The existing full font suite now also explicitly requires25 Filipino files. The installed Vitest5 fsModuleCache retained a pre-Filipino dynamic-import map: changing only a diagnostic comment temporarily made the same request test pass, restoring the exact source reproduced failure; documented vitest --clearCache then made the unchanged loader and assertions pass. The diagnostic edit/probes were removed; no production-loader change or assertion/timeout/skip workaround. Only disposable test caches were cleared, never database data/services.
 
 Four bundles th/km/lo/my, the final fixed10-bundle production gate and full state/all-language/native/control/visual/performance acceptance remain open. A complete raw bundle is not whole-TIP completion or a native-human translation approval. Existing licensed Latin font covers all Filipino glyphs; no binary/license regeneration.
+
+## Complete Thai raw/auth checkpoint — 2026-11-11
+
+All25 explicit catalogs/2667 leaves, including all6 settings parts, now exist.693 unambiguous exact-source Portal Thai matches retained;1968 directly translated/Admin-context-corrected leaves (including1 original blank actions header);6 canonical examples preserved.1693 distinct Vietnamese/English direct draft pairs were produced across the initial12 and remaining13 files, with exact-pair reuse across domains.37 reused Portal leaves were corrected after Admin-context review. Native-speaker-reviewed=false. Raw/font/request tests are not native-human approval or whole-TIP acceptance. No Vietnamese/English/TODO filler catalog was created, and fallback never counts as translation.
+
+| Source concept                  | Thai                                 | Context                                                     |
+| ------------------------------- | ------------------------------------ | ----------------------------------------------------------- |
+| Member / Membership fee         | สมาชิก / ค่าสมาชิก                   | Raw integer VND, no conversion                              |
+| Community group / Project       | กลุ่มชุมชน / โครงการ                 | Authored names remain raw                                   |
+| Investor / Investment fund      | นักลงทุน / กองทุนลงทุน               | Do not narrow all funds to mutual funds                     |
+| Affiliate                       | แอฟฟิลิเอต                           | Referral entity, distinct from general partners พันธมิตร    |
+| Regional Director               | ผู้อำนวยการภูมิภาค                   | Only direct revenue-share recipient                         |
+| Commission                      | คอมมิชชัน / ค่าคอมมิชชัน             | Legacy/reference labels, not a changed payout policy        |
+| Month-end payout pending        | รอจ่ายเมื่อสิ้นเดือน                 | Preserve timing                                             |
+| Administrator / Moderator       | ผู้ดูแลระบบ / ผู้ดูแลเนื้อหา         | Display projections, never permission keys                  |
+| User Portal / Admin Dashboard   | พอร์ทัลสมาชิก / แดชบอร์ดผู้ดูแล      | Keep destinations distinct                                  |
+| Clear / Delete                  | ล้าง / ลบ                            | Clearing a filter does not delete a record                  |
+| Enabled / Not enabled           | เปิดใช้งานแล้ว / ยังไม่เปิดใช้งาน    | Preserve polarity                                           |
+| Paid / Expired and unpaid       | ชำระแล้ว / หมดอายุและยังไม่ชำระ      | Conversion denominator unchanged                            |
+| Internal discussion             | การสนทนาภายใน                        | Admin-only notes                                            |
+| Province / Region               | จังหวัด / ภูมิภาค                    | Canonical province data stays raw                           |
+| Persona / Script                | บุคลิกจำลอง / สคริปต์                | Bot roles and dialogue, not member identities               |
+| Pending review                  | รอตรวจสอบ                            | Do not imply approval has already occurred                  |
+| Email body / Transfer reference | เนื้อหาอีเมล / ข้อความอ้างอิงการโอน  | Do not reuse ambiguous Vietnamese “Nội dung” across domains |
+| Attendee list / Bullet list     | รายชื่อผู้เข้าร่วม / รายการสัญลักษณ์ | Context must distinguish list types                         |
+| Public / Private                | สาธารณะ / ส่วนตัว                    | Preserve repository/visibility enum values                  |
+| Fallback / AI call log          | สำรอง / บันทึกการเรียก AI            | Display only, same model/provider IDs                       |
+
+Review corrections to37 Portal-reused leaves cover affiliate/reference roles and network names, month-end timing, customer count phrasing, proper copyright brand, Thai auth destinations and imperative password hint, investor fund specificity, consistent project labels, review-pending states, attendee lists, email body versus transfer reference, audit category/content, non-destructive Clear and canonical URL labels. Every retained reused translation was checked in its Admin context, not copied by key alone. All legacy VI business wording is retained as-is in source; translation does not resolve old policy wording or change payout/approval behavior. Canonical person names, OPCHUB transfer example, URLs/emails/provider IDs, blank actions header and timezone names are preserved.
+
+83 fixed Thai cases =25 raw shape/key/ICU/NFC/no-copy +50 context +6 canonical +1 all2667-leaf English-filler/Thai-script check (53 exact neutral examples) +1 full Thai/Latin cmap check. Actual request loading additionally checks auth/Profile/Overview/reports and all6 merged settings parts without fallback; the34 full font/asset tests now include all25 Thai files. Existing7 font binaries/six OFLs are unchanged. The known Vitest dynamic-import cache is cleared with documented --clearCache when adding this new bundle; production loader logic is unchanged.
+
+Whole10-bundle inventory remains incomplete:175/250 files; km/lo/my are absent. Actual Thai browser scope must be stated separately: auth heading/title and Overview/Profile/Settings1440/390, not all controls/states/auth flows or owner/native-human approval. Remaining full English/all-language/native/value/visual/performance acceptance is still required by the original TIP.
