@@ -1,5 +1,15 @@
 # Admin translation review (D-141)
 
+## Staged Khmer raw catalogs — 2026-11-12
+
+Source SHA f94713bf, unchanged Vietnamese schema2667 leaves/25files; native-reviewed: **false**. This stage adds12 explicit Khmer files/729 leaves: auth, common (including Admin Profile), bot-options, meta, overview, investors, needs, reports, requests, stores, ui and settings/audit. Thirteen files/1938 leaves remain absent; **not a complete Khmer bundle** and not full10-bundle acceptance. Settings/audit is raw-only at this stage: all six settings parts are required by the existing runtime namespace merge, so missing parts still cause intentional Vietnamese fallback. No filler catalogs or runtime cross-app import is added.
+
+Provenance:318 unambiguous exact-source Portal Khmer matches were candidates;13 leaves from six distinct phrases were corrected for Admin context, leaving305 retained matches.351 distinct Vietnamese→Khmer direct pairs cover411 leaves; with13 corrected matches,424 leaves were directly translated/context-corrected. All729 values are NFC. No existing Vietnamese/English/other locale, business/API/DB, shared/Portal production, dependency or font binary/license changes.
+
+Glossary/context review: Member = សមាជិក; Membership fee = ថ្លៃសមាជិកភាព; Administrator = អ្នកគ្រប់គ្រង; reports (noun) = របាយការណ៍, not Portal's report-action verb រាយការណ៍; Affiliate = អ្នកណែនាំ (referrer), not generic ដៃគូ (partner); Regional Director = នាយកតំបន់. Enabled បានបើកដំណើរការ and not-yet-enabled មិនទាន់បើកដំណើរការ remain distinct. Central ភាគកណ្ដាល and Central & Highlands ភាគកណ្ដាល និងតំបន់ខ្ពង់រាបកណ្ដាល remain distinct. Payment conversion denominator and unpaid-expired status retain D-140 meaning. Internal service-request comments remain visible only to administrators. Translation preserves the existing legacy assistant wording in requests.catalog.sub as source copy; it does not add the removed assistant feature or change D-92/D-124.
+
+Twelve exact language-neutral examples are allowed (fixed raw tests): auth.twoFactor.codePlaceholder; bot-options.hours.0–3; meta.default (required unchanged OPC Hub Admin brand); overview.growth.delta; investors/needs/requests/stores.dateRange; settings/audit.log.tag.sso. All other staged values must differ from English and contain Khmer script. Raw shape/key/ICU/NFC tests,30 Admin-context assertions and actual existing Khmer/Latin font-cmap coverage do not imply native-speaker review. Confidence is moderate, requiring native review for idiom/line breaks; human approval is not fabricated.
+
 ## Scoped standard date/number data — 2026-11-12
 
 Separate from UI translation completeness: standalone FormatJS DateTimeFormat8.0.3 and NumberFormat10.0.4 provide pinned CLDR49 data for km/lo/my, which the installed Chromium does not support natively for dates/numbers. All12 selector identities support native plural rules; the other9 support native dates/numbers. These are actual offline capability observations, not inferred from translated text.
@@ -10,7 +20,7 @@ Fixed tests cover decimal/grouping separators, Myanmar digits/explicit Latin ove
 
 Actual built locale-data chunks are mapped and hashed separately for both modes; missing/duplicate/mixed-locale data fails the auditor. Browser evidence checks actual Lao dates/VND against independent Node Intl/raw DTOs, zero unused data payload on public auth, only selected Lao data responses with exact hashes and unchanged global constructor snapshots. This is not the original-baseline/per-route JS budget proof. Full performance and all-language controls/states remain required.
 
-No UI-message leaves are added here:200/250 raw files/eight complete bundles remain. km/my Admin catalogs still missing; standard CLDR names are not substitutes for those translations. Native-speaker-reviewed=false remains unchanged for every Admin target locale; the licensed fonts/binaries and existing Vietnamese source text remain unchanged.
+The standard-data implementation itself added no UI messages. The staged Khmer section above now updates raw readiness to212/250 files: eight complete bundles plus12 Khmer files;13 Khmer files and all25 Myanmar files remain absent. Standard CLDR names are not substitutes for those translations. Native-speaker-reviewed=false remains unchanged; licensed fonts/binaries and Vietnamese source text remain unchanged.
 
 - Scope: Admin UI only; API errors, email, CSV and user content retain their original contract.
 - Source baseline: f7c1b2b8; current source has2667 string leaves in25 physical catalogs.

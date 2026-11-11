@@ -109,6 +109,22 @@ for (const option of languageOptions) {
         ).toBeVisible();
         await expect(page).toHaveTitle(/^Mag-sign in/);
       }
+      if (option.code === 'km') {
+        // Complete auth/meta files only; the remaining Khmer domains are still incomplete.
+        await expect(
+          page.getByRole('heading', { name: 'សូមស្វាគមន៍ការត្រឡប់មកវិញ!', exact: true }),
+        ).toBeVisible();
+        await expect(page).toHaveTitle('ចូលប្រើ · OPC Hub Admin');
+        const directory = fileURLToPath(
+          new URL('../../coding-packs/reports/evidence/v46-824/', import.meta.url),
+        );
+        mkdirSync(directory, { recursive: true });
+        await page.screenshot({
+          path: resolve(directory, `km-auth-${env.E2E_TARGET}-${width}.png`),
+          fullPage: true,
+          animations: 'disabled',
+        });
+      }
       if (option.code === 'ms' || option.code === 'ms-BN') {
         await expect(
           page.getByRole('heading', { name: 'Selamat kembali!', exact: true }),

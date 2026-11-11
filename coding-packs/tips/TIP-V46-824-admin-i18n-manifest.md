@@ -1164,3 +1164,18 @@ Picker browser harness correction: existing fetchOverview intentionally omits de
 | create | `coding-packs/reports/evidence/v46-824/lo-settings-msw-390.png` | Actual unmasked Lao screen, not owner/native-human approval. |
 | create | `coding-packs/reports/evidence/v46-824/lo-settings-server-1440.png` | Actual unmasked Lao screen, not owner/native-human approval. |
 | create | `coding-packs/reports/evidence/v46-824/lo-settings-server-390.png` | Actual unmasked Lao screen, not owner/native-human approval. |
+
+## Khmer raw catalog execution inventory (2026-11-12)
+
+Existing explicit km catalog rows remain authoritative. Implement all25 incrementally without placeholder files or treating fallback as translated. Initial12 physical catalogs: auth, common, bot-options, meta, overview, investors, needs, reports, requests, stores, ui, settings/audit. Exact-source unambiguous Portal matches may be retained only as build-time translation input, never runtime cross-app imports; correct Admin-specific context explicitly.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| create | `apps/admin/src/i18n/tests/khmer-catalog.spec.ts` | Fixed staged Khmer raw inventory/key/type/ICU/NFC/no-copy, exact context and unchanged font cmap; grow to explicit25 when complete, never claim final10-bundle gate from staged checks. |
+
+| modify | `e2e/audit/admin-i18n-fonts.spec.ts` | Keep all24 font assertions per mode; add actual Khmer public-login heading/title and unmasked screenshot, not full Khmer body/catalog acceptance. |
+| create | `coding-packs/reports/evidence/v46-824/km-auth-msw-1440.png` | Public Khmer auth at1440; no native-human/owner approval. |
+| create | `coding-packs/reports/evidence/v46-824/km-auth-msw-390.png` | Public Khmer auth at390; no native-human/owner approval. |
+| create | `coding-packs/reports/evidence/v46-824/km-auth-server-1440.png` | Same public auth assertions with native-mode frontend, not DB acceptance. |
+| create | `coding-packs/reports/evidence/v46-824/km-auth-server-390.png` | Same public auth assertions with native-mode frontend, not DB acceptance. |
+| create | `coding-packs/reports/evidence/v46-824/khmer-raw.log` | Focused44-case raw/ICU/context/cmap verification;12 of25 catalogs only. |
