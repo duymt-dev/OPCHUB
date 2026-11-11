@@ -10,6 +10,7 @@ import { GroupGrid, type GroupRowActions } from './group-grid';
 import { GroupTable } from './group-table';
 import { GroupsFilters, GroupsHead, GroupsStats } from './groups-toolbar';
 import styles from './groups.module.css';
+import { useAdminUiLabels } from '@/i18n/ui-labels';
 
 interface Props {
   all: AdminGroup[];
@@ -23,6 +24,7 @@ interface Props {
 
 /** D-23 → D-27: tab "Danh sách nhóm" — thống kê, lọc, lưới / bảng, chọn nhiều, phân trang */
 export function GroupListPanel(p: Props) {
+  const ui = useAdminUiLabels();
   const t = useTranslations('groups.list');
   const { params } = p;
   const list = useMemo(() => filterGroups(p.all, params), [p.all, params]);
@@ -42,6 +44,7 @@ export function GroupListPanel(p: Props) {
       <GroupsFilters all={p.all} params={params} onChange={p.onChange} />
       {params.view === 'list' ? (
         <BulkBar
+          {...ui.bulk}
           count={picked.length}
           unit={t('unit')}
           selectedLabel={t('selected')}
@@ -90,7 +93,7 @@ export function GroupListPanel(p: Props) {
         sizeOptions={[...PAGE_SIZES]}
         onChange={(n) => p.onChange({ page: n })}
         onSizeChange={(size) => p.onChange({ size, page: 1 })}
-        labels={{ unit: t('pageUnit'), pageSize: t('pageSize') }}
+        labels={{ ...ui.pagination, unit: t('pageUnit'), pageSize: t('pageSize') }}
       />
     </div>
   );

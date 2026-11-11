@@ -9,6 +9,7 @@ import { MAIL_VARS, type CampaignFormError, type CampaignFormState } from '../ty
 import styles from './campaign-form.module.css';
 import { AdminAiSuggestButton } from '@/components/ai-suggest-button';
 import { useState } from 'react';
+import { useAdminUiLabels } from '@/i18n/ui-labels';
 
 interface FieldProps {
   f: CampaignFormState;
@@ -161,6 +162,7 @@ export function BodyField({
   rev,
   onInsert,
 }: FieldProps & { rev: number; onInsert: (v: string) => void }) {
+  const ui = useAdminUiLabels();
   const t = useTranslations('marketing.form');
   const [aiRevision, setAiRevision] = useState(0);
   return (
@@ -174,6 +176,7 @@ export function BodyField({
         }}
       />
       <RichTextField
+        labels={ui.editor}
         key={`${rev}:${aiRevision}`}
         value={f.body}
         onChange={(body) => set({ body })}

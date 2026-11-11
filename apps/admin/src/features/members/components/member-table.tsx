@@ -1,7 +1,7 @@
 'use client';
 
 import type { AdminMember } from '@opchub/shared/api-domains';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { formatDate, pageCheckState, splitGroups, subOf } from '../model';
 import type { GroupLookup, MemberHandlers, MemberPermissions } from '../types';
 import { CheckBox, Flag, GroupChips, MemberAvatar, StatusPill, TypeTag } from './cells';
@@ -55,6 +55,7 @@ function Row(p: {
   h: MemberHandlers;
   can: MemberPermissions;
 }) {
+  const locale = useLocale();
   const { m, h } = p;
   const t = useTranslations('members');
   const g = splitGroups(m.groupIds, p.groups);
@@ -84,7 +85,7 @@ function Row(p: {
       </div>
       <GroupChips chips={g.chips} more={g.more} />
       <span className={styles.regRole}>{m.persona || t('role.member')}</span>
-      <span className={styles.date}>{formatDate(m.createdAt)}</span>
+      <span className={styles.date}>{formatDate(m.createdAt, locale)}</span>
       <StatusPill m={m} />
       <RowMenu m={m} h={h} canEdit={p.can.edit} />
     </div>

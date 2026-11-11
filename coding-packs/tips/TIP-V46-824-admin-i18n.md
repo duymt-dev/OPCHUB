@@ -88,6 +88,8 @@ Checker dùng ICU AST để đối chiếu argument name/type, select/plural và
 
 Execute inventory clarification (11/11/2026): baseline có `settings.renewal.actions = ""`, là header cột thao tác cố ý để trống. Giữ nguyên vi/hash và cho phép **riêng key này**, chỉ khi cả source/target đều chuỗi rỗng và có lý do allowlist cụ thể. Không cho phép biến source có chữ thành rỗng hoặc miễn kiểm cả namespace; test âm phải chặn các trường hợp đó.
 
+Owner-approved execute clarification (11/11/2026): owner đồng ý thêm props định dạng số **tùy chọn** cho shared Pagination/BulkBar để Admin dịch đầy đủ số hiển thị. Giữ nguyên mặc định Portal, giá trị số/callback và logic chọn/phân trang; cập nhật manifest trước khi sửa hai file shared này. Chạy hồi quy shared UI/Portal và build Portal; không mở rộng sang thay đổi nghiệp vụ Portal.
+
 ### 4. UI, labels và validation
 
 22. Metadata: 22 route title hiện có + `/profile` chuyển `generateMetadata/getTranslations('meta')`; giữ brand `OPC Hub Admin`, robots noindex/nofollow. Không locale hóa href/slug/canonical hoặc public SEO Portal.

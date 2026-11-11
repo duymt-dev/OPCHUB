@@ -5,6 +5,7 @@ import { Button, Form, Input } from 'antd';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import styles from './policy-terms.module.css';
+import { useAdminUiLabels } from '@/i18n/ui-labels';
 
 /**
  * SRS §20.6 "Điều khoản chương trình" — D-91 (2): prototype v4 không có ô này, nên thu thành nút
@@ -20,6 +21,7 @@ export function PolicyTerms() {
 }
 
 function TermsDialog({ invalid }: { invalid: boolean }) {
+  const ui = useAdminUiLabels();
   const t = useTranslations('affiliate.policy');
   const [open, setOpen] = useState(false);
   const show = open || invalid;
@@ -29,6 +31,7 @@ function TermsDialog({ invalid }: { invalid: boolean }) {
         {t('termsEdit')}
       </Button>
       <Modal
+        closeLabel={ui.close}
         open={show}
         title={t('terms')}
         onClose={() => setOpen(false)}

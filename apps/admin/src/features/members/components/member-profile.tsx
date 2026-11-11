@@ -1,7 +1,7 @@
 'use client';
 
 import type { AdminMember } from '@opchub/shared/api-domains';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { formatDate, splitGroups } from '../model';
 import type { GroupLookup } from '../types';
 import { Flag, MemberAvatar, TypeTag, useStatusLabel } from './cells';
@@ -10,6 +10,7 @@ import styles from './member-drawer.module.css';
 type Row = [label: string, value: string];
 
 function useProfileRows(m: AdminMember) {
+  const locale = useLocale();
   const t = useTranslations('members.drawer');
   const tRole = useTranslations('members.role');
   const status = useStatusLabel();
@@ -30,7 +31,7 @@ function useProfileRows(m: AdminMember) {
     [t('email'), m.email],
   ];
   const sys: Row[] = [
-    [t('registered'), formatDate(m.createdAt)],
+    [t('registered'), formatDate(m.createdAt, locale)],
     [t('role'), m.persona || tRole('member')],
     [t('status'), status(m)],
   ];

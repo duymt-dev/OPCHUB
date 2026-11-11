@@ -1,0 +1,64 @@
+APP=@opchub/portal MODE=msw; build only, not API/browser acceptance
+$ next build
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 1318ms
+- Experiments (use with caution):
+  · optimizePackageImports
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 40s
+  Running TypeScript ...
+  Finished TypeScript in 57s ...
+  Collecting page data using 5 workers ...
+{"level":"warn","scope":"portal-seo","event":"store_sitemap_unavailable"}
+  Generating static pages using 5 workers (0/15) ...
+  Generating static pages using 5 workers (3/15)
+  Generating static pages using 5 workers (7/15)
+{"level":"warn","scope":"portal-seo","event":"store_sitemap_unavailable"}
+{"level":"warn","scope":"portal-seo","event":"store_sitemap_unavailable"}
+{"level":"warn","scope":"portal-seo","event":"store_sitemap_unavailable"}
+  Generating static pages using 5 workers (11/15)
+✓ Generating static pages using 5 workers (15/15) in 3.2s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /affiliate
+├ ƒ /chat/[[...slug]]
+├ ƒ /community
+├ ƒ /dashboard
+├ ƒ /events/[[...id]]
+├ ƒ /forgot-password
+├ ƒ /g/[slug]
+├ ƒ /g/[slug]/opengraph-image
+├ ƒ /g/[slug]/opengraph-image-1rfkr9
+├ ƒ /huong-dan
+├ ƒ /login
+├ ○ /manifest.webmanifest
+├ ƒ /membership/pay
+├ ƒ /mock-affiliate-state
+├ ƒ /needs
+├ ƒ /needs/mine
+├ ƒ /profile
+├ ƒ /projects
+├ ƒ /projects/[id]
+├ ƒ /projects/mine
+├ ƒ /r/[code]
+├ ƒ /register
+├ ƒ /reset-password
+├ ƒ /robots.txt
+├ ƒ /services/[[...slug]]
+├ ƒ /sitemap.xml
+├ ƒ /sso/callback
+├ ƒ /sso/callback/[provider]
+├ ƒ /store-sitemaps/sitemap/[__metadata_id__]
+├ ƒ /stores
+├ ƒ /stores/[id]
+├ ƒ /stores/mine
+└ ƒ /unsubscribe
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand

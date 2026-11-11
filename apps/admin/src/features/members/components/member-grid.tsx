@@ -1,7 +1,7 @@
 'use client';
 
 import type { AdminMember } from '@opchub/shared/api-domains';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { formatDate, splitGroups, subOf } from '../model';
 import type { GroupLookup, MemberHandlers, MemberPermissions } from '../types';
 import { CheckBox, GroupChips, MemberAvatar, StatusPill, TypeTag } from './cells';
@@ -18,6 +18,7 @@ interface Props {
 
 /** D-08 dạng lưới: thẻ 250px, chọn / menu ⋯ / "Xem hồ sơ đăng ký →" */
 export function MemberGrid({ rows, selected, groups, h, can }: Props) {
+  const locale = useLocale();
   const t = useTranslations('members');
   return (
     <div className={styles.grid}>
@@ -52,7 +53,7 @@ export function MemberGrid({ rows, selected, groups, h, can }: Props) {
             </div>
             <div className={styles.foot}>
               <span>{m.persona || t('role.member')}</span>
-              <span>{t('grid.joined', { date: formatDate(m.createdAt) })}</span>
+              <span>{t('grid.joined', { date: formatDate(m.createdAt, locale) })}</span>
             </div>
           </article>
         );

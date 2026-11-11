@@ -27,6 +27,8 @@ describe('D-141 AC824-09 translated shared-component label props', () => {
     expect(result.current.editor.linkInsert).toBe(locale === 'en' ? 'Insert' : 'Chèn');
     expect(result.current.editor.linkInvalid).toContain('https://');
     expect(result.current.bulk.clearLabel).toBe(locale === 'en' ? 'Clear selection' : 'Bỏ chọn');
+    expect(result.current.bulk.formatCount?.(1234)).toBe(locale === 'en' ? '1,234' : '1.234');
+    expect(result.current.pagination.number?.(1234)).toBe(locale === 'en' ? '1,234' : '1.234');
     expect(result.current.dateRange.presets).toHaveLength(5);
     expect(result.current.dateRange.dateLocale).toBe(locale === 'en' ? 'en-gb' : 'vi');
   });

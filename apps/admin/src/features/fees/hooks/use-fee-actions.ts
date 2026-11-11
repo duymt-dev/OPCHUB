@@ -3,8 +3,9 @@
 import type { FeeRow } from '@opchub/shared/api-domains';
 import { useToast } from '@opchub/ui';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { messageOf } from '@/lib/api-errors';
+import { formatNumber } from '@/i18n/format';
 import { collectFees, exportFees, feeKeys, feeRowAction, remindAllFees, remindFees } from '../api';
 import { remindTarget, vnd } from '../model';
 
@@ -25,6 +26,7 @@ function download(filename: string, csv: string) {
  * Số tiền toast = `amount` của dòng (D-68: theo gói của thành viên, số nguyên VND).
  */
 export function useFeeActions(clearSelection: () => void) {
+  const locale = useLocale();
   const t = useTranslations('fees.toast');
   const toast = useToast();
   const qc = useQueryClient();
@@ -37,7 +39,7 @@ export function useFeeActions(clearSelection: () => void) {
     onSuccess: (_d, { r, action }) => {
       if (action === 'remind') toast(t('reminded', { to: remindTarget(r) }));
       else {
-        toast(t('collected', { amount: vnd(r.amount), name: r.fullName }));
+        toast(t('collected', { amount: vnd(r.amount, locale), name: r.fullName }));
         refresh();
       }
     },
@@ -47,7 +49,7 @@ export function useFeeActions(clearSelection: () => void) {
   const bulkCollect = useMutation({
     mutationFn: collectFees,
     onSuccess: (_d, ids) => {
-      toast(t('bulkCollected', { n: ids.length }));
+      toast(t('bulkCollected', { n: formatNumber(ids.length, locale) }));
       clearSelection();
       refresh();
     },
@@ -57,7 +59,7 @@ export function useFeeActions(clearSelection: () => void) {
   const bulkRemind = useMutation({
     mutationFn: remindFees,
     onSuccess: (_d, ids) => {
-      toast(t('bulkReminded', { n: ids.length }));
+      toast(t('bulkReminded', { n: formatNumber(ids.length, locale) }));
       clearSelection();
     },
     onError: fail,
@@ -65,7 +67,7 @@ export function useFeeActions(clearSelection: () => void) {
 
   const remindAll = useMutation({
     mutationFn: remindAllFees,
-    onSuccess: (d) => toast(t('bulkReminded', { n: d.queued })),
+    onSuccess: (d) => toast(t('bulkReminded', { n: formatNumber(d.queued, locale) })),
     onError: fail,
   });
 
@@ -73,7 +75,7 @@ export function useFeeActions(clearSelection: () => void) {
     mutationFn: exportFees,
     onSuccess: (d, ids) => {
       download(d.filename, d.csv);
-      toast(t('exported', { n: ids.length }));
+      toast(t('exported', { n: formatNumber(ids.length, locale) }));
     },
     onError: fail,
   });

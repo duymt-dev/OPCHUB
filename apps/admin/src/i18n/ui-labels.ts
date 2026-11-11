@@ -1,10 +1,10 @@
 'use client';
 
 import { useLocale, useTranslations } from 'next-intl';
-import dayjs from 'dayjs';
 import type { BulkBarProps, PaginationLabels, RichTextLabels } from '@opchub/ui';
 import { formatNumber } from './format';
 import { localeProfileOf } from './locales';
+import { adminDatePresets, datePickerFormat } from './date-picker';
 
 const EDITOR_KEYS = [
   'undo',
@@ -36,12 +36,13 @@ export function useAdminUiLabels() {
   const locale = useLocale();
   const count = (n: number) => formatNumber(n, locale);
   const pagination: PaginationLabels = {
+    number: count,
     unit: t('pagination.unit'),
     prev: t('pagination.prev'),
     next: t('pagination.next'),
-    page: (n) => t('pagination.page', { n }),
+    page: (n) => t('pagination.page', { n: count(n) }),
     pageSize: t('pagination.pageSize'),
-    perPage: (n) => t('pagination.perPage', { n }),
+    perPage: (n) => t('pagination.perPage', { n: count(n) }),
     range: (from, to, total, unit) =>
       t('pagination.range', {
         from: count(from),
@@ -50,7 +51,8 @@ export function useAdminUiLabels() {
         unit,
       }),
   };
-  const bulk: Pick<BulkBarProps, 'selectedLabel' | 'clearLabel' | 'ariaLabel'> = {
+  const bulk: Pick<BulkBarProps, 'selectedLabel' | 'clearLabel' | 'ariaLabel' | 'formatCount'> = {
+    formatCount: count,
     selectedLabel: t('bulk.selected'),
     clearLabel: t('bulk.clear'),
     ariaLabel: t('bulk.aria'),
@@ -65,15 +67,6 @@ export function useAdminUiLabels() {
     t('calendar.month'),
     t('calendar.previousMonth'),
   ];
-  const today = dayjs();
-  const previous = today.subtract(1, 'month');
-  const ranges: [dayjs.Dayjs, dayjs.Dayjs][] = [
-    [today.startOf('day'), today.endOf('day')],
-    [today.subtract(6, 'day').startOf('day'), today.endOf('day')],
-    [today.subtract(29, 'day').startOf('day'), today.endOf('day')],
-    [today.startOf('month'), today.endOf('month')],
-    [previous.startOf('month'), previous.endOf('month')],
-  ];
   return {
     pagination,
     bulk,
@@ -82,8 +75,9 @@ export function useAdminUiLabels() {
     presetLabels,
     dateRange: {
       placeholder: [t('calendar.from'), t('calendar.to')] as [string, string],
-      presets: ranges.map((value, index) => ({ label: presetLabels[index] ?? '', value })),
+      presets: adminDatePresets(presetLabels),
       dateLocale: localeProfileOf(locale).dayjs,
+      format: datePickerFormat(locale),
     },
   };
 }

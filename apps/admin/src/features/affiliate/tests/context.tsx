@@ -4,6 +4,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import type { ReactNode } from 'react';
 import affiliate from '../../../../messages/vi/affiliate.json';
 import common from '../../../../messages/vi/common.json';
+import ui from '../../../../messages/vi/ui.json';
 
 export function affiliateTestContext() {
   const client = new QueryClient({
@@ -14,7 +15,7 @@ export function affiliateTestContext() {
       <NextIntlClientProvider
         locale="vi"
         timeZone="Asia/Ho_Chi_Minh"
-        messages={{ affiliate, common }}
+        messages={{ affiliate, common, ui }}
       >
         <QueryClientProvider client={client}>
           <ToastProvider>{children}</ToastProvider>

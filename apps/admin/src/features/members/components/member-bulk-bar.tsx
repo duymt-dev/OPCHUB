@@ -3,6 +3,7 @@
 import { BulkBar } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import styles from './member-bulk-bar.module.css';
+import { useAdminUiLabels } from '@/i18n/ui-labels';
 
 interface Props {
   count: number;
@@ -16,9 +17,11 @@ interface Props {
 
 /** D-10 "Đã chọn N mục" + Gán vào nhóm / Khóa / Mở khóa / Xuất CSV / Bỏ chọn */
 export function MemberBulkBar(p: Props) {
+  const ui = useAdminUiLabels();
   const t = useTranslations('members.bulk');
   return (
     <BulkBar
+      {...ui.bulk}
       count={p.count}
       unit={t('unit')}
       selectedLabel={t('selected')}

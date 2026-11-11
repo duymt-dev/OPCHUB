@@ -37,7 +37,7 @@ Baseline settings has **524** string leaves. Its sorted `[path,value]` entries (
 - `features/requests/model.ts`: example/author personal names are data, not copy needing translation.
 - All model date parsers, API values, query keys and export files keep prior behavior. Change UI formatting signatures and callers, not the business calculations.
 - API/server error messages and server notification/audit/email payloads remain raw per D-65/D-141. Client-only validation and upload errors must be localized without weakening schema checks.
-- UI labels defaulting to Vietnamese in packages/ui must be overridden from Admin at call sites. Only two shared production files are authorized: optional UiProvider locale and DateRangePicker date locale.
+- UI labels defaulting to Vietnamese in packages/ui must be overridden from Admin at call sites. Initially only UiProvider and DateRangePicker were authorized. Owner approved the11/11/2026 execute clarification: also add optional number-format props to Pagination and BulkBar, retaining all Portal defaults and numeric callbacks. No other shared production file is authorized.
 
 ## Runtime, screens, shared UI and dependencies (252 paths)
 
@@ -654,7 +654,7 @@ Batch = one TIP824. Pairwise conflicts inside the batch = zero. Overlaps with hi
 
 ## Counts and verification
 
-610 explicit paths: 360 create, 249 modify, 1 delete. Modify/delete paths were checked against the working baseline; create paths are planned and absent except the planning documents being created in this phase. No app source file is changed by generating this manifest.
+621 explicit paths: 367 create, 253 modify, 1 delete. Modify/delete paths were checked against the working baseline; create paths are planned and absent except the planning documents being created in this phase. No app source file is changed by generating this manifest.
 
 ## Execute inventory additions (2026-11-11, same serial lane)
 
@@ -723,3 +723,28 @@ Sequential extension inspected before editing; all production callers and catalo
 | create | `apps/admin/src/features/settings/components/welcome-preview.spec.tsx` | Localized preview chrome with unchanged Vietnamese email body and authored content. |
 | modify | `apps/admin/src/features/settings/components/welcome-preview.tsx` | Keep actual Vietnamese email body distinct from localized preview chrome. |
 | create | `apps/admin/src/features/profile/hooks/use-profile-errors.ts` | Keep structured client issues for live locale changes; preserve raw API field errors and hidden-avatar toast behavior. |
+
+## Execute inventory additions - complete shared-control callers
+
+Sequential extension checked before editing; all production control callers are already enumerated above. Preserve domain overrides and callback values; optional shared defaults remain unchanged for Portal. No API/date parser/export changes.
+
+| Action | Exact path | Responsibility |
+|---|---|---|
+| create | `apps/admin/src/i18n/date-picker.ts` | Locale/Gregorian display pattern and live Vietnam-calendar presets, without global dayjs selection. |
+| create | `apps/admin/src/i18n/date-picker.spec.ts` | All12 locale patterns, VN boundary/month/year, live preset values and unchanged canonical date strings. |
+| create | `apps/admin/src/i18n/tests/control-callers.spec.ts` | AST regression for all Admin shared control callers passing translated label props. |
+| modify | `apps/admin/src/features/stores/components/stores-header.spec.tsx` | Supply real ui messages after wiring the localized date control; retain assertions. |
+| create | `apps/admin/src/features/fees/model.spec.ts` | Locale money/timestamps/null regression with unchanged fee values and actions; no existing domain model suite at this path. |
+
+## Owner-approved execute extension - optional numeric labels (11/11/2026)
+
+Owner answered: “Đồng ý thêm props tùy chọn, giữ nguyên Portal”. No data, calculation, pagination/selection state or callback contract changes. Keep default rendering identical for every existing caller; Admin opts in with its live formatter. Fresh shared-UI/Portal regression and Portal build required.
+
+| Action | Exact path | Responsibility |
+|---|---|---|
+| modify | `packages/ui/src/pagination/pagination.tsx` | Optional numeric button label formatter, preserve numeric callbacks/default output. |
+| modify | `packages/ui/src/bulk-bar/bulk-bar.tsx` | Optional count formatter, preserve selection visibility and callbacks/default output. |
+| create | `packages/ui/src/controls-i18n.spec.tsx` | Optional/default rendering and raw numeric callback regression. |
+| modify | `apps/admin/src/features/affiliate/tests/context.tsx` | Add real ui catalog to shared provider fixture; preserve existing assertions. |
+| create | `coding-packs/reports/evidence/v46-824/build-portal.log` | Actual Portal build after owner-approved shared changes; no Portal business edits. |
+| create | `coding-packs/reports/evidence/v46-824/portal-unit.log` | Fresh direct Portal regression, bypassing consumer cache after shared changes. |

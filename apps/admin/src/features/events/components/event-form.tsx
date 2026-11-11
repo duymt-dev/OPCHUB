@@ -20,11 +20,13 @@ import { BasicFields, CoverField, RegSwitch, SeatsFields } from './event-form-fi
 import { MeetField, PlaceFields } from './event-place-fields';
 import { Sheet } from './sheet';
 import btn from './sheet.module.css';
+import { useAdminUiLabels } from '@/i18n/ui-labels';
 
 /** `new` = tạo mới; sự kiện = sửa */
 export type EventFormTarget = 'new' | EventView | null;
 
 function FormBody({ initial, onClose }: { initial: EventFormState; onClose: () => void }) {
+  const ui = useAdminUiLabels();
   const t = useTranslations('events');
   const toast = useToast();
   const save = useSaveEvent();
@@ -75,6 +77,7 @@ function FormBody({ initial, onClose }: { initial: EventFormState; onClose: () =
         <div className={styles.field}>
           {t('form.desc')}
           <RichTextField
+            labels={ui.editor}
             value={f.description}
             onChange={(description) => set({ description })}
             placeholder={t('form.descPh')}

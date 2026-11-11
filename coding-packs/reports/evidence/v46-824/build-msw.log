@@ -1,21 +1,21 @@
-MODE=msw; Portal=http://localhost:60096; build only, not API/browser acceptance
+APP=@opchub/admin MODE=msw; build only, not API/browser acceptance
 $ next build
 ▲ Next.js 16.4.2 (Turbopack)
 - Environments: .env.local
-✓ Running next.config.ts took 595ms
+✓ Running next.config.ts took 2.4s
 - Experiments (use with caution):
   · optimizePackageImports
 
   Creating an optimized production build ...
-✓ Compiled successfully in 6.6s
+✓ Compiled successfully in 16.1s
   Running TypeScript ...
-  Finished TypeScript in 36.6s ...
+  Finished TypeScript in 66s ...
   Collecting page data using 5 workers ...
   Generating static pages using 5 workers (0/10) ...
   Generating static pages using 5 workers (2/10)
   Generating static pages using 5 workers (4/10)
   Generating static pages using 5 workers (7/10)
-✓ Generating static pages using 5 workers (10/10) in 1453ms
+✓ Generating static pages using 5 workers (10/10) in 9.1s
   Finalizing page optimization ...
 
 Route (app)

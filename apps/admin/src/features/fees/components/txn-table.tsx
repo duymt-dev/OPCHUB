@@ -1,7 +1,7 @@
 'use client';
 
 import type { UnmatchedTxn } from '@opchub/shared/api-domains';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { vnd, vnDateTime } from '../model';
 import styles from './fee-transactions.module.css';
 
@@ -14,6 +14,7 @@ interface Props {
 
 /** Bảng giao dịch CK không khớp (NA-03 4b): giờ VN, tiền VND nguyên, lý do, gợi ý Mã TV / mã GV (D-113) */
 export function TxnTable({ rows, canMatch, onMatch }: Props) {
+  const locale = useLocale();
   const t = useTranslations('fees.txn');
   return (
     <div className={styles.scroll}>
@@ -33,8 +34,8 @@ export function TxnTable({ rows, canMatch, onMatch }: Props) {
         <tbody>
           {rows.map((r) => (
             <tr key={r.id}>
-              <td className={styles.muted}>{vnDateTime(r.receivedAt)}</td>
-              <td className={styles.num}>{vnd(r.amount)}</td>
+              <td className={styles.muted}>{vnDateTime(r.receivedAt, locale)}</td>
+              <td className={styles.num}>{vnd(r.amount, locale)}</td>
               <td className={styles.content}>{r.content}</td>
               <td>{r.reason ?? '—'}</td>
               <td>
