@@ -5,10 +5,10 @@ The active goal remains the entire approved TIP and all16 ACs. No scope reductio
 
 ## Current checkpoint
 
-- Date:2026-11-11. Branch: `feature/TIP-V46-824-admin-i18n`, baseline `dev f7c1b2b8` (822/823 already merged). Current source **8aa9c974**, committed and pushed.
+- Date:2026-11-11. Branch: `feature/TIP-V46-824-admin-i18n`, baseline `dev f7c1b2b8` (822/823 already merged). Current source **c90db9f8**, committed and pushed.
 - Previous goal turn made concrete progress. No blocking external condition: substantial implementation/verification remains.
 - Owner explicitly approved optional number-format props for shared Pagination/BulkBar, retaining Portal defaults/callbacks. Approval is recorded in TIP/manifest before those shared edits; no Portal business/source change.
-- Native safety: no operation against original PG5432 data, no reset/repair/recreate of original `opchub_test`, no service/port teardown. Native-mode compilation used the isolated proxy configuration, not database/API verification.
+- Native safety: no operation against original PG5432 data, no reset/repair/recreate of original `opchub_test`, no service/port teardown. Native-mode compilation used the isolated proxy configuration. Read-only font audits visited login in MSW/off builds without server fixtures, API mutations, seeds or DB access; they are not database/API verification.
 
 ## Delivered cumulatively
 
@@ -27,6 +27,9 @@ The active goal remains the entire approved TIP and all16 ACs. No scope reductio
 12. Current display migration covers93 actual model/presentation calls in50 UI files across14 modules (11 domains): stores/needs/requests/projects/investors/marketing/reports/affiliate/events/groups/settings, in addition to the earlier members/fees work. Compact money retains original VND/USD thresholds and JS toFixed/Math.round semantics; Vietnamese padded/non-padded dates, month labels and legacy email/campaign content are preserved. Event day/time projects canonical startsAt/endTime only for display, never changes form/API fields. Local calendar comparisons and group export date/search/sort remain canonical.
 13. Settings bank/SSO/AI-provider, bot script and group chat/moderation inline display formatters now read the live locale. Script-type and known regional labels use exact canonical projections with custom-content fallback. Attachment size is already a raw API string and remains unchanged. The AST gate finds only one fixed-vi visible-format API exception: groups/model.ts private vnDate, exclusively used by immutable export cells/filenames. Other raw UI number interpolation/local-error/literal audits and browser acceptance are still open.
 
+14. Added seven self-hosted WOFF2 assets from six pinned Google Fonts sources, all six byte-identical OFL/copyright files, a reproducible external build-only FontTools4.68.0/Brotli1.2.1 script and actual cmap/hash/shaping receipts. Static regular400; heavier weights use synthesis, not claimed weight masters. Latin is primary, only the selected SC/Thai/Khmer/Lao/Myanmar fallback is referenced. A9724-byte selector-only font covers all12 native names/countries; Unicode-range faces keep original per-script metrics, and the popover is bounded/scrollable. The Admin auth root overrides its shared system stack via a zero-box marker; Portal/shared code is unchanged.
+15. Font technical proof:29 units, two byte-identical builds and48 font-only browser cases (12 choices x1440/390 xMSW/off). CDP checks actual custom fonts on the active label and24 native-name/country text nodes, no installed-font fallback, selected-script-only initial downloads, one extra small menu asset, viewport bounds, Escape and no browser errors. This does NOT prove absent translations, all-screen glyphs/screenshots, backend/native integration or JS performance. Current catalog glyph scope is present vi/en plus native selector names; regenerate/assert all target catalog glyphs when those catalogs exist.
+
 ## Raw translation readiness — FAIL / INCOMPLETE
 
 | Bundle | Files present / required | Raw leaves present / required |
@@ -37,24 +40,25 @@ The active goal remains the entire approved TIP and all16 ACs. No scope reductio
 
 Presence50/250 and complete English are NOT whole-TIP acceptance. Eight target bundles, their glossaries and the final fixed10-bundle production gate remain missing. Runtime fallback never counts as a translation. See [catalog audit](evidence/v46-824/catalog-audit.md) and [REVIEW](../../apps/admin/messages/REVIEW.md).
 
-## Current verification — source 8aa9c974
+## Current verification — source c90db9f8
 
 | Command / check | Actual evidence |
 |---|---|
-| `pnpm lint` | PASS,8 tasks; initial0 cached, final7 cached / Admin fresh |
-| `pnpm typecheck` | PASS,8 tasks; initial0 cached, final7 cached / Admin fresh |
-| `pnpm test` | **2550 passed +2 pre-existing skips**. All6 tasks fresh /0 cached: Admin835, UI80, Portal476, shared757, server276, integrations126 |
-| Portal regression | **476 passed**,85 files, fresh in current root run. Earlier direct Portal log is historical f5bb0479, not another current run or extra tests. |
-| `pnpm depcheck` | PASS, frontend/shared2717 modules8245 dependencies; server1260/5995 |
+| `pnpm lint` | PASS,8 tasks /6 cached; Admin/e2e fresh, including final source recheck |
+| `pnpm typecheck` | PASS,8 tasks /6 cached; Admin/e2e fresh, including final source recheck |
+| `pnpm test` | **2579 passed +2 pre-existing skips**. Admin864 fresh; UI80, Portal476, shared757, server276, integrations126 cached;6 tasks /5 cached |
+| Portal regression | **476 passed**,85 files, cached in this Admin-only checkpoint; prior fresh root run8aa9c974 and direct f5bb0479 are historical, not extra current tests. |
+| `pnpm depcheck` | PASS, frontend/shared2724 modules8258 dependencies; server1260/5995 |
 | Admin MSW production build | PASS, `.next-msw-tip824` |
-| Admin mocking-off production build | PASS, `.next-server-tip824`; build only, NOT native API/browser acceptance |
+| Admin mocking-off production build | PASS, `.next-server-tip824`; build only, NOT full native API/browser acceptance |
 | Portal production MSW build | Prior PASS f5bb0479 after shared changes; no Portal/shared production change in this checkpoint, not rebuilt here. |
-| Manifest/caps/logs |634 unique declared paths; no undeclared changed path, changed source/catalog files≤400 lines; UTF-8/no ANSI/trailing spaces; credential/control-character scan and unexpected missing-message scan clean |
-| Current browser/native API/visual/fonts/performance | NOT VERIFIED; remain required |
+| Manifest/caps/logs |641 unique declared paths; no undeclared changed path, changed source/catalog files≤400 lines; UTF-8/no ANSI; source/log whitespace and credential/control-character/missing-message scans clean. Six exact upstream OFL files retain original whitespace and hashes, excluded only from whitespace normalization |
+| Font technical checks |29 units, reproducible7 binaries,24/24 MSW +24/24 mocking-off browser cases; actual custom-font/network/menu/bounds proof, not full catalog/API acceptance |
+| Full browser/native API/screenshots/JS performance | NOT VERIFIED; remain required |
 
-Current logs: [root gates](evidence/v46-824/quality-gates.log), [unit including fresh Portal](evidence/v46-824/unit.log), [Admin MSW](evidence/v46-824/build-msw.log), [Admin mocking-off](evidence/v46-824/build-native.log). Historical f5bb0479 logs retained: [direct Portal unit](evidence/v46-824/portal-unit.log), [Portal build](evidence/v46-824/build-portal.log).
+Current logs: [root gates](evidence/v46-824/quality-gates.log), [unit (Portal cached)](evidence/v46-824/unit.log), [Admin MSW](evidence/v46-824/build-msw.log), [Admin mocking-off](evidence/v46-824/build-native.log), [fonts generation + both browser modes](evidence/v46-824/fonts.log). Historical f5bb0479 logs retained: [direct Portal unit](evidence/v46-824/portal-unit.log), [Portal build](evidence/v46-824/build-portal.log).
 
-New tests this checkpoint:35 compact-money +16 cross-domain display/contract +13 event presentation +9 AST cases,73 total. Focused migration run97/97, subsequent format/AST36/36 and extended AST9/9; do not add focused counts to root total. Initial focused checks caught default-vi month labels changing under Intl and incorrect test assumptions about en-GB compact k/Chinese month shape; retained original assertions and corrected implementations/locale expectations. Lint/typecheck caught function-size limits, reserved module identifier and the API's preformatted attachment-size string; extracted the unchanged CSV download callback, reused a finite bot-label projection, and retained raw attachment size. Percent precision regression avoids floating-point tails without changing formulas. Final root lint/typecheck were rerun after all source changes; all root suites and both exact-source Admin builds pass. Initial commit hook failed because PATH used the broken global pnpm; restored the pinned shim and reran hooks normally, no bypass. Expected jsdom pseudo-element/AntD deprecation warnings remain, not browser proof. No missing-message/environment-fallback errors. Slow task timings are not performance benchmarks.
+New tests this checkpoint:29 font units plus48 font-only browser cases, not added together with the root unit total. All864 Admin unit cases pass. Initial browser proof caught the shared auth root still using its system stack; corrected only the Admin wrapper/CSS and retained the custom-font assertions. CDP must inspect immediate label TextNodes rather than an empty parent button; the final test explicitly requires all24 menu label nodes. Script-specific menu metrics prevent Burmese metrics enlarging every Latin row; both viewport bounds pass. Build-time merging drops irrelevant vertical/STAT tables from horizontal derivative parts and removes incompatible hinting programs, preserving outlines and shaping. Two independent builds match every binary/source/license/cmap receipt. Final root lint/typecheck were rerun after CSS/audit changes; focused final29 font cases, complete root unit suites, current MSW/off font audits and both exact-source Admin builds pass. OFL bytes, including upstream whitespace, are untouched. Expected jsdom/AntD/NO_COLOR warnings are retained; no browser font/hydration or client missing-message errors. Build/test timing is not a performance benchmark.
 
 ## Current acceptance audit — all16 retained
 
@@ -73,17 +77,17 @@ New tests this checkpoint:35 compact-money +16 cross-domain display/contract +13
 |11|Canonical projections, event default, AI filter/moderation/optional numeric callback units pass; browser save-value/RBAC assertions pending.|
 |12|Raw API negative and CSV/Excel/email-preview boundaries pass by unit; actual translated-mode API/audit/notification/email/export browser negatives pending.|
 |13|Settings-language wiring unchanged; selector/config independence browser proof missing.|
-|14|Both current Admin build modes compile; identical MSW/native i18n behavior suites still NOT RUN.|
-|15|Required unmasked1440/390 glyph/focus/hydration and vi-parity evidence missing; no owner image approval fabricated.|
-|16|Selected-bundle architecture exists; executable JS/RSC/catalog/font/isolation/performance measurements missing.|
+|14|Both current Admin builds and identical24-case MSW/off font-only audits pass; complete identical MSW/native i18n behavior suites still NOT RUN.|
+|15|Font-only1440/390 selector glyph/custom-font/menu-bounds/Escape/no-error assertions pass in both modes. Required full-screen unmasked glyph/focus/hydration/vi-parity images remain missing; no owner image approval fabricated.|
+|16|Selected-bundle/font architecture and per-locale script network isolation have font-only browser proof; font binary sizes/hashes are recorded. Executable JS/RSC/catalog/full-page isolation/baseline performance measurements remain missing.|
 
 ## Next work — same full goal
 
 1. Finish remaining raw UI number interpolation, local form/auth/upload errors, and comprehensive AST literal audit with exact file/literal/reason exceptions. Do not alter parsers/search/date machine fields, API errors, exports, content or D-140.
 2. English browser smoke every route/state/main tab/dialog, then all8 target catalogs/glossaries and mandatory fixed-bundle raw gate. No directory-discovery skip, copied vi or TODO stand-ins.
-3. Licensed self-hosted script-scoped fonts/provenance; actual glyph/control rendering, same MSW/native assertions, profile/overview/auth/Portal language/shell regressions, unmasked1440/390 screenshots and measured baseline/current JS/catalog/font performance.
+3. Extend font glyph assertions to every target catalog when produced; full-screen/control rendering and same MSW/native i18n assertions, profile/overview/auth/Portal regressions, unmasked1440/390 screenshots and measured baseline/current JS/catalog/font performance.
 4. Re-audit every numbered requirement, all16 ACs and named artifacts against actual evidence. Only then finalize clean/push, PR into dev for owner review. Never auto-merge/release main.
 
 ## Historical evidence
 
-Earlier detailed checkpoints remain in Git: foundation9e207741 / report b61c1007; runtime55116347 / report ee41244b; English ec97a874 / report704810e9; AI/validation9e962712 / report fbf0b481; controls/shared compatibility f5bb0479 / report a45252d6. This compact report replaces repeated historical sections, not their Git evidence. Shared log filenames now contain the current runs. No previous partial PASS is promoted into whole-feature acceptance.
+Earlier detailed checkpoints remain in Git: foundation9e207741 / report b61c1007; runtime55116347 / report ee41244b; English ec97a874 / report704810e9; AI/validation9e962712 / report fbf0b481; controls/shared compatibility f5bb0479 / report a45252d6; domain display8aa9c974 / report bde191dd. This compact report replaces repeated historical sections, not their Git evidence. Shared log filenames now contain the current runs. No previous partial PASS is promoted into whole-feature acceptance.

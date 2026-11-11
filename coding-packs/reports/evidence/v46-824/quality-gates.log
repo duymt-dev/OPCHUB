@@ -1,5 +1,5 @@
-Source 8aa9c974; initial full root gates plus final source-snapshot lint/typecheck rerun. No native API acceptance.
-
+Source c90db9f8; tested working tree, then committed; font browser proofs are font-only, not catalog/API acceptance.
+TIP824 font working tree; full mandatory root gates; native API behavior still pending.
 COMMAND pnpm lint
 $ turbo run lint
 
@@ -8,29 +8,28 @@ $ turbo run lint
    • Running lint in 9 packages
    • Remote caching disabled
 
-@opchub/integrations:lint: cache miss, executing 1fb607819a53b21e
-@opchub/portal:lint: cache miss, executing 71e3df361172b94e
-@opchub/admin:lint: cache miss, executing 3c5bb2d1143c1624
-@opchub/e2e:lint: cache miss, executing 7eaaed5a9f33cfee
-@opchub/server:lint: cache miss, executing 7f4b11d47879bedd
-@opchub/db:lint: cache miss, executing 8df791dba6501ec7
-@opchub/shared:lint: cache miss, executing f9d493ea0cb6d67f
-@opchub/ui:lint: cache miss, executing 31f1920560035fc4
-@opchub/portal:lint: $ eslint src
-@opchub/shared:lint: $ eslint src
+@opchub/ui:lint: cache hit, replaying logs 31f1920560035fc4
 @opchub/ui:lint: $ eslint src
-@opchub/admin:lint: $ eslint src
+@opchub/e2e:lint: cache miss, executing ea4ba74d4e49da74
+@opchub/server:lint: cache hit, replaying logs 7f4b11d47879bedd
+@opchub/shared:lint: cache hit, replaying logs f9d493ea0cb6d67f
+@opchub/admin:lint: cache miss, executing 326f2390c5b8bdc1
+@opchub/portal:lint: cache hit, replaying logs 71e3df361172b94e
+@opchub/integrations:lint: cache hit, replaying logs 1fb607819a53b21e
 @opchub/integrations:lint: $ eslint src
 @opchub/server:lint: $ eslint src test
-@opchub/e2e:lint: $ eslint parity behavior audit server llm env.ts urls.ts
+@opchub/portal:lint: $ eslint src
+@opchub/shared:lint: $ eslint src
+@opchub/db:lint: cache hit, replaying logs 8df791dba6501ec7
 @opchub/db:lint: $ eslint src seed test
+@opchub/e2e:lint: $ eslint parity behavior audit server llm env.ts urls.ts
+@opchub/admin:lint: $ eslint src
 
  Tasks:    8 successful, 8 total
-Cached:    0 cached, 8 total
-  Time:    3m6.123s
+Cached:    6 cached, 8 total
+  Time:    1m31.999s
 
 EXIT 0
-
 COMMAND pnpm typecheck
 $ turbo run typecheck
 
@@ -39,44 +38,43 @@ $ turbo run typecheck
    • Running typecheck in 9 packages
    • Remote caching disabled
 
-@opchub/ui:typecheck: cache miss, executing 0878f2a111999454
-@opchub/e2e:typecheck: cache miss, executing 3d9da68b7736e33f
-@opchub/admin:typecheck: cache miss, executing 61fbfb515fe37e16
-@opchub/server:typecheck: cache miss, executing f44a5951da8d2c30
-@opchub/integrations:typecheck: cache miss, executing 60f5b494e043fdc4
-@opchub/db:typecheck: cache miss, executing 35eaf239ef03390a
-@opchub/shared:typecheck: cache miss, executing 2af37fea5a693c30
-@opchub/portal:typecheck: cache miss, executing 384ceac62a366d53
-@opchub/e2e:typecheck: $ tsc -p tsconfig.json
-@opchub/ui:typecheck: $ tsc -p tsconfig.json
-@opchub/admin:typecheck: $ next typegen && tsc --noEmit
+@opchub/admin:typecheck: cache miss, executing 7084493388873fae
+@opchub/integrations:typecheck: cache hit, replaying logs 60f5b494e043fdc4
 @opchub/integrations:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/server:typecheck: cache hit, replaying logs f44a5951da8d2c30
 @opchub/server:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/portal:typecheck: cache hit, replaying logs 384ceac62a366d53
 @opchub/portal:typecheck: $ next typegen && tsc --noEmit
-@opchub/shared:typecheck: $ tsc -p tsconfig.json
-@opchub/db:typecheck: $ tsc --noEmit -p tsconfig.json
 @opchub/portal:typecheck: Generating route types...
 @opchub/portal:typecheck: ✓ Types generated successfully
+@opchub/shared:typecheck: cache hit, replaying logs 2af37fea5a693c30
+@opchub/e2e:typecheck: cache miss, executing 438f423d814d136d
+@opchub/shared:typecheck: $ tsc -p tsconfig.json
+@opchub/db:typecheck: cache hit, replaying logs 35eaf239ef03390a
+@opchub/ui:typecheck: cache hit, replaying logs 0878f2a111999454
+@opchub/ui:typecheck: $ tsc -p tsconfig.json
+@opchub/db:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/admin:typecheck: $ next typegen && tsc --noEmit
+@opchub/e2e:typecheck: $ tsc -p tsconfig.json
 @opchub/admin:typecheck: Generating route types...
 @opchub/admin:typecheck: ✓ Types generated successfully
 
  Tasks:    8 successful, 8 total
-Cached:    0 cached, 8 total
-  Time:    1m3.944s
+Cached:    6 cached, 8 total
+  Time:    25.129s
 
 EXIT 0
-
 COMMAND pnpm depcheck
 $ depcruise apps/portal apps/admin packages e2e --config .dependency-cruiser.cjs && depcruise apps/server --config .dependency-cruiser.cjs --ts-config tsconfig.depcruise.server.json
 
-✔ no dependency violations found (2717 modules, 8245 dependencies cruised)
+✔ no dependency violations found (2724 modules, 8258 dependencies cruised)
 
 
 ✔ no dependency violations found (1260 modules, 5995 dependencies cruised)
 
 EXIT 0
 
-Final source snapshot after formatter/AST changes; mandatory root recheck
+Final font/CSS/audit source snapshot; mandatory root recheck
 COMMAND pnpm lint
 $ turbo run lint
 
@@ -85,26 +83,26 @@ $ turbo run lint
    • Running lint in 9 packages
    • Remote caching disabled
 
-@opchub/e2e:lint: cache hit, replaying logs 7eaaed5a9f33cfee
-@opchub/admin:lint: cache miss, executing f5e82feb105a6ae0
-@opchub/e2e:lint: $ eslint parity behavior audit server llm env.ts urls.ts
+@opchub/admin:lint: cache miss, executing 7bbc44b39de1e19c
 @opchub/server:lint: cache hit, replaying logs 7f4b11d47879bedd
 @opchub/server:lint: $ eslint src test
-@opchub/shared:lint: cache hit, replaying logs f9d493ea0cb6d67f
 @opchub/integrations:lint: cache hit, replaying logs 1fb607819a53b21e
-@opchub/shared:lint: $ eslint src
-@opchub/integrations:lint: $ eslint src
 @opchub/ui:lint: cache hit, replaying logs 31f1920560035fc4
-@opchub/ui:lint: $ eslint src
+@opchub/integrations:lint: $ eslint src
+@opchub/e2e:lint: cache miss, executing 8de64925912f0d54
+@opchub/shared:lint: cache hit, replaying logs f9d493ea0cb6d67f
+@opchub/shared:lint: $ eslint src
 @opchub/portal:lint: cache hit, replaying logs 71e3df361172b94e
-@opchub/db:lint: cache hit, replaying logs 8df791dba6501ec7
-@opchub/db:lint: $ eslint src seed test
 @opchub/portal:lint: $ eslint src
+@opchub/db:lint: cache hit, replaying logs 8df791dba6501ec7
+@opchub/ui:lint: $ eslint src
+@opchub/db:lint: $ eslint src seed test
 @opchub/admin:lint: $ eslint src
+@opchub/e2e:lint: $ eslint parity behavior audit server llm env.ts urls.ts
 
  Tasks:    8 successful, 8 total
-Cached:    7 cached, 8 total
-  Time:    1m53.728s
+Cached:    6 cached, 8 total
+  Time:    1m54.398s
 
 EXIT 0
 COMMAND pnpm typecheck
@@ -115,29 +113,29 @@ $ turbo run typecheck
    • Running typecheck in 9 packages
    • Remote caching disabled
 
+@opchub/admin:typecheck: cache miss, executing dbee9399219356db
+@opchub/shared:typecheck: cache hit, replaying logs 2af37fea5a693c30
 @opchub/portal:typecheck: cache hit, replaying logs 384ceac62a366d53
 @opchub/ui:typecheck: cache hit, replaying logs 0878f2a111999454
 @opchub/integrations:typecheck: cache hit, replaying logs 60f5b494e043fdc4
-@opchub/shared:typecheck: cache hit, replaying logs 2af37fea5a693c30
-@opchub/db:typecheck: cache hit, replaying logs 35eaf239ef03390a
-@opchub/admin:typecheck: cache miss, executing ad956e2c71a444df
-@opchub/shared:typecheck: $ tsc -p tsconfig.json
-@opchub/db:typecheck: $ tsc --noEmit -p tsconfig.json
-@opchub/integrations:typecheck: $ tsc --noEmit -p tsconfig.json
 @opchub/ui:typecheck: $ tsc -p tsconfig.json
 @opchub/portal:typecheck: $ next typegen && tsc --noEmit
 @opchub/portal:typecheck: Generating route types...
 @opchub/portal:typecheck: ✓ Types generated successfully
-@opchub/e2e:typecheck: cache hit, replaying logs 3d9da68b7736e33f
+@opchub/integrations:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/e2e:typecheck: cache miss, executing c4d545af21d9c703
+@opchub/shared:typecheck: $ tsc -p tsconfig.json
 @opchub/server:typecheck: cache hit, replaying logs f44a5951da8d2c30
-@opchub/e2e:typecheck: $ tsc -p tsconfig.json
+@opchub/db:typecheck: cache hit, replaying logs 35eaf239ef03390a
+@opchub/db:typecheck: $ tsc --noEmit -p tsconfig.json
 @opchub/server:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/e2e:typecheck: $ tsc -p tsconfig.json
 @opchub/admin:typecheck: $ next typegen && tsc --noEmit
 @opchub/admin:typecheck: Generating route types...
 @opchub/admin:typecheck: ✓ Types generated successfully
 
  Tasks:    8 successful, 8 total
-Cached:    7 cached, 8 total
-  Time:    16.12s
+Cached:    6 cached, 8 total
+  Time:    22.374s
 
 EXIT 0

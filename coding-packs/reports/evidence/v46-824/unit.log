@@ -1,3 +1,4 @@
+Source c90db9f8; tested working tree, then committed; font browser proofs are font-only, not catalog/API acceptance.
 COMMAND pnpm test
 $ turbo run test --concurrency=2
 
