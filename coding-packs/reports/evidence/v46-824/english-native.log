@@ -78,3 +78,4 @@ Running 68 tests using 1 worker
 
   68 passed (2.2m)
 EXIT 0
+Postcommit receipt source264842f8: all35 final tested catalog/test/README/manifest blobs match HEAD and worktree after normal hooks. Build/catalog/production inputs unchanged by the later sidebar-test-only readiness correction. Original working-tree base retained above.

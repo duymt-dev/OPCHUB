@@ -1,24 +1,24 @@
-TIP824 authenticated vi/en/fil sidebar internal-clipping/collapse/mobile/keyboard regression; production Admin/test working tree based on39e0783f; approved optional badge formatter plus Admin-only wrapping, unchanged copy/Portal defaults/geometry. Portal source unchanged since77484e3f. Requires real MSW Portal Affiliate relay, no DB/global seed/reset. Same9 sidebar browser assertions in native; actual UI login/read-only API and no masks. Not complete16-AC acceptance.
+TIP824 authenticated vi/en/fil sidebar internal-clipping/collapse/mobile/keyboard regression; production Admin/test working tree based on582e8579; approved optional badge formatter plus Admin-only wrapping, unchanged copy/Portal defaults/geometry. Portal source unchanged since77484e3f. Requires real MSW Portal Affiliate relay, no DB/global seed/reset. Same9 sidebar browser assertions in native; actual UI login/read-only API and no masks. Not complete16-AC acceptance.
 COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-sidebar.spec.ts
-[WebServer] (node:2204) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (node:13464) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
-[WebServer] (node:16820) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (node:27068) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
 
 Running 9 tests using 1 worker
 
-(node:29308) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:7188) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 (Use `node --trace-warnings ...` to show where the warning was created)
-  ok 1 [behavior] › behavior\admin-i18n-sidebar.spec.ts:12:3 › D-141 AC824-08 sidebar badge digits switch my/vi/en without changing counts 1440; not Myanmar catalog acceptance (6.3s)
-  ok 2 [behavior] › behavior\admin-i18n-sidebar.spec.ts:12:3 › D-141 AC824-08 sidebar badge digits switch my/vi/en without changing counts 390; not Myanmar catalog acceptance (6.8s)
-  ok 3 [behavior] › behavior\admin-i18n-sidebar.spec.ts:57:5 › D-141 AC824-15 sidebar text and badges stay inside links, vi 1440 (8.0s)
-  ok 4 [behavior] › behavior\admin-i18n-sidebar.spec.ts:57:5 › D-141 AC824-15 sidebar text and badges stay inside links, vi 390 (6.6s)
-  ok 5 [behavior] › behavior\admin-i18n-sidebar.spec.ts:57:5 › D-141 AC824-15 sidebar text and badges stay inside links, en 1440 (8.2s)
-  ok 6 [behavior] › behavior\admin-i18n-sidebar.spec.ts:57:5 › D-141 AC824-15 sidebar text and badges stay inside links, en 390 (7.8s)
-  ok 7 [behavior] › behavior\admin-i18n-sidebar.spec.ts:57:5 › D-141 AC824-15 sidebar text and badges stay inside links, fil 1440 (8.2s)
-  ok 8 [behavior] › behavior\admin-i18n-sidebar.spec.ts:57:5 › D-141 AC824-15 sidebar text and badges stay inside links, fil 390 (5.9s)
-  ok 9 [behavior] › behavior\admin-i18n-sidebar.spec.ts:130:1 › D-141 AC824-15 rejects internal clipping even when document width passes (10.0s)
+  ok 1 [behavior] › behavior\admin-i18n-sidebar.spec.ts:12:3 › D-141 AC824-08 sidebar badge digits switch my/vi/en without changing counts 1440; not Myanmar catalog acceptance (6.9s)
+  ok 2 [behavior] › behavior\admin-i18n-sidebar.spec.ts:12:3 › D-141 AC824-08 sidebar badge digits switch my/vi/en without changing counts 390; not Myanmar catalog acceptance (6.6s)
+  ok 3 [behavior] › behavior\admin-i18n-sidebar.spec.ts:58:5 › D-141 AC824-15 sidebar text and badges stay inside links, vi 1440 (4.3s)
+  ok 4 [behavior] › behavior\admin-i18n-sidebar.spec.ts:58:5 › D-141 AC824-15 sidebar text and badges stay inside links, vi 390 (3.8s)
+  ok 5 [behavior] › behavior\admin-i18n-sidebar.spec.ts:58:5 › D-141 AC824-15 sidebar text and badges stay inside links, en 1440 (4.1s)
+  ok 6 [behavior] › behavior\admin-i18n-sidebar.spec.ts:58:5 › D-141 AC824-15 sidebar text and badges stay inside links, en 390 (3.7s)
+  ok 7 [behavior] › behavior\admin-i18n-sidebar.spec.ts:58:5 › D-141 AC824-15 sidebar text and badges stay inside links, fil 1440 (5.5s)
+  ok 8 [behavior] › behavior\admin-i18n-sidebar.spec.ts:58:5 › D-141 AC824-15 sidebar text and badges stay inside links, fil 390 (4.4s)
+  ok 9 [behavior] › behavior\admin-i18n-sidebar.spec.ts:131:1 › D-141 AC824-15 rejects internal clipping even when document width passes (3.9s)
 
-  9 passed (1.4m)
+  9 passed (51.5s)
 EXIT 0
-Postcommit receipt: source e7c6ca13; all10 tested source/test/TIP/manifest blobs match HEAD and worktree after normal hooks. Original precommit working-tree base retained above.
+Postcommit receipt source264842f8: all35 final tested catalog/test/README/manifest blobs match HEAD and worktree after normal hooks. Build/catalog/production inputs unchanged by the later sidebar-test-only readiness correction. Original working-tree base retained above.

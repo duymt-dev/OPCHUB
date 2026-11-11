@@ -1,4 +1,4 @@
-# TIP824 raw catalog readiness - complete Filipino raw checkpoint
+# TIP824 raw catalog readiness - complete Thai raw checkpoint
 
 **INCOMPLETE / FAIL.** File presence alone is not completion. Counts below are raw source-key presence before any Vietnamese fallback, not native review or proof of ICU validity.
 
@@ -8,14 +8,14 @@
 | en | 25 | 25 | 2667 | 0 |
 | zh | 25 | 25 | 2667 | 0 |
 | id | 25 | 25 | 2667 | 0 |
-| th | 0 | 25 | 0 | 2667 |
+| th | 25 | 25 | 2667 | 0 |
 | ms | 25 | 25 | 2667 | 0 |
 | fil | 25 | 25 | 2667 | 0 |
 | km | 0 | 25 | 0 | 2667 |
 | lo | 0 | 25 | 0 | 2667 |
 | my | 0 | 25 | 0 | 2667 |
 
-Required source tree:2667 string leaves. All original2456 legacy leaves are hash-protected; the original524 settings leaves retain their exact baseline hash. The earlier52 labels are explicitly additive (40 settings.aiCalls,4 groups.mod,8 ui.errors). A further6 ui.errors labels cover numeric/bank/device validation; one settings.ai.customProviderLabel is now added in all five present bundles. Original source leaves are unchanged. All25 English files are explicitly checked against raw source keys/types/ICU/NFC/nonempty/no-copy contracts:25 passing cases, with six exact copied-text exceptions and one intentionally blank source header documented in REVIEW. Simplified Chinese has a fixed25-file raw suite,10 Admin-context cases and6 canonical-copy cases. Indonesian has a fixed25-file raw suite,14 Admin-context cases and6 canonical-copy cases. Filipino now has all25 files/2667 leaves. Four target bundles remain absent. Runtime fallback does NOT count as a translation.150/250 files present is not full acceptance. Overall10-bundle readiness remains FAIL; the final mandatory all-bundle production gate is still pending.
+Required source tree:2667 string leaves. All original2456 legacy leaves are hash-protected; the original524 settings leaves retain their exact baseline hash. The earlier52 labels are explicitly additive (40 settings.aiCalls,4 groups.mod,8 ui.errors). A further6 ui.errors labels cover numeric/bank/device validation; one settings.ai.customProviderLabel is now added in all five present bundles. Original source leaves are unchanged. All25 English files are explicitly checked against raw source keys/types/ICU/NFC/nonempty/no-copy contracts:25 passing cases, with six exact copied-text exceptions and one intentionally blank source header documented in REVIEW. Simplified Chinese has a fixed25-file raw suite,10 Admin-context cases and6 canonical-copy cases. Indonesian has a fixed25-file raw suite,14 Admin-context cases and6 canonical-copy cases. Filipino now has all25 files/2667 leaves. Three target bundles remain absent. Runtime fallback does NOT count as a translation.175/250 files present is not full acceptance. Overall10-bundle readiness remains FAIL; the final mandatory all-bundle production gate is still pending.
 
 Chinese provenance:692 exact-source Portal matches retained,1969 Admin-specific/context-reviewed leaves,6 canonical examples unchanged. Indonesian:728 retained matches,1933 translated/context-corrected leaves,6 canonical examples. Native-reviewed=false for every target. Real-loader request regressions cover English, Chinese, Indonesian and Malay plus all six physical settings parts; raw-file presence is not used as runtime proof. Overall10-bundle readiness remains FAIL.
 
@@ -39,3 +39,6 @@ Fresh full regression chain:68 loaded English +10 navigation/probe +6 Filipino +
 Root2910 passed +2 existing skips, Admin1192/180 files fresh,5 suites cached; lint/typecheck8 tasks/6 cached, depcheck2784modules/8543deps plus server1260/5995. Both Admin production builds pass; unchanged Portal build remains historical77484e3f, no fresh Portal build claimed.828 unique manifest paths, no undeclared changed source, all source caps/UTF8/log scans pass. Source AST584 files/301 retained findings/291 exceptions/zero unreviewed, corpus071a0c2dac01e16a2f8ac522f73e62f82dc4b7694d7e421078a3f6f20fd7f54f; CSS/catalogs/browser proof are outside that fingerprint.
 
 Specific sidebar clipping finding is corrected and regression-verified, NOT a whole AC15/TIP PASS. vi/en/zh/id/ms/fil each25files/2667leaves; th/km/lo/my absent,150/250 files and final10-bundle raw gate still FAIL. All-language/state/chat/auth/control/value/API/export/native/VI/visual/performance and named regressions remain open. Owner has now approved an optional AppShell/Sidebar badge-number presentation callback with unchanged raw counts/navigation/default Portal; approved, not yet implemented in this source checkpoint. Entire TIP remains IN PROGRESS / NOT DONE / NOT READY TO MERGE.
+
+
+Latest Thai raw checkpoint source264842f8:25files/2667 leaves,83 fixed Thai cases, actual request loading of all6 merged settings without fallback,34 full font cases; focused129 included in root3003.693 retained Portal matches +1968 direct/context-corrected (1 blank header) +6 canonical examples,37 Portal context corrections,1693 direct draft pairs. Native-reviewed=false. Six Thai actual Overview/Profile/Settings browser cases/mode,12 body images plus4 auth-only images, no font/Portal/shared/API/DB production change. Seven raw bundles complete,175/250 files; km/lo/my and final fixed10-bundle gate still absent. Older dated checkpoint inventories below/above retain their historical scope, not current readiness.
