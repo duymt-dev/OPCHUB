@@ -822,3 +822,7 @@ session negatives, validation/413/429, immutable identity/role, real storage own
 Argon2/version/refresh revocation/new current session, transactional audit/outbox and idempotent
 monotonic Redis replay. Actual gate counts and verification status are authoritative in
 `coding-packs/reports/TIP-V46-822-completion.md`; no unrelated historical gap is closed here.
+
+## TIP-V46-824 - D-141 foundation checkpoint (2026-11-11)
+
+PARTIAL, not feature acceptance: Admin i18n locales/loader/format/message-contract specs and shared UiProvider/date-picker specs verify the source split, locale allowlist/aliases, raw ICU contract negative fixtures, fallback/isolation and opt-in control compatibility. Source9e207741; full root2360 pass +2 existing skips, focused48. Raw catalog readiness FAIL22/250; nine target catalogs, full runtime/UI integration, identical MSW/native assertions, font/layout/performance evidence remain open. See reports/TIP-V46-824-completion.md for per-AC status; no unrelated historical gap is closed.

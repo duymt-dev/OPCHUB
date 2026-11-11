@@ -1,0 +1,67 @@
+TIP824 foundation checkpoint; catalog readiness incomplete; no runtime acceptance.
+
+=== tip824-lint-final.log ===
+@opchub/server:lint: cache hit, replaying logs 7f4b11d47879bedd
+@opchub/shared:lint: cache hit, replaying logs f9d493ea0cb6d67f
+@opchub/db:lint: $ eslint src seed test
+@opchub/server:lint: $ eslint src test
+@opchub/shared:lint: $ eslint src
+@opchub/ui:lint: $ eslint src
+@opchub/integrations:lint: cache hit, replaying logs 1fb607819a53b21e
+@opchub/portal:lint: cache hit, replaying logs 71e3df361172b94e
+@opchub/portal:lint: $ eslint src
+@opchub/integrations:lint: $ eslint src
+@opchub/admin:lint: $ eslint src
+
+ Tasks:    8 successful, 8 total
+Cached:    7 cached, 8 total
+  Time:    2m27.196s 
+
+
+=== tip824-typecheck-final.log ===
+@opchub/shared:typecheck: $ tsc -p tsconfig.json
+@opchub/admin:typecheck: cache miss, executing a83a73efb9be166b
+@opchub/e2e:typecheck: cache hit, replaying logs 3d9da68b7736e33f
+@opchub/e2e:typecheck: $ tsc -p tsconfig.json
+@opchub/integrations:typecheck: cache hit, replaying logs 60f5b494e043fdc4
+@opchub/ui:typecheck: cache hit, replaying logs 5c28a239a5b2bb4f
+@opchub/ui:typecheck: $ tsc -p tsconfig.json
+@opchub/integrations:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/admin:typecheck: $ next typegen && tsc --noEmit
+@opchub/admin:typecheck: Generating route types...
+@opchub/admin:typecheck: ✓ Types generated successfully
+
+ Tasks:    8 successful, 8 total
+Cached:    7 cached, 8 total
+  Time:    21.468s 
+
+
+=== tip824-focused-final.log ===
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  4 passed (4)
+      Tests  48 passed (48)
+   Start at  09:16:15
+   Duration  16.21s (environment 88%, import 7%, tests 2%, transform 2%, worker 1%)
+
+    Isolate  4 workers spawned · ~7.51s startup each (spawn + environment, per file)
+             at least ~2.50s faster with isolate: false — reuses workers across files instead of one per file
+
+
+=== tip824-depcheck.log ===
+pnpm.cmd : $ depcruise apps/portal apps/admin packages e2e --config .dependency-cruiser.cjs && depcruise apps/server 
+--config .dependency-cruiser.cjs --ts-config tsconfig.depcruise.server.json
+At line:2 char:1272
++ ... EXITCODE }; pnpm.cmd depcheck *> (Join-Path $env:TEMP 'tip824-depchec ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ depcruise app...ise.server.json:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+✔ no dependency violations found (2658 modules, 8030 dependencies cruised)
+
+
+✔ no dependency violations found (1260 modules, 5995 dependencies cruised)
+

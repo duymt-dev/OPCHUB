@@ -81,7 +81,7 @@ Các mục B khác để sau (D-138). TIP viết lúc tới bước, dựa trên
 
 | TIP | Tên | REQ / D | Phụ thuộc | Ước lượng | Files / trạng thái |
 |---|---|---|---|---|---|
-| V46-824 | [TIP](tips/TIP-V46-824-admin-i18n.md) · nhánh `feature/TIP-V46-824-admin-i18n` · **TIP đã viết, chưa code** — i18n toàn bộ Admin: Việt + 9 bản dịch, 12 lựa chọn quốc gia; metadata/AntD/dayjs/format/local validation, catalog gates và MSW/native | D-141, D-06, D-37, D-65, D-133, D-134; hồi quy D-140 / REQ-122 / REQ-625 | V2-117, V46-822, V46-823 (đã merge) | XL | [Manifest file-level](tips/TIP-V46-824-admin-i18n-manifest.md); sequential, không song song Admin/shared UI; chưa có implementation report |
+| V46-824 | [TIP](tips/TIP-V46-824-admin-i18n.md) ? branch `feature/TIP-V46-824-admin-i18n` ? **PARTIAL / IN PROGRESS, NOT READY TO MERGE** ? locale/catalog/formatter foundations and opt-in shared UI primitives; raw catalogs22/250,9 target translations and runtime/browser integration remain | D-141, D-06, D-37, D-65, D-133, D-134; D-140 / REQ-122 / REQ-625 regression pending | V2-117, V46-822, V46-823 (merged) | XL | [Report](reports/TIP-V46-824-completion.md) ? source `9e207741`; unit2360 +2 existing skips, focused48; no i18n browser/native acceptance claim |
 
 Thứ tự: V46-822 + V46-823 đã tích hợp → **V46-824** (execute khi owner yêu cầu). Một TIP implementation, manifest là phụ lục chứ không phải làn song song. Không tự release/merge `main`.
 
