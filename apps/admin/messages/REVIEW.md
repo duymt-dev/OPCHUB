@@ -8,7 +8,7 @@
 - Provenance: the earlier checkpoint reused464 unambiguous exact-text matches from Portal English catalogs. The remaining English was translated directly from the unchanged Vietnamese source. No Portal app import exists at runtime. No missing key is filled with Vietnamese/TODO stand-ins.
 - Other target bundles zh/id/th/ms/fil/km/lo/my: pending. Aliases en-SG and ms-BN share en/ms catalogs, not separate translations.
 - Confidence: English moderate pending owner review; Khmer/Lao/Myanmar require special native-speaker attention when their catalogs are produced. Human review is not fabricated and does not replace technical gates.
-- Font assets/provenance/licenses: pending; no font-delivery completion claim.
+- Self-hosted font assets, licenses and reproducible build provenance are recorded below. Full translated-screen/visual/performance acceptance is still pending; font contracts alone do not complete this TIP.
 
 ## English terminology
 
@@ -49,3 +49,34 @@
 - Existing legacy policy strings remain catalog-compatible; they do not enable payouts. Current regional rules continue to state that Media Soft pays only Regional Directors and affiliate commission is reference-only. No rate or business rule changed.
 - Event default description sent to the server remains Vietnamese; group-export headers/enum cells/bytes remain Vietnamese; the welcome-email frame previews the existing Vietnamese email even under English Admin chrome. Authored content stays raw. These are D-141 content exceptions, not untranslated GUI controls.
 - New52 source labels:40 settings AI-call labels,4 moderation labels and8 client validation labels. Existing source strings were not rewritten. The original524 settings leaves and all2456 original legacy leaves have separate baseline hashes; new roots/keys are excluded explicitly, not by broad feature exemptions.
+
+## Self-hosted font provenance (D-37 / D-141)
+
+Pinned upstream Google Fonts commit `5bb28733cec313b63fbd415b574b5ae35c8aa8b8`. No runtime Google Fonts request or Portal import. Build-only external venv: `fonttools==4.68.0`, `Brotli==1.2.1`; neither is an application dependency. Reproduce with `python infra/scripts/build-admin-fonts.py --cache <external-cache>` after installing these exact tools. Two independent builds produced identical7 binary hashes and cmap/shaping receipts. See `src/i18n/font-assets.json` and the TIP evidence `fonts.log`. Binary hashes are integrity data, never completion Git SHAs.
+
+| Upstream family | Pinned source                                                                                                                                              | Unchanged license                              |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| NotoSans        | [Source](https://raw.githubusercontent.com/google/fonts/5bb28733cec313b63fbd415b574b5ae35c8aa8b8/ofl/notosans/NotoSans%5Bwdth%2Cwght%5D.ttf)               | [OFL](../public/fonts/OFL-NotoSans.txt)        |
+| NotoSansSC      | [Source](https://raw.githubusercontent.com/google/fonts/5bb28733cec313b63fbd415b574b5ae35c8aa8b8/ofl/notosanssc/NotoSansSC%5Bwght%5D.ttf)                  | [OFL](../public/fonts/OFL-NotoSansSC.txt)      |
+| NotoSansThai    | [Source](https://raw.githubusercontent.com/google/fonts/5bb28733cec313b63fbd415b574b5ae35c8aa8b8/ofl/notosansthai/NotoSansThai%5Bwdth%2Cwght%5D.ttf)       | [OFL](../public/fonts/OFL-NotoSansThai.txt)    |
+| NotoSansKhmer   | [Source](https://raw.githubusercontent.com/google/fonts/5bb28733cec313b63fbd415b574b5ae35c8aa8b8/ofl/notosanskhmer/NotoSansKhmer%5Bwdth%2Cwght%5D.ttf)     | [OFL](../public/fonts/OFL-NotoSansKhmer.txt)   |
+| NotoSansLao     | [Source](https://raw.githubusercontent.com/google/fonts/5bb28733cec313b63fbd415b574b5ae35c8aa8b8/ofl/notosanslao/NotoSansLao%5Bwdth%2Cwght%5D.ttf)         | [OFL](../public/fonts/OFL-NotoSansLao.txt)     |
+| NotoSansMyanmar | [Source](https://raw.githubusercontent.com/google/fonts/5bb28733cec313b63fbd415b574b5ae35c8aa8b8/ofl/notosansmyanmar/NotoSansMyanmar%5Bwdth%2Cwght%5D.ttf) | [OFL](../public/fonts/OFL-NotoSansMyanmar.txt) |
+
+| Self-hosted file              |   Bytes | Actual cmap entries |
+| ----------------------------- | ------: | ------------------: |
+| NotoSans-Regular.woff2        |   84076 |                1781 |
+| NotoSansSC-Regular.woff2      | 1080080 |                7652 |
+| NotoSansThai-Regular.woff2    |   10636 |                 121 |
+| NotoSansKhmer-Regular.woff2   |   18740 |                 180 |
+| NotoSansLao-Regular.woff2     |   10820 |                 117 |
+| NotoSansMyanmar-Regular.woff2 |   43372 |                 257 |
+| LanguageMenu-Regular.woff2    |    9724 |                  67 |
+
+- Static regular400 instances, width100 when supported. Heavier GUI weights use browser synthesis; these files are not claimed to contain nine real weight masters. Original outlines/shaping tables are retained after subsetting; hinting programs are removed before cross-family merging.
+- Latin is the primary face, with a single selected SC/Thai/Khmer/Lao/Myanmar fallback. CSS URLs are compiled into hashed/basePath-aware Next assets. Registering twelve faces for seven binaries does not download them all; the browser loads only referenced families. The selector alone uses a9.7KB merged font covering all twelve unchanged native names/countries, avoiding five full-script downloads merely to open the menu.
+- The Latin derivative adds only missing U+2000..27FF punctuation/arrows/checkmarks from licensed Noto Sans SC and preserves the original Latin line metrics. The selector derivative merges subsets of the six listed sources. Both are named OPCHUB, not the reserved name Source. All original copyright/OFL files are packaged byte-for-byte, including upstream whitespace.
+- SC includes the GB2312 common repertoire, script punctuation, selector glyphs and all glyphs from the actual Chinese catalog when available. Thai/Khmer/Lao/Myanmar include their Unicode blocks plus current catalog/selector glyphs. Re-run the tool and extend glyph assertions when the remaining catalogs are added. No claim of glyph completeness for absent catalogs.
+- Current unit glyph scope is the present vi/en catalogs plus twelve native selector names. Platform emoji, arbitrary authored text and monospace code fields are not rewritten into translations. Font-only browser audits use CDP to verify actual custom fonts rather than relying on installed fonts; this does not replace full-screen translated screenshots, parity approval or performance measurement. The Admin auth root has a zero-box marker to override its shared Be Vietnam Pro/system stack without modifying Portal/shared UI.
+
+- Menu CSS splits the same binary into six Unicode-range faces with the original per-script ascent/descent metrics, so Burmese line metrics do not enlarge every Latin country label. A bounded, scrollable Admin-only popover keeps all choices reachable on short/mobile viewports.

@@ -1,0 +1,135 @@
+/* D-37/D-141: licensed self-hosted regular faces; heavier UI weights use browser synthesis.
+   CSS asset URLs are hashed/basePath-aware by Next. Only referenced families are fetched. */
+@font-face {
+  font-family: 'OPCHUB Latin';
+  src: url('../../public/fonts/NotoSans-Regular.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'OPCHUB SC';
+  src: url('../../public/fonts/NotoSansSC-Regular.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'OPCHUB Thai';
+  src: url('../../public/fonts/NotoSansThai-Regular.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'OPCHUB Khmer';
+  src: url('../../public/fonts/NotoSansKhmer-Regular.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'OPCHUB Lao';
+  src: url('../../public/fonts/NotoSansLao-Regular.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'OPCHUB Myanmar';
+  src: url('../../public/fonts/NotoSansMyanmar-Regular.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+/* One menu binary, script-specific upstream metrics: Myanmar must not enlarge every Latin label. */
+@font-face {
+  font-family: 'OPCHUB Language Menu';
+  src: url('../../public/fonts/LanguageMenu-Regular.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  unicode-range: U+0-024F, U+0300-036F, U+1E00-1EFF;
+  ascent-override: 106.9%;
+  descent-override: 29.3%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'OPCHUB Language Menu';
+  src: url('../../public/fonts/LanguageMenu-Regular.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  unicode-range: U+3000-303F, U+4E00-9FFF, U+FF00-FFEF;
+  ascent-override: 116%;
+  descent-override: 28.8%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'OPCHUB Language Menu';
+  src: url('../../public/fonts/LanguageMenu-Regular.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  unicode-range: U+0E00-0E7F;
+  ascent-override: 106.1%;
+  descent-override: 45%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'OPCHUB Language Menu';
+  src: url('../../public/fonts/LanguageMenu-Regular.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  unicode-range: U+1780-17FF, U+19E0-19FF;
+  ascent-override: 106.9%;
+  descent-override: 29.3%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'OPCHUB Language Menu';
+  src: url('../../public/fonts/LanguageMenu-Regular.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  unicode-range: U+0E80-0EFF;
+  ascent-override: 118.3%;
+  descent-override: 46.2%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'OPCHUB Language Menu';
+  src: url('../../public/fonts/LanguageMenu-Regular.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  unicode-range: U+1000-109F, U+AA60-AA7F, U+A9E0-A9FF;
+  ascent-override: 132.4%;
+  descent-override: 86%;
+  line-gap-override: 0%;
+}
+
+html body,
+html body [data-admin-auth-font] > div,
+html body [class^='ant-']:not(code):not(pre),
+html body [class*=' ant-']:not(code):not(pre) {
+  font-family: var(--admin-font-family, 'OPCHUB Latin'), sans-serif;
+}
+
+/* A zero-box Admin marker lets the shared auth root keep Portal's original font. */
+html body [data-admin-auth-font] {
+  display: contents;
+}
+
+/* The twelve native names need only this tiny subset, not five full script downloads.
+   This matches the existing shared LanguageMenu structure without changing Portal/shared UI. */
+html body [role='listbox'] > button[role='option'] {
+  font-family: 'OPCHUB Language Menu', var(--admin-font-family), sans-serif;
+}
+
+/* Keep all twelve choices reachable on short/mobile viewports, including older font-metric engines. */
+html body div:has(> [role='listbox'] > button[role='option']) {
+  max-height: calc(100dvh - 96px);
+  overflow-y: auto;
+}

@@ -1,0 +1,91 @@
+import { expect, test } from '@playwright/test';
+import type { CDPSession } from '@playwright/test';
+import { languageOptions } from '@opchub/shared/fixtures';
+import { ADMIN_URL } from '../urls';
+
+const SCRIPTS: Record<string, string> = {
+  zh: 'SC',
+  th: 'Thai',
+  km: 'Khmer',
+  lo: 'Lao',
+  my: 'Myanmar',
+};
+
+async function customFonts(cdp: CDPSession, nodeId: number) {
+  const result = await cdp.send('CSS.getPlatformFontsForNode', { nodeId });
+  const fonts = result.fonts.filter((font) => font.glyphCount > 0);
+  expect(fonts.length).toBeGreaterThan(0);
+  expect(fonts.every((font) => font.isCustomFont)).toBe(true);
+  return fonts.map((font) => ({ family: font.familyName, glyphs: font.glyphCount }));
+}
+
+for (const option of languageOptions) {
+  for (const width of [1440, 390]) {
+    test(`D-141 AC824-15/16 fonts only: ${option.code} ${width}, not catalog acceptance`, async ({
+      page,
+      context,
+    }) => {
+      const faults: string[] = [];
+      const downloads = new Set<string>();
+      page.on('pageerror', (error) => faults.push(error.message));
+      page.on('console', (message) => {
+        if (message.type() === 'error') faults.push(message.text());
+      });
+      page.on('response', (response) => {
+        if (/\.woff2(?:\?|$)/.test(response.url())) {
+          expect(response.ok()).toBe(true);
+          downloads.add(new URL(response.url()).pathname.split('/').at(-1) ?? '');
+        }
+      });
+      await page.setViewportSize({ width, height: 1000 });
+      await context.addCookies([{ name: 'NEXT_LOCALE', value: option.code, url: ADMIN_URL }]);
+      await page.goto(`${ADMIN_URL}/login`);
+      await expect(page.locator('html')).toHaveAttribute('lang', option.code);
+      const trigger = page.locator('button[aria-haspopup=listbox]');
+      await expect(trigger).toContainText(option.native);
+      await page.evaluate(() => document.fonts.ready);
+      const expected = SCRIPTS[option.code];
+      const initial = [...downloads];
+      expect(initial.some((name) => name.startsWith('NotoSans-Regular.'))).toBe(true);
+      const scriptFonts = initial.filter((name) =>
+        /^NotoSans(?:SC|Thai|Khmer|Lao|Myanmar)-Regular\./.test(name),
+      );
+      expect(scriptFonts).toHaveLength(expected ? 1 : 0);
+      if (expected) expect(scriptFonts[0]).toMatch(new RegExp(`^NotoSans${expected}-Regular\\.`));
+      const cdp = await context.newCDPSession(page);
+      await cdp.send('DOM.enable');
+      await cdp.send('CSS.enable');
+      const { root } = await cdp.send('DOM.getDocument');
+      const { nodeId } = await cdp.send('DOM.querySelector', {
+        nodeId: root.nodeId,
+        selector: 'button[aria-haspopup=listbox]',
+      });
+      const current = await customFonts(cdp, nodeId);
+      await trigger.click();
+      await expect(page.getByRole('option')).toHaveCount(12);
+      await page.evaluate(() => document.fonts.ready);
+      const { nodeIds } = await cdp.send('DOM.querySelectorAll', {
+        nodeId: root.nodeId,
+        selector: 'button[role=option] > span > span',
+      });
+      // CDP reports immediate child TextNodes, not the button's nested label descendants.
+      expect(nodeIds).toHaveLength(24);
+      const menu = await Promise.all(nodeIds.map((id) => customFonts(cdp, id)));
+      const bounds = await page.getByRole('listbox').evaluate((node) => {
+        const rect = node.parentElement?.getBoundingClientRect();
+        return rect ? { top: rect.top, bottom: rect.bottom } : null;
+      });
+      expect(bounds?.top ?? -1).toBeGreaterThanOrEqual(0);
+      expect(bounds?.bottom ?? Infinity).toBeLessThanOrEqual(1000);
+      expect([...downloads].filter((name) => !initial.includes(name))).toHaveLength(1);
+      expect([...downloads].some((name) => name.startsWith('LanguageMenu-Regular.'))).toBe(true);
+      await page.keyboard.press('Escape');
+      await expect(page.getByRole('option')).toHaveCount(0);
+      expect(faults).toEqual([]);
+      await test.info().attach('font-proof', {
+        body: JSON.stringify({ initial, all: [...downloads], current, menu }),
+        contentType: 'application/json',
+      });
+    });
+  }
+}

@@ -768,3 +768,17 @@ Sequential presentation-only work; existing domain models and their UI callers a
 | modify | `apps/admin/src/features/events/components/upcoming-block.tsx` | Localize event date/time, mode and visible counts, preserve Meet/content/actions. |
 | modify | `apps/admin/src/features/events/components/registrants-drawer.tsx` | Localize event display and visible counts, preserve check-in/export contracts. |
 | modify | `apps/admin/src/features/events/components/event-form-fields.tsx` | Localize mode labels/edit-date hint; retain form values and datetime parsing. |
+
+## Execute extension - reproducible self-hosted fonts (11/11/2026)
+
+Sequential Admin-only presentation work. Existing six font/OFL assets, font-config/fonts.css, root layout and REVIEW paths are declared above. No Portal/shared UI edits, runtime CDN or new application dependency. A small merged menu-only font covers the twelve native language names without downloading five full script fonts merely to open the selector; main UI loads Latin plus only the selected script. Build-time FontTools/Brotli live in an isolated external venv, never the runtime dependency graph.
+
+| Action | Exact path | Responsibility |
+|---|---|---|
+| create | `apps/admin/public/fonts/LanguageMenu-Regular.woff2` | Licensed merged subset containing only the twelve native language-name glyphs; main UI never uses it. |
+| create | `apps/admin/src/i18n/font-assets.json` | Reproducible asset hashes, sizes, actual cmap ranges and pinned upstream provenance; not translated messages. |
+| create | `apps/admin/src/i18n/font-config.spec.ts` | Finite locale/script CSS stack map, font receipts/catalog glyph coverage and CSS scoping regression. |
+| create | `infra/scripts/build-admin-fonts.py` | Reproducible pinned-upstream conversion/subsetting and actual cmap/byte verification; no project/runtime dependency. |
+| create | `coding-packs/reports/evidence/v46-824/fonts.log` | Actual font generation/glyph/hash/size evidence, not browser glyph acceptance. |
+| create | `e2e/audit/admin-i18n-fonts.spec.ts` | Same MSW/off font-only browser assertions:12 choices,1440/390, actual custom fonts/no platform fallback, native-name menu subset and selected-script network isolation. Does not count as translated catalog acceptance. |
+| create | `e2e/audit/playwright.admin-fonts.config.ts` | Read-only auth-page font audit using isolated configured ports/build outputs; no API fixture/DB seed/reset. |
