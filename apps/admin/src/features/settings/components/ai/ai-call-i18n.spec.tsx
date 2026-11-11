@@ -63,11 +63,70 @@ function Labels({ locale, children }: { locale: 'vi' | 'en'; children: ReactNode
     </NextIntlClientProvider>
   );
 }
-function Calls() {
-  return <Table rowKey="id" columns={useAiCallColumns()} dataSource={[row]} pagination={false} />;
+function Calls({ provider = row.provider }: { provider?: AiCallItem['provider'] }) {
+  return (
+    <Table
+      rowKey="id"
+      columns={useAiCallColumns()}
+      dataSource={[{ ...row, provider }]}
+      pagination={false}
+    />
+  );
 }
 
 describe('D-141 AC824-06/08/11 AI log live presentation', () => {
+  it('projects the custom provider in the actual filter while retaining its API ID and draft', () => {
+    const changed = vi.fn();
+    function Filters() {
+      const [value, setValue] = useState(initial);
+      return (
+        <AiCallFilters
+          value={value}
+          onChange={(next) => {
+            setValue(next);
+            changed(next);
+          }}
+        />
+      );
+    }
+    const view = render(
+      <Labels locale="en">
+        <Filters />
+      </Labels>,
+    );
+    fireEvent.mouseDown(screen.getByRole('combobox', { name: 'Log provider' }));
+    fireEvent.click(
+      screen.getByText('Custom (OpenAI-compatible)', {
+        selector: '.ant-select-item-option-content',
+      }),
+    );
+    expect(changed).toHaveBeenLastCalledWith({ ...initial, provider: 'custom' });
+    view.rerender(
+      <Labels locale="vi">
+        <Filters />
+      </Labels>,
+    );
+    expect(screen.getByTitle('Tùy chỉnh (OpenAI-compatible)')).toBeTruthy();
+    expect(changed).toHaveBeenCalledTimes(1);
+  });
+
+  it('projects the custom provider in actual log cells without modifying the raw row', () => {
+    const before = JSON.stringify(row);
+    const view = render(
+      <Labels locale="en">
+        <Calls provider="custom" />
+      </Labels>,
+    );
+    expect(screen.getByRole('cell', { name: 'Custom (OpenAI-compatible)' })).toBeTruthy();
+    view.rerender(
+      <Labels locale="vi">
+        <Calls provider="custom" />
+      </Labels>,
+    );
+    expect(screen.getByRole('cell', { name: 'Tùy chỉnh (OpenAI-compatible)' })).toBeTruthy();
+    expect(screen.getByText('owner-model-123')).toBeTruthy();
+    expect(JSON.stringify(row)).toBe(before);
+  });
   it('switches filters without losing canonical values or firing a change', () => {
     const changed = vi.fn();
     function Filters() {

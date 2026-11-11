@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 import type { RegionalSlot } from '@opchub/shared/api-domains';
 import styles from './regional.module.css';
 import { useNumberText } from '@/i18n/use-number-text';
+import { useDomainLabels } from '@/i18n/domain-labels';
 
 export function RegionalSlotSummary({
   slot,
@@ -18,6 +19,7 @@ export function RegionalSlotSummary({
 }) {
   const numberText = useNumberText();
   const t = useTranslations('affiliate.regional');
+  const labels = useDomainLabels();
   return (
     <>
       <header className={styles.slotHead}>
@@ -25,7 +27,7 @@ export function RegionalSlotSummary({
         <div className={styles.identity}>
           <div>
             <b>{slot.member?.fullName ?? t('vacant')}</b>
-            <span className={styles.region}>{slot.label}</span>
+            <span className={styles.region}>{labels.region(slot.region, true)}</span>
           </div>
           <small>{slot.member?.email ?? '—'}</small>
         </div>

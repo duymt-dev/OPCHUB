@@ -976,3 +976,32 @@ AC824-06/08 inventory and verification tooling: inspect all Admin production TS/
 | create | `infra/scripts/admin-i18n/exceptions/technical-1.json` | Exact file/kind/literal/reason, and actual enum values; reject wildcard, stale and changed literals. |
 
 | create | `coding-packs/reports/evidence/v46-824/source-audit.log` | Actual focused units, source scan summary and numeric migration receipt; no browser/native acceptance claimed. |
+
+### English authenticated screen/browser verification (serial, no global seed/reset)
+
+| Operation | File | Scope |
+|---|---|---|
+| create | `e2e/playwright.admin-i18n.config.ts` | Typed browser cases/helpers or actual verification output; same assertions both modes, fail closed on native isolation, no original DB operation. |
+| create | `e2e/behavior/admin-i18n/fixtures.ts` | Typed browser cases/helpers or actual verification output; same assertions both modes, fail closed on native isolation, no original DB operation. |
+| create | `e2e/behavior/admin-i18n/screen-cases.ts` | Typed browser cases/helpers or actual verification output; same assertions both modes, fail closed on native isolation, no original DB operation. |
+| create | `e2e/behavior/admin-i18n/chrome.ts` | Typed browser cases/helpers or actual verification output; same assertions both modes, fail closed on native isolation, no original DB operation. |
+| create | `e2e/behavior/admin-i18n/dialogs.ts` | Typed browser cases/helpers or actual verification output; same assertions both modes, fail closed on native isolation, no original DB operation. |
+| create | `coding-packs/reports/evidence/v46-824/english-msw.log` | Typed browser cases/helpers or actual verification output; same assertions both modes, fail closed on native isolation, no original DB operation. |
+| create | `coding-packs/reports/evidence/v46-824/english-native.log` | Typed browser cases/helpers or actual verification output; same assertions both modes, fail closed on native isolation, no original DB operation. |
+| create | `coding-packs/reports/evidence/v46-824/en-overview-msw-1440.png` | Unmasked actual English screen image, named route and viewport; not prototype parity or native approval. |
+| create | `coding-packs/reports/evidence/v46-824/en-overview-server-1440.png` | Unmasked actual English screen image, named route and viewport; not prototype parity or native approval. |
+| create | `coding-packs/reports/evidence/v46-824/en-overview-msw-390.png` | Unmasked actual English screen image, named route and viewport; not prototype parity or native approval. |
+| create | `coding-packs/reports/evidence/v46-824/en-overview-server-390.png` | Unmasked actual English screen image, named route and viewport; not prototype parity or native approval. |
+| create | `coding-packs/reports/evidence/v46-824/en-profile-msw-1440.png` | Unmasked actual English screen image, named route and viewport; not prototype parity or native approval. |
+| create | `coding-packs/reports/evidence/v46-824/en-profile-server-1440.png` | Unmasked actual English screen image, named route and viewport; not prototype parity or native approval. |
+| create | `coding-packs/reports/evidence/v46-824/en-profile-msw-390.png` | Unmasked actual English screen image, named route and viewport; not prototype parity or native approval. |
+| create | `coding-packs/reports/evidence/v46-824/en-profile-server-390.png` | Unmasked actual English screen image, named route and viewport; not prototype parity or native approval. |
+| create | `coding-packs/reports/evidence/v46-824/en-settings-msw-1440.png` | Unmasked actual English screen image, named route and viewport; not prototype parity or native approval. |
+| create | `coding-packs/reports/evidence/v46-824/en-settings-server-1440.png` | Unmasked actual English screen image, named route and viewport; not prototype parity or native approval. |
+| create | `coding-packs/reports/evidence/v46-824/en-settings-msw-390.png` | Unmasked actual English screen image, named route and viewport; not prototype parity or native approval. |
+| create | `coding-packs/reports/evidence/v46-824/en-settings-server-390.png` | Unmasked actual English screen image, named route and viewport; not prototype parity or native approval. |
+
+| modify | `apps/admin/src/features/affiliate/regional/components/regional-assignment.tsx` | Project the region enum to translated visible/aria labels only; member IDs and mutation parameters stay canonical. |
+| create | `apps/admin/src/features/affiliate/regional/components/regional-labels-i18n.spec.tsx` | Actual summary/assignment labels and accessible selector live-switch by region enum, preserving raw member data and callback values. |
+
+Native browser clarification: the already-owned bots.module.css also bounds existing AntD skeleton placeholder widths inside Bot cards at390, discovered while checking translated tabs. Keep shared PageSkeleton/Portal untouched; no hiding real text, viewport masks or assertion tolerance changes.

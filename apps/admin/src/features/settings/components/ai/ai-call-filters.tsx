@@ -1,12 +1,8 @@
 'use client';
 import { Input, Select, Space } from 'antd';
 import { useTranslations } from 'next-intl';
-import {
-  AI_PROVIDER_IDS,
-  AI_PROVIDER_CATALOG,
-  AI_PURPOSES,
-  type AiCallsFilter,
-} from '@opchub/shared/api-domains';
+import { AI_PROVIDER_IDS, AI_PURPOSES, type AiCallsFilter } from '@opchub/shared/api-domains';
+import { useAiProviderLabel } from '../../hooks/use-ai-provider-label';
 
 const date = (iso: string) => new Date(Date.parse(iso) + 7 * 3600000).toISOString().slice(0, 10);
 export function AiCallFilters({
@@ -17,6 +13,7 @@ export function AiCallFilters({
   onChange: (next: AiCallsFilter) => void;
 }) {
   const t = useTranslations('settings.aiCalls');
+  const providerLabel = useAiProviderLabel();
   const choice = <K extends 'purpose' | 'provider' | 'status'>(key: K, next: AiCallsFilter[K]) => {
     const patch = { ...value };
     if (next) patch[key] = next;
@@ -58,7 +55,7 @@ export function AiCallFilters({
         value={value.provider}
         options={AI_PROVIDER_IDS.map((key) => ({
           value: key,
-          label: AI_PROVIDER_CATALOG[key].name,
+          label: providerLabel(key),
         }))}
         onChange={(next) => choice('provider', next)}
       />

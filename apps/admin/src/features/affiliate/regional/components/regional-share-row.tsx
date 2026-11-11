@@ -10,9 +10,11 @@ import { RegionalPayoutDialog } from './regional-payout-dialog';
 import { RegionalPayeeBankDialog } from './regional-payee-bank-dialog';
 import styles from './regional-share.module.css';
 import { useNumberText } from '@/i18n/use-number-text';
+import { useDomainLabels } from '@/i18n/domain-labels';
 
 export function RegionalShareRow({ row }: { row: Row }) {
   const numberText = useNumberText();
+  const labels = useDomainLabels();
   const locale = useLocale();
   const t = useTranslations('affiliate.regional.share');
   const [open, setOpen] = useState(false);
@@ -26,8 +28,8 @@ export function RegionalShareRow({ row }: { row: Row }) {
             <div>
               <b>{row.member?.fullName ?? t('vacant')}</b>
               <small>
-                {row.label} · {t('provinces', { n: numberText(row.provinces) })} ·{' '}
-                {row.member?.email}
+                {labels.region(row.region, true)} ·{' '}
+                {t('provinces', { n: numberText(row.provinces) })} · {row.member?.email}
               </small>
             </div>
           </button>

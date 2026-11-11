@@ -2,12 +2,14 @@
 
 import { Tag, type TableColumnsType } from 'antd';
 import { useLocale, useTranslations } from 'next-intl';
-import { AI_PROVIDER_CATALOG, type AiCallItem } from '@opchub/shared/api-domains';
+import { type AiCallItem } from '@opchub/shared/api-domains';
 import { formatDate, formatNumber } from '@/i18n/format';
+import { useAiProviderLabel } from '../../hooks/use-ai-provider-label';
 
 export function useAiCallColumns(): TableColumnsType<AiCallItem> {
   const t = useTranslations('settings.aiCalls');
   const locale = useLocale();
+  const providerLabel = useAiProviderLabel();
   return [
     {
       title: t('col.at'),
@@ -30,7 +32,7 @@ export function useAiCallColumns(): TableColumnsType<AiCallItem> {
     {
       title: t('col.provider'),
       dataIndex: 'provider',
-      render: (provider: AiCallItem['provider']) => AI_PROVIDER_CATALOG[provider].name,
+      render: (provider: AiCallItem['provider']) => providerLabel(provider),
     },
     { title: t('col.model'), dataIndex: 'model' },
     {
