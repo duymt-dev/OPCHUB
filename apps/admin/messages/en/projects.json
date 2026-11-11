@@ -1,0 +1,71 @@
+{
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "viewGrid": "Grid view",
+  "viewList": "List view",
+  "tabs": {
+    "pending": "Pending review",
+    "live": "Published",
+    "hidden": "Hidden",
+    "changes": "Needs changes",
+    "rejected": "Rejected",
+    "draft": "Draft"
+  },
+  "status": {
+    "pending_review": "Pending review",
+    "published": "Published",
+    "hidden": "Hidden",
+    "needs_changes": "Needs changes",
+    "rejected": "Rejected",
+    "draft": "Draft"
+  },
+  "act": {
+    "detail": "Details"
+  },
+  "col": {
+    "owner": "Project owner",
+    "status": "Status"
+  },
+  "bulk": {
+    "unit": "items",
+    "hide": "Hide"
+  },
+  "pager": {
+    "prev": "Previous page",
+    "next": "Next page",
+    "pageSize": "Projects per page"
+  },
+  "drawer": {
+    "close": "Close",
+    "detail": "Detailed description",
+    "reasonLabel": "Reason"
+  },
+  "info": {
+    "country": "Country",
+    "stage": "Stage",
+    "website": "Website",
+    "visibility": "Visibility",
+    "team": "Team"
+  },
+  "stage": {
+    "idea": "Idea",
+    "developing": "In development",
+    "mvp": "MVP",
+    "growth": "Growth",
+    "launched": "Launched"
+  },
+  "val": {
+    "repoPublic": "Public",
+    "repoPrivate": "Private",
+    "visPublic": "Public",
+    "visPrivate": "Private"
+  },
+  "confirm": {
+    "cancel": "Cancel",
+    "hide": "Hide"
+  },
+  "fund": {
+    "status": {
+      "active": "Fundraising"
+    }
+  }
+}

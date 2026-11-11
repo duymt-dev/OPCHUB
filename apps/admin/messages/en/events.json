@@ -1,0 +1,48 @@
+{
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "stats": {
+    "upcoming": "Upcoming events"
+  },
+  "toolbar": {
+    "viewGrid": "Grid view",
+    "viewList": "List view"
+  },
+  "status": {
+    "all": "All",
+    "open": "Open"
+  },
+  "mode": {
+    "online": "Online",
+    "offline": "Offline"
+  },
+  "card": {
+    "closed": "Registration closed",
+    "list": "Bulleted list",
+    "edit": "Edit",
+    "editShort": "Edit",
+    "share": "Share"
+  },
+  "table": {
+    "event": "Events",
+    "time": "Time",
+    "place": "Venue",
+    "status": "Status"
+  },
+  "empty": "No matching events.",
+  "regs": {
+    "today": "Today",
+    "daysAgo": "{n} days ago",
+    "copy": "Copy"
+  },
+  "form": {
+    "close": "Close",
+    "cover": "Cover image",
+    "coverRemove": "Remove image",
+    "cancel": "Cancel"
+  },
+  "upcoming": {
+    "today": "Today",
+    "inDays": "{n} days left",
+    "copy": "Copy"
+  }
+}

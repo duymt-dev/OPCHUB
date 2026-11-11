@@ -1,0 +1,18 @@
+{
+  "log": {
+    "filterTag": "Groups",
+    "system": "System",
+    "tag": {
+      "affiliate": "Affiliate",
+      "report": "Report",
+      "pricing": "Pricing"
+    },
+    "more": "Show more"
+  },
+  "time": {
+    "minutes": "{n} min ago",
+    "hours": "{n} hr ago",
+    "yesterday": "Yesterday",
+    "days": "{n} days ago"
+  }
+}

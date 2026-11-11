@@ -22,6 +22,17 @@ const readSourcePart = (file: string): unknown =>
   JSON.parse(readFileSync(join(__dirname, '../../messages/vi', `${file}.json`), 'utf8')) as unknown;
 
 describe('D-141 AC824-03 source partition and fallback', () => {
+  it.each(['auth', 'common', 'overview', 'meta', 'ui', 'botOptions'] as const)(
+    'validates the actual staged English %s catalog before any fallback',
+    (namespace) => {
+      const file = namespace === 'botOptions' ? 'bot-options' : namespace;
+      const translated: unknown = JSON.parse(
+        readFileSync(join(__dirname, '../../messages/en', `${file}.json`), 'utf8'),
+      );
+      expect(catalogIssues(messages[namespace], translated, { locale: 'en' })).toEqual([]);
+    },
+  );
+
   it('validates the actual Vietnamese source tree, not only synthetic ICU fixtures', () => {
     expect(
       catalogIssues(messages, messages, {
@@ -42,7 +53,12 @@ describe('D-141 AC824-03 source partition and fallback', () => {
     expect(createHash('sha256').update(JSON.stringify(entries)).digest('hex')).toBe(
       baseline.sha256,
     );
-    expect(leaves(messages)).toHaveLength(2456);
+    const legacy = Object.fromEntries(
+      Object.entries(messages).filter(
+        ([namespace]) => !['meta', 'ui', 'botOptions'].includes(namespace),
+      ),
+    );
+    expect(leaves(legacy)).toHaveLength(2456);
     const roots = SETTINGS_PARTS.flatMap((part) =>
       Object.keys(readSourcePart(`settings/${part}`) as object),
     );
@@ -92,7 +108,9 @@ describe('D-141 AC824-03 source partition and fallback', () => {
     expect(read.mock.calls.every(([bundle]) => bundle === 'en')).toBe(true);
     expect(read.mock.calls.map(([, file]) => file).sort()).toEqual(
       [
-        ...NAMESPACES.filter((ns) => ns !== 'settings'),
+        ...NAMESPACES.filter((ns) => ns !== 'settings').map((ns) =>
+          ns === 'botOptions' ? 'bot-options' : ns,
+        ),
         ...SETTINGS_PARTS.map((part) => `settings/${part}`),
       ].sort(),
     );

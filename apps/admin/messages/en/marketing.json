@@ -1,0 +1,48 @@
+{
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "table": {
+    "status": "Status"
+  },
+  "status": {
+    "sent": "Sent",
+    "draft": "Draft"
+  },
+  "log": {
+    "otp": "OTP code",
+    "password_reset": "Reset password",
+    "event": "Events",
+    "fundraising": "Fundraising plan",
+    "regional_director": "Regional Director",
+    "resend": "Resend"
+  },
+  "form": {
+    "close": "Close",
+    "aud": {
+      "business": "Business"
+    },
+    "draft": "Save draft"
+  },
+  "errors": {
+    "groups": "Please select at least 1 group"
+  },
+  "confirm": {
+    "cancel": "Cancel"
+  },
+  "toast": {
+    "draft": "Draft saved"
+  },
+  "auto": {
+    "showGuide": "Attachments",
+    "atts": "Attachments"
+  },
+  "mail": {
+    "close": "Close",
+    "hello": "Welcome, {name}!",
+    "rules": "Platform rules of conduct",
+    "login": "Sign in now",
+    "atts": "Attachments",
+    "footer": "Automated email from OPC Hub · opchub.community. You received this email because you just signed up for an account.",
+    "sentWelcome": "Welcome email sent",
+    "sampleName": "Nguyen Van A"
+  }
+}

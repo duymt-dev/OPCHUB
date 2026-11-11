@@ -654,7 +654,7 @@ Batch = one TIP824. Pairwise conflicts inside the batch = zero. Overlaps with hi
 
 ## Counts and verification
 
-591 explicit paths: 347 create, 243 modify, 1 delete. Modify/delete paths were checked against the working baseline; create paths are planned and absent except the planning documents being created in this phase. No app source file is changed by generating this manifest.
+597 explicit paths: 350 create, 246 modify, 1 delete. Modify/delete paths were checked against the working baseline; create paths are planned and absent except the planning documents being created in this phase. No app source file is changed by generating this manifest.
 
 ## Execute inventory additions (2026-11-11, same serial lane)
 
@@ -669,3 +669,23 @@ The split removes the old settings JSON import used by six existing tests; redir
 | modify | `apps/admin/src/features/settings/components/app-notify-device.spec.tsx` | Redirect obsolete settings fixture import; preserve assertions. |
 | modify | `apps/admin/src/features/settings/components/ai/ai-tab.spec.tsx` | Redirect obsolete settings fixture import; preserve assertions. |
 | create | `apps/admin/src/i18n/tests/icu-contract.ts` | Public IntlMessageFormat AST contract comparison, tests only. |
+
+## Execute inventory additions - presentation and control locale integration
+
+One serial TIP lane; no active file overlap. Exact additional paths:
+
+| Action | Exact path | Responsibility |
+|---|---|---|
+| create | `apps/admin/src/i18n/antd/translate-locale.ts` | Strict complete translation of installed AntD locale text; no silent English fallback. |
+| create | `apps/admin/src/i18n/ui-labels.spec.tsx` | Live-locale UI label tests and editor/datepicker label contracts. |
+| modify | `apps/admin/src/features/affiliate/components/affiliate-pagination.spec.tsx` | Add required i18n provider around newly localized pager; retain existing assertions. |
+| modify | `apps/admin/src/features/overview/components/overview-controls.spec.tsx` | Supply the new UI namespace to focused provider fixtures. |
+
+## Execute inventory additions - fallback and renderer fixtures
+
+Exact paths, same serial lane:
+
+| Action | Exact path | Responsibility |
+|---|---|---|
+| modify | `apps/admin/src/features/overview/components/conversion-table.spec.tsx` | Supply the UI namespace for translated region/count labels; keep existing assertions. |
+| create | `apps/admin/src/providers/admin-intl-errors.spec.tsx` | Verify safe readable fallback without raw message keys/ICU variables. |

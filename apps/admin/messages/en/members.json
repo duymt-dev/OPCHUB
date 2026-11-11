@@ -1,0 +1,84 @@
+{
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "card": {
+    "grid": "Grid view",
+    "list": "List view",
+    "types": "Account type",
+    "typeAll": "All",
+    "typeBiz": "Business"
+  },
+  "col": {
+    "type": "Account type",
+    "status": "Status"
+  },
+  "type": {
+    "business": "Business",
+    "businessLong": "Business / Organisation"
+  },
+  "role": {
+    "lecturer": "Lecturer"
+  },
+  "status": {
+    "locked": "Locked"
+  },
+  "bulk": {
+    "unit": "items"
+  },
+  "assign": {
+    "cancel": "Cancel",
+    "close": "Close"
+  },
+  "drawer": {
+    "close": "Close",
+    "rep": "Representative",
+    "per": "Personal information",
+    "sys": "System",
+    "company": "Business name",
+    "size": "Size",
+    "name": "Full name",
+    "position": "Position",
+    "phone": "Phone number",
+    "email": "Email",
+    "persona": "You are",
+    "status": "Status",
+    "pending": "Pending verification",
+    "cancel": "Cancel"
+  },
+  "roleConfirm": {
+    "cancel": "Cancel"
+  },
+  "lockConfirm": {
+    "cancel": "Cancel"
+  },
+  "pager": {
+    "unit": "members",
+    "prev": "Previous page",
+    "next": "Next page",
+    "pageSize": "Rows per page"
+  },
+  "toast": {
+    "pickGroup": "Please select at least 1 group"
+  },
+  "filters": {
+    "all": "All",
+    "results": "{n} results",
+    "grp": "Community groups",
+    "role": {
+      "business": "Business",
+      "lecturer": "Lecturer",
+      "investor": "Investor",
+      "freelancer": "Freelancer",
+      "student": "Student"
+    },
+    "fee": {
+      "label": "Membership fee"
+    },
+    "st": {
+      "label": "Status",
+      "locked": "Locked"
+    },
+    "day": {
+      "7": "last 7 days"
+    }
+  }
+}

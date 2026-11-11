@@ -1,0 +1,39 @@
+{
+  "title": "Membership fee",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "tabs": {
+    "all": "All",
+    "pending": "Awaiting payment"
+  },
+  "status": {
+    "pending_payment": "Awaiting payment"
+  },
+  "type": {
+    "business": "Business",
+    "investor": "Investor"
+  },
+  "col": {
+    "type": "Type"
+  },
+  "bulk": {
+    "unit": "members"
+  },
+  "pager": {
+    "unit": "members",
+    "prev": "Previous page",
+    "next": "Next page",
+    "pageSize": "Rows per page"
+  },
+  "txn": {
+    "col": {
+      "amount": "Amount"
+    },
+    "dialog": {
+      "modeFee": "Membership fee",
+      "modeFundraising": "Fundraising plan",
+      "reason": "Reason",
+      "cancel": "Cancel",
+      "back": "Back"
+    }
+  }
+}

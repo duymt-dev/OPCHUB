@@ -1,0 +1,29 @@
+{
+  "ai": {
+    "show": "Show",
+    "hide": "Hide",
+    "unlimited": "No minimum",
+    "loading": "Loading…"
+  },
+  "app": {
+    "kinds": "Push notification types",
+    "msg": "New group messages",
+    "need": "Needs matching your store",
+    "renew": "Membership renewal reminders",
+    "event": "Upcoming events",
+    "store": "Store views and contacts",
+    "loading": "Loading…",
+    "device": {
+      "device": "This device",
+      "heading": "This device",
+      "loading": "Checking device…",
+      "unsupported": "Browser not supported",
+      "ios": "Add OPC Hub to your home screen to receive notifications",
+      "denied": "Blocked in the browser",
+      "off": "Not enabled on this device",
+      "on": "Enabled on this device",
+      "enable": "Enable notifications on this device",
+      "disable": "Disable on this device"
+    }
+  }
+}

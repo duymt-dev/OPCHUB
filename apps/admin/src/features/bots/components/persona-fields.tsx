@@ -4,9 +4,10 @@ import { provinces } from '@opchub/shared/fixtures';
 import type { FieldErrorProps } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import type { PersonaField } from '../model';
-import { ACTIVE_HOURS, AGE_RANGES, PERSONA_TONES, type PersonaForm } from '../types';
+import { AGE_RANGES, type PersonaForm } from '../types';
 import { opts, SelectField, TextField } from './fields';
 import f from './form.module.css';
+import { useBotOptionLabels } from '../option-labels';
 
 type Setter = <K extends keyof PersonaForm>(k: K) => (v: PersonaForm[K]) => void;
 
@@ -88,6 +89,7 @@ export function PersonaBasicFields({
 /** "PHONG CÁCH TƯƠNG TÁC": giọng văn, chuyên môn, tần suất, khung giờ */
 export function PersonaStyleFields({ form, set }: { form: PersonaForm; set: Setter }) {
   const t = useTranslations('bots.pf');
+  const options = useBotOptionLabels();
   return (
     <>
       <div className={f.section}>{t('style')}</div>
@@ -96,7 +98,7 @@ export function PersonaStyleFields({ form, set }: { form: PersonaForm; set: Sett
           label={t('tone')}
           value={form.tone}
           onChange={set('tone')}
-          options={opts(PERSONA_TONES)}
+          options={options.tones}
         />
         <TextField
           label={t('skills')}
@@ -118,7 +120,7 @@ export function PersonaStyleFields({ form, set }: { form: PersonaForm; set: Sett
           label={t('hours')}
           value={form.activeHours}
           onChange={set('activeHours')}
-          options={opts(ACTIVE_HOURS)}
+          options={options.hours}
         />
       </div>
     </>

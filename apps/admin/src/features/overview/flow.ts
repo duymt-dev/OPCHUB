@@ -1,4 +1,5 @@
 import type { AdminOverview } from '@opchub/shared/api-domains';
+import { intlLocaleOf } from '@/i18n/locales';
 
 export type FlowKey = 'fees' | 'stores' | 'needs' | 'projects' | 'groups';
 
@@ -13,10 +14,9 @@ export interface FlowCard {
   done: boolean;
 }
 
-const nf = new Intl.NumberFormat('vi-VN');
-
 /** D-89 v4 "Luồng hệ thống" (prototype `FLOW.admin`): 5 thẻ theo thứ tự prototype */
-export function flowCards(f: AdminOverview['flow']): FlowCard[] {
+export function flowCards(f: AdminOverview['flow'], locale = 'vi'): FlowCard[] {
+  const nf = new Intl.NumberFormat(intlLocaleOf(locale));
   return [
     {
       key: 'fees',

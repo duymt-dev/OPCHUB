@@ -1,0 +1,35 @@
+{
+  "price": {
+    "per": {
+      "name": "Personal plan"
+    },
+    "biz": {
+      "name": "Business plan"
+    },
+    "perMonth": "{amount}/month",
+    "fund": {
+      "name": "Fundraising plan"
+    }
+  },
+  "renewal": {
+    "channelEmail": "Email",
+    "plan": "Plan",
+    "personal": "Personal plan",
+    "business": "Business plan",
+    "left": "{n} days left",
+    "more": "Show more",
+    "loading": "Loading…"
+  },
+  "bank": {
+    "copy": "Copy",
+    "owner": "Account holder",
+    "time": "Time",
+    "amount": "Amount",
+    "status": "Status",
+    "memberFallback": "members",
+    "cancel": "Cancel",
+    "close": "Close",
+    "loading": "Loading…",
+    "more": "Show more"
+  }
+}

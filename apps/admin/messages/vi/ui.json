@@ -1,0 +1,160 @@
+{
+  "close": "Đóng",
+  "clear": "Xóa",
+  "pagination": {
+    "unit": "mục",
+    "prev": "Trang trước",
+    "next": "Trang sau",
+    "page": "Trang {n}",
+    "pageSize": "Số dòng mỗi trang",
+    "perPage": "{n} / trang",
+    "range": "Hiển thị {from}–{to} / {total} {unit}"
+  },
+  "bulk": {
+    "selected": "Đã chọn",
+    "clear": "Bỏ chọn",
+    "aria": "Thao tác hàng loạt"
+  },
+  "calendar": {
+    "today": "Hôm nay",
+    "week": "7 ngày qua",
+    "days30": "30 ngày qua",
+    "month": "Tháng này",
+    "previousMonth": "Tháng trước",
+    "from": "Từ ngày",
+    "to": "Đến ngày"
+  },
+  "editor": {
+    "undo": "Hoàn tác (Ctrl+Z)",
+    "redo": "Làm lại (Ctrl+Y)",
+    "heading": "Tiêu đề",
+    "paragraph": "Đoạn văn",
+    "bold": "In đậm",
+    "italic": "In nghiêng",
+    "underline": "Gạch chân",
+    "strike": "Gạch ngang",
+    "bulletList": "• Danh sách",
+    "bulletListTitle": "Danh sách",
+    "orderedList": "1. Danh sách",
+    "orderedListTitle": "Danh sách số",
+    "quote": "Trích dẫn",
+    "link": "Liên kết",
+    "linkTitle": "Chèn liên kết",
+    "clear": "Xoá định dạng",
+    "linkUrl": "Đường dẫn",
+    "linkInsert": "Chèn",
+    "linkRemove": "Gỡ liên kết",
+    "linkCancel": "Huỷ",
+    "linkInvalid": "Đường dẫn phải bắt đầu bằng http:// hoặc https://"
+  },
+  "errors": {
+    "required": "Vui lòng nhập trường này",
+    "invalid": "Giá trị không hợp lệ",
+    "minLength": "Nhập ít nhất {min} ký tự",
+    "maxLength": "Nhập tối đa {max} ký tự",
+    "passwordRule": "Mật khẩu tối thiểu 8 ký tự, có chữ hoa và chữ số",
+    "passwordMismatch": "Mật khẩu nhập lại không khớp",
+    "passwordSame": "Mật khẩu mới phải khác mật khẩu hiện tại",
+    "imageType": "Ảnh phải là PNG/JPEG/WEBP",
+    "imageUpload": "Tải ảnh lên thất bại, vui lòng thử lại",
+    "imageSize": "Ảnh tối đa 5 MB",
+    "failed": "Thao tác không thành công, vui lòng thử lại",
+    "dateRange": "Khoảng ngày phải từ 0 đến 90 ngày"
+  },
+  "regions": {
+    "north": "Miền Bắc",
+    "central": "Miền Trung",
+    "centralDirector": "Miền Trung & Tây Nguyên",
+    "south": "Miền Nam"
+  },
+  "reviewReasons": [
+    "Thiếu thông tin mô tả",
+    "Ảnh bìa không phù hợp",
+    "Nội dung quảng cáo / spam",
+    "Vi phạm nội quy cộng đồng",
+    "Trùng lặp dự án đã có"
+  ],
+  "aiSuggestion": {
+    "failed": "Chưa gợi ý được, vui lòng thử lại sau",
+    "suggest": "Gợi ý bằng AI",
+    "use": "Dùng gợi ý",
+    "skip": "Bỏ qua",
+    "title": "Gợi ý nội dung"
+  },
+  "permissions": {
+    "overview": {
+      "view": "Xem tổng quan & số liệu"
+    },
+    "members": {
+      "view": "Xem danh sách & chi tiết thành viên",
+      "action": "Khóa / mở, gán nhóm, xuất dữ liệu"
+    },
+    "fees": {
+      "view": "Xem tình trạng phí",
+      "action": "Ghi nhận đã thu, nhắc phí"
+    },
+    "groups": {
+      "view": "Xem nhóm & phòng chat",
+      "action": "Tạo / sửa nhóm, chủ đề, duyệt thành viên",
+      "moderate": "Kiểm duyệt tin nhắn nhạy cảm"
+    },
+    "bots": {
+      "view": "Xem bot",
+      "action": "Cấu hình persona & kịch bản"
+    },
+    "events": {
+      "view": "Xem sự kiện & danh sách đăng ký",
+      "action": "Tạo / sửa sự kiện, check-in"
+    },
+    "projects": {
+      "view": "Xem dự án",
+      "action": "Duyệt / ẩn dự án"
+    },
+    "investors": {
+      "view": "Xem nhà đầu tư",
+      "action": "Trao đổi & xuất dữ liệu nhà đầu tư"
+    },
+    "services": {
+      "view": "Xem yêu cầu dịch vụ",
+      "action": "Xử lý yêu cầu & danh mục dịch vụ"
+    },
+    "affiliate": {
+      "view": "Xem đại lý & hoa hồng",
+      "action": "Sửa % hoa hồng, hủy hoa hồng",
+      "payout": "Chi trả GĐ Vùng",
+      "regional": "Bổ nhiệm / thu hồi GĐ Vùng (miễn phí thành viên)"
+    },
+    "settings": {
+      "general": "Thông tin chung & danh mục lĩnh vực",
+      "mail": "Email chào mừng & SMTP",
+      "admins": "Tài khoản quản trị & phân quyền",
+      "log": "Nhật ký hoạt động"
+    },
+    "stores": {
+      "view": "Xem gian hàng & nhu cầu địa phương",
+      "action": "Ẩn / hiện gian hàng & nhu cầu vi phạm"
+    },
+    "reports": {
+      "view": "Xem & xuất báo cáo B1 / B2 / B3"
+    }
+  },
+  "permissionMenus": {
+    "overview": "Tổng quan",
+    "members": "Thành viên",
+    "fees": "Phí thành viên",
+    "groups": "Nhóm cộng đồng",
+    "bots": "Bot tương tác",
+    "events": "Nội dung & Sự kiện",
+    "projects": "Dự án",
+    "investors": "Nhà đầu tư",
+    "services": "Dịch vụ",
+    "affiliate": "Affiliate",
+    "settings": "Cài đặt",
+    "stores": "Gian hàng & Nhu cầu",
+    "reports": "Báo cáo"
+  },
+  "chart": {
+    "month": "T{n}",
+    "week": "W{n}"
+  }
+}

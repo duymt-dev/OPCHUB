@@ -1,0 +1,20 @@
+{
+  "mail": {
+    "loginUrl": "Sign-in URL",
+    "username": "Username",
+    "password": "Password",
+    "passwordOwn": "Set by you",
+    "accessNote": "For security, OPC Hub never sends your password by email.",
+    "showGuide": "Attachments",
+    "attachments": "Attachments",
+    "hello": "Welcome, {name}!",
+    "rulesTitle": "Platform rules of conduct",
+    "loginNow": "Sign in now",
+    "footer": "Automated email from OPC Hub · opchub.community. You received this email because you just signed up for an account.",
+    "sampleName": "Nguyen Van A"
+  },
+  "smtp": {
+    "show": "Show",
+    "hide": "Hide"
+  }
+}

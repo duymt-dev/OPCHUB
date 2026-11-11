@@ -1,0 +1,12 @@
+{
+  "title": "Report",
+  "month": "Month",
+  "monthOption": "Month {month}",
+  "scope": {
+    "b1": "Groups"
+  },
+  "table": {
+    "group": "Groups",
+    "events": "Events"
+  }
+}

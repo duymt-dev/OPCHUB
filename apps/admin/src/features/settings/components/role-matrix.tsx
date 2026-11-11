@@ -1,13 +1,12 @@
 'use client';
 
-import { ADMIN_MENUS, ADMIN_PERMISSIONS, type AdminPermissionKey } from '@opchub/shared';
+import { ADMIN_PERMISSIONS, type AdminPermissionKey } from '@opchub/shared';
 import type { AdminRoleRow } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
 import type { CSSProperties } from 'react';
 import { isSuperRole, type RoleMatrix } from '../model';
 import styles from './roles.module.css';
-
-const menuLabel = (k: string) => ADMIN_MENUS.find((m) => m.key === k)?.label ?? k;
+import { useDomainLabels } from '@/i18n/domain-labels';
 
 /** Ma trận 25 khoá × vai trò (RB-R05): nhóm theo menu, Super Admin khoá cứng ✓ */
 export function RoleMatrixTable({
@@ -22,6 +21,7 @@ export function RoleMatrixTable({
   onToggle: (roleId: string, k: AdminPermissionKey) => void;
 }) {
   const t = useTranslations('settings.roles');
+  const labels = useDomainLabels();
   const cols = { '--n': roles.length } as CSSProperties;
   return (
     <div className={styles.wrap}>
@@ -39,8 +39,8 @@ export function RoleMatrixTable({
         {ADMIN_PERMISSIONS.map((p) => (
           <div key={p.key} className={styles.row} style={cols} role="row">
             <span className={styles.label} role="rowheader">
-              <span className={styles.group}>{menuLabel(p.menu)}</span>
-              {p.label}
+              <span className={styles.group}>{labels.menu(p.menu)}</span>
+              {labels.permission(p.key)}
             </span>
             {roles.map((r) => {
               const sa = isSuperRole(r);
@@ -52,7 +52,7 @@ export function RoleMatrixTable({
                     role="checkbox"
                     aria-checked={on}
                     aria-disabled={sa || !canEdit}
-                    aria-label={t('cell', { perm: p.label, role: r.name })}
+                    aria-label={t('cell', { perm: labels.permission(p.key), role: r.name })}
                     className={`${styles.tick} ${on ? styles.on : ''} ${sa ? styles.locked : ''}`}
                     onClick={() => !sa && onToggle(r.id, p.key)}
                   >

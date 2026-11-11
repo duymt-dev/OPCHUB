@@ -1,5 +1,7 @@
 'use client';
 
+import { useDomainLabels } from '@/i18n/domain-labels';
+
 import { useTranslations } from 'next-intl';
 import { formatCount, industriesOf, kindCount, regionCount } from '../model';
 import {
@@ -111,6 +113,7 @@ interface FilterProps {
 /** Miền (Tất cả / Bắc / Trung / Nam), loại nhóm + ngành (D-89 v4), ô tìm, sắp xếp */
 export function GroupsFilters({ all, params, onChange }: FilterProps) {
   const t = useTranslations('groups.list');
+  const labels = useDomainLabels();
   return (
     <>
       <div className={styles.filters}>
@@ -123,7 +126,7 @@ export function GroupsFilters({ all, params, onChange }: FilterProps) {
               className={`${styles.region} ${params.region === r ? styles.regionOn : ''}`}
               onClick={() => onChange({ region: r, page: 1 })}
             >
-              {r === 'all' ? t('regionAll') : r}
+              {r === 'all' ? t('regionAll') : labels.canonicalRegion(r)}
               <span className={styles.regionN}>{regionCount(all, r)}</span>
             </button>
           ))}

@@ -1,0 +1,58 @@
+{
+  "regional": {
+    "save": "Save",
+    "bankName": "Bank",
+    "bankNo": "Account number",
+    "bankHolder": "Account holder",
+    "share": {
+      "director": "Regional Director",
+      "affiliates": "Affiliate",
+      "date": "Date",
+      "status": "Status",
+      "pendingStatus": "Awaiting payment",
+      "cancel": "Cancel"
+    }
+  },
+  "title": "Affiliate",
+  "pageTitle": "Affiliate network",
+  "close": "Close",
+  "save": "Save",
+  "cancel": "Cancel",
+  "detail": "Details",
+  "monthOption": "Month {month}",
+  "periodCustomers": "{count} customers",
+  "monthCustomers": "Customers",
+  "tabs": {
+    "com": "Commission",
+    "aff": "Affiliate"
+  },
+  "stats": {
+    "broughtRevenue": "Revenue generated"
+  },
+  "columns": {
+    "date": "Date",
+    "affiliate": "Affiliate",
+    "revenue": "Revenue",
+    "commission": "Commission",
+    "status": "Status",
+    "month": "Month",
+    "paidAt": "Payment date"
+  },
+  "status": {
+    "all": "All",
+    "recorded": "Recorded",
+    "cancelled": "Cancelled",
+    "pending": "Awaiting payment"
+  },
+  "policy": {
+    "customerYear": "Customer year",
+    "director": "Regional Director",
+    "renewalYear": "Year {year} · renewal",
+    "year": "Year {year}",
+    "personal": "Personal plan",
+    "business": "Business plan",
+    "fundraisingPlan": "Fundraising plan",
+    "perProject": "/ project"
+  },
+  "dateRange": "01/10/2026 – 15/10/2026"
+}

@@ -7,6 +7,7 @@ import {
   type AiCompose,
 } from '@opchub/shared/api-domains';
 import { api } from '@/lib/api-client';
+import { useTranslations } from 'next-intl';
 
 export function AdminAiSuggestButton({
   input,
@@ -16,6 +17,7 @@ export function AdminAiSuggestButton({
   apply: (text: string) => void;
 }) {
   const toast = useToast();
+  const t = useTranslations('ui');
   const config = useQuery({
     queryKey: ['admin-ai-compose-config'],
     queryFn: () => api('/admin/ai/config', { schema: aiComposeConfigSchema }),
@@ -33,12 +35,12 @@ export function AdminAiSuggestButton({
         ).text
       }
       apply={apply}
-      onError={() => toast('Chưa gợi ý được, vui lòng thử lại sau')}
+      onError={() => toast(t('aiSuggestion.failed'))}
       labels={{
-        suggest: 'Gợi ý bằng AI',
-        use: 'Dùng gợi ý',
-        dismiss: 'Bỏ qua',
-        preview: 'Gợi ý nội dung',
+        suggest: t('aiSuggestion.suggest'),
+        use: t('aiSuggestion.use'),
+        dismiss: t('aiSuggestion.skip'),
+        preview: t('aiSuggestion.title'),
       }}
     />
   );

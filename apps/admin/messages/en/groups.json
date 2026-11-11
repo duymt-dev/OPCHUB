@@ -1,0 +1,93 @@
+{
+  "title": "Community groups",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "list": {
+    "heading": "Community groups",
+    "viewGrid": "Grid view",
+    "viewList": "List view",
+    "stats": {
+      "groups": "Community groups"
+    },
+    "regionAll": "All",
+    "indAll": "All industries",
+    "sortLabel": "Sort",
+    "sort": {
+      "members": "Most members",
+      "weekly": "Most active",
+      "name": "Name A–Z"
+    },
+    "edit": "Edit",
+    "col": {
+      "group": "Groups"
+    },
+    "unit": "items"
+  },
+  "confirm": {
+    "cancel": "Cancel"
+  },
+  "toast": {
+    "deleted": "Deleted {name}",
+    "failed": "Action failed, please try again"
+  },
+  "form": {
+    "close": "Close",
+    "coverRemove": "Remove image",
+    "coverTooLarge": "Image must be PNG, JPG or WebP, max 5MB",
+    "province": "Province / City",
+    "provincePh": "Select a province / city",
+    "desc": "Short description",
+    "owner": "Group owner",
+    "removeLecturer": "Remove {name}",
+    "room": {
+      "events": "Events",
+      "boardDesc": "Private"
+    },
+    "cancel": "Cancel",
+    "save": "Save changes",
+    "err": {
+      "province": "Please select a province / city"
+    },
+    "topicSave": "Save",
+    "topicDelete": "Remove",
+    "topicClose": "Close"
+  },
+  "export": {
+    "close": "Close",
+    "groups": "Community groups",
+    "field": {
+      "group": "Groups",
+      "name": "Full name",
+      "email": "Email",
+      "phone": "Phone number",
+      "type": "Account type",
+      "country": "Country",
+      "status": "Status"
+    },
+    "statusAll": "All",
+    "statusActive": "Active",
+    "statusLocked": "Locked",
+    "cancel": "Cancel",
+    "cell": {
+      "business": "Business",
+      "owner": "Group owner",
+      "lecturer": "Lecturer",
+      "locked": "Locked"
+    }
+  },
+  "mod": {
+    "filter": {
+      "all": "All",
+      "report": "Report"
+    },
+    "cat": {
+      "scam": "Scam",
+      "personal_info": "Personal information",
+      "abuse": "Abusive language",
+      "other": "Other"
+    },
+    "yesterday": "Yesterday"
+  },
+  "chat": {
+    "hidden": "Hidden"
+  }
+}

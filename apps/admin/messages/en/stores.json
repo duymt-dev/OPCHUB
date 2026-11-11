@@ -1,0 +1,39 @@
+{
+  "title": "Stores",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "kpi": {
+    "published": "Published",
+    "draft": "Draft",
+    "hidden": "Hidden by Admin"
+  },
+  "filter": {
+    "all": "All",
+    "published": "Published",
+    "draft": "Draft",
+    "hidden": "Hidden"
+  },
+  "status": {
+    "published": "Published",
+    "draft": "Draft",
+    "hidden": "Hidden by Admin"
+  },
+  "table": {
+    "store": "Stores",
+    "status": "Status",
+    "hide": "Hide"
+  },
+  "bulk": {
+    "hide": "Hide"
+  },
+  "pager": {
+    "prev": "Previous page",
+    "next": "Next page"
+  },
+  "drawer": {
+    "closeBtn": "Close",
+    "items": "Products & services",
+    "publicPage": "Public page",
+    "publicCopy": "Copy",
+    "publicCopied": "Public page link copied"
+  }
+}

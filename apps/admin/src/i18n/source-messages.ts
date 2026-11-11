@@ -14,6 +14,9 @@ import projects from '../../messages/vi/projects.json';
 import reports from '../../messages/vi/reports.json';
 import requests from '../../messages/vi/requests.json';
 import stores from '../../messages/vi/stores.json';
+import meta from '../../messages/vi/meta.json';
+import ui from '../../messages/vi/ui.json';
+import botOptions from '../../messages/vi/bot-options.json';
 import settingsCore from '../../messages/vi/settings/core.json';
 import settingsAccess from '../../messages/vi/settings/access.json';
 import settingsMail from '../../messages/vi/settings/mail.json';
@@ -39,6 +42,9 @@ export const messages = {
   reports,
   requests,
   stores,
+  meta,
+  ui,
+  botOptions,
   settings: {
     ...settingsCore,
     ...settingsAccess,

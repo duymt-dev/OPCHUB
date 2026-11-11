@@ -1,0 +1,13 @@
+{
+  "tones": [
+    "Thân thiện, hay hỏi",
+    "Thực tế, chia sẻ kinh nghiệm",
+    "Chuyên gia, trả lời chi tiết",
+    "Truyền cảm hứng",
+    "Ngắn gọn, kỹ thuật",
+    "Tò mò, mới bắt đầu"
+  ],
+  "genders": ["Nam", "Nữ", "Khác"],
+  "hours": ["8:00 – 22:00", "8:00 – 12:00", "12:00 – 18:00", "18:00 – 23:00", "Cả ngày"],
+  "scriptTypes": ["Hỏi đáp", "Thảo luận", "Chia sẻ kinh nghiệm", "Giới thiệu sự kiện / dự án"]
+}

@@ -1,0 +1,27 @@
+{
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "col": {
+    "contact": "Contact person"
+  },
+  "kind": {
+    "business": "Business / Organisation"
+  },
+  "detail": "Details",
+  "pager": {
+    "prev": "Previous page",
+    "next": "Next page",
+    "pageSize": "Rows per page"
+  },
+  "drawer": {
+    "close": "Close",
+    "contact": "Contact person",
+    "phone": "Phone number",
+    "email": "Email"
+  },
+  "confirm": {
+    "cancel": "Cancel"
+  },
+  "catalog": {
+    "desc": "Short description"
+  }
+}

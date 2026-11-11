@@ -1,0 +1,47 @@
+{
+  "title": "Local needs",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "kpi": {
+    "open": "Open",
+    "closed": "Closed",
+    "hidden": "Hidden by Admin"
+  },
+  "filter": {
+    "all": "All",
+    "open": "Open",
+    "closed": "Closed",
+    "hidden": "Hidden"
+  },
+  "type": {
+    "buy": "Want to buy",
+    "sell": "Need buyers",
+    "partner": "Need partners",
+    "service": "Need services",
+    "solution": "Need solutions",
+    "staff": "Need staff",
+    "space": "Need premises / warehouse",
+    "capital": "Need capital",
+    "other": "Other needs"
+  },
+  "status": {
+    "open": "Open",
+    "closed": "Closed",
+    "hidden": "Hidden by Admin"
+  },
+  "table": {
+    "need": "Need",
+    "type": "Type",
+    "store": "Stores",
+    "status": "Status",
+    "hide": "Hide"
+  },
+  "bulk": {
+    "hide": "Hide"
+  },
+  "pager": {
+    "prev": "Previous page",
+    "next": "Next page",
+    "prevBtn": "‹ Previous",
+    "nextBtn": "Next ›"
+  }
+}

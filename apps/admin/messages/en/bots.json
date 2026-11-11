@@ -1,0 +1,39 @@
+{
+  "bulk": {
+    "close": "Close",
+    "cancel": "Cancel"
+  },
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "ago": {
+    "minutes": "{n} min ago",
+    "hours": "{n} hr ago",
+    "days": "{n} days ago"
+  },
+  "persona": {
+    "edit": "Edit"
+  },
+  "pf": {
+    "removePhoto": "Remove image",
+    "namePh": "Nguyen Van A",
+    "other": "Other",
+    "pick": "Select",
+    "cancel": "Cancel"
+  },
+  "script": {
+    "edit": "Edit"
+  },
+  "sf": {
+    "cancel": "Cancel"
+  },
+  "thread": {
+    "pending": "Pending review"
+  },
+  "confirm": {
+    "cancel": "Cancel"
+  },
+  "close": "Close",
+  "emergency": {
+    "cancel": "Cancel",
+    "close": "Close"
+  }
+}

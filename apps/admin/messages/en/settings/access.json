@@ -1,0 +1,22 @@
+{
+  "roles": {
+    "addCancel": "Cancel"
+  },
+  "admins": {
+    "cols": {
+      "account": "Account"
+    },
+    "locked": "Locked",
+    "drawer": {
+      "name": "Full name",
+      "namePh": "Nguyen Van A",
+      "phone": "Phone number",
+      "phonePh": "0912 345 678",
+      "cancel": "Cancel",
+      "submit": "Create an account"
+    }
+  },
+  "sso": {
+    "active": "Active"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "common": {
+    "cancel": "Cancel",
+    "save": "Save",
+    "loading": "Loading…"
+  },
+  "general": {
+    "email": "Contact email",
+    "invalidEmail": "Invalid contact email"
+  },
+  "cat": {
+    "biz": "Business",
+    "all": "All",
+    "add": "+ Add",
+    "cols": {
+      "biz": "Business"
+    },
+    "edit": "Edit",
+    "delete": "Remove",
+    "scopeLong": {
+      "biz": "Business"
+    }
+  }
+}

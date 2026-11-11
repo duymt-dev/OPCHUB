@@ -16,6 +16,7 @@ const readCatalog: CatalogReader = async (bundle, file) => {
 };
 
 async function readNamespace(bundle: Bundle, namespace: Namespace, reader: CatalogReader) {
+  if (namespace === 'botOptions') return reader(bundle, 'bot-options');
   if (namespace !== 'settings') return reader(bundle, namespace);
   const parts = await Promise.all(SETTINGS_PARTS.map((part) => reader(bundle, `settings/${part}`)));
   const result: Record<string, unknown> = {};

@@ -1,0 +1,33 @@
+{
+  "title": "Investor",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "stats": {
+    "fund": "Investment fund"
+  },
+  "heading": "Investor",
+  "searchLabel": "Find investors",
+  "tabs": {
+    "all": "All",
+    "fund": "Investment fund",
+    "business": "Business"
+  },
+  "kind": {
+    "fund": "Investment fund",
+    "business": "Business"
+  },
+  "col": {
+    "investor": "Investor",
+    "kind": "Type",
+    "phone": "Phone number"
+  },
+  "detail": "Details",
+  "pager": {
+    "prev": "Previous page",
+    "next": "Next page",
+    "pageSize": "Rows per page"
+  },
+  "drawer": {
+    "close": "Close",
+    "phone": "Phone number"
+  }
+}
