@@ -5,10 +5,10 @@ The active goal remains the entire approved TIP and all16 ACs. No scope reductio
 
 ## Current checkpoint
 
-- Date:2026-11-11. Branch: `feature/TIP-V46-824-admin-i18n`, baseline `dev f7c1b2b8` (822/823 already merged). Current source **042dedaf**, committed and pushed.
+- Date:2026-11-11. Branch: `feature/TIP-V46-824-admin-i18n`, baseline `dev f7c1b2b8` (822/823 already merged). Current source **77484e3f**, committed and pushed.
 - Previous goal turn made concrete progress. No blocking external condition: substantial implementation/verification remains.
-- Owner explicitly approved optional number-format props for shared Pagination/BulkBar, retaining Portal defaults/callbacks. Approval is recorded in TIP/manifest before those shared edits; no Portal business/source change.
-- Native safety: no operation against original PG5432 data, no reset/repair/recreate of original `opchub_test`, no service/port teardown. Native-mode compilation used the isolated proxy configuration. Read-only font audits visited login in MSW/off builds without server fixtures, API mutations, seeds or DB access; they are not database/API verification.
+- Owner explicitly approved optional number-format props for shared Pagination/BulkBar and optional LoginPanel error formatting, retaining Portal defaults/callbacks. Approval is recorded in TIP/manifest before those shared edits; no Portal business/source change.
+- Native safety: no operation against original PG5432 data, no reset/repair/recreate of original `opchub_test`, no existing native service/port teardown. Native-mode compilation used the isolated proxy configuration. Read-only font audits visited login in MSW/off builds without server fixtures, API mutations, seeds or DB access; they are not database/API verification.
 
 ## Delivered cumulatively
 
@@ -35,6 +35,10 @@ The active goal remains the entire approved TIP and all16 ACs. No scope reductio
 
 18. Complete Indonesian raw catalog:25 files /2660 leaves,45 raw/context/canonical cases.728 unambiguous exact-source Portal matches retained,1926 translated/context-corrected leaves,6 canonical examples retained.23 corrections distinguish reports/reporting actions, month-end payouts, event registration, audit categories and repository visibility. Native-reviewed=false; glossary/provenance in REVIEW. Actual request assertions cover auth/Profile/Overview/reports and all six merged settings parts with no fallback warning. Existing Latin font covers all Indonesian glyphs; no font binary or Portal change. Both production modes assert the actual Indonesian login heading/title in addition to existing Chinese and font assertions.
 
+19. Local auth error provenance now stores client codes rather than translated strings: first-password strength/equality, TOTP/2FA six-digit validation, reset missing-token/password mismatch and forgot-email validation rerender live without losing draft/session. Raw API text/fields stay raw even when matching a known local string. Extracted first-password hook preserves exact predicates, payload and setup-route/session behavior. Owner-approved optional shared LoginPanel formatError changes presentation only; existing error state, pending, callback and demo-account clearing stay unchanged, and Portal does not opt in.
+20. All five actual upload consumers use an Admin-only wrapper for typed local compression/type/storage failures. Presign ApiError identity/text/fields pass through unchanged. Six upload kinds retain exact compression edges, kind/MIME/size, presign/storage PUT and public URL; a locale switch during an in-flight failure uses the current translator. No shared upload or Portal production file changed.
+21. Actual production public-auth browser proof:8/8 MSW +8/8 mocking-off cases, four states x1440/390, vi -> en -> vi through the real selector. Checks actual localized errors/titles, unchanged drafts and URL/query/hash, cookie, zero API mutations, no horizontal overflow or client errors. This is not full credential/MFA/nativeAPI/all-language acceptance; see local-errors.log and coverage.md.
+
 ## Raw translation readiness — FAIL / INCOMPLETE
 
 | Bundle | Files present / required | Raw leaves present / required |
@@ -47,25 +51,27 @@ The active goal remains the entire approved TIP and all16 ACs. No scope reductio
 
 Presence100/250 and complete English/Chinese/Indonesian are NOT whole-TIP acceptance. Six target bundles, their glossaries and the final fixed10-bundle production gate remain missing. Runtime fallback never counts as a translation. See [catalog audit](evidence/v46-824/catalog-audit.md) and [REVIEW](../../apps/admin/messages/REVIEW.md).
 
-## Current verification — source 042dedaf
+## Current verification — source 77484e3f
 
 | Command / check | Actual evidence |
 |---|---|
-| `pnpm lint` | PASS,8 tasks /6 cached; Admin/e2e fresh |
-| `pnpm typecheck` | PASS,8 tasks /6 cached; Admin/e2e fresh |
-| `pnpm test` | **2670 passed +2 pre-existing skips**. Admin955 fresh; UI80, Portal476, shared757, server276, integrations126 cached;6 tasks /5 cached |
-| Portal regression | **476 passed**,85 files, cached in this Admin-only checkpoint; prior fresh root run8aa9c974 and direct f5bb0479 are historical, not extra current tests. |
-| `pnpm depcheck` | PASS, frontend/shared2726 modules8269 dependencies; server1260/5995 |
+| `pnpm lint` | PASS,8 tasks /6 cached; Admin/UI fresh; final current-source recheck E2E fresh /7 cached |
+| `pnpm typecheck` | PASS,8 tasks /6 cached; Admin/UI fresh; final current-source recheck E2E fresh /7 cached |
+| `pnpm test` | **2704 passed +2 pre-existing skips**. Admin986/UI83 fresh; Portal476, shared757, server276, integrations126 cached;6 tasks /4 cached |
+| Portal regression | **476 passed**,85 files, fresh direct full-suite run after shared LoginPanel changes (2 workers); root Turbo replay is the same suite, not an additional476 tests. |
+| `pnpm depcheck` | PASS, frontend/shared2741 modules8315 dependencies; server1260/5995 |
 | Admin MSW production build | PASS, `.next-msw-tip824` |
 | Admin mocking-off production build | PASS, `.next-server-tip824`; build only, NOT full native API/browser acceptance |
-| Portal production MSW build | Prior PASS f5bb0479 after shared changes; no Portal/shared production change in this checkpoint, not rebuilt here. |
-| Manifest/caps/logs |646 unique declared table paths; no undeclared changed path, changed source/catalog files≤400 lines; UTF-8/no ANSI; source/log whitespace and credential/control-character/missing-message scans clean. Six exact upstream OFL files retain original whitespace and hashes, excluded only from whitespace normalization |
+| Portal production MSW build | Current PASS, .next-msw-tip824-portal, after owner-approved optional shared prop; unchanged Portal source/defaults. store_sitemap_unavailable warning retained, not sitemap/API acceptance. |
+| Manifest/caps/logs |669 unique declared table paths; no undeclared changed path, changed source/catalog files≤400 lines; UTF-8/no ANSI; source/log whitespace and credential/control-character/missing-message scans clean. Six exact upstream OFL files retain original whitespace and hashes, excluded only from whitespace normalization |
 | Font technical checks |31 units, reproducible7 binaries,24/24 MSW +24/24 mocking-off browser cases; actual custom-font/network/menu/bounds proof, not full catalog/API acceptance |
 | Full browser/native API/screenshots/JS performance | NOT VERIFIED; remain required |
 
-Current logs: [root gates](evidence/v46-824/quality-gates.log), [unit (Portal cached)](evidence/v46-824/unit.log), [Admin MSW](evidence/v46-824/build-msw.log), [Admin mocking-off](evidence/v46-824/build-native.log), [fonts generation + both browser modes](evidence/v46-824/fonts.log). Historical f5bb0479 logs retained: [direct Portal unit](evidence/v46-824/portal-unit.log), [Portal build](evidence/v46-824/build-portal.log).
+Current public-auth behavior: [same assertions in both modes](evidence/v46-824/local-errors.log), [route/state coverage](evidence/v46-824/coverage.md).
 
-New unit cases this checkpoint:Indonesian45, actual request1, glyph1 (47 total). Focused6-file164 pass. Root unit results and48 browser cases are separate counts. Initial actual-request test exposed a stale Vitest filesystem module cache that still excluded the newly added id folder. The documented `vitest --clearCache` invalidated generated test caches, without source/DB/service changes; default focused/root tests then include the real bundle. No fallback assertion was removed, loader replaced with a mock, or cache issue presented as production success. Expected jsdom/AntD/NO_COLOR warnings remain in logs. Build/test timing is not a performance benchmark.
+Current logs: [root gates](evidence/v46-824/quality-gates.log), [unit (Portal cached)](evidence/v46-824/unit.log), [Admin MSW](evidence/v46-824/build-msw.log), [Admin mocking-off](evidence/v46-824/build-native.log), [fonts generation + both browser modes](evidence/v46-824/fonts.log). Current fresh [direct Portal unit](evidence/v46-824/portal-unit.log), [Portal build](evidence/v46-824/build-portal.log).
+
+New unit cases this checkpoint:31 Admin (auth11, typed state3, upload wrapper6, upload transport11) +3 shared UI, not added again to the root total. Focused Admin37 includes6 existing Profile regressions; shared focused4 includes1 existing pending-name regression. Actual browser16 local-error cases and48 font-only cases are separate. Fresh full Portal476 and Portal production build verify unchanged defaults. All source bytes match the pre-commit tested tree; normal hooks passed. Expected jsdom/AntD, existing UI act and NO_COLOR warnings are retained; no client missing-message/hydration errors. Initial harness errors (unsupported matchers/RTL options, actual Forgot button vs form, lint typing) were corrected without dropping runtime assertions. Build/test duration is not a performance benchmark.
 
 ## Current acceptance audit — all16 retained
 
@@ -74,17 +80,17 @@ New unit cases this checkpoint:Indonesian45, actual request1, glyph1 (47 total).
 |01|Locale/alias/unsafe-cookie/request units pass; full selector/browser identity belongs to pending browser acceptance.|
 |02|vi/en/zh/id raw contracts pass;6 bundles and final fixed10-bundle gate missing — overall FAIL.|
 |03|Original settings/legacy hashes, duplicate-root, shape/fallback/isolation and client safe-error units pass.|
-|04|Metadata/auth implementation retained; Chinese/Indonesian login heading/title pass both modes, but all-locale auth/2FA browser flow evidence missing. Historical SSR4/4 belongs to55116347, not current browser/native proof.|
+|04|Metadata/auth implementation retained; Chinese/Indonesian login heading/title and vi/en local auth states pass both modes; full credential/2FA/all-locale flow evidence still missing. Historical SSR4/4 belongs to55116347, not current browser/native proof.|
 |05|Provider/Profile draft/session units pass; URL/query/hash/paging/session browser assertions pending.|
 |06|AI/moderation and all shared callers localized; comprehensive literal audit and full English routes/states/tabs/dialogs browser matrix pending.|
 |07|Six target catalogs absent; four Chinese auth-only images exist, required full-screen images remain incomplete.|
 |08|Pure/compact/domain/event/picker/optional-number and export-byte units pass;93 model callers have live-locale AST proof, only fixed-vi export Intl remains. Raw number interpolation audit and browser boundaries still pending.|
 |09|All10 AntD locale import/serialization/custom-string units and42 caller AST checks pass; actual all-locale controls/fonts/browser proof pending.|
-|10|Structured local issues and live Profile password errors/draft units pass; other form/auth/upload errors and browser switching still pending.|
+|10|Profile + auth local-code/raw negatives and typed upload boundaries pass by unit; public vi/en error switching passes both modes. Other domain Zod forms, upload UI/native behavior, browser 2FA and notification-local errors remain pending.|
 |11|Canonical projections, event default, AI filter/moderation/optional numeric callback units pass; browser save-value/RBAC assertions pending.|
 |12|Raw API negative and CSV/Excel/email-preview boundaries pass by unit; actual translated-mode API/audit/notification/email/export browser negatives pending.|
 |13|Settings-language wiring unchanged; selector/config independence browser proof missing.|
-|14|Both current Admin builds and identical24-case MSW/off font-only audits pass; complete identical MSW/native i18n behavior suites still NOT RUN.|
+|14|Current Admin/Portal builds, identical24-case font audits and8-case public local-error audits per mode pass; complete identical MSW/native API i18n suites still NOT RUN.|
 |15|Font-only1440/390 selector glyph/custom-font/menu-bounds/Escape/no-error assertions pass in both modes. Required full-screen unmasked glyph/focus/hydration/vi-parity images remain missing; no owner image approval fabricated.|
 |16|Selected-bundle/font architecture and per-locale script network isolation have font-only browser proof; font binary sizes/hashes are recorded. Executable JS/RSC/catalog/full-page isolation/baseline performance measurements remain missing.|
 
@@ -92,11 +98,11 @@ Chinese current browser coverage: login title + heading in both modes, with unma
 
 ## Next work — same full goal
 
-1. Finish remaining raw UI number interpolation, local form/auth/upload errors, and comprehensive AST literal audit with exact file/literal/reason exceptions. Do not alter parsers/search/date machine fields, API errors, exports, content or D-140.
+1. Finish remaining raw UI number interpolation, domain AntD/Zod field errors (affiliate policy/bank, bot type, pricing), notification-local fallback and full upload/browser flows, plus comprehensive AST literal audit with exact file/literal/reason exceptions. Do not alter parsers/search/date machine fields, API errors, exports, content or D-140.
 2. English browser smoke every route/state/main tab/dialog, then remaining6 target catalogs/glossaries and mandatory fixed-bundle raw gate. No directory-discovery skip, copied vi or TODO stand-ins.
 3. Extend font glyph assertions to every target catalog when produced; full-screen/control rendering and same MSW/native i18n assertions, profile/overview/auth/Portal regressions, unmasked1440/390 screenshots and measured baseline/current JS/catalog/font performance.
 4. Re-audit every numbered requirement, all16 ACs and named artifacts against actual evidence. Only then finalize clean/push, PR into dev for owner review. Never auto-merge/release main.
 
 ## Historical evidence
 
-Earlier detailed checkpoints remain in Git: foundation9e207741 / report b61c1007; runtime55116347 / report ee41244b; English ec97a874 / report704810e9; AI/validation9e962712 / report fbf0b481; controls/shared compatibility f5bb0479 / report a45252d6; domain display8aa9c974 / report bde191dd; fonts c90db9f8 / report29fa8a8a; Chinese f1cca64b / report7b5e3734. This compact report replaces repeated historical sections, not their Git evidence. Shared log filenames now contain the current runs. No previous partial PASS is promoted into whole-feature acceptance.
+Earlier detailed checkpoints remain in Git: foundation9e207741 / report b61c1007; runtime55116347 / report ee41244b; English ec97a874 / report704810e9; AI/validation9e962712 / report fbf0b481; controls/shared compatibility f5bb0479 / report a45252d6; domain display8aa9c974 / report bde191dd; fonts c90db9f8 / report29fa8a8a; Chinese f1cca64b / report7b5e3734; Indonesian042dedaf / report2a57ca78. This compact report replaces repeated historical sections, not their Git evidence. Shared log filenames now contain the current runs. No previous partial PASS is promoted into whole-feature acceptance.

@@ -1,5 +1,4 @@
-Fresh Portal regression; direct pnpm --filter @opchub/portal test; not Turbo replay
-$ vitest run --passWithNoTests
+TIP824 optional LoginPanel prop; fresh direct Portal unit, tested working tree committed as77484e3f; not browser/API acceptance.
 
  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/portal
 
@@ -10,9 +9,11 @@ Not implemented: Window's getComputedStyle() method: with pseudo-elements
 
  Test Files  85 passed (85)
       Tests  476 passed (476)
-   Start at  11:28:55
-   Duration  318.61s (environment 50%, import 44%, tests 3%, transform 3%)
+   Start at  14:44:56
+   Duration  798.21s (environment 52%, import 45%, tests 2%, transform 1%)
 
-     Import  804 modules were evaluated 5431 times · 393.35s total, 44% of tracked time
-             ~84.09s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+     Import  804 modules were evaluated 5284 times · 676.12s total, 45% of tracked time
+             ~250.02s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
              learn more: https://vitest.dev/guide/improving-performance#test-isolation
+
+EXIT 0

@@ -9,6 +9,7 @@
 - Simplified Chinese source checkpoint f1cca64b, 2026-11-11, covers25/25 physical files and2660/2660 leaves. Indonesian source checkpoint042dedaf, 2026-11-11, also covers25/25 files and2660/2660 leaves, raw-contract checked before fallback. Other target bundles th/ms/fil/km/lo/my: pending. Aliases en-SG and ms-BN share en/ms catalogs, not separate translations.
 - Confidence: English moderate pending owner review; Khmer/Lao/Myanmar require special native-speaker attention when their catalogs are produced. Human review is not fabricated and does not replace technical gates.
 - Self-hosted font assets, licenses and reproducible build provenance are recorded below. Full translated-screen/visual/performance acceptance is still pending; font contracts alone do not complete this TIP.
+- Auth/upload consumer checkpoint77484e3f uses existing catalog keys only: local error codes render in the live locale; raw API strings are never reverse-matched into translation keys. The owner-approved optional shared LoginPanel formatter is Admin-only; Portal defaults/callbacks/demo clearing remain unchanged and have fresh regression/build evidence. This adds no translation leaves or native-speaker approval.
 
 ## English terminology
 

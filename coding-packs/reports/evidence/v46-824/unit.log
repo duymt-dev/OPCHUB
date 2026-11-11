@@ -1,4 +1,4 @@
-COMMAND pnpm test
+Tested working tree committed as77484e3f; COMMAND pnpm test
 $ turbo run test --concurrency=2
 
    • turbo 2.11.8
@@ -6,101 +6,38 @@ $ turbo run test --concurrency=2
    • Running test in 9 packages
    • Remote caching disabled
 
-@opchub/portal:test: cache hit, replaying logs c085a02155560a30
-@opchub/portal:test: $ vitest run --passWithNoTests
-@opchub/portal:test:
-@opchub/portal:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/portal
-@opchub/portal:test:
-@opchub/portal:test:  ✓ src/i18n/messages.spec.ts (145 tests) 4026ms
-@opchub/portal:test:  ✓ src/features/auth/hooks/use-referral-code.spec.tsx (4 tests) 3687ms
-@opchub/portal:test:    ✓ useReferralCode (TIP-V2-403) (4)
-@opchub/portal:test:      ✓ REQ-303 debounce 400ms, prefill URL before cookie; manual override remains editable 1079ms
-@opchub/portal:test:      ✓ AT-AF03 REQ-304 email changes invalidate valid result and show the self error 1043ms
-@opchub/portal:test:      ✓ REQ-304 a late response for an old code never overwrites the new result 1046ms
-@opchub/portal:test:      ✓ REQ-304 failed check blocks, empty optional code does not send a request or block 517ms
-@opchub/portal:test:  ✓ src/features/dashboard/components/need-matches-card.spec.tsx (11 tests) 1293ms
-@opchub/portal:test:    ✓ REQ-626 dashboard matching card (11)
-@opchub/portal:test:      ✓ renders labels/reasons/count/98% and only buttons navigate 507ms
-@opchub/portal:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/portal:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/portal:test:  ✓ src/features/affiliate/components/my-region-affiliates.spec.tsx (2 tests) 3941ms
-@opchub/portal:test:    ✓ SPEC16 loads130 unique affiliate rows in50-row pages and exports only after a click 2897ms
-@opchub/portal:test:    ✓ SPEC16 failed next page preserves all visible rows and allows retry without silently dropping assertions 1041ms
-@opchub/portal:test:  ✓ src/features/stores/components/dashboard/public-page-card.spec.tsx (6 tests) 2314ms
-@opchub/portal:test:    ✓ REQ-627 BR-494 public page card (6)
-@opchub/portal:test:      ✓ TC-494 toggle saves immediately, changes explanation, rollback on error 651ms
-@opchub/portal:test:      ✓ seo fields: placeholders, max lengths, counter160, blur and debounced save 971ms
-@opchub/portal:test:      ✓ copy and view: full URL, new tab, selected link on clipboard error 301ms
-@opchub/portal:test: stderr | src/features/push/components/push-preferences.spec.tsx > D-137 member preferences > offers retry instead of editing unknown preferences when loading fails
-@opchub/portal:test: Warning: [antd: Alert] `message` is deprecated. Please use `title` instead.
-@opchub/portal:test:
-@opchub/portal:test:  ✓ src/features/push/components/push-preferences.spec.tsx (2 tests) 739ms
-@opchub/portal:test:    ✓ D-137 member preferences (2)
-@opchub/portal:test:      ✓ shows five kinds, locks the Admin-disabled kind and saves a complete strict preference object 540ms
-@opchub/portal:test:  ✓ src/features/push/components/push-enable-button.spec.tsx (4 tests) 707ms
-@opchub/portal:test:    ✓ D-137 device permission presentation (4)
-@opchub/portal:test:      ✓ enables only from a direct gesture and exposes the active-device disable action 507ms
-@opchub/portal:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/portal:test:  ✓ src/features/affiliate/components/my-region-years.spec.tsx (1 test) 758ms
-@opchub/portal:test:    ✓ MyRegion year table prototype numeric alignment (1)
-@opchub/portal:test:      ✓ right-aligns numeric headers and cells without changing labels or amounts 754ms
-@opchub/portal:test:  ✓ src/app/(public)/g/[slug]/opengraph-image.spec.ts (2 tests) 910ms
-@opchub/portal:test:    ✓ REQ-627 B15 real OG rendering (2)
-@opchub/portal:test:      ✓ REQ-627 Vietnamese text renders to real PNG1200x630 with bundled font 906ms
-@opchub/portal:test:  ✓ src/mocks/registration-credentials.spec.ts (5 tests) 756ms
-@opchub/portal:test:    ✓ REQ-401 UAT-30 private MSW registration credential boundary (5)
-@opchub/portal:test:      ✓ requires activation and the actual password, never grants an unknown account 317ms
-@opchub/portal:test:  ✓ src/mocks/registered-login.spec.ts (1 test) 472ms
-@opchub/portal:test:    ✓ UAT-30 REQ-401 correct OTP alone promotes the private password verifier; same identity logs in 463ms
-@opchub/portal:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/portal:test:  ✓ src/features/affiliate/components/my-region-months.spec.tsx (1 test) 606ms
-@opchub/portal:test:    ✓ TIP821 parity reserves90px for month and preserves the prototype480px scrollable table 602ms
-@opchub/portal:test:  ✓ src/lib/build-config.spec.ts (3 tests) 802ms
-@opchub/portal:test:    ✓ TIP-V46-804-F1 build API isolation (3)
-@opchub/portal:test:      ✓ MSW never proxies an unhandled request to an inherited real API 790ms
-@opchub/portal:test:  ✓ src/mocks/affiliate-handlers.spec.ts (6 tests) 410ms
-@opchub/portal:test:  ✓ src/features/onboarding/components/onboarding-card.spec.tsx (4 tests) 463ms
-@opchub/portal:test:  ✓ src/mocks/profile-handlers.spec.ts (6 tests) 347ms
-@opchub/portal:test:  ✓ src/mocks/register-handlers.spec.ts (8 tests) 295ms
-@opchub/portal:test:  ✓ src/mocks/domain-handlers.spec.ts (15 tests) 358ms
-@opchub/portal:test:  ✓ src/features/membership/hooks/use-mock-membership-push.spec.ts (3 tests) 328ms
-@opchub/portal:test:  ✓ src/features/push/hooks/use-push-subscription.spec.tsx (3 tests) 272ms
-@opchub/portal:test:  ✓ src/mocks/needs-handlers.spec.ts (3 tests) 255ms
-@opchub/portal:test:  ✓ src/mocks/fundraising-handlers.spec.ts (4 tests) 292ms
-@opchub/portal:test:  ✓ src/features/affiliate/components/share-bar.spec.tsx (2 tests) 319ms
-@opchub/portal:test:  ✓ src/mocks/bot-reply-handlers.spec.ts (4 tests) 271ms
-@opchub/portal:test:  ✓ src/app/(public)/g/[slug]/guest-view-beacon.spec.tsx (4 tests) 258ms
-@opchub/portal:test:  ✓ src/mocks/moderation-lock-session.spec.ts (6 tests) 240ms
-@opchub/portal:test:  ✓ src/mocks/stores-handlers.spec.ts (3 tests) 238ms
-@opchub/portal:test:  ✓ src/mocks/onboarding-handlers.spec.ts (2 tests) 221ms
-@opchub/portal:test:  ✓ src/mocks/affiliate-demo.spec.ts (3 tests) 260ms
-@opchub/portal:test:  ✓ src/mocks/unsubscribe-handlers.spec.ts (1 test) 279ms
-@opchub/portal:test:  ✓ src/features/chat/hooks/use-mock-room-reload.spec.ts (3 tests) 236ms
-@opchub/portal:test:  ✓ src/mocks/membership-handlers.spec.ts (5 tests) 278ms
-@opchub/portal:test:  ✓ src/features/affiliate/hooks/use-my-region.spec.tsx (2 tests) 191ms
-@opchub/portal:test:  ✓ src/mocks/dashboard-bot-handlers.spec.ts (2 tests) 208ms
-@opchub/portal:test:  ✓ src/features/membership/hooks/use-paid-access-recovery.spec.ts (3 tests) 188ms
-@opchub/portal:test:  ✓ src/mocks/handlers.spec.ts (3 tests) 155ms
-@opchub/portal:test:  ✓ src/mocks/chat-topic-routes.spec.ts (2 tests) 112ms
-@opchub/portal:test:  ✓ src/features/projects/components/detail-contact.spec.tsx (2 tests) 323ms
-@opchub/portal:test:    ✓ BUG-016 BUG-021 QT-09 thẻ liên hệ chủ dự án (2)
-@opchub/portal:test:      ✓ có SĐT → Zalo + Gọi, không có Nhắn tin 312ms
-@opchub/portal:test:  ✓ src/mocks/group-lock-handlers.spec.ts (1 test) 228ms
-@opchub/portal:test:  ✓ src/mocks/moderation-warning-handlers.spec.ts (1 test) 195ms
-@opchub/portal:test:  ✓ src/mocks/mock-auth-session.spec.ts (2 tests) 115ms
-@opchub/portal:test:  ✓ src/i18n/overlay.spec.ts (4 tests) 92ms
-@opchub/portal:test:  ✓ src/features/affiliate/components/history-mobile.spec.tsx (2 tests) 193ms
-@opchub/portal:test:  ✓ src/features/affiliate/hooks/use-bank-form.spec.tsx (4 tests) 132ms
-@opchub/portal:test:  ✓ src/features/affiliate/hooks/use-affiliate.spec.tsx (7 tests) 88ms
-@opchub/portal:test:  ✓ src/features/chat/hooks/use-mark-read.spec.tsx (8 tests) 310ms
-@opchub/portal:test:  ✓ src/features/shell/hooks/use-global-search.spec.tsx (4 tests) 87ms
-@opchub/portal:test:  ✓ src/features/stores/components/dashboard/guest-views-kpi.spec.tsx (1 test) 93ms
-@opchub/portal:test:  ✓ src/features/auth/hooks/use-registration-open.spec.tsx (4 tests) 147ms
-@opchub/portal:test:  ✓ src/features/membership/model.spec.ts (10 tests) 50ms
-@opchub/portal:test:  ✓ src/features/services/model.spec.ts (8 tests) 11ms
-@opchub/portal:test:  ✓ src/features/chat/format.spec.ts (5 tests) 35ms
-@opchub/portal:test:  ✓ src/features/profile/model.spec.ts (8 tests) 67ms
-@opchub/portal:test:  ✓ src/features/needs/model.spec.ts (5 tests) 39ms
+@opchub/ui:test: cache miss, executing 7d9a99b7e71963c0
+@opchub/integrations:test: cache hit, replaying logs 55fe577ab4148b40
+@opchub/integrations:test: $ vitest run
+@opchub/integrations:test:
+@opchub/integrations:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/integrations
+@opchub/integrations:test:
+@opchub/integrations:test:  ✓ src/storage/local.provider.spec.ts (5 tests) 97ms
+@opchub/integrations:test:  ✓ src/mail/fake.provider.spec.ts (3 tests) 98ms
+@opchub/integrations:test:  ✓ src/sso/google.provider.spec.ts (12 tests) 263ms
+@opchub/integrations:test:  ✓ src/llm/local.spec.ts (25 tests) 67ms
+@opchub/integrations:test:  ✓ src/tax-lookup/chain.spec.ts (3 tests) 1273ms
+@opchub/integrations:test:    ✓ ChainTaxProvider (D-17) (3)
+@opchub/integrations:test:      ✓ ESGOO lỗi 500 → dùng VietQR 654ms
+@opchub/integrations:test:      ✓ cả hai lỗi / dữ liệu lạ → null, gọi onError 612ms
+@opchub/integrations:test:  ✓ src/tax-lookup/dlpl.provider.spec.ts (6 tests) 52ms
+@opchub/integrations:test:  ✓ src/mail/brevo.provider.spec.ts (3 tests) 96ms
+@opchub/integrations:test:  ✓ src/bank-webhook/content.spec.ts (40 tests) 13ms
+@opchub/integrations:test:  ✓ src/push/fake.provider.spec.ts (7 tests) 42ms
+@opchub/integrations:test:  ✓ src/tax-lookup/esgoo.provider.spec.ts (4 tests) 37ms
+@opchub/integrations:test:  ✓ src/bank-webhook/dynamic-secret.spec.ts (2 tests) 8ms
+@opchub/integrations:test:  ✓ src/push/webpush.provider.spec.ts (12 tests) 28ms
+@opchub/integrations:test:  ✓ src/llm/fake.spec.ts (4 tests) 11ms
+@opchub/integrations:test:  ↓ src/storage/s3.provider.spec.ts (2 tests | 2 skipped)
+@opchub/integrations:test:
+@opchub/integrations:test:  Test Files  13 passed | 1 skipped (14)
+@opchub/integrations:test:       Tests  126 passed | 2 skipped (128)
+@opchub/integrations:test:    Start at  12:07:47
+@opchub/integrations:test:    Duration  5.23s (import 64%, transform 18%, tests 16%, worker 1%)
+@opchub/integrations:test:
+@opchub/integrations:test:     Isolate  14 workers spawned · ~751ms startup each (spawn + environment, per file)
+@opchub/integrations:test:              at least ~1.35s faster with isolate: false — reuses workers across files instead of one per file
+@opchub/integrations:test:
 @opchub/shared:test: cache hit, replaying logs 466666ab1430e6fe
 @opchub/shared:test: $ vitest run
 @opchub/shared:test:
@@ -242,6 +179,101 @@ $ turbo run test --concurrency=2
 @opchub/shared:test:     Isolate  127 workers spawned · ~834ms startup each (spawn + environment, per file)
 @opchub/shared:test:              at least ~20.35s faster with isolate: false — reuses workers across files instead of one per file
 @opchub/shared:test:
+@opchub/portal:test: cache hit, replaying logs c085a02155560a30
+@opchub/portal:test: $ vitest run --passWithNoTests
+@opchub/portal:test:
+@opchub/portal:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/portal
+@opchub/portal:test:
+@opchub/portal:test:  ✓ src/i18n/messages.spec.ts (145 tests) 4026ms
+@opchub/portal:test:  ✓ src/features/auth/hooks/use-referral-code.spec.tsx (4 tests) 3687ms
+@opchub/portal:test:    ✓ useReferralCode (TIP-V2-403) (4)
+@opchub/portal:test:      ✓ REQ-303 debounce 400ms, prefill URL before cookie; manual override remains editable 1079ms
+@opchub/portal:test:      ✓ AT-AF03 REQ-304 email changes invalidate valid result and show the self error 1043ms
+@opchub/portal:test:      ✓ REQ-304 a late response for an old code never overwrites the new result 1046ms
+@opchub/portal:test:      ✓ REQ-304 failed check blocks, empty optional code does not send a request or block 517ms
+@opchub/portal:test:  ✓ src/features/dashboard/components/need-matches-card.spec.tsx (11 tests) 1293ms
+@opchub/portal:test:    ✓ REQ-626 dashboard matching card (11)
+@opchub/portal:test:      ✓ renders labels/reasons/count/98% and only buttons navigate 507ms
+@opchub/portal:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/portal:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/portal:test:  ✓ src/features/affiliate/components/my-region-affiliates.spec.tsx (2 tests) 3941ms
+@opchub/portal:test:    ✓ SPEC16 loads130 unique affiliate rows in50-row pages and exports only after a click 2897ms
+@opchub/portal:test:    ✓ SPEC16 failed next page preserves all visible rows and allows retry without silently dropping assertions 1041ms
+@opchub/portal:test:  ✓ src/features/stores/components/dashboard/public-page-card.spec.tsx (6 tests) 2314ms
+@opchub/portal:test:    ✓ REQ-627 BR-494 public page card (6)
+@opchub/portal:test:      ✓ TC-494 toggle saves immediately, changes explanation, rollback on error 651ms
+@opchub/portal:test:      ✓ seo fields: placeholders, max lengths, counter160, blur and debounced save 971ms
+@opchub/portal:test:      ✓ copy and view: full URL, new tab, selected link on clipboard error 301ms
+@opchub/portal:test: stderr | src/features/push/components/push-preferences.spec.tsx > D-137 member preferences > offers retry instead of editing unknown preferences when loading fails
+@opchub/portal:test: Warning: [antd: Alert] `message` is deprecated. Please use `title` instead.
+@opchub/portal:test:
+@opchub/portal:test:  ✓ src/features/push/components/push-preferences.spec.tsx (2 tests) 739ms
+@opchub/portal:test:    ✓ D-137 member preferences (2)
+@opchub/portal:test:      ✓ shows five kinds, locks the Admin-disabled kind and saves a complete strict preference object 540ms
+@opchub/portal:test:  ✓ src/features/push/components/push-enable-button.spec.tsx (4 tests) 707ms
+@opchub/portal:test:    ✓ D-137 device permission presentation (4)
+@opchub/portal:test:      ✓ enables only from a direct gesture and exposes the active-device disable action 507ms
+@opchub/portal:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/portal:test:  ✓ src/features/affiliate/components/my-region-years.spec.tsx (1 test) 758ms
+@opchub/portal:test:    ✓ MyRegion year table prototype numeric alignment (1)
+@opchub/portal:test:      ✓ right-aligns numeric headers and cells without changing labels or amounts 754ms
+@opchub/portal:test:  ✓ src/app/(public)/g/[slug]/opengraph-image.spec.ts (2 tests) 910ms
+@opchub/portal:test:    ✓ REQ-627 B15 real OG rendering (2)
+@opchub/portal:test:      ✓ REQ-627 Vietnamese text renders to real PNG1200x630 with bundled font 906ms
+@opchub/portal:test:  ✓ src/mocks/registration-credentials.spec.ts (5 tests) 756ms
+@opchub/portal:test:    ✓ REQ-401 UAT-30 private MSW registration credential boundary (5)
+@opchub/portal:test:      ✓ requires activation and the actual password, never grants an unknown account 317ms
+@opchub/portal:test:  ✓ src/mocks/registered-login.spec.ts (1 test) 472ms
+@opchub/portal:test:    ✓ UAT-30 REQ-401 correct OTP alone promotes the private password verifier; same identity logs in 463ms
+@opchub/portal:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/portal:test:  ✓ src/features/affiliate/components/my-region-months.spec.tsx (1 test) 606ms
+@opchub/portal:test:    ✓ TIP821 parity reserves90px for month and preserves the prototype480px scrollable table 602ms
+@opchub/portal:test:  ✓ src/lib/build-config.spec.ts (3 tests) 802ms
+@opchub/portal:test:    ✓ TIP-V46-804-F1 build API isolation (3)
+@opchub/portal:test:      ✓ MSW never proxies an unhandled request to an inherited real API 790ms
+@opchub/portal:test:  ✓ src/mocks/affiliate-handlers.spec.ts (6 tests) 410ms
+@opchub/portal:test:  ✓ src/features/onboarding/components/onboarding-card.spec.tsx (4 tests) 463ms
+@opchub/portal:test:  ✓ src/mocks/profile-handlers.spec.ts (6 tests) 347ms
+@opchub/portal:test:  ✓ src/mocks/register-handlers.spec.ts (8 tests) 295ms
+@opchub/portal:test:  ✓ src/mocks/domain-handlers.spec.ts (15 tests) 358ms
+@opchub/portal:test:  ✓ src/features/membership/hooks/use-mock-membership-push.spec.ts (3 tests) 328ms
+@opchub/portal:test:  ✓ src/features/push/hooks/use-push-subscription.spec.tsx (3 tests) 272ms
+@opchub/portal:test:  ✓ src/mocks/needs-handlers.spec.ts (3 tests) 255ms
+@opchub/portal:test:  ✓ src/mocks/fundraising-handlers.spec.ts (4 tests) 292ms
+@opchub/portal:test:  ✓ src/features/affiliate/components/share-bar.spec.tsx (2 tests) 319ms
+@opchub/portal:test:  ✓ src/mocks/bot-reply-handlers.spec.ts (4 tests) 271ms
+@opchub/portal:test:  ✓ src/app/(public)/g/[slug]/guest-view-beacon.spec.tsx (4 tests) 258ms
+@opchub/portal:test:  ✓ src/mocks/moderation-lock-session.spec.ts (6 tests) 240ms
+@opchub/portal:test:  ✓ src/mocks/stores-handlers.spec.ts (3 tests) 238ms
+@opchub/portal:test:  ✓ src/mocks/onboarding-handlers.spec.ts (2 tests) 221ms
+@opchub/portal:test:  ✓ src/mocks/affiliate-demo.spec.ts (3 tests) 260ms
+@opchub/portal:test:  ✓ src/mocks/unsubscribe-handlers.spec.ts (1 test) 279ms
+@opchub/portal:test:  ✓ src/features/chat/hooks/use-mock-room-reload.spec.ts (3 tests) 236ms
+@opchub/portal:test:  ✓ src/mocks/membership-handlers.spec.ts (5 tests) 278ms
+@opchub/portal:test:  ✓ src/features/affiliate/hooks/use-my-region.spec.tsx (2 tests) 191ms
+@opchub/portal:test:  ✓ src/mocks/dashboard-bot-handlers.spec.ts (2 tests) 208ms
+@opchub/portal:test:  ✓ src/features/membership/hooks/use-paid-access-recovery.spec.ts (3 tests) 188ms
+@opchub/portal:test:  ✓ src/mocks/handlers.spec.ts (3 tests) 155ms
+@opchub/portal:test:  ✓ src/mocks/chat-topic-routes.spec.ts (2 tests) 112ms
+@opchub/portal:test:  ✓ src/features/projects/components/detail-contact.spec.tsx (2 tests) 323ms
+@opchub/portal:test:    ✓ BUG-016 BUG-021 QT-09 thẻ liên hệ chủ dự án (2)
+@opchub/portal:test:      ✓ có SĐT → Zalo + Gọi, không có Nhắn tin 312ms
+@opchub/portal:test:  ✓ src/mocks/group-lock-handlers.spec.ts (1 test) 228ms
+@opchub/portal:test:  ✓ src/mocks/moderation-warning-handlers.spec.ts (1 test) 195ms
+@opchub/portal:test:  ✓ src/mocks/mock-auth-session.spec.ts (2 tests) 115ms
+@opchub/portal:test:  ✓ src/i18n/overlay.spec.ts (4 tests) 92ms
+@opchub/portal:test:  ✓ src/features/affiliate/components/history-mobile.spec.tsx (2 tests) 193ms
+@opchub/portal:test:  ✓ src/features/affiliate/hooks/use-bank-form.spec.tsx (4 tests) 132ms
+@opchub/portal:test:  ✓ src/features/affiliate/hooks/use-affiliate.spec.tsx (7 tests) 88ms
+@opchub/portal:test:  ✓ src/features/chat/hooks/use-mark-read.spec.tsx (8 tests) 310ms
+@opchub/portal:test:  ✓ src/features/shell/hooks/use-global-search.spec.tsx (4 tests) 87ms
+@opchub/portal:test:  ✓ src/features/stores/components/dashboard/guest-views-kpi.spec.tsx (1 test) 93ms
+@opchub/portal:test:  ✓ src/features/auth/hooks/use-registration-open.spec.tsx (4 tests) 147ms
+@opchub/portal:test:  ✓ src/features/membership/model.spec.ts (10 tests) 50ms
+@opchub/portal:test:  ✓ src/features/services/model.spec.ts (8 tests) 11ms
+@opchub/portal:test:  ✓ src/features/chat/format.spec.ts (5 tests) 35ms
+@opchub/portal:test:  ✓ src/features/profile/model.spec.ts (8 tests) 67ms
+@opchub/portal:test:  ✓ src/features/needs/model.spec.ts (5 tests) 39ms
 @opchub/portal:test:  ✓ src/features/affiliate/components/affiliate-hero.spec.tsx (2 tests) 99ms
 @opchub/portal:test:  ✓ src/i18n/locales.spec.ts (4 tests) 56ms
 @opchub/portal:test:  ✓ src/features/projects/model.spec.ts (14 tests) 36ms
@@ -265,6 +297,7 @@ $ turbo run test --concurrency=2
 @opchub/portal:test:  ✓ src/features/affiliate/model.spec.ts (5 tests) 10ms
 @opchub/portal:test:  ✓ src/features/projects/contact-model.spec.ts (2 tests) 7ms
 @opchub/portal:test:  ✓ src/features/auth/register-validation.spec.ts (3 tests) 6ms
+@opchub/ui:test: $ vitest run
 @opchub/portal:test:  ✓ src/features/events/model.spec.ts (4 tests) 9ms
 @opchub/portal:test:  ✓ src/mocks/affiliate-bank-storage.spec.ts (1 test) 6ms
 @opchub/portal:test:  ✓ src/features/profile/billing.spec.ts (2 tests) 5ms
@@ -352,18 +385,22 @@ $ turbo run test --concurrency=2
 @opchub/server:test:       Tests  276 passed (276)
 @opchub/server:test:    Start at  12:03:48
 @opchub/server:test:    Duration  29.59s (import 90%, transform 8%, tests 2%, worker 1%)
-@opchub/ui:test: cache hit, replaying logs 50d8e50289ad74ae
 @opchub/server:test:
 @opchub/server:test:      Import  |unit| 400 modules were evaluated 2157 times · 87.59s total, 90% of tracked time
 @opchub/server:test:              ~8.09s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
 @opchub/server:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
 @opchub/server:test:
-@opchub/ui:test: $ vitest run
+@opchub/admin:test: cache miss, executing a51af1a46bf5920b
+@opchub/admin:test: $ vitest run --passWithNoTests
 @opchub/ui:test:
 @opchub/ui:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/ui
 @opchub/ui:test:
-@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test:
+@opchub/admin:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+@opchub/admin:test:
+@opchub/ui:test:  ✓ src/auth/login-panel-i18n.spec.tsx (3 tests) 1248ms
+@opchub/ui:test:    ✓ D-141 AC824-10 owner-approved optional LoginPanel formatter (3)
+@opchub/ui:test:      ✓ without the prop retains raw Portal error output and unchanged callback values 852ms
 @opchub/ui:test: stderr | src/ai-suggestion/ai-suggest-button.spec.tsx > D-138 explicit AI suggestion acceptance > failure reports a safe message without applying any content
 @opchub/ui:test: An update to AiSuggestButton inside a test was not wrapped in act(...).
 @opchub/ui:test:
@@ -440,377 +477,358 @@ $ turbo run test --concurrency=2
 @opchub/ui:test:
 @opchub/ui:test: This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 @opchub/ui:test:
-@opchub/ui:test:  ✓ src/global-search/global-search.spec.tsx (11 tests) 888ms
-@opchub/ui:test:    ✓ GlobalSearch BR-491 interaction (11)
-@opchub/ui:test:      ✓ REQ-625 hint threshold and keyboard without selectable hint or stale hits 338ms
-@opchub/ui:test:  ✓ src/rich-text-field/link-dialog.spec.tsx (2 tests) 802ms
-@opchub/ui:test:    ✓ LinkDialog (2)
-@opchub/ui:test:      ✓ BUG-043 LinkDialog từ chối URL không http(s) 649ms
-@opchub/ui:test:  ✓ src/ai-suggestion/ai-suggest-button.spec.tsx (2 tests) 1064ms
+@opchub/ui:test:  ✓ src/ai-suggestion/ai-suggest-button.spec.tsx (2 tests) 1076ms
 @opchub/ui:test:    ✓ D-138 explicit AI suggestion acceptance (2)
-@opchub/ui:test:      ✓ never overwrites automatically; only use applies and dismiss discards 915ms
-@opchub/ui:test:  ✓ src/date-range-picker/date-range-picker.spec.tsx (3 tests) 497ms
-@opchub/ui:test:    ✓ DateRangePicker (3)
-@opchub/ui:test:      ✓ renders default date range and inputs 366ms
-@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/ui:test:  ✓ src/base-components.spec.tsx (16 tests) 788ms
-@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/ui:test:  ✓ src/admin-table/admin-table.spec.tsx (2 tests) 755ms
-@opchub/ui:test:    ✓ AdminTable pagination contract (2)
-@opchub/ui:test:      ✓ REQ-311 default server pager remains backwards compatible 668ms
-@opchub/ui:test:  ✓ src/auth/login-panel.spec.tsx (1 test) 564ms
-@opchub/ui:test:    ✓ LoginPanel (1)
-@opchub/ui:test:      ✓ P5-MSW-RESET-PENDING-01 UAT-11 keeps the exact submit name while a login is pending 559ms
-@opchub/ui:test:  ✓ src/providers/ui-provider.spec.tsx (2 tests) 323ms
-@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/ui:test:  ✓ src/modal/modal.spec.tsx (1 test) 434ms
-@opchub/ui:test:    ✓ preserves default modal sizing and supports the wide workflow variant with scoped styles 431ms
-@opchub/ui:test:  ✓ src/auth/otp-modal.spec.tsx (2 tests) 254ms
-@opchub/ui:test:  ✓ src/controls-i18n.spec.tsx (4 tests) 317ms
-@opchub/ui:test:  ✓ src/auth/auth-layout.spec.tsx (1 test) 193ms
-@opchub/ui:test:  ✓ src/confirm-dialog/confirm-dialog.spec.tsx (3 tests) 224ms
-@opchub/ui:test:  ✓ src/pay-qr/pay-qr.spec.tsx (3 tests) 340ms
-@opchub/ui:test:  ✓ src/auth/language-menu.spec.tsx (4 tests) 257ms
-@opchub/ui:test:  ✓ src/auth/auth-hero.spec.tsx (1 test) 287ms
-@opchub/ui:test:  ✓ src/paywall-modal/paywall-modal.spec.tsx (4 tests) 245ms
-@opchub/ui:test:  ✓ src/form-errors/field-errors.spec.ts (5 tests) 185ms
-@opchub/ui:test:  ✓ src/app-shell/sidebar-events.spec.tsx (2 tests) 255ms
-@opchub/ui:test:  ✓ src/status-tag/status-tag.spec.tsx (2 tests) 87ms
-@opchub/ui:test:  ✓ src/ui.spec.tsx (6 tests) 119ms
-@opchub/ui:test:  ✓ src/upload-image/compress-image.spec.ts (3 tests) 8ms
-@opchub/ui:test:
-@opchub/ui:test:  Test Files  22 passed (22)
-@opchub/ui:test:       Tests  80 passed (80)
-@opchub/ui:test:    Start at  12:02:13
-@opchub/ui:test:    Duration  93.17s (import 51%, environment 45%, tests 3%)
-@opchub/ui:test:
-@opchub/ui:test:     Isolate  22 workers spawned · ~5.96s startup each (spawn + environment, per file)
-@opchub/ui:test:              at least ~37.75s faster with isolate: false — reuses workers across files instead of one per file
-@opchub/ui:test:
-@opchub/integrations:test: cache hit, replaying logs 55fe577ab4148b40
-@opchub/integrations:test: $ vitest run
-@opchub/integrations:test:
-@opchub/integrations:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/integrations
-@opchub/integrations:test:
-@opchub/integrations:test:  ✓ src/storage/local.provider.spec.ts (5 tests) 97ms
-@opchub/integrations:test:  ✓ src/mail/fake.provider.spec.ts (3 tests) 98ms
-@opchub/integrations:test:  ✓ src/sso/google.provider.spec.ts (12 tests) 263ms
-@opchub/integrations:test:  ✓ src/llm/local.spec.ts (25 tests) 67ms
-@opchub/integrations:test:  ✓ src/tax-lookup/chain.spec.ts (3 tests) 1273ms
-@opchub/integrations:test:    ✓ ChainTaxProvider (D-17) (3)
-@opchub/integrations:test:      ✓ ESGOO lỗi 500 → dùng VietQR 654ms
-@opchub/integrations:test:      ✓ cả hai lỗi / dữ liệu lạ → null, gọi onError 612ms
-@opchub/integrations:test:  ✓ src/tax-lookup/dlpl.provider.spec.ts (6 tests) 52ms
-@opchub/integrations:test:  ✓ src/mail/brevo.provider.spec.ts (3 tests) 96ms
-@opchub/integrations:test:  ✓ src/bank-webhook/content.spec.ts (40 tests) 13ms
-@opchub/integrations:test:  ✓ src/push/fake.provider.spec.ts (7 tests) 42ms
-@opchub/integrations:test:  ✓ src/tax-lookup/esgoo.provider.spec.ts (4 tests) 37ms
-@opchub/integrations:test:  ✓ src/bank-webhook/dynamic-secret.spec.ts (2 tests) 8ms
-@opchub/integrations:test:  ✓ src/push/webpush.provider.spec.ts (12 tests) 28ms
-@opchub/integrations:test:  ✓ src/llm/fake.spec.ts (4 tests) 11ms
-@opchub/integrations:test:  ↓ src/storage/s3.provider.spec.ts (2 tests | 2 skipped)
-@opchub/integrations:test:
-@opchub/integrations:test:  Test Files  13 passed | 1 skipped (14)
-@opchub/integrations:test:       Tests  126 passed | 2 skipped (128)
-@opchub/integrations:test:    Start at  12:07:47
-@opchub/integrations:test:    Duration  5.23s (import 64%, transform 18%, tests 16%, worker 1%)
-@opchub/integrations:test:
-@opchub/integrations:test:     Isolate  14 workers spawned · ~751ms startup each (spawn + environment, per file)
-@opchub/integrations:test:              at least ~1.35s faster with isolate: false — reuses workers across files instead of one per file
-@opchub/integrations:test:
-@opchub/admin:test: cache miss, executing da35d8f14b782824
-@opchub/admin:test: $ vitest run --passWithNoTests
-@opchub/admin:test:
-@opchub/admin:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
-@opchub/admin:test:
-@opchub/admin:test:  ✓ src/i18n/tests/formatter-callers.spec.ts (9 tests) 2923ms
-@opchub/admin:test:    ✓ D-141 AC824-08 model display callers use live locale rather than default vi (9)
-@opchub/admin:test:      ✓ retains a single exact fixed-vi export exception; no fixed-vi visible Intl remains 1943ms
-@opchub/admin:test:      ✓ checks actual imports and every migrated UI caller, not comments or folder presence 971ms
-@opchub/admin:test:  ✓ src/mocks/affiliate-handlers.spec.ts (7 tests) 763ms
-@opchub/admin:test:  ✓ src/mocks/moderation-actions.spec.ts (13 tests) 410ms
-@opchub/admin:test:  ✓ src/features/affiliate/hooks/use-affiliate-queries.spec.tsx (10 tests) 1222ms
-@opchub/admin:test:    ✓ REQ-312 permission-gated Affiliate query orchestration (10)
-@opchub/admin:test:      ✓ loads agents for the current month; policy only on aff (default-rate hint, v4.2) and cfg 342ms
-@opchub/admin:test:  ✓ src/mocks/domain-handlers.spec.ts (18 tests) 840ms
-@opchub/admin:test:  ✓ src/features/profile/admin-profile.spec.tsx (6 tests) 5633ms
-@opchub/admin:test:    ✓ TIP-V46-822 AC-01/02 readonly email/role and successful name updates store immediately 1446ms
-@opchub/admin:test:    ✓ TIP-V46-822 AC-04 successful password clears fields and replaces in-memory token 819ms
-@opchub/admin:test:    ✓ TIP-V46-822 AC-05 backend current-password error stays at current field, session intact 1187ms
-@opchub/admin:test:    ✓ TIP-V46-822 AC-03 rejected avatar has visible feedback rather than hidden field help 496ms
-@opchub/admin:test:    ✓ D-141 AC824-10 local password errors switch live while preserving draft/session and making no request 740ms
-@opchub/admin:test:    ✓ D-141 AC824-12 raw API errors are never translated, even if their text matches a local rule 941ms
-@opchub/admin:test:  ✓ src/i18n/font-config.spec.ts (31 tests) 1994ms
-@opchub/admin:test:    ✓ D-141 AC824-15/16 self-hosted font contracts (not browser acceptance) (31)
-@opchub/admin:test:      ✓ covers letter/mark/number/punctuation/currency glyphs in current zh catalogs 1878ms
+@opchub/ui:test:      ✓ never overwrites automatically; only use applies and dismiss discards 944ms
+@opchub/ui:test:  ✓ src/global-search/global-search.spec.tsx (11 tests) 1061ms
+@opchub/ui:test:    ✓ GlobalSearch BR-491 interaction (11)
+@opchub/ui:test:      ✓ REQ-625 hint threshold and keyboard without selectable hint or stale hits 358ms
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/admin:test:  ✓ src/features/settings/components/bank-tab.spec.tsx (6 tests) 3614ms
-@opchub/admin:test:    ✓ REQ-621 bank tab (6)
-@opchub/admin:test:      ✓ providers fake: unsupported dimmed, SePay unselected, no provider mutation; D-123 syntax 950ms
-@opchub/admin:test:      ✓ providers SePay production: selected adapter, fake and simulate absent 350ms
-@opchub/admin:test:      ✓ toggle persists immediately, unlike renewal draft; no Save button 329ms
-@opchub/admin:test:      ✓ rotation confirms no grace, one-time plaintext disappears after close and never enters query cache 997ms
-@opchub/admin:test:      ✓ short note required, sends note without activation; existing match dialog reused 784ms
-@opchub/admin:test:  ✓ src/i18n/request.spec.ts (8 tests) 500ms
-@opchub/admin:test:  ✓ src/i18n/message-loader.spec.ts (14 tests) 311ms
-@opchub/admin:test:  ✓ src/i18n/tests/domain-formatters.spec.ts (16 tests) 164ms
-@opchub/admin:test:  ✓ src/features/groups/model.spec.ts (11 tests) 33ms
-@opchub/admin:test:  ✓ src/features/settings/components/audit-log-tab.spec.tsx (5 tests) 1624ms
-@opchub/admin:test:    ✓ REQ-624 AuditLogTab (5)
-@opchub/admin:test:      ✓ hydrates shared URL filters without sending Settings or unknown URL keys to the audit API 585ms
-@opchub/admin:test:      ✓ filter changes reset cursor; filtered CSV and clear use the same query state 607ms
-@opchub/admin:test:  ✓ src/mocks/bot-bulk-handlers.spec.ts (4 tests) 436ms
-@opchub/admin:test:  ✓ src/mocks/bot-emergency-handlers.spec.ts (13 tests) 367ms
-@opchub/admin:test:  ✓ src/mocks/fee-handlers.spec.ts (6 tests) 335ms
-@opchub/admin:test:  ✓ src/mocks/settings-handlers.spec.ts (7 tests) 515ms
-@opchub/admin:test:  ✓ src/mocks/bot-catalog-contract.spec.ts (6 tests) 638ms
-@opchub/admin:test:  ✓ src/mocks/g5c-handlers.spec.ts (8 tests) 361ms
-@opchub/admin:test:  ✓ src/features/bots/hooks/use-bot-schedule.spec.tsx (5 tests) 916ms
-@opchub/admin:test:  ✓ src/features/affiliate/components/commission-status-menu.spec.tsx (9 tests) 2170ms
-@opchub/admin:test:    ✓ REQ-310 REQ-312 commission menu preserves visible states and terminal invariants (9)
-@opchub/admin:test:      ✓ marks only the current recorded status while keeping it non-actionable 676ms
-@opchub/admin:test:  ✓ src/features/affiliate/components/affiliate-rate-editor.spec.tsx (6 tests) 1756ms
-@opchub/admin:test:    ✓ REQ-308 REQ-312 individual rate editing follows the inline ver2 interaction (6)
-@opchub/admin:test:      ✓ cancels without a write and opens again from the latest server-owned rate 1045ms
-@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/admin:test:  ✓ src/features/settings/components/renewal-tab.spec.tsx (5 tests) 1480ms
-@opchub/admin:test:    ✓ REQ-620 renewal tab (5)
-@opchub/admin:test:      ✓ shows three milestones and two channels, no Zalo, data and last sent 720ms
-@opchub/admin:test:  ✓ src/features/events/model.spec.ts (10 tests) 13ms
-@opchub/admin:test:  ✓ src/features/bots/hooks/use-bot-bulk-actions.spec.tsx (5 tests) 240ms
-@opchub/admin:test:  ✓ src/features/affiliate/api.spec.ts (6 tests) 10ms
-@opchub/admin:test:  ✓ src/mocks/bot-handlers.spec.ts (7 tests) 553ms
-@opchub/admin:test:  ✓ src/features/projects/model.spec.ts (8 tests) 32ms
-@opchub/admin:test:  ✓ src/features/bots/model.spec.ts (11 tests) 15ms
-@opchub/admin:test:  ✓ src/mocks/bot-replies-handlers.spec.ts (8 tests) 431ms
-@opchub/admin:test:  ✓ src/i18n/tests/control-callers.spec.ts (7 tests) 950ms
-@opchub/admin:test:    ✓ D-141 AC824-09 shared controls do not inherit Vietnamese defaults in Admin (7)
-@opchub/admin:test:      ✓ every real Admin shared-control caller explicitly supplies localized props 942ms
-@opchub/admin:test:  ✓ src/features/affiliate/hooks/use-affiliate-writes.spec.tsx (5 tests) 94ms
-@opchub/admin:test:  ✓ src/features/bots/hooks/use-bot-bulk.spec.tsx (5 tests) 607ms
-@opchub/admin:test:  ✓ src/features/settings/components/ai/ai-tab.spec.tsx (3 tests) 1785ms
-@opchub/admin:test:    ✓ REQ-628 AI provider UI (3)
-@opchub/admin:test:      ✓ D-138 purpose model stays draft until explicit save 1044ms
-@opchub/admin:test:      ✓ six providers, four purposes and fallback; no assistant row; switches are drafts 403ms
-@opchub/admin:test:      ✓ saved key is not restored to input; verifies draft and shows status, hiding key on save 334ms
-@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/admin:test:  ✓ src/features/affiliate/components/affiliate-detail-head.spec.tsx (6 tests) 1016ms
-@opchub/admin:test:    ✓ REQ-312 Affiliate detail follows prototype information order (6)
-@opchub/admin:test:      ✓ renders actual non-default attribution days and follows a policy change 353ms
-@opchub/admin:test:  ✓ src/features/affiliate/components/policy-form.spec.tsx (5 tests) 4650ms
+@opchub/admin:test:  ✓ src/features/affiliate/components/policy-form.spec.tsx (5 tests) 4523ms
 @opchub/admin:test:    ✓ REQ-619 D-132 policy form (5)
-@opchub/admin:test:      ✓ keeps hidden rates and renewal policy, renders configured plan amounts 1787ms
-@opchub/admin:test:      ✓ D-91 editable terms stay in the saved policy 827ms
-@opchub/admin:test:      ✓ invalid floor and empty policy values block saving and preview gracefully 977ms
-@opchub/admin:test:      ✓ view-only cannot submit even through form events 354ms
-@opchub/admin:test:      ✓ failed save retains draft for retry without resetting hidden values 701ms
-@opchub/admin:test:  ✓ src/features/overview/components/overview-controls.spec.tsx (4 tests) 518ms
-@opchub/admin:test:  ✓ src/i18n/tests/message-contract.spec.ts (15 tests) 42ms
-@opchub/admin:test:  ✓ src/mocks/admin-groups.spec.ts (6 tests) 275ms
-@opchub/admin:test:  ✓ src/mocks/bot-handler-errors.spec.ts (22 tests) 549ms
-@opchub/admin:test:  ✓ src/mocks/moderation-lock-handlers.spec.ts (7 tests) 279ms
+@opchub/admin:test:      ✓ keeps hidden rates and renewal policy, renders configured plan amounts 1719ms
+@opchub/admin:test:      ✓ D-91 editable terms stay in the saved policy 1049ms
+@opchub/admin:test:      ✓ invalid floor and empty policy values block saving and preview gracefully 544ms
+@opchub/admin:test:      ✓ view-only cannot submit even through form events 552ms
+@opchub/admin:test:      ✓ failed save retains draft for retry without resetting hidden values 656ms
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/admin:test:  ✓ src/features/settings/components/ai/ai-call-i18n.spec.tsx (2 tests) 1051ms
+@opchub/admin:test:  ✓ src/features/profile/admin-profile.spec.tsx (6 tests) 4397ms
+@opchub/admin:test:    ✓ TIP-V46-822 AC-01/02 readonly email/role and successful name updates store immediately 1539ms
+@opchub/admin:test:    ✓ TIP-V46-822 AC-04 successful password clears fields and replaces in-memory token 475ms
+@opchub/admin:test:    ✓ TIP-V46-822 AC-05 backend current-password error stays at current field, session intact 545ms
+@opchub/admin:test:    ✓ TIP-V46-822 AC-03 rejected avatar has visible feedback rather than hidden field help 372ms
+@opchub/admin:test:    ✓ D-141 AC824-10 local password errors switch live while preserving draft/session and making no request 831ms
+@opchub/admin:test:    ✓ D-141 AC824-12 raw API errors are never translated, even if their text matches a local rule 631ms
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test:  ✓ src/features/settings/components/bank-tab.spec.tsx (6 tests) 3074ms
+@opchub/admin:test:    ✓ REQ-621 bank tab (6)
+@opchub/admin:test:      ✓ providers fake: unsupported dimmed, SePay unselected, no provider mutation; D-123 syntax 1037ms
+@opchub/admin:test:      ✓ toggle persists immediately, unlike renewal draft; no Save button 433ms
+@opchub/admin:test:      ✓ rotation confirms no grace, one-time plaintext disappears after close and never enters query cache 722ms
+@opchub/admin:test:      ✓ short note required, sends note without activation; existing match dialog reused 503ms
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test:  ✓ src/rich-text-field/link-dialog.spec.tsx (2 tests) 966ms
+@opchub/ui:test:    ✓ LinkDialog (2)
+@opchub/ui:test:      ✓ BUG-043 LinkDialog từ chối URL không http(s) 774ms
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test:  ✓ src/base-components.spec.tsx (16 tests) 837ms
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test:  ✓ src/admin-table/admin-table.spec.tsx (2 tests) 696ms
+@opchub/ui:test:    ✓ AdminTable pagination contract (2)
+@opchub/ui:test:      ✓ REQ-311 default server pager remains backwards compatible 573ms
+@opchub/admin:test:  ✓ src/i18n/tests/formatter-callers.spec.ts (9 tests) 6929ms
+@opchub/admin:test:    ✓ D-141 AC824-08 model display callers use live locale rather than default vi (9)
+@opchub/admin:test:      ✓ retains a single exact fixed-vi export exception; no fixed-vi visible Intl remains 3779ms
+@opchub/admin:test:      ✓ checks actual imports and every migrated UI caller, not comments or folder presence 3135ms
+@opchub/admin:test:  ✓ src/i18n/use-upload-image.spec.tsx (6 tests) 3448ms
+@opchub/admin:test:    ✓ D-141 AC824-10/12 typed Admin upload translation (6)
+@opchub/admin:test:      ✓ all five real consumers opt in; direct/aliased raw imports in production features fail 3385ms
+@opchub/admin:test:  ✓ src/i18n/font-config.spec.ts (31 tests) 1590ms
+@opchub/admin:test:    ✓ D-141 AC824-15/16 self-hosted font contracts (not browser acceptance) (31)
+@opchub/admin:test:      ✓ covers letter/mark/number/punctuation/currency glyphs in current zh catalogs 1230ms
+@opchub/ui:test:  ✓ src/date-range-picker/date-range-picker.spec.tsx (3 tests) 511ms
+@opchub/ui:test:    ✓ DateRangePicker (3)
+@opchub/ui:test:      ✓ renders default date range and inputs 385ms
+@opchub/ui:test:  ✓ src/auth/login-panel.spec.tsx (1 test) 624ms
+@opchub/ui:test:    ✓ LoginPanel (1)
+@opchub/ui:test:      ✓ P5-MSW-RESET-PENDING-01 UAT-11 keeps the exact submit name while a login is pending 614ms
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test:  ✓ src/modal/modal.spec.tsx (1 test) 444ms
+@opchub/ui:test:    ✓ preserves default modal sizing and supports the wide workflow variant with scoped styles 439ms
+@opchub/admin:test:  ✓ src/features/affiliate/components/commission-status-menu.spec.tsx (9 tests) 1773ms
+@opchub/admin:test:    ✓ REQ-310 REQ-312 commission menu preserves visible states and terminal invariants (9)
+@opchub/admin:test:      ✓ marks only the current recorded status while keeping it non-actionable 686ms
+@opchub/ui:test:  ✓ src/controls-i18n.spec.tsx (4 tests) 316ms
+@opchub/ui:test:  ✓ src/auth/auth-hero.spec.tsx (1 test) 244ms
+@opchub/ui:test:  ✓ src/pay-qr/pay-qr.spec.tsx (3 tests) 526ms
+@opchub/ui:test:    ✓ PayQr (D-96, UI-PAY-02) (3)
+@opchub/ui:test:      ✓ có chuỗi EMVCo → vẽ SVG trong khung cố định, không ảnh ngoài 407ms
+@opchub/ui:test:  ✓ src/providers/ui-provider.spec.tsx (2 tests) 425ms
+@opchub/ui:test:    ✓ D-141 AC824-09 scoped shared UiProvider locale (2)
+@opchub/ui:test:      ✓ retains the existing Vietnamese default without a new prop 323ms
+@opchub/admin:test:  ✓ src/features/settings/components/ai/ai-tab.spec.tsx (3 tests) 2106ms
+@opchub/admin:test:    ✓ REQ-628 AI provider UI (3)
+@opchub/admin:test:      ✓ D-138 purpose model stays draft until explicit save 1443ms
+@opchub/admin:test:      ✓ six providers, four purposes and fallback; no assistant row; switches are drafts 393ms
+@opchub/ui:test:  ✓ src/auth/language-menu.spec.tsx (4 tests) 318ms
+@opchub/admin:test:  ✓ src/features/affiliate/components/affiliate-rate-editor.spec.tsx (6 tests) 1391ms
+@opchub/admin:test:    ✓ REQ-308 REQ-312 individual rate editing follows the inline ver2 interaction (6)
+@opchub/admin:test:      ✓ cancels without a write and opens again from the latest server-owned rate 680ms
+@opchub/ui:test:  ✓ src/app-shell/sidebar-events.spec.tsx (2 tests) 259ms
+@opchub/ui:test:  ✓ src/auth/otp-modal.spec.tsx (2 tests) 429ms
+@opchub/ui:test:    ✓ OtpModal (2)
+@opchub/ui:test:      ✓ disables input and submit button while submitting to prevent duplicate requests 379ms
+@opchub/ui:test:  ✓ src/paywall-modal/paywall-modal.spec.tsx (4 tests) 289ms
+@opchub/ui:test:  ✓ src/confirm-dialog/confirm-dialog.spec.tsx (3 tests) 297ms
+@opchub/ui:test:  ✓ src/auth/auth-layout.spec.tsx (1 test) 277ms
+@opchub/ui:test:  ✓ src/form-errors/field-errors.spec.ts (5 tests) 141ms
+@opchub/admin:test:  ✓ src/features/settings/components/audit-log-tab.spec.tsx (5 tests) 2100ms
+@opchub/admin:test:    ✓ REQ-624 AuditLogTab (5)
+@opchub/admin:test:      ✓ hydrates shared URL filters without sending Settings or unknown URL keys to the audit API 861ms
+@opchub/admin:test:      ✓ filter changes reset cursor; filtered CSV and clear use the same query state 753ms
+@opchub/ui:test:  ✓ src/upload-image/compress-image.spec.ts (3 tests) 7ms
+@opchub/ui:test:  ✓ src/ui.spec.tsx (6 tests) 139ms
+@opchub/ui:test:  ✓ src/status-tag/status-tag.spec.tsx (2 tests) 92ms
+@opchub/ui:test:
+@opchub/ui:test:  Test Files  23 passed (23)
+@opchub/ui:test:       Tests  83 passed (83)
+@opchub/ui:test:    Start at  14:52:06
+@opchub/ui:test:    Duration  151.61s (import 56%, environment 40%, tests 3%, transform 2%)
+@opchub/ui:test:
+@opchub/ui:test:     Isolate  23 workers spawned · ~8.24s startup each (spawn + environment, per file)
+@opchub/ui:test:              at least ~54.95s faster with isolate: false — reuses workers across files instead of one per file
+@opchub/ui:test:
+@opchub/admin:test:  ✓ src/features/bots/components/bulk/bulk-form.spec.tsx (3 tests) 2078ms
+@opchub/admin:test:    ✓ D-112 validates missing fields then submits normalized topics, selected type/groups and exact defaults 1354ms
+@opchub/admin:test:    ✓ D-112 automatic topics and select-all populate the form without generating or saving 443ms
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test:  ✓ src/features/settings/components/renewal-tab.spec.tsx (5 tests) 1858ms
+@opchub/admin:test:    ✓ REQ-620 renewal tab (5)
+@opchub/admin:test:      ✓ shows three milestones and two channels, no Zalo, data and last sent 820ms
+@opchub/admin:test:      ✓ TC-471 all local channels off: warning and no send request 336ms
+@opchub/admin:test:      ✓ TC-472 send one refreshes last sent; send all uses all:true 352ms
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test:  ✓ src/features/bots/components/bulk/bulk-modal.spec.tsx (3 tests) 2503ms
+@opchub/admin:test:    ✓ D-112 recovered ready drafts save only explicitly and count only newly selected items 1492ms
+@opchub/admin:test:    ✓ D-112 partial failed batch retains results, blocks partial save and retries the same batch 618ms
+@opchub/admin:test:    ✓ D-112 running recovery prevents duplicate generation and read-only users cannot save 390ms
+@opchub/admin:test:  ✓ src/features/auth/tests/local-errors.spec.tsx (11 tests) 1070ms
+@opchub/admin:test:    ✓ D-141 AC824-10 Admin LoginPanel local error changes live without losing draft or calling login 552ms
+@opchub/admin:test:  ✓ src/features/affiliate/hooks/use-affiliate-queries.spec.tsx (10 tests) 911ms
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test:  ✓ src/features/settings/components/ai/ai-call-i18n.spec.tsx (2 tests) 1284ms
 @opchub/admin:test:    ✓ D-141 AC824-06/08/11 AI log live presentation (2)
-@opchub/admin:test:      ✓ switches filters without losing canonical values or firing a change 655ms
-@opchub/admin:test:      ✓ switches columns and number/date displays but leaves raw data untouched 391ms
-@opchub/admin:test:  ✓ src/features/bots/hooks/use-bot-emergency.spec.tsx (5 tests) 126ms
-@opchub/admin:test:  ✓ src/mocks/admin-reports-handlers.spec.ts (4 tests) 226ms
-@opchub/admin:test:  ✓ src/features/bots/hooks/use-bot-conversation-types.spec.tsx (4 tests) 567ms
-@opchub/admin:test:  ✓ src/features/bots/hooks/use-bot-replies.spec.tsx (5 tests) 901ms
-@opchub/admin:test:    ✓ prevents duplicate writes, preserves server field errors and allows an explicit retry 305ms
-@opchub/admin:test:  ✓ src/features/affiliate/model.spec.ts (7 tests) 15ms
-@opchub/admin:test:  ✓ src/features/bots/components/reply-controls.spec.tsx (5 tests) 599ms
-@opchub/admin:test:    ✓ displays monitored rather than pending group count and permits manual scan with auto off 342ms
+@opchub/admin:test:      ✓ switches filters without losing canonical values or firing a change 761ms
+@opchub/admin:test:      ✓ switches columns and number/date displays but leaves raw data untouched 519ms
+@opchub/admin:test:  ✓ src/i18n/tests/control-callers.spec.ts (7 tests) 1571ms
+@opchub/admin:test:    ✓ D-141 AC824-09 shared controls do not inherit Vietnamese defaults in Admin (7)
+@opchub/admin:test:      ✓ every real Admin shared-control caller explicitly supplies localized props 1560ms
+@opchub/admin:test:  ✓ src/features/affiliate/components/affiliate-detail-head.spec.tsx (6 tests) 1024ms
+@opchub/admin:test:    ✓ REQ-312 Affiliate detail follows prototype information order (6)
+@opchub/admin:test:      ✓ renders actual non-default attribution days and follows a policy change 420ms
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/admin:test:  ✓ src/features/affiliate/components/rate-dialog.spec.tsx (3 tests) 877ms
-@opchub/admin:test:    ✓ REQ-308 REQ-312 bulk rate dialog preserves financial intent across failures (3)
-@opchub/admin:test:      ✓ retains the draft and both IDs on 409, retrying only through the bulk endpoint 541ms
-@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/admin:test:  ✓ src/features/bots/components/bulk/bulk-modal.spec.tsx (3 tests) 1399ms
-@opchub/admin:test:    ✓ D-112 recovered ready drafts save only explicitly and count only newly selected items 770ms
-@opchub/admin:test:    ✓ D-112 partial failed batch retains results, blocks partial save and retries the same batch 386ms
-@opchub/admin:test:  ✓ src/lib/session-end.spec.ts (6 tests) 16ms
-@opchub/admin:test:  ✓ src/mocks/bot-conversation-types.spec.ts (3 tests) 266ms
-@opchub/admin:test:  ✓ src/mocks/llm-config-handlers.spec.ts (2 tests) 200ms
-@opchub/admin:test:  ✓ src/mocks/bot-moderation-handlers.spec.ts (2 tests) 205ms
-@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/admin:test:  ✓ src/features/bots/components/bulk/type-picker.spec.tsx (3 tests) 933ms
-@opchub/admin:test:    ✓ D-112 builtins cannot be deleted and a confirmed new type beyond the loaded page is visible/selectable 612ms
-@opchub/admin:test:  ✓ src/features/marketing/model.spec.ts (6 tests) 33ms
-@opchub/admin:test:  ✓ src/mocks/bot-scheduler-handlers.spec.ts (2 tests) 200ms
-@opchub/admin:test:  ✓ src/features/settings/model.spec.ts (8 tests) 12ms
-@opchub/admin:test:  ✓ src/mocks/bot-activity-handlers.spec.ts (2 tests) 189ms
-@opchub/admin:test:  ✓ src/i18n/tests/indonesian-catalog.spec.ts (45 tests) 181ms
-@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/admin:test:  ✓ src/features/bots/components/emergency-bar.spec.tsx (5 tests) 660ms
-@opchub/admin:test:    ✓ REQ-141 Admin destructive confirmations (5)
-@opchub/admin:test:      ✓ opening/cancelling the dialog never calls the endpoint 341ms
-@opchub/admin:test:  ✓ src/mocks/marketing-handlers.spec.ts (5 tests) 212ms
-@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/admin:test:  ✓ src/features/affiliate/components/action-dialogs.spec.tsx (3 tests) 761ms
-@opchub/admin:test:    ✓ REQ-308 REQ-309 REQ-310 Affiliate financial dialogs (3)
-@opchub/admin:test:      ✓ requires a nonblank cancellation reason before enabling confirmation 454ms
-@opchub/admin:test:  ✓ src/i18n/validation.spec.ts (11 tests) 32ms
-@opchub/admin:test:  ✓ src/features/bots/hooks/use-bot-control.spec.tsx (3 tests) 364ms
-@opchub/admin:test:  ✓ src/i18n/tests/chinese-catalog.spec.ts (41 tests) 166ms
-@opchub/admin:test:  ✓ src/features/bots/components/bulk/bulk-results.spec.tsx (4 tests) 280ms
-@opchub/admin:test:  ✓ src/features/bots/components/bulk/bulk-form.spec.tsx (3 tests) 1610ms
-@opchub/admin:test:    ✓ D-112 validates missing fields then submits normalized topics, selected type/groups and exact defaults 1025ms
-@opchub/admin:test:    ✓ D-112 automatic topics and select-all populate the form without generating or saving 353ms
-@opchub/admin:test:  ✓ src/features/affiliate/components/affiliate-stats.spec.tsx (6 tests) 444ms
-@opchub/admin:test:  ✓ src/mocks/overview-handlers.spec.ts (4 tests) 323ms
-@opchub/admin:test:  ✓ src/i18n/domain-labels.spec.ts (4 tests) 47ms
-@opchub/admin:test:  ✓ src/features/settings/components/app-notify-tab.spec.tsx (2 tests) 331ms
-@opchub/admin:test:  ✓ src/features/groups/components/moderation-i18n.spec.tsx (2 tests) 588ms
-@opchub/admin:test:    ✓ D-141 AC824-06/11 moderation chrome (2)
-@opchub/admin:test:      ✓ translates actions live without changing action names or report data 525ms
-@opchub/admin:test:  ✓ src/features/bots/components/schedule-bar.spec.tsx (5 tests) 281ms
-@opchub/admin:test:  ✓ src/mocks/affiliate-authorization.spec.ts (13 tests) 728ms
-@opchub/admin:test:  ✓ src/mocks/bot-auto-handlers.spec.ts (4 tests) 254ms
-@opchub/admin:test:  ✓ src/features/shell/components/view-only-zone.spec.tsx (3 tests) 252ms
-@opchub/admin:test:  ✓ src/mocks/admin-profile-handlers.spec.ts (3 tests) 275ms
-@opchub/admin:test:  ✓ src/i18n/compact-money.spec.ts (35 tests) 51ms
-@opchub/admin:test:  ✓ src/i18n/format.spec.ts (15 tests) 37ms
-@opchub/admin:test:  ✓ src/features/bots/components/reply-groups.spec.tsx (4 tests) 291ms
-@opchub/admin:test:  ✓ src/lib/session.spec.ts (4 tests) 19ms
-@opchub/admin:test:  ✓ src/features/shell/nav-model.spec.ts (6 tests) 9ms
-@opchub/admin:test:  ✓ src/features/auth/components/auth-refresh-gates.spec.tsx (4 tests) 233ms
-@opchub/admin:test:  ✓ src/mocks/onboarding-handlers.spec.ts (3 tests) 273ms
-@opchub/admin:test:  ✓ src/mocks/bot-permissions.spec.ts (17 tests) 633ms
-@opchub/admin:test:  ✓ src/lib/permission-model.spec.ts (7 tests) 11ms
-@opchub/admin:test:  ✓ src/mocks/bot-schedule-handlers.spec.ts (6 tests) 245ms
-@opchub/admin:test:  ✓ src/features/affiliate/components/affiliate-pagination.spec.tsx (5 tests) 371ms
-@opchub/admin:test:  ✓ src/features/bots/bulk-api.spec.ts (3 tests) 16ms
-@opchub/admin:test:  ✓ src/lib/session-refresh-lock.spec.ts (4 tests) 9ms
-@opchub/admin:test:  ✓ src/features/overview/hooks/use-overview-url.spec.tsx (5 tests) 71ms
-@opchub/admin:test:  ✓ src/features/affiliate/components/customer-payout-history.spec.tsx (4 tests) 94ms
-@opchub/admin:test:  ✓ src/features/overview/data.spec.ts (6 tests) 28ms
-@opchub/admin:test:  ✓ src/mocks/price-config-handlers.spec.ts (2 tests) 276ms
-@opchub/admin:test:  ✓ src/lib/use-export-job.spec.ts (4 tests) 6ms
-@opchub/admin:test:  ✓ src/mocks/handlers.spec.ts (5 tests) 217ms
-@opchub/admin:test:  ✓ src/i18n/tests/english-catalog.spec.ts (25 tests) 170ms
-@opchub/admin:test:  ✓ src/features/affiliate/hooks/use-affiliate-counts.spec.tsx (3 tests) 282ms
-@opchub/admin:test:  ✓ src/features/overview/components/conversion-table.spec.tsx (1 test) 261ms
-@opchub/admin:test:  ✓ src/features/members/model.spec.ts (9 tests) 34ms
-@opchub/admin:test:  ✓ src/features/stores/components/store-public-link.spec.tsx (3 tests) 301ms
-@opchub/admin:test:  ✓ src/features/affiliate/components/affiliate-export-button.spec.tsx (3 tests) 533ms
-@opchub/admin:test:    ✓ REQ-312 Affiliate export toolbar preserves server filters (3)
-@opchub/admin:test:      ✓ exports all matching commissions, never the visible page or invented selected IDs 387ms
-@opchub/admin:test:  ✓ src/mocks/mock-admin-session.spec.ts (3 tests) 48ms
-@opchub/admin:test:  ✓ src/mocks/moderation-warning-handlers.spec.ts (1 test) 162ms
-@opchub/admin:test:  ✓ src/mocks/group-lock-handlers.spec.ts (1 test) 135ms
-@opchub/admin:test:  ✓ src/features/groups/export-content.spec.ts (3 tests) 63ms
+@opchub/admin:test:  ✓ src/features/affiliate/components/customer-table-columns.spec.tsx (3 tests) 1149ms
+@opchub/admin:test:    ✓ TIP-V46-812 customer rate retains actual snapshot year (3)
+@opchub/admin:test:      ✓ renders year1 without inferring an expiry or recalculating its rate 764ms
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
 @opchub/admin:test: stderr | src/features/affiliate/regional/components/regional-payee-bank-dialog.spec.tsx > SPEC4 retired payee dialog reuses bank validation and never submits until explicit Save
 @opchub/admin:test: Warning: [antd: Modal] `maskClosable` is deprecated. Please use `mask.closable` instead.
 @opchub/admin:test: Warning: [antd: Modal] `maskClosable` is deprecated. Please use `mask.closable` instead.
 @opchub/admin:test:
-@opchub/admin:test:  ✓ src/features/affiliate/regional/components/regional-payee-bank-dialog.spec.tsx (1 test) 938ms
-@opchub/admin:test:    ✓ SPEC4 retired payee dialog reuses bank validation and never submits until explicit Save 935ms
-@opchub/admin:test:  ✓ src/features/events/presentation.spec.ts (13 tests) 45ms
-@opchub/admin:test:  ✓ src/mocks/admin-stores-handlers.spec.ts (2 tests) 204ms
-@opchub/admin:test:  ✓ src/features/affiliate/components/agent-identity.spec.tsx (3 tests) 197ms
-@opchub/admin:test:  ✓ src/features/bots/bulk/request-replay.spec.ts (3 tests) 27ms
-@opchub/admin:test:  ✓ src/i18n/ui-labels.spec.tsx (2 tests) 68ms
-@opchub/admin:test:  ✓ src/features/marketing/components/welcome-preview.spec.tsx (1 test) 77ms
-@opchub/admin:test:  ✓ src/i18n/date-picker.spec.ts (13 tests) 57ms
-@opchub/admin:test:  ✓ src/i18n/locales.spec.ts (11 tests) 14ms
-@opchub/admin:test:  ✓ src/features/settings/components/app-notify-device.spec.tsx (3 tests) 399ms
-@opchub/admin:test:    ✓ D-137 Admin receiving device (3)
-@opchub/admin:test:      ✓ has an explicit enable gesture for the acting Admin 351ms
-@opchub/admin:test:  ✓ src/features/affiliate/components/affiliate-detail-tabs.spec.tsx (3 tests) 230ms
-@opchub/admin:test:  ✓ src/features/affiliate/components/commission-bulk-bar.spec.tsx (2 tests) 519ms
+@opchub/admin:test:  ✓ src/features/affiliate/regional/components/regional-payee-bank-dialog.spec.tsx (1 test) 1080ms
+@opchub/admin:test:    ✓ SPEC4 retired payee dialog reuses bank validation and never submits until explicit Save 1078ms
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test:  ✓ src/features/bots/components/bulk/type-picker.spec.tsx (3 tests) 1611ms
+@opchub/admin:test:    ✓ D-112 builtins cannot be deleted and a confirmed new type beyond the loaded page is visible/selectable 1115ms
+@opchub/admin:test:    ✓ D-112 custom delete needs confirmation and failures leave the dialog open for an explicit retry 398ms
+@opchub/admin:test:  ✓ src/features/bots/hooks/use-bot-schedule.spec.tsx (5 tests) 1089ms
+@opchub/admin:test:    ✓ serializes emergency stop after an in-flight resume so nothing re-enables afterwards 323ms
+@opchub/admin:test:  ✓ src/features/bots/hooks/use-bot-replies.spec.tsx (5 tests) 963ms
+@opchub/admin:test:    ✓ prevents duplicate writes, preserves server field errors and allows an explicit retry 324ms
+@opchub/admin:test:  ✓ src/mocks/domain-handlers.spec.ts (18 tests) 541ms
+@opchub/admin:test:  ✓ src/mocks/affiliate-handlers.spec.ts (7 tests) 645ms
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test:  ✓ src/features/affiliate/components/rate-dialog.spec.tsx (3 tests) 1501ms
+@opchub/admin:test:    ✓ REQ-308 REQ-312 bulk rate dialog preserves financial intent across failures (3)
+@opchub/admin:test:      ✓ retains the draft and both IDs on 409, retrying only through the bulk endpoint 854ms
+@opchub/admin:test:      ✓ disables editing and dismissing while saving, then closes only after the response 372ms
+@opchub/admin:test:  ✓ src/mocks/affiliate-authorization.spec.ts (13 tests) 686ms
+@opchub/admin:test:  ✓ src/mocks/bot-catalog-contract.spec.ts (6 tests) 355ms
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test:  ✓ src/features/affiliate/components/action-dialogs.spec.tsx (3 tests) 1140ms
+@opchub/admin:test:    ✓ REQ-308 REQ-309 REQ-310 Affiliate financial dialogs (3)
+@opchub/admin:test:      ✓ requires a nonblank cancellation reason before enabling confirmation 634ms
+@opchub/admin:test:      ✓ disables an empty rate and submits a valid individual rate through PATCH 335ms
+@opchub/admin:test:  ✓ src/mocks/bot-permissions.spec.ts (17 tests) 787ms
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test:  ✓ src/features/bots/components/emergency-bar.spec.tsx (5 tests) 973ms
+@opchub/admin:test:    ✓ REQ-141 Admin destructive confirmations (5)
+@opchub/admin:test:      ✓ opening/cancelling the dialog never calls the endpoint 475ms
+@opchub/admin:test:  ✓ src/features/bots/hooks/use-bot-bulk.spec.tsx (5 tests) 589ms
+@opchub/admin:test:  ✓ src/features/bots/components/reply-controls.spec.tsx (5 tests) 396ms
+@opchub/admin:test:  ✓ src/mocks/bot-handlers.spec.ts (7 tests) 412ms
+@opchub/admin:test:  ✓ src/features/groups/components/moderation-i18n.spec.tsx (2 tests) 721ms
+@opchub/admin:test:    ✓ D-141 AC824-06/11 moderation chrome (2)
+@opchub/admin:test:      ✓ translates actions live without changing action names or report data 610ms
+@opchub/admin:test:  ✓ src/mocks/bot-handler-errors.spec.ts (22 tests) 824ms
+@opchub/admin:test:  ✓ src/features/bots/hooks/use-bot-conversation-types.spec.tsx (4 tests) 584ms
+@opchub/admin:test:  ✓ src/features/affiliate/components/affiliate-export-button.spec.tsx (3 tests) 827ms
+@opchub/admin:test:    ✓ REQ-312 Affiliate export toolbar preserves server filters (3)
+@opchub/admin:test:      ✓ exports all matching commissions, never the visible page or invented selected IDs 521ms
+@opchub/admin:test:  ✓ src/features/affiliate/components/commission-bulk-bar.spec.tsx (2 tests) 750ms
 @opchub/admin:test:    ✓ REQ-310 REQ-312 commission selection actions remain delegated to the parent (2)
-@opchub/admin:test:      ✓ delegates cancel, export and clear without changing selected money itself 511ms
-@opchub/admin:test:  ✓ src/features/bots/components/thread-list.spec.tsx (2 tests) 401ms
-@opchub/admin:test:  ✓ src/features/affiliate/components/affiliate-tabs.spec.tsx (1 test) 241ms
-@opchub/admin:test:  ✓ src/features/overview/flow.spec.ts (2 tests) 15ms
-@opchub/admin:test:  ✓ src/i18n/antd-locales.spec.ts (12 tests) 137ms
-@opchub/admin:test:  ✓ src/features/bots/components/sheet.spec.tsx (2 tests) 45ms
-@opchub/admin:test:  ✓ src/features/affiliate/components/agent-bulk-bar.spec.tsx (2 tests) 479ms
+@opchub/admin:test:      ✓ delegates cancel, export and clear without changing selected money itself 738ms
+@opchub/admin:test:  ✓ src/mocks/settings-handlers.spec.ts (7 tests) 598ms
+@opchub/admin:test:    ✓ MSW admin — cài đặt (7)
+@opchub/admin:test:      ✓ AT-RB01/RB05: Kế toán bị 403, Super Admin lưu ma trận + audit; xoá vai trò đang dùng 409 313ms
+@opchub/admin:test:  ✓ src/i18n/request.spec.ts (8 tests) 207ms
+@opchub/admin:test:  ✓ src/features/overview/components/overview-controls.spec.tsx (4 tests) 500ms
+@opchub/admin:test:  ✓ src/mocks/bot-bulk-handlers.spec.ts (4 tests) 488ms
+@opchub/admin:test:  ✓ src/mocks/bot-replies-handlers.spec.ts (8 tests) 408ms
+@opchub/admin:test:  ✓ src/features/affiliate/components/agent-bulk-bar.spec.tsx (2 tests) 560ms
 @opchub/admin:test:    ✓ REQ-308 REQ-312 agent card selection keeps its bulk actions (2)
-@opchub/admin:test:      ✓ wires edit, export and clear without creating replacement selection state 466ms
-@opchub/admin:test:  ✓ src/features/bots/conversation-type-api.spec.ts (2 tests) 12ms
-@opchub/admin:test:  ✓ src/features/needs/model.spec.ts (3 tests) 31ms
-@opchub/admin:test:  ✓ src/features/affiliate/hooks/use-affiliate-tab-visibility.spec.ts (3 tests) 23ms
-@opchub/admin:test:  ✓ src/providers/admin-ui-locale-provider.spec.tsx (1 test) 358ms
-@opchub/admin:test:    ✓ D-141 AC824-09/10 Admin control locale bridge (1)
-@opchub/admin:test:      ✓ updates control copy without replacing the subtree, losing drafts or selecting a global dayjs locale 355ms
-@opchub/admin:test:  ✓ src/features/settings/components/welcome-preview.spec.tsx (1 test) 98ms
-@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/admin:test:  ✓ src/features/affiliate/components/customer-table-columns.spec.tsx (3 tests) 958ms
-@opchub/admin:test:    ✓ TIP-V46-812 customer rate retains actual snapshot year (3)
-@opchub/admin:test:      ✓ renders year1 without inferring an expiry or recalculating its rate 618ms
-@opchub/admin:test:  ✓ src/features/reports/model.spec.ts (2 tests) 6ms
-@opchub/admin:test:  ✓ src/features/fees/model.spec.ts (4 tests) 34ms
-@opchub/admin:test:  ✓ src/features/bots/components/auto-panel.spec.tsx (2 tests) 212ms
-@opchub/admin:test:  ✓ src/features/bots/bulk/form-model.spec.ts (3 tests) 10ms
-@opchub/admin:test:  ✓ src/features/shell/hooks/use-admin-nav.spec.tsx (4 tests) 31ms
-@opchub/admin:test:  ✓ src/providers/admin-intl-errors.spec.tsx (1 test) 58ms
-@opchub/admin:test:  ✓ src/features/shell/model-ro.spec.ts (4 tests) 6ms
-@opchub/admin:test:  ✓ src/features/affiliate/hooks/use-affiliate-page.spec.tsx (2 tests) 26ms
-@opchub/admin:test:  ✓ src/features/groups/model-topics.spec.ts (2 tests) 7ms
-@opchub/admin:test:  ✓ src/features/stores/model.spec.ts (3 tests) 42ms
-@opchub/admin:test:  ✓ src/features/stores/components/stores-header.spec.tsx (1 test) 269ms
-@opchub/admin:test:  ✓ src/mocks/bot-settings-patch.spec.ts (3 tests) 158ms
-@opchub/admin:test:  ✓ src/features/affiliate/components/agent-period.spec.tsx (5 tests) 150ms
-@opchub/admin:test:  ✓ src/features/affiliate/regional/components/regional-config-panel.spec.tsx (1 test) 75ms
-@opchub/admin:test:  ✓ src/lib/build-config.spec.ts (2 tests) 421ms
+@opchub/admin:test:      ✓ wires edit, export and clear without creating replacement selection state 551ms
+@opchub/admin:test:  ✓ src/features/affiliate/components/affiliate-stats.spec.tsx (6 tests) 513ms
+@opchub/admin:test:  ✓ src/lib/build-config.spec.ts (2 tests) 450ms
 @opchub/admin:test:    ✓ TIP-V46-804-F1 build API isolation (2)
-@opchub/admin:test:      ✓ MSW never proxies an unhandled request to an inherited real API 416ms
-@opchub/admin:test:  ✓ src/mocks/fee-collection-clock.spec.ts (1 test) 97ms
-@opchub/admin:test:  ✓ src/features/affiliate/summary-presentation.spec.ts (3 tests) 37ms
-@opchub/admin:test:  ✓ src/features/events/content-defaults.spec.ts (4 tests) 6ms
-@opchub/admin:test:  ✓ src/features/shell/model.spec.ts (2 tests) 5ms
-@opchub/admin:test:  ✓ src/features/affiliate/regional/hooks/use-regional-writes.spec.tsx (1 test) 37ms
+@opchub/admin:test:      ✓ MSW never proxies an unhandled request to an inherited real API 446ms
+@opchub/admin:test:  ✓ src/mocks/moderation-actions.spec.ts (13 tests) 582ms
+@opchub/admin:test:  ✓ src/features/settings/components/app-notify-device.spec.tsx (3 tests) 395ms
+@opchub/admin:test:    ✓ D-137 Admin receiving device (3)
+@opchub/admin:test:      ✓ has an explicit enable gesture for the acting Admin 343ms
+@opchub/admin:test:  ✓ src/features/bots/components/thread-list.spec.tsx (2 tests) 238ms
+@opchub/admin:test:  ✓ src/mocks/bot-emergency-handlers.spec.ts (13 tests) 340ms
+@opchub/admin:test:  ✓ src/features/affiliate/components/affiliate-pagination.spec.tsx (5 tests) 406ms
+@opchub/admin:test:  ✓ src/mocks/g5c-handlers.spec.ts (8 tests) 550ms
+@opchub/admin:test:  ✓ src/mocks/fee-handlers.spec.ts (6 tests) 355ms
+@opchub/admin:test:  ✓ src/features/bots/hooks/use-bot-control.spec.tsx (3 tests) 405ms
+@opchub/admin:test:  ✓ src/providers/admin-ui-locale-provider.spec.tsx (1 test) 286ms
+@opchub/admin:test:  ✓ src/mocks/overview-handlers.spec.ts (4 tests) 253ms
+@opchub/admin:test:  ✓ src/i18n/message-loader.spec.ts (14 tests) 282ms
+@opchub/admin:test:  ✓ src/features/settings/components/app-notify-tab.spec.tsx (2 tests) 354ms
+@opchub/admin:test:  ✓ src/features/stores/components/store-public-link.spec.tsx (3 tests) 249ms
+@opchub/admin:test:  ✓ src/features/bots/components/reply-groups.spec.tsx (4 tests) 236ms
+@opchub/admin:test:  ✓ src/features/affiliate/hooks/use-affiliate-counts.spec.tsx (3 tests) 186ms
+@opchub/admin:test:  ✓ src/mocks/moderation-lock-handlers.spec.ts (7 tests) 262ms
+@opchub/admin:test:  ✓ src/features/bots/components/schedule-bar.spec.tsx (5 tests) 314ms
+@opchub/admin:test:  ✓ src/features/bots/components/bulk/bulk-results.spec.tsx (4 tests) 300ms
+@opchub/admin:test:  ✓ src/mocks/price-config-handlers.spec.ts (2 tests) 162ms
+@opchub/admin:test:  ✓ src/mocks/admin-groups.spec.ts (6 tests) 283ms
+@opchub/admin:test:  ✓ src/mocks/admin-profile-handlers.spec.ts (3 tests) 244ms
+@opchub/admin:test:  ✓ src/mocks/onboarding-handlers.spec.ts (3 tests) 201ms
+@opchub/admin:test:  ✓ src/features/stores/components/stores-header.spec.tsx (1 test) 166ms
+@opchub/admin:test:  ✓ src/mocks/bot-conversation-types.spec.ts (3 tests) 290ms
+@opchub/admin:test:  ✓ src/mocks/bot-auto-handlers.spec.ts (4 tests) 164ms
+@opchub/admin:test:  ✓ src/features/shell/components/view-only-zone.spec.tsx (3 tests) 200ms
+@opchub/admin:test:  ✓ src/mocks/bot-schedule-handlers.spec.ts (6 tests) 253ms
+@opchub/admin:test:  ✓ src/features/overview/components/conversion-table.spec.tsx (1 test) 300ms
+@opchub/admin:test:  ✓ src/features/auth/components/auth-refresh-gates.spec.tsx (4 tests) 210ms
+@opchub/admin:test:  ✓ src/features/affiliate/components/affiliate-tabs.spec.tsx (1 test) 186ms
+@opchub/admin:test:  ✓ src/features/bots/hooks/use-bot-bulk-actions.spec.tsx (5 tests) 208ms
+@opchub/admin:test:  ✓ src/mocks/admin-reports-handlers.spec.ts (4 tests) 203ms
+@opchub/admin:test:  ✓ src/mocks/handlers.spec.ts (5 tests) 208ms
+@opchub/admin:test:  ✓ src/features/affiliate/components/affiliate-detail-tabs.spec.tsx (3 tests) 210ms
+@opchub/admin:test:  ✓ src/mocks/marketing-handlers.spec.ts (5 tests) 249ms
+@opchub/admin:test:  ✓ src/mocks/bot-moderation-handlers.spec.ts (2 tests) 244ms
+@opchub/admin:test:  ✓ src/mocks/admin-stores-handlers.spec.ts (2 tests) 171ms
+@opchub/admin:test:  ✓ src/features/bots/components/auto-panel.spec.tsx (2 tests) 199ms
+@opchub/admin:test:  ✓ src/mocks/bot-scheduler-handlers.spec.ts (2 tests) 200ms
+@opchub/admin:test:  ✓ src/mocks/llm-config-handlers.spec.ts (2 tests) 202ms
+@opchub/admin:test:  ✓ src/mocks/bot-activity-handlers.spec.ts (2 tests) 190ms
+@opchub/admin:test:  ✓ src/i18n/tests/indonesian-catalog.spec.ts (45 tests) 479ms
+@opchub/admin:test:  ✓ src/i18n/tests/english-catalog.spec.ts (25 tests) 301ms
+@opchub/admin:test:  ✓ src/i18n/tests/chinese-catalog.spec.ts (41 tests) 349ms
+@opchub/admin:test:  ✓ src/features/affiliate/components/agent-identity.spec.tsx (3 tests) 301ms
+@opchub/admin:test:  ✓ src/mocks/moderation-warning-handlers.spec.ts (1 test) 145ms
+@opchub/admin:test:  ✓ src/mocks/bot-settings-patch.spec.ts (3 tests) 149ms
+@opchub/admin:test:  ✓ src/i18n/antd-locales.spec.ts (12 tests) 108ms
+@opchub/admin:test:  ✓ src/i18n/tests/domain-formatters.spec.ts (16 tests) 138ms
+@opchub/admin:test:  ✓ src/mocks/group-lock-handlers.spec.ts (1 test) 137ms
+@opchub/admin:test:  ✓ src/features/affiliate/components/agent-period.spec.tsx (5 tests) 223ms
+@opchub/admin:test:  ✓ src/mocks/fee-collection-clock.spec.ts (1 test) 99ms
+@opchub/admin:test:  ✓ src/features/bots/hooks/use-bot-emergency.spec.tsx (5 tests) 113ms
+@opchub/admin:test:  ✓ src/features/settings/components/welcome-preview.spec.tsx (1 test) 103ms
+@opchub/admin:test:  ✓ src/features/marketing/components/welcome-preview.spec.tsx (1 test) 104ms
+@opchub/admin:test:  ✓ src/features/affiliate/hooks/use-affiliate-writes.spec.tsx (5 tests) 124ms
+@opchub/admin:test:  ✓ src/features/affiliate/components/customer-payout-history.spec.tsx (4 tests) 95ms
+@opchub/admin:test:  ✓ src/features/overview/hooks/use-overview-url.spec.tsx (5 tests) 64ms
+@opchub/admin:test:  ✓ src/i18n/ui-labels.spec.tsx (2 tests) 63ms
+@opchub/admin:test:  ✓ src/features/affiliate/regional/components/regional-config-panel.spec.tsx (1 test) 101ms
+@opchub/admin:test:  ✓ src/providers/admin-intl-errors.spec.tsx (1 test) 67ms
+@opchub/admin:test:  ✓ src/i18n/date-picker.spec.ts (13 tests) 62ms
+@opchub/admin:test:  ✓ src/i18n/compact-money.spec.ts (35 tests) 41ms
+@opchub/admin:test:  ✓ src/mocks/mock-admin-session.spec.ts (3 tests) 37ms
+@opchub/admin:test:  ✓ src/i18n/domain-labels.spec.ts (4 tests) 47ms
+@opchub/admin:test:  ✓ src/features/groups/export-content.spec.ts (3 tests) 33ms
+@opchub/admin:test:  ✓ src/features/events/presentation.spec.ts (13 tests) 48ms
+@opchub/admin:test:  ✓ src/features/bots/components/sheet.spec.tsx (2 tests) 42ms
+@opchub/admin:test:  ✓ src/i18n/tests/message-contract.spec.ts (15 tests) 40ms
+@opchub/admin:test:  ✓ src/features/stores/model.spec.ts (3 tests) 52ms
+@opchub/admin:test:  ✓ src/i18n/format.spec.ts (15 tests) 45ms
+@opchub/admin:test:  ✓ src/features/affiliate/summary-presentation.spec.ts (3 tests) 31ms
+@opchub/admin:test:  ✓ src/features/fees/model.spec.ts (4 tests) 36ms
+@opchub/admin:test:  ✓ src/features/marketing/model.spec.ts (6 tests) 36ms
+@opchub/admin:test:  ✓ src/features/affiliate/regional/hooks/use-regional-writes.spec.tsx (1 test) 50ms
+@opchub/admin:test:  ✓ src/features/members/model.spec.ts (9 tests) 39ms
+@opchub/admin:test:  ✓ src/features/projects/model.spec.ts (8 tests) 34ms
+@opchub/admin:test:  ✓ src/i18n/validation.spec.ts (11 tests) 41ms
+@opchub/admin:test:  ✓ src/features/affiliate/format.spec.ts (4 tests) 30ms
+@opchub/admin:test:  ✓ src/features/groups/model.spec.ts (11 tests) 186ms
+@opchub/admin:test:  ✓ src/features/needs/model.spec.ts (3 tests) 27ms
+@opchub/admin:test:  ✓ src/features/shell/hooks/use-admin-nav.spec.tsx (4 tests) 37ms
+@opchub/admin:test:  ✓ src/i18n/use-local-errors.spec.tsx (3 tests) 133ms
+@opchub/admin:test:  ✓ src/features/overview/data.spec.ts (6 tests) 37ms
+@opchub/admin:test:  ✓ src/features/bots/bulk/request-replay.spec.ts (3 tests) 14ms
+@opchub/admin:test:  ✓ src/features/affiliate/hooks/use-affiliate-tab-visibility.spec.ts (3 tests) 27ms
+@opchub/admin:test:  ✓ src/features/affiliate/hooks/use-affiliate-page.spec.tsx (2 tests) 28ms
+@opchub/admin:test:  ✓ src/features/affiliate/components/policy-year-table.spec.tsx (6 tests) 53ms
+@opchub/admin:test:  ✓ src/lib/session.spec.ts (4 tests) 21ms
+@opchub/admin:test:  ✓ src/lib/upload-image.spec.ts (11 tests) 53ms
+@opchub/admin:test:  ✓ src/features/bots/bulk-api.spec.ts (3 tests) 16ms
+@opchub/admin:test:  ✓ src/lib/session-end.spec.ts (6 tests) 19ms
+@opchub/admin:test:  ✓ src/features/bots/model.spec.ts (11 tests) 10ms
+@opchub/admin:test:  ✓ src/i18n/locales.spec.ts (11 tests) 10ms
+@opchub/admin:test:  ✓ src/features/affiliate/model.spec.ts (7 tests) 17ms
+@opchub/admin:test:  ✓ src/features/overview/flow.spec.ts (2 tests) 13ms
+@opchub/admin:test:  ✓ src/features/events/model.spec.ts (10 tests) 13ms
+@opchub/admin:test:  ✓ src/features/settings/model.spec.ts (8 tests) 9ms
+@opchub/admin:test:  ✓ src/features/bots/conversation-type-api.spec.ts (2 tests) 47ms
+@opchub/admin:test:  ✓ src/lib/permission-model.spec.ts (7 tests) 8ms
+@opchub/admin:test:  ✓ src/features/affiliate/api.spec.ts (6 tests) 12ms
+@opchub/admin:test:  ✓ src/features/bots/bulk/form-model.spec.ts (3 tests) 8ms
+@opchub/admin:test:  ✓ src/lib/session-refresh-lock.spec.ts (4 tests) 7ms
+@opchub/admin:test:  ✓ src/features/investors/model.spec.ts (2 tests) 4ms
+@opchub/admin:test:  ✓ src/features/shell/nav-model.spec.ts (6 tests) 10ms
+@opchub/admin:test:  ✓ src/features/auth/setup-route.spec.ts (1 test) 4ms
+@opchub/admin:test:  ✓ src/features/auth/safe-next.spec.ts (2 tests) 4ms
+@opchub/admin:test:  ✓ src/features/overview/series-labels.spec.ts (1 test) 4ms
+@opchub/admin:test:  ✓ src/features/affiliate/agent-month-options.spec.ts (2 tests) 6ms
+@opchub/admin:test:  ✓ src/lib/use-export-job.spec.ts (4 tests) 8ms
+@opchub/admin:test:  ✓ src/features/reports/model.spec.ts (2 tests) 7ms
+@opchub/admin:test:  ✓ src/features/shell/model-ro.spec.ts (4 tests) 5ms
+@opchub/admin:test:  ✓ src/features/events/content-defaults.spec.ts (4 tests) 7ms
+@opchub/admin:test:  ✓ src/features/groups/model-topics.spec.ts (2 tests) 5ms
+@opchub/admin:test:  ✓ src/features/requests/model.spec.ts (1 test) 4ms
 @opchub/admin:test:  ✓ src/features/bots/bulk/result-summary.spec.ts (2 tests) 5ms
-@opchub/admin:test:  ✓ src/features/affiliate/format.spec.ts (4 tests) 32ms
-@opchub/admin:test:  ✓ src/features/overview/series-labels.spec.ts (1 test) 7ms
-@opchub/admin:test:  ✓ src/features/auth/setup-route.spec.ts (1 test) 8ms
-@opchub/admin:test:  ✓ src/features/affiliate/agent-month-options.spec.ts (2 tests) 7ms
-@opchub/admin:test:  ✓ src/features/affiliate/components/policy-year-table.spec.tsx (6 tests) 26ms
+@opchub/admin:test:  ✓ src/features/shell/model.spec.ts (2 tests) 4ms
 @opchub/admin:test:  ✓ src/features/bots/model-copy.spec.ts (1 test) 4ms
-@opchub/admin:test:  ✓ src/features/investors/model.spec.ts (2 tests) 9ms
-@opchub/admin:test:  ✓ src/features/auth/safe-next.spec.ts (2 tests) 7ms
-@opchub/admin:test:  ✓ src/features/requests/model.spec.ts (1 test) 6ms
 @opchub/admin:test:
-@opchub/admin:test:  Test Files  161 passed (161)
-@opchub/admin:test:       Tests  955 passed (955)
-@opchub/admin:test:    Start at  14:11:39
-@opchub/admin:test:    Duration  558.87s (import 56%, environment 38%, tests 4%, transform 1%)
+@opchub/admin:test:  Test Files  165 passed (165)
+@opchub/admin:test:       Tests  986 passed (986)
+@opchub/admin:test:    Start at  14:52:06
+@opchub/admin:test:    Duration  943.62s (import 61%, environment 35%, tests 3%)
 @opchub/admin:test:
-@opchub/admin:test:      Import  1078 modules were evaluated 5233 times · 907.93s total, 56% of tracked time
-@opchub/admin:test:              ~202.88s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/admin:test:      Import  1096 modules were evaluated 5638 times · 1688.07s total, 61% of tracked time
+@opchub/admin:test:              ~369.07s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
 @opchub/admin:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
 @opchub/admin:test:
 
  Tasks:    6 successful, 6 total
-Cached:    5 cached, 6 total
-  Time:    9m20.514s
+Cached:    4 cached, 6 total
+  Time:    15m46.105s
 
 EXIT 0
