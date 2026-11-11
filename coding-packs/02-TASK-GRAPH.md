@@ -81,7 +81,7 @@ Các mục B khác để sau (D-138). TIP viết lúc tới bước, dựa trên
 
 | TIP | Tên | REQ / D | Phụ thuộc | Ước lượng | Files / trạng thái |
 |---|---|---|---|---|---|
-| V46-824 | [TIP](tips/TIP-V46-824-admin-i18n.md) · branch `feature/TIP-V46-824-admin-i18n` · **IN PROGRESS / PARTIAL, NOT READY TO MERGE** · request/AntD/metadata23 routes; English2608/2608 raw leaves complete, other8 catalogs pending | D-141, D-06, D-37, D-65, D-133, D-134; D-140 / REQ-122 / REQ-625 | V2-117, V46-822, V46-823 (merged) | XL | [Report](reports/TIP-V46-824-completion.md) · source `ec97a874`; unit2426 +2 existing skips; MSW/native-mode builds pass; full i18n browser/native acceptance still pending |
+| V46-824 | [TIP](tips/TIP-V46-824-admin-i18n.md) · branch `feature/TIP-V46-824-admin-i18n` · **IN PROGRESS / PARTIAL, NOT READY TO MERGE** · runtime/AntD/metadata + AI UI/live Profile validation; English2660/2660 leaves, other8 bundles pending | D-141, D-06, D-37, D-65, D-133, D-134; D-140 / REQ-122 / REQ-625 | V2-117, V46-822, V46-823 (merged) | XL | [Report](reports/TIP-V46-824-completion.md) · source `9e962712`; unit2444 +2 existing skips; both builds pass; full i18n browser/native/font/performance acceptance pending |
 
 Thứ tự: V46-822 + V46-823 đã tích hợp → **V46-824** (execute khi owner yêu cầu). Một TIP implementation, manifest là phụ lục chứ không phải làn song song. Không tự release/merge `main`.
 

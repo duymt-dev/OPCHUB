@@ -2,7 +2,56 @@
 
 **STATUS: IN PROGRESS / PARTIAL - goal remains the complete TIP, NOT READY TO MERGE.**
 
-## Latest checkpoint - source ec97a874
+## Latest checkpoint - source 9e962712
+
+- Date:2026-11-11. Source **9e962712** committed/pushed. Previous goal turn was concrete progress, not a wait/blocker. The complete original TIP remains active: **not DONE, not ready to merge**.
+- Added40 AI-call labels,4 moderation labels and8 local-validation labels to vi/en without rewriting old source strings. Both catalogs now **2660/2660 leaves in25 files**. Other8 target bundles remain absent. A new hash fixture also protects all2456 original legacy leaves, not only their count; the original524 settings leaves retain their prior hash, with only explicitly new roots/keys excluded.
+- AI-call filters, live columns, drawer/close label, totals, loading/error/retry/export/paging, purpose/status/actor-realm labels and AI limits now follow locale. Display dates remain VN/Gregorian; numbers/currency localize without changing filter timestamp strings, query keys, provider/model/error/actor IDs, budgets or export contracts. Moderation action labels/switch translate while action payloads stay canonical.
+- Added pure structured Zod issue translation with finite known custom-message mapping and safe unknown fallback. Profile local errors re-render when locale changes, retaining the password draft/session and issuing no API request for invalid input. API field errors remain raw, including text identical to a known local rule. Shared schemas/checks and success/session behavior are unchanged. This does **not** claim all other form/upload errors are complete.
+- Settings email preview now keeps actual Vietnamese email content and authored fields, translating only preview chrome, matching the existing Marketing content-boundary handling.
+
+### Current gates / evidence
+
+| Check | Actual result |
+|---|---|
+| pnpm lint / typecheck | PASS each,8 tasks /7 cached; Admin fresh |
+| pnpm test | **2444 passed +2 pre-existing skips**, Admin733 fresh; other5 tasks cached (UI76, Portal476, shared757, server276, integrations126) |
+| pnpm depcheck | PASS, frontend/shared2705 modules8141 dependencies; server1260/5995 |
+| Current production builds | MSW `.next-msw-tip824` PASS; mocking-off `.next-server-tip824` PASS using isolated proxy; neither is native API/browser verification |
+| Raw English |25 fixed-file cases pass, now2660 leaves; no fallback counted |
+| Manifest / caps / logs |610 unique declared paths, no undeclared changed path; changed source/catalog files≤400; UTF-8 normalized logs and credential/control-character scan clean |
+| Current browser/native API/visual/fonts/performance | NOT VERIFIED, remain required |
+
+All new regressions are included in the root run:2 AI filter/column cases,2 moderation cases,1 Settings email-preview case,11 structured-validation cases and2 added Profile cases. Existing assertions remain. An initial moderation fixture used the wrong status and was corrected to the real shared enum; a test JSX comma, generic AntD NamePath typing and a type-import lint issue were fixed rather than bypassed. Ownership audit found a duplicate manifest row and the Settings preview entry missing; that preview patch was reverted, the manifest explicitly corrected, then reapplied. No source outside the final declared paths, no backend/schema/SQL/seed change, no native DB/service operation.
+
+Current logs: [root gates](evidence/v46-824/quality-gates.log), [unit](evidence/v46-824/unit.log), [MSW](evidence/v46-824/build-msw.log), [native-mode build](evidence/v46-824/build-native.log), [raw audit](evidence/v46-824/catalog-audit.md). Previous evidence is retained in Git704810e9. Read-only AST scan found18 direct JSX/attribute/object/call candidates, including intentional technical/default content; this is **not** the final source audit or proof that every formatter/call site is localized.
+
+### Current AC audit / next actions
+
+| AC | Current status |
+|---|---|
+|01|Allowlist/alias/request units retained; selector/browser proof pending.|
+|02|vi/en raw contracts pass;8 target bundles and final fixed10-bundle gate missing, overall FAIL.|
+|03|Original524 settings and2456 legacy leaves now hash-protected; fallback/shape units pass.|
+|04|Metadata/auth retained; all-locale auth/browser acceptance pending.|
+|05|Draft/session unit strengthened for Profile; URL/query/paging browser proof pending.|
+|06|AI log/moderation now localized; remaining UI audit/label callers and full English browser matrix pending.|
+|07|Other8 catalogs and required translated viewport images missing.|
+|08|AI display format and canonical date-filter unit added; remaining domain formatters/pickers and browser assertions pending.|
+|09|Existing control-locale unit proof retained; translated browser controls/fonts pending.|
+|10|Structured local issues and live Profile password error/draft units pass; other forms/uploads and browser switching pending.|
+|11|AI filter/moderation payload tests added; full browser save-value assertions pending.|
+|12|API raw-error negative and both Settings/Marketing email-preview boundaries verified by units; browser negatives pending.|
+|13|Settings-language independence unchanged; browser proof pending.|
+|14|Both current build modes compile; identical MSW/native behavior suites still NOT RUN.|
+|15|Required unmasked1440/390 glyph/focus/hydration/vi-parity evidence missing.|
+|16|Executable JS/catalog/font/isolation/performance measurements missing.|
+
+Next: finish other client validation/upload and shared-control label callers, remaining per-domain display formatters and locale picker formats without touching parsers/exports/D-140; English browser smoke all domains; complete8 target catalogs/glossaries and mandatory all-bundle/source-audit gates; licensed script-scoped fonts; full identical MSW/native suites, unmasked evidence and metrics. Preserve original PG5432; finish all16 ACs, then PR to dev for owner review, never auto-merge/main release.
+
+## Historical English checkpoint - source ec97a874
+
+The following is historical; the source and current counts/gates above supersede it.
 
 - Date:2026-11-11. Source **ec97a874** committed and pushed to `feature/TIP-V46-824-admin-i18n`. Full original TIP remains the goal; **not DONE, not ready to merge**, no owner-input blocker or scope reduction.
 - Completed all25 English physical catalogs: **2608/2608 raw source leaves**, up from879. Fixed explicit raw-file tests check exact keys/types, ICU arguments/tags/selectors, NFC, nonempty and copied-Vietnamese exceptions before fallback. All25 cases pass. Source vi remains unchanged, including524 settings leaves and their baseline integrity hash. Six exact proper-name/geographic/canonical exceptions and the single legacy blank header are documented in REVIEW.
