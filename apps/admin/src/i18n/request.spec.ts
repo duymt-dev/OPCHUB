@@ -172,4 +172,50 @@ describe('D-141 AC824-01/04 request-scoped messages, no authOverrides', () => {
     expect(messages.auth.login.submit).toBe('Đăng nhập');
     expect(logger.warn).not.toHaveBeenCalled();
   });
+
+  it('D-141 AC824-07 loads actual Lao domains and all six settings parts without fallback', async () => {
+    mocks.cookie = 'lo';
+    const result = await config();
+    expect(result.locale).toBe('lo');
+    expect(result.messages).toMatchObject({
+      auth: {
+        login: {
+          submit: 'ເຂົ້າລະບົບ',
+        },
+      },
+      common: {
+        adminProfile: {
+          title: 'ໂປຣໄຟລ໌ສ່ວນຕົວ',
+        },
+      },
+      overview: {
+        title: 'ພາບລວມ',
+      },
+      reports: {
+        title: 'ລາຍງານ',
+      },
+      settings: {
+        general: {
+          heading: 'ຂໍ້ມູນແພລດຟອມ',
+        },
+        roles: {
+          heading: 'ບົດບາດແລະສິດ',
+        },
+        mail: {
+          heading: 'ອີເມວຕ້ອນຮັບ',
+        },
+        log: {
+          heading: 'ບັນທຶກກິດຈະກຳຜູ້ດູແລ',
+        },
+        price: {
+          heading: 'ຕັ້ງຄ່າລາຄາ',
+        },
+        ai: {
+          heading: 'ຜູ້ໃຫ້ບໍລິການ AI',
+        },
+      },
+    });
+    expect(messages.auth.login.submit).toBe('Đăng nhập');
+    expect(logger.warn).not.toHaveBeenCalled();
+  });
 });

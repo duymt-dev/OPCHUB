@@ -138,12 +138,13 @@ export const test = base.extend<{ guard: BrowserGuard }>({
 export async function openLocalized(
   page: Page,
   path: string,
-  locale: 'en' | 'vi' | 'fil' | 'th',
+  locale: 'en' | 'vi' | 'fil' | 'th' | 'lo',
 ): Promise<void> {
   const labels = {
     en: { signIn: 'Sign in', notifications: 'Notifications' },
     vi: { signIn: 'Đăng nhập', notifications: 'Thông báo' },
     fil: { signIn: 'Mag-sign in', notifications: 'Mga Abiso' },
+    lo: { signIn: 'ເຂົ້າລະບົບ', notifications: 'ການແຈ້ງເຕືອນ' },
     th: { signIn: 'เข้าสู่ระบบ', notifications: 'การแจ้งเตือน' },
   }[locale];
   const { signIn } = labels;

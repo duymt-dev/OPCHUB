@@ -1087,3 +1087,30 @@ Observed native sidebar badge test readiness race: initial count snapshot ran be
 | create | `coding-packs/reports/evidence/v46-824/th-settings-msw-390.png` | Actual unmasked Thai settings image, not owner/native-human approval. |
 | create | `coding-packs/reports/evidence/v46-824/th-settings-server-1440.png` | Actual unmasked Thai settings image, not owner/native-human approval. |
 | create | `coding-packs/reports/evidence/v46-824/th-settings-server-390.png` | Actual unmasked Thai settings image, not owner/native-human approval. |
+
+### Lao complete raw catalog checks
+
+| Operation | File | Scope |
+|---|---|---|
+| create | `apps/admin/src/i18n/tests/lao-catalog.spec.ts` | Explicit25-file raw Lao shape, ICU, prose/script, canonical examples, reviewed context and every glyph; not final ten-bundle gate. |
+| create | `coding-packs/reports/evidence/v46-824/lao.log` | Actual focused Lao raw/request/font test output. |
+
+### Lao actual three-screen browser proof
+
+| Operation | File | Scope |
+|---|---|---|
+| create | `e2e/behavior/admin-i18n-lao.spec.ts` | Same six Lao Overview/Profile/Settings1440/390 read-only assertions in MSW/native; not all-language acceptance. |
+| create | `coding-packs/reports/evidence/v46-824/lao-msw.log` | Actual six-case msw Lao browser output. |
+| create | `coding-packs/reports/evidence/v46-824/lao-native.log` | Actual six-case native Lao browser output. |
+| create | `coding-packs/reports/evidence/v46-824/lo-overview-msw-1440.png` | Actual unmasked Lao screen, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/lo-overview-msw-390.png` | Actual unmasked Lao screen, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/lo-overview-server-1440.png` | Actual unmasked Lao screen, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/lo-overview-server-390.png` | Actual unmasked Lao screen, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/lo-profile-msw-1440.png` | Actual unmasked Lao screen, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/lo-profile-msw-390.png` | Actual unmasked Lao screen, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/lo-profile-server-1440.png` | Actual unmasked Lao screen, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/lo-profile-server-390.png` | Actual unmasked Lao screen, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/lo-settings-msw-1440.png` | Actual unmasked Lao screen, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/lo-settings-msw-390.png` | Actual unmasked Lao screen, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/lo-settings-server-1440.png` | Actual unmasked Lao screen, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/lo-settings-server-390.png` | Actual unmasked Lao screen, not owner/native-human approval. |

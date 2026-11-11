@@ -31,9 +31,9 @@
 
 ## Raw presence snapshot (not completion)
 
-- vi/en/zh/id/ms/fil/th:25/25 files and2667/2667 source string leaves each.
-- km/lo/my:0/25 files and0/2667 leaves each.
-- Total physical presence175/250, not raw readiness PASS; missing files never count through runtime fallback.
+- vi/en/zh/id/ms/fil/th/lo:25/25 files and2667/2667 source string leaves each.
+- km/my:0/25 files and0/2667 leaves each.
+- Total physical presence200/250, not raw readiness PASS; missing files never count through runtime fallback.
 
 ## Content boundaries / exact exceptions
 
@@ -220,3 +220,31 @@ Review corrections to37 Portal-reused leaves cover affiliate/reference roles and
 83 fixed Thai cases =25 raw shape/key/ICU/NFC/no-copy +50 context +6 canonical +1 all2667-leaf English-filler/Thai-script check (53 exact neutral examples) +1 full Thai/Latin cmap check. Actual request loading additionally checks auth/Profile/Overview/reports and all6 merged settings parts without fallback; the34 full font/asset tests now include all25 Thai files. Existing7 font binaries/six OFLs are unchanged. The known Vitest dynamic-import cache is cleared with documented --clearCache when adding this new bundle; production loader logic is unchanged.
 
 Whole10-bundle inventory remains incomplete:175/250 files; km/lo/my are absent. Actual Thai browser scope must be stated separately: auth heading/title and Overview/Profile/Settings1440/390, not all controls/states/auth flows or owner/native-human approval. Remaining full English/all-language/native/value/visual/performance acceptance is still required by the original TIP.
+
+## Complete Lao raw checkpoint — 2026-11-11
+
+All25 explicit files/2667 leaves, including all6 settings parts, now exist.667 unambiguous exact-Vietnamese-source Portal Lao matches retained,1993 directly translated/Admin-context-corrected leaves,6 canonical examples and1 original blank actions header.1701 distinct Vietnamese/English direct draft pairs;28 Portal-reused leaves corrected in Admin context. This is AI translation and agent context review, **native-speaker-reviewed=false**. No runtime Portal import, external translation service, dependency, raw API value, source Vietnamese/Portal/shared logic, font binary or license change.
+
+| Source concept                  | Lao                                 | Boundary                                            |
+| ------------------------------- | ----------------------------------- | --------------------------------------------------- |
+| Member / Membership fee         | ສະມາຊິກ / ຄ່າສະມາຊິກ                | Raw VND, no currency conversion                     |
+| Project / Investor              | ໂຄງການ / ນັກລົງທຶນ                  | Authored names remain raw                           |
+| Investment fund                 | ກອງທຶນລົງທຶນ                        | Not limited to mutual funds                         |
+| Affiliate / General partner     | ຜູ້ແນະນຳ / ຄູ່ຮ່ວມງານ               | Distinct referral and business roles                |
+| Regional Director               | ຜູ້ອຳນວຍການພາກພື້ນ                  | Only direct revenue-share recipient                 |
+| Commission                      | ຄ່ານາຍໜ້າ                           | Existing reference/policy wording, no payout change |
+| Pending month-end payout        | ລໍຖ້າຈ່າຍໃນທ້າຍເດືອນ                | Preserve timing                                     |
+| Administrator / Moderator       | ຜູ້ດູແລລະບົບ / ຜູ້ດູແລເນື້ອຫາ       | Never permission keys                               |
+| User Portal / Admin Dashboard   | ພອດທັລສະມາຊິກ / ແດຊບອດຜູ້ດູແລ       | Keep destinations distinct                          |
+| Enabled / Not enabled           | ເປີດໃຊ້ແລ້ວ / ຍັງບໍ່ເປີດໃຊ້         | Preserve polarity                                   |
+| Pending review                  | ລໍຖ້າກວດ                            | Not approval already granted                        |
+| Clear / Delete                  | ລ້າງ / ລຶບ                          | Filter clearing is not deletion                     |
+| Email body / Transfer reference | ເນື້ອຫາອີເມວ / ຂໍ້ຄວາມອ້າງອີງການໂອນ | Context-specific content                            |
+| Attendee list / Bullet list     | ລາຍຊື່ຜູ້ເຂົ້າຮ່ວມ / ລາຍການແບບຈຸດ   | Different list types                                |
+| Province / Region               | ແຂວງ / ພາກພື້ນ                      | Canonical geography remains raw                     |
+
+All356 distinct retained-candidate Portal source/English/translation groups were checked for Admin context. Corrections include affiliate terminology/network, consistent director label, month-end timing, pending-review meaning, attendee list, copyright brand, auth destinations, imperative password hint, visibility, audit category, non-destructive Clear, Undo and bullet-list labels. Direct drafts preserve numeric limits/ICU variables and source policy wording; translation does not resolve legacy business inconsistencies or enable direct affiliate payouts. Six exact canonical examples, existing URLs/emails/provider IDs and blank header remain unchanged.
+
+59 fixed Lao cases =25 raw shape/key/ICU/NFC/no-copy +26 reviewed-context +6 canonical +1 all2667-leaf English-filler/Lao-script check with53 exact neutral exceptions +1 complete Latin/Lao cmap check. Request configuration checks real Lao domains and all6 merged settings parts without fallback warnings; full font suite now35 cases. Existing licensed Lao font covers all actual catalog characters without regeneration. Documented Vitest --clearCache cleared disposable test caches for the newly added import directory; production loader is unchanged. These checks do not constitute native-human approval or full browser/state/performance acceptance.
+
+Current inventory200/250: km/my remain absent. The original ten-bundle gate and all16 ACs remain required; Lao actual browser evidence is reported separately, never inferred from raw tests.

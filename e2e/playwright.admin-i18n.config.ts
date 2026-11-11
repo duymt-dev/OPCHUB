@@ -20,6 +20,7 @@ export default defineConfig({
         'admin-i18n-visual.spec.ts',
         'admin-i18n-sidebar.spec.ts',
         'admin-i18n-thai.spec.ts',
+        'admin-i18n-lao.spec.ts',
       ],
     },
   ],
