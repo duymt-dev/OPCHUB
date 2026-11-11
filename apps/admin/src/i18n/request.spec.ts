@@ -56,6 +56,31 @@ describe('D-141 AC824-01/04 request-scoped messages, no authOverrides', () => {
     expect(logger.warn).not.toHaveBeenCalled();
   });
 
+  it.each(['ms', 'ms-BN'])(
+    'D-141 AC824-07 loads actual Malay catalogs for %s without losing alias identity',
+    async (locale) => {
+      mocks.cookie = locale;
+      const result = await config();
+      expect(result.locale).toBe(locale);
+      expect(result.messages).toMatchObject({
+        auth: { login: { submit: 'Log masuk' } },
+        common: { adminProfile: { title: 'Profil peribadi' } },
+        overview: { title: 'Gambaran keseluruhan' },
+        reports: { title: 'Laporan' },
+        settings: {
+          general: { heading: 'Maklumat platform' },
+          roles: { heading: 'Peranan & Kebenaran' },
+          mail: { heading: 'E-mel sambutan' },
+          log: { heading: 'Log aktiviti pentadbir' },
+          price: { heading: 'Konfigurasi harga' },
+          ai: { heading: 'Penyedia AI' },
+        },
+      });
+      expect(messages.auth.login.submit).toBe('Đăng nhập');
+      expect(logger.warn).not.toHaveBeenCalled();
+    },
+  );
+
   it('D-141 AC824-07 loads actual Indonesian domains and all six settings parts without fallback', async () => {
     mocks.cookie = 'id';
     const result = await config();

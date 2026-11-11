@@ -861,3 +861,12 @@ Serial AC824-10/12 work. Preserve schemas, canonical values, field whitelists an
 | modify | `apps/admin/src/features/bots/tests/context.tsx` | Supply the real source ui catalog for new local error rendering in existing regressions. |
 | create | `apps/admin/src/i18n/tests/domain-context.tsx` | Shared test-only real vi/en providers for client validation provenance; no production API change. |
 | create | `coding-packs/reports/evidence/v46-824/schema-errors.log` | Actual domain client-validation tests, not full native or all-language browser acceptance. |
+
+## Malay raw-bundle follow-up
+
+Serial AC824-02/07/15 work: all25 already-declared ms catalogs, exact source keys/ICU, canonical-copy exceptions unchanged. Reuse unambiguous exact-source Portal Malay text; adapt the reviewed Admin Indonesian translations into Malay and review Admin-specific terminology/context. Document this provenance and native-reviewed=false. The ms-BN selection keeps its own identity while loading ms. No Portal source, API, database or business change.
+
+| Action | Exact path | Ownership / reason |
+|---|---|---|
+| create | `apps/admin/src/i18n/tests/malay-catalog.spec.ts` | Explicit25-file raw checks plus Admin-context/canonical cases; not a replacement for the final10-bundle gate. |
+| create | `coding-packs/reports/evidence/v46-824/malay.log` | Actual focused raw/runtime/glyph results and translation provenance, not full native API acceptance. |

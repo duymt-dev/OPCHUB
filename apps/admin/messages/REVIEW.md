@@ -6,7 +6,7 @@
 - Native-speaker reviewed: **false for every target locale**, including custom AntD Filipino/Lao dictionaries.
 - AI-produced English now covers all25 physical catalogs /2666 source leaves, raw-contract tested against the complete explicit file list before fallback. This is catalog completeness, not a claim that all UI call sites or browser acceptance are complete.
 - Provenance: the earlier checkpoint reused464 unambiguous exact-text matches from Portal English catalogs. The remaining English was translated directly from the unchanged Vietnamese source. No Portal app import exists at runtime. No missing key is filled with Vietnamese/TODO stand-ins.
-- Simplified Chinese source checkpoint f1cca64b, 2026-11-11, covers25/25 physical files and2660/2660 leaves. Indonesian source checkpoint042dedaf, 2026-11-11, also covers25/25 files and2660/2660 leaves, raw-contract checked before fallback. Other target bundles th/ms/fil/km/lo/my: pending. Aliases en-SG and ms-BN share en/ms catalogs, not separate translations.
+- Simplified Chinese source checkpoint f1cca64b, 2026-11-11, covers25/25 physical files and2660/2660 leaves. Indonesian source checkpoint042dedaf, 2026-11-11, also covers25/25 files and2660/2660 leaves, raw-contract checked before fallback. Other target bundles th/fil/km/lo/my: pending. Malay now has a complete raw bundle as documented below. Aliases en-SG and ms-BN share en/ms catalogs, not separate translations.
 - Confidence: English moderate pending owner review; Khmer/Lao/Myanmar require special native-speaker attention when their catalogs are produced. Human review is not fabricated and does not replace technical gates.
 - Self-hosted font assets, licenses and reproducible build provenance are recorded below. Full translated-screen/visual/performance acceptance is still pending; font contracts alone do not complete this TIP.
 - Auth/upload consumer checkpoint77484e3f uses existing catalog keys only: local error codes render in the live locale; raw API strings are never reverse-matched into translation keys. The owner-approved optional shared LoginPanel formatter is Admin-only; Portal defaults/callbacks/demo clearing remain unchanged and have fresh regression/build evidence. This adds no translation leaves or native-speaker approval.
@@ -36,7 +36,7 @@
 - zh: 25/25 files, 2666/2666 source string leaves present; complete raw bundle, not full browser acceptance.
 - id: 25/25 files, 2666/2666 source string leaves present; complete raw bundle, not full browser acceptance.
 - th: 0/25 files, 0/2666 source string leaves present.
-- ms: 0/25 files, 0/2666 source string leaves present.
+- ms: 25/25 files, 2666/2666 source string leaves present; complete raw bundle, not full browser acceptance.
 - fil: 0/25 files, 0/2666 source string leaves present.
 - km: 0/25 files, 0/2666 source string leaves present.
 - lo: 0/25 files, 0/2666 source string leaves present.
@@ -78,7 +78,7 @@ Pinned upstream Google Fonts commit `5bb28733cec313b63fbd415b574b5ae35c8aa8b8`. 
 - Latin is the primary face, with a single selected SC/Thai/Khmer/Lao/Myanmar fallback. CSS URLs are compiled into hashed/basePath-aware Next assets. Registering twelve faces for seven binaries does not download them all; the browser loads only referenced families. The selector alone uses a9.7KB merged font covering all twelve unchanged native names/countries, avoiding five full-script downloads merely to open the menu.
 - The Latin derivative adds only missing U+2000..27FF punctuation/arrows/checkmarks from licensed Noto Sans SC and preserves the original Latin line metrics. The selector derivative merges subsets of the six listed sources. Both are named OPCHUB, not the reserved name Source. All original copyright/OFL files are packaged byte-for-byte, including upstream whitespace.
 - SC includes the GB2312 common repertoire, script punctuation, selector glyphs and all glyphs from the actual Chinese catalog when available. Thai/Khmer/Lao/Myanmar include their Unicode blocks plus current catalog/selector glyphs. Re-run the tool and extend glyph assertions when the remaining catalogs are added. No claim of glyph completeness for absent catalogs.
-- Current unit glyph scope is the present vi/en/zh/id catalogs plus twelve native selector names. Platform emoji, arbitrary authored text and monospace code fields are not rewritten into translations. Font-only browser audits use CDP to verify actual custom fonts rather than relying on installed fonts; this does not replace full-screen translated screenshots, parity approval or performance measurement. The Admin auth root has a zero-box marker to override its shared Be Vietnam Pro/system stack without modifying Portal/shared UI.
+- Current unit glyph scope is the present vi/en/zh/id/ms catalogs plus twelve native selector names. Platform emoji, arbitrary authored text and monospace code fields are not rewritten into translations. Font-only browser audits use CDP to verify actual custom fonts rather than relying on installed fonts; this does not replace full-screen translated screenshots, parity approval or performance measurement. The Admin auth root has a zero-box marker to override its shared Be Vietnam Pro/system stack without modifying Portal/shared UI.
 
 - Menu CSS splits the same binary into six Unicode-range faces with the original per-script ascent/descent metrics, so Burmese line metrics do not enlarge every Latin country label. A bounded, scrollable Admin-only popover keeps all choices reachable on short/mobile viewports.
 
@@ -128,3 +128,30 @@ Indonesian confidence: moderate; AI translation and context/ICU review by the co
 ## Additive client-validation labels
 
 The domain client-validation follow-up adds six ui.errors leaves to each present vi/en/zh/id catalog: inclusive numeric bounds, whole-number validation, bank account digits, bank holder letters and notification-device fallback. Current source and each present target have2666 leaves in25 files. Earlier2660-leaf checkpoint counts above are historical; retained Portal matches and canonical-copy counts are unchanged. The six new target translations are AI-produced directly for Admin, native-reviewed=false. Chinese now has1968 Admin-specific/context-corrected leaves plus692 retained matches and6 canonical examples; Indonesian1932 plus728 and6. Other six target bundles and full acceptance remain pending.
+
+## Malay terminology and review (AI-produced, native-reviewed=false)
+
+All25 raw files /2666 source leaves are present. Provenance:707 final leaves retain unambiguous exact-Vietnamese-source Portal Malay matches;1953 are adapted from the already-reviewed Admin Indonesian catalogs and corrected for Malay terminology/Admin context;6 canonical examples remain byte-identical. This is an AI adaptation with source-English context review and Vietnamese contract validation, not a native-speaker translation or native approval. All1683 unique non-reused draft pairs were reviewed;138 received direct wording corrections, with41 exact-English terminology rules and17 path-specific rules.34 reused Portal leaves were corrected where the Admin meaning differs, including noun reports versus reporting actions, province labels, repository visibility and the full Admin Dashboard/User Portal labels. No runtime Portal import or translation-service dependency.
+
+Terminology cross-check: the official DBP dictionary lists [provinsi](https://prpm.dbp.gov.my/Cari1?d=73980&keyword=provinsi) and defines [pelaku](https://prpm.dbp.gov.my/Cari1?d=382696&keyword=pelaku) as someone performing an action. Their application to the province/region distinction and audit actor is the agent's contextual translation choice, not dictionary certification of this UI or native-speaker approval.
+
+| Concept                        | Malay                               | Preserved boundary                             |
+| ------------------------------ | ----------------------------------- | ---------------------------------------------- |
+| Member / membership            | Ahli / keahlian                     | Not expert or administrator                    |
+| Expert / expertise             | Pakar / kepakaran                   | Not ordinary membership                        |
+| Membership fee / cost          | Yuran keahlian / kos                | Integer VND, no conversion                     |
+| Regional Director              | Pengarah Wilayah                    | The sole direct revenue-share payee            |
+| Province / region              | Provinsi / wilayah                  | Keep34 provinces distinct from3 regions        |
+| Commission / regional share    | Komisen / bahagian Pengarah Wilayah | Affiliate figures remain reference-only        |
+| Budget / estimate              | Bajet / anggaran                    | AI budget is not an estimated amount           |
+| Reports / report action        | Laporan / laporkan                  | Financial reports are not abuse-report buttons |
+| Actor                          | Pelaku                              | Audit actor is not an entrepreneur             |
+| Bank transfer reference        | Rujukan pindahan                    | OPCHUB reference syntax unchanged              |
+| Email body                     | Kandungan e-mel                     | Actual email bodies/previews remain raw        |
+| Basic information / policy     | Maklumat asas / dasar               | Distinct administrative meanings               |
+| Public / private repository    | Awam / persendirian                 | Enum values and URLs unchanged                 |
+| Whole number / account digits  | Bilangan bulat / digit akaun        | Same validators and payloads                   |
+| Sign in / incoming transaction | Log masuk / transaksi masuk         | Banking is not an authentication operation     |
+| Settings / roles / permissions | Tetapan / peranan / kebenaran       | Same permission keys and access checks         |
+
+Malay uses the existing licensed Latin font; all current catalog glyphs are checked against its actual cmap. Selection ms-BN loads the same ms messages while preserving the selected country/locale identity. No new font binary or license is needed. Confidence is moderate pending owner/native review. The final five bundles th/fil/km/lo/my, all-language raw gate and full screen/native/performance acceptance are still required. Legacy unused policy prose remains source-compatible and does not introduce payout behavior.
