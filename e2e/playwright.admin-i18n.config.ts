@@ -10,7 +10,13 @@ export default defineConfig({
   fullyParallel: false,
   reporter: [['list']],
   use: { browserName: 'chromium', timezoneId: 'Asia/Ho_Chi_Minh', deviceScaleFactor: 1 },
-  projects: [{ name: 'behavior', testDir: './behavior', testMatch: 'admin-i18n-screens.spec.ts' }],
+  projects: [
+    {
+      name: 'behavior',
+      testDir: './behavior',
+      testMatch: ['admin-i18n-screens.spec.ts', 'admin-i18n-navigation.spec.ts'],
+    },
+  ],
   webServer: [
     // MSW's cross-origin Affiliate relay backs every Admin API handler, including login.
     // This is a setup prerequisite only; all browser assertions remain identical in native.

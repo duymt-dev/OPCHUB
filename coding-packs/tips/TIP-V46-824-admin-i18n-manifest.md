@@ -138,6 +138,7 @@ Baseline settings has **524** string leaves. Its sorted `[path,value]` entries (
 | modify | `apps/admin/src/features/groups/components/ai-report-actions.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
 | modify | `apps/admin/src/features/groups/components/chat-viewer.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
 | modify | `apps/admin/src/features/groups/components/group-form-fields.tsx` | Runtime/locale wiring, label props or local validation; no API/behavior redesign. |
+| create | `apps/admin/src/features/groups/components/group-form-fields-i18n.spec.tsx` | Real field projection switches canonical region labels while retaining province/name/description and callback values. |
 | modify | `apps/admin/src/features/groups/components/group-grid.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
 | modify | `apps/admin/src/features/groups/components/group-list-panel.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
 | modify | `apps/admin/src/features/groups/components/group-table.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
@@ -302,7 +303,10 @@ Baseline settings has **524** string leaves. Its sorted `[path,value]` entries (
 |---|---|---|
 | create | `e2e/behavior/admin-i18n-auth.spec.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
 | create | `e2e/behavior/admin-i18n-controls.spec.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
-| create | `e2e/behavior/admin-i18n-navigation.spec.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `e2e/behavior/admin-i18n-navigation.spec.ts` | Authenticated real-selector navigation, draft/error/modal and settings independence browser assertions; identical MSW/private-native. |
+| create | `e2e/behavior/admin-i18n/navigation.ts` | Small selector/locale/preserved-URL assertion helper; no seed, reset or business writes. |
+| create | `coding-packs/reports/evidence/v46-824/navigation-msw.log` | Actual same-source navigation browser output; scope recorded separately from loaded-screen matrix. |
+| create | `coding-packs/reports/evidence/v46-824/navigation-native.log` | Actual private-native navigation browser output; no original DB change. |
 | create | `e2e/behavior/admin-i18n-screens.spec.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
 | create | `e2e/behavior/admin-i18n-values.spec.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
 | create | `e2e/behavior/admin-i18n-visual.spec.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |

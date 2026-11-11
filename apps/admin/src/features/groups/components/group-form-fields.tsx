@@ -8,6 +8,7 @@ import { nameForIndustry, nameForProvince } from '../model';
 import type { GroupField, GroupFormState, Person } from '../types';
 import styles from './group-form.module.css';
 import { useNumberText } from '@/i18n/use-number-text';
+import { useDomainLabels } from '@/i18n/domain-labels';
 
 export type FormPatch = (patch: Partial<GroupFormState>) => void;
 
@@ -58,6 +59,7 @@ export function CoverField({ f, set, onFile }: Props & { onFile: (file: File) =>
 /** `kind`: ô "Loại nhóm" / "Ngành" chen giữa Tên–Tỉnh và Mô tả như prototype v4 */
 export function BasicFields({ f, set, err, kind }: Props & Err & { kind: ReactNode }) {
   const numberText = useNumberText();
+  const labels = useDomainLabels();
   const t = useTranslations('groups.form');
   return (
     <>
@@ -102,7 +104,9 @@ export function BasicFields({ f, set, err, kind }: Props & Err & { kind: ReactNo
           </select>
           <FieldErrorOf e={err('province')} />
           <span className={styles.hint}>
-            {f.province ? t('region', { region: regionOf(f.province) }) : t('regionAll')}
+            {f.province
+              ? t('region', { region: labels.canonicalRegion(regionOf(f.province)) })
+              : t('regionAll')}
           </span>
         </label>
       </div>
