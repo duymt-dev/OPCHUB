@@ -48,6 +48,14 @@
     "linkInvalid": "The URL must start with http:// or https://"
   },
   "errors": {
+    "adminPasswordRule": "The new password must contain at least 8 characters, an uppercase letter and a digit",
+    "currentPasswordRequired": "Please enter your current password",
+    "confirmPasswordRequired": "Please confirm your new password",
+    "newPasswordRequired": "Please enter a new password",
+    "nameMin": "Full name must contain at least 2 characters",
+    "nameMax": "Full name must not exceed 100 characters",
+    "phoneMax": "Phone number must not exceed 30 characters",
+    "avatarUrl": "Invalid image URL",
     "required": "Please fill in this field",
     "invalid": "Invalid value",
     "minLength": "Enter at least {min} characters",

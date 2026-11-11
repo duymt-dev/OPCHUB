@@ -33,7 +33,7 @@
     "modSub": "Phân loại tin vi phạm trước khi ẩn",
     "fallback": "Nhà cung cấp dự phòng",
     "fallbackSub": "Dùng khi nhà cung cấp chính hết hạn mức hoặc lỗi",
-    "limits": "Tham số & hạn mức",
+    "limits": "Tham số \u0026 hạn mức",
     "temperature": "Temperature (0–1)",
     "maxTokens": "Max tokens / phản hồi",
     "budget": "Ngân sách tháng (đ)",
@@ -58,11 +58,11 @@
     "budgetAlert": "Cảnh báo trong Admin khi chạm ngưỡng hoặc hết ngân sách; không gửi email."
   },
   "app": {
-    "heading": "Ứng dụng di động & thông báo đẩy",
+    "heading": "Ứng dụng di động \u0026 thông báo đẩy",
     "sub": "OPC Hub chạy như ứng dụng (PWA) trên điện thoại: cài lên màn hình chính, nhận thông báo đẩy, không cần tải từ kho ứng dụng.",
     "test": "Gửi thông báo thử",
     "save": "Lưu cấu hình",
-    "saved": "Đã lưu cấu hình ứng dụng & thông báo",
+    "saved": "Đã lưu cấu hình ứng dụng \u0026 thông báo",
     "sent": "Đã gửi thông báo đẩy thử",
     "pwa": "Cho phép cài ứng dụng OPC Hub",
     "on": "Đang bật · thành viên cài được OPC Hub lên màn hình chính",
@@ -76,7 +76,7 @@
     "renewSub": "Theo mốc 30 · 7 · 1 ngày",
     "event": "Sự kiện sắp diễn ra",
     "eventSub": "Trước 1 ngày và 1 giờ",
-    "store": "Lượt xem & liên hệ gian hàng",
+    "store": "Lượt xem \u0026 liên hệ gian hàng",
     "storeSub": "Tổng hợp hằng ngày",
     "loading": "Đang tải…",
     "failed": "Không thể tải cấu hình ứng dụng",
@@ -95,5 +95,55 @@
     },
     "sentDevices": "Đã gửi tới {n} thiết bị",
     "noDevices": "Chưa có thiết bị nào bật thông báo"
+  },
+  "aiCalls": {
+    "title": "Nhật ký gọi AI",
+    "off": "Đang tắt lưu nhật ký; chỉ có dữ liệu cũ (tối đa 90 ngày)",
+    "totals": "{calls} lời gọi · Token vào: {prompt} · Token ra: {completion} · {cost}",
+    "loadingTotals": "Đang tải tổng…",
+    "csv": "Xuất CSV",
+    "error": "Không tải được nhật ký",
+    "retry": "Thử lại",
+    "more": "Tải thêm",
+    "view": "Xem nhật ký",
+    "exported": "Đã xuất {rows} lời gọi AI",
+    "exportFailed": "Không xuất được nhật ký, vui lòng thử lại",
+    "rangeInvalid": "Khoảng ngày phải từ 0 đến 90 ngày",
+    "from": "Từ ngày",
+    "to": "Đến ngày",
+    "purposeLabel": "Chức năng AI",
+    "purposePh": "Chức năng",
+    "providerLabel": "Nhà cung cấp nhật ký",
+    "providerPh": "Nhà cung cấp",
+    "statusLabel": "Trạng thái lời gọi",
+    "statusPh": "Trạng thái",
+    "col": {
+      "at": "Thời gian",
+      "purpose": "Chức năng",
+      "provider": "Nhà cung cấp",
+      "model": "Mô hình",
+      "tokens": "Token vào / ra",
+      "cost": "Chi phí (đ)",
+      "latency": "Độ trễ (ms)",
+      "status": "Trạng thái",
+      "error": "Mã lỗi",
+      "actor": "Người dùng"
+    },
+    "purpose": {
+      "bot": "Bot",
+      "script": "Kịch bản",
+      "content": "Soạn nội dung",
+      "mod": "Kiểm duyệt"
+    },
+    "status": {
+      "ok": "Thành công",
+      "error": "Lỗi",
+      "fallback": "Dự phòng"
+    },
+    "realm": {
+      "member": "Thành viên",
+      "admin": "Quản trị",
+      "system": "Hệ thống"
+    }
   }
 }

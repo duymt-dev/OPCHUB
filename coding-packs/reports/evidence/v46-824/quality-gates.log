@@ -1,4 +1,4 @@
-TIP824 English catalog / content-boundary checkpoint — 2026-11-11
+TIP824 AI UI / structured client validation checkpoint — 2026-11-11
 RUN pnpm lint
 $ turbo run lint
 
@@ -7,26 +7,26 @@ $ turbo run lint
    • Running lint in 9 packages
    • Remote caching disabled
 
-@opchub/portal:lint: cache hit, replaying logs 71e3df361172b94e
-@opchub/e2e:lint: cache hit, replaying logs 7eaaed5a9f33cfee
-@opchub/admin:lint: cache miss, executing ddec1d921172b9d3
-@opchub/ui:lint: cache hit, replaying logs 88bf65a8465a2f7a
-@opchub/portal:lint: $ eslint src
-@opchub/ui:lint: $ eslint src
-@opchub/e2e:lint: $ eslint parity behavior audit server llm env.ts urls.ts
-@opchub/shared:lint: cache hit, replaying logs f9d493ea0cb6d67f
-@opchub/shared:lint: $ eslint src
-@opchub/db:lint: cache hit, replaying logs 8df791dba6501ec7
-@opchub/db:lint: $ eslint src seed test
-@opchub/integrations:lint: cache hit, replaying logs 1fb607819a53b21e
 @opchub/server:lint: cache hit, replaying logs 7f4b11d47879bedd
 @opchub/server:lint: $ eslint src test
+@opchub/ui:lint: cache hit, replaying logs 88bf65a8465a2f7a
+@opchub/ui:lint: $ eslint src
+@opchub/db:lint: cache hit, replaying logs 8df791dba6501ec7
+@opchub/shared:lint: cache hit, replaying logs f9d493ea0cb6d67f
+@opchub/admin:lint: cache miss, executing 06b7da8dab489d45
+@opchub/integrations:lint: cache hit, replaying logs 1fb607819a53b21e
+@opchub/portal:lint: cache hit, replaying logs 71e3df361172b94e
 @opchub/integrations:lint: $ eslint src
+@opchub/e2e:lint: cache hit, replaying logs 7eaaed5a9f33cfee
+@opchub/portal:lint: $ eslint src
+@opchub/db:lint: $ eslint src seed test
+@opchub/e2e:lint: $ eslint parity behavior audit server llm env.ts urls.ts
+@opchub/shared:lint: $ eslint src
 @opchub/admin:lint: $ eslint src
 
  Tasks:    8 successful, 8 total
 Cached:    7 cached, 8 total
-  Time:    1m14.816s
+  Time:    1m9.996s
 
 EXIT lint: 0
 RUN pnpm typecheck
@@ -37,30 +37,30 @@ $ turbo run typecheck
    • Running typecheck in 9 packages
    • Remote caching disabled
 
-@opchub/e2e:typecheck: cache hit, replaying logs 3d9da68b7736e33f
-@opchub/db:typecheck: cache hit, replaying logs 35eaf239ef03390a
-@opchub/admin:typecheck: cache miss, executing bcc3b9fcc080b52f
-@opchub/e2e:typecheck: $ tsc -p tsconfig.json
-@opchub/db:typecheck: $ tsc --noEmit -p tsconfig.json
-@opchub/portal:typecheck: cache hit, replaying logs 384ceac62a366d53
 @opchub/integrations:typecheck: cache hit, replaying logs 60f5b494e043fdc4
+@opchub/integrations:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/db:typecheck: cache hit, replaying logs 35eaf239ef03390a
+@opchub/shared:typecheck: cache hit, replaying logs 2af37fea5a693c30
+@opchub/ui:typecheck: cache hit, replaying logs 5c28a239a5b2bb4f
+@opchub/admin:typecheck: cache miss, executing b92a3c24cd1998ba
+@opchub/portal:typecheck: cache hit, replaying logs 384ceac62a366d53
+@opchub/server:typecheck: cache hit, replaying logs f44a5951da8d2c30
+@opchub/shared:typecheck: $ tsc -p tsconfig.json
 @opchub/portal:typecheck: $ next typegen && tsc --noEmit
 @opchub/portal:typecheck: Generating route types...
-@opchub/ui:typecheck: cache hit, replaying logs 5c28a239a5b2bb4f
-@opchub/server:typecheck: cache hit, replaying logs f44a5951da8d2c30
-@opchub/shared:typecheck: cache hit, replaying logs 2af37fea5a693c30
 @opchub/portal:typecheck: ✓ Types generated successfully
-@opchub/ui:typecheck: $ tsc -p tsconfig.json
 @opchub/server:typecheck: $ tsc --noEmit -p tsconfig.json
-@opchub/shared:typecheck: $ tsc -p tsconfig.json
-@opchub/integrations:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/ui:typecheck: $ tsc -p tsconfig.json
+@opchub/db:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/e2e:typecheck: cache hit, replaying logs 3d9da68b7736e33f
+@opchub/e2e:typecheck: $ tsc -p tsconfig.json
 @opchub/admin:typecheck: $ next typegen && tsc --noEmit
 @opchub/admin:typecheck: Generating route types...
 @opchub/admin:typecheck: ✓ Types generated successfully
 
  Tasks:    8 successful, 8 total
 Cached:    7 cached, 8 total
-  Time:    11.756s
+  Time:    9.179s
 
 EXIT typecheck: 0
 RUN pnpm test
@@ -68,7 +68,7 @@ EXIT test: 0
 RUN pnpm depcheck
 $ depcruise apps/portal apps/admin packages e2e --config .dependency-cruiser.cjs && depcruise apps/server --config .dependency-cruiser.cjs --ts-config tsconfig.depcruise.server.json
 
-✔ no dependency violations found (2694 modules, 8109 dependencies cruised)
+✔ no dependency violations found (2705 modules, 8141 dependencies cruised)
 
 
 ✔ no dependency violations found (1260 modules, 5995 dependencies cruised)

@@ -47,8 +47,12 @@ describe('D-141 AC824-03 source partition and fallback', () => {
     ).toEqual([]);
   });
 
-  it('preserves all 524 settings strings byte-for-byte and the complete 2456-string source', () => {
-    const entries = leaves(messages.settings).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
+  it('preserves all 524 settings and 2456 original legacy leaves byte-for-byte while adding labels', () => {
+    // Only enumerated NEW roots/keys are excluded; all old strings remain hash-protected.
+    const settings = Object.fromEntries(
+      Object.entries(messages.settings).filter(([key]) => key !== 'aiCalls'),
+    );
+    const entries = leaves(settings).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
     expect(entries).toHaveLength(baseline.stringLeaves);
     expect(createHash('sha256').update(JSON.stringify(entries)).digest('hex')).toBe(
       baseline.sha256,
@@ -58,7 +62,23 @@ describe('D-141 AC824-03 source partition and fallback', () => {
         ([namespace]) => !['meta', 'ui', 'botOptions'].includes(namespace),
       ),
     );
-    expect(leaves(legacy)).toHaveLength(2456);
+    const original = {
+      ...legacy,
+      settings,
+      groups: {
+        ...messages.groups,
+        mod: Object.fromEntries(
+          Object.entries(messages.groups.mod).filter(
+            ([key]) => !['aiEnabled', 'aiPending', 'aiHide', 'aiDismiss'].includes(key),
+          ),
+        ),
+      },
+    };
+    const legacyEntries = leaves(original).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
+    expect(legacyEntries).toHaveLength(baseline.legacy.stringLeaves);
+    expect(createHash('sha256').update(JSON.stringify(legacyEntries)).digest('hex')).toBe(
+      baseline.legacy.sha256,
+    );
     const roots = SETTINGS_PARTS.flatMap((part) =>
       Object.keys(readSourcePart(`settings/${part}`) as object),
     );

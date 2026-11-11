@@ -1,5 +1,6 @@
 'use client';
 import { Input, Select, Space } from 'antd';
+import { useTranslations } from 'next-intl';
 import {
   AI_PROVIDER_IDS,
   AI_PROVIDER_CATALOG,
@@ -8,13 +9,6 @@ import {
 } from '@opchub/shared/api-domains';
 
 const date = (iso: string) => new Date(Date.parse(iso) + 7 * 3600000).toISOString().slice(0, 10);
-export const AI_PURPOSE_LABELS = {
-  bot: 'Bot',
-  script: 'Kịch bản',
-  content: 'Soạn nội dung',
-  mod: 'Kiểm duyệt',
-} as const;
-export const AI_STATUS_LABELS = { ok: 'Thành công', error: 'Lỗi', fallback: 'Dự phòng' } as const;
 export function AiCallFilters({
   value,
   onChange,
@@ -22,6 +16,7 @@ export function AiCallFilters({
   value: AiCallsFilter;
   onChange: (next: AiCallsFilter) => void;
 }) {
+  const t = useTranslations('settings.aiCalls');
   const choice = <K extends 'purpose' | 'provider' | 'status'>(key: K, next: AiCallsFilter[K]) => {
     const patch = { ...value };
     if (next) patch[key] = next;
@@ -32,7 +27,7 @@ export function AiCallFilters({
     <Space wrap>
       <Input
         type="date"
-        aria-label="Từ ngày"
+        aria-label={t('from')}
         value={date(value.from)}
         onChange={(e) => {
           if (e.target.value) onChange({ ...value, from: `${e.target.value}T00:00:00+07:00` });
@@ -40,7 +35,7 @@ export function AiCallFilters({
       />
       <Input
         type="date"
-        aria-label="Đến ngày"
+        aria-label={t('to')}
         value={date(value.to)}
         onChange={(e) => {
           if (e.target.value) onChange({ ...value, to: `${e.target.value}T23:59:59.999+07:00` });
@@ -48,17 +43,17 @@ export function AiCallFilters({
       />
       <Select
         virtual={false}
-        aria-label="Chức năng AI"
-        placeholder="Chức năng"
+        aria-label={t('purposeLabel')}
+        placeholder={t('purposePh')}
         allowClear
         value={value.purpose}
-        options={AI_PURPOSES.map((key) => ({ value: key, label: AI_PURPOSE_LABELS[key] }))}
+        options={AI_PURPOSES.map((key) => ({ value: key, label: t(`purpose.${key}`) }))}
         onChange={(next) => choice('purpose', next)}
       />
       <Select
         virtual={false}
-        aria-label="Nhà cung cấp nhật ký"
-        placeholder="Nhà cung cấp"
+        aria-label={t('providerLabel')}
+        placeholder={t('providerPh')}
         allowClear
         value={value.provider}
         options={AI_PROVIDER_IDS.map((key) => ({
@@ -69,13 +64,13 @@ export function AiCallFilters({
       />
       <Select
         virtual={false}
-        aria-label="Trạng thái lời gọi"
-        placeholder="Trạng thái"
+        aria-label={t('statusLabel')}
+        placeholder={t('statusPh')}
         allowClear
         value={value.status}
         options={(['ok', 'error', 'fallback'] as const).map((value) => ({
           value,
-          label: AI_STATUS_LABELS[value],
+          label: t(`status.${value}`),
         }))}
         onChange={(next) => choice('status', next)}
       />

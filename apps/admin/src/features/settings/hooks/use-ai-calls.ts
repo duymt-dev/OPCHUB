@@ -1,5 +1,7 @@
 'use client';
 import { useState } from 'react';
+import { useLocale, useTranslations } from 'next-intl';
+import { formatNumber } from '@/i18n/format';
 import { useInfiniteQuery, useMutation } from '@tanstack/react-query';
 import {
   aiCallsFilterSchema,
@@ -12,6 +14,8 @@ import { api } from '@/lib/api-client';
 import { useExportJob } from '@/lib/use-export-job';
 
 export function useAiCalls() {
+  const t = useTranslations('settings.aiCalls');
+  const locale = useLocale();
   const [filters, setFilters] = useState<AiCallsFilter>(() => aiCallsFilterSchema.parse({}));
   const toast = useToast();
   const run = useExportJob();
@@ -38,13 +42,13 @@ export function useAiCalls() {
       if (result.kind !== 'done') throw Error('export failed');
       return result;
     },
-    onSuccess: (result) => toast(`Đã xuất ${result.rows} lời gọi AI`),
-    onError: () => toast('Không xuất được nhật ký, vui lòng thử lại'),
+    onSuccess: (result) => toast(t('exported', { rows: formatNumber(result.rows, locale) })),
+    onError: () => toast(t('exportFailed')),
   });
   const update = (next: AiCallsFilter) => {
     const parsed = aiCallsFilterSchema.safeParse(next);
     if (!parsed.success) {
-      toast('Khoảng ngày phải từ 0 đến 90 ngày');
+      toast(t('rangeInvalid'));
       return;
     }
     setFilters(parsed.data);

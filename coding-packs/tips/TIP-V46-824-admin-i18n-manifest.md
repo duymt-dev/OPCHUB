@@ -654,7 +654,7 @@ Batch = one TIP824. Pairwise conflicts inside the batch = zero. Overlaps with hi
 
 ## Counts and verification
 
-605 explicit paths: 356 create, 248 modify, 1 delete. Modify/delete paths were checked against the working baseline; create paths are planned and absent except the planning documents being created in this phase. No app source file is changed by generating this manifest.
+610 explicit paths: 360 create, 249 modify, 1 delete. Modify/delete paths were checked against the working baseline; create paths are planned and absent except the planning documents being created in this phase. No app source file is changed by generating this manifest.
 
 ## Execute inventory additions (2026-11-11, same serial lane)
 
@@ -667,7 +667,7 @@ The split removes the old settings JSON import used by six existing tests; redir
 | modify | `apps/admin/src/features/settings/components/audit-log-tab.spec.tsx` | Redirect obsolete settings fixture import; preserve assertions. |
 | modify | `apps/admin/src/features/settings/components/app-notify-tab.spec.tsx` | Redirect obsolete settings fixture import; preserve assertions. |
 | modify | `apps/admin/src/features/settings/components/app-notify-device.spec.tsx` | Redirect obsolete settings fixture import; preserve assertions. |
-| modify | `apps/admin/src/features/settings/components/ai/ai-tab.spec.tsx` | Redirect obsolete settings fixture import; preserve assertions. |
+| modify | `apps/admin/src/features/settings/components/ai/ai-tab.spec.tsx` | Redirect obsolete settings fixture import and include real ui labels; preserve assertions. |
 | create | `apps/admin/src/i18n/tests/icu-contract.ts` | Public IntlMessageFormat AST contract comparison, tests only. |
 
 ## Execute inventory additions - presentation and control locale integration
@@ -711,3 +711,15 @@ Sequential extension, checked before editing. These adapters preserve current Vi
 | modify | `apps/admin/src/features/groups/hooks/use-export.ts` | Keep audited export workflow; render exact export-content preview. |
 | modify | `apps/admin/src/features/marketing/components/welcome-preview.tsx` | Keep email body preview in current email-contract language, not GUI locale. |
 | create | `apps/admin/src/features/marketing/components/welcome-preview.spec.tsx` | Verify unchanged email preview under English Admin provider. |
+
+## Execute inventory additions - AI UI and email-boundary regressions
+
+Sequential extension inspected before editing; all production callers and catalogs are already declared. No parallel implementation or backend changes. New `settings.aiCalls` and four `groups.mod.ai*` source labels are additions only; original524 settings leaves and2456 legacy leaves remain protected separately from additions.
+
+| Action | Exact path | Responsibility |
+|---|---|---|
+| create | `apps/admin/src/features/settings/components/ai/ai-call-i18n.spec.tsx` | Live-locale AI filters/columns, canonical filter values and raw provider/model/error/actor data. |
+| create | `apps/admin/src/features/groups/components/moderation-i18n.spec.tsx` | Localized moderation action labels with identical action payloads. |
+| create | `apps/admin/src/features/settings/components/welcome-preview.spec.tsx` | Localized preview chrome with unchanged Vietnamese email body and authored content. |
+| modify | `apps/admin/src/features/settings/components/welcome-preview.tsx` | Keep actual Vietnamese email body distinct from localized preview chrome. |
+| create | `apps/admin/src/features/profile/hooks/use-profile-errors.ts` | Keep structured client issues for live locale changes; preserve raw API field errors and hidden-avatar toast behavior. |

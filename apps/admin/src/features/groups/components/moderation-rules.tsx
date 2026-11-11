@@ -23,10 +23,10 @@ export function ModerationRules() {
     <div className={styles.rules}>
       <span className={styles.kwTitle}>{t('rules')}</span>
       <label className={styles.lockTime} htmlFor="ai-moderation-enabled">
-        Dùng AI phân loại tin vi phạm
+        {t('aiEnabled')}
         <Switch
           id="ai-moderation-enabled"
-          aria-label="Dùng AI phân loại tin vi phạm"
+          aria-label={t('aiEnabled')}
           checked={ai}
           loading={aiSave.isPending}
           onChange={(value) => aiSave.mutate({ autoLockDays: days, ai: value })}

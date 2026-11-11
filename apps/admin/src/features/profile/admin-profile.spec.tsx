@@ -7,6 +7,9 @@ import { mockAdminMeOf } from '@opchub/shared/mock-domains';
 import { useAuthStore } from '@/lib/auth-store';
 import { ApiError } from '@/lib/api-client';
 import common from '../../../messages/vi/common.json';
+import ui from '../../../messages/vi/ui.json';
+import enCommon from '../../../messages/en/common.json';
+import enUi from '../../../messages/en/ui.json';
 import { AdminProfileScreen } from './components/admin-profile-screen';
 import * as api from './api';
 
@@ -37,16 +40,20 @@ afterEach(() => {
   cleanup();
   useAuthStore.getState().clear();
 });
-function mount() {
-  return render(
-    <QueryClientProvider
-      client={new QueryClient({ defaultOptions: { mutations: { retry: false } } })}
-    >
-      <NextIntlClientProvider locale="vi" messages={{ common }}>
+function mount(locale: 'vi' | 'en' = 'vi') {
+  const client = new QueryClient({ defaultOptions: { mutations: { retry: false } } });
+  const tree = (selected: 'vi' | 'en') => (
+    <QueryClientProvider client={client}>
+      <NextIntlClientProvider
+        locale={selected}
+        messages={selected === 'vi' ? { common, ui } : { common: enCommon, ui: enUi }}
+      >
         <AdminProfileScreen />
       </NextIntlClientProvider>
-    </QueryClientProvider>,
+    </QueryClientProvider>
   );
+  const view = render(tree(locale));
+  return { ...view, switchLocale: (next: 'vi' | 'en') => view.rerender(tree(next)) };
 }
 it('TIP-V46-822 AC-01/02 readonly email/role and successful name updates store immediately', async () => {
   const me = useAuthStore.getState().me;
@@ -103,5 +110,59 @@ it('TIP-V46-822 AC-03 rejected avatar has visible feedback rather than hidden fi
   mount();
   fireEvent.click(screen.getByRole('button', { name: 'Lưu thông tin' }));
   await waitFor(() => expect(state.toast).toHaveBeenCalledWith('Ảnh chưa được tải lên'));
+  expect(useAuthStore.getState().accessToken).toBe('old');
+});
+
+it('D-141 AC824-10 local password errors switch live while preserving draft/session and making no request', async () => {
+  const view = mount('en');
+  fireEvent.change(screen.getByLabelText(enCommon.adminProfile.currentPassword), {
+    target: { value: 'Current1' },
+  });
+  fireEvent.change(screen.getByLabelText(enCommon.adminProfile.newPassword), {
+    target: { value: 'weak' },
+  });
+  fireEvent.change(screen.getByLabelText(enCommon.adminProfile.confirmPassword), {
+    target: { value: 'weak' },
+  });
+  fireEvent.click(screen.getByRole('button', { name: enCommon.adminProfile.changePassword }));
+  await screen.findByText(enUi.errors.adminPasswordRule);
+  expect(api.changePassword).not.toHaveBeenCalled();
+  view.switchLocale('vi');
+  await screen.findByText(ui.errors.adminPasswordRule);
+  expect(screen.getByLabelText<HTMLInputElement>(common.adminProfile.newPassword).value).toBe(
+    'weak',
+  );
+  view.switchLocale('en');
+  await screen.findByText(enUi.errors.adminPasswordRule);
+  expect(screen.getByLabelText<HTMLInputElement>(enCommon.adminProfile.currentPassword).value).toBe(
+    'Current1',
+  );
+  expect(useAuthStore.getState().accessToken).toBe('old');
+  expect(api.changePassword).not.toHaveBeenCalled();
+});
+
+it('D-141 AC824-12 raw API errors are never translated, even if their text matches a local rule', async () => {
+  vi.mocked(api.changePassword).mockRejectedValue(
+    new ApiError('VALIDATION_ERROR', 400, 'Lỗi gốc', [
+      { path: 'newPassword', message: ui.errors.adminPasswordRule },
+    ]),
+  );
+  const view = mount('en');
+  for (const label of [
+    enCommon.adminProfile.currentPassword,
+    enCommon.adminProfile.newPassword,
+    enCommon.adminProfile.confirmPassword,
+  ]) {
+    fireEvent.change(screen.getByLabelText(label), {
+      target: { value: label === enCommon.adminProfile.currentPassword ? 'Current1' : 'NewPass1' },
+    });
+  }
+  fireEvent.click(screen.getByRole('button', { name: enCommon.adminProfile.changePassword }));
+  await screen.findByText(ui.errors.adminPasswordRule);
+  expect(screen.queryByText(enUi.errors.adminPasswordRule)).toBeNull();
+  view.switchLocale('vi');
+  view.switchLocale('en');
+  expect(screen.getByText(ui.errors.adminPasswordRule)).toBeTruthy();
+  expect(api.changePassword).toHaveBeenCalledTimes(1);
   expect(useAuthStore.getState().accessToken).toBe('old');
 });

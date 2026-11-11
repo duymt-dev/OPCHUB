@@ -1,21 +1,21 @@
-NEXT_PUBLIC_PORTAL_URL=http://localhost:60096
+MODE=msw; Portal=http://localhost:60096; build only, not API/browser acceptance
 $ next build
 ▲ Next.js 16.4.2 (Turbopack)
 - Environments: .env.local
-✓ Running next.config.ts took 620ms
+✓ Running next.config.ts took 595ms
 - Experiments (use with caution):
   · optimizePackageImports
 
   Creating an optimized production build ...
-✓ Compiled successfully in 2.9s
+✓ Compiled successfully in 6.6s
   Running TypeScript ...
-  Finished TypeScript in 13.7s ...
+  Finished TypeScript in 36.6s ...
   Collecting page data using 5 workers ...
   Generating static pages using 5 workers (0/10) ...
   Generating static pages using 5 workers (2/10)
   Generating static pages using 5 workers (4/10)
   Generating static pages using 5 workers (7/10)
-✓ Generating static pages using 5 workers (10/10) in 819ms
+✓ Generating static pages using 5 workers (10/10) in 1453ms
   Finalizing page optimization ...
 
 Route (app)

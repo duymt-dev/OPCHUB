@@ -1,47 +1,67 @@
-import { Tag, type TableColumnsType } from 'antd';
-import { AI_PROVIDER_CATALOG, type AiCallItem } from '@opchub/shared/api-domains';
-import { AI_PURPOSE_LABELS, AI_STATUS_LABELS } from './ai-call-filters';
+'use client';
 
-export const AI_CALL_COLUMNS: TableColumnsType<AiCallItem> = [
-  {
-    title: 'Thời gian',
-    dataIndex: 'at',
-    render: (at: string) => new Date(at).toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' }),
-  },
-  {
-    title: 'Chức năng',
-    dataIndex: 'purpose',
-    render: (purpose: AiCallItem['purpose']) => AI_PURPOSE_LABELS[purpose],
-  },
-  {
-    title: 'Nhà cung cấp',
-    dataIndex: 'provider',
-    render: (provider: AiCallItem['provider']) => AI_PROVIDER_CATALOG[provider].name,
-  },
-  { title: 'Mô hình', dataIndex: 'model' },
-  {
-    title: 'Token vào / ra',
-    render: (_: unknown, row) => `${row.promptTokens} / ${row.completionTokens}`,
-  },
-  {
-    title: 'Chi phí (đ)',
-    dataIndex: 'cost',
-    render: (cost: number) => cost.toLocaleString('vi-VN'),
-  },
-  { title: 'Độ trễ (ms)', dataIndex: 'latencyMs' },
-  {
-    title: 'Trạng thái',
-    dataIndex: 'status',
-    render: (status: AiCallItem['status']) => (
-      <Tag color={{ ok: 'green', error: 'red', fallback: 'orange' }[status]}>
-        {AI_STATUS_LABELS[status]}
-      </Tag>
-    ),
-  },
-  { title: 'Mã lỗi', dataIndex: 'errorCode' },
-  {
-    title: 'Người dùng',
-    render: (_: unknown, row) =>
-      `${{ member: 'Thành viên', admin: 'Quản trị', system: 'Hệ thống' }[row.actor?.realm ?? 'system']} ${row.actor?.id ?? ''}`,
-  },
-];
+import { Tag, type TableColumnsType } from 'antd';
+import { useLocale, useTranslations } from 'next-intl';
+import { AI_PROVIDER_CATALOG, type AiCallItem } from '@opchub/shared/api-domains';
+import { formatDate, formatNumber } from '@/i18n/format';
+
+export function useAiCallColumns(): TableColumnsType<AiCallItem> {
+  const t = useTranslations('settings.aiCalls');
+  const locale = useLocale();
+  return [
+    {
+      title: t('col.at'),
+      dataIndex: 'at',
+      render: (at: string) =>
+        formatDate(at, locale, {
+          year: 'numeric',
+          month: 'numeric',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+          second: 'numeric',
+        }),
+    },
+    {
+      title: t('col.purpose'),
+      dataIndex: 'purpose',
+      render: (purpose: AiCallItem['purpose']) => t(`purpose.${purpose}`),
+    },
+    {
+      title: t('col.provider'),
+      dataIndex: 'provider',
+      render: (provider: AiCallItem['provider']) => AI_PROVIDER_CATALOG[provider].name,
+    },
+    { title: t('col.model'), dataIndex: 'model' },
+    {
+      title: t('col.tokens'),
+      render: (_: unknown, row) =>
+        `${formatNumber(row.promptTokens, locale)} / ${formatNumber(row.completionTokens, locale)}`,
+    },
+    {
+      title: t('col.cost'),
+      dataIndex: 'cost',
+      render: (cost: number) => formatNumber(cost, locale),
+    },
+    {
+      title: t('col.latency'),
+      dataIndex: 'latencyMs',
+      render: (value: number) => formatNumber(value, locale),
+    },
+    {
+      title: t('col.status'),
+      dataIndex: 'status',
+      render: (status: AiCallItem['status']) => (
+        <Tag color={{ ok: 'green', error: 'red', fallback: 'orange' }[status]}>
+          {t(`status.${status}`)}
+        </Tag>
+      ),
+    },
+    { title: t('col.error'), dataIndex: 'errorCode' },
+    {
+      title: t('col.actor'),
+      render: (_: unknown, row) =>
+        `${t(`realm.${row.actor?.realm ?? 'system'}`)} ${row.actor?.id ?? ''}`,
+    },
+  ];
+}

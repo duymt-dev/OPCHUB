@@ -1,21 +1,21 @@
-MODE=off; isolated API proxy=http://127.0.0.1:53792; build is NOT native API/browser verification
+MODE=off; Portal=http://localhost:53794; build only, not API/browser acceptance
 $ next build
 ▲ Next.js 16.4.2 (Turbopack)
 - Environments: .env.local
-✓ Running next.config.ts took 803ms
+✓ Running next.config.ts took 838ms
 - Experiments (use with caution):
   · optimizePackageImports
 
   Creating an optimized production build ...
-✓ Compiled successfully in 12.2s
+✓ Compiled successfully in 9.6s
   Running TypeScript ...
-  Finished TypeScript in 30.3s ...
+  Finished TypeScript in 35.4s ...
   Collecting page data using 5 workers ...
   Generating static pages using 5 workers (0/10) ...
   Generating static pages using 5 workers (2/10)
   Generating static pages using 5 workers (4/10)
   Generating static pages using 5 workers (7/10)
-✓ Generating static pages using 5 workers (10/10) in 599ms
+✓ Generating static pages using 5 workers (10/10) in 1220ms
   Finalizing page optimization ...
 
 Route (app)

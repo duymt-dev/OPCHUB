@@ -218,6 +218,10 @@
     }
   },
   "mod": {
+    "aiEnabled": "Use AI to classify violating messages",
+    "aiPending": "Awaiting Admin review · not counted as a violation yet",
+    "aiHide": "Hide message",
+    "aiDismiss": "Dismiss",
     "title": "Sensitive messages",
     "sub": "Messages containing banned keywords or reported by members are immediately hidden from the chat room. From the second violation onward, the account is automatically locked for {days} days.",
     "pending": "Pending: {count}",
