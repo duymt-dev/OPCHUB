@@ -59,5 +59,8 @@ export async function assertSidebarLabels(
   await sidebar.locator(':scope > nav').evaluate((nav) => {
     nav.scrollTop = 0;
   });
+  await sidebar.evaluate((aside) => {
+    aside.scrollTop = 0;
+  });
   return { rows: await links.count(), wrapped };
 }

@@ -1237,3 +1237,12 @@ Implement all25 existing explicit my paths in domain-sized stages, without place
 | create | `coding-packs/reports/evidence/v46-824/my-settings-msw-390.png` | Actual unmasked Myanmar settings at390; not owner/native-human review. |
 | create | `coding-packs/reports/evidence/v46-824/my-settings-server-1440.png` | Actual unmasked Myanmar settings at1440; not owner/native-human review. |
 | create | `coding-packs/reports/evidence/v46-824/my-settings-server-390.png` | Actual unmasked Myanmar settings at390; not owner/native-human review. |
+
+## Myanmar browser evidence readiness follow-up
+
+Native font My1440 failed the unchanged initial Latin-download assertion before the login content/network had been explicitly awaited; retain failure and strengthen loaded-page preconditions (visible username field + network idle + fonts.ready), never drop Latin/script/menu/CDP assertions or change timeout. Sidebar bounds probing scrolls links into view; restore the actual aside as well as nav before screenshot, not a production layout change. My Overview screenshots also expose native Intl.NumberFormat bypass in system flow (Latin5/12 while KPI counts use Myanmar digits); this remains an explicit AC824-08 finding to fix before full completion, not waived by raw/font tests.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| modify | `e2e/behavior/admin-i18n/sidebar.ts` | Preserve every bounds/badge/icon assertion; restore actual aside scroll position after probing so screenshots represent top-of-sidebar state. |
+| modify | `e2e/audit/admin-i18n-fonts.spec.ts` | Explicitly await loaded login DOM/network before font observation; preserve all24 strict assertions/mode and timeout, no arbitrary sleep. |

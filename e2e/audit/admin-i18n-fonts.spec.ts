@@ -47,6 +47,9 @@ for (const option of languageOptions) {
       await expect(page.locator('html')).toHaveAttribute('lang', option.code);
       const trigger = page.locator('button[aria-haspopup=listbox]');
       await expect(trigger).toContainText(option.native);
+      // The selector can arrive before streamed login/provider content discovers Latin fonts.
+      await expect(page.locator('input[autocomplete=username]')).toBeVisible();
+      await page.waitForLoadState('networkidle');
       await page.evaluate(() => document.fonts.ready);
       const expected = SCRIPTS[option.code];
       const initial = [...downloads];
