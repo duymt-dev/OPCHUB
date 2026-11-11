@@ -1,0 +1,76 @@
+{
+  "title": "Pangkalahatang-ideya",
+  "sub": "Subaybayan ang paglago, mga kaganapan at pagmo-moderate ng nilalaman ng komunidad",
+  "stats": {
+    "members": "Mga Miyembro",
+    "membersDelta": "+{pct}% ngayong buwan",
+    "membersRangeDelta": "+{pct}% sa napiling panahon",
+    "freshRangeDelta": "Sa napiling panahon",
+    "communities": "Komunidad",
+    "communitiesDelta": "+{n} bagong grupo",
+    "fresh": "Mga bagong miyembro",
+    "freshDelta": "Buwan {month}",
+    "events": "Mga Kaganapan",
+    "eventsDelta": "{n} paparating"
+  },
+  "growth": {
+    "title": "Paglago ng mga miyembro",
+    "week": "Linggo",
+    "month": "Buwan",
+    "year": "Taon",
+    "delta": "+{pct}%",
+    "deltaNote": "+{n} miyembro ngayong buwan",
+    "rangeDeltaNote": "+{n} miyembro sa napiling panahon",
+    "active": "Aktibo",
+    "new": "Bago",
+    "inactive": "Hindi pa aktibo"
+  },
+  "flow": {
+    "title": "Daloy ng gawain ng system",
+    "sub": "Live na mga bilang mula sa mga module",
+    "done": "Kumpleto",
+    "todo": "Kailangan ng aksyon",
+    "fees": {
+      "name": "Mga nakabayad na miyembro",
+      "sub": "Awtomatikong pinapagana kapag nagtugma na ang mga bank transfer",
+      "cta": "Mga bayad sa pagiging miyembro"
+    },
+    "stores": {
+      "name": "Mga nakikitang tindahan",
+      "sub": "{hidden} nakatago · {draft} draft",
+      "cta": "Mga Tindahan"
+    },
+    "needs": {
+      "name": "Bukas na pangangailangan",
+      "sub": "{closed} sarado",
+      "cta": "Pangangailangan"
+    },
+    "projects": {
+      "name": "Mga proyektong naghihintay ng pagsusuri",
+      "sub": "{published} nakikitang proyekto",
+      "cta": "Suriin ang mga proyekto"
+    },
+    "groups": {
+      "name": "Mga grupo ng komunidad",
+      "sub": "Mga grupo ayon sa lalawigan at industriya",
+      "cta": "Komunidad"
+    }
+  },
+  "conversion": {
+    "heading": "Paglipat mula libre tungo sa bayad ayon sa rehiyon",
+    "sub": "Porsiyento = Nakabayad / (Nakabayad + Nag-expire at hindi pa bayad) · mga miyembro matapos ang 3 buwang libreng pagsubok",
+    "export": "I-export bilang CSV",
+    "region": "Rehiyon",
+    "director": "Direktor ng Rehiyon",
+    "trial": "Nasa panahon ng pagsubok",
+    "paid": "Nakabayad",
+    "expired": "Nag-expire at hindi pa bayad",
+    "rate": "Porsiyento ng paglipat",
+    "total": "Sa buong bansa",
+    "unappointed": "Hindi pa nakatalaga",
+    "exported": "Na-export ang 3 row – chuyen-doi-theo-vung.csv",
+    "failed": "Hindi ma-load ang mga bilang o ma-export ang CSV",
+    "loading": "Nilo-load ang mga bilang…",
+    "retry": "Subukang muli"
+  }
+}

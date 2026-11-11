@@ -1,0 +1,126 @@
+{
+  "shell": {
+    "navTitle": "PAMAMAHALA",
+    "search": "Maghanap...",
+    "notifications": "Mga Abiso",
+    "menu": "Menu",
+    "back": "Pangunahing pahina",
+    "collapse": "Paliitin ang sidebar",
+    "expand": "Palakihin ang sidebar",
+    "language": "Filipino",
+    "profile": "Personal na profile",
+    "logout": "Mag-sign out",
+    "brandTag": "ADMIN",
+    "upcoming": "Mga paparating na kaganapan",
+    "viewAll": "Tingnan lahat",
+    "settings": "Mga setting ng system",
+    "globalSearch": {
+      "placeholder": "Maghanap ng miyembro, tindahan, pangangailangan, proyekto, grupo…",
+      "empty": "Walang nakitang resulta",
+      "clear": "Burahin ang paghahanap",
+      "hint": "Maglagay ng hindi bababa sa 2 character para maghanap...",
+      "emptyQuery": "Walang nakitang resulta para sa ‘{query}’",
+      "loading": "Naghahanap…",
+      "failed": "Hindi ma-load ang mga resulta ng paghahanap",
+      "groups": {
+        "store": "Mga Tindahan",
+        "need": "Mga lokal na pangangailangan",
+        "project": "Mga proyekto ng OPC",
+        "group": "Mga grupo ng komunidad",
+        "member": "Mga Miyembro"
+      },
+      "members": "{n} miyembro"
+    }
+  },
+  "nav": {
+    "overview": "Pangkalahatang-ideya",
+    "members": "Mga Miyembro",
+    "fees": "Mga bayad sa pagiging miyembro",
+    "groups": "Mga grupo ng komunidad",
+    "bots": "Mga interaction bot",
+    "events": "Nilalaman at Mga Kaganapan",
+    "needs": "Mga lokal na pangangailangan",
+    "stores": "Mga Tindahan",
+    "projects": "Mga proyekto ng OPC",
+    "investors": "Mga Mamumuhunan",
+    "requests": "Mga Serbisyo",
+    "affiliate": "Network ng mga affiliate",
+    "reports": "Mga Ulat",
+    "marketing": "Marketing",
+    "settings": "Mga setting ng system"
+  },
+  "navGroup": {
+    "people": "MGA TAO AT KOMUNIDAD",
+    "business": "UGNAYANG PANGNEGOSYO",
+    "revenue": "KITA AT MGA PARTNER"
+  },
+  "role": {
+    "super_admin": "Super Admin",
+    "admin": "Administrador",
+    "moderator": "Tagapangasiwa",
+    "member": "Miyembro"
+  },
+  "state": {
+    "loading": "Naglo-load…",
+    "error": "Hindi ma-load ang data",
+    "retry": "Subukang muli",
+    "notFound": "Hindi nahanap ang pahina"
+  },
+  "notifications": {
+    "title": "Mga Abiso",
+    "markAll": "Markahan lahat bilang nabasa",
+    "tabAll": "Lahat",
+    "tabUnread": "Hindi pa nababasa ({n})",
+    "empty": "Walang abiso"
+  },
+  "ago": {
+    "now": "Ngayon lang",
+    "minutes": "{n} minuto ang nakalipas",
+    "hours": "{n} oras ang nakalipas",
+    "days": "{n} araw ang nakalipas"
+  },
+  "errors": {
+    "fixFields": "Pakisuri ang mga field na may marka",
+    "failed": "Hindi nagtagumpay ang aksyon, pakisubukang muli"
+  },
+  "rbac": {
+    "viewOnly": "Tingnan lamang — hindi maaaring magsagawa ng mga aksyon sa seksyong ito ang tungkuling <b>{role}</b>.",
+    "viewOnlyToast": "Tingnan lamang ang seksyong ito ang pinapayagan sa tungkuling {role}",
+    "preview": "Pini-preview ang Admin bilang <b>{role}</b> — mga menu lamang na pinapayagan sa tungkuling ito ang ipinapakita.",
+    "previewExit": "Lumabas sa preview",
+    "forbiddenTitle": "Wala kang pahintulot na tingnan ang seksyong ito",
+    "forbiddenBody": "Hindi pinapayagan sa iyong tungkulin na buksan ang seksyong ito.",
+    "forbiddenBack": "Pumunta sa pinapayagang seksyon",
+    "twoFactor": "Paganahin ang two-factor authentication"
+  },
+  "adminProfile": {
+    "nameRequired": "Ilagay ang iyong buong pangalan",
+    "enabled": "Pinagana",
+    "name": "Buong pangalan",
+    "currentPassword": "Kasalukuyang password",
+    "newPassword": "Bagong password",
+    "passwordRule": "Hindi bababa sa 8 character, kasama ang malaking titik at numero",
+    "noRole": "Walang nakatalagang tungkulin",
+    "security": "Seguridad at Tungkulin",
+    "passwordSaved": "Na-update ang password",
+    "emailHint": "Email na itinalaga ng administrador",
+    "passwordTitle": "Palitan ang password",
+    "role": "Kasalukuyang tungkulin",
+    "changePassword": "I-update ang password",
+    "enable": "Paganahin ang two-factor authentication",
+    "email": "Email sa pag-sign in",
+    "failed": "Hindi ma-update. Subukang muli",
+    "disabled": "Hindi pa pinagana",
+    "save": "I-save ang mga detalye",
+    "saved": "Na-save ang personal na mga detalye",
+    "personal": "Personal na impormasyon",
+    "phone": "Numero ng telepono",
+    "imageRule": "Larawang JPG/PNG/WebP, hanggang 5 MB",
+    "subtitle": "Pamahalaan ang iyong personal na mga detalye at seguridad ng administrator account",
+    "confirmPassword": "Kumpirmahin ang bagong password",
+    "upload": "Mag-upload ng bagong larawan",
+    "remove": "Alisin ang larawan",
+    "title": "Personal na profile",
+    "twoFactor": "Two-factor authentication (2FA)"
+  }
+}

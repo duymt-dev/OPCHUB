@@ -1,0 +1,70 @@
+{
+  "title": "Mga lokal na pangangailangan",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "kpi": {
+    "total": "Kabuuang mga pangangailangan",
+    "open": "Bukas",
+    "closed": "Sarado",
+    "hidden": "Itinago ng Admin"
+  },
+  "search": "Maghanap ng pangangailangan, tindahan, lalawigan...",
+  "filtersLabel": "I-filter ayon sa katayuan ng pangangailangan",
+  "filter": {
+    "all": "Lahat",
+    "open": "Bukas",
+    "closed": "Sarado",
+    "hidden": "Nakatago"
+  },
+  "note": "Agad na nakikita ang mga pangangailangan kapag nai-post ng miyembro; itinatago lamang ng Admin kapag may paglabag.",
+  "type": {
+    "buy": "Gustong bumili",
+    "sell": "Kailangan ng mamimili",
+    "partner": "Kailangan ng katuwang",
+    "service": "Kailangan ng serbisyo",
+    "solution": "Kailangan ng solusyon",
+    "staff": "Kailangan ng tauhan",
+    "space": "Kailangan ng puwesto / bodega",
+    "capital": "Kailangan ng puhunan",
+    "other": "Iba pang pangangailangan"
+  },
+  "status": {
+    "open": "Bukas",
+    "closed": "Sarado",
+    "hidden": "Itinago ng Admin"
+  },
+  "table": {
+    "label": "Listahan ng mga pangangailangan",
+    "all": "Piliin lahat sa pahinang ito",
+    "need": "Pangangailangan",
+    "type": "Uri",
+    "store": "Tindahan",
+    "area": "Lugar",
+    "date": "Na-post noong",
+    "status": "Katayuan",
+    "actions": "Mga Aksyon",
+    "hide": "Itago",
+    "show": "Ipakita"
+  },
+  "bulk": {
+    "label": "Mga maramihang aksyon",
+    "selected": "Mga napiling pangangailangan: {n}",
+    "show": "Ipakita",
+    "hide": "Itago",
+    "clear": "Alisin ang pagpili"
+  },
+  "pager": {
+    "text": "Pahina {page} / {pages} · Mga pangangailangan: {total}",
+    "prev": "Nakaraang pahina",
+    "next": "Susunod na pahina",
+    "prevBtn": "‹ Nakaraan",
+    "nextBtn": "Susunod ›"
+  },
+  "toast": {
+    "hidden": "Mga naitagong pangangailangan: {n}",
+    "shown": "Mga naipakitang pangangailangan: {n}",
+    "failed": "Hindi maisagawa ang aksyong ito. Subukang muli"
+  },
+  "empty": "Walang tumutugmang pangangailangan.",
+  "error": "Hindi ma-load ang listahan ng mga pangangailangan",
+  "retry": "Subukang muli"
+}

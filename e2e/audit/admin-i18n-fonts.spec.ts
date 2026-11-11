@@ -86,6 +86,13 @@ for (const option of languageOptions) {
       await page.keyboard.press('Escape');
       await expect(page.getByRole('option')).toHaveCount(0);
       expect(faults).toEqual([]);
+      if (option.code === 'fil') {
+        // Auth/meta are complete staged files, not a claim that the whole Filipino bundle exists.
+        await expect(
+          page.getByRole('heading', { name: 'Maligayang pagbabalik!', exact: true }),
+        ).toBeVisible();
+        await expect(page).toHaveTitle(/^Mag-sign in/);
+      }
       if (option.code === 'ms' || option.code === 'ms-BN') {
         await expect(
           page.getByRole('heading', { name: 'Selamat kembali!', exact: true }),

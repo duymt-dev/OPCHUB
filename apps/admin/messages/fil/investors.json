@@ -1,0 +1,61 @@
+{
+  "title": "Mga Mamumuhunan",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "stats": {
+    "total": "Kabuuang mga mamumuhunan",
+    "fund": "Mga pondong pamumuhunan",
+    "business": "Mga negosyong mamumuhunan",
+    "individual": "Mga indibidwal na mamumuhunan",
+    "amount": "Kabuuang ipinahayag na interes sa pamumuhunan"
+  },
+  "heading": "Mga Mamumuhunan",
+  "sub": "Mga pondo at indibidwal na nagpahayag ng interes na mamuhunan sa mga proyekto ng OPC",
+  "search": "Maghanap ng pangalan, negosyo, pondo, numero ng telepono...",
+  "searchLabel": "Maghanap ng mamumuhunan",
+  "csv": "I-export bilang CSV",
+  "tabsLabel": "I-filter ayon sa uri ng mamumuhunan",
+  "tabs": {
+    "all": "Lahat",
+    "fund": "Mga pondong pamumuhunan",
+    "business": "Mga Negosyo",
+    "individual": "Mga Indibidwal"
+  },
+  "kind": {
+    "fund": "Pondong pamumuhunan",
+    "business": "Negosyo",
+    "individual": "Indibidwal"
+  },
+  "col": {
+    "investor": "Mamumuhunan",
+    "kind": "Uri",
+    "org": "Negosyo / Pondo",
+    "phone": "Numero ng telepono",
+    "projects": "Mga proyektong interesado",
+    "total": "Kabuuang interes"
+  },
+  "detail": "Detalye",
+  "empty": "Walang tumutugmang mamumuhunan",
+  "pager": {
+    "unit": "mamumuhunan",
+    "prev": "Nakaraang pahina",
+    "next": "Susunod na pahina",
+    "pageSize": "Bilang ng row bawat pahina"
+  },
+  "drawer": {
+    "title": "Mga detalye ng mamumuhunan",
+    "close": "Isara",
+    "org": "Negosyo / Pondo",
+    "phone": "Numero ng telepono",
+    "total": "Kabuuang ipinahayag na interes sa pamumuhunan",
+    "copy": "Kopyahin ang numero",
+    "projects": "Mga proyektong interesado ({n})",
+    "owner": "May-ari ng proyekto: {owner} · {date}"
+  },
+  "toast": {
+    "copied": "Nakopya ang numero ng telepono",
+    "exported": "Na-export na mga mamumuhunan: {n}",
+    "failed": "Hindi maisagawa ang aksyong ito. Subukang muli"
+  },
+  "error": "Hindi ma-load ang listahan ng mga mamumuhunan",
+  "retry": "Subukang muli"
+}

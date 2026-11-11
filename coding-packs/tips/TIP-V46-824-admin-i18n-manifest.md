@@ -367,6 +367,8 @@ Baseline settings has **524** string leaves. Its sorted `[path,value]` entries (
 | create | `apps/admin/messages/fil/settings/mail.json` | Complete translated catalog; exact structure and ICU argument contract. |
 | create | `apps/admin/messages/fil/stores.json` | Complete translated catalog; exact structure and ICU argument contract. |
 | create | `apps/admin/messages/fil/ui.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/src/i18n/tests/filipino-catalog.spec.ts` | Explicit raw Filipino checkpoint inventory and Admin-context/glyph assertions. Partial locale is never counted as a complete bundle. |
+| create | `coding-packs/reports/evidence/v46-824/filipino.log` | Actual raw/ICU/context/glyph test output and fixed whole-bundle missing-file inventory. |
 | create | `apps/admin/messages/id/affiliate.json` | Complete translated catalog; exact structure and ICU argument contract. |
 | create | `apps/admin/messages/id/auth.json` | Complete translated catalog; exact structure and ICU argument contract. |
 | create | `apps/admin/messages/id/bot-options.json` | Complete translated catalog; exact structure and ICU argument contract. |

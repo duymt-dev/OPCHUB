@@ -1,0 +1,61 @@
+{
+  "title": "Mga Ulat",
+  "subtitle": "Mga buwanang bilang at CSV export gamit ang mga template na B1 / B2 / B3",
+  "template": {
+    "label": "Template ng ulat",
+    "b1": "B1 · Grupo ayon sa industriya",
+    "b2": "B2 · Lalawigan",
+    "b3": "B3 · Rehiyon"
+  },
+  "month": "Buwan",
+  "monthOption": "Buwan {month}",
+  "scope": {
+    "b1": "Grupo",
+    "b2": "Lalawigan / Lungsod",
+    "b3": "Rehiyon"
+  },
+  "pickScope": "Pumili ng saklaw upang makita ang mga bilang",
+  "export": "I-export bilang CSV",
+  "metric": {
+    "newMembers": "Mga bagong miyembro",
+    "newPaidMembers": "Mga bagong nakabayad na miyembro",
+    "totalMembers": "Kabuuang mga miyembro",
+    "activeMembers": "Mga aktibong miyembro",
+    "events": "Mga Kaganapan / Coffee Chat",
+    "topics": "Mga paksa ng talakayan",
+    "feeRevenue": "Kita sa bayad sa pagiging miyembro (VND)",
+    "commission": "Naipong komisyon ng affiliate (VND)",
+    "fundraisingRevenue": "Mga Planong Paglikom ng Pondo (VND)",
+    "totalRevenue": "Kabuuang kita (VND)",
+    "contracts": "Mga kontratang G2B/B2B",
+    "sponsorship": "Sponsorship ng kaganapan (VND)",
+    "partners": "Mga koneksyon sa Partner / Supplier",
+    "opportunities": "Mga pagkakataon para sa pagtutulungan"
+  },
+  "table": {
+    "metrics": "Mga buwanang sukatan",
+    "metric": "Sukatan",
+    "actual": "Aktuwal",
+    "groups": "Mga grupo ayon sa industriya",
+    "group": "Grupo",
+    "owner": "Pinuno ng grupo",
+    "members": "Mga Miyembro",
+    "messages": "Buwanang aktibidad",
+    "provinces": "Mga KPI ng lalawigan",
+    "province": "Lalawigan / Lungsod",
+    "events": "Mga Kaganapan",
+    "revenue": "Kita (VND)",
+    "total": "Kabuuan ng rehiyon"
+  },
+  "noData": "Walang datos sa system",
+  "empty": "Walang row",
+  "error": "Hindi ma-load ang mga bilang ng ulat",
+  "retry": "Subukang muli",
+  "toast": {
+    "exporting": "Ginagawa ang file ng ulat…",
+    "exported": "Na-export ang {file}",
+    "exportFailed": "Hindi na-export ang ulat",
+    "exportTimeout": "Masyadong matagal ang paggawa ng file. Subukang muli",
+    "failed": "Hindi ma-export ang ulat"
+  }
+}
