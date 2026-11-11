@@ -2,7 +2,7 @@
 
 import { CAMPAIGN_AUDIENCE, type MailTemplate } from '@opchub/shared/api-domains';
 import { FieldErrorOf, type FieldErrorProps, invalidProps, RichTextField } from '@opchub/ui';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useGroupOptions } from '../hooks/use-marketing';
 import { applyTemplate, fmtN, toggleGroup } from '../model';
 import { MAIL_VARS, type CampaignFormError, type CampaignFormState } from '../types';
@@ -84,6 +84,7 @@ export function AudienceField({
   err,
   estimate,
 }: FieldProps & Err & { estimate: number | undefined }) {
+  const locale = useLocale();
   const t = useTranslations('marketing.form');
   const groups = useGroupOptions(f.audience === 'groups').data ?? [];
   return (
@@ -130,7 +131,7 @@ export function AudienceField({
       ) : null}
       <FieldErrorOf e={err('groups')} />
       <span className={styles.estimate} aria-live="polite">
-        {t('estimate', { n: fmtN(estimate ?? 0) })}
+        {t('estimate', { n: fmtN(estimate ?? 0, locale) })}
       </span>
     </div>
   );

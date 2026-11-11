@@ -1,7 +1,7 @@
 'use client';
 
 import { SafeHtml } from '@opchub/ui';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useRequestComments } from '../hooks/use-requests';
 import { commentTime, lastInitial, staffTone } from '../model';
 import { CommentComposer } from './comment-composer';
@@ -9,6 +9,7 @@ import styles from './request-comments.module.css';
 
 /** "Trao đổi nội bộ": bình luận HTML (SafeHtml) + nhân sự được gắn tên */
 export function RequestComments({ code }: { code: string }) {
+  const locale = useLocale();
   const d = useTranslations('requests.drawer');
   const q = useRequestComments(code);
   const list = q.data ?? [];
@@ -26,7 +27,7 @@ export function RequestComments({ code }: { code: string }) {
           </span>
           <div className={styles.col}>
             <span className={styles.meta}>
-              <b className={styles.who}>{c.authorName}</b> · {commentTime(c.createdAt)}
+              <b className={styles.who}>{c.authorName}</b> · {commentTime(c.createdAt, locale)}
             </span>
             <SafeHtml html={c.body} className={`rich ${styles.bubble}`} />
             {c.mentions.length ? (

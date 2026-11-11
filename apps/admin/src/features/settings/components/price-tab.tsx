@@ -1,7 +1,7 @@
 'use client';
 
 import { fundCommissionOf } from '@opchub/shared';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { usePriceConfig } from '../hooks/use-price-config';
 import { vnd } from '../model';
 import { PriceInput, PricePlanCard } from './price-plan-card';
@@ -12,6 +12,7 @@ const FUND_AFF_RATE = 10;
 
 /** Cài đặt › Cấu hình bảng giá (D-94 5A, prototype `stPrice`) */
 export function PriceTab() {
+  const locale = useLocale();
   const t = useTranslations('settings.price');
   const tc = useTranslations('settings.common');
   const p = usePriceConfig();
@@ -71,7 +72,7 @@ export function PriceTab() {
         <span className={styles.aff}>
           {t.rich('fund.aff', {
             rate: FUND_AFF_RATE,
-            amount: vnd(fundCommissionOf(f.fund.p, FUND_AFF_RATE)),
+            amount: vnd(fundCommissionOf(f.fund.p, FUND_AFF_RATE), locale),
             b: (c) => <b>{c}</b>,
           })}
         </span>

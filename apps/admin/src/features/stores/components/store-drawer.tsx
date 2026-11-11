@@ -2,7 +2,7 @@
 
 import { StorePublicLink } from './store-public-link';
 import type { AdminStore } from '@opchub/shared/api-domains';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 import { itemPrice, storeDate } from '../model';
 import { StoreStatusTag } from './store-status';
@@ -18,6 +18,7 @@ interface Props {
 }
 
 function DrawerItems({ x }: { x: AdminStore }) {
+  const locale = useLocale();
   const t = useTranslations('stores.drawer');
   const kind = useTranslations('stores.kind');
   return x.items.map((i) => (
@@ -33,7 +34,7 @@ function DrawerItems({ x }: { x: AdminStore }) {
           {kind(i.kind)} · {i.description}
         </span>
       </div>
-      <b className={styles.price}>{itemPrice(i, t('contactPrice'))}</b>
+      <b className={styles.price}>{itemPrice(i, t('contactPrice'), locale)}</b>
     </div>
   ));
 }
@@ -43,6 +44,7 @@ function DrawerItems({ x }: { x: AdminStore }) {
  * dừng đồng hồ); Esc / bấm nền / × đóng.
  */
 export function StoreDrawer({ x, canAct, onClose, onHide, onShow, onFeature }: Props) {
+  const locale = useLocale();
   const t = useTranslations('stores.drawer');
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
@@ -80,7 +82,7 @@ export function StoreDrawer({ x, canAct, onClose, onHide, onShow, onFeature }: P
             </div>
             <span className={styles.slogan}>{x.slogan}</span>
             <span className={styles.meta}>
-              {t('meta', { owner: x.ownerName, loc, date: storeDate(x.updatedAt) })}
+              {t('meta', { owner: x.ownerName, loc, date: storeDate(x.updatedAt, locale) })}
             </span>
             <span className={styles.intro}>{x.intro}</span>
             <span className={styles.contact}>{contact}</span>

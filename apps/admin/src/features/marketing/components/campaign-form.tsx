@@ -2,7 +2,7 @@
 
 import type { CampaignSaveMode } from '@opchub/shared/api-domains';
 import { translateErrors } from '@opchub/ui';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useFormErrors } from '@/lib/use-form-errors';
 import { useEscape } from '../hooks/use-escape';
@@ -35,6 +35,7 @@ function FormBody({
   onSubmit,
   onConfirm,
 }: Omit<Props, 'onClose'> & { initial: CampaignFormState }) {
+  const locale = useLocale();
   const t = useTranslations('marketing');
   const fe = useFormErrors<CampaignFormError>();
   const [f, setF] = useState(initial);
@@ -55,7 +56,7 @@ function FormBody({
     // Gửi ngay không hoàn tác → xác nhận (luật 10)
     onConfirm({
       title: t('confirm.sendTitle'),
-      body: t('confirm.sendBody', { name: f.name.trim(), n: fmtN(estimate ?? 0) }),
+      body: t('confirm.sendBody', { name: f.name.trim(), n: fmtN(estimate ?? 0, locale) }),
       okLabel: t('confirm.sendOk'),
       cancelLabel: t('confirm.cancel'),
       danger: false,

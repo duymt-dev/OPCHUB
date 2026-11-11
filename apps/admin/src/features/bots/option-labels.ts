@@ -13,10 +13,13 @@ export function useBotOptionLabels() {
       label: typeof labels[index] === 'string' ? labels[index] : value,
     }));
   };
+  const scriptTypes = pair(SCRIPT_TYPES, t.raw('scriptTypes'));
   return {
     tones: pair(PERSONA_TONES, t.raw('tones')),
     genders: pair(GENDERS, t.raw('genders')),
     hours: pair(ACTIVE_HOURS, t.raw('hours')),
-    scriptTypes: pair(SCRIPT_TYPES, t.raw('scriptTypes')),
+    scriptTypes,
+    scriptType: (value: string) =>
+      scriptTypes.find((option) => option.value === value)?.label ?? value,
   };
 }

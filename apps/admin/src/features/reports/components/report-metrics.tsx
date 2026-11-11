@@ -2,7 +2,7 @@
 
 import type { ReportMetrics, ReportTemplate } from '@opchub/shared/api-domains';
 import { Tooltip } from 'antd';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { fmt, KPI_KEYS, METRIC_ROWS } from '../model';
 import styles from './reports.module.css';
 
@@ -26,13 +26,14 @@ export function ReportKpis({
   template: ReportTemplate;
   m: ReportMetrics | undefined;
 }) {
+  const locale = useLocale();
   const t = useTranslations('reports.metric');
   return (
     <div className={styles.kpis}>
       {KPI_KEYS[template].map((k) => (
         <div key={k} className={styles.kpi} data-kpi={k}>
           <span className={styles.kpiLabel}>{t(k)}</span>
-          <b className={styles.kpiValue}>{m ? fmt(m[k]) : '—'}</b>
+          <b className={styles.kpiValue}>{m ? fmt(m[k], locale) : '—'}</b>
         </div>
       ))}
     </div>
@@ -41,6 +42,7 @@ export function ReportKpis({
 
 /** Bảng chỉ số đầy đủ theo thứ tự mẫu: Chỉ số | Thực hiện */
 export function ReportMetricTable({ template, m }: { template: ReportTemplate; m: ReportMetrics }) {
+  const locale = useLocale();
   const t = useTranslations('reports');
   return (
     <section className={styles.card} aria-label={t('table.metrics')}>
@@ -56,7 +58,7 @@ export function ReportMetricTable({ template, m }: { template: ReportTemplate; m
           {METRIC_ROWS[template].map((r) => (
             <tr key={r.key} data-metric={r.key}>
               <td>{t(`metric.${r.key}`)}</td>
-              <td className={styles.right}>{'empty' in r ? <NoData /> : fmt(m[r.key])}</td>
+              <td className={styles.right}>{'empty' in r ? <NoData /> : fmt(m[r.key], locale)}</td>
             </tr>
           ))}
         </tbody>

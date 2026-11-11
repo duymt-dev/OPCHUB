@@ -1,3 +1,4 @@
+import { formatNumber } from '@/i18n/format';
 import type { AdminEvent, AdminEventUpsertInput } from '@opchub/shared/api-domains';
 import type {
   EventFill,
@@ -56,7 +57,7 @@ export function pageSlice<T>(list: T[], page: number, size: number) {
   return { page: cur, items: list.slice((cur - 1) * size, cur * size) };
 }
 
-export const formatCount = (n: number) => n.toLocaleString('vi-VN');
+export const formatCount = (n: number, locale = 'vi') => formatNumber(n, locale);
 
 const pad = (n: number) => String(n).padStart(2, '0');
 

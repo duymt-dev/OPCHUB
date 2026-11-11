@@ -29,10 +29,20 @@ export function formatCurrency(
 }
 
 /** A stored 33 means 33%, not 3300%. No business rounding is applied here. */
-export const formatPercentPoints = (value: number | null | undefined, locale: string) =>
-  finite(value)
-    ? formatNumber(value / 100, locale, { style: 'percent', maximumFractionDigits: 2 })
-    : EMPTY;
+export const formatPercentPoints = (
+  value: number | null | undefined,
+  locale: string,
+  maximumFractionDigits = 2,
+) => {
+  if (!finite(value)) return EMPTY;
+  // Division by 100 must not expose binary tails when retaining a DTO's existing precision.
+  const [coefficient = '', exponent = '0'] = String(value).split('e');
+  const decimals = Math.max(0, (coefficient.split('.')[1]?.length ?? 0) - Number(exponent));
+  return formatNumber(value / 100, locale, {
+    style: 'percent',
+    maximumFractionDigits: Math.min(maximumFractionDigits, decimals),
+  });
+};
 
 function displayDate(value: string | Date): Date | undefined {
   if (value instanceof Date) return Number.isNaN(value.getTime()) ? undefined : value;

@@ -2,7 +2,7 @@
 
 import type { MarketingSummary } from '@opchub/shared/api-domains';
 import { DateRangePicker, PageHeader } from '@opchub/ui';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useRovingTabs } from '../hooks/use-roving-tabs';
 import { statValues } from '../model';
 import { MARKETING_TABS, type MarketingTab } from '../types';
@@ -24,8 +24,9 @@ export function MarketingHeader() {
 const STAT_KEYS = ['campaigns', 'sent', 'open', 'welcome'] as const;
 
 export function MarketingStats({ summary }: { summary: MarketingSummary | undefined }) {
+  const locale = useLocale();
   const t = useTranslations('marketing.stats');
-  const v = statValues(summary);
+  const v = statValues(summary, locale);
   return (
     <div className={styles.stats}>
       {STAT_KEYS.map((k) => (

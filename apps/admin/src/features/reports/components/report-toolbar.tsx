@@ -7,7 +7,7 @@ import {
   type ReportTemplate,
 } from '@opchub/shared/api-domains';
 import { Button, Segmented, Select } from 'antd';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { monthLabel } from '../model';
 import type { ReportFilter } from '../types';
 import styles from './reports.module.css';
@@ -39,6 +39,7 @@ function scopeOptions(
 
 /** Thanh lọc: mẫu (segmented) · tháng · phạm vi theo mẫu · "Xuất CSV" */
 export function ReportToolbar(p: Props) {
+  const locale = useLocale();
   const t = useTranslations('reports');
   const labels = useDomainLabels();
   return (
@@ -57,7 +58,7 @@ export function ReportToolbar(p: Props) {
           value={p.filter.month}
           options={p.months.map((m) => ({
             value: m,
-            label: t('monthOption', { month: monthLabel(m) }),
+            label: t('monthOption', { month: monthLabel(m, locale) }),
           }))}
           onChange={p.onMonth}
         />

@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { hasPendingRevision, vnDate } from '../model';
 import type { AdminProject } from '../types';
 import { FundraisingChip } from './fundraising-chip';
@@ -26,6 +26,7 @@ export function useActLabel() {
 }
 
 function Card({ p, a }: { p: AdminProject; a: ProjectRowActions }) {
+  const locale = useLocale();
   const t = useTranslations('projects');
   const actLabel = useActLabel();
   return (
@@ -39,7 +40,7 @@ function Card({ p, a }: { p: AdminProject; a: ProjectRowActions }) {
       <div className={styles.body}>
         <b className={styles.name}>{p.name}</b>
         <span className={styles.meta}>
-          {t('updated', { owner: p.ownerName, date: vnDate(p.createdAt) })}
+          {t('updated', { owner: p.ownerName, date: vnDate(p.createdAt, locale) })}
         </span>
         <div className={styles.status}>
           <StatusBadge status={p.status} featured={p.featured} revision={hasPendingRevision(p)} />

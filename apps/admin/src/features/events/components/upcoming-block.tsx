@@ -1,7 +1,8 @@
 'use client';
 
-import type { AdminUpcoming } from '@opchub/shared/api-domains';
-import { useTranslations } from 'next-intl';
+import { formatNumber } from '@/i18n/format';
+import { eventDay, eventTime } from '../presentation';
+import { useLocale, useTranslations } from 'next-intl';
 import { useUpcoming } from '../hooks/use-events';
 import { inDaysKey, meetShort } from '../model';
 import { Cover } from './event-grid';
@@ -9,24 +10,23 @@ import { useMeetActions } from './meet-actions';
 import { ICON, Svg } from './svg';
 import styles from './upcoming.module.css';
 
-type Item = NonNullable<AdminUpcoming['next']>;
-
 function useInDays() {
+  const locale = useLocale();
   const t = useTranslations('events.upcoming');
   return (n: number) => {
     const k = inDaysKey(n);
-    return k.k === 'inDays' ? t('inDays', { n: k.n }) : t(k.k);
+    return k.k === 'inDays' ? t('inDays', { n: formatNumber(k.n, locale) }) : t(k.k);
   };
 }
-
-const modeLabel = (m: Item['mode']) => (m === 'online' ? 'Online' : 'Offline');
 
 /**
  * EV-R02: khối "Sắp diễn ra" đầu màn — sự kiện gần nhất (ảnh, link Meet, Mở Google Meet,
  * Xem chi tiết & danh sách) + cột "Tiếp theo" tối đa 3 sự kiện. Không có sự kiện → ẩn.
  */
 export function UpcomingBlock({ onOpen }: { onOpen: (id: string) => void }) {
+  const locale = useLocale();
   const t = useTranslations('events.upcoming');
+  const modeLabel = useTranslations('events.mode');
   const q = useUpcoming();
   const inDays = useInDays();
   const meet = useMeetActions();
@@ -47,10 +47,15 @@ export function UpcomingBlock({ onOpen }: { onOpen: (id: string) => void }) {
           </button>
           <div className={styles.meta}>
             <span>
-              {next.day} · {next.time}
+              {eventDay(next.startsAt, next.day, locale)} · {eventTime(next, locale)}
             </span>
             <span>{next.place}</span>
-            <span>{t('reg', { reg: next.registered, seats: next.seats })}</span>
+            <span>
+              {t('reg', {
+                reg: formatNumber(next.registered, locale),
+                seats: formatNumber(next.seats, locale),
+              })}
+            </span>
           </div>
           {next.meetUrl ? (
             <div className={styles.meetBox}>
@@ -87,7 +92,7 @@ export function UpcomingBlock({ onOpen }: { onOpen: (id: string) => void }) {
             <span className={styles.rowText}>
               <span className={styles.rowTitle}>{x.title}</span>
               <span className={styles.rowMeta}>
-                {x.day} · {x.time} · {modeLabel(x.mode)}
+                {eventDay(x.startsAt, x.day, locale)} · {eventTime(x, locale)} · {modeLabel(x.mode)}
               </span>
             </span>
           </button>

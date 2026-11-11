@@ -1,14 +1,16 @@
 'use client';
 
 import { RichTextField, SafeHtml } from '@opchub/ui';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { infoRows, type InfoLabels } from '../model';
 import type { AdminProject } from '../types';
 import { useRejectionLabels } from '../rejection-labels';
 import { useAdminUiLabels } from '@/i18n/ui-labels';
+import { formatNumber } from '@/i18n/format';
 import styles from './review.module.css';
 
 function useInfoLabels(): InfoLabels {
+  const locale = useLocale();
   const t = useTranslations('projects');
   return {
     stage: {
@@ -25,14 +27,15 @@ function useInfoLabels(): InfoLabels {
     visPublic: t('val.visPublic'),
     visPrivate: t('val.visPrivate'),
     noFunding: t('val.noFunding'),
-    funding: (amount, equity) => t('val.funding', { amount, equity }),
+    funding: (amount, equity) => t('val.funding', { amount, equity: formatNumber(equity, locale) }),
   };
 }
 
 /** Ảnh bìa, tên, tóm tắt, thẻ, bảng thông tin, mô tả, ghi chú lần duyệt trước */
 export function ReviewInfo({ p }: { p: AdminProject }) {
+  const locale = useLocale();
   const t = useTranslations('projects');
-  const rows = infoRows(p, useInfoLabels());
+  const rows = infoRows(p, useInfoLabels(), locale);
   return (
     <>
       <div className={styles.cover}>

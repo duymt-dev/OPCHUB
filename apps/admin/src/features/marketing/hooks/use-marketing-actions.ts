@@ -3,7 +3,7 @@
 import type { Campaign, CampaignCreate, MailLogRow, WelcomeMail } from '@opchub/shared/api-domains';
 import { useToast } from '@opchub/ui';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { ApiError } from '@/lib/api-client';
 import {
   cancelCampaign,
@@ -22,6 +22,7 @@ import { fmtN } from '../model';
  * gửi mail chỉ tạo job qua outbox (202), không gửi trong request.
  */
 export function useMarketingActions() {
+  const locale = useLocale();
   const t = useTranslations('marketing');
   const toast = useToast();
   const qc = useQueryClient();
@@ -31,7 +32,8 @@ export function useMarketingActions() {
   const create = useMutation({
     mutationFn: (body: CampaignCreate) => createCampaign(body),
     onSuccess: (c) => {
-      if (c.status === 'sending') toast(t('toast.sendingTo', { n: fmtN(c.recipients ?? 0) }));
+      if (c.status === 'sending')
+        toast(t('toast.sendingTo', { n: fmtN(c.recipients ?? 0, locale) }));
       else toast(t(c.status === 'scheduled' ? 'toast.scheduled' : 'toast.draft'));
       refresh();
     },

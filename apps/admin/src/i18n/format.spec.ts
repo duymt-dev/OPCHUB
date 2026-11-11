@@ -28,6 +28,9 @@ describe('D-141 AC824-08 presentation formatting', () => {
     expect(formatPercentPoints(33, 'en')).toBe('33%');
     expect(formatPercentPoints(0, 'en')).toBe('0%');
     expect(formatPercentPoints(-2.5, 'en')).toBe('-2.5%');
+    expect(formatPercentPoints(12.345678, 'en', 20)).toBe('12.345678%');
+    expect(formatPercentPoints(33.33333333, 'en', 20)).toBe('33.33333333%');
+    expect(formatPercentPoints(0.000001, 'en', 20)).toBe('0.000001%');
   });
 
   it('fixes Vietnam midnight, year boundary and Gregorian year even in Thai', () => {

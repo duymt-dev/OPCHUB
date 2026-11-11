@@ -1,7 +1,7 @@
 'use client';
 import { useRef } from 'react';
 import { App, Button } from 'antd';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useToast } from '@opchub/ui';
 import type { RegionalRegion, RegionalPayee } from '@opchub/shared/api-domains';
 import { useRegionalPayout } from '../hooks/use-regional-payout';
@@ -13,6 +13,7 @@ export function RegionalPayoutDialog({
   region: RegionalRegion;
   payee: RegionalPayee;
 }) {
+  const locale = useLocale();
   const t = useTranslations('affiliate.regional.share');
   const { modal } = App.useApp();
   const toast = useToast();
@@ -23,7 +24,7 @@ export function RegionalPayoutDialog({
     modal.confirm({
       title: t('payTitle', { name: payee.fullName }),
       content: t('payConfirm', {
-        amount: affiliateMoney(payee.due),
+        amount: affiliateMoney(payee.due, locale),
         months: payee.monthKeys.join(', '),
         bank: payee.bank
           ? `${payee.bank.bankHolder} · ${payee.bank.bankName} · ${payee.bank.bankNo}`
@@ -37,7 +38,7 @@ export function RegionalPayoutDialog({
           key.current = undefined;
           toast(
             t('paidToast', {
-              amount: affiliateMoney(result.amount),
+              amount: affiliateMoney(result.amount, locale),
               name: result.directorName,
               holder: result.bankHolder,
             }),

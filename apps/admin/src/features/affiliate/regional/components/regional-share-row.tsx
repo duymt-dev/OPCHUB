@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useCan } from '@/lib/permissions';
 import type { RegionalShareRow as Row } from '../types';
 import { affiliateMoney } from '../../format';
@@ -10,6 +10,7 @@ import { RegionalPayoutDialog } from './regional-payout-dialog';
 import { RegionalPayeeBankDialog } from './regional-payee-bank-dialog';
 import styles from './regional-share.module.css';
 export function RegionalShareRow({ row }: { row: Row }) {
+  const locale = useLocale();
   const t = useTranslations('affiliate.regional.share');
   const [open, setOpen] = useState(false);
   const canPay = useCan('affiliate.payout');
@@ -33,12 +34,12 @@ export function RegionalShareRow({ row }: { row: Row }) {
         </div>
         <div role="cell">{row.affiliates}</div>
         <div role="cell">{row.count}</div>
-        <div role="cell">{affiliateMoney(row.total)}</div>
+        <div role="cell">{affiliateMoney(row.total, locale)}</div>
         <div role="cell" className={styles.paid}>
-          {affiliateMoney(row.paid)}
+          {affiliateMoney(row.paid, locale)}
         </div>
         <div role="cell" className={styles.due}>
-          {affiliateMoney(row.due)}
+          {affiliateMoney(row.due, locale)}
         </div>
         <div role="cell">
           {canPay && row.payees.some((p) => p.due > 0) ? (

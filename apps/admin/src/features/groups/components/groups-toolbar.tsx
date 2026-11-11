@@ -2,7 +2,7 @@
 
 import { useDomainLabels } from '@/i18n/domain-labels';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { formatCount, industriesOf, kindCount, regionCount } from '../model';
 import {
   GROUP_SORTS,
@@ -85,12 +85,13 @@ export function GroupsHead({ view, onCreate, onExport, onView }: HeadProps) {
 }
 
 export function GroupsStats({ s }: { s: GroupStats }) {
+  const locale = useLocale();
   const t = useTranslations('groups.list.stats');
   const items = [
-    [t('groups'), String(s.groups)],
-    [t('provinces'), t('provincesValue', { count: s.provinces })],
-    [t('members'), formatCount(s.members)],
-    [t('weekly'), formatCount(s.weekly)],
+    [t('groups'), formatCount(s.groups, locale)],
+    [t('provinces'), t('provincesValue', { count: formatCount(s.provinces, locale) })],
+    [t('members'), formatCount(s.members, locale)],
+    [t('weekly'), formatCount(s.weekly, locale)],
   ];
   return (
     <div className={styles.stats}>

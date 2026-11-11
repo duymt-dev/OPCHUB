@@ -748,3 +748,23 @@ Owner answered: “Đồng ý thêm props tùy chọn, giữ nguyên Portal”. 
 | modify | `apps/admin/src/features/affiliate/tests/context.tsx` | Add real ui catalog to shared provider fixture; preserve existing assertions. |
 | create | `coding-packs/reports/evidence/v46-824/build-portal.log` | Actual Portal build after owner-approved shared changes; no Portal business edits. |
 | create | `coding-packs/reports/evidence/v46-824/portal-unit.log` | Fresh direct Portal regression, bypassing consumer cache after shared changes. |
+
+## Execute extension - remaining domain display formatters (11/11/2026)
+
+Sequential presentation-only work; existing domain models and their UI callers are already individually declared above. Preserve compact thresholds/rounding, canonical inputs, search/sort, business flags, API/query parameters and export bytes. Invalid display values remain distinct from zero.
+
+| Action | Exact path | Responsibility |
+|---|---|---|
+| create | `apps/admin/src/i18n/compact-money.ts` | Locale-aware project/investor compact display with original Vietnamese rounding and currency retained. |
+| create | `apps/admin/src/i18n/compact-money.spec.ts` | Original thresholds/rounding and all-locale/null/negative/large currency display regression. |
+| create | `apps/admin/src/i18n/tests/domain-formatters.spec.ts` | Cross-domain live display formatting, VN/Gregorian boundary and unchanged parser/export/content contracts. |
+| create | `apps/admin/src/i18n/tests/formatter-callers.spec.ts` | AST regression that declared UI formatter callers supply the current locale. |
+| modify | `apps/admin/src/features/marketing/components/campaign-table.tsx` | Pass selected locale into campaign display cells; keep action eligibility and DTO values unchanged. |
+| modify | `apps/admin/src/features/affiliate/summary-presentation.ts` | Localize display ratio/month-end date, retaining the existing formula and VN calendar. |
+| create | `apps/admin/src/features/events/presentation.ts` | Locale date/time projection from canonical timestamps, retaining original vi labels and raw DTOs. |
+| create | `apps/admin/src/features/events/presentation.spec.ts` | Event display locale/VN boundary and unchanged raw date/time/payload regression. |
+| modify | `apps/admin/src/features/events/components/event-grid.tsx` | Localize event date/time and visible counts only. |
+| modify | `apps/admin/src/features/events/components/event-table.tsx` | Localize event date/time and visible counts only. |
+| modify | `apps/admin/src/features/events/components/upcoming-block.tsx` | Localize event date/time, mode and visible counts, preserve Meet/content/actions. |
+| modify | `apps/admin/src/features/events/components/registrants-drawer.tsx` | Localize event display and visible counts, preserve check-in/export contracts. |
+| modify | `apps/admin/src/features/events/components/event-form-fields.tsx` | Localize mode labels/edit-date hint; retain form values and datetime parsing. |

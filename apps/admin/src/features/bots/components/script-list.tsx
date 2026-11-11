@@ -1,7 +1,9 @@
 'use client';
 
 import type { BotScript, BotThread, Persona } from '@opchub/shared/api-domains';
-import { useTranslations } from 'next-intl';
+import { formatDate, formatNumber } from '@/i18n/format';
+import { useBotOptionLabels } from '../option-labels';
+import { useLocale, useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import { initialOf } from '../model';
 import { PersonaAvatar } from './bits';
@@ -21,8 +23,8 @@ interface Props {
   extra?: ReactNode;
 }
 
-const fmtAt = (iso: string) =>
-  new Date(iso).toLocaleString('vi-VN', {
+const fmtAt = (iso: string, locale: string) =>
+  formatDate(iso, locale, {
     dateStyle: 'short',
     timeStyle: 'short',
     timeZone: 'Asia/Ho_Chi_Minh',
@@ -30,7 +32,9 @@ const fmtAt = (iso: string) =>
 
 /** D-39 tab Kịch bản hội thoại: thẻ, avatar persona, Chạy ngay / Sửa / Xóa */
 export function ScriptList(p: Props) {
+  const locale = useLocale();
   const t = useTranslations('bots.script');
+  const options = useBotOptionLabels();
   const personaOf = (id: string) => p.personas.find((x) => x.id === id);
   return (
     <>
@@ -48,9 +52,9 @@ export function ScriptList(p: Props) {
           return (
             <div key={s.id} className={`${c.card} ${c.cardScript}`}>
               <div className={c.scriptHead}>
-                <span className={`${c.tag} ${c.tagViolet}`}>{s.type}</span>
+                <span className={`${c.tag} ${c.tagViolet}`}>{options.scriptType(s.type)}</span>
                 <span className={c.spacer} />
-                <span className={c.runs}>{t('runs', { n: runs })}</span>
+                <span className={c.runs}>{t('runs', { n: formatNumber(runs, locale) })}</span>
               </div>
               <b className={c.topic}>{s.topic}</b>
               <span className={c.quote}>“{s.lines[0]?.body ?? ''}”</span>
@@ -72,13 +76,15 @@ export function ScriptList(p: Props) {
                     );
                   })}
                 </div>
-                <span className={c.avsLabel}>{t('lines', { n: s.lines.length })}</span>
+                <span className={c.avsLabel}>
+                  {t('lines', { n: formatNumber(s.lines.length, locale) })}
+                </span>
               </div>
               <div className={c.meta}>
                 <span>{t('groups', { names: s.groupIds.map(p.groupName).join(', ') })}</span>
                 <span>
-                  {s.runAt ? t('notBefore', { at: fmtAt(s.runAt) }) : t('rotation')} ·{' '}
-                  {t('delay', { n: s.delayMinutes })}
+                  {s.runAt ? t('notBefore', { at: fmtAt(s.runAt, locale) }) : t('rotation')} ·{' '}
+                  {t('delay', { n: formatNumber(s.delayMinutes, locale) })}
                 </span>
               </div>
               <div className={`${c.actions} ${c.actionsScript}`}>

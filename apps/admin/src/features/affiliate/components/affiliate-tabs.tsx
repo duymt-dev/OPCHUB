@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useLayoutEffect, useRef } from 'react';
 import { affiliateMoney } from '../format';
 import type { AffiliateParams } from '../types';
@@ -17,6 +17,7 @@ export function AffiliateTabs({
   counts: { com: number | undefined; aff: number | undefined; gdv?: number | undefined };
   net: number | undefined;
 }) {
+  const locale = useLocale();
   const t = useTranslations('affiliate');
   const tabs = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
@@ -54,7 +55,8 @@ export function AffiliateTabs({
         ))}
       </div>
       <span>
-        {t('net')} <b className={styles.net}>{net === undefined ? '—' : affiliateMoney(net)}</b>
+        {t('net')}{' '}
+        <b className={styles.net}>{net === undefined ? '—' : affiliateMoney(net, locale)}</b>
       </span>
     </div>
   );

@@ -1,7 +1,9 @@
 'use client';
 
 import { COVER_DEFAULT_SRC, groupCoverSrc } from '@opchub/ui';
-import { useTranslations } from 'next-intl';
+import { formatNumber } from '@/i18n/format';
+import { eventDay, eventTime } from '../presentation';
+import { useLocale, useTranslations } from 'next-intl';
 import type { SyntheticEvent } from 'react';
 import type { EventView } from '../types';
 import styles from './event-grid.module.css';
@@ -41,6 +43,7 @@ export function FillBar({ e }: { e: EventView }) {
 }
 
 function Card({ e, a }: { e: EventView; a: EventActions }) {
+  const locale = useLocale();
   const t = useTranslations('events');
   return (
     <article className={styles.card}>
@@ -65,7 +68,7 @@ function Card({ e, a }: { e: EventView; a: EventActions }) {
         <div className={styles.meta}>
           <span className={styles.metaRow}>
             <Svg d={ICON.day} size={14} stroke="rgba(0,0,0,0.45)" />
-            {e.day} · {e.time}
+            {eventDay(e.startsAt, e.day, locale)} · {eventTime(e, locale)}
           </span>
           <span className={styles.metaRow}>
             <Svg d={ICON.pin} size={14} stroke="rgba(0,0,0,0.45)" />
@@ -84,7 +87,7 @@ function Card({ e, a }: { e: EventView; a: EventActions }) {
               <span className={styles.muted}>{t('card.registered')}</span>
             </div>
             <b className={styles.count}>
-              {e.registered}/{e.seats}
+              {formatNumber(e.registered, locale)}/{formatNumber(e.seats, locale)}
             </b>
           </div>
           <FillBar e={e} />

@@ -1,12 +1,13 @@
 'use client';
 import { regionalAmount, regionalPercent } from '@opchub/shared';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { usePrices } from '@/lib/use-prices';
 import { usePolicyPreview } from '../hooks/use-policy-preview';
 import { affiliateMoney } from '../format';
 import styles from './policy-reference.module.css';
 
 export function PolicyPlanTable() {
+  const locale = useLocale();
   const t = useTranslations('affiliate.policy');
   const policy = usePolicyPreview();
   const prices = usePrices();
@@ -36,7 +37,7 @@ export function PolicyPlanTable() {
                   <small>
                     {plan.amount === undefined
                       ? '—'
-                      : `${affiliateMoney(plan.amount)} ${t(plan.key === 'fundraisingPlan' ? 'perProject' : 'perYear')}`}
+                      : `${affiliateMoney(plan.amount, locale)} ${t(plan.key === 'fundraisingPlan' ? 'perProject' : 'perYear')}`}
                   </small>
                 </td>
                 {[1, 2, 3, 4].map((year) => {
@@ -47,11 +48,13 @@ export function PolicyPlanTable() {
                   return (
                     <td key={year}>
                       <b className={styles.blue}>
-                        {amount ? affiliateMoney(amount.directorAmount) : '—'}
+                        {amount ? affiliateMoney(amount.directorAmount, locale) : '—'}
                       </b>
                       <small>
                         {amount
-                          ? t('mediaAmount', { amount: affiliateMoney(amount.mediaSoftAmount) })
+                          ? t('mediaAmount', {
+                              amount: affiliateMoney(amount.mediaSoftAmount, locale),
+                            })
                           : '—'}
                       </small>
                     </td>

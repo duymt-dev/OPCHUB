@@ -1,7 +1,7 @@
 'use client';
 
 import type { AdminStore } from '@opchub/shared/api-domains';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { allChecked, storeDate, storeInitials } from '../model';
 import { StoreStatusTag, StoreThumb } from './store-status';
 import styles from './store-table.module.css';
@@ -19,6 +19,7 @@ interface Props {
 
 /** Bảng 8 cột prototype `aStores` (min-width 960, cuộn ngang ở màn hẹp) */
 export function StoreTable(p: Props) {
+  const locale = useLocale();
   const t = useTranslations('stores.table');
   const ids = p.rows.map((r) => r.id);
   return (
@@ -54,7 +55,7 @@ export function StoreTable(p: Props) {
             <span className={styles.muted}>{r.field}</span>
             <span className={styles.muted}>{r.province}</span>
             <span className={styles.right}>{r.itemCount}</span>
-            <span className={styles.muted}>{storeDate(r.updatedAt)}</span>
+            <span className={styles.muted}>{storeDate(r.updatedAt, locale)}</span>
             <span>
               <StoreStatusTag status={r.status} />
             </span>

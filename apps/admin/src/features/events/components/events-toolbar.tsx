@@ -1,6 +1,7 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { formatPercentPoints } from '@/i18n/format';
 import { formatCount } from '../model';
 import {
   EVENT_MODES,
@@ -22,17 +23,33 @@ const TONES = {
 
 /** 4 thẻ thống kê (aeStats) */
 export function EventStatsRow({ s }: { s: EventStats }) {
+  const locale = useLocale();
   const t = useTranslations('events.stats');
   const items = [
-    { label: t('upcoming'), value: String(s.upcoming), icon: ICON.calendar, tone: TONES.blue },
+    {
+      label: t('upcoming'),
+      value: formatCount(s.upcoming, locale),
+      icon: ICON.calendar,
+      tone: TONES.blue,
+    },
     {
       label: t('registrations'),
-      value: formatCount(s.registrations),
+      value: formatCount(s.registrations, locale),
       icon: ICON.users,
       tone: TONES.green,
     },
-    { label: t('fillRate'), value: `${s.fillRate}%`, icon: ICON.pie, tone: TONES.amber },
-    { label: t('online'), value: String(s.online), icon: ICON.screen, tone: TONES.violet },
+    {
+      label: t('fillRate'),
+      value: formatPercentPoints(s.fillRate, locale),
+      icon: ICON.pie,
+      tone: TONES.amber,
+    },
+    {
+      label: t('online'),
+      value: formatCount(s.online, locale),
+      icon: ICON.screen,
+      tone: TONES.violet,
+    },
   ];
   return (
     <div className={styles.stats}>

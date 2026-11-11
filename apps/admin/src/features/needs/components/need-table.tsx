@@ -1,7 +1,7 @@
 'use client';
 
 import type { AdminNeed } from '@opchub/shared/api-domains';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { allChecked, needDate, needLoc, needSub } from '../model';
 import styles from './need-table.module.css';
 import { NeedStatusTag, NeedTypeTag } from './need-tags';
@@ -18,6 +18,7 @@ interface Props {
 
 /** Bảng 8 cột prototype `aNeeds` (min-width 1040, cuộn ngang; ≤ 1023px lưới 2 cột) */
 export function NeedTable(p: Props) {
+  const locale = useLocale();
   const t = useTranslations('needs.table');
   const ids = p.rows.map((r) => r.id);
   return (
@@ -55,7 +56,7 @@ export function NeedTable(p: Props) {
             </span>
             <span className={`${styles.muted} ${styles.ellipsis}`}>{r.store.name || '—'}</span>
             <span className={styles.muted}>{needLoc(r)}</span>
-            <span className={styles.muted}>{needDate(r.updatedAt)}</span>
+            <span className={styles.muted}>{needDate(r.updatedAt, locale)}</span>
             <span>
               <NeedStatusTag status={r.status} />
             </span>

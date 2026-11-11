@@ -2,7 +2,8 @@
 
 import type { Report } from '@opchub/shared/api-domains';
 import { tones } from '@opchub/ui';
-import { useTranslations } from 'next-intl';
+import { formatDate, formatNumber } from '@/i18n/format';
+import { useLocale, useTranslations } from 'next-intl';
 import { avatarColorOf } from '../model';
 import styles from './moderation.module.css';
 import { AiReportActions } from './ai-report-actions';
@@ -24,11 +25,12 @@ const initials = (name: string) => {
   ).toUpperCase();
 };
 
-function timeLabel(iso: string, yesterday: string) {
+function timeLabel(iso: string, yesterday: string, locale: string) {
   const d = new Date(iso);
-  const vn = (x: Date) => x.toLocaleDateString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
+  if (Number.isNaN(d.getTime())) return '—';
+  const vn = (x: Date) => formatDate(x, 'en');
   if (vn(d) !== vn(new Date())) return yesterday;
-  return d.toLocaleTimeString('vi-VN', {
+  return formatDate(iso, locale, {
     timeZone: 'Asia/Ho_Chi_Minh',
     hour: '2-digit',
     minute: '2-digit',
@@ -48,6 +50,7 @@ interface Props {
  * ngày", nút "Khóa N ngày" (khi chưa khoá) và "Khôi phục tin".
  */
 export function ReportCard({ r, days, onRestore, onLock }: Props) {
+  const locale = useLocale();
   const t = useTranslations('groups.mod');
   const tone = tones[CAT_TONE[r.reason]];
   const i = r.body.indexOf(r.hit);
@@ -66,7 +69,7 @@ export function ReportCard({ r, days, onRestore, onLock }: Props) {
         <div className={styles.whoText}>
           <span className={styles.name}>{r.senderName}</span>
           <span className={styles.meta}>
-            {r.groupName} · {timeLabel(r.createdAt, t('yesterday'))}
+            {r.groupName} · {timeLabel(r.createdAt, t('yesterday'), locale)}
           </span>
         </div>
         <span className={styles.cat} style={{ background: tone.bg, color: tone.fg }}>
@@ -84,7 +87,7 @@ export function ReportCard({ r, days, onRestore, onLock }: Props) {
           ? `AI · ${r.hit.slice(3)}`
           : auto
             ? t('srcAuto')
-            : t('srcReport', { count: r.reporterCount })}
+            : t('srcReport', { count: formatNumber(r.reporterCount, locale) })}
       </div>
       {ai ? (
         <AiReportActions report={r} days={days} onLock={onLock} />
@@ -93,12 +96,12 @@ export function ReportCard({ r, days, onRestore, onLock }: Props) {
           <span className={styles.badge}>{t('autoHidden')}</span>
           <span className={`${styles.badge} ${severe ? styles.badgeRed : styles.badgeAmber}`}>
             {r.senderLocked
-              ? t('lockedDays', { days })
-              : t('violation', { count: Math.max(1, r.violations) })}
+              ? t('lockedDays', { days: formatNumber(days, locale) })
+              : t('violation', { count: formatNumber(Math.max(1, r.violations), locale) })}
           </span>
           {r.canLock ? (
             <button type="button" className={styles.lock} onClick={() => onLock(r)}>
-              {t('lockDays', { days })}
+              {t('lockDays', { days: formatNumber(days, locale) })}
             </button>
           ) : null}
           <button

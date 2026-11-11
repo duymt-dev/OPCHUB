@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import type { KeyboardEvent } from 'react';
 import { formatCount } from '../model';
 import type { AdminGroup } from '../types';
@@ -42,6 +42,7 @@ interface Props {
 
 /** D-24 / D-26: bảng nhóm (dạng danh sách) có chọn nhiều */
 export function GroupTable({ items, selected, onToggle, onToggleAll, actions }: Props) {
+  const locale = useLocale();
   const t = useTranslations('groups.list');
   const n = items.filter((g) => selected.has(g.id)).length;
   const all: Mark = n > 0 && n === items.length ? 'on' : n > 0 ? 'part' : 'off';
@@ -80,8 +81,8 @@ export function GroupTable({ items, selected, onToggle, onToggleAll, actions }: 
               <span className={styles.muted}>
                 {g.province} · {g.region}
               </span>
-              <span>{formatCount(g.memberCount)}</span>
-              <span>{formatCount(g.weeklyActive)}</span>
+              <span>{formatCount(g.memberCount, locale)}</span>
+              <span>{formatCount(g.weeklyActive, locale)}</span>
               <span className={styles.status}>{t('active')}</span>
               <div className={styles.actions}>
                 <button type="button" className={styles.btn} onClick={() => actions.onEdit(g)}>
