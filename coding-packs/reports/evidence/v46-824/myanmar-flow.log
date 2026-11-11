@@ -1,0 +1,206 @@
+Regression before correction; original committed5495329f flow uses native NumberFormat despite prepared Myanmar CLDR.
+COMMAND pnpm --filter @opchub/admin exec vitest run src/features/overview/flow.spec.ts
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+ ❯ src/features/overview/flow.spec.ts (3 tests | 1 failed) 222ms
+   ❯ D-141 system-flow prepared Myanmar presentation (1)
+     × does not bypass scoped CLDR via native NumberFormat after preparation 217ms
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+System.Management.Automation.RemoteException
+ FAIL  src/features/overview/flow.spec.ts > D-141 system-flow prepared Myanmar presentation > does not bypass scoped CLDR via native NumberFormat after preparation
+AssertionError: expected "NumberFormat" to not be called at all, but actually been called 1 times
+System.Management.Automation.RemoteException
+Received:
+System.Management.Automation.RemoteException
+  1st NumberFormat call:
+System.Management.Automation.RemoteException
+    Array [
+      "my-MM",
+    ]
+System.Management.Automation.RemoteException
+System.Management.Automation.RemoteException
+Number of calls: 1
+System.Management.Automation.RemoteException
+ ❯ src/features/overview/flow.spec.ts:23:26
+     21|       const cards = flowCards(FLOW, 'my');
+     22|       expect(cards.map((card) => card.value)).toEqual(['၁ / ၈', '၁၇', …
+     23|       expect(native).not.toHaveBeenCalled();
+       |                          ^
+     24|       expect(cards[1]?.sub).toEqual({ hidden: 1, draft: 2 });
+     25|       expect(FLOW.stores).toEqual({ published: 17, hidden: 1, draft: 2…
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+System.Management.Automation.RemoteException
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  05:42:40
+   Duration  4.99s (environment 61%, transform 18%, import 16%, tests 5%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\admin
+System.Management.Automation.RemoteException
+EXIT 1
+
+First root lint attempt failed on two unused destructured test variables, before typecheck/unit/build; corrected test projection with explicit key/href/done/sub fields, no assertion removed.
+Source working tree based on5495329f; correct scoped Myanmar system-flow primary and plain numeric parameters; reduced-native-ICU regression plus eleven locale raw DTO/status/route invariants. Eight Myanmar business catalogs/1407 leaves and full16-AC/performance remain open. No other locale/runtime/business/API/DB/Portal/shared/dependency/font change. Actual root commands, cached tasks identified by Turbo; no DB/service mutation.
+COMMAND pnpm lint
+$ turbo run lint
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running lint in 9 packages
+   • Remote caching disabled
+
+@opchub/e2e:lint: cache miss, executing 0f23ff611bea464a
+@opchub/server:lint: cache hit, replaying logs 7f4b11d47879bedd
+@opchub/server:lint: $ eslint src test
+@opchub/admin:lint: cache miss, executing 237165faf241593f
+@opchub/db:lint: cache hit, replaying logs 8df791dba6501ec7
+@opchub/db:lint: $ eslint src seed test
+@opchub/portal:lint: cache hit, replaying logs 71e3df361172b94e
+@opchub/portal:lint: $ eslint src
+@opchub/integrations:lint: cache hit, replaying logs 1fb607819a53b21e
+@opchub/integrations:lint: $ eslint src
+@opchub/shared:lint: cache hit, replaying logs f9d493ea0cb6d67f
+@opchub/shared:lint: $ eslint src
+@opchub/ui:lint: cache hit, replaying logs eea5bd38bfdbc884
+@opchub/ui:lint: $ eslint src
+@opchub/e2e:lint: $ eslint parity behavior audit server llm env.ts urls.ts
+@opchub/admin:lint: $ eslint src
+@opchub/admin:lint:
+@opchub/admin:lint: D:\CODING\OPCHUB\CODING\apps\admin\src\features\overview\flow.spec.ts
+@opchub/admin:lint:   41:34  error  '_value' is defined but never used  @typescript-eslint/no-unused-vars
+@opchub/admin:lint:   42:39  error  '_value' is defined but never used  @typescript-eslint/no-unused-vars
+@opchub/admin:lint:
+@opchub/admin:lint: ✖ 2 problems (2 errors, 0 warnings)
+@opchub/admin:lint:
+@opchub/admin:lint: [ELIFECYCLE] Command failed with exit code 1.
+@opchub/admin#lint:  ERROR  command (D:\CODING\OPCHUB\CODING\apps\admin) C:\Users\PC\AppData\Local\Temp\opchub-tip823-pnpm-12-11-2\pnpm.cmd run lint exited (1)
+
+ Tasks:    7 successful, 8 total
+Cached:    6 cached, 8 total
+  Time:    1m16.982s
+Failed:    @opchub/admin#lint
+
+ ERROR  run failed: command  exited (1)
+[ELIFECYCLE] Command failed with exit code 1.
+EXIT 1
+
+
+Pre-rebuild browser regression: existing production builda9cea423 still contains native flow formatter; new exact raw-response/Node Myanmar oracle, uncommitted harness based on5495329f. Deliberate red check before corrected production rebuild; no assertions skipped.
+Source 5495329f. Staged17-file Myanmar raw core/1260 leaves; missing8 business catalogs/1407 leaves remain required; actual Overview/Profile/Settings1440/390, same6 assertions both modes, real login200 and strict HTTP/JSON/no-business-write guard. Approved native wrapper/listener/endpoints revalidated by native preflight; original PG5432/opchub_test/services/data retained, no SQL/seed/reset/repair. Unmasked images and exact Myanmar anchors, not all-language/state/control/value/performance or human approval.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-myanmar.spec.ts
+[WebServer] (node:8860) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:13676) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+(node:1872) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [behavior] › behavior\admin-i18n-myanmar.spec.ts:40:5 › D-141 AC824-07/15 Myanmar core overview 1440, not missing8-domain/full acceptance (8.6s)
+(node:16016) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [behavior] › behavior\admin-i18n-myanmar.spec.ts:40:5 › D-141 AC824-07/15 Myanmar core overview 390, not missing8-domain/full acceptance (8.4s)
+(node:12016) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [behavior] › behavior\admin-i18n-myanmar.spec.ts:40:5 › D-141 AC824-07/15 Myanmar core profile 1440, not missing8-domain/full acceptance (5.7s)
+  ok 4 [behavior] › behavior\admin-i18n-myanmar.spec.ts:40:5 › D-141 AC824-07/15 Myanmar core profile 390, not missing8-domain/full acceptance (4.6s)
+  ok 5 [behavior] › behavior\admin-i18n-myanmar.spec.ts:40:5 › D-141 AC824-07/15 Myanmar core settings 1440, not missing8-domain/full acceptance (5.5s)
+  ok 6 [behavior] › behavior\admin-i18n-myanmar.spec.ts:40:5 › D-141 AC824-07/15 Myanmar core settings 390, not missing8-domain/full acceptance (4.6s)
+
+
+  1) [behavior] › behavior\admin-i18n-myanmar.spec.ts:40:5 › D-141 AC824-07/15 Myanmar core overview 1440, not missing8-domain/full acceptance
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('section[aria-labelledby="system-flow-title"]').locator('a[href="/fees"]').getByText('၅ / ၁၀', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('section[aria-labelledby="system-flow-title"]').locator('a[href="/fees"]').getByText('၅ / ၁၀', { exact: true }) with timeout 5000ms
+      - waiting for locator('section[aria-labelledby="system-flow-title"]').locator('a[href="/fees"]').getByText('၅ / ၁၀', { exact: true })
+
+
+      66 |           await expect(
+      67 |             region.locator(`a[href="${href}"]`).getByText(value!, { exact: true }),
+    > 68 |           ).toBeVisible();
+         |             ^
+      69 |         const notes = [
+      70 |           [
+      71 |             '/stores',
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-myanmar.spec.ts:68:13
+
+    Error Context: test-results\admin-i18n-myanmar-D-141-A-a7092-ing8-domain-full-acceptance-behavior\error-context.md
+
+  2) [behavior] › behavior\admin-i18n-myanmar.spec.ts:40:5 › D-141 AC824-07/15 Myanmar core overview 390, not missing8-domain/full acceptance
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('section[aria-labelledby="system-flow-title"]').locator('a[href="/fees"]').getByText('၅ / ၁၀', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('section[aria-labelledby="system-flow-title"]').locator('a[href="/fees"]').getByText('၅ / ၁၀', { exact: true }) with timeout 5000ms
+      - waiting for locator('section[aria-labelledby="system-flow-title"]').locator('a[href="/fees"]').getByText('၅ / ၁၀', { exact: true })
+
+
+      66 |           await expect(
+      67 |             region.locator(`a[href="${href}"]`).getByText(value!, { exact: true }),
+    > 68 |           ).toBeVisible();
+         |             ^
+      69 |         const notes = [
+      70 |           [
+      71 |             '/stores',
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-myanmar.spec.ts:68:13
+
+    Error Context: test-results\admin-i18n-myanmar-D-141-A-7a3a5-ing8-domain-full-acceptance-behavior\error-context.md
+
+  2 failed
+    [behavior] › behavior\admin-i18n-myanmar.spec.ts:40:5 › D-141 AC824-07/15 Myanmar core overview 1440, not missing8-domain/full acceptance
+    [behavior] › behavior\admin-i18n-myanmar.spec.ts:40:5 › D-141 AC824-07/15 Myanmar core overview 390, not missing8-domain/full acceptance
+  4 passed (49.8s)
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+System.Management.Automation.RemoteException
+EXIT 1
+
+EXIT 1
+
+Corrected source17f74404 focused14 verification; all14 are included in fresh root Admin1554, not additional unique tests. Native spy preserved; raw numeric DTO/card parameters and11 locale invariants retained.
+COMMAND pnpm --filter @opchub/admin exec vitest run src/features/overview/flow.spec.ts
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  1 passed (1)
+      Tests  14 passed (14)
+   Start at  06:09:30
+   Duration  4.56s (environment 50%, transform 25%, import 20%, tests 5%)
+
+EXIT 0
+
+FINAL CORRECTED CHECKPOINT
+Source17f74404 corrects system-flow primary counts through existing scoped formatNumber and plain ICU subtitle parameters through a pure string projection. All raw DTO/card numeric parameters, counts, paid/current formulas, statuses, links, polling, permissions and API/export contracts remain unchanged. No other language/catalog/Portal/shared/dependency/font/runtime-global change.
+
+Regression evidence is deliberately red before green: original native-NumberFormat bypass fails the prepared-CLDR/native-spy unit; the new raw-response/independent Node Myanmar browser oracle fails both old-build Overview widths (2 failed/4 other core cases passed), as expected. Full failure observations retained in myanmar-flow.log. First root lint caught two unused test destructuring names; explicit key/href/status/sub projection fixes lint without deleting assertions.
+
+Final root3277 unique passed +2 existing skips: fresh Admin1554 tests/191 files (including14 flow tests), other5 suites cached. Lint8tasks/7cached, typecheck8tasks/6cached, depcheck2824modules/8649dependencies plus server1260/5995. Admin test duration1082.07s, root18m2.847s; timings are not benchmarks. Five frozen source/unit/harness/manifest inputs match HEAD/worktree after normal hooks. Both Admin production builds PASS on committed17f74404.
+
+Current64 browser cases PASS:12 actual Myanmar Overview/Profile/Settings1440/390,48 public font/auth,4 real-login read-only Fees en/lo. All five Myanmar flow primary values and all three numeric subtitles match schema-validated actual response counts and independent Node full-ICU formatting at both widths in both modes; no mocked displayed count oracle. This closes the previously confirmed flow bypass, not every number/date/control/state/value/performance obligation. Original native PG5432/opchub_test/data/services are untouched; approved isolated API listener/wrapper/endpoints revalidated, strict HTTP/JSON/read-only guards, auth sessions only, no SQL/seed/reset/repair/business writes.
+
+Static audit PASS/dirty=false source17f74404:591 production files,303 findings,293 exact exceptions,0 unreviewed/errors,608 fingerprint files. Corpus0b4393de94adc80a26ac724f52bd2ffd3799c4fffa3b2412fca7ebc189b576a4 reflects the real production flow changes; no new exception. Both actual built data inventories contain6 distinct unmixed payloads/mode; unchanged payload hashes/bytes with refreshed buildIDs/source metadata, overall dirty=true from evidence only. Direct post-artifact e2e typecheck PASS.
+
+Still PARTIAL / NOT DONE / NOT READY TO MERGE: raw242/250, Myanmar17/1260 with8 business catalogs/1407 leaves absent. Final fixed10-bundle positive/negative gate, full all-language body/control/state/value/RBAC/export/canonical/Portal/822/823 proof, original f7c1b2b8 performance-budget acceptance and all remaining16-AC obligations remain required. No scope reduction, PR, merge or release. Native-human/owner image review pending, not fabricated.
+
+Final scope/artifact checks PASS:949 unique manifest paths,19 changed evidence/report paths,0 undeclared or over400 source files;14 UTF8/control/secret/Intl-log text checks,5 PNG signatures, git diff --check. Five frozen source/unit/harness/manifest blobs match17f74404 HEAD/worktree after normal hooks. No full16-AC or final10-bundle/performance PASS.

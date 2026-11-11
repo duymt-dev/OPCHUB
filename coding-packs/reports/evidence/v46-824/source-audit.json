@@ -2,9 +2,9 @@
   "status": "PASS",
   "command": "node infra/scripts/audit-admin-i18n.mjs",
   "source": {
-    "gitHead": "a9cea42331638415c623d6fe4a7ee452fd6d9293",
+    "gitHead": "17f744043b7b4aea257e207ba0fe7505bef53d25",
     "dirty": false,
-    "corpusSha256": "a2d9af154a0aef504a3ee07c556ff54ebb05f15ce288b24d7f37a511b3a716c4",
+    "corpusSha256": "0b4393de94adc80a26ac724f52bd2ffd3799c4fffa3b2412fca7ebc189b576a4",
     "fingerprintFiles": 608,
     "fingerprintScope": "Scanned production source plus audit scripts and exact exception registries; not catalogs or browser evidence"
   },
@@ -13,7 +13,7 @@
     "test/spec/declaration files",
     "tests/__tests__/mocks/__mocks__ fixture directories"
   ],
-  "durationMs": 27028,
+  "durationMs": 32191,
   "rows": [
     {
       "file": "apps/admin/src/app/(admin)/affiliate/[[...slug]]/page.tsx",

@@ -3,7 +3,23 @@
 **STATUS: IN PROGRESS / PARTIAL — NOT DONE, NOT READY TO MERGE.**
 The active goal remains the entire approved TIP and all16 ACs. No scope reduction; the agent has not opened a PR, merged or released.
 
-## Current staged Myanmar core checkpoint — 2026-11-12, sourcea9cea423 / harness5599b103
+## Current Myanmar system-flow correction checkpoint — 2026-11-12, source17f74404
+
+Source17f74404 corrects system-flow primary counts through existing scoped formatNumber and plain ICU subtitle parameters through a pure string projection. All raw DTO/card numeric parameters, counts, paid/current formulas, statuses, links, polling, permissions and API/export contracts remain unchanged. No other language/catalog/Portal/shared/dependency/font/runtime-global change.
+
+Regression evidence is deliberately red before green: original native-NumberFormat bypass fails the prepared-CLDR/native-spy unit; the new raw-response/independent Node Myanmar browser oracle fails both old-build Overview widths (2 failed/4 other core cases passed), as expected. Full failure observations retained in myanmar-flow.log. First root lint caught two unused test destructuring names; explicit key/href/status/sub projection fixes lint without deleting assertions.
+
+Final root3277 unique passed +2 existing skips: fresh Admin1554 tests/191 files (including14 flow tests), other5 suites cached. Lint8tasks/7cached, typecheck8tasks/6cached, depcheck2824modules/8649dependencies plus server1260/5995. Admin test duration1082.07s, root18m2.847s; timings are not benchmarks. Five frozen source/unit/harness/manifest inputs match HEAD/worktree after normal hooks. Both Admin production builds PASS on committed17f74404.
+
+Current64 browser cases PASS:12 actual Myanmar Overview/Profile/Settings1440/390,48 public font/auth,4 real-login read-only Fees en/lo. All five Myanmar flow primary values and all three numeric subtitles match schema-validated actual response counts and independent Node full-ICU formatting at both widths in both modes; no mocked displayed count oracle. This closes the previously confirmed flow bypass, not every number/date/control/state/value/performance obligation. Original native PG5432/opchub_test/data/services are untouched; approved isolated API listener/wrapper/endpoints revalidated, strict HTTP/JSON/read-only guards, auth sessions only, no SQL/seed/reset/repair/business writes.
+
+Static audit PASS/dirty=false source17f74404:591 production files,303 findings,293 exact exceptions,0 unreviewed/errors,608 fingerprint files. Corpus0b4393de94adc80a26ac724f52bd2ffd3799c4fffa3b2412fca7ebc189b576a4 reflects the real production flow changes; no new exception. Both actual built data inventories contain6 distinct unmixed payloads/mode; unchanged payload hashes/bytes with refreshed buildIDs/source metadata, overall dirty=true from evidence only. Direct post-artifact e2e typecheck PASS.
+
+Still PARTIAL / NOT DONE / NOT READY TO MERGE: raw242/250, Myanmar17/1260 with8 business catalogs/1407 leaves absent. Final fixed10-bundle positive/negative gate, full all-language body/control/state/value/RBAC/export/canonical/Portal/822/823 proof, original f7c1b2b8 performance-budget acceptance and all remaining16-AC obligations remain required. No scope reduction, PR, merge or release. Native-human/owner image review pending, not fabricated.
+
+Evidence: [red/green flow regression](evidence/v46-824/myanmar-flow.log), [root gates](evidence/v46-824/quality-gates.log), [unit](evidence/v46-824/unit.log), [MSW6](evidence/v46-824/myanmar-msw.log), [native6](evidence/v46-824/myanmar-native.log), [font48](evidence/v46-824/fonts.log), [source audit](evidence/v46-824/source-audit.json), [built data receipt](evidence/v46-824/intl-chunks.json). Regenerated native Overview1440/390 images inspected for corrected primary/subtitle glyphs; visual inspection is not owner/native-human approval.
+
+## Historical staged Myanmar core checkpoint — 2026-11-12, sourcea9cea423 / harness5599b103
 
 **Still PARTIAL / NOT DONE / NOT READY TO MERGE.** The prior goal turn completed Khmer and pushedbf4c1d0d. This turn advances Myanmar, the only remaining raw language:17 files/1260 leaves covering auth/bot-options/common/Profile/investors/meta/needs/overview/reports/requests/stores/ui and all six settings parts. Eight business files/1407 leaves (affiliate/bots/events/fees/groups/marketing/members/projects) remain absent. Raw242/250 is nine complete bundles plus staged Myanmar, not the final10-bundle gate or full16-AC completion. No scope reduction.
 

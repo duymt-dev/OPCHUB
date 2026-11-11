@@ -1,21 +1,21 @@
-Source a9cea423; Admin build mode=native dist=.next-server-tip824; compile only, no API verification
+Source 17f74404; Admin build mode=native dist=.next-server-tip824; compile only, no API verification
 $ next build
 ▲ Next.js 16.4.2 (Turbopack)
 - Environments: .env.local
-✓ Running next.config.ts took 397ms
+✓ Running next.config.ts took 670ms
 - Experiments (use with caution):
   · optimizePackageImports
 
   Creating an optimized production build ...
-✓ Compiled successfully in 3.2s
+✓ Compiled successfully in 4.3s
   Running TypeScript ...
-  Finished TypeScript in 9.8s ...
+  Finished TypeScript in 11.8s ...
   Collecting page data using 5 workers ...
   Generating static pages using 5 workers (0/10) ...
   Generating static pages using 5 workers (2/10)
   Generating static pages using 5 workers (4/10)
   Generating static pages using 5 workers (7/10)
-✓ Generating static pages using 5 workers (10/10) in 823ms
+✓ Generating static pages using 5 workers (10/10) in 580ms
   Finalizing page optimization ...
 
 Route (app)
