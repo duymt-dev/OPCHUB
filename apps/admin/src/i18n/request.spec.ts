@@ -56,6 +56,28 @@ describe('D-141 AC824-01/04 request-scoped messages, no authOverrides', () => {
     expect(logger.warn).not.toHaveBeenCalled();
   });
 
+  it('D-141 AC824-07 loads actual Indonesian domains and all six settings parts without fallback', async () => {
+    mocks.cookie = 'id';
+    const result = await config();
+    expect(result.locale).toBe('id');
+    expect(result.messages).toMatchObject({
+      auth: { login: { submit: 'Masuk' } },
+      common: { adminProfile: { title: 'Profil pribadi' } },
+      overview: { title: 'Ringkasan' },
+      reports: { title: 'Laporan' },
+      settings: {
+        general: { heading: 'Informasi platform' },
+        roles: { heading: 'Peran & Izin' },
+        mail: { heading: 'Email sambutan' },
+        log: { heading: 'Log aktivitas administrator' },
+        price: { heading: 'Konfigurasi harga' },
+        ai: { heading: 'Penyedia AI' },
+      },
+    });
+    expect(messages.auth.login.submit).toBe('Đăng nhập');
+    expect(logger.warn).not.toHaveBeenCalled();
+  });
+
   it('D-141 AC824-07 loads actual Chinese domains and all six settings parts without changing source', async () => {
     const read = async (bundle: string, file: string): Promise<unknown> =>
       import(`../../messages/${bundle}/${file}.json`);

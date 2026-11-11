@@ -794,3 +794,11 @@ All25 zh catalog paths are already explicitly declared. Reuse Portal translation
 | create | `coding-packs/reports/evidence/v46-824/zh-auth-msw-390.png` | Unmasked actual Chinese login screen, MSW mobile. |
 | create | `coding-packs/reports/evidence/v46-824/zh-auth-server-1440.png` | Same Chinese login assertions/image on mocking-off desktop; no API/DB acceptance claim. |
 | create | `coding-packs/reports/evidence/v46-824/zh-auth-server-390.png` | Same Chinese login assertions/image on mocking-off mobile. |
+
+## Indonesian raw catalog checkpoint
+
+Serial follow-up within the same TIP. The25 Indonesian catalog paths above are already declared; context review must distinguish financial reports, abuse reports, open needs, email bodies and bank references. Other six missing targets remain incomplete; no runtime fallback counts as translation.
+
+| Action | Exact path | Ownership / reason |
+|---|---|---|
+| create | `apps/admin/src/i18n/tests/indonesian-catalog.spec.ts` | Fixed25-file raw contracts before fallback, Admin-context and canonical-copy cases; missing file or key must fail. |

@@ -86,6 +86,12 @@ for (const option of languageOptions) {
       await page.keyboard.press('Escape');
       await expect(page.getByRole('option')).toHaveCount(0);
       expect(faults).toEqual([]);
+      if (option.code === 'id') {
+        await expect(
+          page.getByRole('heading', { name: 'Selamat datang kembali!', exact: true }),
+        ).toBeVisible();
+        await expect(page).toHaveTitle(/^Masuk/);
+      }
       if (option.code === 'zh') {
         await expect(page.getByRole('heading', { name: '欢迎回来！', exact: true })).toBeVisible();
         await expect(page).toHaveTitle(/^登录/);

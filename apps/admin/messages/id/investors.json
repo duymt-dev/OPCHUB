@@ -1,0 +1,61 @@
+{
+  "title": "Investor",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "stats": {
+    "total": "Total investor",
+    "fund": "Dana investasi",
+    "business": "Investor bisnis",
+    "individual": "Investor perorangan",
+    "amount": "Total minat investasi"
+  },
+  "heading": "Investor",
+  "sub": "Dana dan individu yang menyatakan minat berinvestasi dalam proyek OPC",
+  "search": "Cari nama, bisnis, dana, nomor telepon...",
+  "searchLabel": "Cari investor",
+  "csv": "Ekspor CSV",
+  "tabsLabel": "Filter menurut jenis investor",
+  "tabs": {
+    "all": "Semua",
+    "fund": "Dana investasi",
+    "business": "Bisnis",
+    "individual": "Perorangan"
+  },
+  "kind": {
+    "fund": "Dana investasi",
+    "business": "Bisnis",
+    "individual": "Perorangan"
+  },
+  "col": {
+    "investor": "Investor",
+    "kind": "Jenis",
+    "org": "Bisnis / Dana",
+    "phone": "Nomor telepon",
+    "projects": "Proyek yang diminati",
+    "total": "Total minat"
+  },
+  "detail": "Detail",
+  "empty": "Tidak ada investor yang cocok",
+  "pager": {
+    "unit": "investor",
+    "prev": "Halaman sebelumnya",
+    "next": "Halaman berikutnya",
+    "pageSize": "Baris per halaman"
+  },
+  "drawer": {
+    "title": "Detail investor",
+    "close": "Tutup",
+    "org": "Bisnis / Dana",
+    "phone": "Nomor telepon",
+    "total": "Total minat investasi",
+    "copy": "Salin nomor",
+    "projects": "Proyek yang diminati ({n})",
+    "owner": "Pemilik proyek: {owner} · {date}"
+  },
+  "toast": {
+    "copied": "Nomor telepon disalin",
+    "exported": "Investor diekspor: {n}",
+    "failed": "Tidak dapat diproses, silakan coba lagi"
+  },
+  "error": "Tidak dapat memuat daftar investor",
+  "retry": "Coba lagi"
+}

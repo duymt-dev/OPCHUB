@@ -6,7 +6,7 @@
 - Native-speaker reviewed: **false for every target locale**, including custom AntD Filipino/Lao dictionaries.
 - AI-produced English now covers all25 physical catalogs /2660 source leaves, raw-contract tested against the complete explicit file list before fallback. This is catalog completeness, not a claim that all UI call sites or browser acceptance are complete.
 - Provenance: the earlier checkpoint reused464 unambiguous exact-text matches from Portal English catalogs. The remaining English was translated directly from the unchanged Vietnamese source. No Portal app import exists at runtime. No missing key is filled with Vietnamese/TODO stand-ins.
-- Simplified Chinese source checkpoint f1cca64b, 2026-11-11, now covers25/25 physical files and2660/2660 leaves; raw-contract checked before fallback. Other target bundles id/th/ms/fil/km/lo/my: pending. Aliases en-SG and ms-BN share en/ms catalogs, not separate translations.
+- Simplified Chinese source checkpoint f1cca64b, 2026-11-11, covers25/25 physical files and2660/2660 leaves. Indonesian now also covers25/25 files and2660/2660 leaves, raw-contract checked before fallback. Other target bundles th/ms/fil/km/lo/my: pending. Aliases en-SG and ms-BN share en/ms catalogs, not separate translations.
 - Confidence: English moderate pending owner review; Khmer/Lao/Myanmar require special native-speaker attention when their catalogs are produced. Human review is not fabricated and does not replace technical gates.
 - Self-hosted font assets, licenses and reproducible build provenance are recorded below. Full translated-screen/visual/performance acceptance is still pending; font contracts alone do not complete this TIP.
 
@@ -77,7 +77,7 @@ Pinned upstream Google Fonts commit `5bb28733cec313b63fbd415b574b5ae35c8aa8b8`. 
 - Latin is the primary face, with a single selected SC/Thai/Khmer/Lao/Myanmar fallback. CSS URLs are compiled into hashed/basePath-aware Next assets. Registering twelve faces for seven binaries does not download them all; the browser loads only referenced families. The selector alone uses a9.7KB merged font covering all twelve unchanged native names/countries, avoiding five full-script downloads merely to open the menu.
 - The Latin derivative adds only missing U+2000..27FF punctuation/arrows/checkmarks from licensed Noto Sans SC and preserves the original Latin line metrics. The selector derivative merges subsets of the six listed sources. Both are named OPCHUB, not the reserved name Source. All original copyright/OFL files are packaged byte-for-byte, including upstream whitespace.
 - SC includes the GB2312 common repertoire, script punctuation, selector glyphs and all glyphs from the actual Chinese catalog when available. Thai/Khmer/Lao/Myanmar include their Unicode blocks plus current catalog/selector glyphs. Re-run the tool and extend glyph assertions when the remaining catalogs are added. No claim of glyph completeness for absent catalogs.
-- Current unit glyph scope is the present vi/en/zh catalogs plus twelve native selector names. Platform emoji, arbitrary authored text and monospace code fields are not rewritten into translations. Font-only browser audits use CDP to verify actual custom fonts rather than relying on installed fonts; this does not replace full-screen translated screenshots, parity approval or performance measurement. The Admin auth root has a zero-box marker to override its shared Be Vietnam Pro/system stack without modifying Portal/shared UI.
+- Current unit glyph scope is the present vi/en/zh/id catalogs plus twelve native selector names. Platform emoji, arbitrary authored text and monospace code fields are not rewritten into translations. Font-only browser audits use CDP to verify actual custom fonts rather than relying on installed fonts; this does not replace full-screen translated screenshots, parity approval or performance measurement. The Admin auth root has a zero-box marker to override its shared Be Vietnam Pro/system stack without modifying Portal/shared UI.
 
 - Menu CSS splits the same binary into six Unicode-range faces with the original per-script ascent/descent metrics, so Burmese line metrics do not enlarge every Latin country label. A bounded, scrollable Admin-only popover keeps all choices reachable on short/mobile viewports.
 
@@ -100,4 +100,26 @@ Provenance:692 current leaves retain unambiguous exact-Vietnamese-source matches
 | Dự phòng             | 备用                | Existing provider fallback                        |
 | Nhu cầu đang mở      | 开放需求            | Not a pending moderation queue                    |
 
-Chinese confidence: moderate; terminology and ICU reviewed by the coding agent, not a native speaker. Human review remains false. Current font coverage includes actual vi/en/zh catalogs and12 native selector names; other seven target catalogs still need translations and glyph checks. The SC subset is regenerated from actual Chinese text in addition to its GB2312 repertoire.
+Chinese confidence: moderate; terminology and ICU reviewed by the coding agent, not a native speaker. Human review remains false. Current font coverage includes actual vi/en/zh/id catalogs and12 native selector names; other six target catalogs still need translations and glyph checks. The SC subset is regenerated from actual Chinese text in addition to its GB2312 repertoire.
+
+## Indonesian terminology and review (AI-produced, native-reviewed=false)
+
+2026-11-11, source baseline f7c1b2b8 and unchanged2660-leaf source tree.25 raw files are complete.728 leaves retain unambiguous exact-Vietnamese-source Portal Indonesian matches;1926 leaves are translated or context-corrected for Admin, and6 canonical examples remain byte-identical under the same path-specific policy as English/Chinese.23 context corrections distinguish financial reports from reporting actions, month-end payouts, event registration status, audit categories and repository visibility. No runtime Portal import or translation service. Raw content, canonical values, CSV/email bytes and financial rules are not translated or changed. Legacy unused policy prose stays catalog-compatible and does not create new payout behavior.
+
+| Vietnamese / concept     | Indonesian                    | Boundary                                               |
+| ------------------------ | ----------------------------- | ------------------------------------------------------ |
+| Thành viên               | Anggota                       | Member account, not administrator                      |
+| Phí thành viên           | Biaya keanggotaan             | VND, no exchange conversion                            |
+| Nhóm cộng đồng           | Grup komunitas                | Authored group names stay raw                          |
+| Affiliate                | Afiliasi                      | Reference-only commission; no direct Media Soft payout |
+| Giám đốc Vùng            | Direktur Wilayah              | Only direct regional share recipient                   |
+| Hoa hồng                 | Komisi                        | Existing financial rules retained                      |
+| Báo cáo B1/B2/B3         | Laporan                       | Distinct from the action Laporkan                      |
+| Báo cáo vi phạm          | Laporan anggota               | Moderation source, not financial reports               |
+| Nội dung email           | Isi email                     | Bank reference remains Berita transfer                 |
+| Nhật ký / nhóm hành động | Log aktivitas / Kategori      | Audit taxonomy, not a community group                  |
+| Đang mở / đăng ký        | Terbuka / Pendaftaran terbuka | No pending-review reinterpretation                     |
+| Persona                  | Persona                       | Names/bios and API values remain raw                   |
+| Dự phòng                 | Cadangan                      | Existing provider fallback                             |
+
+Indonesian confidence: moderate; AI translation and context/ICU review by the coding agent, not a native speaker. Native-reviewed=false. All current Indonesian glyphs fit the existing licensed Latin asset, checked against its actual cmap; no additional font download or binary change is needed.

@@ -1,0 +1,156 @@
+{
+  "title": "Proyek OPC",
+  "sub": "Kelola dan publikasikan proyek anggota",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "heading": "Moderasi proyek",
+  "headingSub": "Proyek yang diajukan anggota harus disetujui sebelum ditampilkan ke publik",
+  "viewLabel": "Mode tampilan",
+  "viewGrid": "Tampilan kisi",
+  "viewList": "Tampilan daftar",
+  "tabsLabel": "Status proyek",
+  "tabs": {
+    "pending": "Menunggu persetujuan",
+    "live": "Ditampilkan",
+    "hidden": "Disembunyikan",
+    "changes": "Perlu diubah",
+    "rejected": "Ditolak",
+    "draft": "Draf"
+  },
+  "status": {
+    "pending_review": "Menunggu persetujuan",
+    "published": "Ditampilkan",
+    "hidden": "Disembunyikan",
+    "needs_changes": "Perlu diubah",
+    "rejected": "Ditolak",
+    "draft": "Draf"
+  },
+  "act": {
+    "review": "Lihat & tinjau",
+    "detail": "Detail",
+    "view": "Lihat",
+    "delete": "Hapus"
+  },
+  "featuredMark": "Unggulan",
+  "revision": "Revisi",
+  "updated": "{owner} · Diperbarui {date}",
+  "emptyPending": "Tidak ada proyek yang menunggu peninjauan",
+  "empty": "Tidak ada proyek di bagian ini.",
+  "loadError": "Tidak dapat memuat proyek",
+  "retry": "Coba lagi",
+  "col": {
+    "project": "Proyek",
+    "category": "Bidang",
+    "owner": "Pemilik proyek",
+    "date": "Diajukan",
+    "status": "Status"
+  },
+  "selectAll": "Pilih semua proyek di halaman ini",
+  "selectRow": "Pilih {name}",
+  "bulk": {
+    "label": "Tindakan proyek massal",
+    "selected": "Terpilih",
+    "unit": "item",
+    "publish": "Setujui & publikasikan",
+    "hide": "Sembunyikan",
+    "delete": "Hapus",
+    "clear": "Hapus pilihan"
+  },
+  "pager": {
+    "unit": "proyek",
+    "prev": "Halaman sebelumnya",
+    "next": "Halaman berikutnya",
+    "pageSize": "Proyek per halaman"
+  },
+  "drawer": {
+    "title": "Lihat & tinjau proyek",
+    "close": "Tutup",
+    "detail": "Deskripsi lengkap",
+    "prevNote": "Catatan peninjauan sebelumnya:",
+    "feature": "Jadikan proyek unggulan minggu ini",
+    "featureHint": "Ditampilkan di bagian teratas Jelajahi proyek · hanya proyek yang dipublikasikan",
+    "feedback": "Masukan kepada penulis",
+    "reasonLabel": "Alasan",
+    "reasonPlaceholder": "Alasan (saat meminta perubahan / menolak)",
+    "notePlaceholder": "Pesan kepada pemilik proyek: perubahan yang diperlukan, alasan penolakan…",
+    "noteLabel": "Pesan kepada pemilik proyek",
+    "reject": "Tolak",
+    "changes": "Minta perubahan",
+    "approve": "Setujui & publikasikan",
+    "hide": "Sembunyikan proyek",
+    "republish": "Publikasikan ulang"
+  },
+  "info": {
+    "owner": "Penulis",
+    "country": "Negara",
+    "category": "Bidang",
+    "stage": "Tahap",
+    "website": "Situs web",
+    "testUrl": "Tautan uji",
+    "repo": "Kode sumber",
+    "visibility": "Visibilitas",
+    "funding": "Penggalangan dana",
+    "team": "Tim",
+    "groups": "Dibagikan ke grup",
+    "date": "Diajukan"
+  },
+  "stage": {
+    "idea": "Ide",
+    "developing": "Sedang dikembangkan",
+    "mvp": "MVP",
+    "growth": "Bertumbuh",
+    "launched": "Sudah diluncurkan"
+  },
+  "val": {
+    "none": "—",
+    "noRepo": "Belum dibagikan",
+    "repoPublic": "Publik",
+    "repoPrivate": "Privat",
+    "visPublic": "Publik",
+    "visPrivate": "Privat",
+    "noFunding": "Tidak",
+    "funding": "{amount} untuk {equity}% ekuitas"
+  },
+  "confirm": {
+    "cancel": "Batal",
+    "deleteTitle": "Hapus proyek?",
+    "deleteOne": "Proyek {name} dan masukannya akan dihapus permanen. Tindakan ini dicatat.",
+    "deleteMany": "Proyek beserta masukan yang akan dihapus permanen: {count}. Tindakan ini dicatat.",
+    "delete": "Hapus",
+    "hideTitle": "Sembunyikan proyek?",
+    "hideOne": "{name} tidak lagi terlihat oleh publik. Pemilik proyek akan diberi tahu.",
+    "hideMany": "Proyek terpublikasi yang akan disembunyikan dari Jelajahi: {count}.",
+    "hide": "Sembunyikan",
+    "rejectTitle": "Tolak proyek?",
+    "rejectOne": "{name} akan ditolak karena: {reason}. Pemilik proyek akan diberi tahu.",
+    "reject": "Tolak"
+  },
+  "toast": {
+    "approved": "Disetujui & dipublikasikan · {name}",
+    "changes": "Perubahan diminta · {name}",
+    "rejected": "Ditolak · {name}",
+    "hidden": "Disembunyikan · {name}",
+    "deleted": "Proyek {name} dihapus",
+    "published": "Proyek dipublikasikan: {count}",
+    "hiddenMany": "Proyek disembunyikan: {count}",
+    "deletedMany": "Proyek dihapus: {count}",
+    "skipped": "{text} · proyek tidak valid dilewati: {count}",
+    "needNote": "Masukkan alasan atau pesan untuk meminta perubahan",
+    "needReason": "Pilih alasan penolakan",
+    "featured": "{name} dijadikan proyek unggulan minggu ini",
+    "unfeatured": "Status unggulan dihapus",
+    "featureLiveOnly": "Hanya proyek terpublikasi yang dapat dijadikan unggulan",
+    "failed": "Tindakan gagal. Silakan coba lagi"
+  },
+  "fund": {
+    "status": {
+      "pending_payment": "Penggalangan dana · menunggu pembayaran",
+      "pending_review": "Penggalangan dana · menunggu peninjauan",
+      "active": "Sedang menggalang dana",
+      "rejected": "Penggalangan dana · ditolak"
+    },
+    "approve": "Setujui penggalangan dana",
+    "reject": "Tolak",
+    "approved": "Penggalangan dana disetujui · komisi afiliasi 10% dicatat sebagai referensi (jika ada perujuk)",
+    "rejected": "Paket penggalangan dana ditolak"
+  }
+}
