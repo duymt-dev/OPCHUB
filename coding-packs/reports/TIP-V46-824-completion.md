@@ -5,10 +5,10 @@ The active goal remains the entire approved TIP and all16 ACs. No scope reductio
 
 ## Current checkpoint
 
-- Date:2026-11-11. Branch: `feature/TIP-V46-824-admin-i18n`, baseline `dev f7c1b2b8` (822/823 already merged). Current source **264842f8**; all35 tested catalog/test/README/manifest blobs equal committed HEAD and working tree after normal hooks. Source commit also contains the owned successful native English browser log; remaining evidence is recorded in a subsequent scoped commit.
+- Date:2026-11-11. Branch: `feature/TIP-V46-824-admin-i18n`, baseline `dev f7c1b2b8` (822/823 merged). Current source **44f7c443**; all33 tested catalog/test/REVIEW/manifest blobs match committed HEAD and working tree after normal hooks. This checkpoint adds complete Lao raw catalogs and six actual screens per mode; historical Thai/badge/English evidence below retains its named source, not a fresh rerun.
 - Previous goal turn made concrete progress. No blocking external condition: substantial implementation/verification remains.
 - Owner explicitly approved optional number-format props for shared Pagination/BulkBar and optional LoginPanel error formatting, retaining Portal defaults/callbacks. Approval is recorded in TIP/manifest before those shared edits; no Portal business/source change.
-- Native safety: original PG5432/test data and services remain untouched. Current Filipino6-case subset per mode uses the approved private native API/cluster after revalidating live listener parent/unchanged launch wrapper and isolated endpoints. No seed/reset/SQL/business writes; browser login/refresh authentication sessions only. Font/public-error audits are separate public-page proof, not additional native database acceptance.
+- Native safety: original PG5432/test data and services remain untouched. Current Lao6-case subset per mode uses the approved private native API/cluster after revalidating live listener parent/unchanged launch wrapper and isolated endpoints. No seed/reset/SQL/business writes; browser login/refresh authentication sessions only. Font/public-error audits are separate public-page proof, not additional native database acceptance.
 
 ## Delivered cumulatively
 
@@ -93,6 +93,16 @@ Root3003 passed +2 existing skips, Admin1280/183 files fresh and5 suites cached 
 
 Whole TIP remains IN PROGRESS / PARTIAL / NOT DONE / NOT READY TO MERGE. Seven complete raw bundles vi/en/zh/id/ms/fil/th each25/2667;175/250 files. km/lo/my and final fixed10-bundle production gate remain missing. Full English error/empty/loading/403/chat/auth/secondary controls/values/API/export negatives, all-locale native controls/formatting/session/RBAC, VI/visual and JS/RSC/catalog/performance measurements and named full regressions remain open. Same full16-AC goal, no reduced success criteria or PR/merge/release.
 
+38. Complete Lao checkpoint source44f7c443. All25 files/2667 leaves,6 settings parts.667 retained exact-source Portal matches,1993 direct/context-corrected leaves,6 canonical examples and1 original blank header;1701 distinct direct VI/English draft pairs,28 Portal context corrections. Native-reviewed=false.59 fixed raw/context/canonical/prose/cmap cases plus13 request and35 font =107 focused, included in root3064, not additional. Request loading checks actual Lao domains/all6 settings parts without fallback; original VI/source/Portal/shared/font binaries/API/DB unchanged. The known dynamic-import test cache was cleared with documented vitest --clearCache, not a production-loader workaround.
+
+Fresh six authenticated Overview/Profile/Settings cases at1440/390 in **each** mode use the same assertions, real login200, read-only API guard, actual Lao titles/headings/body anchors, no page overflow, desktop internal sidebar label bounds, loaded fonts and unmasked screenshots. Twelve body images are actual UI evidence, not all-locale/state/control/owner/native-human approval. No additional font/public-error/English/navigation browser rerun is claimed this checkpoint. Previous262-case chain belongs to source264842f8; current fresh browser total12, not274 same-source cases. Private native listener/wrapper/isolated DB/API preconditions revalidated, no reset/seed/SQL/original PG5432/test data or service changes; login/refresh sessions only.
+
+Root3064 passed +2 existing skips: Admin1341/184 files fresh, five suites cache-replayed (Portal476/UI88/shared757/server276/integrations126). Lint/typecheck8 successful/6 cached each; depcheck2792modules/8572dependencies plus server1260/5995. Both Admin production builds pass. Source CLI584 files/301 retained findings/291 exact exceptions/zero unreviewed/dirty=false, unchanged corpusb145416ef4c6391489ba21d77aeaae2a4c29af4d8f7f69a9d2324025e6df5e81 across601 fingerprint files; catalogs/browser proof are outside that fingerprint.873 exact manifest paths, no undeclared changed path/source cap violation. Entire TIP remains PARTIAL; km/my and the final10-bundle gate/full16-AC acceptance remain open.
+
+### Observed reduced-ICU date defect — OPEN
+
+Actual installed Chromium reports Intl.DateTimeFormat.supportedLocalesOf empty for lo-LA/my-MM/km-KH, resolves en-US and formats the fixed Vietnam-calendar day as 11/21/2026; Node supports all three and returns 21/11/2026 (Myanmar native digits). Native Overview390 image consequently shows month/day order for Lao. The current six-screen suite checks prose/layout, not this date order; no assertion was relaxed. Probe output is retained in lao.log. Fix date/picker/runtime parity and add browser numeric/date boundary assertions before accepting AC09/15; do not treat selected catalog/fonts or existing Myanmar number-digit fix as solving dates. No business parser/calendar value or API change is authorized.
+
 ## Raw translation readiness — FAIL / INCOMPLETE
 
 | Bundle | Files present / required | Raw leaves present / required |
@@ -104,29 +114,27 @@ Whole TIP remains IN PROGRESS / PARTIAL / NOT DONE / NOT READY TO MERGE. Seven c
 | ms |25/25|2667/2667|
 | fil |25/25|2667/2667|
 | th |25/25|2667/2667|
-| km/lo/my |0/25 each|0/2667 each|
+| lo |25/25|2667/2667|
+| km/my |0/25 each|0/2667 each|
 
-Presence175/250 and seven complete raw bundles are NOT whole-TIP acceptance. Thai now has25/25 raw files; km/lo/my are absent. These three missing target bundles and the final fixed10-bundle production gate remain open. Runtime fallback never counts as a translation. See [catalog audit](evidence/v46-824/catalog-audit.md) and [REVIEW](../../apps/admin/messages/REVIEW.md).
+Presence200/250 and eight complete raw bundles are NOT whole-TIP acceptance. Lao now has25/25 raw files; km/my are absent. These two missing target bundles and the final fixed10-bundle production gate remain open. Runtime fallback never counts as a translation. See [catalog audit](evidence/v46-824/catalog-audit.md) and [REVIEW](../../apps/admin/messages/REVIEW.md).
 
-## Current verification — source 264842f8
+## Current verification — source44f7c443
 
 | Command / check | Actual evidence |
 |---|---|
-| `pnpm lint` | PASS, initial8 tasks /6 cached (Admin/e2e fresh); final8/7 cached after harness-only readiness correction (e2e fresh) |
-| `pnpm typecheck` | PASS, initial8 tasks /6 cached (Admin/e2e fresh); final8/7 cached after harness-only readiness correction (e2e fresh) |
-| `pnpm test --env-mode=loose` | **3003 passed +2 pre-existing skips**; Admin1280/183 files fresh in initial full run,5 cached suites (Portal476, UI88, shared757, server276, integrations126); final harness-only rerun replays all6 unchanged unit suites. Unique count3003, not doubled.6 tasks successful. VITEST_MAX_WORKERS=2 is a resource cap only |
-| Portal regression | Sourcee7c6ca13 fresh direct476/85 files + Portal MSW build, final shared/Portal inputs unchanged since; current root476 is cache replay, not a fresh Portal rerun |
-| `pnpm depcheck` | PASS, frontend/shared2790 modules8561 dependencies; server1260/5995 |
-| Admin MSW production build | PASS, `.next-msw-tip824` |
-| Admin mocking-off production build | PASS, `.next-server-tip824`; current68-case authenticated subset passes, NOT full native API/all-language acceptance |
-| Portal production MSW build | Historical sourcee7c6ca13 PASS, .next-msw-tip824-portal; final shared/Portal inputs identical, before the Admin-only Intl correction. See portal-sidebar-regression.log |
-| Manifest/caps/logs |856 unique declared table paths; no undeclared changed path, changed source/catalog files≤400 lines; UTF-8/no ANSI; source/log whitespace and credential/control-character/missing-message scans clean. Six exact upstream OFL files retain original whitespace and hashes, excluded only from whitespace normalization |
-| Font technical checks |34 font/asset units now include all25 Thai files; Thai83 includes one full2667-leaf Thai/Latin cmap check. Existing7 binaries and6 OFLs unchanged. Actual24/24 font cases per mode now check Thai auth heading/title and capture4 auth images; not all-control/full native acceptance |
-| Authenticated loaded-screen browser subset | Current68+68 English loaded cases,10+10 navigation/probe,9+9 sidebar,6+6 Filipino and6+6 Thai actual screens;12 English +12 Filipino +12 Thai body images and4 Thai auth images. Same-source262 total browser cases including font/public-error scopes and explicit synthetic/negative probes, not whole-TIP acceptance |
+| pnpm lint / typecheck | PASS,8 tasks /6 cached each; Admin/e2e fresh |
+| pnpm test --env-mode=loose | **3064 passed +2 pre-existing skips**, Admin1341/184files fresh,5 cached suites; VITEST_MAX_WORKERS=2 resource cap only |
+| pnpm depcheck | PASS,2792modules/8572dependencies; server1260/5995 |
+| Admin production builds | PASS both MSW and mocking-off, source44f7c443; not full API acceptance |
+| Lao focused tests |107 =59 raw/context/canonical/prose/cmap +13 request +35 font, included in root count |
+| Fresh browser |6 MSW +6 approved private-native actual Lao Overview/Profile/Settings1440/390; twelve unmasked body images |
+| Historical browser |262 cases on source264842f8 (separate font/error/loaded/navigation/probe/sidebar scopes); not freshly rerun here |
+| Portal | Root476 cache replay. Historical direct476/85files and Portal build sourcee7c6ca13, unchanged inputs; no fresh build claimed |
+| Manifest/source audit |873 declared paths, no undeclared changed path/cap violations;33 tested blobs identical after hooks; production corpus unchanged |
+| Font assets |35 font/asset units and complete Lao cmap test pass;7 binaries/six OFLs unchanged; full performance still pending |
 
-Current source264842f8 public-auth local-error behavior (8 MSW +8 mocking-off cases, same assertions): [same assertions in both modes](evidence/v46-824/local-errors.log), [route/state coverage](evidence/v46-824/coverage.md).
-
-Current logs: [root gates](evidence/v46-824/quality-gates.log), [root unit run (5 cached suites)](evidence/v46-824/unit.log), [Admin MSW](evidence/v46-824/build-msw.log), [Admin mocking-off](evidence/v46-824/build-native.log), [fonts generation + both browser modes](evidence/v46-824/fonts.log). Historical source77484e3f [direct Portal unit](evidence/v46-824/portal-unit.log), [Portal build](evidence/v46-824/build-portal.log).
+Current evidence: [root gates](evidence/v46-824/quality-gates.log), [root unit](evidence/v46-824/unit.log), [focused107](evidence/v46-824/lao.log), [MSW6](evidence/v46-824/lao-msw.log), [private-native6](evidence/v46-824/lao-native.log), [MSW build](evidence/v46-824/build-msw.log), [native build](evidence/v46-824/build-native.log), [source audit](evidence/v46-824/source-audit.json). Earlier fonts/local-errors/English/navigation logs retain their recorded source; not current full acceptance.
 
 Historical complete-raw checkpoint (sourcec0b97b51, superseded by sidebar checkpoint above): Filipino raw suite expands43→82; request +1 and full font suite +1 =41 additional Admin cases. Full root2907 +2 pre-existing skips, Admin1189/179 files fresh and5 cached suites. Focused126 =82 Filipino +11 request +33 font units, included in root totals, not additional coverage. Mandatory lint/types/depcheck and both Admin builds pass. Current browser proof: Filipino6+6 authenticated subset, font24+24, public local-error8+8. Earlier English68+10 per mode remains source016b9077 evidence, not newly rerun here. All22 final tested blobs are identical after normal hooks; no source/catalog/test edits after final gates. Precommit run base335b3b82 is retained truthfully.
 
@@ -137,7 +145,7 @@ A real loader test initially fell back despite valid raw files: installed Vitest
 | AC | Authoritative proof / remaining requirement |
 |---|---|
 |01|Locale/alias/unsafe-cookie/request units pass; full selector/browser identity belongs to pending browser acceptance.|
-|02|vi/en/zh/id/ms/fil/th25-file raw contracts pass; km/lo/my remain absent. Final fixed10-bundle gate pending — overall FAIL.|
+|02|vi/en/zh/id/ms/fil/th/lo25-file raw contracts pass; km/my remain absent. Final fixed10-bundle gate pending — overall FAIL.|
 |03|Original settings/legacy hashes, duplicate-root, shape/fallback/isolation and client safe-error units pass.|
 |04|Metadata/auth implementation retained; Chinese/Indonesian/Malay and Filipino login heading/title pass both modes; vi/en public local auth states pass on source016b9077; full credential/2FA/all-locale flow evidence still missing. Historical SSR4/4 belongs to55116347, not current browser/native proof.|
 |05|Actual vi/en/vi member paging/filter/identity/URL/query/hash and F5 protected-read tests pass at1440/390 in both modes; en-SG/ms-BN Profile draft/country identity pass. Required Thai sequence and broader navigation/session cases still pending.|
@@ -158,15 +166,17 @@ Chinese current browser coverage: login title + heading in both modes, with unma
 ## Next work — same full goal
 
 1. The approved optional badge callback is implemented and regression-verified (Portal defaults unchanged). Continue with full English domain/upload/browser flows, including indirect runtime strings beyond static analysis. The584-file source audit and raw-number migration now pass; the five domain client-error integrations have unit proof, not full browser acceptance. Do not alter parsers/search/date machine fields, API errors, exports, content or D-140.
-2. Complete km/lo/my catalogs/glossaries and final fixed10-bundle gate, plus English edge/chat/auth/navigation/control/value scenarios beyond the loaded47-state/14-dialog matrix and mandatory fixed-bundle raw gate. No directory-discovery skip, copied vi or TODO stand-ins.
+2. Complete km/my catalogs/glossaries and final fixed10-bundle gate, plus English edge/chat/auth/navigation/control/value scenarios beyond the loaded47-state/14-dialog matrix and mandatory fixed-bundle raw gate. No directory-discovery skip, copied vi or TODO stand-ins.
 3. Extend font glyph assertions to every target catalog when produced; full-screen/control rendering and same MSW/native i18n assertions, profile/overview/auth/Portal regressions, unmasked1440/390 screenshots and measured baseline/current JS/catalog/font performance.
 4. Re-audit every numbered requirement, all16 ACs and named artifacts against actual evidence. Only then finalize clean/push, PR into dev for owner review. Never auto-merge/release main.
 
-Current same-source navigation [MSW10](evidence/v46-824/navigation-msw.log)/[private-native10](evidence/v46-824/navigation-native.log), loaded [MSW68](evidence/v46-824/english-msw.log)/[private-native68](evidence/v46-824/english-native.log), sidebar [MSW9](evidence/v46-824/sidebar-msw.log)/[private-native9](evidence/v46-824/sidebar-native.log). Total262 browser cases, including4 synthetic modal-handler probes and2 injected internal-clipping negatives; scopes remain distinct, not whole TIP acceptance.
+Historical source264842f8 same-source navigation [MSW10](evidence/v46-824/navigation-msw.log)/[private-native10](evidence/v46-824/navigation-native.log), loaded [MSW68](evidence/v46-824/english-msw.log)/[private-native68](evidence/v46-824/english-native.log), sidebar [MSW9](evidence/v46-824/sidebar-msw.log)/[private-native9](evidence/v46-824/sidebar-native.log). Total262 browser cases, including4 synthetic modal-handler probes and2 injected internal-clipping negatives; scopes remain distinct, not whole TIP acceptance.
 
-Current Thai proof: [Profile1440](evidence/v46-824/th-profile-server-1440.png), [Overview390](evidence/v46-824/th-overview-server-390.png), [Settings390](evidence/v46-824/th-settings-server-390.png), [MSW6](evidence/v46-824/thai-msw.log), [private-native6](evidence/v46-824/thai-native.log), [raw/request/font129](evidence/v46-824/thai.log). Sixteen Thai auth/body images, not all-locale controls or owner approval.
+Historical source264842f8 Thai proof: [Profile1440](evidence/v46-824/th-profile-server-1440.png), [Overview390](evidence/v46-824/th-overview-server-390.png), [Settings390](evidence/v46-824/th-settings-server-390.png), [MSW6](evidence/v46-824/thai-msw.log), [private-native6](evidence/v46-824/thai-native.log), [raw/request/font129](evidence/v46-824/thai.log). Sixteen Thai auth/body images, not all-locale controls or owner approval.
 
-Current Filipino images: [Profile1440 — sidebar clipping corrected](evidence/v46-824/fil-profile-server-1440.png), [Overview390](evidence/v46-824/fil-overview-server-390.png), [Settings390](evidence/v46-824/fil-settings-server-390.png). Representative images inspected for glyphs and real layout; no native-human or owner approval. Native data/counts retained, not reseeded to mimic MSW.
+Historical source264842f8 Filipino images: [Profile1440 — sidebar clipping corrected](evidence/v46-824/fil-profile-server-1440.png), [Overview390](evidence/v46-824/fil-overview-server-390.png), [Settings390](evidence/v46-824/fil-settings-server-390.png). Representative images inspected for glyphs and real layout; no native-human or owner approval. Native data/counts retained, not reseeded to mimic MSW.
+
+Current Lao proof: [Profile1440](evidence/v46-824/lo-profile-server-1440.png), [Overview390](evidence/v46-824/lo-overview-server-390.png), [Settings390](evidence/v46-824/lo-settings-server-390.png). Agent inspected representative native screenshots; no owner/native-speaker approval. Same-source six cases/mode are narrowly loaded-state evidence, not full screen/control acceptance.
 
 ## Historical evidence
 

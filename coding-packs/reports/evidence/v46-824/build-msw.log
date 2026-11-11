@@ -1,21 +1,21 @@
-Source working tree based on 582e8579; Admin build mode=msw dist=.next-msw-tip824; compile only, no API verification
+Source 44f7c443; Admin build mode=msw dist=.next-msw-tip824; compile only, no API verification
 $ next build
 ▲ Next.js 16.4.2 (Turbopack)
 - Environments: .env.local
-✓ Running next.config.ts took 397ms
+✓ Running next.config.ts took 379ms
 - Experiments (use with caution):
   · optimizePackageImports
 
   Creating an optimized production build ...
-✓ Compiled successfully in 2.9s
+✓ Compiled successfully in 3.4s
   Running TypeScript ...
-  Finished TypeScript in 8.2s ...
+  Finished TypeScript in 7.0s ...
   Collecting page data using 5 workers ...
   Generating static pages using 5 workers (0/10) ...
   Generating static pages using 5 workers (2/10)
   Generating static pages using 5 workers (4/10)
   Generating static pages using 5 workers (7/10)
-✓ Generating static pages using 5 workers (10/10) in 570ms
+✓ Generating static pages using 5 workers (10/10) in 464ms
   Finalizing page optimization ...
 
 Route (app)
@@ -49,4 +49,3 @@ Route (app)
 ƒ  (Dynamic)  server-rendered on demand
 
 EXIT 0
-Postcommit receipt source264842f8: all35 final tested catalog/test/README/manifest blobs match HEAD and worktree after normal hooks. Build/catalog/production inputs unchanged by the later sidebar-test-only readiness correction. Original working-tree base retained above.

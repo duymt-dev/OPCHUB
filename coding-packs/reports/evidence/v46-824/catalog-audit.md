@@ -1,4 +1,4 @@
-# TIP824 raw catalog readiness - complete Thai raw checkpoint
+# TIP824 raw catalog readiness - complete Lao raw checkpoint
 
 **INCOMPLETE / FAIL.** File presence alone is not completion. Counts below are raw source-key presence before any Vietnamese fallback, not native review or proof of ICU validity.
 
@@ -12,7 +12,7 @@
 | ms | 25 | 25 | 2667 | 0 |
 | fil | 25 | 25 | 2667 | 0 |
 | km | 0 | 25 | 0 | 2667 |
-| lo | 0 | 25 | 0 | 2667 |
+| lo | 25 | 25 | 2667 | 0 |
 | my | 0 | 25 | 0 | 2667 |
 
 Required source tree:2667 string leaves. All original2456 legacy leaves are hash-protected; the original524 settings leaves retain their exact baseline hash. The earlier52 labels are explicitly additive (40 settings.aiCalls,4 groups.mod,8 ui.errors). A further6 ui.errors labels cover numeric/bank/device validation; one settings.ai.customProviderLabel is now added in all five present bundles. Original source leaves are unchanged. All25 English files are explicitly checked against raw source keys/types/ICU/NFC/nonempty/no-copy contracts:25 passing cases, with six exact copied-text exceptions and one intentionally blank source header documented in REVIEW. Simplified Chinese has a fixed25-file raw suite,10 Admin-context cases and6 canonical-copy cases. Indonesian has a fixed25-file raw suite,14 Admin-context cases and6 canonical-copy cases. Filipino now has all25 files/2667 leaves. Three target bundles remain absent. Runtime fallback does NOT count as a translation.175/250 files present is not full acceptance. Overall10-bundle readiness remains FAIL; the final mandatory all-bundle production gate is still pending.
@@ -42,3 +42,9 @@ Specific sidebar clipping finding is corrected and regression-verified, NOT a wh
 
 
 Latest Thai raw checkpoint source264842f8:25files/2667 leaves,83 fixed Thai cases, actual request loading of all6 merged settings without fallback,34 full font cases; focused129 included in root3003.693 retained Portal matches +1968 direct/context-corrected (1 blank header) +6 canonical examples,37 Portal context corrections,1693 direct draft pairs. Native-reviewed=false. Six Thai actual Overview/Profile/Settings browser cases/mode,12 body images plus4 auth-only images, no font/Portal/shared/API/DB production change. Seven raw bundles complete,175/250 files; km/lo/my and final fixed10-bundle gate still absent. Older dated checkpoint inventories below/above retain their historical scope, not current readiness.
+
+## Current Lao source44f7c443
+
+Supersedes historical inventories above: vi/en/zh/id/ms/fil/th/lo each25files/2667leaves,200/250 total; km/my missing. Final fixed10-bundle gate remains FAIL/incomplete.667 retained Portal leaves +1993 direct/context-corrected +6 canonical +1 blank header;28 Portal-context corrections,1701 direct draft pairs. Native-reviewed=false.59 raw/context/canonical/prose/Lao-script/cmap +13 actual request +35 full font =107 focused cases, included in root3064, not added twice. Source VI2456 legacy/524 settings hashes preserved; all7 existing font binaries/6 OFLs unchanged. Six actual loaded Lao screens/mode and12 unmasked body images do not prove every control/state/native business path. Full TIP remains NOT DONE / NOT READY TO MERGE.
+
+Open observed formatting defect: installed reduced-ICU Chromium falls back lo-LA/my-MM/km-KH dates to en-US unlike Node; fixed21Nov2026 gives11/21/2026 in browser,21/11/2026 in Node (Myanmar native digits). Actual diagnostic in lao.log; six Lao screen cases do not assert date order. Date/picker runtime parity and boundary browser assertions remain required before AC09/15 acceptance.

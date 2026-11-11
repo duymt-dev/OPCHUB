@@ -1,0 +1,98 @@
+Source working tree based onf030784a. Lao25 explicit raw files/2667 leaves, not whole10-bundle acceptance. Provenance667 retained exact-source Portal matches +1993 direct/context-corrected leaves +6 canonical examples +1 existing blank header;28 Portal context corrections,1701 distinct direct draft pairs. Native-reviewed=false; Portal/shared/API/DB/font binaries unchanged. Known Vitest dynamic-import-map cache was cleared using documented vitest --clearCache after introducing the new Lao directory; production loader unchanged. km/my remain absent;200/250 file presence, final fixed10-bundle gate pending.
+COMMAND pnpm --filter @opchub/admin exec vitest run src/i18n/tests/lao-catalog.spec.ts src/i18n/request.spec.ts src/i18n/font-config.spec.ts --maxWorkers=2
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  3 passed (3)
+      Tests  107 passed (107)
+   Start at  23:41:56
+   Duration  8.75s (environment 68%, tests 18%, import 9%, transform 4%, worker 1%)
+
+    Isolate  3 workers spawned · ~3.48s startup each (spawn + environment, per file)
+             at least ~1.74s faster with isolate: false — reuses workers across files instead of one per file
+
+EXIT 0
+
+ADDITIONAL READ-ONLY DIAGNOSTIC: actual installed Chromium versus Node Intl.DateTimeFormat at 2026-11-21T05:00:00Z; Gregorian Asia/Ho_Chi_Minh, year/month/day numeric. Chromium selected lo-LA/my-MM/km-KH is unsupported and resolves en-US; Node supports all three. This is a remaining AC09/15 formatting defect, NOT a date-format PASS. No page/API/DB requests.
+{
+  "browser": [
+    {
+      "locale": "lo-LA",
+      "supported": [],
+      "resolved": "en-US",
+      "date": "11/21/2026"
+    },
+    {
+      "locale": "my-MM",
+      "supported": [],
+      "resolved": "en-US",
+      "date": "11/21/2026"
+    },
+    {
+      "locale": "km-KH",
+      "supported": [],
+      "resolved": "en-US",
+      "date": "11/21/2026"
+    },
+    {
+      "locale": "th-TH",
+      "supported": [
+        "th-TH"
+      ],
+      "resolved": "th-TH",
+      "date": "21/11/2026"
+    },
+    {
+      "locale": "en-GB",
+      "supported": [
+        "en-GB"
+      ],
+      "resolved": "en-GB",
+      "date": "21/11/2026"
+    }
+  ],
+  "node": [
+    {
+      "locale": "lo-LA",
+      "supported": [
+        "lo-LA"
+      ],
+      "resolved": "lo-LA",
+      "date": "21/11/2026"
+    },
+    {
+      "locale": "my-MM",
+      "supported": [
+        "my-MM"
+      ],
+      "resolved": "my-MM",
+      "date": "၂၁/၁၁/၂၀၂၆"
+    },
+    {
+      "locale": "km-KH",
+      "supported": [
+        "km-KH"
+      ],
+      "resolved": "km-KH",
+      "date": "21/11/2026"
+    },
+    {
+      "locale": "th-TH",
+      "supported": [
+        "th-TH"
+      ],
+      "resolved": "th-TH",
+      "date": "21/11/2026"
+    },
+    {
+      "locale": "en-GB",
+      "supported": [
+        "en-GB"
+      ],
+      "resolved": "en-GB",
+      "date": "21/11/2026"
+    }
+  ]
+}
+PROBE EXIT 0 (diagnostic executed, not acceptance passed)
