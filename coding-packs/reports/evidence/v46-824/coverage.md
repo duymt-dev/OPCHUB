@@ -2,7 +2,14 @@
 
 **Partial evidence only.** Metadata implementation is not proof that a route body, dialog, every locale or API is verified.
 
-## Current complete Khmer checkpoint (2026-11-12, source3bd94726)
+## Current staged Myanmar core checkpoint (2026-11-12)
+
+Raw242/250: nine complete bundles plus Myanmar17 files/1260 leaves, missing8 business files/1407 leaves. Fixed raw65 pass, not final10-bundle gate or human review.
+
+Final checkpoint verification: root3265 unique passed +2 existing skips. Original fresh Admin1542/191files, other5 cached; recovered original task output above is not another run. E2E-only harness follow-up root replay has all6 unit tasks cached, lint/typecheck8tasks/7cached, depcheck2824/8646 plus server1260/5995. Both Admin production builds PASS sourcea9cea423; E2E-only commit5599b103 changes no production input; all25 frozen inputs match HEAD/worktree after normal hooks. Current64 browser cases PASS:12 actual Myanmar core body,48 public font/auth,4 real-login read-only Fees en/lo. Direct post-artifact E2E typecheck recorded in quality-gates.log. Native original PG5432/opchub_test/services/data retained; only approved isolated API, auth sessions, no SQL/seed/reset/repair/business writes.
+Known OPEN defect: actual My Overview system-flow values remain Latin whereas KPI counts are Myanmar. flow.ts uses native Intl.NumberFormat instead of prepared scoped formatter; full My numeric acceptance is NOT achieved. Canonical date inputs require spec32 review, not assumed defects. Stronger loaded-page font preconditions pass current48; earlier failure retained, no definitive timing root-cause claim. Sidebar helper now restores actual aside scroll after unchanged bounds assertions; regenerated Profile screenshot logo is fully visible. No production CSS change, owner/native-human approval or full16-AC completion.
+
+## Historical complete Khmer checkpoint (2026-11-12, source3bd94726)
 
 Nine complete bundles/225 of250 raw files: Khmer25/2667 now complete, all25 Myanmar/2667 leaves still absent. Earlier12 Khmer files/729 leaves remain byte-identical. Actual request config loads all six Khmer settings parts plus auth/Profile/Overview/reports without warning/fallback; raw84 +request14 =focused98 pass. Final fixed10-bundle positive/negative gate remains required, not replaced by physical file presence.
 

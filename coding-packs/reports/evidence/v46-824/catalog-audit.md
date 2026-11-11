@@ -1,8 +1,8 @@
-# TIP824 raw catalog readiness - complete Khmer checkpoint
+# TIP824 raw catalog readiness - staged Myanmar core checkpoint
 
 **INCOMPLETE / FAIL.** File presence alone is not completion. Counts below are raw source-key presence before any Vietnamese fallback, not native review or proof of ICU validity.
 
-2026-11-12: raw225/250 files, nine complete bundles including Khmer25/25 (2667/2667 leaves); Myanmar25/2667 remains absent. Overall10-bundle readiness is still FAIL. Standard CLDR formatting data and runtime fallback do not count as UI translation. Native-reviewed=false.
+2026-11-12: raw242/250 files, nine complete bundles plus Myanmar17/25 (1260/2667 leaves); eight Myanmar business catalogs/1407 leaves remain absent. Overall10-bundle readiness remains FAIL; runtime fallback/standard CLDR names do not count as translated UI. Native-reviewed=false.
 
 | Bundle | Raw files | Required files | String leaves present | Missing string leaves |
 |---|---:|---:|---:|---:|
@@ -15,7 +15,11 @@
 | fil | 25 | 25 | 2667 | 0 |
 | km | 25 | 25 | 2667 | 0 |
 | lo | 25 | 25 | 2667 | 0 |
-| my | 0 | 25 | 0 | 2667 |
+| my | 17 | 25 | 1260 | 1407 |
+
+Myanmar stage:17 fixed raw catalogs cover auth/bot-options/common/Profile/investors/meta/needs/overview/reports/requests/stores/ui and all six settings parts. Missing8 are affiliate, bots, events, fees, groups, marketing, members, projects; no filler production files.354 retained Portal exact-source +891 leaves from768 explicit source/target pairs (including canonical examples/one blank header) +15 context-corrected leaves =1260. Fixed65 raw/context/script/neutral/canonical/cmap checks pass;31 neutral keys only, no broad exemption. AI-produced/native-reviewed=false, glossary/provenance in REVIEW. This does not prove absent8 domains, final10-bundle gate or whole-TIP browser/performance acceptance.
+
+Prior complete Khmer evidence (unchanged25 files/2667 leaves) follows; historical source-bound results are not automatically fresh current-browser proof.
 
 Required source tree2667 leaves/25 files; original2456 legacy and524 settings leaves remain baseline-hash protected. All25 Khmer raw physical files now exist with exact source shape/keys/types/ICU/NFC before fallback. Previous12/729 leaves remain byte-identical; remaining13/1938 are added. All six settings parts now exist; actual request config tests auth/Profile/Overview/reports/general/roles/mail/audit/pricing/AI with no fallback. No placeholder or English/Vietnamese prose filler. No Vietnamese/other locale, runtime loader, API/business/DB/Portal/shared or font binary/license change.
 

@@ -1,16 +1,16 @@
-Source3bd94726; both production builds and20 source/catalog/test/harness/manifest blobs match committed source after normal hooks. Actual2-case Lao Fees date/currency proof1440/390 against independent Node/raw DTOs, selected-only locale-data response hashes/no unused public-auth payload. Same MSW/native assertions and real-login/read-only HTTP/JSON/write guard; native uses revalidated approved isolated API/cluster. No original DB/service/seed/reset/business change. Complete Khmer catalogs are not full10-bundle/UI/performance acceptance; Myanmar remains missing.
+TIP824 current scoped Intl implementation; production builds a9cea423 with staged Myanmar17/1260; E2E-only harness5599b103, all25 frozen source/catalog/harness/manifest blobs verified. Actual2-case Lao fee/date/currency proof at1440/390 against independent Node full-ICU/raw DTOs, public auth has no unused locale payload, selected-only evaluated registration AND exact response hashes/absence of unselected built locale data. Same assertions both modes; real login and read-only guard, no fake date cells, no full TIP/native/all-language/performance acceptance. Existing MSW Portal relay, no DB/global seed/reset.
 COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-intl.spec.ts
-[WebServer] (node:26916) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (node:28048) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
-[WebServer] (node:13724) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (node:8568) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
 
 Running 2 tests using 1 worker
 
-(node:32164) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:11136) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 (Use `node --trace-warnings ...` to show where the warning was created)
-  ok 1 [behavior] › behavior\admin-i18n-intl.spec.ts:46:3 › D-141 AC824-08/11/16 actual Lao fees match independent Node dates/currency and selected Intl registration 1440 (4.9s)
-  ok 2 [behavior] › behavior\admin-i18n-intl.spec.ts:46:3 › D-141 AC824-08/11/16 actual Lao fees match independent Node dates/currency and selected Intl registration 390 (4.3s)
+  ok 1 [behavior] › behavior\admin-i18n-intl.spec.ts:46:3 › D-141 AC824-08/11/16 actual Lao fees match independent Node dates/currency and selected Intl registration 1440 (4.7s)
+  ok 2 [behavior] › behavior\admin-i18n-intl.spec.ts:46:3 › D-141 AC824-08/11/16 actual Lao fees match independent Node dates/currency and selected Intl registration 390 (4.1s)
 
-  2 passed (18.0s)
+  2 passed (15.4s)
 EXIT 0
