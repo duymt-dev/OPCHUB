@@ -1,0 +1,14 @@
+Source working tree based on f94713bf; staged12 Khmer raw catalogs/729 leaves only, not full bundle. Direct/context translations and fixed script/no-English filler/cmap tests; native-reviewed=false.
+COMMAND pnpm --filter @opchub/admin exec vitest run src/i18n/tests/khmer-catalog.spec.ts
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  1 passed (1)
+      Tests  44 passed (44)
+   Start at  03:22:54
+   Duration  1.88s (environment 87%, tests 9%, import 2%, transform 1%, worker 1%)
+
+EXIT 0
+
+Final16 source/catalog/test/REVIEW/manifest blobs match source150dec81 and worktree after normal hooks. Root3159 passed +2 existing skips (fresh Admin1436/190files, five suites cached); focused44 included, not additional. Both production builds use actual source150dec81. Current52 browser cases =48 public font/login (4 Khmer auth assertions/images included) +4 real-login read-only Fees en/lo date/currency/payload-hash cases. No full Khmer/10-bundle or whole-TIP acceptance.

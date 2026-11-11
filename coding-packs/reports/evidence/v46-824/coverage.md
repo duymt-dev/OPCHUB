@@ -2,7 +2,15 @@
 
 **Partial evidence only.** Metadata implementation is not proof that a route body, dialog, every locale or API is verified.
 
-## Current scoped Intl browser evidence (2026-11-12)
+## Current staged Khmer checkpoint (2026-11-12, source150dec81)
+
+Raw212/250: eight complete bundles plus Khmer12/25 files/729 leaves. Missing Khmer13/1938 leaves and Myanmar25/2667 leaves; runtime fallback is not translated coverage. Raw settings/audit alone does not load as translated settings while other five parts are absent. Fixed44 raw/context/script/cmap tests pass, included in root3159 +2 existing skips. This remains partial overall.
+
+Actual same-source production builds both pass. Current52 browser cases =48 font/public-login (12 selector identities ×2 widths ×2 modes;4 Khmer heading/title/unmasked auth captures included), plus4 Fees en→lo→en real-login/read-only date/currency/payload-hash checks. Native font cases are public native-mode frontend only, **not private DB/body acceptance**. The2 native Fees cases use the approved isolated API/cluster and strict response/write guards; no original PG5432/test data/service mutation or seed/reset. Twelve script/date resource payload hashes are unchanged across the rebuilt modes; generated build/source metadata is refreshed, direct e2e typecheck passes. Full10-language body/state/control/value/negative/performance acceptance remains required.
+
+Four Khmer public-auth images km-auth-{msw,server}-{1440,390}.png are actual unmasked pages. Native1440/390 were visually inspected, no owner/native-speaker approval. No fresh full70/262-case regression claimed; history below retains its original source.
+
+## Historical scoped Intl browser evidence (2026-11-12)
 
 Production working tree based on e5e5bf05; final commit/frozen-input verification is recorded in the completion report. Same assertions in MSW and approved isolated native API modes:
 
