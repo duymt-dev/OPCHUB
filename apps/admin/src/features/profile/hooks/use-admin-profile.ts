@@ -8,13 +8,14 @@ import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useToast } from '@opchub/ui';
 import { useAuthStore } from '@/lib/auth-store';
-import { uploadImage } from '@/lib/upload-image';
+import { useUploadImage } from '@/i18n/use-upload-image';
 import { updateProfile } from '../api';
 import { useProfileErrors } from './use-profile-errors';
 
 const FIELDS = ['name', 'phone'] as const;
 
 export function useAdminProfile() {
+  const uploadImage = useUploadImage();
   const t = useTranslations('common.adminProfile');
   const toast = useToast();
   const me = useAuthStore((s) => s.me);

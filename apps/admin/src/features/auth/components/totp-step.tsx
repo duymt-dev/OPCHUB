@@ -4,6 +4,7 @@ import type { AdminLoginResponse } from '@opchub/shared/api';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { ApiError } from '@/lib/api-client';
+import { useLocalErrors } from '@/i18n/use-local-errors';
 import { verifyTotp } from '../api';
 import { SetupField } from './setup-field';
 import styles from './setup.module.css';
@@ -20,16 +21,16 @@ export function TotpStep({
 }) {
   const t = useTranslations('auth.totp');
   const [code, setCode] = useState('');
-  const [error, setError] = useState<string>();
+  const error = useLocalErrors<'code', 'errCode'>((key) => t(key));
   const [busy, setBusy] = useState(false);
   const submit = async () => {
-    if (!/^\d{6}$/.test(code)) return setError(t('errCode'));
+    if (!/^\d{6}$/.test(code)) return error.local({ code: 'errCode' });
     setBusy(true);
     try {
       onDone(await verifyTotp(mfaToken, code));
     } catch (e) {
       if (!(e instanceof ApiError)) throw e;
-      setError(e.message);
+      error.raw({ code: e.message });
     } finally {
       setBusy(false);
     }
@@ -54,7 +55,7 @@ export function TotpStep({
         autoComplete="one-time-code"
         value={code}
         onChange={(v) => setCode(v.replace(/\D/g, '').slice(0, 6))}
-        error={error}
+        error={error.errors.code}
       />
       <div className={styles.actions}>
         <button type="submit" className={styles.primary} disabled={busy}>

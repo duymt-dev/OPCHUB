@@ -27,6 +27,9 @@ const DEMO_KIND = {
 /** A-01 Đăng nhập (Admin) */
 export function LoginScreen() {
   const t = useTranslations('auth');
+  const [localError, setLocalError] = useState<
+    'errorEmpty' | NonNullable<ReturnType<typeof loginErrorKey>>['key']
+  >();
   const router = useRouter();
   const params = useSearchParams();
   const next = safeNext(params.get('next'), '/overview');
@@ -47,7 +50,10 @@ export function LoginScreen() {
   const labels = useLoginLabels();
 
   const onSubmit = async ({ identifier, password, remember }: LoginValues) => {
-    if (!identifier.trim() || !password) return t('login.errorEmpty');
+    if (!identifier.trim() || !password) {
+      setLocalError('errorEmpty');
+      return t('login.errorEmpty');
+    }
     try {
       enter(await login({ identifier, password, remember }));
       return undefined;
@@ -60,7 +66,12 @@ export function LoginScreen() {
       }
       const err = loginErrorKey(e);
       if (!err) throw e;
-      return 'raw' in err && err.raw ? err.raw : t(`login.${err.key}`);
+      if ('raw' in err && err.raw) {
+        setLocalError(undefined);
+        return err.raw;
+      }
+      setLocalError(err.key);
+      return t(`login.${err.key}`);
     }
   };
 
@@ -89,6 +100,7 @@ export function LoginScreen() {
   return (
     <AuthFrame>
       <LoginPanel
+        formatError={(message) => (localError ? t(`login.${localError}`) : message)}
         labels={labels}
         sso={LOGIN_SSO}
         demoAccounts={accounts}

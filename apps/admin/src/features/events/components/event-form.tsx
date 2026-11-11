@@ -3,7 +3,7 @@
 import { RichTextField, translateErrors, useImageUpload, useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import { uploadImage } from '@/lib/upload-image';
+import { useUploadImage } from '@/i18n/use-upload-image';
 import { useFormErrors } from '@/lib/use-form-errors';
 import { useGroupOptions, useSaveEvent } from '../hooks/use-events';
 import { EVENT_DESCRIPTION_DEFAULT } from '../content-defaults';
@@ -27,6 +27,7 @@ export type EventFormTarget = 'new' | EventView | null;
 
 function FormBody({ initial, onClose }: { initial: EventFormState; onClose: () => void }) {
   const ui = useAdminUiLabels();
+  const uploadImage = useUploadImage();
   const t = useTranslations('events');
   const toast = useToast();
   const save = useSaveEvent();

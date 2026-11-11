@@ -4,7 +4,7 @@ import { translateErrors, useImageUpload, useToast } from '@opchub/ui';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import { uploadImage } from '@/lib/upload-image';
+import { useUploadImage } from '@/i18n/use-upload-image';
 import { useFormErrors } from '@/lib/use-form-errors';
 import { botKeys, savePersona } from '../api';
 import { PERSONA_FIELD_MAP, type PersonaField, personaBody, personaError } from '../model';
@@ -23,6 +23,7 @@ interface Props {
 
 /** D-38 Drawer "Persona": ảnh/màu, thông tin cơ bản, phong cách, nhóm tham gia */
 export function PersonaDrawer({ initial, groups, onClose }: Props) {
+  const uploadImage = useUploadImage();
   const t = useTranslations('bots');
   const toast = useToast();
   const qc = useQueryClient();

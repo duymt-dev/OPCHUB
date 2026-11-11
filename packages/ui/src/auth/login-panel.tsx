@@ -13,10 +13,20 @@ export function LoginPanel({
   ssoPending = false,
   demoAccounts,
   notice,
+  formatError,
   onSubmit,
   ...nav
 }: LoginPanelProps) {
   const f = useLoginForm(onSubmit);
+  const form = formatError
+    ? {
+        ...f,
+        state: {
+          ...f.state,
+          error: f.state.error === undefined ? undefined : formatError(f.state.error),
+        },
+      }
+    : f;
   return (
     <>
       <AuthHeader
@@ -29,7 +39,7 @@ export function LoginPanel({
           onRegister: nav.onRegister,
         }}
       />
-      <LoginFields labels={labels} form={f} notice={notice} onForgot={nav.onForgot} />
+      <LoginFields labels={labels} form={form} notice={notice} onForgot={nav.onForgot} />
       {sso.length || ssoPending ? (
         <SsoSection label={labels.orContinue} sso={sso} pending={ssoPending} onSso={nav.onSso} />
       ) : null}

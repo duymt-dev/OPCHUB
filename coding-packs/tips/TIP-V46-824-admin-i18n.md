@@ -90,6 +90,8 @@ Execute inventory clarification (11/11/2026): baseline có `settings.renewal.act
 
 Owner-approved execute clarification (11/11/2026): owner đồng ý thêm props định dạng số **tùy chọn** cho shared Pagination/BulkBar để Admin dịch đầy đủ số hiển thị. Giữ nguyên mặc định Portal, giá trị số/callback và logic chọn/phân trang; cập nhật manifest trước khi sửa hai file shared này. Chạy hồi quy shared UI/Portal và build Portal; không mở rộng sang thay đổi nghiệp vụ Portal.
 
+Owner-approved auth execute clarification (11/11/2026): owner đồng ý thêm prop định dạng lỗi **tùy chọn** cho shared LoginPanel, chỉ Admin sử dụng để lỗi client đang hiển thị đổi theo locale. Portal mặc định không đổi; giữ nguyên draft, cơ chế xóa lỗi khi chọn tài khoản mẫu, pending và callback string/undefined. Không suy diễn text API thành mã lỗi client. Khai báo file-level manifest trước sửa, chạy shared/UI + Portal regression và build Portal.
+
 ### 4. UI, labels và validation
 
 22. Metadata: 22 route title hiện có + `/profile` chuyển `generateMetadata/getTranslations('meta')`; giữ brand `OPC Hub Admin`, robots noindex/nofollow. Không locale hóa href/slug/canonical hoặc public SEO Portal.

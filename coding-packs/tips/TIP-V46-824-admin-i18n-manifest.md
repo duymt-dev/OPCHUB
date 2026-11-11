@@ -802,3 +802,40 @@ Serial follow-up within the same TIP. The25 Indonesian catalog paths above are a
 | Action | Exact path | Ownership / reason |
 |---|---|---|
 | create | `apps/admin/src/i18n/tests/indonesian-catalog.spec.ts` | Fixed25-file raw contracts before fallback, Admin-context and canonical-copy cases; missing file or key must fail. |
+
+## Local auth/upload error-state follow-up
+
+Serial AC824-10/12 implementation. Store client error codes and translate at render; keep API field/message strings raw, drafts and validation predicates unchanged. No shared LoginPanel change without the separately requested owner clarification.
+
+| Action | Exact path | Ownership / reason |
+|---|---|---|
+| create | `apps/admin/src/i18n/use-local-errors.ts` | Typed local-code/raw-text error state; live rendering without reverse-matching server messages. |
+| create | `apps/admin/src/i18n/use-local-errors.spec.tsx` | Local rerender/clear/raw collision regressions. |
+| create | `apps/admin/src/i18n/use-upload-image.ts` | Admin-only localized wrapper around typed local upload failures; API exceptions pass through unchanged. |
+| create | `apps/admin/src/i18n/use-upload-image.spec.tsx` | Live-locale/local-kind/raw-API upload boundary and caller coverage tests. |
+| create | `apps/admin/src/lib/image-upload-error.ts` | Typed browser/storage-local upload error identity, separate from ApiError. |
+| create | `apps/admin/src/lib/upload-image.spec.ts` | Compression/presign/storage contracts and local failure identity. |
+| create | `apps/admin/src/features/auth/hooks/use-first-password.ts` | Extract existing hook; preserve strength/equality/session/routing, render local errors from codes. |
+| create | `apps/admin/src/features/auth/tests/local-errors.spec.tsx` | Actual auth form/hook draft/error locale-switch regressions and raw API negatives. |
+| modify | `apps/admin/src/features/auth/components/first-password-screen.tsx` | Hook extraction facade; no auth-flow redesign. |
+| modify | `apps/admin/src/features/auth/components/forgot-screen.tsx` | Local email validation remains live under locale switch. |
+| modify | `apps/admin/src/features/auth/components/reset-screen.tsx` | Structured local link/password errors, raw server errors unchanged. |
+| modify | `apps/admin/src/features/auth/components/totp-step.tsx` | Local six-digit error code; raw API errors unchanged. |
+| modify | `apps/admin/src/features/auth/components/two-factor-form.tsx` | Local six-digit error code; raw API errors unchanged. |
+| modify | `apps/admin/src/features/bots/components/persona-drawer.tsx` | Opt into typed local upload error translation; file rules/values unchanged. |
+| modify | `apps/admin/src/features/groups/components/group-form.tsx` | Opt into typed local upload error translation; file rules/values unchanged. |
+| modify | `apps/admin/src/features/settings/components/logo-picker.tsx` | Opt into typed local upload error translation; immediate logo save semantics unchanged. |
+
+## Owner-approved optional LoginPanel error formatting
+
+Owner explicitly approved optional error formatting for Admin while retaining Portal defaults. The formatter changes displayed errors only; onSubmit returns the same string/undefined contract, drafts, demo-account clearing, pending state and actions remain unchanged. No Portal production file is edited. Shared/UI and fresh Portal regression plus Portal production build are required.
+
+| Action | Exact path | Ownership / reason |
+|---|---|---|
+| modify | `packages/ui/src/auth/types.ts` | Optional typed formatError prop, default behavior unchanged. |
+| modify | `packages/ui/src/auth/login-panel.tsx` | Present formatted error without mutating internal login form state. |
+| create | `packages/ui/src/auth/login-panel-i18n.spec.tsx` | Default/raw output, live opt-in formatting, draft/demo/error-clear and callback regressions. |
+| modify | `apps/admin/src/features/auth/components/login-screen.tsx` | Retain known client/auth-message provenance; formatter rerenders only known local keys and leaves raw API strings unchanged. |
+| create | `e2e/audit/admin-local-errors.spec.ts` | Actual vi/en public-auth local-error/draft/query/hash/cookie checks at1440/390, same assertions in both modes, no submitted API mutations. Not the final all-language/auth suite. |
+| create | `e2e/audit/playwright.admin-local-errors.config.ts` | Reuse isolated font-audit startup only; no fixtures/seeds/global database setup. |
+| create | `coding-packs/reports/evidence/v46-824/local-errors.log` | Actual same-assertion MSW/off public-auth local-error output; never whole native API acceptance. |
