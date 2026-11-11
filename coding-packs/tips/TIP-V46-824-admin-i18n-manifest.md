@@ -310,6 +310,16 @@ Baseline settings has **524** string leaves. Its sorted `[path,value]` entries (
 | create | `e2e/behavior/admin-i18n-screens.spec.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
 | create | `e2e/behavior/admin-i18n-values.spec.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
 | create | `e2e/behavior/admin-i18n-visual.spec.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `e2e/behavior/admin-i18n-sidebar.spec.ts` | Real vi/en/fil expanded/collapsed/mobile sidebar bounds, badges, keyboard and navigation regression; no shortened copy or masks. |
+| create | `e2e/behavior/admin-i18n/sidebar.ts` | Text-range/label/badge/icon bounds assertions; detects internal clipping even when page width is valid. |
+| create | `apps/admin/src/features/shell/components/admin-navigation.css` | Admin-only wrapping for existing sidebar labels/badges, imported only by Admin RootLayout; no shared/Portal or theme geometry change. |
+| create | `apps/admin/src/features/shell/components/admin-navigation-style.spec.ts` | Guards Admin-only stylesheet import, exact semantic selectors and no clipping/geometry/locale-specific workaround. |
+| create | `coding-packs/reports/evidence/v46-824/sidebar-msw.log` | Actual identical sidebar assertions and observed geometry, MSW production build. |
+| create | `coding-packs/reports/evidence/v46-824/sidebar-native.log` | Actual identical sidebar assertions against approved private native API; no original DB/seed/reset. |
+| create | `coding-packs/reports/evidence/v46-824/fil-sidebar-msw-1440.png` | Unmasked actual expanded Filipino sidebar with wrapped labels and visible badges. |
+| create | `coding-packs/reports/evidence/v46-824/fil-sidebar-msw-390.png` | Unmasked actual mobile Filipino drawer, no shortened copy or masks. |
+| create | `coding-packs/reports/evidence/v46-824/fil-sidebar-server-1440.png` | Actual private-native expanded Filipino navigation. |
+| create | `coding-packs/reports/evidence/v46-824/fil-sidebar-server-390.png` | Actual private-native mobile Filipino navigation. |
 | create | `e2e/behavior/admin-i18n/cases.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
 | create | `e2e/behavior/admin-i18n/helpers.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
 

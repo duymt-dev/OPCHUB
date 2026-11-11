@@ -1,6 +1,7 @@
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import '@opchub/ui/globals.css';
 import '@/i18n/fonts.css';
+import '@/features/shell/components/admin-navigation.css';
 import type { Metadata, Viewport } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale } from 'next-intl/server';

@@ -4,6 +4,7 @@ import { resolve } from 'node:path';
 import { env } from '../env';
 import { test, expect, openLocalized } from './admin-i18n/fixtures';
 import { englishChrome } from './admin-i18n/chrome';
+import { assertSidebarLabels } from './admin-i18n/sidebar';
 
 const evidence = fileURLToPath(
   new URL('../../coding-packs/reports/evidence/v46-824/', import.meta.url),
@@ -55,6 +56,7 @@ for (const screen of SCREENS)
         page.getByRole('status').filter({ hasText: 'Mag-sign in sa Admin Dashboard' }),
       ).toBeHidden();
       await page.evaluate(() => document.fonts.ready);
+      if (width === 1440) await assertSidebarLabels(page.locator('aside[data-mini]'));
       mkdirSync(evidence, { recursive: true });
       await page.screenshot({
         path: resolve(evidence, `fil-${screen.id}-${env.E2E_TARGET}-${width}.png`),
