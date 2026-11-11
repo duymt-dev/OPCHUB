@@ -48,6 +48,12 @@
     "linkInvalid": "链接必须以 http:// 或 https:// 开头"
   },
   "errors": {
+    "minNumber": "最小值：{min}",
+    "maxNumber": "最大值：{max}",
+    "integer": "请输入整数",
+    "bankAccountNumber": "银行账号必须包含 6–20 位数字",
+    "bankHolderLetters": "账户持有人姓名只能包含字母",
+    "notifyDeviceFailed": "无法更新通知",
     "adminPasswordRule": "新密码至少需要八个字符，须包含大写字母及数字",
     "currentPasswordRequired": "请输入当前密码",
     "confirmPasswordRequired": "请确认新密码",

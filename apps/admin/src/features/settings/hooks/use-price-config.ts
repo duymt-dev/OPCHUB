@@ -5,6 +5,7 @@ import { useToast } from '@opchub/ui';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import { useIssueMessage } from '@/i18n/use-issue-message';
 import { fetchPriceConfig, savePriceConfig, settingsKeys } from '../api';
 import { useSettingsMutation } from './use-settings-mutation';
 
@@ -23,6 +24,7 @@ const plain = (c: PriceConfig): PriceConfig => ({ per: c.per, biz: c.biz, fund: 
 export function usePriceConfig() {
   const t = useTranslations('settings.price');
   const toast = useToast();
+  const issueMessage = useIssueMessage();
   const qc = useQueryClient();
   const q = useQuery({ queryKey: settingsKeys.price, queryFn: fetchPriceConfig });
   const [draft, setDraft] = useState<PriceConfig | null>(null);
@@ -46,7 +48,7 @@ export function usePriceConfig() {
       if (!form.per.y || !form.biz.y || !form.fund.p || !form.fund.r) return toast(t('emptySell'));
       if (!(form.fund.mo >= 1)) return toast(t('minMonths'));
       const ok = priceConfigSchema.safeParse(form);
-      if (!ok.success) return toast(ok.error.issues[0]?.message ?? t('emptySell'));
+      if (!ok.success) return toast(issueMessage(ok.error.issues[0]));
       save.mutate(
         { ...ok.data, version: q.data.version },
         {

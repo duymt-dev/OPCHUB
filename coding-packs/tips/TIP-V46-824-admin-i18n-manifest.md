@@ -839,3 +839,25 @@ Owner explicitly approved optional error formatting for Admin while retaining Po
 | create | `e2e/audit/admin-local-errors.spec.ts` | Actual vi/en public-auth local-error/draft/query/hash/cookie checks at1440/390, same assertions in both modes, no submitted API mutations. Not the final all-language/auth suite. |
 | create | `e2e/audit/playwright.admin-local-errors.config.ts` | Reuse isolated font-audit startup only; no fixtures/seeds/global database setup. |
 | create | `coding-packs/reports/evidence/v46-824/local-errors.log` | Actual same-assertion MSW/off public-auth local-error output; never whole native API acceptance. |
+
+## Domain client-validation provenance follow-up
+
+Serial AC824-10/12 work. Preserve schemas, canonical values, field whitelists and API error text. Add six UI labels in the already-owned vi/en/zh/id ui catalogs; other six bundles remain incomplete. Refresh only active client errors on locale change; never resurrect cleared errors, overwrite remembered API errors, change drafts or submit a mutation.
+
+| Action | Exact path | Ownership / reason |
+|---|---|---|
+| create | `apps/admin/src/i18n/use-schema-form-errors.ts` | Domain client error rendering / regression, no business or API redesign. |
+| create | `apps/admin/src/i18n/use-schema-form-errors.spec.tsx` | Domain client error rendering / regression, no business or API redesign. |
+| create | `apps/admin/src/i18n/schema-validation.spec.ts` | Domain client error rendering / regression, no business or API redesign. |
+| create | `apps/admin/src/features/affiliate/components/policy-i18n.spec.tsx` | Domain client error rendering / regression, no business or API redesign. |
+| create | `apps/admin/src/features/affiliate/regional/components/regional-bank-i18n.spec.tsx` | Domain client error rendering / regression, no business or API redesign. |
+| create | `apps/admin/src/features/bots/hooks/use-bot-type-form-i18n.spec.tsx` | Domain client error rendering / regression, no business or API redesign. |
+| create | `apps/admin/src/features/settings/hooks/use-price-config-i18n.spec.tsx` | Domain client error rendering / regression, no business or API redesign. |
+| create | `apps/admin/src/features/settings/hooks/use-app-notify-device-i18n.spec.tsx` | Domain client error rendering / regression, no business or API redesign. |
+| modify | `apps/admin/src/features/affiliate/regional/components/regional-bank-fields.tsx` | Domain client error rendering / regression, no business or API redesign. |
+| modify | `apps/admin/src/features/affiliate/components/policy-form.spec.tsx` | Domain client error rendering / regression, no business or API redesign. |
+| modify | `apps/admin/src/features/affiliate/regional/components/regional-payee-bank-dialog.spec.tsx` | Domain client error rendering / regression, no business or API redesign. |
+| create | `apps/admin/src/i18n/use-issue-message.ts` | Live locale formatting for structured Zod issue parameters; no parser changes. |
+| modify | `apps/admin/src/features/bots/tests/context.tsx` | Supply the real source ui catalog for new local error rendering in existing regressions. |
+| create | `apps/admin/src/i18n/tests/domain-context.tsx` | Shared test-only real vi/en providers for client validation provenance; no production API change. |
+| create | `coding-packs/reports/evidence/v46-824/schema-errors.log` | Actual domain client-validation tests, not full native or all-language browser acceptance. |

@@ -1,10 +1,10 @@
 # Admin translation review (D-141)
 
 - Scope: Admin UI only; API errors, email, CSV and user content retain their original contract.
-- Source baseline: f7c1b2b8; current source has2660 string leaves in25 physical catalogs.
+- Source baseline: f7c1b2b8; current source has2666 string leaves in25 physical catalogs.
 - English completion checkpoint: ec97a874 (2608 leaves); additive AI/validation checkpoint9e962712 (2660 leaves), 2026-11-11. All25 raw English catalogs verified, not whole-TIP completion.
 - Native-speaker reviewed: **false for every target locale**, including custom AntD Filipino/Lao dictionaries.
-- AI-produced English now covers all25 physical catalogs /2660 source leaves, raw-contract tested against the complete explicit file list before fallback. This is catalog completeness, not a claim that all UI call sites or browser acceptance are complete.
+- AI-produced English now covers all25 physical catalogs /2666 source leaves, raw-contract tested against the complete explicit file list before fallback. This is catalog completeness, not a claim that all UI call sites or browser acceptance are complete.
 - Provenance: the earlier checkpoint reused464 unambiguous exact-text matches from Portal English catalogs. The remaining English was translated directly from the unchanged Vietnamese source. No Portal app import exists at runtime. No missing key is filled with Vietnamese/TODO stand-ins.
 - Simplified Chinese source checkpoint f1cca64b, 2026-11-11, covers25/25 physical files and2660/2660 leaves. Indonesian source checkpoint042dedaf, 2026-11-11, also covers25/25 files and2660/2660 leaves, raw-contract checked before fallback. Other target bundles th/ms/fil/km/lo/my: pending. Aliases en-SG and ms-BN share en/ms catalogs, not separate translations.
 - Confidence: English moderate pending owner review; Khmer/Lao/Myanmar require special native-speaker attention when their catalogs are produced. Human review is not fabricated and does not replace technical gates.
@@ -31,16 +31,16 @@
 
 ## Raw presence snapshot (not completion)
 
-- vi: 25/25 files, 2660/2660 source string leaves present.
-- en: 25/25 files, 2660/2660 source string leaves present;25 raw contract cases pass.
-- zh: 25/25 files, 2660/2660 source string leaves present; complete raw bundle, not full browser acceptance.
-- id: 0/25 files, 0/2660 source string leaves present.
-- th: 0/25 files, 0/2660 source string leaves present.
-- ms: 0/25 files, 0/2660 source string leaves present.
-- fil: 0/25 files, 0/2660 source string leaves present.
-- km: 0/25 files, 0/2660 source string leaves present.
-- lo: 0/25 files, 0/2660 source string leaves present.
-- my: 0/25 files, 0/2660 source string leaves present.
+- vi: 25/25 files, 2666/2666 source string leaves present.
+- en: 25/25 files, 2666/2666 source string leaves present;25 raw contract cases pass.
+- zh: 25/25 files, 2666/2666 source string leaves present; complete raw bundle, not full browser acceptance.
+- id: 25/25 files, 2666/2666 source string leaves present; complete raw bundle, not full browser acceptance.
+- th: 0/25 files, 0/2666 source string leaves present.
+- ms: 0/25 files, 0/2666 source string leaves present.
+- fil: 0/25 files, 0/2666 source string leaves present.
+- km: 0/25 files, 0/2666 source string leaves present.
+- lo: 0/25 files, 0/2666 source string leaves present.
+- my: 0/25 files, 0/2666 source string leaves present.
 
 ## Content boundaries / exact exceptions
 
@@ -124,3 +124,7 @@ Chinese confidence: moderate; terminology and ICU reviewed by the coding agent, 
 | Dự phòng                 | Cadangan                      | Existing provider fallback                             |
 
 Indonesian confidence: moderate; AI translation and context/ICU review by the coding agent, not a native speaker. Native-reviewed=false. All current Indonesian glyphs fit the existing licensed Latin asset, checked against its actual cmap; no additional font download or binary change is needed.
+
+## Additive client-validation labels
+
+The domain client-validation follow-up adds six ui.errors leaves to each present vi/en/zh/id catalog: inclusive numeric bounds, whole-number validation, bank account digits, bank holder letters and notification-device fallback. Current source and each present target have2666 leaves in25 files. Earlier2660-leaf checkpoint counts above are historical; retained Portal matches and canonical-copy counts are unchanged. The six new target translations are AI-produced directly for Admin, native-reviewed=false. Chinese now has1968 Admin-specific/context-corrected leaves plus692 retained matches and6 canonical examples; Indonesian1932 plus728 and6. Other six target bundles and full acceptance remain pending.

@@ -48,6 +48,12 @@
     "linkInvalid": "Tautan harus diawali dengan http:// atau https://"
   },
   "errors": {
+    "minNumber": "Nilai minimum: {min}",
+    "maxNumber": "Nilai maksimum: {max}",
+    "integer": "Masukkan bilangan bulat",
+    "bankAccountNumber": "Nomor rekening harus terdiri dari 6–20 digit",
+    "bankHolderLetters": "Nama pemilik rekening hanya boleh berisi huruf",
+    "notifyDeviceFailed": "Tidak dapat memperbarui notifikasi",
     "adminPasswordRule": "Kata sandi baru harus terdiri dari minimal 8 karakter, huruf kapital, dan angka",
     "currentPasswordRequired": "Masukkan kata sandi saat ini",
     "confirmPasswordRequired": "Konfirmasi kata sandi baru Anda",

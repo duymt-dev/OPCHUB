@@ -60,14 +60,14 @@ describe('D-141 AC824-10 structured local validation only', () => {
     expect(localIssueMessage(parsed.error.issues[0], t)).toBe(english.errors.invalid);
   });
 
-  it('keeps generic string limits and ignores numeric limits rather than calling them text lengths', () => {
+  it('keeps generic string limits and renders numeric bounds without calling them text lengths', () => {
     const short = z.string().min(3).safeParse('a');
     const long = z.string().max(4).safeParse('abcde');
     const number = z.number().min(5).safeParse(1);
     for (const [result, text] of [
       [short, 'Enter at least 3 characters'],
       [long, 'Enter no more than 4 characters'],
-      [number, english.errors.invalid],
+      [number, 'Minimum value: 5'],
     ] as const) {
       if (result.success || !result.error.issues[0]) throw new Error('Expected issue');
       expect(localIssueMessage(result.error.issues[0], t)).toBe(text);
