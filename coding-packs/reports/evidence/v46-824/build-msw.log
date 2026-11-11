@@ -1,21 +1,21 @@
-Source working tree based on 55504b45; Admin build mode=msw dist=.next-msw-tip824; compile only, no API verification
+Source working tree based on 335b3b82; Admin build mode=msw dist=.next-msw-tip824; compile only, no API verification
 $ next build
 ▲ Next.js 16.4.2 (Turbopack)
 - Environments: .env.local
-✓ Running next.config.ts took 388ms
+✓ Running next.config.ts took 370ms
 - Experiments (use with caution):
   · optimizePackageImports
 
   Creating an optimized production build ...
-✓ Compiled successfully in 2.7s
+✓ Compiled successfully in 2.4s
   Running TypeScript ...
-  Finished TypeScript in 7.2s ...
+  Finished TypeScript in 7.7s ...
   Collecting page data using 5 workers ...
   Generating static pages using 5 workers (0/10) ...
   Generating static pages using 5 workers (2/10)
   Generating static pages using 5 workers (4/10)
   Generating static pages using 5 workers (7/10)
-✓ Generating static pages using 5 workers (10/10) in 486ms
+✓ Generating static pages using 5 workers (10/10) in 503ms
   Finalizing page optimization ...
 
 Route (app)
@@ -50,4 +50,4 @@ Route (app)
 
 EXIT 0
 
-Postcommit receipt: all15 tested catalog/test/manifest blobs equal committed sourcec12b477d and working tree after normal hooks. REVIEW Markdown hook diff is formatting only; no catalog/logic/test edit after final gates. Precommit run base55504b45 is retained truthfully.
+Postcommit receipt: all22 tested catalog/test/manifest/README blobs equal committed sourcec0b97b51 and working tree after normal hooks. No source edit after final gates; precommit base335b3b82 retained. Known real sidebar clipping remains an AC15 failure, not a passing visual verdict.

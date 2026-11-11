@@ -1,0 +1,22 @@
+TIP824 authenticated Filipino Overview/Profile/Settings 1440/390 visual subset; production Admin/test working tree based on335b3b82; full Filipino25-file catalog, actual language-specific body anchors. Portal source unchanged since77484e3f. Requires real MSW Portal Affiliate relay, no DB/global seed/reset. Same6 Filipino three-screen browser assertions in native; actual UI login/read-only API and no masks. Not complete16-AC acceptance.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-visual.spec.ts
+[WebServer] (node:3192) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:5720) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+(node:9684) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\admin-i18n-visual.spec.ts:37:5 › D-141 AC824-07/15 Filipino actual overview 1440, not all-language acceptance (4.4s)
+  ok 2 [behavior] › behavior\admin-i18n-visual.spec.ts:37:5 › D-141 AC824-07/15 Filipino actual overview 390, not all-language acceptance (4.0s)
+  ok 3 [behavior] › behavior\admin-i18n-visual.spec.ts:37:5 › D-141 AC824-07/15 Filipino actual profile 1440, not all-language acceptance (4.5s)
+  ok 4 [behavior] › behavior\admin-i18n-visual.spec.ts:37:5 › D-141 AC824-07/15 Filipino actual profile 390, not all-language acceptance (4.6s)
+  ok 5 [behavior] › behavior\admin-i18n-visual.spec.ts:37:5 › D-141 AC824-07/15 Filipino actual settings 1440, not all-language acceptance (4.2s)
+  ok 6 [behavior] › behavior\admin-i18n-visual.spec.ts:37:5 › D-141 AC824-07/15 Filipino actual settings 390, not all-language acceptance (4.4s)
+
+  6 passed (32.2s)
+EXIT 0
+
+Postcommit receipt: all22 tested catalog/test/manifest/README blobs equal committed sourcec0b97b51 and working tree after normal hooks. No source edit after final gates; precommit base335b3b82 retained. Known real sidebar clipping remains an AC15 failure, not a passing visual verdict.
