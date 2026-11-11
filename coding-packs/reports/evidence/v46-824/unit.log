@@ -1,4 +1,4 @@
-Source working tree based on d06bce37. Full root tests; VITEST_MAX_WORKERS=4 passed through Turbo loose mode, a resource cap only. Initial run found 525 instead of 524 baseline settings leaves after adding customProviderLabel. Only that exact NEW key is now excluded from the unchanged original hashes; focused14 baseline cases pass. No baseline hash, existing source string, test skip or timeout changed. Full rerun follows. No overlapping production builds.
+Source working tree based on1a6b0117. Full root tests; VITEST_MAX_WORKERS=4 passed through Turbo loose mode, a resource cap only. No test skip, assertion or timeout reductions. No overlapping production builds.
 COMMAND pnpm test --env-mode=loose
 $ turbo run test --concurrency=2 --env-mode=loose
 
@@ -8,7 +8,37 @@ $ turbo run test --concurrency=2 --env-mode=loose
    • Remote caching disabled
 
 @opchub/server:test: cache hit, replaying logs c2e070d3adeeddab
+@opchub/server:test: $ vitest run --project unit
+@opchub/server:test:
+@opchub/server:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+@opchub/server:test:
+@opchub/server:test:
+@opchub/server:test:  Test Files  57 passed (57)
+@opchub/server:test:       Tests  276 passed (276)
+@opchub/server:test:    Start at  16:03:29
+@opchub/server:test:    Duration  57.63s (import 83%, transform 12%, tests 4%, worker 1%)
+@opchub/server:test:
+@opchub/server:test:      Import  |unit| 400 modules were evaluated 1913 times · 65.27s total, 83% of tracked time
+@opchub/server:test:              ~22.11s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/server:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
+@opchub/server:test:
+@opchub/shared:test: cache hit, replaying logs b0ac9becdf974ad3
+@opchub/shared:test: $ vitest run
+@opchub/shared:test:
+@opchub/shared:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/shared
+@opchub/shared:test:
+@opchub/shared:test:
+@opchub/shared:test:  Test Files  127 passed (127)
+@opchub/shared:test:       Tests  757 passed (757)
+@opchub/shared:test:    Start at  16:00:10
+@opchub/shared:test:    Duration  158.12s (import 86%, transform 9%, tests 4%, worker 1%)
+@opchub/shared:test:
+@opchub/shared:test:      Import  432 modules were evaluated 893 times · 162.66s total, 86% of tracked time
+@opchub/shared:test:              ~18.76s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/shared:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
+@opchub/shared:test:
 @opchub/portal:test: cache hit, replaying logs c499ac8b2dccf1b3
+@opchub/integrations:test: cache hit, replaying logs b6c214e97c1022b8
 @opchub/portal:test: $ vitest run --passWithNoTests
 @opchub/portal:test:
 @opchub/portal:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/portal
@@ -27,22 +57,6 @@ $ turbo run test --concurrency=2 --env-mode=loose
 @opchub/portal:test:              ~113.00s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
 @opchub/portal:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
 @opchub/portal:test:
-@opchub/server:test: $ vitest run --project unit
-@opchub/server:test:
-@opchub/server:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
-@opchub/server:test:
-@opchub/server:test:
-@opchub/server:test:  Test Files  57 passed (57)
-@opchub/server:test:       Tests  276 passed (276)
-@opchub/server:test:    Start at  16:03:29
-@opchub/server:test:    Duration  57.63s (import 83%, transform 12%, tests 4%, worker 1%)
-@opchub/server:test:
-@opchub/server:test:      Import  |unit| 400 modules were evaluated 1913 times · 65.27s total, 83% of tracked time
-@opchub/server:test:              ~22.11s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
-@opchub/server:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
-@opchub/server:test:
-@opchub/integrations:test: cache hit, replaying logs b6c214e97c1022b8
-@opchub/admin:test: cache miss, executing 9c9bdece294ed9d2
 @opchub/integrations:test: $ vitest run
 @opchub/integrations:test:
 @opchub/integrations:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/integrations
@@ -57,21 +71,7 @@ $ turbo run test --concurrency=2 --env-mode=loose
 @opchub/integrations:test:              ~709ms faster with isolate: false — shared modules are evaluated once per worker instead of once per file
 @opchub/integrations:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
 @opchub/integrations:test:
-@opchub/shared:test: cache hit, replaying logs b0ac9becdf974ad3
-@opchub/shared:test: $ vitest run
-@opchub/shared:test:
-@opchub/shared:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/shared
-@opchub/shared:test:
-@opchub/shared:test:
-@opchub/shared:test:  Test Files  127 passed (127)
-@opchub/shared:test:       Tests  757 passed (757)
-@opchub/shared:test:    Start at  16:00:10
-@opchub/shared:test:    Duration  158.12s (import 86%, transform 9%, tests 4%, worker 1%)
-@opchub/shared:test:
-@opchub/shared:test:      Import  432 modules were evaluated 893 times · 162.66s total, 86% of tracked time
-@opchub/shared:test:              ~18.76s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
-@opchub/shared:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
-@opchub/shared:test:
+@opchub/admin:test: cache miss, executing 676cf8cf13ea81d7
 @opchub/ui:test: cache hit, replaying logs 3fc4e542c25d697b
 @opchub/ui:test: $ vitest run
 @opchub/ui:test:
@@ -130,19 +130,22 @@ $ turbo run test --concurrency=2 --env-mode=loose
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
 @opchub/admin:test:
-@opchub/admin:test:  Test Files  176 passed (176)
-@opchub/admin:test:       Tests  1097 passed (1097)
-@opchub/admin:test:    Start at  18:16:59
-@opchub/admin:test:    Duration  483.44s (import 58%, environment 35%, tests 5%)
+@opchub/admin:test:  Test Files  177 passed (177)
+@opchub/admin:test:       Tests  1102 passed (1102)
+@opchub/admin:test:    Start at  19:43:29
+@opchub/admin:test:    Duration  380.63s (import 59%, environment 34%, tests 7%, transform 1%)
 @opchub/admin:test:
-@opchub/admin:test:      Import  1139 modules were evaluated 6085 times · 1073.40s total, 58% of tracked time
-@opchub/admin:test:              ~173.31s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/admin:test:      Import  1140 modules were evaluated 6224 times · 851.07s total, 59% of tracked time
+@opchub/admin:test:              ~139.03s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
 @opchub/admin:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
 @opchub/admin:test:
 
  Tasks:    6 successful, 6 total
 Cached:    5 cached, 6 total
-  Time:    8m4.668s
+  Time:    6m21.489s
 
 EXIT 0
+
+Postcommit receipt: tested source blobs verified identical to b9e50ace and working tree after normal hooks. Original precommit run header retained. No source edit after final gates.
