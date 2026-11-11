@@ -87,7 +87,7 @@ for (const option of languageOptions) {
       await expect(page.getByRole('option')).toHaveCount(0);
       expect(faults).toEqual([]);
       if (option.code === 'fil') {
-        // Auth/meta are complete staged files, not a claim that the whole Filipino bundle exists.
+        // Auth/meta rendering only; complete raw files do not prove all-screen browser acceptance.
         await expect(
           page.getByRole('heading', { name: 'Maligayang pagbabalik!', exact: true }),
         ).toBeVisible();

@@ -1,0 +1,179 @@
+{
+  "title": "Mga Miyembro",
+  "sub": "Pamahalaan ang mga account ng miyembro, tungkulin sa pagpaparehistro at mga grupo",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "card": {
+    "title": "Mga Miyembro",
+    "count": "· Mga account: {n}",
+    "search": "Maghanap ayon sa pangalan, email...",
+    "grid": "Grid view",
+    "list": "Listahang view",
+    "types": "Uri ng account",
+    "typeAll": "Lahat",
+    "typeBiz": "Negosyo",
+    "typePer": "Indibidwal"
+  },
+  "col": {
+    "member": "Miyembro",
+    "type": "Uri ng account",
+    "groups": "Mga grupong sinalihan",
+    "role": "Tungkulin sa pagpaparehistro",
+    "date": "Sumali",
+    "status": "Katayuan",
+    "selectAll": "Piliin lahat sa pahinang ito",
+    "select": "Piliin si {name}",
+    "actions": "Mga aksyon para kay {name}"
+  },
+  "type": {
+    "business": "Negosyo",
+    "personal": "Indibidwal",
+    "businessLong": "Negosyo / Organisasyon"
+  },
+  "role": {
+    "member": "Miyembro",
+    "lecturer": "Tagapagturo",
+    "admin": "Administrador"
+  },
+  "status": {
+    "active": "Aktibo",
+    "locked": "Naka-lock"
+  },
+  "grid": {
+    "joined": "Sumali noong {date}",
+    "profile": "Tingnan ang profile sa pagpaparehistro →"
+  },
+  "menu": {
+    "title": "Baguhin ang katayuan",
+    "active": "Aktibo",
+    "lock": "I-lock ang account",
+    "unlock": "I-unlock",
+    "assign": "Italaga sa mga grupo…",
+    "profile": "Tingnan ang profile sa pagpaparehistro"
+  },
+  "bulk": {
+    "selected": "Napili",
+    "unit": "item",
+    "assign": "+ Italaga sa mga grupo",
+    "lock": "I-lock ang mga account",
+    "unlock": "I-unlock",
+    "export": "I-export bilang CSV",
+    "clear": "Alisin ang pagpili"
+  },
+  "assign": {
+    "titleOne": "Italaga si {name} sa mga grupo",
+    "titleMany": "Mga miyembrong itatalaga sa mga grupo: {n}",
+    "search": "Maghanap ng grupo ayon sa pangalan o lalawigan/lungsod...",
+    "groupRole": "Tungkulin sa grupo",
+    "already": "Miyembro na",
+    "none": "Walang napiling grupo",
+    "count": "Mga napiling grupo: {n}",
+    "cancel": "Kanselahin",
+    "save": "Italaga sa mga grupo",
+    "close": "Isara"
+  },
+  "drawer": {
+    "title": "Profile sa pagpaparehistro",
+    "close": "Isara",
+    "biz": "Impormasyon ng negosyo",
+    "rep": "Kinatawan",
+    "per": "Personal na impormasyon",
+    "groups": "Mga grupong pinili sa pagpaparehistro",
+    "sys": "System",
+    "taxCode": "Tax ID",
+    "company": "Pangalan ng negosyo",
+    "field": "Industriya",
+    "size": "Laki",
+    "country": "Bansa ng pagpaparehistro",
+    "name": "Buong pangalan",
+    "position": "Posisyon",
+    "phone": "Numero ng telepono",
+    "email": "Email",
+    "persona": "Ikaw ay",
+    "registered": "Petsa ng pagpaparehistro",
+    "role": "Tungkulin sa pagpaparehistro",
+    "status": "Katayuan",
+    "pending": "Naghihintay ng beripikasyon",
+    "rejected": "Tinanggihan ang beripikasyon",
+    "reject": "Tanggihan",
+    "approve": "Beripikahin ang negosyo",
+    "rejectTitle": "Tanggihan ang profile ng negosyo?",
+    "rejectBody": "Hindi matatanggap ng {company} ang badge na \"Beripikado\". Magagamit pa rin ang account (D-40).",
+    "confirm": "Tanggihan",
+    "cancel": "Kanselahin"
+  },
+  "roleConfirm": {
+    "title": "Baguhin ang mga pahintulot sa system?",
+    "body": "{name}: {from} → {to}. Itatala ang pagbabagong ito sa talaan ng aktibidad.",
+    "ok": "Baguhin ang mga pahintulot",
+    "cancel": "Kanselahin"
+  },
+  "lockConfirm": {
+    "title": "I-lock ang account?",
+    "body": "Hindi makakapag-sign in si {who} hanggang ma-unlock. Itatala ang aksyong ito sa talaan ng aktibidad.",
+    "many": "Mga account: {n}",
+    "ok": "I-lock",
+    "cancel": "Kanselahin"
+  },
+  "pager": {
+    "unit": "miyembro",
+    "prev": "Nakaraang pahina",
+    "next": "Susunod na pahina",
+    "pageSize": "Bilang ng row bawat pahina"
+  },
+  "toast": {
+    "locked": "Naka-lock · {name}",
+    "unlocked": "Na-unlock · {name}",
+    "activated": "Naitakda bilang Aktibo · {name}",
+    "bulkLocked": "Mga naka-lock na account: {n}",
+    "bulkUnlocked": "Mga na-unlock na account: {n}",
+    "exporting": "Ini-export sa CSV ang mga item: {n}…",
+    "exported": "Mga na-export na miyembro: {n}",
+    "exportFailed": "Hindi na-export: hindi magawa ang file. Subukang muli",
+    "exportTimeout": "Hindi na-export: lumampas sa oras ang paggawa ng file. Subukang muli",
+    "role": "Na-update ang tungkulin para kay {name}",
+    "assigned": "Mga naitalagang miyembro: {n} · Mga grupo: {g} · Tungkulin: {role}",
+    "pickGroup": "Pumili ng hindi bababa sa 1 grupo",
+    "verified": "Beripikado na si {name}",
+    "rejected": "Tinanggihan ang profile ni {name}",
+    "failed": "Hindi matagumpay ang aksyon"
+  },
+  "filters": {
+    "all": "Lahat",
+    "results": "{n} resulta",
+    "clear": "I-clear ang mga filter ({n})",
+    "grp": "Mga grupo ng komunidad",
+    "role": {
+      "label": "Tungkulin sa pagpaparehistro",
+      "business": "Negosyo",
+      "expert": "Eksperto",
+      "lecturer": "Tagapagturo",
+      "engineer": "Inhinyero",
+      "investor": "Mamumuhunan",
+      "freelancer": "Freelancer",
+      "student": "Estudyante"
+    },
+    "fee": {
+      "label": "Bayad sa pagiging miyembro",
+      "paid": "Nakabayad",
+      "trial": "3 buwang libreng pagsubok",
+      "unpaid": "Hindi pa bayad / Nag-expire"
+    },
+    "st": {
+      "label": "Katayuan",
+      "active": "Aktibo",
+      "locked": "Naka-lock"
+    },
+    "prof": {
+      "label": "Profile",
+      "done": "Kumpleto",
+      "inc": "Hindi kumpleto"
+    },
+    "day": {
+      "7": "Nakaraang 7 araw",
+      "30": "Nakaraang 30 araw",
+      "90": "Nakaraang 90 araw",
+      "365": "Nakaraang 12 buwan",
+      "label": "Petsa ng pagpaparehistro"
+    }
+  }
+}

@@ -1,0 +1,134 @@
+{
+  "title": "Mga bayad sa pagiging miyembro",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "stats": {
+    "total": "Kabuuang mga miyembro",
+    "paid": "Nakabayad (may bisa)",
+    "trial": "Nasa 3 buwang libreng pagsubok",
+    "expired": "Nag-expire · kailangan ng upgrade",
+    "soon": "Malapit nang mag-expire (30 araw)",
+    "revenue": "Kita sa taunang bayad sa pagiging miyembro"
+  },
+  "heading": "Mga bayad sa pagiging miyembro ng system",
+  "search": "Maghanap ng pangalan, email...",
+  "searchLabel": "Maghanap ng miyembro ayon sa pangalan o email",
+  "remindAll": "Magpadala ng maramihang paalala",
+  "tabsLabel": "I-filter ayon sa katayuan ng bayad",
+  "tabs": {
+    "gdv": "Libre · Direktor ng Rehiyon",
+    "all": "Lahat",
+    "active": "Aktibo",
+    "trial": "3 buwang libreng pagsubok",
+    "pending": "Naghihintay ng bayad",
+    "soon": "Malapit nang mag-expire",
+    "expired": "Nag-expire"
+  },
+  "status": {
+    "regional_director": "Libre · Direktor ng Rehiyon",
+    "trial": "3 buwang libreng pagsubok",
+    "active": "Aktibo",
+    "pending_payment": "Naghihintay ng bayad",
+    "expiring": "Malapit nang mag-expire",
+    "expired": "Nag-expire"
+  },
+  "type": {
+    "business": "Negosyo",
+    "personal": "Indibidwal",
+    "investor": "Mamumuhunan"
+  },
+  "col": {
+    "name": "Pangalan ng miyembro",
+    "email": "Email ng miyembro",
+    "groups": "Mga grupong sinalihan",
+    "type": "Uri",
+    "joined": "Nagparehistro",
+    "status": "Katayuan ng bayad",
+    "paid": "Petsa ng pagbabayad",
+    "until": "May bisa hanggang"
+  },
+  "selectAll": "Piliin lahat sa pahinang ito",
+  "selectRow": "Piliin si {name}",
+  "bulk": {
+    "label": "Mga maramihang aksyon",
+    "selected": "Napili",
+    "unit": "miyembro",
+    "collect": "Itala ang natanggap na bayad",
+    "remind": "Magpadala ng paalala",
+    "csv": "I-export bilang CSV",
+    "clear": "Alisin ang pagpili"
+  },
+  "row": {
+    "collect": "Itala ang natanggap na bayad",
+    "renew": "I-renew nang 12 buwan",
+    "remind": "Magpadala ng paalala"
+  },
+  "empty": "Walang tumutugmang miyembro",
+  "pager": {
+    "unit": "miyembro",
+    "prev": "Nakaraang pahina",
+    "next": "Susunod na pahina",
+    "pageSize": "Bilang ng row bawat pahina"
+  },
+  "toast": {
+    "collected": "Naitala ang bayad na {amount} · {name}",
+    "reminded": "Na-email ang paalala sa bayad sa {to}",
+    "bulkCollected": "Mga naitalang bayad ng miyembro: {n}",
+    "bulkReminded": "Mga naipadalang paalala sa miyembro: {n}",
+    "exported": "Mga na-export na miyembro: {n}",
+    "failed": "Hindi makumpleto ang aksyon. Subukang muli"
+  },
+  "error": "Hindi ma-load ang mga bayad sa pagiging miyembro",
+  "retry": "Subukang muli",
+  "txn": {
+    "link": "Mga transaksyong pagtutugmain",
+    "linkCount": "Mga transaksyong pagtutugmain ({n})",
+    "linkShort": "Pagtugmain",
+    "linkShortCount": "Pagtugmain ({n})",
+    "title": "Mga transaksyong pagtutugmain",
+    "subtitle": "Mga bank transfer na hindi awtomatikong tumugma sa miyembro — susuriin at manwal na itutugma ng accounting",
+    "heading": "Mga bank transfer na hindi pa nagtugma",
+    "back": "Bumalik sa Mga Bayad sa Pagiging Miyembro",
+    "col": {
+      "receivedAt": "Natanggap noong",
+      "amount": "Halaga",
+      "content": "Reference ng paglilipat",
+      "reason": "Dahilan kung bakit hindi nagtugma",
+      "hint": "Iminungkahing miyembro / fundraising code",
+      "action": "Mga Aksyon"
+    },
+    "match": "Manwal na pagtutugma",
+    "more": "Mag-load pa",
+    "empty": "Walang transaksyong pagtutugmain",
+    "error": "Hindi ma-load ang mga transaksyon",
+    "retry": "Subukang muli",
+    "dialog": {
+      "title": "Manwal na pagtugmain ang transaksyon",
+      "txn": "Transaksyong {amount}",
+      "member": "Miyembro",
+      "memberPlaceholder": "Maghanap ng pangalan, email o code ng miyembro...",
+      "results": "Mga resulta ng paghahanap ng miyembro",
+      "noResult": "Walang nakitang tumutugmang miyembro",
+      "picked": "Napili: {name} · {code}",
+      "mode": "Itugma sa",
+      "modeFee": "Bayad sa pagiging miyembro",
+      "modeFundraising": "Planong Paglikom ng Pondo",
+      "fundraising": "Bayad sa paglikom ng pondo na naghihintay ng pagbabayad",
+      "fundraisingPlaceholder": "Maghanap ng fundraising code, pangalan ng proyekto o code ng may-aring miyembro...",
+      "fundraisingResults": "Mga resulta ng paghahanap ng bayad sa paglikom ng pondo",
+      "noFundraising": "Walang tumutugmang hindi pa nababayarang bayad sa paglikom ng pondo",
+      "pickedFundraising": "Napili: {code} · {project}",
+      "reason": "Dahilan",
+      "reasonPlaceholder": "Hal. customer na kinumpirma sa telepono, sinuri sa bank statement",
+      "confirm": "Itugma ang transaksyong {amount} kay {name}?",
+      "cancel": "Kanselahin",
+      "back": "Bumalik",
+      "next": "Magpatuloy",
+      "submit": "Itugma ang transaksyon"
+    },
+    "toast": {
+      "matched": "Naitugma ang transaksyon kay {name} · may bisa hanggang {date}",
+      "matchedFundraising": "Naitugma ang transaksyon sa Planong Paglikom ng Pondo {code} · naghihintay ng pagsusuri ng Admin",
+      "failed": "Hindi maitugma ang transaksyon. Subukang muli"
+    }
+  }
+}

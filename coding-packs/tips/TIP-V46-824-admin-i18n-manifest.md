@@ -367,7 +367,21 @@ Baseline settings has **524** string leaves. Its sorted `[path,value]` entries (
 | create | `apps/admin/messages/fil/settings/mail.json` | Complete translated catalog; exact structure and ICU argument contract. |
 | create | `apps/admin/messages/fil/stores.json` | Complete translated catalog; exact structure and ICU argument contract. |
 | create | `apps/admin/messages/fil/ui.json` | Complete translated catalog; exact structure and ICU argument contract. |
-| create | `apps/admin/src/i18n/tests/filipino-catalog.spec.ts` | Explicit raw Filipino checkpoint inventory and Admin-context/glyph assertions. Partial locale is never counted as a complete bundle. |
+| create | `apps/admin/src/i18n/tests/filipino-catalog.spec.ts` | Fixed25-file Filipino raw/context/canonical/glyph inventory; whole10-bundle gate remains independent. |
+| create | `coding-packs/reports/evidence/v46-824/filipino-msw.log` | Actual authenticated Filipino Overview/Profile/Settings browser subset; no full TIP claim. |
+| create | `coding-packs/reports/evidence/v46-824/filipino-native.log` | Same Filipino assertions against private native API, no original DB/seed/reset. |
+| create | `coding-packs/reports/evidence/v46-824/fil-overview-msw-1440.png` | Unmasked actual Filipino Overview. |
+| create | `coding-packs/reports/evidence/v46-824/fil-overview-msw-390.png` | Unmasked actual Filipino Overview. |
+| create | `coding-packs/reports/evidence/v46-824/fil-profile-msw-1440.png` | Unmasked actual Filipino Profile, never substituted with Dashboard. |
+| create | `coding-packs/reports/evidence/v46-824/fil-profile-msw-390.png` | Unmasked actual Filipino Profile. |
+| create | `coding-packs/reports/evidence/v46-824/fil-settings-msw-1440.png` | Unmasked actual Filipino Settings. |
+| create | `coding-packs/reports/evidence/v46-824/fil-settings-msw-390.png` | Unmasked actual Filipino Settings. |
+| create | `coding-packs/reports/evidence/v46-824/fil-overview-server-1440.png` | Unmasked actual Filipino Overview. |
+| create | `coding-packs/reports/evidence/v46-824/fil-overview-server-390.png` | Unmasked actual Filipino Overview. |
+| create | `coding-packs/reports/evidence/v46-824/fil-profile-server-1440.png` | Unmasked actual Filipino Profile. |
+| create | `coding-packs/reports/evidence/v46-824/fil-profile-server-390.png` | Unmasked actual Filipino Profile. |
+| create | `coding-packs/reports/evidence/v46-824/fil-settings-server-1440.png` | Unmasked actual Filipino Settings. |
+| create | `coding-packs/reports/evidence/v46-824/fil-settings-server-390.png` | Unmasked actual Filipino Settings. |
 | create | `coding-packs/reports/evidence/v46-824/filipino.log` | Actual raw/ICU/context/glyph test output and fixed whole-bundle missing-file inventory. |
 | create | `apps/admin/messages/id/affiliate.json` | Complete translated catalog; exact structure and ICU argument contract. |
 | create | `apps/admin/messages/id/auth.json` | Complete translated catalog; exact structure and ICU argument contract. |

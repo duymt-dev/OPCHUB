@@ -1,0 +1,156 @@
+{
+  "title": "Mga Proyekto ng OPC",
+  "sub": "Pamahalaan at ilathala ang mga proyekto ng miyembro",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "heading": "Pagmo-moderate ng proyekto",
+  "headingSub": "Kailangang aprubahan ang mga proyektong isinumite ng miyembro bago makita ng publiko",
+  "viewLabel": "Paraan ng pagpapakita",
+  "viewGrid": "Grid view",
+  "viewList": "Listahang view",
+  "tabsLabel": "Katayuan ng proyekto",
+  "tabs": {
+    "pending": "Naghihintay ng pagsusuri",
+    "live": "Nakikita",
+    "hidden": "Nakatago",
+    "changes": "Kailangang baguhin",
+    "rejected": "Tinanggihan",
+    "draft": "Draft"
+  },
+  "status": {
+    "pending_review": "Naghihintay ng pagsusuri",
+    "published": "Nakikita",
+    "hidden": "Nakatago",
+    "needs_changes": "Kailangang baguhin",
+    "rejected": "Tinanggihan",
+    "draft": "Draft"
+  },
+  "act": {
+    "review": "Tingnan at suriin",
+    "detail": "Detalye",
+    "view": "Tingnan",
+    "delete": "Tanggalin"
+  },
+  "featuredMark": "Itinatampok",
+  "revision": "Rebisyon",
+  "updated": "{owner} · Na-update noong {date}",
+  "emptyPending": "Walang proyektong naghihintay ng pagsusuri",
+  "empty": "Walang proyekto sa seksyong ito.",
+  "loadError": "Hindi ma-load ang mga proyekto",
+  "retry": "Subukang muli",
+  "col": {
+    "project": "Proyekto",
+    "category": "Kategorya",
+    "owner": "May-ari ng proyekto",
+    "date": "Isinumite",
+    "status": "Katayuan"
+  },
+  "selectAll": "Piliin lahat ng proyekto sa pahinang ito",
+  "selectRow": "Piliin si {name}",
+  "bulk": {
+    "label": "Maramihang aksyon sa proyekto",
+    "selected": "Napili",
+    "unit": "item",
+    "publish": "Aprubahan at ilathala",
+    "hide": "Itago",
+    "delete": "Tanggalin",
+    "clear": "Alisin ang pagpili"
+  },
+  "pager": {
+    "unit": "proyekto",
+    "prev": "Nakaraang pahina",
+    "next": "Susunod na pahina",
+    "pageSize": "Proyekto bawat pahina"
+  },
+  "drawer": {
+    "title": "Tingnan at suriin ang proyekto",
+    "close": "Isara",
+    "detail": "Detalyadong paglalarawan",
+    "prevNote": "Nakaraang tala sa pagsusuri:",
+    "feature": "Itakda bilang tampok na proyekto ng linggo",
+    "featureHint": "Ipinapakita sa itaas ng Tuklasin ang mga Proyekto · mga nailathalang proyekto lamang",
+    "feedback": "Feedback sa may-akda",
+    "reasonLabel": "Dahilan",
+    "reasonPlaceholder": "Dahilan (sa paghiling ng pagbabago / pagtanggi)",
+    "notePlaceholder": "Mensahe sa may-ari ng proyekto: mga kailangang baguhin, dahilan ng pagtanggi…",
+    "noteLabel": "Mensahe sa may-ari ng proyekto",
+    "reject": "Tanggihan",
+    "changes": "Humiling ng pagbabago",
+    "approve": "Aprubahan at ilathala",
+    "hide": "Itago ang proyekto",
+    "republish": "Ilathala muli"
+  },
+  "info": {
+    "owner": "May-akda",
+    "country": "Bansa",
+    "category": "Kategorya",
+    "stage": "Yugto",
+    "website": "Website",
+    "testUrl": "Subukan ang link",
+    "repo": "Source code",
+    "visibility": "Pagiging nakikita",
+    "funding": "Paglikom ng pondo",
+    "team": "Koponan",
+    "groups": "Ibinahagi sa mga grupo",
+    "date": "Isinumite"
+  },
+  "stage": {
+    "idea": "Ideya",
+    "developing": "Dinedebelop",
+    "mvp": "MVP",
+    "growth": "Paglago",
+    "launched": "Nailunsad na"
+  },
+  "val": {
+    "none": "—",
+    "noRepo": "Hindi ibinahagi",
+    "repoPublic": "Pampubliko",
+    "repoPrivate": "Pribado",
+    "visPublic": "Pampubliko",
+    "visPrivate": "Pribado",
+    "noFunding": "Hindi",
+    "funding": "{amount} para sa {equity}% na bahagi sa pagmamay-ari"
+  },
+  "confirm": {
+    "cancel": "Kanselahin",
+    "deleteTitle": "Tanggalin ang proyekto?",
+    "deleteOne": "Permanenteng tatanggalin ang proyektong {name} at ang feedback nito. Itatala ang aksyong ito.",
+    "deleteMany": "Mga proyektong permanenteng tatanggalin kasama ang feedback: {count}. Itatala ang aksyong ito.",
+    "delete": "Tanggalin",
+    "hideTitle": "Itago ang proyekto?",
+    "hideOne": "Hindi na makikita ng publiko ang {name}. Aabisuhan ang may-ari ng proyekto.",
+    "hideMany": "Mga nailathalang proyektong itatago sa Tuklasin: {count}.",
+    "hide": "Itago",
+    "rejectTitle": "Tanggihan ang proyekto?",
+    "rejectOne": "Tatanggihan ang {name} dahil sa: {reason}. Aabisuhan ang may-ari ng proyekto.",
+    "reject": "Tanggihan"
+  },
+  "toast": {
+    "approved": "Inaprubahan at nailathala · {name}",
+    "changes": "Hiniling ang mga pagbabago · {name}",
+    "rejected": "Tinanggihan · {name}",
+    "hidden": "Nakatago · {name}",
+    "deleted": "Natanggal ang proyektong {name}",
+    "published": "Mga nailathalang proyekto: {count}",
+    "hiddenMany": "Mga naitagong proyekto: {count}",
+    "deletedMany": "Mga natanggal na proyekto: {count}",
+    "skipped": "{text} · mga nilaktawang hindi wastong proyekto: {count}",
+    "needNote": "Maglagay ng dahilan o mensahe upang humiling ng pagbabago",
+    "needReason": "Pumili ng dahilan ng pagtanggi",
+    "featured": "Naitakda ang {name} bilang tampok na proyekto ng linggo",
+    "unfeatured": "Inalis ang pagiging itinatampok",
+    "featureLiveOnly": "Mga nailathalang proyekto lamang ang maaaring itampok",
+    "failed": "Nabigo ang aksyon. Subukang muli"
+  },
+  "fund": {
+    "status": {
+      "pending_payment": "Paglikom ng pondo · naghihintay ng bayad",
+      "pending_review": "Paglikom ng pondo · naghihintay ng pagsusuri",
+      "active": "Nangangalap ng pondo",
+      "rejected": "Paglikom ng pondo · tinanggihan"
+    },
+    "approve": "Aprubahan ang paglikom ng pondo",
+    "reject": "Tanggihan",
+    "approved": "Inaprubahan ang paglikom ng pondo · naitala para sa sanggunian ang 10% komisyon ng affiliate (kung may nag-refer)",
+    "rejected": "Tinanggihan ang Planong Paglikom ng Pondo"
+  }
+}

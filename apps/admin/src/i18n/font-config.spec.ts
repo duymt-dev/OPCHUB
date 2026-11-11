@@ -84,7 +84,7 @@ describe('D-141 AC824-15/16 self-hosted font contracts (not browser acceptance)'
     expect(receipt.assets.LanguageMenu.bytes).toBeLessThan(70_000);
   });
 
-  it.each(['vi', 'en', 'zh', 'id', 'ms'])(
+  it.each(['vi', 'en', 'zh', 'id', 'ms', 'fil'])(
     'covers letter/mark/number/punctuation/currency glyphs in current %s catalogs',
     (locale) => {
       const catalogs = files(join(__dirname, '../../messages', locale));

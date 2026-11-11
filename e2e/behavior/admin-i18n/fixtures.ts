@@ -135,8 +135,17 @@ export const test = base.extend<{ guard: BrowserGuard }>({
   ],
 });
 
-export async function openLocalized(page: Page, path: string, locale: 'en' | 'vi'): Promise<void> {
-  const signIn = locale === 'en' ? 'Sign in' : 'Đăng nhập';
+export async function openLocalized(
+  page: Page,
+  path: string,
+  locale: 'en' | 'vi' | 'fil',
+): Promise<void> {
+  const labels = {
+    en: { signIn: 'Sign in', notifications: 'Notifications' },
+    vi: { signIn: 'Đăng nhập', notifications: 'Thông báo' },
+    fil: { signIn: 'Mag-sign in', notifications: 'Mga Abiso' },
+  }[locale];
+  const { signIn } = labels;
   await page.context().addCookies([{ name: 'NEXT_LOCALE', value: locale, url: ADMIN_URL }]);
   await page.goto(`${ADMIN_URL}/login?next=${encodeURIComponent(path)}`, {
     waitUntil: 'networkidle',
@@ -149,7 +158,7 @@ export async function openLocalized(page: Page, path: string, locale: 'en' | 'vi
   await expect(page.locator('html')).toHaveAttribute('lang', locale);
   await expect(
     page.getByRole('button', {
-      name: locale === 'en' ? 'Notifications' : 'Thông báo',
+      name: labels.notifications,
       exact: true,
     }),
   ).toBeVisible();

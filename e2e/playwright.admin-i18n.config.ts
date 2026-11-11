@@ -14,7 +14,11 @@ export default defineConfig({
     {
       name: 'behavior',
       testDir: './behavior',
-      testMatch: ['admin-i18n-screens.spec.ts', 'admin-i18n-navigation.spec.ts'],
+      testMatch: [
+        'admin-i18n-screens.spec.ts',
+        'admin-i18n-navigation.spec.ts',
+        'admin-i18n-visual.spec.ts',
+      ],
     },
   ],
   webServer: [

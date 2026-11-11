@@ -56,6 +56,29 @@ describe('D-141 AC824-01/04 request-scoped messages, no authOverrides', () => {
     expect(logger.warn).not.toHaveBeenCalled();
   });
 
+  it('D-141 AC824-07 loads full Filipino catalogs and all six settings parts without fallback', async () => {
+    mocks.cookie = 'fil';
+    const result = await config();
+    expect(result.locale).toBe('fil');
+    expect(logger.warn).not.toHaveBeenCalled();
+    expect(result.messages).toMatchObject({
+      auth: { login: { submit: 'Mag-sign in' } },
+      common: { adminProfile: { title: 'Personal na profile' } },
+      overview: { title: 'Pangkalahatang-ideya' },
+      reports: { title: 'Mga Ulat' },
+      settings: {
+        general: { heading: 'Mga detalye ng platform' },
+        roles: { heading: 'Mga Tungkulin at Pahintulot' },
+        mail: { heading: 'Welcome email' },
+        log: { heading: 'Talaan ng aktibidad ng administrador' },
+        price: { heading: 'Konfigurasyon ng pagpepresyo' },
+        ai: { heading: 'Mga AI provider' },
+      },
+    });
+    expect(messages.auth.login.submit).toBe('Đăng nhập');
+    expect(logger.warn).not.toHaveBeenCalled();
+  });
+
   it.each(['ms', 'ms-BN'])(
     'D-141 AC824-07 loads actual Malay catalogs for %s without losing alias identity',
     async (locale) => {
