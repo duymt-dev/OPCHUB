@@ -1,0 +1,22 @@
+TIP824 authenticated vi/en/fil sidebar internal-clipping/collapse/mobile/keyboard regression; production Admin/test working tree based on2a104d79; Admin-only label wrapping, unchanged copy/shared/Portal geometry. Portal source unchanged since77484e3f. Requires real MSW Portal Affiliate relay, no DB/global seed/reset. Same7 sidebar browser assertions in native; actual UI login/read-only API and no masks. Not complete16-AC acceptance.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-sidebar.spec.ts
+[WebServer] (node:19580) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:12996) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 7 tests using 1 worker
+
+(node:8992) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\admin-i18n-sidebar.spec.ts:12:5 › D-141 AC824-15 sidebar text and badges stay inside links, vi 1440 (3.8s)
+  ok 2 [behavior] › behavior\admin-i18n-sidebar.spec.ts:12:5 › D-141 AC824-15 sidebar text and badges stay inside links, vi 390 (3.4s)
+  ok 3 [behavior] › behavior\admin-i18n-sidebar.spec.ts:12:5 › D-141 AC824-15 sidebar text and badges stay inside links, en 1440 (3.7s)
+  ok 4 [behavior] › behavior\admin-i18n-sidebar.spec.ts:12:5 › D-141 AC824-15 sidebar text and badges stay inside links, en 390 (3.3s)
+  ok 5 [behavior] › behavior\admin-i18n-sidebar.spec.ts:12:5 › D-141 AC824-15 sidebar text and badges stay inside links, fil 1440 (5.0s)
+  ok 6 [behavior] › behavior\admin-i18n-sidebar.spec.ts:12:5 › D-141 AC824-15 sidebar text and badges stay inside links, fil 390 (4.2s)
+  ok 7 [behavior] › behavior\admin-i18n-sidebar.spec.ts:85:1 › D-141 AC824-15 rejects internal clipping even when document width passes (3.4s)
+
+  7 passed (35.2s)
+EXIT 0
+Postcommit receipt: source d6efb178; all8 tested source/test/manifest blobs verified identical to HEAD and worktree after normal hooks. Precommit working-tree base retained above.

@@ -1,20 +1,19 @@
-TIP824 native authenticated Filipino Overview/Profile/Settings 1440/390 visual subset; production/test working tree based on335b3b82. Private API listener belongs to unchanged approved wrapper; local database port is not5432. No seed/reset/migration, no original service stop; authenticated session creation only. Full6-case Filipino actual three-screen suite, identical assertions to MSW; no global seed/reset. Not all-language/error/loading/native feature acceptance.
+TIP824 native authenticated Filipino Overview/Profile/Settings 1440/390 visual subset; production/test working tree based on2a104d79. Private API listener belongs to unchanged approved wrapper; local database port is not5432. No seed/reset/migration, no original service stop; authenticated session creation only. Full6-case Filipino actual three-screen suite, identical assertions to MSW; no global seed/reset. Not all-language/error/loading/native feature acceptance.
 COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-visual.spec.ts
-[WebServer] (node:31968) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (node:32576) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
 
 Running 6 tests using 1 worker
 
-(node:23976) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:6712) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 (Use `node --trace-warnings ...` to show where the warning was created)
-  ok 1 [behavior] › behavior\admin-i18n-visual.spec.ts:37:5 › D-141 AC824-07/15 Filipino actual overview 1440, not all-language acceptance (3.8s)
-  ok 2 [behavior] › behavior\admin-i18n-visual.spec.ts:37:5 › D-141 AC824-07/15 Filipino actual overview 390, not all-language acceptance (3.6s)
-  ok 3 [behavior] › behavior\admin-i18n-visual.spec.ts:37:5 › D-141 AC824-07/15 Filipino actual profile 1440, not all-language acceptance (3.6s)
-  ok 4 [behavior] › behavior\admin-i18n-visual.spec.ts:37:5 › D-141 AC824-07/15 Filipino actual profile 390, not all-language acceptance (3.7s)
-  ok 5 [behavior] › behavior\admin-i18n-visual.spec.ts:37:5 › D-141 AC824-07/15 Filipino actual settings 1440, not all-language acceptance (3.8s)
-  ok 6 [behavior] › behavior\admin-i18n-visual.spec.ts:37:5 › D-141 AC824-07/15 Filipino actual settings 390, not all-language acceptance (3.7s)
+  ok 1 [behavior] › behavior\admin-i18n-visual.spec.ts:38:5 › D-141 AC824-07/15 Filipino actual overview 1440, not all-language acceptance (4.4s)
+  ok 2 [behavior] › behavior\admin-i18n-visual.spec.ts:38:5 › D-141 AC824-07/15 Filipino actual overview 390, not all-language acceptance (3.8s)
+  ok 3 [behavior] › behavior\admin-i18n-visual.spec.ts:38:5 › D-141 AC824-07/15 Filipino actual profile 1440, not all-language acceptance (6.5s)
+  ok 4 [behavior] › behavior\admin-i18n-visual.spec.ts:38:5 › D-141 AC824-07/15 Filipino actual profile 390, not all-language acceptance (6.2s)
+  ok 5 [behavior] › behavior\admin-i18n-visual.spec.ts:38:5 › D-141 AC824-07/15 Filipino actual settings 1440, not all-language acceptance (4.7s)
+  ok 6 [behavior] › behavior\admin-i18n-visual.spec.ts:38:5 › D-141 AC824-07/15 Filipino actual settings 390, not all-language acceptance (4.0s)
 
-  6 passed (26.3s)
+  6 passed (33.9s)
 EXIT 0
-
-Postcommit receipt: all22 tested catalog/test/manifest/README blobs equal committed sourcec0b97b51 and working tree after normal hooks. No source edit after final gates; precommit base335b3b82 retained. Known real sidebar clipping remains an AC15 failure, not a passing visual verdict.
+Postcommit receipt: source d6efb178; all8 tested source/test/manifest blobs verified identical to HEAD and worktree after normal hooks. Precommit working-tree base retained above.

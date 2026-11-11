@@ -64,3 +64,5 @@ COMMAND node infra/scripts/audit-admin-i18n.mjs
   "errors": 0
 }
 Production TS/TSX unchanged; catalogs and visual evidence are explicitly outside this fingerprint. Filipino raw126 and actual three-screen logs are separate; sidebar clipping remains a known visual failure.
+
+Current sidebar checkpoint source d6efb178, actual node infra/scripts/audit-admin-i18n.mjs PASS; committed dirty=false,584 production files/301 retained findings/291 exact exceptions/0 unreviewed/0 errors, corpus071a0c2dac01e16a2f8ac522f73e62f82dc4b7694d7e421078a3f6f20fd7f54f. CSS/catalog/browser proof excluded; RootLayout import is the production TS change. Three new Admin-only style tests passed in actual full root1192 Admin/2910 total +2 existing skips.

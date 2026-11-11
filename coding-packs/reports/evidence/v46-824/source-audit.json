@@ -2,9 +2,9 @@
   "status": "PASS",
   "command": "node infra/scripts/audit-admin-i18n.mjs",
   "source": {
-    "gitHead": "c0b97b512d4235063da9ebeac405f1c775d21271",
+    "gitHead": "d6efb17830ca36ee46efe47074e5cdc2cf063cf2",
     "dirty": false,
-    "corpusSha256": "2022fe8ac2abd4a92823c93a5720ac81adbed57110c49907922546bcf1651b4f",
+    "corpusSha256": "071a0c2dac01e16a2f8ac522f73e62f82dc4b7694d7e421078a3f6f20fd7f54f",
     "fingerprintFiles": 601,
     "fingerprintScope": "Scanned production source plus audit scripts and exact exception registries; not catalogs or browser evidence"
   },
@@ -13,7 +13,7 @@
     "test/spec/declaration files",
     "tests/__tests__/mocks/__mocks__ fixture directories"
   ],
-  "durationMs": 25575,
+  "durationMs": 34860,
   "rows": [
     {
       "file": "apps/admin/src/app/(admin)/affiliate/[[...slug]]/page.tsx",
@@ -248,10 +248,10 @@
     {
       "file": "apps/admin/src/app/layout.tsx",
       "kind": "ui-literal",
-      "line": 14,
+      "line": 15,
       "text": "OPC Hub Admin",
-      "start": 582,
-      "end": 597,
+      "start": 641,
+      "end": 656,
       "disposition": "retained-contract",
       "reason": "Required unchanged root metadata brand title."
     },
