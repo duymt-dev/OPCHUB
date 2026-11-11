@@ -1,39 +1,134 @@
 {
-  "title": "Membership fee",
+  "title": "Membership fees",
   "dateRange": "01/10/2026 – 15/10/2026",
+  "stats": {
+    "total": "Total members",
+    "paid": "Paid (valid)",
+    "trial": "On 3-month free trial",
+    "expired": "Expired · upgrade required",
+    "soon": "Expiring soon (30 days)",
+    "revenue": "Annual membership fee revenue"
+  },
+  "heading": "System membership fees",
+  "search": "Search name, email...",
+  "searchLabel": "Find members by name or email",
+  "remindAll": "Send bulk reminders",
+  "tabsLabel": "Filter by fee status",
   "tabs": {
+    "gdv": "Free · Regional Director",
     "all": "All",
-    "pending": "Awaiting payment"
+    "active": "Active",
+    "trial": "3-month free trial",
+    "pending": "Pending payment",
+    "soon": "Expiring soon",
+    "expired": "Expired"
   },
   "status": {
-    "pending_payment": "Awaiting payment"
+    "regional_director": "Free · Regional Director",
+    "trial": "3-month free trial",
+    "active": "Active",
+    "pending_payment": "Pending payment",
+    "expiring": "Expiring soon",
+    "expired": "Expired"
   },
   "type": {
     "business": "Business",
+    "personal": "Individual",
     "investor": "Investor"
   },
   "col": {
-    "type": "Type"
+    "name": "Member name",
+    "email": "Member email",
+    "groups": "Joined groups",
+    "type": "Type",
+    "joined": "Registered",
+    "status": "Fee status",
+    "paid": "Payment date",
+    "until": "Valid until"
   },
+  "selectAll": "Select all on this page",
+  "selectRow": "Select {name}",
   "bulk": {
-    "unit": "members"
+    "label": "Bulk actions",
+    "selected": "Selected",
+    "unit": "members",
+    "collect": "Record payment received",
+    "remind": "Send reminder",
+    "csv": "Export CSV",
+    "clear": "Clear selection"
   },
+  "row": {
+    "collect": "Record payment received",
+    "renew": "Renew for 12 months",
+    "remind": "Send reminder"
+  },
+  "empty": "No matching members",
   "pager": {
     "unit": "members",
     "prev": "Previous page",
     "next": "Next page",
     "pageSize": "Rows per page"
   },
+  "toast": {
+    "collected": "Payment of {amount} recorded · {name}",
+    "reminded": "Payment reminder emailed to {to}",
+    "bulkCollected": "Membership payments recorded: {n}",
+    "bulkReminded": "Member reminder emails sent: {n}",
+    "exported": "Members exported: {n}",
+    "failed": "Unable to complete the action. Please try again"
+  },
+  "error": "Unable to load membership fees",
+  "retry": "Try again",
   "txn": {
+    "link": "Transactions to reconcile",
+    "linkCount": "Transactions to reconcile ({n})",
+    "linkShort": "Reconcile",
+    "linkShortCount": "Reconcile ({n})",
+    "title": "Transactions to reconcile",
+    "subtitle": "Bank transfers that did not match a member automatically — accounting reviews and matches them manually",
+    "heading": "Unmatched bank transfers",
+    "back": "Back to Membership fees",
     "col": {
-      "amount": "Amount"
+      "receivedAt": "Received at",
+      "amount": "Amount",
+      "content": "Transfer reference",
+      "reason": "Unmatched reason",
+      "hint": "Suggested member / fundraising code",
+      "action": "Actions"
     },
+    "match": "Match manually",
+    "more": "Load more",
+    "empty": "No transactions to reconcile",
+    "error": "Unable to load transactions",
+    "retry": "Try again",
     "dialog": {
+      "title": "Match transaction manually",
+      "txn": "Transaction {amount}",
+      "member": "Member",
+      "memberPlaceholder": "Search name, email or member code...",
+      "results": "Member search results",
+      "noResult": "No matching members found",
+      "picked": "Selected: {name} · {code}",
+      "mode": "Match to",
       "modeFee": "Membership fee",
       "modeFundraising": "Fundraising plan",
+      "fundraising": "Fundraising payment awaiting payment",
+      "fundraisingPlaceholder": "Search fundraising code, project name or owner member code...",
+      "fundraisingResults": "Fundraising payment search results",
+      "noFundraising": "No matching unpaid fundraising payments",
+      "pickedFundraising": "Selected: {code} · {project}",
       "reason": "Reason",
+      "reasonPlaceholder": "E.g. customer confirmed by phone, verified against bank statement",
+      "confirm": "Match the transaction of {amount} to {name}?",
       "cancel": "Cancel",
-      "back": "Back"
+      "back": "Back",
+      "next": "Continue",
+      "submit": "Match transaction"
+    },
+    "toast": {
+      "matched": "Transaction matched to {name} · valid until {date}",
+      "matchedFundraising": "Transaction matched to fundraising plan {code} · awaiting Admin review",
+      "failed": "Unable to match the transaction. Please try again"
     }
   }
 }

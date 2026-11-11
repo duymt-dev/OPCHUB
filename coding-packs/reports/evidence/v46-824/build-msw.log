@@ -1,26 +1,21 @@
-pnpm.cmd : $ next build
-At line:2 char:180
-+ ... sw-tip824'; pnpm.cmd --filter @opchub/admin build *> (Join-Path $env: ...
-+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : NotSpecified: ($ next build:String) [], RemoteException
-    + FullyQualifiedErrorId : NativeCommandError
-
+NEXT_PUBLIC_PORTAL_URL=http://localhost:60096
+$ next build
 ▲ Next.js 16.4.2 (Turbopack)
 - Environments: .env.local
-✓ Running next.config.ts took 742ms
+✓ Running next.config.ts took 620ms
 - Experiments (use with caution):
   · optimizePackageImports
 
   Creating an optimized production build ...
-✓ Compiled successfully in 10.1s
+✓ Compiled successfully in 2.9s
   Running TypeScript ...
-  Finished TypeScript in 46s ...
+  Finished TypeScript in 13.7s ...
   Collecting page data using 5 workers ...
   Generating static pages using 5 workers (0/10) ...
   Generating static pages using 5 workers (2/10)
   Generating static pages using 5 workers (4/10)
   Generating static pages using 5 workers (7/10)
-✓ Generating static pages using 5 workers (10/10) in 855ms
+✓ Generating static pages using 5 workers (10/10) in 819ms
   Finalizing page optimization ...
 
 Route (app)

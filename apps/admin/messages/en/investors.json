@@ -1,33 +1,61 @@
 {
-  "title": "Investor",
+  "title": "Investors",
   "dateRange": "01/10/2026 – 15/10/2026",
   "stats": {
-    "fund": "Investment fund"
+    "total": "Total investors",
+    "fund": "Investment funds",
+    "business": "Business investors",
+    "individual": "Individual investors",
+    "amount": "Total investment interest"
   },
-  "heading": "Investor",
-  "searchLabel": "Find investors",
+  "heading": "Investors",
+  "sub": "Funds and individuals who have expressed interest in investing in OPC projects",
+  "search": "Search name, business, fund, phone number...",
+  "searchLabel": "Search investors",
+  "csv": "Export CSV",
+  "tabsLabel": "Filter by investor type",
   "tabs": {
     "all": "All",
-    "fund": "Investment fund",
-    "business": "Business"
+    "fund": "Investment funds",
+    "business": "Businesses",
+    "individual": "Individuals"
   },
   "kind": {
     "fund": "Investment fund",
-    "business": "Business"
+    "business": "Business",
+    "individual": "Individual"
   },
   "col": {
     "investor": "Investor",
     "kind": "Type",
-    "phone": "Phone number"
+    "org": "Business / Fund",
+    "phone": "Phone number",
+    "projects": "Projects of interest",
+    "total": "Total interest"
   },
   "detail": "Details",
+  "empty": "No matching investors",
   "pager": {
+    "unit": "investors",
     "prev": "Previous page",
     "next": "Next page",
     "pageSize": "Rows per page"
   },
   "drawer": {
+    "title": "Investor details",
     "close": "Close",
-    "phone": "Phone number"
-  }
+    "org": "Business / Fund",
+    "phone": "Phone number",
+    "total": "Total investment interest",
+    "copy": "Copy number",
+    "projects": "Projects of interest ({n})",
+    "owner": "Project owner: {owner} · {date}"
+  },
+  "toast": {
+    "copied": "Phone number copied",
+    "exported": "Investors exported: {n}",
+    "failed": "Unable to perform this action. Please try again"
+  },
+  "error": "Unable to load the investor list",
+  "retry": "Try again"
 }

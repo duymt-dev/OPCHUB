@@ -1,26 +1,21 @@
-pnpm.cmd : $ next build
-At line:2 char:183
-+ ... er-tip824'; pnpm.cmd --filter @opchub/admin build *> (Join-Path $env: ...
-+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : NotSpecified: ($ next build:String) [], RemoteException
-    + FullyQualifiedErrorId : NativeCommandError
-
+MODE=off; isolated API proxy=http://127.0.0.1:53792; build is NOT native API/browser verification
+$ next build
 ▲ Next.js 16.4.2 (Turbopack)
 - Environments: .env.local
-✓ Running next.config.ts took 1104ms
+✓ Running next.config.ts took 803ms
 - Experiments (use with caution):
   · optimizePackageImports
 
   Creating an optimized production build ...
-✓ Compiled successfully in 45s
+✓ Compiled successfully in 12.2s
   Running TypeScript ...
-  Finished TypeScript in 60s ...
+  Finished TypeScript in 30.3s ...
   Collecting page data using 5 workers ...
   Generating static pages using 5 workers (0/10) ...
   Generating static pages using 5 workers (2/10)
   Generating static pages using 5 workers (4/10)
   Generating static pages using 5 workers (7/10)
-✓ Generating static pages using 5 workers (10/10) in 1181ms
+✓ Generating static pages using 5 workers (10/10) in 599ms
   Finalizing page optimization ...
 
 Route (app)

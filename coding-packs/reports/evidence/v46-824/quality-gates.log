@@ -1,56 +1,76 @@
-TIP824 source55116347 - presentation checkpoint; complete feature readiness NOT achieved.
+TIP824 English catalog / content-boundary checkpoint — 2026-11-11
+RUN pnpm lint
+$ turbo run lint
 
-=== tip824-presentation-lint.log ===
-@opchub/db:lint: cache hit, replaying logs 8df791dba6501ec7
-@opchub/shared:lint: cache hit, replaying logs f9d493ea0cb6d67f
-@opchub/db:lint: $ eslint src seed test
-@opchub/shared:lint: $ eslint src
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running lint in 9 packages
+   • Remote caching disabled
+
 @opchub/portal:lint: cache hit, replaying logs 71e3df361172b94e
+@opchub/e2e:lint: cache hit, replaying logs 7eaaed5a9f33cfee
+@opchub/admin:lint: cache miss, executing ddec1d921172b9d3
+@opchub/ui:lint: cache hit, replaying logs 88bf65a8465a2f7a
 @opchub/portal:lint: $ eslint src
+@opchub/ui:lint: $ eslint src
+@opchub/e2e:lint: $ eslint parity behavior audit server llm env.ts urls.ts
+@opchub/shared:lint: cache hit, replaying logs f9d493ea0cb6d67f
+@opchub/shared:lint: $ eslint src
+@opchub/db:lint: cache hit, replaying logs 8df791dba6501ec7
+@opchub/db:lint: $ eslint src seed test
+@opchub/integrations:lint: cache hit, replaying logs 1fb607819a53b21e
+@opchub/server:lint: cache hit, replaying logs 7f4b11d47879bedd
+@opchub/server:lint: $ eslint src test
+@opchub/integrations:lint: $ eslint src
 @opchub/admin:lint: $ eslint src
 
  Tasks:    8 successful, 8 total
 Cached:    7 cached, 8 total
-  Time:    1m30.851s
+  Time:    1m14.816s
 
+EXIT lint: 0
+RUN pnpm typecheck
+$ turbo run typecheck
 
-=== tip824-presentation-types.log ===
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running typecheck in 9 packages
+   • Remote caching disabled
+
 @opchub/e2e:typecheck: cache hit, replaying logs 3d9da68b7736e33f
-@opchub/shared:typecheck: cache hit, replaying logs 2af37fea5a693c30
+@opchub/db:typecheck: cache hit, replaying logs 35eaf239ef03390a
+@opchub/admin:typecheck: cache miss, executing bcc3b9fcc080b52f
 @opchub/e2e:typecheck: $ tsc -p tsconfig.json
+@opchub/db:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/portal:typecheck: cache hit, replaying logs 384ceac62a366d53
+@opchub/integrations:typecheck: cache hit, replaying logs 60f5b494e043fdc4
+@opchub/portal:typecheck: $ next typegen && tsc --noEmit
+@opchub/portal:typecheck: Generating route types...
+@opchub/ui:typecheck: cache hit, replaying logs 5c28a239a5b2bb4f
+@opchub/server:typecheck: cache hit, replaying logs f44a5951da8d2c30
+@opchub/shared:typecheck: cache hit, replaying logs 2af37fea5a693c30
+@opchub/portal:typecheck: ✓ Types generated successfully
+@opchub/ui:typecheck: $ tsc -p tsconfig.json
+@opchub/server:typecheck: $ tsc --noEmit -p tsconfig.json
 @opchub/shared:typecheck: $ tsc -p tsconfig.json
+@opchub/integrations:typecheck: $ tsc --noEmit -p tsconfig.json
 @opchub/admin:typecheck: $ next typegen && tsc --noEmit
 @opchub/admin:typecheck: Generating route types...
 @opchub/admin:typecheck: ✓ Types generated successfully
 
  Tasks:    8 successful, 8 total
 Cached:    7 cached, 8 total
-  Time:    19.778s
+  Time:    11.756s
 
+EXIT typecheck: 0
+RUN pnpm test
+EXIT test: 0
+RUN pnpm depcheck
+$ depcruise apps/portal apps/admin packages e2e --config .dependency-cruiser.cjs && depcruise apps/server --config .dependency-cruiser.cjs --ts-config tsconfig.depcruise.server.json
 
-=== tip824-presentation-unit.log ===
-@opchub/admin:test:    Start at  09:48:09
-@opchub/admin:test:    Duration  754.68s (import 61%, environment 36%, tests 3%)
-@opchub/admin:test:
-@opchub/admin:test:      Import  986 modules were evaluated 4892 times · 1327.58s total, 61% of tracked time
-@opchub/admin:test:              ~277.89s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
-@opchub/admin:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
-@opchub/admin:test:
-
- Tasks:    6 successful, 6 total
-Cached:    5 cached, 6 total
-  Time:    12m36.157s
-
-
-=== tip824-presentation-deps.log ===
-At line:4 char:653
-+ ... EXITCODE }; pnpm.cmd depcheck *> (Join-Path $env:TEMP 'tip824-present ...
-+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : NotSpecified: ($ depcruise app...ise.server.json:String) [], RemoteException
-    + FullyQualifiedErrorId : NativeCommandError
-
-
-✔ no dependency violations found (2687 modules, 8091 dependencies cruised)
+✔ no dependency violations found (2694 modules, 8109 dependencies cruised)
 
 
 ✔ no dependency violations found (1260 modules, 5995 dependencies cruised)
+
+EXIT depcheck: 0

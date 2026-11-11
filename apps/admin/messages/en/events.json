@@ -1,48 +1,149 @@
 {
+  "title": "Content & Events",
+  "sub": "Manage events, registrations and introductory content",
   "dateRange": "01/10/2026 – 15/10/2026",
+  "loadError": "Unable to load events",
+  "retry": "Try again",
   "stats": {
-    "upcoming": "Upcoming events"
+    "upcoming": "Upcoming events",
+    "registrations": "Registrations",
+    "fillRate": "Occupancy rate",
+    "online": "Online events"
   },
   "toolbar": {
+    "search": "Search events...",
+    "tabsLabel": "Filter by status",
+    "modeLabel": "Format",
+    "create": "Create event",
+    "viewLabel": "Display mode",
     "viewGrid": "Grid view",
     "viewList": "List view"
   },
   "status": {
     "all": "All",
-    "open": "Open"
+    "open": "Open",
+    "almost": "Almost full",
+    "full": "Full"
   },
   "mode": {
+    "all": "All formats",
     "online": "Online",
     "offline": "Offline"
   },
   "card": {
+    "registered": "registered",
     "closed": "Registration closed",
-    "list": "Bulleted list",
+    "list": "Attendee list",
     "edit": "Edit",
     "editShort": "Edit",
-    "share": "Share"
+    "share": "Share",
+    "createTile": "Create new event",
+    "open": "Open event details for {title}"
   },
   "table": {
-    "event": "Events",
+    "label": "Event list",
+    "event": "Event",
     "time": "Time",
-    "place": "Venue",
+    "place": "Location",
+    "mode": "Format",
+    "reg": "Registration",
     "status": "Status"
   },
   "empty": "No matching events.",
+  "pager": {
+    "unit": "events",
+    "pageSize": "Events per page"
+  },
   "regs": {
+    "title": "Event details",
+    "export": "Export CSV",
+    "seats": "{reg}/{seats} seats",
+    "checked": "Checked in: {n}/{total}",
+    "checkAll": "Check in all",
+    "checkIn": "Check in",
+    "checkedIn": "✓ Checked in",
     "today": "Today",
-    "daysAgo": "{n} days ago",
-    "copy": "Copy"
+    "daysAgo": "Days ago: {n}",
+    "loading": "Loading attendees…",
+    "none": "No registrations yet.",
+    "meet": "Online meeting link (Google Meet)",
+    "copy": "Copy",
+    "openMeet": "Open Meet"
   },
   "form": {
+    "createTitle": "Create new event",
+    "editTitle": "Edit event",
     "close": "Close",
     "cover": "Cover image",
+    "coverUpload": "Upload cover image",
+    "coverRatio": "16:9 ratio",
     "coverRemove": "Remove image",
-    "cancel": "Cancel"
+    "name": "Event name",
+    "namePh": "E.g. OPC Meetup #13",
+    "mode": "Format",
+    "date": "Event date",
+    "dateHint": "Current: {day}",
+    "start": "Start",
+    "end": "End",
+    "venue": "Venue",
+    "place": "Venue name",
+    "placePh": "E.g. MediaSoft Hub",
+    "address": "Full address",
+    "addressPh": "Street number, street, ward/commune, district, province/city",
+    "map": "Google Maps link",
+    "mapPh": "https://maps.app.goo.gl/...",
+    "mapTry": "Open preview ↗",
+    "mapHint": "Leave blank to generate a map from the address.",
+    "mapPreview": "Map preview",
+    "link": "Joining link (Zoom, Meet…)",
+    "linkPh": "https://zoom.us/j/...",
+    "meet": "Google Meet link",
+    "meetHint": "(shown in event details)",
+    "meetPh": "https://meet.google.com/abc-defg-hij",
+    "meetNew": "Create Meet link",
+    "seats": "Maximum seats",
+    "group": "Organizing group",
+    "groupAll": "Entire OPC Hub community",
+    "desc": "Description",
+    "descPh": "Agenda, speakers, intended audience...",
+    "descDefault": "Details will be updated.",
+    "regOpen": "Open registration",
+    "regOpenHint": "Turn off to stop new registrations; existing attendees keep their seats",
+    "cancel": "Cancel",
+    "save": "Save event"
+  },
+  "errors": {
+    "title": "Please enter an event name",
+    "titleShort": "Event name must contain at least 3 characters",
+    "date": "Please select the event date",
+    "link": "Please enter a joining link",
+    "place": "Please enter the venue name",
+    "address": "Please enter the full address",
+    "map": "Map link must start with https://",
+    "coverType": "Cover image must be PNG, JPG or WebP",
+    "coverSize": "Cover image must not exceed 5 MB",
+    "save": "Unable to save event",
+    "meet": "Google Meet link must start with https://"
+  },
+  "toast": {
+    "created": "Event {title} created",
+    "updated": "Event updated",
+    "shared": "Event link copied",
+    "exporting": "Exporting registrations…",
+    "exportError": "Unable to export the list",
+    "meetCopied": "Meet link copied"
   },
   "upcoming": {
+    "aria": "Coming up",
+    "badge": "Coming up · {when}",
     "today": "Today",
-    "inDays": "{n} days left",
-    "copy": "Copy"
+    "tomorrow": "Tomorrow",
+    "inDays": "Days remaining: {n}",
+    "kicker": "NEXT EVENT · {mode}",
+    "reg": "Registered: {reg}/{seats}",
+    "copy": "Copy",
+    "openMeet": "Open Google Meet",
+    "detail": "View details & attendees",
+    "more": "Next"
   }
 }

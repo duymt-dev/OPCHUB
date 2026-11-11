@@ -1,50 +1,97 @@
 {
+  "title": "OPC Projects",
+  "sub": "Manage and publish member projects",
   "dateRange": "01/10/2026 – 15/10/2026",
+  "heading": "Project moderation",
+  "headingSub": "Projects submitted by members require approval before they appear publicly",
+  "viewLabel": "Display mode",
   "viewGrid": "Grid view",
   "viewList": "List view",
+  "tabsLabel": "Project status",
   "tabs": {
     "pending": "Pending review",
     "live": "Published",
     "hidden": "Hidden",
-    "changes": "Needs changes",
+    "changes": "Changes required",
     "rejected": "Rejected",
-    "draft": "Draft"
+    "draft": "Drafts"
   },
   "status": {
     "pending_review": "Pending review",
     "published": "Published",
     "hidden": "Hidden",
-    "needs_changes": "Needs changes",
+    "needs_changes": "Changes required",
     "rejected": "Rejected",
     "draft": "Draft"
   },
   "act": {
-    "detail": "Details"
+    "review": "View & review",
+    "detail": "Details",
+    "view": "View",
+    "delete": "Delete"
   },
+  "featuredMark": "Featured",
+  "revision": "Revision",
+  "updated": "{owner} · Updated {date}",
+  "emptyPending": "No projects awaiting review",
+  "empty": "No projects in this section.",
+  "loadError": "Unable to load projects",
+  "retry": "Try again",
   "col": {
+    "project": "Project",
+    "category": "Category",
     "owner": "Project owner",
+    "date": "Submitted",
     "status": "Status"
   },
+  "selectAll": "Select all projects on this page",
+  "selectRow": "Select {name}",
   "bulk": {
+    "label": "Bulk project actions",
+    "selected": "Selected",
     "unit": "items",
-    "hide": "Hide"
+    "publish": "Approve & publish",
+    "hide": "Hide",
+    "delete": "Delete",
+    "clear": "Clear selection"
   },
   "pager": {
+    "unit": "projects",
     "prev": "Previous page",
     "next": "Next page",
     "pageSize": "Projects per page"
   },
   "drawer": {
+    "title": "View & review project",
     "close": "Close",
     "detail": "Detailed description",
-    "reasonLabel": "Reason"
+    "prevNote": "Previous review note:",
+    "feature": "Set as featured project of the week",
+    "featureHint": "Shown at the top of Explore projects · published projects only",
+    "feedback": "Feedback to the author",
+    "reasonLabel": "Reason",
+    "reasonPlaceholder": "Reason (when requesting changes / rejecting)",
+    "notePlaceholder": "Message to the project owner: required changes, reason for rejection…",
+    "noteLabel": "Message to project owner",
+    "reject": "Reject",
+    "changes": "Request changes",
+    "approve": "Approve & publish",
+    "hide": "Hide project",
+    "republish": "Republish"
   },
   "info": {
+    "owner": "Author",
     "country": "Country",
+    "category": "Category",
     "stage": "Stage",
     "website": "Website",
+    "testUrl": "Test link",
+    "repo": "Source code",
     "visibility": "Visibility",
-    "team": "Team"
+    "funding": "Fundraising",
+    "team": "Team",
+    "groups": "Shared with groups",
+    "date": "Submitted"
   },
   "stage": {
     "idea": "Idea",
@@ -54,18 +101,56 @@
     "launched": "Launched"
   },
   "val": {
+    "none": "—",
+    "noRepo": "Not shared",
     "repoPublic": "Public",
     "repoPrivate": "Private",
     "visPublic": "Public",
-    "visPrivate": "Private"
+    "visPrivate": "Private",
+    "noFunding": "No",
+    "funding": "{amount} for {equity}% equity"
   },
   "confirm": {
     "cancel": "Cancel",
-    "hide": "Hide"
+    "deleteTitle": "Delete project?",
+    "deleteOne": "Project {name} and its feedback will be permanently deleted. This action is logged.",
+    "deleteMany": "Projects and their feedback will be permanently deleted: {count}. This action is logged.",
+    "delete": "Delete",
+    "hideTitle": "Hide project?",
+    "hideOne": "{name} will no longer be publicly visible. The project owner will be notified.",
+    "hideMany": "Published projects to hide from Explore: {count}.",
+    "hide": "Hide",
+    "rejectTitle": "Reject project?",
+    "rejectOne": "{name} will be rejected for: {reason}. The project owner will be notified.",
+    "reject": "Reject"
+  },
+  "toast": {
+    "approved": "Approved & published · {name}",
+    "changes": "Changes requested · {name}",
+    "rejected": "Rejected · {name}",
+    "hidden": "Hidden · {name}",
+    "deleted": "Project {name} deleted",
+    "published": "Projects published: {count}",
+    "hiddenMany": "Projects hidden: {count}",
+    "deletedMany": "Projects deleted: {count}",
+    "skipped": "{text} · invalid projects skipped: {count}",
+    "needNote": "Enter a reason or message to request changes",
+    "needReason": "Please select a rejection reason",
+    "featured": "{name} set as featured project of the week",
+    "unfeatured": "Featured status removed",
+    "featureLiveOnly": "Only published projects can be featured",
+    "failed": "Action failed. Please try again"
   },
   "fund": {
     "status": {
-      "active": "Fundraising"
-    }
+      "pending_payment": "Fundraising · pending payment",
+      "pending_review": "Fundraising · pending review",
+      "active": "Fundraising active",
+      "rejected": "Fundraising · rejected"
+    },
+    "approve": "Approve fundraising",
+    "reject": "Reject",
+    "approved": "Fundraising approved · 10% affiliate commission recorded for reference (if a referrer exists)",
+    "rejected": "Fundraising plan rejected"
   }
 }

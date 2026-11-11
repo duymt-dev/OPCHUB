@@ -1,48 +1,195 @@
 {
+  "regional": {
+    "title": "System email · Regional Director",
+    "description": "Sent automatically when Admin appoints / revokes a director in Affiliate network › Regional Director configuration. No password is sent.",
+    "on": "Enabled",
+    "appointName": "Regional Director appointment notice",
+    "appointWhen": "Admin appoints a member as Regional Director",
+    "appointSubject": "[OPC Hub] You are appointed Regional Director for {vùng} · free membership",
+    "revokeName": "Regional Director revocation notice",
+    "revokeWhen": "Admin revokes / replaces the regional director",
+    "revokeSubject": "[OPC Hub] Your Regional Director role for {vùng} has ended · membership payment required"
+  },
+  "title": "Marketing",
+  "sub": "Send bulk email by group or member type and manage automated email",
   "dateRange": "01/10/2026 – 15/10/2026",
+  "loadError": "Unable to load Marketing data",
+  "retry": "Try again",
+  "stats": {
+    "campaigns": "Campaigns",
+    "sent": "Emails sent (30 days)",
+    "open": "Average open rate",
+    "welcome": "Welcome email"
+  },
+  "tabsLabel": "Marketing sections",
+  "tabs": {
+    "campaigns": "Campaigns",
+    "auto": "Automated email",
+    "log": "Delivery log"
+  },
+  "create": "+ Create campaign",
   "table": {
-    "status": "Status"
+    "label": "Campaign list",
+    "name": "Campaign",
+    "audience": "Audience",
+    "recipients": "Recipients",
+    "open": "Opens",
+    "click": "Clicks",
+    "at": "Send time",
+    "status": "Status",
+    "actions": "Actions",
+    "sendNow": "Send now",
+    "cancel": "Stop sending",
+    "dup": "Duplicate",
+    "del": "Delete",
+    "empty": "No campaigns yet"
   },
   "status": {
     "sent": "Sent",
-    "draft": "Draft"
+    "scheduled": "Scheduled",
+    "sending": "Sending",
+    "draft": "Draft",
+    "cancelled": "Stopped"
   },
   "log": {
+    "label": "Email delivery log",
+    "welcome": "Welcome",
+    "campaign": "Campaign",
+    "sent": "✓ Sent",
     "otp": "OTP code",
-    "password_reset": "Reset password",
-    "event": "Events",
+    "password_reset": "Password reset",
+    "fee_reminder": "Renewal reminder",
+    "event": "Event",
+    "test": "Test",
+    "service": "Service request",
     "fundraising": "Fundraising plan",
+    "fundraising_expired": "Expired fundraising plan",
+    "onboarding": "Getting-started reminder",
+    "receipt": "Payment receipt",
     "regional_director": "Regional Director",
-    "resend": "Resend"
+    "regional_director_appoint": "Regional Director appointment",
+    "regional_director_revoke": "Regional Director revocation",
+    "st": {
+      "queued": "Queued",
+      "sent": "✓ Sent",
+      "failed": "Failed",
+      "cancelled": "Cancelled"
+    },
+    "attempts": "Attempts: {n}",
+    "lastError": "Last error: {error}",
+    "view": "View",
+    "resend": "Resend",
+    "empty": "No emails sent yet"
   },
   "form": {
+    "title": "Create email campaign",
     "close": "Close",
+    "tpl": "Email template",
+    "tplHint": "Choose a template to prefill the campaign name, subject and body — you can edit them afterward.",
+    "blank": "Blank",
+    "blankHint": "Compose from scratch",
+    "name": "Campaign name",
+    "namePh": "E.g. OPC Day Đà Nẵng invitation",
+    "audience": "Recipient audience",
     "aud": {
-      "business": "Business"
+      "all": "All members",
+      "groups": "By community group",
+      "business": "Business",
+      "personal": "Individual"
     },
-    "draft": "Save draft"
+    "groupsLabel": "Select community groups",
+    "estimate": "Estimated recipients: {n}",
+    "subject": "Email subject",
+    "subjectPh": "E.g. [OPC Hub] November event invitation",
+    "body": "Body",
+    "bodyPh": "Compose email...",
+    "vars": "Insert variable:",
+    "at": "Schedule send (optional)",
+    "draft": "Save draft",
+    "schedule": "Schedule",
+    "send": "Send now"
   },
   "errors": {
-    "groups": "Please select at least 1 group"
+    "name": "Please enter a campaign name",
+    "subject": "Please enter an email subject",
+    "groups": "Please select at least 1 group",
+    "at": "Please select a send time",
+    "failed": "Action failed. Please try again"
   },
   "confirm": {
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "sendTitle": "Send campaign now?",
+    "sendBody": "Campaign “{name}” will be sent to {n} recipients. Sending cannot be undone.",
+    "sendOk": "Send now",
+    "delTitle": "Delete campaign?",
+    "delBody": "Campaign “{name}” will be permanently deleted. This cannot be undone.",
+    "delOk": "Delete",
+    "cancelTitle": "Stop sending campaign?",
+    "cancelBody": "Campaign “{name}” will stop immediately: unsent emails are cancelled, sent emails remain unchanged. Sending cannot resume after stopping.",
+    "cancelOk": "Stop sending"
   },
   "toast": {
-    "draft": "Draft saved"
+    "sendingTo": "Sending to recipients: {n}",
+    "sending": "Sending {name}",
+    "scheduled": "Campaign scheduled",
+    "draft": "Draft saved",
+    "deleted": "Campaign deleted",
+    "cancelled": "Stopped sending {name}",
+    "resent": "Resent to {to}",
+    "tested": "Test email sent to {to}",
+    "saved": "Welcome email template saved"
   },
   "auto": {
+    "title": "Welcome email",
+    "hint": "Sent automatically after each successful registration (individual & business)",
+    "on": "Enabled",
+    "subject": "Email subject",
+    "intro": "Greeting",
+    "include": "Included content",
+    "showRules": "Platform rules",
     "showGuide": "Attachments",
-    "atts": "Attachments"
+    "atts": "Attachments",
+    "attN": "Documents: {n}",
+    "attTitle": "Document title",
+    "attUrl": "https://...",
+    "attRm": "Remove document",
+    "addAtt": "Add attachment",
+    "rules": "Rules",
+    "ruleN": "Rule {n}",
+    "ruleRm": "Remove rule {n}",
+    "addRule": "+ Add rule",
+    "test": "Send test",
+    "save": "Save template",
+    "preview": "Preview",
+    "invalidUrl": "Invalid document URL"
   },
   "mail": {
+    "brand": "opchub.community",
     "close": "Close",
-    "hello": "Welcome, {name}!",
-    "rules": "Platform rules of conduct",
+    "hello": "Welcome {name}!",
+    "rules": "Platform rules",
     "login": "Sign in now",
     "atts": "Attachments",
-    "footer": "Automated email from OPC Hub · opchub.community. You received this email because you just signed up for an account.",
+    "footer": "Automated email from OPC Hub · opchub.community. You received this email because you just registered an account.",
     "sentWelcome": "Welcome email sent",
-    "sampleName": "Nguyen Van A"
+    "sentCampaign": "Campaign email sent",
+    "to": "To {to} · {subject}",
+    "sampleName": "Nguyễn Văn A"
+  },
+  "onbMail": {
+    "title": "Getting-started completion reminder email",
+    "hint": "Sent when Admin clicks \"Remind\" in the Getting started column (Members) · at most once per day per member",
+    "subject": "Email subject",
+    "body": "Body",
+    "save": "Save template",
+    "saved": "Getting-started reminder template saved",
+    "invalid": "Please enter an email subject and body",
+    "failed": "Unable to save email template",
+    "varsLabel": "Variables:",
+    "var": {
+      "ten": "member name",
+      "con_thieu": "remaining steps",
+      "link": "Dashboard link"
+    }
   }
 }

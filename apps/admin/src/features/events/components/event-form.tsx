@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { uploadImage } from '@/lib/upload-image';
 import { useFormErrors } from '@/lib/use-form-errors';
 import { useGroupOptions, useSaveEvent } from '../hooks/use-events';
+import { EVENT_DESCRIPTION_DEFAULT } from '../content-defaults';
 import {
   EVENT_FIELD_MAP,
   emptyEventForm,
@@ -50,7 +51,7 @@ function FormBody({ initial, onClose }: { initial: EventFormState; onClose: () =
     const errs = validateEvent(f);
     if (fe.check(translateErrors(errs, (e) => t(`errors.${e}`)))) return;
     if (save.isPending || cover.uploading) return;
-    const body = formToUpsert(f, t('form.descDefault'));
+    const body = formToUpsert(f, EVENT_DESCRIPTION_DEFAULT);
     save.mutate(
       { body, id: f.id },
       {

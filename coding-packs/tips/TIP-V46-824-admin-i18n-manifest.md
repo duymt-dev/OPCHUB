@@ -654,7 +654,7 @@ Batch = one TIP824. Pairwise conflicts inside the batch = zero. Overlaps with hi
 
 ## Counts and verification
 
-597 explicit paths: 350 create, 246 modify, 1 delete. Modify/delete paths were checked against the working baseline; create paths are planned and absent except the planning documents being created in this phase. No app source file is changed by generating this manifest.
+605 explicit paths: 356 create, 248 modify, 1 delete. Modify/delete paths were checked against the working baseline; create paths are planned and absent except the planning documents being created in this phase. No app source file is changed by generating this manifest.
 
 ## Execute inventory additions (2026-11-11, same serial lane)
 
@@ -689,3 +689,25 @@ Exact paths, same serial lane:
 |---|---|---|
 | modify | `apps/admin/src/features/overview/components/conversion-table.spec.tsx` | Supply the UI namespace for translated region/count labels; keep existing assertions. |
 | create | `apps/admin/src/providers/admin-intl-errors.spec.tsx` | Verify safe readable fallback without raw message keys/ICU variables. |
+
+## Execute inventory additions - raw English catalog verification
+
+Same serial TIP lane, no active overlap.
+
+| Action | Exact path | Responsibility |
+|---|---|---|
+| create | `apps/admin/src/i18n/tests/english-catalog.spec.ts` | Fixed explicit raw-English catalog checks before fallback; exact-key exceptions for proper names and canonical syntax only. |
+
+## Execute inventory additions - canonical content boundaries
+
+Sequential extension, checked before editing. These adapters preserve current Vietnamese event defaults, export bytes and email-preview content independently of Admin presentation locale. No server/DB/shared registry changes or overlap with another active implementation.
+
+| Action | Exact path | Responsibility |
+|---|---|---|
+| create | `apps/admin/src/features/events/content-defaults.ts` | Stable source-language event default content, not a translated UI label. |
+| create | `apps/admin/src/features/events/content-defaults.spec.ts` | Blank/rich-text default and authored content payload regression. |
+| create | `apps/admin/src/features/groups/export-content.ts` | Source-language exported headers/cells independent of dialog language. |
+| create | `apps/admin/src/features/groups/export-content.spec.ts` | CSV/Excel bytes and raw personal content regression. |
+| modify | `apps/admin/src/features/groups/hooks/use-export.ts` | Keep audited export workflow; render exact export-content preview. |
+| modify | `apps/admin/src/features/marketing/components/welcome-preview.tsx` | Keep email body preview in current email-contract language, not GUI locale. |
+| create | `apps/admin/src/features/marketing/components/welcome-preview.spec.tsx` | Verify unchanged email preview under English Admin provider. |
