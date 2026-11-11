@@ -1,5 +1,17 @@
 # Admin translation review (D-141)
 
+## Scoped standard date/number data — 2026-11-12
+
+Separate from UI translation completeness: standalone FormatJS DateTimeFormat8.0.3 and NumberFormat10.0.4 provide pinned CLDR49 data for km/lo/my, which the installed Chromium does not support natively for dates/numbers. All12 selector identities support native plural rules; the other9 support native dates/numbers. These are actual offline capability observations, not inferred from translated text.
+
+The three scoped constructors/data are the same on SSR/client; no global Intl replacement or per-request default locale mutation. Explicit lazy package locale imports use their version-pinned registration buffers, with source/hash/license contracts. Only the exact historical Asia/Ho_Chi_Minh timezone record is extracted; not a fixed +07 approximation. The MIT notice is also distributed at public/licenses/formatjs-intl.txt. No remote polyfill/CDN/service. The authenticated layout prepares these resources before shell/pages; public auth has no date/currency display and does not evaluate/download unused locale-data assets. QueryClient/UiProvider/ToastProvider and auth/form instances are not keyed by locale.
+
+Fixed tests cover decimal/grouping separators, Myanmar digits/explicit Latin override, VND without conversion, missing/negative/zero values, Gregorian Vietnam midnight/year/leap boundaries and the actual1900 historical offset, cold concurrent locale preparation, selected-script month/weekday names and existing font cmap coverage. Structured resource failures use existing selected-language loading/error/retry strings, not raw technical diagnostics; retry is explicit. Two exact source-audit exceptions are diagnostics only, with the absence of their raw error text in UI tested. Four remaining next-intl date consumers now use the same prepared Admin formatter; authored content/DTOs/exports/parsers/API values are untouched.
+
+Actual built locale-data chunks are mapped and hashed separately for both modes; missing/duplicate/mixed-locale data fails the auditor. Browser evidence checks actual Lao dates/VND against independent Node Intl/raw DTOs, zero unused data payload on public auth, only selected Lao data responses with exact hashes and unchanged global constructor snapshots. This is not the original-baseline/per-route JS budget proof. Full performance and all-language controls/states remain required.
+
+No UI-message leaves are added here:200/250 raw files/eight complete bundles remain. km/my Admin catalogs still missing; standard CLDR names are not substitutes for those translations. Native-speaker-reviewed=false remains unchanged for every Admin target locale; the licensed fonts/binaries and existing Vietnamese source text remain unchanged.
+
 - Scope: Admin UI only; API errors, email, CSV and user content retain their original contract.
 - Source baseline: f7c1b2b8; current source has2667 string leaves in25 physical catalogs.
 - English completion checkpoint: ec97a874 (2608 leaves); additive AI/validation checkpoint9e962712 (2660 leaves), 2026-11-11. All25 raw English catalogs verified, not whole-TIP completion.

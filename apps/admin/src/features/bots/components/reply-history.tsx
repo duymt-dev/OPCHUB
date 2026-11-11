@@ -1,12 +1,13 @@
 'use client';
 
 import type { BotReplyOverview } from '@opchub/shared/api-domains';
-import { useFormatter, useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { formatDate } from '@/i18n/format';
 import styles from './reply-panel.module.css';
 
 export function ReplyHistory({ history }: { history: BotReplyOverview['history'] }) {
   const t = useTranslations('bots.replies');
-  const format = useFormatter();
+  const locale = useLocale();
   return (
     <section className={styles.box} aria-label={t('history')}>
       <header className={styles.sectionHead}>
@@ -20,7 +21,7 @@ export function ReplyHistory({ history }: { history: BotReplyOverview['history']
               <span className={styles.time}>
                 {' '}
                 · {row.groupName} ·{' '}
-                {format.dateTime(new Date(row.createdAt), {
+                {formatDate(row.createdAt, locale, {
                   day: '2-digit',
                   month: '2-digit',
                   hour: '2-digit',

@@ -1,4 +1,4 @@
-import { intlLocaleOf } from './locales';
+import { adminDateFormatter, adminNumberFormatter } from './intl/runtime';
 
 export const ADMIN_TIME_ZONE = 'Asia/Ho_Chi_Minh';
 const EMPTY = '—';
@@ -12,7 +12,7 @@ export function formatNumber(
   options: Intl.NumberFormatOptions = {},
 ): string {
   return finite(value)
-    ? new Intl.NumberFormat(intlLocaleOf(locale), {
+    ? adminNumberFormatter(locale, {
         // Reduced-ICU browsers may fall back my-MM to Latin; keep SSR/client digits consistent.
         ...(locale === 'my' ? { numberingSystem: 'mymr' } : {}),
         ...options,
@@ -75,7 +75,7 @@ export function formatDate(
 ): string {
   const date = value ? displayDate(value) : undefined;
   if (!date) return EMPTY;
-  return new Intl.DateTimeFormat(intlLocaleOf(locale), {
+  return adminDateFormatter(locale, {
     ...options,
     timeZone: ADMIN_TIME_ZONE,
     calendar: 'gregory',

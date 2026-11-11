@@ -1090,6 +1090,44 @@ Observed native sidebar badge test readiness race: initial count snapshot ran be
 
 ### Lao complete raw catalog checks
 
+### Reproducible scoped Intl constructors for km/lo/my
+
+Reason for new dependencies: installed Chromium lacks the three Intl locales while Node supports them, so native fallback changes dates, digits and separators. Pin standalone FormatJS DateTimeFormat8.0.3 and NumberFormat10.0.4, with extracted official CLDR49 data for only the selected one of km/lo/my and the exact Asia/Ho_Chi_Minh timezone record. These implement presentation only, not business parsers or exchanged values. Use the same constructors/data on SSR and client for those three identities, never replace global Intl, change Portal, fetch an external service or mutate a default locale per request. Other nine selector identities retain native constructors. Each selected locale is prepared before descendant formatting; keep QueryClient/auth/form instances and no keyed subtree. Require tests for loading failure, cross-request isolation, dates/timezone/number boundaries and drafts. Full JS/data isolation/performance must still be measured; no budget waiver.
+
+Avoid copying large generated locale JSON into application source: import the six explicitly selected official package locale modules instead. Those pinned modules expose their raw data through upstream FormatJS registration buffers; read those buffers without replacing Intl, changing a shared default or clearing another consumer's data. Exact source module hashes/versions belong in the reproducible receipt. Only the tiny exact Vietnam timezone resource/license is copied. No runtime eval, external service or all-language payload. Existing package/lock/request/formatter/provider/consumer paths remain presentation-only; no unrelated upgrade.
+
+| Operation | File | Scope |
+|---|---|---|
+| modify | `pnpm-workspace.yaml` | Pin two new independent Intl constructor dependencies, no upgrade of the existing stack. |
+| create | `infra/scripts/build-admin-intl-data.mjs` | Reproduce official pinned locale/timezone resources in an isolated build-only VM, no runtime eval/global Intl modification. |
+| create | `apps/admin/src/i18n/intl-data/vietnam-time-zone.json` | Exact official packed Asia/Ho_Chi_Minh record, historical offsets retained, not a fixed +07 substitute. |
+| create | `apps/admin/src/i18n/intl-data/receipt.json` | Source versions, hashes and exact resource inventory. |
+| create | `apps/admin/src/i18n/intl-data/LICENSE.txt` | Exact upstream redistribution license. |
+| create | `apps/admin/public/licenses/formatjs-intl.txt` | Same exact upstream license available in the distributed public application. |
+| create | `apps/admin/src/i18n/intl/runtime.ts` | Finite cached preparation and scoped immutable constructor choice; no global Intl replacement or locale default mutation. |
+| create | `apps/admin/src/i18n/intl/data-loaders.ts` | Explicit lazy resource imports for only selected km/lo/my, no unsafe locale interpolation. |
+| create | `apps/admin/src/i18n/intl/types.ts` | Internal typed constructor/data contracts. |
+| create | `apps/admin/src/i18n/intl/registration-data.ts` | Read only the pinned package's selected registration buffers, fail closed if missing, never replace Intl or clear other data. |
+| create | `apps/admin/src/i18n/intl/resource-error.ts` | Structured scoped-resource failure, not a raw user-facing technical message. |
+| create | `apps/admin/src/i18n/intl/runtime.spec.ts` | Real constructors/data, locale/number/timezone/calendar/value/parallel-isolation and global-preservation tests. |
+| create | `apps/admin/src/i18n/intl/resources.spec.ts` | Exact pinned package/data/license/hash inventory, no undisclosed locale payloads. |
+| create | `apps/admin/src/providers/admin-intl-ready.tsx` | Suspense readiness inside stable QueryClient, no key/remount or silent English fallback on loading failure. |
+| modify | `apps/admin/src/app/(admin)/layout.tsx` | Gate authenticated shell/pages inside existing AuthGate; public auth has no date/currency displays and must not download unused Intl constructors/data. Root QueryClient/UiProvider/ToastProvider remain unchanged. |
+| create | `apps/admin/src/providers/admin-intl-ready.spec.tsx` | Deferred/rejected readiness and retained draft/subtree checks. |
+| create | `apps/admin/src/providers/admin-intl-resource-boundary.tsx` | Readable selected-language resource error/retry only; unrelated errors propagate, QueryClient/auth remain outside. |
+| modify | `apps/admin/src/features/bots/components/reply-history.tsx` | Use the same prepared Admin date formatter instead of a separate native next-intl date path; authored content untouched. |
+| create | `coding-packs/reports/evidence/v46-824/intl-runtime.log` | Actual focused constructor/provider/resource/request regression outputs. |
+| create | `e2e/behavior/admin-i18n-intl.spec.ts` | Actual Lao fee display against independent Node Intl/raw DTOs; scoped-data/global-Intl isolation and retained Profile draft across deferred language switches, both modes. |
+| create | `coding-packs/reports/evidence/v46-824/intl-msw.log` | Current same-assertion Intl browser output, no DB/seed/reset. |
+| create | `coding-packs/reports/evidence/v46-824/intl-native.log` | Same Intl assertions against approved isolated native API, original DB/services retained. |
+| create | `infra/scripts/audit-admin-intl-chunks.mjs` | Inspect actual built locale-data chunk markers/hash/bytes; fail missing, duplicate or mixed-locale payloads, not a substitute for original-baseline route budgets. |
+| create | `apps/admin/src/i18n/intl/chunks.spec.ts` | Plain/escaped/date/number/core and mixed-locale negative fixtures for the actual chunk auditor. |
+| create | `coding-packs/reports/evidence/v46-824/intl-chunks.json` | Actual MSW/native built data assets and hashes used to reject unselected locale payload responses. |
+| create | `e2e/behavior/admin-i18n/response-lifetime.ts` | Classify only exact CDP body-unavailable errors belonging to a committed older document; current-document/JSON/HTTP failures remain strict. |
+| create | `e2e/behavior/admin-i18n/response-lifetime.spec.ts` | Eleven pure positive/negative protocol-lifetime cases in both modes, including restored-loader protection; not authenticated UI coverage. |
+
+Observed harness race: an Overview poll's response body became unavailable when the picker F5 test committed a new document. Keep real polling, every URL/value assertion, HTTP/error/write guard and default timeout. Track actual Chromium main-frame loaderId changes and request document epochs; discard only this exact stale-document CDP body error, record paths/epochs explicitly, and continue rejecting current-document body failures or malformed JSON. Do not suppress API HTTP failures or fabricate raw-content exceptions for discarded bodies. This is observation-lifetime handling, not a production/fixture/clock change or a claim that discarded old response bodies were validated.
+
 Reduced-ICU follow-up: keep picker display patterns deterministic for the existing twelve approved locale profiles, not inferred from optional browser ICU coverage. This fixes numeric picker order only, not general Intl date/number/month-name support. No dependency added: the inspected FormatJS package would require separate lifecycle/data/payload design; no polyfill or global Intl replacement is introduced here. Canonical YYYY-MM-DD URL/API values and Vietnam-calendar preset behavior remain unchanged. The full reduced-ICU formatter defect remains open until separately fixed and verified.
 
 Picker browser harness correction: existing fetchOverview intentionally omits default period=month from the API query while retaining the explicit URL parameter. Assert exactly null plus only from/to API keys, not a permissive null-or-month alternative; keep URL period=month, range, locale, guard and F5 assertions unchanged. Preserve the initial six-case diagnostic failure; no production/query behavior change.

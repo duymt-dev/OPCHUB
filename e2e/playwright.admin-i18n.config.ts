@@ -22,6 +22,8 @@ export default defineConfig({
         'admin-i18n-thai.spec.ts',
         'admin-i18n-lao.spec.ts',
         'admin-i18n-picker.spec.ts',
+        'admin-i18n-intl.spec.ts',
+        'admin-i18n/response-lifetime.spec.ts',
       ],
     },
   ],

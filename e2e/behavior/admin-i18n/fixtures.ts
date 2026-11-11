@@ -1,4 +1,5 @@
 import { test as base, expect, type Page, type Response } from '@playwright/test';
+import { reportDiscardedBodies, trackDocumentBodies } from './response-lifetime';
 import { z } from 'zod';
 import { keywordListSchema, mailTemplateListSchema } from '@opchub/shared/api-domains';
 import { env } from '../../env';
@@ -69,6 +70,7 @@ export const test = base.extend<{ guard: BrowserGuard }>({
       const pending: Promise<void>[] = [];
       const network: string[] = [];
       const raw = new Set<string>();
+      const documents = await trackDocumentBodies(page);
       page.on('pageerror', (error) => errors.push(error.message));
       page.on('console', (message) => {
         if (message.type() === 'error') errors.push(message.text());
@@ -90,7 +92,9 @@ export const test = base.extend<{ guard: BrowserGuard }>({
           failures.push(`${response.status()} ${path}`);
         if (response.ok() && response.headers()['content-type']?.includes('application/json')) {
           const parsing = (async () => {
-            const parsed = z.json().parse((await response.json()) as unknown);
+            const result = await documents.json(response);
+            if (result === undefined) return;
+            const parsed = z.json().parse(result.body);
             rawContent(parsed, raw);
             // Stored moderation keywords are user-authored content, not filter-control labels.
             if (path === '/v1/admin/moderation/keywords')
@@ -115,6 +119,8 @@ export const test = base.extend<{ guard: BrowserGuard }>({
       });
       page.off('response', responseListener);
       await Promise.all(pending);
+      await documents.detach();
+      await reportDiscardedBodies(info, documents.discarded);
       if (info.status !== info.expectedStatus) {
         await info.attach('i18n-network-paths-no-credentials', {
           body: JSON.stringify({ network, failures, writes, errors }),

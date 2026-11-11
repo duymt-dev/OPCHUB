@@ -172,5 +172,17 @@
     "kind": "human-literal",
     "text": "Intl error:",
     "reason": "Logger diagnostic prefix, not rendered UI text."
+  },
+  {
+    "file": "apps/admin/src/i18n/intl/registration-data.ts",
+    "kind": "human-literal",
+    "text": "Admin Intl locale data unavailable:",
+    "reason": "Technical registration failure wrapped as a structured resource error; the localized boundary renders common.state.error/retry, never this diagnostic or its cause."
+  },
+  {
+    "file": "apps/admin/src/i18n/intl/resource-error.ts",
+    "kind": "human-literal",
+    "text": "Admin Intl resources unavailable",
+    "reason": "Typed resource error diagnostic for logger/cause only; selected-language error/retry UI and absence of this raw message are explicitly tested in admin-intl-ready.spec.tsx."
   }
 ]

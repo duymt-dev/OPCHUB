@@ -1,14 +1,15 @@
 'use client';
 
 import type { BotReplyOverview } from '@opchub/shared/api-domains';
-import { useFormatter, useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { formatDate } from '@/i18n/format';
 import styles from './reply-panel.module.css';
 import { useNumberText } from '@/i18n/use-number-text';
 
 export function ReplyGroups({ data }: { data: BotReplyOverview }) {
   const numberText = useNumberText();
   const t = useTranslations('bots.replies');
-  const format = useFormatter();
+  const locale = useLocale();
   const next = data.groups.find((row) => row.personaCount > 0);
   return (
     <>
@@ -61,7 +62,7 @@ export function ReplyGroups({ data }: { data: BotReplyOverview }) {
                   <span className={styles.time}>
                     {' '}
                     ·{' '}
-                    {format.dateTime(new Date(row.createdAt), {
+                    {formatDate(row.createdAt, locale, {
                       hour: '2-digit',
                       minute: '2-digit',
                       timeZone: 'Asia/Ho_Chi_Minh',

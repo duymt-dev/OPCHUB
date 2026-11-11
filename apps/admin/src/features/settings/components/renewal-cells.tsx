@@ -1,6 +1,7 @@
 'use client';
 import type { RenewalRow } from '@opchub/shared/api-domains';
-import { useFormatter, useTranslations, useNow } from 'next-intl';
+import { useLocale, useTranslations, useNow } from 'next-intl';
+import { formatDate } from '@/i18n/format';
 import { useRelTime } from '../hooks/use-rel-time';
 import styles from './renewal.module.css';
 import { useNumberText } from '@/i18n/use-number-text';
@@ -8,11 +9,11 @@ import { useNumberText } from '@/i18n/use-number-text';
 export function RenewalExpiry({ row: r }: { row: RenewalRow }) {
   const numberText = useNumberText();
   const t = useTranslations('settings.renewal'),
-    fmt = useFormatter();
+    locale = useLocale();
   return (
     <div className={styles.stack}>
       <span>
-        {fmt.dateTime(new Date(r.validUntil), {
+        {formatDate(r.validUntil, locale, {
           timeZone: 'Asia/Ho_Chi_Minh',
           day: '2-digit',
           month: '2-digit',

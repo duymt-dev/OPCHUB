@@ -12,6 +12,9 @@ import groupsEn from '../../apps/admin/messages/en/groups.json' with { type: 'js
 import groupsVi from '../../apps/admin/messages/vi/groups.json' with { type: 'json' };
 import settingsEn from '../../apps/admin/messages/en/settings/core.json' with { type: 'json' };
 import settingsVi from '../../apps/admin/messages/vi/settings/core.json' with { type: 'json' };
+import membersTh from '../../apps/admin/messages/th/members.json' with { type: 'json' };
+import commonLo from '../../apps/admin/messages/lo/common.json' with { type: 'json' };
+import uiLo from '../../apps/admin/messages/lo/ui.json' with { type: 'json' };
 
 for (const width of [1440, 390]) {
   test(`D-141 AC824-01/05 aliases retain country identity and profile draft after refresh ${width}`, async ({
@@ -51,6 +54,7 @@ for (const width of [1440, 390]) {
     for (const [locale, messages, title] of [
       ['vi', membersVi, 'Thành viên'],
       ['en', membersEn, 'Members'],
+      ['th', membersTh, 'สมาชิก'],
       ['vi', membersVi, 'Thành viên'],
     ] as const) {
       await selectLocale(page, locale);
@@ -98,6 +102,7 @@ for (const width of [1440, 390]) {
     for (const [locale, common, ui] of [
       ['vi', commonVi, uiVi],
       ['en', commonEn, uiEn],
+      ['lo', commonLo, uiLo],
       ['vi', commonVi, uiVi],
     ] as const) {
       await selectLocale(page, locale);

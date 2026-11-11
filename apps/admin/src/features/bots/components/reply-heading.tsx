@@ -1,7 +1,8 @@
 'use client';
 
 import type { BotReplyOverview, BotReplySettings } from '@opchub/shared/api-domains';
-import { useFormatter, useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { formatDate } from '@/i18n/format';
 import { Switch } from './bits';
 import styles from './reply-panel.module.css';
 import { useNumberText } from '@/i18n/use-number-text';
@@ -16,10 +17,10 @@ interface Props {
 export function ReplyHeading({ data, groupCount, disabled, onPatch }: Props) {
   const numberText = useNumberText();
   const t = useTranslations('bots.replies');
-  const format = useFormatter();
+  const locale = useLocale();
   const lastScan = data.lastScanAt
     ? t('lastScan', {
-        time: format.dateTime(new Date(data.lastScanAt), {
+        time: formatDate(data.lastScanAt, locale, {
           hour: '2-digit',
           minute: '2-digit',
           second: '2-digit',
