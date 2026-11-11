@@ -4,6 +4,22 @@ Mandatory HEADER appendix to [TIP-V46-824](TIP-V46-824-admin-i18n.md). This is N
 
 ## Ownership and scope
 
+### Approved optional sidebar badge formatter — 11/11/2026
+
+Owner: “Đồng ý thêm callback tùy chọn, giữ nguyên Portal”. Presentation only; raw badge counts, visibility, href/navigation callbacks and Portal defaults stay unchanged. AppShell already forwards its props to Sidebar, so its implementation needs no change. These exact additions are declared before implementation; existing AdminShell path remains owned.
+
+| Operation | File | Scope |
+|---|---|---|
+| modify | `packages/ui/src/app-shell/types.ts` | Optional formatBadgeCount callback; no locale dependency or changed default. |
+| modify | `packages/ui/src/app-shell/sidebar.tsx` | Invoke only for visible badge presentation; preserve raw truthiness, dot and navigation. |
+| create | `packages/ui/src/app-shell/sidebar-badge.spec.tsx` | Actual AppShell/Sidebar default, formatted badge, zero/dot, raw values, rerender and navigation regressions. |
+| create | `apps/admin/src/features/shell/components/admin-shell-badge.spec.tsx` | Actual AdminShell opt-in and live Myanmar/VI/English number projection, preserving raw nav/route. |
+| create | `coding-packs/reports/evidence/v46-824/sidebar-badge.log` | Actual focused callback tests; not whole Myanmar catalog/browser acceptance. |
+| create | `coding-packs/reports/evidence/v46-824/portal-sidebar-regression.log` | Fresh Portal unit regression and production build for approved shared change. |
+| create | `apps/admin/src/i18n/numbering-system.spec.ts` | Pin Myanmar presentation digits under reduced browser ICU; retain caller options and VI defaults. |
+
+Actual browser finding: Chromium156 falls back from unsupported my-MM to en-US/Latin digits, unlike Node's full ICU. The already-owned Admin format.ts must explicitly default Myanmar numberingSystem to mymr (caller options still win), retaining all raw values and Portal behavior. This is formatting correctness within D-141, not a new business policy or a claim that the missing Myanmar prose catalog exists.
+
 - One serial implementation lane. No parallel Admin/shared-UI edits. Prior TIP822/823 are merged.
 - Every path below is literal, including Next route brackets; there are no wildcard write grants.
 - `modify` is an audited boundary, not an instruction to make artificial edits: report unchanged paths as `no change needed` with reason. Audit all listed callers, not only definitions.

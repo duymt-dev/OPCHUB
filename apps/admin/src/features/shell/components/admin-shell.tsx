@@ -9,6 +9,7 @@ import { languageOptions, LOCALE_COOKIE } from '@opchub/shared/fixtures';
 import { logout } from '@/features/auth';
 import { useAuthStore } from '@/lib/auth-store';
 import { useSessionEndNavigator } from '@/lib/session-end-navigator';
+import { numberText } from '@/i18n/number-text';
 import { useNavBadges } from '../hooks/use-nav-badges';
 import { useAdminNav } from '../hooks/use-admin-nav';
 import { useMenuMe } from '../hooks/use-menu-me';
@@ -99,6 +100,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
       logoSrc="/opchub-logo.png"
       logoAlt="OPC HUB ASEAN – One Person Company Hub"
       brandTag={t('shell.brandTag')}
+      formatBadgeCount={(count) => numberText(count, locale)}
       nav={items.map((n, i) => ({
         key: n.key,
         label: t(`nav.${n.key}`),

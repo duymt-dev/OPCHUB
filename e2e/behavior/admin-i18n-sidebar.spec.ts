@@ -2,10 +2,55 @@ import { test, expect, openLocalized } from './admin-i18n/fixtures';
 import { assertSidebarLabels } from './admin-i18n/sidebar';
 import { fileURLToPath } from 'node:url';
 import { env } from '../env';
+import { selectLocale } from './admin-i18n/navigation';
 
 const evidence = fileURLToPath(
   new URL('../../coding-packs/reports/evidence/v46-824/', import.meta.url),
 );
+
+for (const width of [1440, 390]) {
+  test(`D-141 AC824-08 sidebar badge digits switch my/vi/en without changing counts ${width}; not Myanmar catalog acceptance`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: 1000 });
+    await openLocalized(page, '/profile?badge=raw#locale', 'en');
+    const sidebar = page.locator('aside[data-mini]');
+    const badges = sidebar.locator('nav > a:has(> span:nth-of-type(2))');
+    const original = await badges.evaluateAll((links) =>
+      links.map((link) => ({
+        href: link.getAttribute('href'),
+        count: Number(link.querySelector('span:nth-of-type(2)')?.textContent?.replaceAll(',', '')),
+      })),
+    );
+    expect(original.length).toBeGreaterThan(0);
+    for (const item of original) expect(item.count).toBeGreaterThan(0);
+    for (const [locale, intl] of [
+      ['my', 'my-MM'],
+      ['vi', 'vi-VN'],
+      ['en', 'en-GB'],
+    ] as const) {
+      await selectLocale(page, locale);
+      // Missing Myanmar prose still falls back to VI. This checks the approved number boundary only.
+      if (width === 390) await page.getByRole('button', { name: 'Menu', exact: true }).click();
+      for (const item of original) {
+        const badge = sidebar.locator(`a[href="${item.href}"] > span:nth-of-type(2)`);
+        await expect(badge).toHaveText(new Intl.NumberFormat(intl).format(item.count));
+      }
+      await assertSidebarLabels(sidebar);
+      expect(
+        await badges.evaluateAll((links) => links.map((link) => link.getAttribute('href'))),
+      ).toEqual(original.map((item) => item.href));
+      await expect(page).toHaveURL(/\/profile\?badge=raw#locale$/);
+      if (width === 390) {
+        // Real click in the uncovered right-hand overlay; no forced/covered-handler events.
+        await page
+          .locator('aside[data-mini] + div[data-open="true"]')
+          .click({ position: { x: 380, y: 500 } });
+        await expect(sidebar).toHaveAttribute('data-open', 'false');
+      }
+    }
+  });
+}
 
 for (const locale of ['vi', 'en', 'fil'] as const)
   for (const width of [1440, 390]) {

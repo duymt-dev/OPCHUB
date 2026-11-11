@@ -92,6 +92,8 @@ Owner-approved execute clarification (11/11/2026): owner đồng ý thêm props 
 
 Owner-approved auth execute clarification (11/11/2026): owner đồng ý thêm prop định dạng lỗi **tùy chọn** cho shared LoginPanel, chỉ Admin sử dụng để lỗi client đang hiển thị đổi theo locale. Portal mặc định không đổi; giữ nguyên draft, cơ chế xóa lỗi khi chọn tài khoản mẫu, pending và callback string/undefined. Không suy diễn text API thành mã lỗi client. Khai báo file-level manifest trước sửa, chạy shared/UI + Portal regression và build Portal.
 
+Owner-approved sidebar execute clarification (11/11/2026): owner đồng ý thêm callback định dạng số **tùy chọn** cho AppShell/Sidebar. Admin opt in để badge dùng chữ số theo locale (đặc biệt Myanmar); giữ nguyên số đếm thô, điều kiện hiện badge/dot, href và callback điều hướng. Portal không opt in và giữ nguyên mặc định. Không thêm next-intl vào shared UI; khai báo manifest trước sửa, chạy shared UI/Portal regression và build Portal.
+
 ### 4. UI, labels và validation
 
 22. Metadata: 22 route title hiện có + `/profile` chuyển `generateMetadata/getTranslations('meta')`; giữ brand `OPC Hub Admin`, robots noindex/nofollow. Không locale hóa href/slug/canonical hoặc public SEO Portal.

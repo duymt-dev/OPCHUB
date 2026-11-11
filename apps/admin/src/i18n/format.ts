@@ -11,7 +11,13 @@ export function formatNumber(
   locale: string,
   options: Intl.NumberFormatOptions = {},
 ): string {
-  return finite(value) ? new Intl.NumberFormat(intlLocaleOf(locale), options).format(value) : EMPTY;
+  return finite(value)
+    ? new Intl.NumberFormat(intlLocaleOf(locale), {
+        // Reduced-ICU browsers may fall back my-MM to Latin; keep SSR/client digits consistent.
+        ...(locale === 'my' ? { numberingSystem: 'mymr' } : {}),
+        ...options,
+      }).format(value)
+    : EMPTY;
 }
 
 export function formatCurrency(

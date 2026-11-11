@@ -11,6 +11,7 @@ type SidebarProps = Pick<
   | 'logoAlt'
   | 'brandTag'
   | 'nav'
+  | 'formatBadgeCount'
   | 'activeKey'
   | 'labels'
   | 'sidebarExtra'
@@ -80,7 +81,11 @@ export function Sidebar(props: SidebarProps) {
           >
             <Icon name={item.icon} size={19} strokeWidth={1.6} />
             <span className={styles.navLabel}>{item.label}</span>
-            {item.badge ? <span className={styles.badge}>{item.badge}</span> : null}
+            {item.badge ? (
+              <span className={styles.badge}>
+                {props.formatBadgeCount ? props.formatBadgeCount(item.badge) : item.badge}
+              </span>
+            ) : null}
             {item.badge ? <i className={styles.dot} aria-hidden="true" /> : null}
           </a>,
         ])}
