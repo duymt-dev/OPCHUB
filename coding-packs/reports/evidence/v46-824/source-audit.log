@@ -1,0 +1,23 @@
+Source cba91c9f, committed production/test/catalog files. Focused verification is included in full root totals, not additional coverage. No DB/service mutation.
+COMMAND pnpm --filter @opchub/admin test src/i18n/tests/source-audit.spec.ts src/i18n/number-text.spec.tsx src/i18n/domain-labels.spec.ts src/features/settings/hooks/use-ai-provider-label.spec.tsx src/i18n/message-loader.spec.ts
+$ vitest run --passWithNoTests src/i18n/tests/source-audit.spec.ts src/i18n/number-text.spec.tsx src/i18n/domain-labels.spec.ts src/features/settings/hooks/use-ai-provider-label.spec.tsx src/i18n/message-loader.spec.ts
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  5 passed (5)
+      Tests  53 passed (53)
+   Start at  18:30:12
+   Duration  33.44s (tests 47%, environment 44%, import 7%, transform 1%)
+
+    Isolate  5 workers spawned · ~5.21s startup each (spawn + environment, per file)
+             at least ~7.81s faster with isolate: false — reuses workers across files instead of one per file
+
+EXIT 0
+
+COMMAND node infra/scripts/audit-admin-i18n.mjs
+{"status":"PASS","source":{"gitHead":"cba91c9f3bc2201b6a65c28a3aad5ee7b15ded95","dirty":false,"corpusSha256":"29bb7c6330339b8e0b2ec108eac4f1f0b87d5f042541bdb90a336805b376994f","fingerprintFiles":601,"fingerprintScope":"Scanned production source plus audit scripts and exact exception registries; not catalogs or browser evidence"},"sourceFiles":584,"findings":301,"kinds":{"human-literal":248,"ui-literal":40,"enum-jsx":11,"numeric-jsx":2},"unreviewed":0,"errors":0}
+EXIT 0
+Migration receipt:172 numeric display/translation expressions across87 files +2 static denominators =174 formatter calls in those files. No form/DTO/query/parser/callback/export/business-precision change. Two email-preview counters remain exact content exceptions.
+The full root initial integrity failure was an unenumerated NEW customProviderLabel (525 vs524); only that new path is excluded from both unchanged original524/2456 baseline hashes. Focused14 plus full root rerun pass; no baseline hash, old string, skip or timeout change.
+Static audit is not arbitrary interprocedural/runtime analysis, all-language catalog acceptance, browser behavior or native API proof.

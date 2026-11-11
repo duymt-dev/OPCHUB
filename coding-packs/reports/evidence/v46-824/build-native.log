@@ -1,22 +1,21 @@
-Tested code/catalog source committed asf76118f9; blobs unchanged by normal pre-commit hooks.
-Source working tree based on 517ee88e; Admin build mode=native dist=.next-server-tip824; compile only, no API verification
+Source cba91c9f; Admin build mode=native dist=.next-server-tip824; compile only, no API verification
 $ next build
 ▲ Next.js 16.4.2 (Turbopack)
 - Environments: .env.local
-✓ Running next.config.ts took 444ms
+✓ Running next.config.ts took 585ms
 - Experiments (use with caution):
   · optimizePackageImports
 
   Creating an optimized production build ...
-✓ Compiled successfully in 3.2s
+✓ Compiled successfully in 8.1s
   Running TypeScript ...
-  Finished TypeScript in 10.5s ...
+  Finished TypeScript in 32.9s ...
   Collecting page data using 5 workers ...
   Generating static pages using 5 workers (0/10) ...
   Generating static pages using 5 workers (2/10)
   Generating static pages using 5 workers (4/10)
   Generating static pages using 5 workers (7/10)
-✓ Generating static pages using 5 workers (10/10) in 1157ms
+✓ Generating static pages using 5 workers (10/10) in 789ms
   Finalizing page optimization ...
 
 Route (app)
