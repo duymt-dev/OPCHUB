@@ -1,25 +1,14 @@
 import dayjs, { type Dayjs } from 'dayjs';
-import { ADMIN_TIME_ZONE } from './format';
-import { intlLocaleOf } from './locales';
+import { bundleOf } from './locales';
 
 /** Numeric Gregorian display only; picker callbacks still transport canonical YYYY-MM-DD. */
 export function datePickerFormat(locale: string): string {
-  return new Intl.DateTimeFormat(intlLocaleOf(locale), {
-    calendar: 'gregory',
-    timeZone: ADMIN_TIME_ZONE,
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  })
-    .formatToParts(new Date('2026-11-21T05:00:00Z'))
-    .map((part) => {
-      if (part.type === 'year') return 'YYYY';
-      if (part.type === 'month') return 'MM';
-      if (part.type === 'day') return 'DD';
-      // Escape locale punctuation/literals from Dayjs token interpretation.
-      return `[${part.value}]`;
-    })
-    .join('');
+  // These approved numeric orders must agree on SSR and reduced-ICU browsers.
+  // Inferring them from Intl silently gives US order for unsupported lo/km/my.
+  const bundle = bundleOf(locale);
+  if (bundle === 'zh') return 'YYYY[/]MM[/]DD';
+  if (bundle === 'fil') return 'MM[/]DD[/]YYYY';
+  return 'DD[/]MM[/]YYYY';
 }
 
 /** A date-only picker value represents the Vietnam calendar day, not the browser's UTC day. */

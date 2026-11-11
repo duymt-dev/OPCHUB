@@ -1090,6 +1090,16 @@ Observed native sidebar badge test readiness race: initial count snapshot ran be
 
 ### Lao complete raw catalog checks
 
+Reduced-ICU follow-up: keep picker display patterns deterministic for the existing twelve approved locale profiles, not inferred from optional browser ICU coverage. This fixes numeric picker order only, not general Intl date/number/month-name support. No dependency added: the inspected FormatJS package would require separate lifecycle/data/payload design; no polyfill or global Intl replacement is introduced here. Canonical YYYY-MM-DD URL/API values and Vietnam-calendar preset behavior remain unchanged. The full reduced-ICU formatter defect remains open until separately fixed and verified.
+
+| Operation | File | Scope |
+|---|---|---|
+| create | `apps/admin/src/i18n/date-picker-format.spec.ts` | Fixed twelve-profile patterns with Intl unavailable/unsupported, invalid-cookie fallback; no locale discovery. |
+| create | `e2e/behavior/admin-i18n-picker.spec.ts` | Actual numeric picker order across ten currently translated selector identities, leap/year ranges, real locale switches and canonical URL/API range invariants; not missing Khmer/Myanmar catalog acceptance. |
+| create | `coding-packs/reports/evidence/v46-824/picker-msw.log` | Same picker browser assertions in MSW, no DB access. |
+| create | `coding-packs/reports/evidence/v46-824/picker-native.log` | Same assertions against approved isolated native API, no reset/seed/SQL/original service changes. |
+| create | `coding-packs/reports/evidence/v46-824/picker-unit.log` | Actual numeric picker regression and focused existing formatter/preset tests, including retained red diagnostic. |
+
 | Operation | File | Scope |
 |---|---|---|
 | create | `apps/admin/src/i18n/tests/lao-catalog.spec.ts` | Explicit25-file raw Lao shape, ICU, prose/script, canonical examples, reviewed context and every glyph; not final ten-bundle gate. |
