@@ -1,0 +1,156 @@
+{
+  "title": "OPC 项目",
+  "sub": "管理及发布会员项目",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "heading": "项目审核",
+  "headingSub": "会员提交的项目须经审核后才会公开显示",
+  "viewLabel": "显示模式",
+  "viewGrid": "网格视图",
+  "viewList": "列表视图",
+  "tabsLabel": "项目状态",
+  "tabs": {
+    "pending": "待审核",
+    "live": "展示中",
+    "hidden": "已隐藏",
+    "changes": "需修改",
+    "rejected": "已拒绝",
+    "draft": "草稿"
+  },
+  "status": {
+    "pending_review": "待审核",
+    "published": "展示中",
+    "hidden": "已隐藏",
+    "needs_changes": "需修改",
+    "rejected": "已拒绝",
+    "draft": "草稿"
+  },
+  "act": {
+    "review": "查看与审核",
+    "detail": "详情",
+    "view": "查看",
+    "delete": "删除"
+  },
+  "featuredMark": "已设为精选",
+  "revision": "修订版本",
+  "updated": "{owner} · 更新于 {date}",
+  "emptyPending": "没有待审核项目",
+  "empty": "此部分暂无项目。",
+  "loadError": "无法加载项目列表",
+  "retry": "重试",
+  "col": {
+    "project": "项目",
+    "category": "领域",
+    "owner": "项目负责人",
+    "date": "提交日期",
+    "status": "状态"
+  },
+  "selectAll": "选择本页全部项目",
+  "selectRow": "选择 {name}",
+  "bulk": {
+    "label": "项目批量操作",
+    "selected": "已选择",
+    "unit": "项",
+    "publish": "审核并发布",
+    "hide": "隐藏",
+    "delete": "删除",
+    "clear": "清除选择"
+  },
+  "pager": {
+    "unit": "个项目",
+    "prev": "上一页",
+    "next": "下一页",
+    "pageSize": "每页项目数"
+  },
+  "drawer": {
+    "title": "查看与审核项目",
+    "close": "关闭",
+    "detail": "详细描述",
+    "prevNote": "上次审核备注：",
+    "feature": "设为本周精选项目",
+    "featureHint": "显示在探索项目页面顶部 · 仅适用于已发布项目",
+    "feedback": "给发布者的反馈",
+    "reasonLabel": "原因",
+    "reasonPlaceholder": "原因（要求修改或拒绝时）",
+    "notePlaceholder": "给项目所有者的留言：需修改内容、拒绝原因等…",
+    "noteLabel": "给项目所有者的留言",
+    "reject": "拒绝",
+    "changes": "要求修改",
+    "approve": "审核并发布",
+    "hide": "隐藏项目",
+    "republish": "重新发布"
+  },
+  "info": {
+    "owner": "发布者",
+    "country": "国家",
+    "category": "领域",
+    "stage": "阶段",
+    "website": "网站",
+    "testUrl": "测试链接",
+    "repo": "源代码",
+    "visibility": "可见范围",
+    "funding": "融资",
+    "team": "团队",
+    "groups": "分享至群组",
+    "date": "提交日期"
+  },
+  "stage": {
+    "idea": "创意",
+    "developing": "开发中",
+    "mvp": "MVP",
+    "growth": "增长期",
+    "launched": "已上线"
+  },
+  "val": {
+    "none": "—",
+    "noRepo": "未分享",
+    "repoPublic": "公开",
+    "repoPrivate": "私有",
+    "visPublic": "公开",
+    "visPrivate": "私密",
+    "noFunding": "无",
+    "funding": "{amount} 换取 {equity}% 股权"
+  },
+  "confirm": {
+    "cancel": "取消",
+    "deleteTitle": "删除项目？",
+    "deleteOne": "项目 {name} 及其反馈将被永久删除。此操作会记入日志。",
+    "deleteMany": "将永久删除 {count} 个项目及其反馈。此操作会记入日志。",
+    "delete": "删除",
+    "hideTitle": "隐藏项目？",
+    "hideOne": "{name} 将不再公开显示。项目所有者将收到通知。",
+    "hideMany": "将在探索页面隐藏 {count} 个已发布项目。",
+    "hide": "隐藏",
+    "rejectTitle": "拒绝项目？",
+    "rejectOne": "{name} 将被拒绝，原因：{reason}。项目所有者将收到通知。",
+    "reject": "拒绝"
+  },
+  "toast": {
+    "approved": "已审核并发布 · {name}",
+    "changes": "已要求修改 · {name}",
+    "rejected": "已拒绝 · {name}",
+    "hidden": "已隐藏 · {name}",
+    "deleted": "项目 {name} 已删除",
+    "published": "已发布项目：{count}",
+    "hiddenMany": "已隐藏项目：{count}",
+    "deletedMany": "已删除项目：{count}",
+    "skipped": "{text} · 已跳过无效项目：{count}",
+    "needNote": "请输入修改原因或留言",
+    "needReason": "请选择拒绝原因",
+    "featured": "已将 {name} 设为本周精选项目",
+    "unfeatured": "已取消精选",
+    "featureLiveOnly": "仅已发布项目可设为精选",
+    "failed": "操作失败，请重试"
+  },
+  "fund": {
+    "status": {
+      "pending_payment": "融资 · 等待付款",
+      "pending_review": "融资 · 等待审核",
+      "active": "融资中",
+      "rejected": "融资 · 已拒绝"
+    },
+    "approve": "批准融资",
+    "reject": "拒绝",
+    "approved": "融资已批准 · 已记录 10% 推广佣金供参考（如有推荐人）",
+    "rejected": "融资套餐已拒绝"
+  }
+}

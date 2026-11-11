@@ -782,3 +782,15 @@ Sequential Admin-only presentation work. Existing six font/OFL assets, font-conf
 | create | `coding-packs/reports/evidence/v46-824/fonts.log` | Actual font generation/glyph/hash/size evidence, not browser glyph acceptance. |
 | create | `e2e/audit/admin-i18n-fonts.spec.ts` | Same MSW/off font-only browser assertions:12 choices,1440/390, actual custom fonts/no platform fallback, native-name menu subset and selected-script network isolation. Does not count as translated catalog acceptance. |
 | create | `e2e/audit/playwright.admin-fonts.config.ts` | Read-only auth-page font audit using isolated configured ports/build outputs; no API fixture/DB seed/reset. |
+
+## Execute extension - complete Simplified Chinese catalog (11/11/2026)
+
+All25 zh catalog paths are already explicitly declared. Reuse Portal translations only for unambiguous exact Vietnamese source matches, translate remaining Admin prose separately, preserve canonical data/examples and ICU contracts. This is one more complete raw bundle, not the final10-bundle gate. No runtime Portal import or translation service. Regenerate the existing SC subset/receipt and extend glyph coverage after adding the catalog.
+
+| Action | Exact path | Responsibility |
+|---|---|---|
+| create | `apps/admin/src/i18n/tests/chinese-catalog.spec.ts` | Fixed25-file Chinese raw-contract/ICU/copy/NFC checks before fallback; missing bundle/file fails. Other seven absent targets remain explicitly incomplete. |
+| create | `coding-packs/reports/evidence/v46-824/zh-auth-msw-1440.png` | Unmasked actual Chinese login screen, MSW desktop; not Profile or Dashboard evidence. |
+| create | `coding-packs/reports/evidence/v46-824/zh-auth-msw-390.png` | Unmasked actual Chinese login screen, MSW mobile. |
+| create | `coding-packs/reports/evidence/v46-824/zh-auth-server-1440.png` | Same Chinese login assertions/image on mocking-off desktop; no API/DB acceptance claim. |
+| create | `coding-packs/reports/evidence/v46-824/zh-auth-server-390.png` | Same Chinese login assertions/image on mocking-off mobile. |

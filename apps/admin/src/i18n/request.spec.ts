@@ -1,6 +1,7 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest';
 import requestConfig from './request';
 import { messages } from './messages';
+import { logger } from '@/lib/logger';
 
 const mocks = vi.hoisted(() => ({ cookie: undefined as string | undefined }));
 vi.mock('next/headers', () => ({
@@ -13,6 +14,7 @@ vi.mock('next-intl/server', () => ({ getRequestConfig: (create: unknown) => crea
 vi.mock('@/lib/logger', () => ({ logger: { warn: vi.fn(), error: vi.fn() } }));
 
 beforeEach(() => {
+  vi.clearAllMocks();
   mocks.cookie = undefined;
 });
 const config = () => requestConfig({ requestLocale: Promise.resolve(undefined) });
@@ -41,7 +43,41 @@ describe('D-141 AC824-01/04 request-scoped messages, no authOverrides', () => {
       common: { adminProfile: { title: 'My profile' } },
       overview: { title: 'Overview' },
       meta: { profile: 'My profile' },
+      settings: {
+        general: { heading: 'Platform details' },
+        roles: { heading: 'Roles & Permissions' },
+        mail: { heading: 'Welcome email' },
+        log: { heading: 'Administrator activity log' },
+        price: { heading: 'Pricing configuration' },
+        ai: { heading: 'AI providers' },
+      },
     });
     expect(messages.auth.login.submit).toBe('Đăng nhập');
+    expect(logger.warn).not.toHaveBeenCalled();
+  });
+
+  it('D-141 AC824-07 loads actual Chinese domains and all six settings parts without changing source', async () => {
+    const read = async (bundle: string, file: string): Promise<unknown> =>
+      import(`../../messages/${bundle}/${file}.json`);
+    expect(await read('zh', 'auth')).toMatchObject({ default: { login: { submit: '登录' } } });
+    mocks.cookie = 'zh';
+    const result = await config();
+    expect(result.locale).toBe('zh');
+    expect(result.messages).toMatchObject({
+      auth: { login: { submit: '登录' } },
+      common: { adminProfile: { title: '个人资料' } },
+      overview: { title: '概览' },
+      reports: { title: '报表' },
+      settings: {
+        general: { heading: '平台信息' },
+        roles: { heading: '角色与权限' },
+        mail: { heading: '欢迎邮件' },
+        log: { heading: '管理员操作日志' },
+        price: { heading: '价格设置' },
+        ai: { heading: 'AI 提供商' },
+      },
+    });
+    expect(messages.auth.login.submit).toBe('Đăng nhập');
+    expect(logger.warn).not.toHaveBeenCalled();
   });
 });

@@ -17,6 +17,8 @@ export function overlayMessages<T extends MessageNode>(
   key = '',
 ): T {
   if (typeof source === 'string') {
+    // Preserve the intentional blank actions header without reporting a false fallback.
+    if (source === '' && translated === '') return source;
     if (typeof translated === 'string' && translated.trim()) return translated as T;
     onFallback?.(
       key,

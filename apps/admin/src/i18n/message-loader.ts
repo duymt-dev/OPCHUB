@@ -9,7 +9,12 @@ import type { MessageFallback } from './types';
 export type CatalogReader = (bundle: Bundle, file: string) => Promise<unknown>;
 
 const readCatalog: CatalogReader = async (bundle, file) => {
-  const imported: unknown = await import(`../../messages/${bundle}/${file}.json`);
+  // Keep each variable to one path segment. Bundler globs do not reliably match
+  // a slash inside `file`; otherwise all six settings parts silently fall back.
+  const part = SETTINGS_PARTS.find((name) => file === `settings/${name}`);
+  const imported: unknown = part
+    ? await import(`../../messages/${bundle}/settings/${part}.json`)
+    : await import(`../../messages/${bundle}/${file}.json`);
   return imported && typeof imported === 'object' && 'default' in imported
     ? imported.default
     : imported;

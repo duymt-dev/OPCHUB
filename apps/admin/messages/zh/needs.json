@@ -1,0 +1,70 @@
+{
+  "title": "本地需求",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "kpi": {
+    "total": "需求总数",
+    "open": "进行中",
+    "closed": "已关闭",
+    "hidden": "已由管理员隐藏"
+  },
+  "search": "搜索需求、店铺或省份...",
+  "filtersLabel": "按需求状态筛选",
+  "filter": {
+    "all": "全部",
+    "open": "进行中",
+    "closed": "已关闭",
+    "hidden": "已隐藏"
+  },
+  "note": "会员发布的需求立即显示；管理员仅在违规时将其隐藏。",
+  "type": {
+    "buy": "求购",
+    "sell": "寻找销路",
+    "partner": "寻找合作伙伴",
+    "service": "需要服务",
+    "solution": "需要解决方案",
+    "staff": "需要人员",
+    "space": "需要场地 / 仓库",
+    "capital": "需要资金",
+    "other": "其他需求"
+  },
+  "status": {
+    "open": "进行中",
+    "closed": "已关闭",
+    "hidden": "已由管理员隐藏"
+  },
+  "table": {
+    "label": "需求列表",
+    "all": "选择本页全部项目",
+    "need": "需求",
+    "type": "类型",
+    "store": "店铺",
+    "area": "地区",
+    "date": "发布日期",
+    "status": "状态",
+    "actions": "操作",
+    "hide": "隐藏",
+    "show": "显示"
+  },
+  "bulk": {
+    "label": "批量操作",
+    "selected": "已选择需求：{n}",
+    "show": "显示",
+    "hide": "隐藏",
+    "clear": "清除选择"
+  },
+  "pager": {
+    "text": "第 {page}/{pages} 页 · 需求：{total}",
+    "prev": "上一页",
+    "next": "下一页",
+    "prevBtn": "‹ 上一页",
+    "nextBtn": "下一页 ›"
+  },
+  "toast": {
+    "hidden": "已隐藏需求：{n}",
+    "shown": "已显示需求：{n}",
+    "failed": "无法执行此操作，请重试"
+  },
+  "empty": "没有匹配的需求。",
+  "error": "无法加载需求列表",
+  "retry": "重试"
+}

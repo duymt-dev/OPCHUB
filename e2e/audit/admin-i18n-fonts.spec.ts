@@ -1,7 +1,11 @@
 import { expect, test } from '@playwright/test';
 import type { CDPSession } from '@playwright/test';
+import { resolve } from 'node:path';
+import { mkdirSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { languageOptions } from '@opchub/shared/fixtures';
 import { ADMIN_URL } from '../urls';
+import { env } from '../env';
 
 const SCRIPTS: Record<string, string> = {
   zh: 'SC',
@@ -82,6 +86,19 @@ for (const option of languageOptions) {
       await page.keyboard.press('Escape');
       await expect(page.getByRole('option')).toHaveCount(0);
       expect(faults).toEqual([]);
+      if (option.code === 'zh') {
+        await expect(page.getByRole('heading', { name: '欢迎回来！', exact: true })).toBeVisible();
+        await expect(page).toHaveTitle(/^登录/);
+        const directory = fileURLToPath(
+          new URL('../../coding-packs/reports/evidence/v46-824/', import.meta.url),
+        );
+        mkdirSync(directory, { recursive: true });
+        await page.screenshot({
+          path: resolve(directory, `zh-auth-${env.E2E_TARGET}-${width}.png`),
+          fullPage: true,
+          animations: 'disabled',
+        });
+      }
       await test.info().attach('font-proof', {
         body: JSON.stringify({ initial, all: [...downloads], current, menu }),
         contentType: 'application/json',

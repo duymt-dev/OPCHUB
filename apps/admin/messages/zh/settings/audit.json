@@ -1,0 +1,42 @@
+{
+  "log": {
+    "filterTag": "类别",
+    "filterActor": "操作人",
+    "filterRange": "日期范围",
+    "from": "开始日期",
+    "to": "结束日期",
+    "system": "系统",
+    "clearFilters": "清除筛选",
+    "retryActors": "重新加载操作人",
+    "emptyFiltered": "没有匹配的操作",
+    "heading": "管理员操作日志",
+    "headingSub": "自动记录最近 90 天内全部管理员操作，包括锁定、审核、付款及设置变更等。",
+    "empty": "暂无操作记录",
+    "tag": {
+      "affiliate": "推广员",
+      "sso": "SSO",
+      "member": "会员",
+      "permission": "权限分配",
+      "project": "项目",
+      "language": "语言",
+      "moderation": "审核",
+      "settings": "设置",
+      "content": "内容",
+      "report": "报表",
+      "pricing": "价格表"
+    },
+    "export": "导出 CSV",
+    "more": "查看更多",
+    "loading": "正在加载操作日志…",
+    "failed": "无法加载操作日志或导出 CSV",
+    "retry": "重试",
+    "exported": "已导出 {n} 行 — nhat-ky-hoat-dong.csv"
+  },
+  "time": {
+    "now": "刚刚",
+    "minutes": "{n} 分钟前",
+    "hours": "{n} 小时前",
+    "yesterday": "昨天",
+    "days": "{n} 天前"
+  }
+}

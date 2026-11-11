@@ -1,0 +1,179 @@
+{
+  "title": "会员",
+  "sub": "管理会员账户、注册角色及群组",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "card": {
+    "title": "会员",
+    "count": "· 账户：{n}",
+    "search": "按姓名、邮箱搜索...",
+    "grid": "网格视图",
+    "list": "列表视图",
+    "types": "账户类型",
+    "typeAll": "全部",
+    "typeBiz": "企业",
+    "typePer": "个人"
+  },
+  "col": {
+    "member": "会员",
+    "type": "账户类型",
+    "groups": "已加入群组",
+    "role": "注册时的角色",
+    "date": "加入日期",
+    "status": "状态",
+    "selectAll": "选择本页全部项目",
+    "select": "选择 {name}",
+    "actions": "{name} 的操作"
+  },
+  "type": {
+    "business": "企业",
+    "personal": "个人",
+    "businessLong": "企业 / 组织"
+  },
+  "role": {
+    "member": "会员",
+    "lecturer": "讲师",
+    "admin": "管理员"
+  },
+  "status": {
+    "active": "活跃",
+    "locked": "已锁定"
+  },
+  "grid": {
+    "joined": "加入时间：{date}",
+    "profile": "查看注册资料 →"
+  },
+  "menu": {
+    "title": "更改状态",
+    "active": "活跃",
+    "lock": "锁定账户",
+    "unlock": "解锁",
+    "assign": "分配至群组…",
+    "profile": "查看注册资料"
+  },
+  "bulk": {
+    "selected": "已选择",
+    "unit": "项",
+    "assign": "+ 分配至群组",
+    "lock": "锁定账户",
+    "unlock": "解锁",
+    "export": "导出 CSV",
+    "clear": "清除选择"
+  },
+  "assign": {
+    "titleOne": "将 {name} 分配至群组",
+    "titleMany": "分配至群组的会员：{n}",
+    "search": "按名称或省市搜索群组...",
+    "groupRole": "群组角色",
+    "already": "已是成员",
+    "none": "尚未选择群组",
+    "count": "已选择群组：{n}",
+    "cancel": "取消",
+    "save": "分配至群组",
+    "close": "关闭"
+  },
+  "drawer": {
+    "title": "注册资料",
+    "close": "关闭",
+    "biz": "企业信息",
+    "rep": "代表",
+    "per": "个人信息",
+    "groups": "注册时选择的群组",
+    "sys": "系统",
+    "taxCode": "税号",
+    "company": "企业名称",
+    "field": "行业领域",
+    "size": "规模",
+    "country": "注册国家",
+    "name": "姓名",
+    "position": "职务",
+    "phone": "电话号码",
+    "email": "电子邮箱",
+    "persona": "您的身份",
+    "registered": "注册日期",
+    "role": "注册时的角色",
+    "status": "状态",
+    "pending": "待验证",
+    "rejected": "验证已拒绝",
+    "reject": "拒绝",
+    "approve": "验证企业",
+    "rejectTitle": "拒绝企业资料？",
+    "rejectBody": "{company} 将不会获得“已验证”徽章。账户仍可正常使用（D-40）。",
+    "confirm": "拒绝",
+    "cancel": "取消"
+  },
+  "roleConfirm": {
+    "title": "更改系统权限？",
+    "body": "{name}：{from} → {to}。此变更将记录在操作日志中。",
+    "ok": "更改权限",
+    "cancel": "取消"
+  },
+  "lockConfirm": {
+    "title": "锁定账户？",
+    "body": "{who} 在解锁前将无法登录。此操作将记录在操作日志中。",
+    "many": "账户：{n}",
+    "ok": "锁定",
+    "cancel": "取消"
+  },
+  "pager": {
+    "unit": "位会员",
+    "prev": "上一页",
+    "next": "下一页",
+    "pageSize": "每页行数"
+  },
+  "toast": {
+    "locked": "已锁定 · {name}",
+    "unlocked": "已解锁 · {name}",
+    "activated": "已设为活跃 · {name}",
+    "bulkLocked": "已锁定账户：{n}",
+    "bulkUnlocked": "已解锁账户：{n}",
+    "exporting": "正在将 {n} 项导出为 CSV…",
+    "exported": "已导出会员：{n}",
+    "exportFailed": "导出失败：无法创建文件，请重试",
+    "exportTimeout": "导出失败：创建文件超时，请重试",
+    "role": "{name} 的角色已更新",
+    "assigned": "已将 {n} 位会员分配至 {g} 个群组 · 角色：{role}",
+    "pickGroup": "请至少选择 1 个群组",
+    "verified": "{name} 已验证",
+    "rejected": "已拒绝 {name} 的资料",
+    "failed": "操作未成功"
+  },
+  "filters": {
+    "all": "全部",
+    "results": "结果：{n}",
+    "clear": "清除筛选（{n}）",
+    "grp": "社区群组",
+    "role": {
+      "label": "注册时的角色",
+      "business": "企业",
+      "expert": "专家",
+      "lecturer": "讲师",
+      "engineer": "工程师",
+      "investor": "投资人",
+      "freelancer": "自由职业者",
+      "student": "学生"
+    },
+    "fee": {
+      "label": "会员费",
+      "paid": "已缴费",
+      "trial": "三个月免费试用",
+      "unpaid": "未缴费／已到期"
+    },
+    "st": {
+      "label": "状态",
+      "active": "活跃",
+      "locked": "已锁定"
+    },
+    "prof": {
+      "label": "资料",
+      "done": "已填写",
+      "inc": "未填写"
+    },
+    "day": {
+      "7": "最近 7 天",
+      "30": "过去 30 天",
+      "90": "过去 90 天",
+      "365": "过去 12 个月",
+      "label": "注册日期"
+    }
+  }
+}

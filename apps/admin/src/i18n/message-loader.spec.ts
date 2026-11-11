@@ -22,6 +22,13 @@ const readSourcePart = (file: string): unknown =>
   JSON.parse(readFileSync(join(__dirname, '../../messages/vi', `${file}.json`), 'utf8')) as unknown;
 
 describe('D-141 AC824-03 source partition and fallback', () => {
+  it('preserves an intentionally blank source/target header without a false fallback', () => {
+    const fallback = vi.fn();
+    expect(overlayMessages('', '', fallback)).toBe('');
+    expect(fallback).not.toHaveBeenCalled();
+    expect(overlayMessages('Required', '', fallback)).toBe('Required');
+    expect(fallback).toHaveBeenCalledWith('', 'empty');
+  });
   it.each(['auth', 'common', 'overview', 'meta', 'ui', 'botOptions'] as const)(
     'validates the actual staged English %s catalog before any fallback',
     (namespace) => {

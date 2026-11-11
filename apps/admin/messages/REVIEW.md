@@ -6,7 +6,7 @@
 - Native-speaker reviewed: **false for every target locale**, including custom AntD Filipino/Lao dictionaries.
 - AI-produced English now covers all25 physical catalogs /2660 source leaves, raw-contract tested against the complete explicit file list before fallback. This is catalog completeness, not a claim that all UI call sites or browser acceptance are complete.
 - Provenance: the earlier checkpoint reused464 unambiguous exact-text matches from Portal English catalogs. The remaining English was translated directly from the unchanged Vietnamese source. No Portal app import exists at runtime. No missing key is filled with Vietnamese/TODO stand-ins.
-- Other target bundles zh/id/th/ms/fil/km/lo/my: pending. Aliases en-SG and ms-BN share en/ms catalogs, not separate translations.
+- Simplified Chinese now covers25/25 physical files and2660/2660 leaves; raw-contract checked before fallback. Other target bundles id/th/ms/fil/km/lo/my: pending. Aliases en-SG and ms-BN share en/ms catalogs, not separate translations.
 - Confidence: English moderate pending owner review; Khmer/Lao/Myanmar require special native-speaker attention when their catalogs are produced. Human review is not fabricated and does not replace technical gates.
 - Self-hosted font assets, licenses and reproducible build provenance are recorded below. Full translated-screen/visual/performance acceptance is still pending; font contracts alone do not complete this TIP.
 
@@ -32,7 +32,7 @@
 
 - vi: 25/25 files, 2660/2660 source string leaves present.
 - en: 25/25 files, 2660/2660 source string leaves present;25 raw contract cases pass.
-- zh: 0/25 files, 0/2660 source string leaves present.
+- zh: 25/25 files, 2660/2660 source string leaves present; complete raw bundle, not full browser acceptance.
 - id: 0/25 files, 0/2660 source string leaves present.
 - th: 0/25 files, 0/2660 source string leaves present.
 - ms: 0/25 files, 0/2660 source string leaves present.
@@ -66,7 +66,7 @@ Pinned upstream Google Fonts commit `5bb28733cec313b63fbd415b574b5ae35c8aa8b8`. 
 | Self-hosted file              |   Bytes | Actual cmap entries |
 | ----------------------------- | ------: | ------------------: |
 | NotoSans-Regular.woff2        |   84076 |                1781 |
-| NotoSansSC-Regular.woff2      | 1080080 |                7652 |
+| NotoSansSC-Regular.woff2      | 1081440 |                7719 |
 | NotoSansThai-Regular.woff2    |   10636 |                 121 |
 | NotoSansKhmer-Regular.woff2   |   18740 |                 180 |
 | NotoSansLao-Regular.woff2     |   10820 |                 117 |
@@ -77,6 +77,27 @@ Pinned upstream Google Fonts commit `5bb28733cec313b63fbd415b574b5ae35c8aa8b8`. 
 - Latin is the primary face, with a single selected SC/Thai/Khmer/Lao/Myanmar fallback. CSS URLs are compiled into hashed/basePath-aware Next assets. Registering twelve faces for seven binaries does not download them all; the browser loads only referenced families. The selector alone uses a9.7KB merged font covering all twelve unchanged native names/countries, avoiding five full-script downloads merely to open the menu.
 - The Latin derivative adds only missing U+2000..27FF punctuation/arrows/checkmarks from licensed Noto Sans SC and preserves the original Latin line metrics. The selector derivative merges subsets of the six listed sources. Both are named OPCHUB, not the reserved name Source. All original copyright/OFL files are packaged byte-for-byte, including upstream whitespace.
 - SC includes the GB2312 common repertoire, script punctuation, selector glyphs and all glyphs from the actual Chinese catalog when available. Thai/Khmer/Lao/Myanmar include their Unicode blocks plus current catalog/selector glyphs. Re-run the tool and extend glyph assertions when the remaining catalogs are added. No claim of glyph completeness for absent catalogs.
-- Current unit glyph scope is the present vi/en catalogs plus twelve native selector names. Platform emoji, arbitrary authored text and monospace code fields are not rewritten into translations. Font-only browser audits use CDP to verify actual custom fonts rather than relying on installed fonts; this does not replace full-screen translated screenshots, parity approval or performance measurement. The Admin auth root has a zero-box marker to override its shared Be Vietnam Pro/system stack without modifying Portal/shared UI.
+- Current unit glyph scope is the present vi/en/zh catalogs plus twelve native selector names. Platform emoji, arbitrary authored text and monospace code fields are not rewritten into translations. Font-only browser audits use CDP to verify actual custom fonts rather than relying on installed fonts; this does not replace full-screen translated screenshots, parity approval or performance measurement. The Admin auth root has a zero-box marker to override its shared Be Vietnam Pro/system stack without modifying Portal/shared UI.
 
 - Menu CSS splits the same binary into six Unicode-range faces with the original per-script ascent/descent metrics, so Burmese line metrics do not enlarge every Latin country label. A bounded, scrollable Admin-only popover keeps all choices reachable on short/mobile viewports.
+
+## Simplified Chinese terminology and review (AI-produced, native-reviewed=false)
+
+Provenance:692 current leaves retain unambiguous exact-Vietnamese-source matches from Portal Chinese;1962 leaves are Admin-specific translations/context corrections, and6 canonical examples remain byte-identical. No runtime Portal import. All2660 source leaves are present. Reuse was reviewed in Admin context: financial reports are not abuse reports; email body/activity content are not bank-transfer notes; an open need is not a pending moderation item.37 path-specific corrections include these distinctions, Chinese GUI badges/repository visibility and a representative without an added legal-representative claim. Source Vietnamese, enum/payload values, real people/companies/custom roles, bank references, CSV and actual emails remain unchanged. Legacy unused policy prose is catalog-compatible, not new payout behavior.
+
+| Vietnamese / concept | Simplified Chinese  | Boundary                                          |
+| -------------------- | ------------------- | ------------------------------------------------- |
+| Thành viên           | 会员                | Member account, not administrator                 |
+| Phí thành viên       | 会员费              | VND, no exchange conversion                       |
+| Nhóm cộng đồng       | 社群群组 / 社区群组 | Group names remain raw                            |
+| Affiliate            | 推广员              | Reference commission, no direct Media Soft payout |
+| Giám đốc Vùng        | 区域总监            | Only direct regional share recipient              |
+| Hoa hồng             | 佣金                | Existing financial rules retained                 |
+| Báo cáo B1/B2/B3     | 报表                | Distinct from 举报, a member abuse report         |
+| Nội dung email       | 正文                | Distinct from 转账附言                            |
+| Kiểm duyệt           | 审核                | Same permission/action keys                       |
+| Persona              | 虚拟角色            | Persona bio/name and API values remain raw        |
+| Dự phòng             | 备用                | Existing provider fallback                        |
+| Nhu cầu đang mở      | 开放需求            | Not a pending moderation queue                    |
+
+Chinese confidence: moderate; terminology and ICU reviewed by the coding agent, not a native speaker. Human review remains false. Current font coverage includes actual vi/en/zh catalogs and12 native selector names; other seven target catalogs still need translations and glyph checks. The SC subset is regenerated from actual Chinese text in addition to its GB2312 repertoire.
