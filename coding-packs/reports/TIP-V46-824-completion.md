@@ -2,7 +2,60 @@
 
 **STATUS: IN PROGRESS / PARTIAL - goal remains the complete TIP, NOT READY TO MERGE.**
 
-## Latest checkpoint - source55116347
+## Latest checkpoint - source ec97a874
+
+- Date:2026-11-11. Source **ec97a874** committed and pushed to `feature/TIP-V46-824-admin-i18n`. Full original TIP remains the goal; **not DONE, not ready to merge**, no owner-input blocker or scope reduction.
+- Completed all25 English physical catalogs: **2608/2608 raw source leaves**, up from879. Fixed explicit raw-file tests check exact keys/types, ICU arguments/tags/selectors, NFC, nonempty and copied-Vietnamese exceptions before fallback. All25 cases pass. Source vi remains unchanged, including524 settings leaves and their baseline integrity hash. Six exact proper-name/geographic/canonical exceptions and the single legacy blank header are documented in REVIEW.
+- Preserved content boundaries exposed by broad translation: event default descriptions sent to the server stay Vietnamese; group-export CSV/Excel headers, enum cells, BOM/escaping/bytes and raw names stay unchanged; welcome-email preview keeps actual Vietnamese email text while surrounding Admin controls can translate. New focused regressions:4 event cases,3 export cases and1 email case. No API/DB/schema/seed/business changes.
+- English is AI-produced, **native-reviewed=false**. All eight other target bundles remain absent; presence50/250 and full English are **not** whole-TIP acceptance. Final fixed10-bundle production gate, hardcode/formatter/local-validation completion, fonts and browser/native evidence remain required.
+
+### Current verification for ec97a874
+
+| Check | Actual result |
+|---|---|
+| English raw catalog + content-boundary focused suite | **33 passed**,4 files;25 catalog +8 content cases |
+| pnpm lint | PASS,8 tasks /7 cached, Admin fresh |
+| pnpm typecheck | PASS,8 tasks /7 cached, Admin fresh |
+| pnpm test | **2426 passed +2 pre-existing skips**; Admin715 fresh, other5 task results cached: UI76, Portal476, shared757, server276, integrations126 |
+| pnpm depcheck | PASS, frontend/shared2694 modules8109 dependencies; server1260/5995 |
+| Admin production MSW build | PASS, `.next-msw-tip824`, Portal relay origin configured from the owned MSW port config |
+| Admin production native-mode build | PASS, `.next-server-tip824`, mocking off and isolated API proxy; **build only, not native API/browser acceptance** |
+| Browser/HTTP smoke for this source | NOT RUN; historical login SSR4/4 below belongs to55116347 |
+| Full i18n native/browser/visual/font/performance acceptance | NOT VERIFIED; remains required |
+
+Logs: [root gates](evidence/v46-824/quality-gates.log), [unit](evidence/v46-824/unit.log), [MSW build](evidence/v46-824/build-msw.log), [native-mode build](evidence/v46-824/build-native.log), [raw catalog audit](evidence/v46-824/catalog-audit.md). Logs were normalized to UTF-8/no ANSI/trailing spaces. The initial PowerShell wrapper incorrectly treated ordinary pnpm stderr as a terminating exception; it was corrected and all four root commands were rerun using real exit codes. An initial MSW build used the wrong port-property name; its output was superseded by the successful rebuild with `PORTAL_PORT`. No assertion was weakened. No original native service or PG5432 data was changed; build commands did not seed or exercise a database.
+
+### Current AC status (all16 still retained)
+
+| AC | Evidence / remaining work |
+|---|---|
+|01|Existing allowlist/alias/request units pass in current root run; full selector browser evidence remains.|
+|02|All25 English raw contracts pass; other8 bundles absent and final fixed10-bundle gate pending — overall FAIL.|
+|03|Source/hash/shape/fallback units pass; no vi source change.|
+|04|Metadata/auth implementation retained; no new all-locale browser proof.|
+|05|Provider draft unit retained; URL/query/session/paging browser tests pending.|
+|06|English catalog now complete, but remaining UI literals/call sites and all-route browser matrix pending.|
+|07|Other8 catalogs and required viewport images absent; not achieved.|
+|08|Existing formatter units plus exact export-byte regression pass; remaining per-domain/date-picker callers and browser evidence pending.|
+|09|Existing10 control-locale unit coverage retained; localized controls and fonts not browser-verified.|
+|10|Provider draft unit retained; local validation/upload errors and switch-with-form tests pending.|
+|11|Existing canonical projection tests plus event-content payload regressions pass; browser save-value assertions pending.|
+|12|New canonical CSV/Excel/email-preview regressions pass; translated-mode API/email/audit/notification/export browser negatives pending.|
+|13|Settings language wiring unchanged; independence browser proof pending.|
+|14|Both current build modes compile; identical MSW/native behavior suites NOT RUN.|
+|15|Unmasked1440/390, glyph/focus/hydration and vi parity evidence missing.|
+|16|Selected-bundle architecture retained; current JS/RSC/font/isolation/performance measurements missing.|
+
+### Next implementation work (same full goal)
+
+1. Finish remaining UI literals/shared label props, local validation/upload errors and per-domain display formatters, preserving canonical content/API/export contracts. Read-only direct-JSX AST inventory found28 candidates; it is not the final comprehensive source audit.
+2. Browser-smoke every English domain/tab/dialog, then complete zh/id/th/ms/fil/km/lo/my with glossaries and native-reviewed=false. Add mandatory fixed-bundle raw gate and full source-literal audit; never make missing directories pass through discovery/fallback.
+3. Licensed script-scoped fonts; identical MSW/native behavior and existing profile/overview/auth/Portal regressions, unmasked1440/390 evidence, vi parity, measured performance/isolation. Preserve original native5432 data/services.
+4. Close all16 ACs with actual evidence, clean/push and PR to dev for owner review. No automatic merge/main release.
+
+## Historical presentation integration checkpoint - source55116347
+
+The following checkpoint is historical, superseded by ec97a874 above. Shared log files now contain the latest runs; previous versions remain in Git ee41244b.
 
 - Date:2026-11-11. Branch: feature/TIP-V46-824-admin-i18n, baseline dev f7c1b2b8. Source checkpoint **55116347** is committed and pushed.
 - The full original scope and all16 ACs remain required. No smaller definition of DONE, no merge/release and no owner-input blocker.

@@ -2,6 +2,7 @@
 
 - Scope: Admin UI only; API errors, email, CSV and user content retain their original contract.
 - Source baseline: f7c1b2b8; current source has2608 string leaves in25 physical catalogs.
+- English completion checkpoint: ec97a874, 2026-11-11; all25 raw English catalogs verified, not whole-TIP completion.
 - Native-speaker reviewed: **false for every target locale**, including custom AntD Filipino/Lao dictionaries.
 - AI-produced English now covers all25 physical catalogs /2608 source leaves, raw-contract tested against the complete explicit file list before fallback. This is catalog completeness, not a claim that all UI call sites or browser acceptance are complete.
 - Provenance: the earlier checkpoint reused464 unambiguous exact-text matches from Portal English catalogs. The remaining English was translated directly from the unchanged Vietnamese source. No Portal app import exists at runtime. No missing key is filled with Vietnamese/TODO stand-ins.
