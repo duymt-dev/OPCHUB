@@ -4,7 +4,7 @@
 
 - **TIP-ID:** TIP-V46-824 · **Project:** OPCHUB · **Module:** Admin presentation/i18n.
 - **Priority:** P1 · **Estimated:** XL, khoảng 5–8 ngày công; hơn 22.000 chuỗi đích trước khi bổ sung nhãn còn thiếu. Không coi đây là việc chỉ dịch màn đăng nhập.
-- **Status:** TIP đã viết, **chưa implement**. Owner chốt bộ ngôn ngữ ngày 11/11/2026; lệnh execute riêng mới cho phép thi công.
+- **Status:** **IN PROGRESS / PARTIAL** — owner đã gọi execute ngày 11/11/2026. Checkpoint nền kỹ thuật đang triển khai; chưa có 9 catalog đích và chưa đạt nghiệm thu i18n. Không merge/release với trạng thái này.
 - **Baseline:** `dev` / `origin/dev` tại `f7c1b2b8`, đã có PR #116 (823) và #118 (822).
 - **Branch:** `feature/TIP-V46-824-admin-i18n`, PR vào `dev`; không merge tự động, không release `main`.
 - **Depends on:** V2-117 (mẫu Portal, đã có), V46-822 và V46-823 (đã merge). Không sửa nghiệp vụ hai TIP này.
@@ -85,6 +85,8 @@ Hoàn thiện i18n cho toàn bộ giao diện Admin, từ auth tới các màn n
 21. Không rỗng, không copy toàn bộ vi sang đích, không để `[TODO]`, bản dịch Latin giả cho Khmer/Lao/Myanmar. Allowlist chuỗi giống vi phải cụ thể `namespace.key + reason`, chỉ thuật ngữ/tên riêng/ký hiệu hợp lệ. Kiểm Unicode NFC, tránh mojibake và escape biến/thẻ sai. Khmer/Lao/Myanmar ghi độ tin cậy và chờ người bản xứ, không gắn nhãn đã được họ duyệt.
 
 Checker dùng ICU AST để đối chiếu argument name/type, select/plural và rich-text tags; regex `{...}` đơn giản không đủ. Duyệt danh sách bundle/namespace **cố định kỳ vọng**, không lấy danh sách thư mục có sẵn rồi bỏ qua phần thiếu. Test âm dùng fixture/temp catalog cô lập; không xóa catalog production thật để chạy test. Source audit dùng AST/literal context để tìm text UI (kể cả chữ không dấu/English và aria/title/placeholder), không chỉ grep dấu tiếng Việt; ngoại lệ lưu theo file + literal + lý do, cấm allowlist nguyên feature. Audit helper/checker tách file ≤400 dòng, không dồn vào test suite hàng nghìn dòng.
+
+Execute inventory clarification (11/11/2026): baseline có `settings.renewal.actions = ""`, là header cột thao tác cố ý để trống. Giữ nguyên vi/hash và cho phép **riêng key này**, chỉ khi cả source/target đều chuỗi rỗng và có lý do allowlist cụ thể. Không cho phép biến source có chữ thành rỗng hoặc miễn kiểm cả namespace; test âm phải chặn các trường hợp đó.
 
 ### 4. UI, labels và validation
 

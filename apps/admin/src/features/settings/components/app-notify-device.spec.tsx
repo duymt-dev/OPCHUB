@@ -1,7 +1,8 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { NextIntlClientProvider } from 'next-intl';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import settings from '../../../../messages/vi/settings.json';
+import { messages as sourceMessages } from '@/i18n/messages';
+const settings = sourceMessages.settings;
 import { AppNotifyDevice } from './app-notify-device';
 
 const device = vi.hoisted(() => ({ state: 'off', enabled: true, toggle: vi.fn() }));

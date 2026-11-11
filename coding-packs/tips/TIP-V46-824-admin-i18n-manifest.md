@@ -654,4 +654,18 @@ Batch = one TIP824. Pairwise conflicts inside the batch = zero. Overlaps with hi
 
 ## Counts and verification
 
-584 explicit paths: 346 create, 237 modify, 1 delete. Modify/delete paths were checked against the working baseline; create paths are planned and absent except the planning documents being created in this phase. No app source file is changed by generating this manifest.
+591 explicit paths: 347 create, 243 modify, 1 delete. Modify/delete paths were checked against the working baseline; create paths are planned and absent except the planning documents being created in this phase. No app source file is changed by generating this manifest.
+
+## Execute inventory additions (2026-11-11, same serial lane)
+
+The split removes the old settings JSON import used by six existing tests; redirect fixtures to the public source-messages facade, keeping every assertion. ICU structural comparison is separated from tree traversal. These paths do not overlap any active TIP.
+
+| Action | Exact path | Responsibility |
+|---|---|---|
+| modify | `apps/admin/src/features/settings/components/renewal-tab.spec.tsx` | Redirect obsolete settings fixture import; preserve assertions. |
+| modify | `apps/admin/src/features/settings/components/bank-tab.spec.tsx` | Redirect obsolete settings fixture import; preserve assertions. |
+| modify | `apps/admin/src/features/settings/components/audit-log-tab.spec.tsx` | Redirect obsolete settings fixture import; preserve assertions. |
+| modify | `apps/admin/src/features/settings/components/app-notify-tab.spec.tsx` | Redirect obsolete settings fixture import; preserve assertions. |
+| modify | `apps/admin/src/features/settings/components/app-notify-device.spec.tsx` | Redirect obsolete settings fixture import; preserve assertions. |
+| modify | `apps/admin/src/features/settings/components/ai/ai-tab.spec.tsx` | Redirect obsolete settings fixture import; preserve assertions. |
+| create | `apps/admin/src/i18n/tests/icu-contract.ts` | Public IntlMessageFormat AST contract comparison, tests only. |
