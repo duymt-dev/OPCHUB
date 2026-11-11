@@ -1,43 +1,45 @@
-Tested working tree committed as77484e3f; TIP824 current auth local-error source working tree; identical MSW/off assertions, public pages only. No seeds/database fixture. Each case asserts zero API mutations, live vi/en errors, unchanged drafts/query/hash/cookie, actual title, no horizontal overflow and no client errors. This is NOT full native API/2FA/all-language acceptance.
+Tested source committed ase6c241bb; source blobs unchanged by normal pre-commit hooks.
+TIP824 current auth local-error source working tree; identical MSW/off assertions, public pages only. No seeds/database fixture. Each case asserts zero API mutations, live vi/en errors, unchanged drafts/query/hash/cookie, actual title, no horizontal overflow and no client errors. This is NOT full native API/2FA/all-language acceptance.
 
 === msw ===
 Actual msw public-auth local-error audit; no seed/database fixture, expect zero API mutations.
-[WebServer] (node:3720) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (node:11456) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
 
 Running 8 tests using 1 worker
 
-(node:18528) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:31984) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 (Use `node --trace-warnings ...` to show where the warning was created)
-  ok 1 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error login 1440; not full native API acceptance (2.0s)
-  ok 2 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error forgot 1440; not full native API acceptance (1.3s)
-  ok 3 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error reset 1440; not full native API acceptance (1.5s)
-  ok 4 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error missing 1440; not full native API acceptance (1.4s)
-  ok 5 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error login 390; not full native API acceptance (1.5s)
-  ok 6 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error forgot 390; not full native API acceptance (1.4s)
-  ok 7 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error reset 390; not full native API acceptance (2.0s)
-  ok 8 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error missing 390; not full native API acceptance (1.5s)
+  ok 1 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error login 1440; not full native API acceptance (4.9s)
+  ok 2 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error forgot 1440; not full native API acceptance (4.6s)
+  ok 3 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error reset 1440; not full native API acceptance (6.6s)
+  ok 4 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error missing 1440; not full native API acceptance (5.0s)
+  ok 5 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error login 390; not full native API acceptance (1.7s)
+  ok 6 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error forgot 390; not full native API acceptance (3.7s)
+  ok 7 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error reset 390; not full native API acceptance (4.0s)
+  ok 8 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error missing 390; not full native API acceptance (2.2s)
 
-  8 passed (52.0s)
+  8 passed (1.0m)
+[WebServer] Error:
 EXIT 0
 
 === server ===
 Actual server public-auth local-error audit; no seed/database fixture, expect zero API mutations.
-[WebServer] (node:17684) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (node:12032) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
 
 Running 8 tests using 1 worker
 
-(node:27972) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:15548) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 (Use `node --trace-warnings ...` to show where the warning was created)
-  ok 1 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error login 1440; not full native API acceptance (2.3s)
-  ok 2 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error forgot 1440; not full native API acceptance (2.3s)
-  ok 3 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error reset 1440; not full native API acceptance (1.7s)
-  ok 4 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error missing 1440; not full native API acceptance (1.2s)
-  ok 5 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error login 390; not full native API acceptance (1.6s)
-  ok 6 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error forgot 390; not full native API acceptance (1.3s)
-  ok 7 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error reset 390; not full native API acceptance (1.3s)
-  ok 8 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error missing 390; not full native API acceptance (1.2s)
+  ok 1 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error login 1440; not full native API acceptance (2.4s)
+  ok 2 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error forgot 1440; not full native API acceptance (1.4s)
+  ok 3 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error reset 1440; not full native API acceptance (1.9s)
+  ok 4 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error missing 1440; not full native API acceptance (2.2s)
+  ok 5 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error login 390; not full native API acceptance (2.1s)
+  ok 6 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error forgot 390; not full native API acceptance (3.4s)
+  ok 7 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error reset 390; not full native API acceptance (3.0s)
+  ok 8 audit\admin-local-errors.spec.ts:42:5 › D-141 AC824-04/10 public local error missing 390; not full native API acceptance (1.7s)
 
-  8 passed (29.7s)
+  8 passed (47.6s)
 EXIT 0
