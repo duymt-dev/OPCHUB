@@ -5,6 +5,8 @@ import { env } from '../env';
 import { test, expect, openLocalized } from './admin-i18n/fixtures';
 import { englishChrome } from './admin-i18n/chrome';
 import { assertSidebarLabels } from './admin-i18n/sidebar';
+import { adminOverviewSchema } from '@opchub/shared/api-domains';
+import myOverview from '../../apps/admin/messages/my/overview.json' with { type: 'json' };
 
 const evidence = fileURLToPath(
   new URL('../../coding-packs/reports/evidence/v46-824/', import.meta.url),
@@ -40,7 +42,48 @@ for (const screen of SCREENS)
       guard,
     }) => {
       await page.setViewportSize({ width, height: 1000 });
+      const response =
+        screen.id === 'overview'
+          ? page.waitForResponse(
+              (r) => new URL(r.url()).pathname.endsWith('/admin/overview') && r.ok(),
+            )
+          : undefined;
       await openLocalized(page, screen.path, 'my');
+      if (response) {
+        const raw = (await (await response).json()) as unknown;
+        const { flow } = adminOverviewSchema.parse(raw);
+        // Node full ICU oracle, not the app formatter or browser's reduced ICU.
+        const n = (value: number) => new Intl.NumberFormat('my-MM').format(value);
+        const region = page.locator('section[aria-labelledby="system-flow-title"]');
+        const expected = [
+          ['/fees', `${n(flow.paidMembers)} / ${n(flow.members)}`],
+          ['/stores', n(flow.stores.published)],
+          ['/needs', n(flow.needs.open)],
+          ['/projects?tab=pending', n(flow.projects.pending)],
+          ['/groups', n(flow.groups)],
+        ];
+        for (const [href, value] of expected)
+          await expect(
+            region.locator(`a[href="${href}"]`).getByText(value!, { exact: true }),
+          ).toBeVisible();
+        const notes = [
+          [
+            '/stores',
+            myOverview.flow.stores.sub
+              .replace('{hidden}', n(flow.stores.hidden))
+              .replace('{draft}', n(flow.stores.draft)),
+          ],
+          ['/needs', myOverview.flow.needs.sub.replace('{closed}', n(flow.needs.closed))],
+          [
+            '/projects?tab=pending',
+            myOverview.flow.projects.sub.replace('{published}', n(flow.projects.published)),
+          ],
+        ];
+        for (const [href, value] of notes)
+          await expect(
+            region.locator(`a[href="${href}"]`).getByText(value!, { exact: true }),
+          ).toBeVisible();
+      }
       await expect(page).toHaveTitle(`${screen.title} · OPC Hub Admin`);
       await expect(
         page.getByRole('heading', { name: screen.heading, level: 1, exact: true }),

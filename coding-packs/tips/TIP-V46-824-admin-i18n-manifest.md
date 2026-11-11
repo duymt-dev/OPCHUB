@@ -1246,3 +1246,15 @@ Native font My1440 failed the unchanged initial Latin-download assertion before 
 |---|---|---|
 | modify | `e2e/behavior/admin-i18n/sidebar.ts` | Preserve every bounds/badge/icon assertion; restore actual aside scroll position after probing so screenshots represent top-of-sidebar state. |
 | modify | `e2e/audit/admin-i18n-fonts.spec.ts` | Explicitly await loaded login DOM/network before font observation; preserve all24 strict assertions/mode and timeout, no arbitrary sleep. |
+
+## Myanmar system-flow formatter correction
+
+Route the five system-flow primary values and plain ICU numeric parameters through the existing scoped presentation formatter. Keep raw DTOs, counts, navigation, status logic, polling and API contracts unchanged. Add reduced-ICU unit regression and exact actual-response Myanmar browser oracles; no missing-catalog/full-TIP waiver.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| modify | `apps/admin/src/features/overview/flow.ts` | Reuse scoped formatNumber for primary values and a pure numeric parameter projection. |
+| modify | `apps/admin/src/features/overview/flow.spec.ts` | Actual prepared CLDR, reduced-native-ICU bypass detection, raw DTO/parameter/status invariants. |
+| modify | `apps/admin/src/features/overview/components/system-flow.tsx` | Format display-only subtext arguments without changing numeric model data. |
+| modify | `e2e/behavior/admin-i18n-myanmar.spec.ts` | Compare all five primary counts and three subtexts against raw response and independent Node Myanmar number oracle. |
+| create | `coding-packs/reports/evidence/v46-824/myanmar-flow.log` | Focused regression, original failure and corrected gate evidence. |

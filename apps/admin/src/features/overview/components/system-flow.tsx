@@ -2,7 +2,7 @@
 
 import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { flowCards } from '../flow';
+import { flowCards, flowTextParams } from '../flow';
 import { useOverview } from '../hooks/use-overview';
 import styles from './system-flow.module.css';
 
@@ -30,7 +30,9 @@ export function SystemFlow() {
                 </span>
               </div>
               <span className={styles.value}>{c.value}</span>
-              <span className={styles.note}>{t(`${c.key}.sub`, c.sub)}</span>
+              <span className={styles.note}>
+                {t(`${c.key}.sub`, flowTextParams(c.sub, locale))}
+              </span>
               <span className={styles.cta}>{t(`${c.key}.cta`)} →</span>
             </Link>
           ))}
