@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 import receipt from '../font-assets.json';
 import { catalogIssues } from './message-contract';
 
-/** Staged12-file inventory only; the full25-file/10-bundle gate remains required. */
+/** Complete explicit Khmer inventory, not the final10-bundle production gate. */
 const FILES = [
   'auth',
   'common',
@@ -18,6 +18,19 @@ const FILES = [
   'stores',
   'ui',
   'settings/audit',
+  'affiliate',
+  'bots',
+  'events',
+  'fees',
+  'groups',
+  'marketing',
+  'members',
+  'projects',
+  'settings/core',
+  'settings/access',
+  'settings/mail',
+  'settings/finance',
+  'settings/ai',
 ] as const;
 const NEUTRAL = new Map([
   ['auth.twoFactor.codePlaceholder', 'Unchanged numeric six-digit example'],
@@ -32,6 +45,46 @@ const NEUTRAL = new Map([
   ['requests.dateRange', 'Existing numeric date-range example'],
   ['stores.dateRange', 'Existing numeric date-range example'],
   ['settings/audit.log.tag.sso', 'Canonical SSO protocol abbreviation'],
+  ['affiliate.policy.mediaSoft', 'Unchanged Media Soft brand'],
+  ['affiliate.dateRange', 'Existing numeric date-range example'],
+  ['bots.dateRange', 'Existing numeric date-range example'],
+  ['bots.pf.namePh', 'Existing person-name example'],
+  ['events.dateRange', 'Existing numeric date-range example'],
+  ['events.form.mapPh', 'Canonical map URL example'],
+  ['events.form.linkPh', 'Canonical meeting URL example'],
+  ['events.form.meetPh', 'Canonical Google Meet URL example'],
+  ['fees.dateRange', 'Existing numeric date-range example'],
+  ['groups.dateRange', 'Existing numeric date-range example'],
+  ['groups.list.stats.provincesValue', 'Numeric province-count ICU expression'],
+  ['groups.export.csv', 'Canonical CSV format'],
+  ['groups.export.xls', 'Canonical Excel format'],
+  ['marketing.dateRange', 'Existing numeric date-range example'],
+  ['marketing.auto.attUrl', 'Canonical URL example'],
+  ['marketing.mail.brand', 'Unchanged public domain'],
+  ['marketing.mail.sampleName', 'Existing person-name example'],
+  ['members.dateRange', 'Existing numeric date-range example'],
+  ['projects.dateRange', 'Existing numeric date-range example'],
+  ['projects.stage.mvp', 'Canonical MVP abbreviation'],
+  ['projects.val.none', 'Existing empty-value display marker'],
+  ['settings/core.tabSub.smtp', 'Unchanged Brevo provider brand'],
+  ['settings/core.general.tz.ict', 'Existing official timezone-name example'],
+  ['settings/access.roles.cell', 'Permission/role ICU separator expression'],
+  ['settings/access.admins.drawer.namePh', 'Existing person-name example'],
+  ['settings/access.admins.drawer.phonePh', 'Existing numeric phone example'],
+  ['settings/access.admins.drawer.emailPh', 'Existing email example'],
+  ['settings/mail.mail.sampleEmail', 'Existing email example'],
+  ['settings/mail.mail.attUrl', 'Canonical URL example'],
+  ['settings/mail.mail.brand', 'Unchanged public domain'],
+  ['settings/mail.mail.sampleName', 'Existing person-name example'],
+  ['settings/mail.smtp.enc.tls', 'Canonical STARTTLS port example'],
+  ['settings/mail.smtp.enc.ssl', 'Canonical SSL/TLS port example'],
+  ['settings/mail.smtp.keyPh', 'Existing masked SMTP-key placeholder'],
+  ['settings/mail.smtp.testPh', 'Existing email example'],
+  ['settings/finance.renewal.actions', 'Existing intentionally blank actions header'],
+  ['settings/finance.bank.providers.casso', 'Unchanged Casso provider brand'],
+  ['settings/finance.bank.providers.sepay', 'Unchanged SePay provider brand'],
+  ['settings/finance.bank.providers.vcb', 'Unchanged Vietcombank provider brand'],
+  ['settings/finance.bank.syntaxValue', 'Canonical OPCHUB transfer-reference example'],
 ]);
 const read = (locale: string, file: string): unknown =>
   JSON.parse(
@@ -55,7 +108,7 @@ function valueAt(node: unknown, key: string): unknown {
   return node;
 }
 
-describe('D-141 AC824-02 staged Khmer raw catalogs before fallback, not full bundle', () => {
+describe('D-141 AC824-02 Khmer25-file raw catalogs before fallback', () => {
   it.each(FILES)('%s retains shape/keys/ICU/NFC without copied Vietnamese prose', (file) => {
     expect(
       catalogIssues(
@@ -64,6 +117,9 @@ describe('D-141 AC824-02 staged Khmer raw catalogs before fallback, not full bun
         {
           locale: 'km',
           sameTextReasons: NEUTRAL,
+          emptyTextReasons: new Map([
+            ['settings/finance.renewal.actions', 'Existing intentionally blank actions header'],
+          ]),
         },
         file,
       ),
@@ -101,11 +157,31 @@ describe('D-141 AC824-02 staged Khmer raw catalogs before fallback, not full bun
     ['ui', 'editor.orderedListTitle', 'បញ្ជីលេខ'],
     ['settings/audit', 'log.heading', 'កំណត់ហេតុសកម្មភាពអ្នកគ្រប់គ្រង'],
     ['settings/audit', 'log.tag.permission', 'សិទ្ធិចូលប្រើ'],
+    ['affiliate', 'regional.share.pendingStatus', 'រង់ចាំបង់នៅចុងខែ'],
+    ['affiliate', 'regional.share.director', 'នាយកតំបន់'],
+    ['affiliate', 'regionalPays', 'នាយកតំបន់បង់'],
+    ['bots', 'bulk.title', 'បង្កើតសេណារីយ៉ូសន្ទនាជាក្រុមដោយ AI'],
+    ['bots', 'pf.role', 'តួនាទី / មុខរបរ'],
+    ['bots', 'tabs.log', 'កំណត់ហេតុស្វ័យប្រវត្តិ'],
+    ['events', 'card.list', 'បញ្ជីអ្នកចូលរួម'],
+    ['events', 'upcoming.tomorrow', 'ថ្ងៃស្អែក'],
+    ['fees', 'txn.dialog.mode', 'ផ្គូផ្គងទៅ'],
+    ['groups', 'mod.aiPending', 'រង់ចាំអ្នកគ្រប់គ្រងដោះស្រាយ · មិនទាន់គិតជាការរំលោភបំពាន'],
+    ['marketing', 'form.body', 'មាតិកាអ៊ីមែល'],
+    ['members', 'filters.prof.inc', 'មិនទាន់ប្រកាសព័ត៌មាន'],
+    ['projects', 'status.pending_review', 'រង់ចាំការអនុម័ត'],
+    ['settings/core', 'general.heading', 'ព័ត៌មានវេទិកា'],
+    ['settings/access', 'admins.tfaOff', 'មិនទាន់បើក'],
+    ['settings/mail', 'mail.heading', 'អ៊ីមែលស្វាគមន៍'],
+    ['settings/finance', 'renewal.heading', 'ការរំលឹកបន្តសមាជិកភាពដោយស្វ័យប្រវត្តិ'],
+    ['settings/finance', 'bank.content', 'ខ្លឹមសារផ្ទេរប្រាក់'],
+    ['settings/ai', 'ai.customProviderLabel', 'ផ្ទាល់ខ្លួន (ឆបគ្នាជាមួយ OpenAI)'],
+    ['settings/ai', 'aiCalls.title', 'កំណត់ហេតុហៅ AI'],
   ])('D-141 AC824-06 preserves reviewed Admin context %s.%s', (file, key, expected) => {
     expect(valueAt(read('km', file ?? ''), key ?? '')).toBe(expected);
   });
 
-  it('D-141 AC824-02 keeps only12 exact neutral examples equal to English, never English filler', () => {
+  it('D-141 AC824-02 keeps only exact neutral examples equal to English, never English filler', () => {
     const retained: string[] = [];
     for (const file of FILES) {
       const english = new Map(leaves(read('en', file)));
@@ -125,9 +201,29 @@ describe('D-141 AC824-02 staged Khmer raw catalogs before fallback, not full bun
     expect(retained.sort()).toEqual([...NEUTRAL.keys()].sort());
   });
 
-  it('D-141 AC824-15 covers all729 staged leaves with unchanged Khmer/Latin cmaps', () => {
+  it.each([
+    ['bots', 'pf.namePh'],
+    ['marketing', 'mail.sampleName'],
+    ['settings/core', 'general.tz.ict'],
+    ['settings/access', 'admins.drawer.namePh'],
+    ['settings/mail', 'mail.sampleName'],
+    ['settings/finance', 'bank.syntaxValue'],
+  ])('D-141 AC824-11/12 preserves canonical example %s.%s', (file, key) => {
+    expect(valueAt(read('km', file ?? ''), key ?? '')).toBe(
+      valueAt(read('vi', file ?? ''), key ?? ''),
+    );
+  });
+
+  it('D-141 AC824-02 preserves the three-line topic example rather than literal escaped newline text', () => {
+    const example = valueAt(read('km', 'bots'), 'bulk.topicsPlaceholder');
+    expect(typeof example).toBe('string');
+    expect(String(example).split('\n')).toHaveLength(3);
+    expect(String(example)).not.toContain('\\n');
+  });
+
+  it('D-141 AC824-15 covers all2667 leaves with unchanged Khmer/Latin cmaps', () => {
     const text = FILES.flatMap((file) => leaves(read('km', file)).map(([, value]) => value));
-    expect(text).toHaveLength(729);
+    expect(text).toHaveLength(2667);
     const ranges = [receipt.assets.NotoSans.cmap, receipt.assets.NotoSansKhmer.cmap]
       .flatMap((cmap) => cmap.split(','))
       .map((range) => {

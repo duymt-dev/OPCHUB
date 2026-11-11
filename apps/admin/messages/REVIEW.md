@@ -1,6 +1,18 @@
 # Admin translation review (D-141)
 
-## Staged Khmer raw catalogs — 2026-11-12
+## Complete Khmer raw bundle — 2026-11-12
+
+Source9145beff, unchanged Vietnamese2667-leaf/25-file schema. Khmer now has all25 physical catalogs/2667 leaves; the earlier12 files/729 leaves are byte-identical. All six settings parts now exist and the actual request loader is tested across auth/Profile/Overview/reports/general/roles/mail/audit/pricing/AI with no warning/fallback. Nine complete bundles/225 of250 raw files is still **not** the final10-bundle acceptance: all25 Myanmar files remain absent. Native-reviewed: **false**, confidence moderate pending native idiom/layout review.
+
+The remaining13 files contribute1938 leaves:295 reuse prior Admin Khmer translations,174 retain unambiguous exact-source Portal matches,1465 use1320 explicit new source/target pairs (including exact neutral technical examples and the one intentional blank actions header), and4 are Admin-context corrections (end-of-month payout, attendee list, two email-content labels). The earlier stage contributes305 retained Portal matches,411 leaves from351 explicit pairs and13 context-corrected leaves. Whole-bundle accounting:479 retained Portal +295 prior-Admin reuse +1876 explicit-pair leaves +17 context-corrected leaves =2667. No runtime cross-app import or remote translator is added.
+
+Raw84 tests cover25 physical shape/key/type/ICU/NFC/no-copy contracts,50 exact Admin-context labels,52 exact neutral technical examples/script/no-English-filler,6 canonical-example checks, an actual three-line topic placeholder and every glyph across2667 leaves against unchanged Khmer/Latin cmaps. Blank settings/finance.renewal.actions is allowed only when both source and target are blank; no namespace-wide exemption. Names, OPCHUB transfer syntax, canonical URL/SMTP examples and unchanged brand are explicit exceptions. Twelve old files, all Vietnamese/other locale content, raw API/enum/permission/payload/exports and font binaries/licenses remain unchanged.
+
+Additional glossary: persona = តួអង្គ; conversation script = សេណារីយ៉ូសន្ទនា; moderation = ការត្រួតពិនិត្យ; pending payout at month end = រង់ចាំបង់នៅចុងខែ; report-action = រាយការណ៍ vs report noun = របាយការណ៍. D-119/D-131 regional share/reference-only affiliate labels retain the original meaning; obsolete legacy source descriptions (first-payment-only rule, fixed10% fundraising wording and removed-assistant copy) are translated as existing source text, **not** new business decisions or restored features. No backend/payment logic is changed or inferred from those old strings.
+
+Two initially generic reused labels (attendee list/email content) were corrected in new files without weakening tests. The first actual Khmer request test exposed stale Vitest filesystem-transformed dynamic-import maps: all20 namespaces were unavailable despite present valid files. The same14 request cases passed with fsModuleCache disabled diagnostically; supported Vitest --clearCache then the default full98 focused cases passed. Only test caches were cleared; no production loader/fallback/cache policy or DB/service change. Human translation review remains pending, not fabricated.
+
+## Historical staged Khmer raw catalogs — 2026-11-12
 
 Source SHA f94713bf, unchanged Vietnamese schema2667 leaves/25files; native-reviewed: **false**. This stage adds12 explicit Khmer files/729 leaves: auth, common (including Admin Profile), bot-options, meta, overview, investors, needs, reports, requests, stores, ui and settings/audit. Thirteen files/1938 leaves remain absent; **not a complete Khmer bundle** and not full10-bundle acceptance. Settings/audit is raw-only at this stage: all six settings parts are required by the existing runtime namespace merge, so missing parts still cause intentional Vietnamese fallback. No filler catalogs or runtime cross-app import is added.
 
@@ -20,7 +32,7 @@ Fixed tests cover decimal/grouping separators, Myanmar digits/explicit Latin ove
 
 Actual built locale-data chunks are mapped and hashed separately for both modes; missing/duplicate/mixed-locale data fails the auditor. Browser evidence checks actual Lao dates/VND against independent Node Intl/raw DTOs, zero unused data payload on public auth, only selected Lao data responses with exact hashes and unchanged global constructor snapshots. This is not the original-baseline/per-route JS budget proof. Full performance and all-language controls/states remain required.
 
-The standard-data implementation itself added no UI messages. The staged Khmer section above now updates raw readiness to212/250 files: eight complete bundles plus12 Khmer files;13 Khmer files and all25 Myanmar files remain absent. Standard CLDR names are not substitutes for those translations. Native-speaker-reviewed=false remains unchanged; licensed fonts/binaries and Vietnamese source text remain unchanged.
+The standard-data implementation itself added no UI messages. The complete Khmer section above now updates raw readiness to225/250 files: nine complete bundles; all25 Myanmar files remain absent. Standard CLDR names are not substitutes for those translations. Native-speaker-reviewed=false remains unchanged; licensed fonts/binaries and Vietnamese source text remain unchanged.
 
 - Scope: Admin UI only; API errors, email, CSV and user content retain their original contract.
 - Source baseline: f7c1b2b8; current source has2667 string leaves in25 physical catalogs.

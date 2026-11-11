@@ -1179,3 +1179,29 @@ Existing explicit km catalog rows remain authoritative. Implement all25 incremen
 | create | `coding-packs/reports/evidence/v46-824/km-auth-server-1440.png` | Same public auth assertions with native-mode frontend, not DB acceptance. |
 | create | `coding-packs/reports/evidence/v46-824/km-auth-server-390.png` | Same public auth assertions with native-mode frontend, not DB acceptance. |
 | create | `coding-packs/reports/evidence/v46-824/khmer-raw.log` | Focused44-case raw/ICU/context/cmap verification;12 of25 catalogs only. |
+
+## Complete Khmer inventory follow-through (2026-11-12)
+
+Complete the13 existing explicitly declared km paths, preserving all12 staged files byte-for-byte. Extend khmer-catalog.spec.ts to fixed25 files/2667 leaves and exact canonical examples; extend existing request.spec.ts with actual Khmer auth/Profile/Overview and all six merged settings parts, with no fallback. Native-human-reviewed remains false, Myanmar and final10-bundle/full-AC acceptance remain open.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| modify | `apps/admin/src/i18n/request.spec.ts` | Actual complete Khmer request loading, all settings domains and no warning/fallback; no runtime/source-vi change. |
+
+| create | `e2e/behavior/admin-i18n-khmer.spec.ts` | Six actual Khmer Overview/Profile/Settings cases at1440/390, same read-only assertions both modes, not all-language or all-state acceptance. |
+| modify | `e2e/behavior/admin-i18n/fixtures.ts` | Add explicit Khmer login/notification label identity; retain strict HTTP/JSON/document/write guards. |
+| modify | `e2e/playwright.admin-i18n.config.ts` | Include explicit Khmer actual-screen suite without global DB/reset fixtures. |
+| create | `coding-packs/reports/evidence/v46-824/khmer-msw.log` | Actual six-case Khmer screen output, no full TIP claim. |
+| create | `coding-packs/reports/evidence/v46-824/khmer-native.log` | Same six assertions against revalidated approved private native API; original PG5432 retained. |
+| create | `coding-packs/reports/evidence/v46-824/km-overview-msw-1440.png` | Actual unmasked Khmer overview body at1440; not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/km-overview-msw-390.png` | Actual unmasked Khmer overview body at390; not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/km-overview-server-1440.png` | Actual unmasked Khmer overview body at1440; not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/km-overview-server-390.png` | Actual unmasked Khmer overview body at390; not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/km-profile-msw-1440.png` | Actual unmasked Khmer profile body at1440; not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/km-profile-msw-390.png` | Actual unmasked Khmer profile body at390; not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/km-profile-server-1440.png` | Actual unmasked Khmer profile body at1440; not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/km-profile-server-390.png` | Actual unmasked Khmer profile body at390; not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/km-settings-msw-1440.png` | Actual unmasked Khmer settings body at1440; not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/km-settings-msw-390.png` | Actual unmasked Khmer settings body at390; not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/km-settings-server-1440.png` | Actual unmasked Khmer settings body at1440; not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/km-settings-server-390.png` | Actual unmasked Khmer settings body at390; not owner/native-human approval. |

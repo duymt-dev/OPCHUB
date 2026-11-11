@@ -218,4 +218,28 @@ describe('D-141 AC824-01/04 request-scoped messages, no authOverrides', () => {
     expect(messages.auth.login.submit).toBe('Đăng nhập');
     expect(logger.warn).not.toHaveBeenCalled();
   });
+
+  it('D-141 AC824-07 loads complete Khmer auth/Profile/Overview and all settings parts without fallback', async () => {
+    mocks.cookie = 'km';
+    const result = await config();
+    expect(logger.warn).not.toHaveBeenCalled();
+    expect(result.locale).toBe('km');
+    expect(result.timeZone).toBe('Asia/Ho_Chi_Minh');
+    expect(result.messages).toMatchObject({
+      auth: { login: { submit: 'ចូលប្រើ' } },
+      common: { adminProfile: { title: 'ប្រវត្តិរូបផ្ទាល់ខ្លួន' } },
+      overview: { title: 'ទិដ្ឋភាពទូទៅ' },
+      reports: { title: 'របាយការណ៍' },
+      settings: {
+        general: { heading: 'ព័ត៌មានវេទិកា' },
+        roles: { heading: 'តួនាទី និងសិទ្ធិចូលប្រើ' },
+        mail: { heading: 'អ៊ីមែលស្វាគមន៍' },
+        log: { heading: 'កំណត់ហេតុសកម្មភាពអ្នកគ្រប់គ្រង' },
+        price: { heading: 'ការកំណត់តារាងតម្លៃ' },
+        ai: { heading: 'អ្នកផ្ដល់សេវា AI' },
+      },
+    });
+    expect(messages.auth.login.submit).toBe('Đăng nhập');
+    expect(logger.warn).not.toHaveBeenCalled();
+  });
 });
