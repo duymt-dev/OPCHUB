@@ -1,0 +1,89 @@
+Working tree based on39e0783f; owner-approved optional AppShell/Sidebar badge formatter, Portal does not opt in and Portal production source is unchanged. Fresh Portal production MSW build for shared change; not native API/browser acceptance. Root unit log records Portal tests/cache status separately.
+COMMAND pnpm --filter @opchub/portal build
+$ next build
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 531ms
+- Experiments (use with caution):
+  · optimizePackageImports
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.8s
+  Running TypeScript ...
+  Finished TypeScript in 14.9s ...
+  Collecting page data using 5 workers ...
+{"level":"warn","scope":"portal-seo","event":"store_sitemap_unavailable"}
+  Generating static pages using 5 workers (0/15) ...
+  Generating static pages using 5 workers (3/15)
+  Generating static pages using 5 workers (7/15)
+{"level":"warn","scope":"portal-seo","event":"store_sitemap_unavailable"}
+{"level":"warn","scope":"portal-seo","event":"store_sitemap_unavailable"}
+{"level":"warn","scope":"portal-seo","event":"store_sitemap_unavailable"}
+  Generating static pages using 5 workers (11/15)
+✓ Generating static pages using 5 workers (15/15) in 575ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /affiliate
+├ ƒ /chat/[[...slug]]
+├ ƒ /community
+├ ƒ /dashboard
+├ ƒ /events/[[...id]]
+├ ƒ /forgot-password
+├ ƒ /g/[slug]
+├ ƒ /g/[slug]/opengraph-image
+├ ƒ /g/[slug]/opengraph-image-1rfkr9
+├ ƒ /huong-dan
+├ ƒ /login
+├ ○ /manifest.webmanifest
+├ ƒ /membership/pay
+├ ƒ /mock-affiliate-state
+├ ƒ /needs
+├ ƒ /needs/mine
+├ ƒ /profile
+├ ƒ /projects
+├ ƒ /projects/[id]
+├ ƒ /projects/mine
+├ ƒ /r/[code]
+├ ƒ /register
+├ ƒ /reset-password
+├ ƒ /robots.txt
+├ ƒ /services/[[...slug]]
+├ ƒ /sitemap.xml
+├ ƒ /sso/callback
+├ ƒ /sso/callback/[provider]
+├ ƒ /store-sitemaps/sitemap/[__metadata_id__]
+├ ƒ /stores
+├ ƒ /stores/[id]
+├ ƒ /stores/mine
+└ ƒ /unsubscribe
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+EXIT 0
+
+COMMAND pnpm --filter @opchub/portal exec vitest run --maxWorkers=2 (fresh direct, no Turbo cache replay)
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/portal
+
+Not implemented: Window's getComputedStyle() method: with pseudo-elements
+Not implemented: Window's getComputedStyle() method: with pseudo-elements
+Not implemented: Window's getComputedStyle() method: with pseudo-elements
+Not implemented: Window's getComputedStyle() method: with pseudo-elements
+
+ Test Files  85 passed (85)
+      Tests  476 passed (476)
+   Start at  21:55:38
+   Duration  177.47s (import 45%, environment 44%, tests 7%, transform 4%)
+
+     Import  804 modules were evaluated 5289 times · 150.05s total, 45% of tracked time
+             ~55.46s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+             learn more: https://vitest.dev/guide/improving-performance#test-isolation
+
+EXIT 0
+
+Postcommit receipt e7c6ca13: final shared/Portal inputs identical to this fresh476-test/build run; Portal source unchanged and not opted in. Build preceded the final Admin-only Intl correction, which is not a Portal input.

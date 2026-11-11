@@ -1,20 +1,22 @@
-TIP824 native authenticated vi/en/fil sidebar internal-clipping/collapse/mobile/keyboard regression; production/test working tree based on2a104d79. Private API listener belongs to unchanged approved wrapper; local database port is not5432. No seed/reset/migration, no original service stop; authenticated session creation only. Full7-case sidebar suite including an actual-app negative fixture, identical assertions to MSW; no global seed/reset. Not all-language/error/loading/native feature acceptance.
+TIP824 native authenticated vi/en/fil sidebar internal-clipping/collapse/mobile/keyboard regression; production/test working tree based on39e0783f. Private API listener belongs to unchanged approved wrapper; local database port is not5432. No seed/reset/migration, no original service stop; authenticated session creation only. Full9-case sidebar suite including an actual-app negative fixture, identical assertions to MSW; no global seed/reset. Not all-language/error/loading/native feature acceptance.
 COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-sidebar.spec.ts
-[WebServer] (node:30940) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (node:2288) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
 
-Running 7 tests using 1 worker
+Running 9 tests using 1 worker
 
-(node:18164) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:12132) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 (Use `node --trace-warnings ...` to show where the warning was created)
-  ok 1 [behavior] › behavior\admin-i18n-sidebar.spec.ts:12:5 › D-141 AC824-15 sidebar text and badges stay inside links, vi 1440 (2.6s)
-  ok 2 [behavior] › behavior\admin-i18n-sidebar.spec.ts:12:5 › D-141 AC824-15 sidebar text and badges stay inside links, vi 390 (2.2s)
-  ok 3 [behavior] › behavior\admin-i18n-sidebar.spec.ts:12:5 › D-141 AC824-15 sidebar text and badges stay inside links, en 1440 (2.7s)
-  ok 4 [behavior] › behavior\admin-i18n-sidebar.spec.ts:12:5 › D-141 AC824-15 sidebar text and badges stay inside links, en 390 (2.0s)
-  ok 5 [behavior] › behavior\admin-i18n-sidebar.spec.ts:12:5 › D-141 AC824-15 sidebar text and badges stay inside links, fil 1440 (4.4s)
-  ok 6 [behavior] › behavior\admin-i18n-sidebar.spec.ts:12:5 › D-141 AC824-15 sidebar text and badges stay inside links, fil 390 (3.4s)
-  ok 7 [behavior] › behavior\admin-i18n-sidebar.spec.ts:85:1 › D-141 AC824-15 rejects internal clipping even when document width passes (2.4s)
+  ok 1 [behavior] › behavior\admin-i18n-sidebar.spec.ts:12:3 › D-141 AC824-08 sidebar badge digits switch my/vi/en without changing counts 1440; not Myanmar catalog acceptance (6.9s)
+  ok 2 [behavior] › behavior\admin-i18n-sidebar.spec.ts:12:3 › D-141 AC824-08 sidebar badge digits switch my/vi/en without changing counts 390; not Myanmar catalog acceptance (5.7s)
+  ok 3 [behavior] › behavior\admin-i18n-sidebar.spec.ts:57:5 › D-141 AC824-15 sidebar text and badges stay inside links, vi 1440 (3.5s)
+  ok 4 [behavior] › behavior\admin-i18n-sidebar.spec.ts:57:5 › D-141 AC824-15 sidebar text and badges stay inside links, vi 390 (2.5s)
+  ok 5 [behavior] › behavior\admin-i18n-sidebar.spec.ts:57:5 › D-141 AC824-15 sidebar text and badges stay inside links, en 1440 (2.8s)
+  ok 6 [behavior] › behavior\admin-i18n-sidebar.spec.ts:57:5 › D-141 AC824-15 sidebar text and badges stay inside links, en 390 (2.3s)
+  ok 7 [behavior] › behavior\admin-i18n-sidebar.spec.ts:57:5 › D-141 AC824-15 sidebar text and badges stay inside links, fil 1440 (4.5s)
+  ok 8 [behavior] › behavior\admin-i18n-sidebar.spec.ts:57:5 › D-141 AC824-15 sidebar text and badges stay inside links, fil 390 (4.0s)
+  ok 9 [behavior] › behavior\admin-i18n-sidebar.spec.ts:130:1 › D-141 AC824-15 rejects internal clipping even when document width passes (2.4s)
 
-  7 passed (23.3s)
+  9 passed (43.3s)
 EXIT 0
-Postcommit receipt: source d6efb178; all8 tested source/test/manifest blobs verified identical to HEAD and worktree after normal hooks. Precommit working-tree base retained above.
+Postcommit receipt: source e7c6ca13; all10 tested source/test/TIP/manifest blobs match HEAD and worktree after normal hooks. Original precommit working-tree base retained above.

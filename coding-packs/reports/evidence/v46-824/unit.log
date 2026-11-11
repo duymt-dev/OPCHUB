@@ -1,4 +1,4 @@
-Source working tree based on2a104d79. Full root tests; VITEST_MAX_WORKERS=2 passed through Turbo loose mode, a resource cap only. No test skip, assertion or timeout reductions. No overlapping production builds.
+Source working tree based on39e0783f. Full root tests; VITEST_MAX_WORKERS=2 passed through Turbo loose mode, a resource cap only. No test skip, assertion or timeout reductions. No overlapping production builds.
 COMMAND pnpm test --env-mode=loose
 $ turbo run test --concurrency=2 --env-mode=loose
 
@@ -8,6 +8,7 @@ $ turbo run test --concurrency=2 --env-mode=loose
    • Remote caching disabled
 
 @opchub/shared:test: cache hit, replaying logs b0ac9becdf974ad3
+@opchub/server:test: cache hit, replaying logs c2e070d3adeeddab
 @opchub/shared:test: $ vitest run
 @opchub/shared:test:
 @opchub/shared:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/shared
@@ -21,9 +22,8 @@ $ turbo run test --concurrency=2 --env-mode=loose
 @opchub/shared:test:      Import  432 modules were evaluated 893 times · 162.66s total, 86% of tracked time
 @opchub/shared:test:              ~18.76s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
 @opchub/shared:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
-@opchub/shared:test:
-@opchub/server:test: cache hit, replaying logs c2e070d3adeeddab
 @opchub/server:test: $ vitest run --project unit
+@opchub/shared:test:
 @opchub/server:test:
 @opchub/server:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
 @opchub/server:test:
@@ -37,28 +37,7 @@ $ turbo run test --concurrency=2 --env-mode=loose
 @opchub/server:test:              ~22.11s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
 @opchub/server:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
 @opchub/server:test:
-@opchub/ui:test: cache hit, replaying logs 3fc4e542c25d697b
-@opchub/ui:test: $ vitest run
-@opchub/ui:test:
-@opchub/ui:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/ui
-@opchub/ui:test:
-@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
-@opchub/ui:test:
-@opchub/ui:test:  Test Files  23 passed (23)
-@opchub/ui:test:       Tests  83 passed (83)
-@opchub/ui:test:    Start at  16:00:10
-@opchub/ui:test:    Duration  181.83s (environment 52%, import 44%, tests 3%, transform 1%)
-@opchub/ui:test:
-@opchub/ui:test:     Isolate  23 workers spawned · ~8.67s startup each (spawn + environment, per file)
-@opchub/ui:test:              at least ~91.02s faster with isolate: false — reuses workers across files instead of one per file
-@opchub/ui:test:
+@opchub/ui:test: cache miss, executing 93ecb6a3e3980f04
 @opchub/portal:test: cache hit, replaying logs c499ac8b2dccf1b3
 @opchub/portal:test: $ vitest run --passWithNoTests
 @opchub/portal:test:
@@ -78,7 +57,6 @@ $ turbo run test --concurrency=2 --env-mode=loose
 @opchub/portal:test:              ~113.00s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
 @opchub/portal:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
 @opchub/portal:test:
-@opchub/admin:test: cache miss, executing 094421f5f1099aa6
 @opchub/integrations:test: cache hit, replaying logs b6c214e97c1022b8
 @opchub/integrations:test: $ vitest run
 @opchub/integrations:test:
@@ -94,11 +72,21 @@ $ turbo run test --concurrency=2 --env-mode=loose
 @opchub/integrations:test:              ~709ms faster with isolate: false — shared modules are evaluated once per worker instead of once per file
 @opchub/integrations:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
 @opchub/integrations:test:
+@opchub/admin:test: cache miss, executing 22b70fda11a2a353
+@opchub/ui:test: $ vitest run
 @opchub/admin:test: $ vitest run --passWithNoTests
+@opchub/ui:test:
+@opchub/ui:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/ui
+@opchub/ui:test:
 @opchub/admin:test:
 @opchub/admin:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
 @opchub/admin:test:
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
@@ -108,11 +96,23 @@ $ turbo run test --concurrency=2 --env-mode=loose
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test:
+@opchub/ui:test:  Test Files  24 passed (24)
+@opchub/ui:test:       Tests  88 passed (88)
+@opchub/ui:test:    Start at  22:02:39
+@opchub/ui:test:    Duration  124.68s (import 50%, environment 44%, tests 4%, transform 1%)
+@opchub/ui:test:
+@opchub/ui:test:     Isolate  24 workers spawned · ~4.78s startup each (spawn + environment, per file)
+@opchub/ui:test:              at least ~52.62s faster with isolate: false — reuses workers across files instead of one per file
+@opchub/ui:test:
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
@@ -132,19 +132,19 @@ $ turbo run test --concurrency=2 --env-mode=loose
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
 @opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
 @opchub/admin:test:
-@opchub/admin:test:  Test Files  180 passed (180)
-@opchub/admin:test:       Tests  1192 passed (1192)
-@opchub/admin:test:    Start at  21:38:16
-@opchub/admin:test:    Duration  556.36s (import 58%, environment 34%, tests 7%, transform 1%)
+@opchub/admin:test:  Test Files  182 passed (182)
+@opchub/admin:test:       Tests  1195 passed (1195)
+@opchub/admin:test:    Start at  22:02:39
+@opchub/admin:test:    Duration  669.32s (import 60%, environment 31%, tests 8%, transform 1%)
 @opchub/admin:test:
-@opchub/admin:test:      Import  1170 modules were evaluated 6083 times · 626.79s total, 58% of tracked time
-@opchub/admin:test:              ~234.21s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/admin:test:      Import  1175 modules were evaluated 6026 times · 780.43s total, 60% of tracked time
+@opchub/admin:test:              ~289.33s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
 @opchub/admin:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
 @opchub/admin:test:
 
  Tasks:    6 successful, 6 total
-Cached:    5 cached, 6 total
-  Time:    9m17.354s
+Cached:    4 cached, 6 total
+  Time:    11m10.61s
 
 EXIT 0
-Postcommit receipt: source d6efb178; all8 tested source/test/manifest blobs verified identical to HEAD and worktree after normal hooks. Precommit working-tree base retained above.
+Postcommit receipt: source e7c6ca13; all10 tested source/test/TIP/manifest blobs match HEAD and worktree after normal hooks. Original precommit working-tree base retained above.
