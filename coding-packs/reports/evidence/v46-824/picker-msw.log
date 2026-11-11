@@ -1,20 +1,31 @@
-TIP824 actual numeric picker, ten currently translated selector identities incl aliases, three explicit canonical ranges (21Nov, year boundary, leap day) at1440/390. Six cases/mode, same assertions both modes, actual login and read-only guard, actual selector pointer switches, retained URL/API YYYY-MM-DD and alias/F5. General Intl date/number formatting and missing km/my catalog acceptance remain open. Sourcec56da166, production build70f46a3c with identical production inputs; exact default-period omission assertion corrected, no runtime change. MSW Portal relay only, no DB/global seed/reset.
-COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-picker.spec.ts
-[WebServer] (node:16696) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+TIP824 actual numeric picker, ten currently translated selector identities incl aliases, three explicit canonical ranges (21Nov, year boundary, leap day) at1440/390. 6 authenticated picker plus11 pure document-lifetime helper cases/mode, same assertions both modes, actual login and read-only guard, actual selector pointer switches, retained URL/API YYYY-MM-DD and alias/F5. General Intl date/number formatting and missing km/my catalog acceptance remain open. Current scoped Intl working tree based one5e5bf05, same-source production builds and strengthened current tests. MSW Portal relay only, no DB/global seed/reset.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-picker.spec.ts behavior/admin-i18n/response-lifetime.spec.ts
+[WebServer] (node:24772) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
-[WebServer] (node:14292) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (node:26656) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
 
-Running 6 tests using 1 worker
+Running 17 tests using 1 worker
 
-(node:10576) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:15168) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 (Use `node --trace-warnings ...` to show where the warning was created)
-  ok 1 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker nonambiguous 1440, ten translated identities not full Intl acceptance (6.5s)
-  ok 2 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker year-boundary 1440, ten translated identities not full Intl acceptance (5.8s)
-  ok 3 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker leap-day 1440, ten translated identities not full Intl acceptance (5.9s)
-  ok 4 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker nonambiguous 390, ten translated identities not full Intl acceptance (5.8s)
-  ok 5 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker year-boundary 390, ten translated identities not full Intl acceptance (5.8s)
-  ok 6 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker leap-day 390, ten translated identities not full Intl acceptance (5.8s)
+  ok  1 [behavior] › behavior\admin-i18n\response-lifetime.spec.ts:32:3 › D-141 observation lifetime only: older document (9ms)
+  ok  2 [behavior] › behavior\admin-i18n\response-lifetime.spec.ts:32:3 › D-141 observation lifetime only: body method older document (4ms)
+  ok  3 [behavior] › behavior\admin-i18n\response-lifetime.spec.ts:32:3 › D-141 observation lifetime only: same document (42ms)
+  ok  4 [behavior] › behavior\admin-i18n\response-lifetime.spec.ts:32:3 › D-141 observation lifetime only: unknown request epoch (1ms)
+  ok  5 [behavior] › behavior\admin-i18n\response-lifetime.spec.ts:32:3 › D-141 observation lifetime only: future epoch (4ms)
+  ok  6 [behavior] › behavior\admin-i18n\response-lifetime.spec.ts:32:3 › D-141 observation lifetime only: malformed JSON (1ms)
+  ok  7 [behavior] › behavior\admin-i18n\response-lifetime.spec.ts:32:3 › D-141 observation lifetime only: different protocol error (2ms)
+  ok  8 [behavior] › behavior\admin-i18n\response-lifetime.spec.ts:32:3 › D-141 observation lifetime only: unrelated message (4ms)
+  ok  9 [behavior] › behavior\admin-i18n\response-lifetime.spec.ts:32:3 › D-141 observation lifetime only: non-error object (1ms)
+  ok 10 [behavior] › behavior\admin-i18n\response-lifetime.spec.ts:32:3 › D-141 observation lifetime only: unanchored text (1ms)
+  ok 11 [behavior] › behavior\admin-i18n\response-lifetime.spec.ts:36:1 › D-141 observation lifetime only: restored current loader is never discarded (1ms)
+  ok 12 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker nonambiguous 1440, ten translated identities not full Intl acceptance (8.1s)
+  ok 13 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker year-boundary 1440, ten translated identities not full Intl acceptance (6.7s)
+  ok 14 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker leap-day 1440, ten translated identities not full Intl acceptance (6.7s)
+  ok 15 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker nonambiguous 390, ten translated identities not full Intl acceptance (6.9s)
+  ok 16 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker year-boundary 390, ten translated identities not full Intl acceptance (7.0s)
+  ok 17 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker leap-day 390, ten translated identities not full Intl acceptance (7.1s)
 
-  6 passed (41.8s)
+  17 passed (54.7s)
 EXIT 0

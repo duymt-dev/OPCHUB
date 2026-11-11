@@ -1,25 +1,24 @@
-TIP824 authenticated real-selector navigation/draft/settings and explicit covered-handler provider-refresh probes; production Admin/test working tree based on582e8579; approved optional badge presentation, retained existing navigation assertions. Portal source unchanged since77484e3f. Requires real MSW Portal Affiliate relay, no DB/global seed/reset. Same10 browser assertions in native;2 are synthetic covered-selector-handler probes, NOT modal pointer accessibility. Not complete16-AC acceptance.
+TIP824 authenticated real-selector navigation/draft/settings and explicit covered-handler provider-refresh probes; production Admin/test working tree based one5e5bf05; approved optional badge presentation, retained existing navigation assertions. Portal source unchanged since77484e3f. Requires real MSW Portal Affiliate relay, no DB/global seed/reset. Same10 browser assertions in native;2 are synthetic covered-selector-handler probes, NOT modal pointer accessibility. Not complete16-AC acceptance.
 COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-navigation.spec.ts
-[WebServer] (node:30388) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (node:8444) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
-[WebServer] (node:19072) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (node:17016) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
 
 Running 10 tests using 1 worker
 
-(node:19768) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:10704) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 (Use `node --trace-warnings ...` to show where the warning was created)
-  ok  1 [behavior] › behavior\admin-i18n-navigation.spec.ts:17:3 › D-141 AC824-01/05 aliases retain country identity and profile draft after refresh 1440 (4.1s)
-  ok  2 [behavior] › behavior\admin-i18n-navigation.spec.ts:40:3 › D-141 AC824-05 member URL filters page and protected data survive real locale switches 1440 (4.7s)
-  ok  3 [behavior] › behavior\admin-i18n-navigation.spec.ts:80:3 › D-141 AC824-10 profile draft and local password errors switch without submitting 1440 (3.6s)
-  ok  4 [behavior] › behavior\admin-i18n-navigation.spec.ts:123:3 › D-141 AC824-10/11 provider refresh probe preserves open group drawer and canonical draft 1440 (3.2s)
-  ok  5 [behavior] › behavior\admin-i18n-navigation.spec.ts:164:3 › D-141 AC824-13 selector cookie and12 options remain independent of saved language settings 1440 (4.5s)
-  ok  6 [behavior] › behavior\admin-i18n-navigation.spec.ts:17:3 › D-141 AC824-01/05 aliases retain country identity and profile draft after refresh 390 (3.5s)
-  ok  7 [behavior] › behavior\admin-i18n-navigation.spec.ts:40:3 › D-141 AC824-05 member URL filters page and protected data survive real locale switches 390 (4.1s)
-  ok  8 [behavior] › behavior\admin-i18n-navigation.spec.ts:80:3 › D-141 AC824-10 profile draft and local password errors switch without submitting 390 (3.4s)
-  ok  9 [behavior] › behavior\admin-i18n-navigation.spec.ts:123:3 › D-141 AC824-10/11 provider refresh probe preserves open group drawer and canonical draft 390 (3.1s)
-  ok 10 [behavior] › behavior\admin-i18n-navigation.spec.ts:164:3 › D-141 AC824-13 selector cookie and12 options remain independent of saved language settings 390 (4.3s)
+  ok  1 [behavior] › behavior\admin-i18n-navigation.spec.ts:20:3 › D-141 AC824-01/05 aliases retain country identity and profile draft after refresh 1440 (3.6s)
+  ok  2 [behavior] › behavior\admin-i18n-navigation.spec.ts:43:3 › D-141 AC824-05 member URL filters page and protected data survive real locale switches 1440 (4.7s)
+  ok  3 [behavior] › behavior\admin-i18n-navigation.spec.ts:84:3 › D-141 AC824-10 profile draft and local password errors switch without submitting 1440 (4.2s)
+  ok  4 [behavior] › behavior\admin-i18n-navigation.spec.ts:128:3 › D-141 AC824-10/11 provider refresh probe preserves open group drawer and canonical draft 1440 (3.2s)
+  ok  5 [behavior] › behavior\admin-i18n-navigation.spec.ts:169:3 › D-141 AC824-13 selector cookie and12 options remain independent of saved language settings 1440 (4.9s)
+  ok  6 [behavior] › behavior\admin-i18n-navigation.spec.ts:20:3 › D-141 AC824-01/05 aliases retain country identity and profile draft after refresh 390 (3.3s)
+  ok  7 [behavior] › behavior\admin-i18n-navigation.spec.ts:43:3 › D-141 AC824-05 member URL filters page and protected data survive real locale switches 390 (4.5s)
+  ok  8 [behavior] › behavior\admin-i18n-navigation.spec.ts:84:3 › D-141 AC824-10 profile draft and local password errors switch without submitting 390 (3.7s)
+  ok  9 [behavior] › behavior\admin-i18n-navigation.spec.ts:128:3 › D-141 AC824-10/11 provider refresh probe preserves open group drawer and canonical draft 390 (3.6s)
+  ok 10 [behavior] › behavior\admin-i18n-navigation.spec.ts:169:3 › D-141 AC824-13 selector cookie and12 options remain independent of saved language settings 390 (4.9s)
 
-  10 passed (47.1s)
+  10 passed (47.6s)
 EXIT 0
-Postcommit receipt source264842f8: all35 final tested catalog/test/README/manifest blobs match HEAD and worktree after normal hooks. Build/catalog/production inputs unchanged by the later sidebar-test-only readiness correction. Original working-tree base retained above.

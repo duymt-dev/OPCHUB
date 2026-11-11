@@ -1,0 +1,16 @@
+TIP824 current scoped Intl implementation; working tree based one5e5bf05, production source blobs saved before build, final test-only/exception-registry edits do not change the builds. Actual2-case Lao fee/date/currency proof at1440/390 against independent Node full-ICU/raw DTOs, public auth has no unused locale payload, selected-only evaluated registration AND exact response hashes/absence of unselected built locale data. Same assertions both modes; real login and read-only guard, no fake date cells, no full TIP/native/all-language/performance acceptance. Existing MSW Portal relay, no DB/global seed/reset.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-intl.spec.ts
+[WebServer] (node:18964) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:18796) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:21676) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\admin-i18n-intl.spec.ts:46:3 › D-141 AC824-08/11/16 actual Lao fees match independent Node dates/currency and selected Intl registration 1440 (4.7s)
+  ok 2 [behavior] › behavior\admin-i18n-intl.spec.ts:46:3 › D-141 AC824-08/11/16 actual Lao fees match independent Node dates/currency and selected Intl registration 390 (4.3s)
+
+  2 passed (16.4s)
+EXIT 0

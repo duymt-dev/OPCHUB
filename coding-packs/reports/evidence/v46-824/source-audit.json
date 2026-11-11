@@ -2,18 +2,18 @@
   "status": "PASS",
   "command": "node infra/scripts/audit-admin-i18n.mjs",
   "source": {
-    "gitHead": "c56da1664530ec5c67428ba5ed1eb8d861fa2896",
+    "gitHead": "3c9674760fe1a979e087ea2f1ef289767ca461ab",
     "dirty": false,
-    "corpusSha256": "01440207b8df8aa87d8345b749b15626d47227e9c4f9cbb96547989580351e9c",
-    "fingerprintFiles": 601,
+    "corpusSha256": "a2d9af154a0aef504a3ee07c556ff54ebb05f15ce288b24d7f37a511b3a716c4",
+    "fingerprintFiles": 608,
     "fingerprintScope": "Scanned production source plus audit scripts and exact exception registries; not catalogs or browser evidence"
   },
-  "sourceFiles": 584,
+  "sourceFiles": 591,
   "excluded": [
     "test/spec/declaration files",
     "tests/__tests__/mocks/__mocks__ fixture directories"
   ],
-  "durationMs": 24923,
+  "durationMs": 28202,
   "rows": [
     {
       "file": "apps/admin/src/app/(admin)/affiliate/[[...slug]]/page.tsx",
@@ -429,20 +429,10 @@
     {
       "file": "apps/admin/src/features/bots/components/reply-heading.tsx",
       "kind": "ui-literal",
-      "line": 23,
-      "text": "2-digit",
-      "start": 769,
-      "end": 778,
-      "disposition": "retained-contract",
-      "reason": "Intl date/time option or fixed display timezone, not a visible untranslated label."
-    },
-    {
-      "file": "apps/admin/src/features/bots/components/reply-heading.tsx",
-      "kind": "ui-literal",
       "line": 24,
       "text": "2-digit",
-      "start": 798,
-      "end": 807,
+      "start": 800,
+      "end": 809,
       "disposition": "retained-contract",
       "reason": "Intl date/time option or fixed display timezone, not a visible untranslated label."
     },
@@ -451,8 +441,8 @@
       "kind": "ui-literal",
       "line": 25,
       "text": "2-digit",
-      "start": 827,
-      "end": 836,
+      "start": 829,
+      "end": 838,
       "disposition": "retained-contract",
       "reason": "Intl date/time option or fixed display timezone, not a visible untranslated label."
     },
@@ -460,9 +450,19 @@
       "file": "apps/admin/src/features/bots/components/reply-heading.tsx",
       "kind": "ui-literal",
       "line": 26,
-      "text": "Asia/Ho_Chi_Minh",
+      "text": "2-digit",
       "start": 858,
-      "end": 876,
+      "end": 867,
+      "disposition": "retained-contract",
+      "reason": "Intl date/time option or fixed display timezone, not a visible untranslated label."
+    },
+    {
+      "file": "apps/admin/src/features/bots/components/reply-heading.tsx",
+      "kind": "ui-literal",
+      "line": 27,
+      "text": "Asia/Ho_Chi_Minh",
+      "start": 889,
+      "end": 907,
       "disposition": "retained-contract",
       "reason": "Intl date/time option or fixed display timezone, not a visible untranslated label."
     },
@@ -2999,10 +2999,30 @@
       "kind": "human-literal",
       "line": 29,
       "text": "đ",
-      "start": 1008,
-      "end": 1011,
+      "start": 1026,
+      "end": 1029,
       "disposition": "retained-contract",
       "reason": "Vietnamese-only currency suffix; other locales use Intl currency formatting, no FX."
+    },
+    {
+      "file": "apps/admin/src/i18n/intl/registration-data.ts",
+      "kind": "human-literal",
+      "line": 14,
+      "text": "Admin Intl locale data unavailable:",
+      "start": 728,
+      "end": 767,
+      "disposition": "retained-contract",
+      "reason": "Technical registration failure wrapped as a structured resource error; the localized boundary renders common.state.error/retry, never this diagnostic or its cause."
+    },
+    {
+      "file": "apps/admin/src/i18n/intl/resource-error.ts",
+      "kind": "human-literal",
+      "line": 6,
+      "text": "Admin Intl resources unavailable",
+      "start": 191,
+      "end": 225,
+      "disposition": "retained-contract",
+      "reason": "Typed resource error diagnostic for logger/cause only; selected-language error/retry UI and absence of this raw message are explicitly tested in admin-intl-ready.spec.tsx."
     },
     {
       "file": "apps/admin/src/i18n/message-loader.ts",

@@ -2,6 +2,22 @@
 
 **Partial evidence only.** Metadata implementation is not proof that a route body, dialog, every locale or API is verified.
 
+## Current scoped Intl browser evidence (2026-11-12)
+
+Production working tree based on e5e5bf05; final commit/frozen-input verification is recorded in the completion report. Same assertions in MSW and approved isolated native API modes:
+
+| Suite | Per mode | Evidence / limited scope |
+|---|---:|---|
+| admin-i18n-intl | 2 | Fees1440/390, actual en→lo→en; raw DTOs vs independent Node full-ICU date/VND; selected payload response hashes, zero public-login data fetch and no km/my data |
+| admin-i18n-navigation | 10 | Real alias/F5, member vi→en→th→vi state, Profile deferred Lao draft/error retention; includes2 synthetic modal-handler probes/mode |
+| admin-i18n-picker | 6 | Three explicit ranges at1440/390, ten translated identities, exact canonical URL/API/input/F5; not manual editing/full controls |
+| admin-i18n-lao | 6 | Actual Overview/Profile/Settings1440/390,12 unmasked images total |
+| response-lifetime | 11 | Pure classifier positive/negative cases only, not authenticated browser flows |
+
+Total70 =48 UI assertion cases (4 synthetic probes included) +22 pure classifier cases. Initial native navigation had HTTP500 `/v1/admin/badges`; unchanged full10-case retry passed. Initial failure retained in intl-runtime.log; no backend fix/root-cause claim. The guard remains strict on HTTP/current-document/JSON/business-write failures. Discarded older-loader bodies are explicitly not validated.
+
+Representative current native Lao Profile1440, Overview390 and Settings390 images were inspected; no owner/native-human approval. Historical route/state evidence below retains its named source. km/my full catalogs/UI and full original-baseline performance acceptance remain missing.
+
 ## Historical production HTTP smoke (source55116347, not current browser evidence)
 
 [

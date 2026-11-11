@@ -2,6 +2,8 @@
 
 **INCOMPLETE / FAIL.** File presence alone is not completion. Counts below are raw source-key presence before any Vietnamese fallback, not native review or proof of ICU validity.
 
+2026-11-12 scoped Intl constructor work does not add translation catalogs: raw200/250 remains unchanged. Private pinned CLDR date/number resources for km/lo/my are formatting data, **not** translated message bundles. km/my raw catalog acceptance still fails; native-reviewed=false remains unchanged. See completion report and intl-runtime/intl-{msw,native}/intl-chunks evidence for the separate formatter/payload scope.
+
 | Bundle | Raw files | Required files | String leaves present | Missing string leaves |
 |---|---:|---:|---:|---:|
 | vi | 25 | 25 | 2667 | 0 |
