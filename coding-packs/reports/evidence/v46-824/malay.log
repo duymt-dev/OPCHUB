@@ -1,0 +1,28 @@
+Tested code/catalog source committed asf76118f9; blobs unchanged by normal pre-commit hooks.
+Final Malay raw/runtime/glyph source. Native-reviewed=false. Initial generated Vitest import-glob cache omitted the new folder; documented vitest --clearCache invalidated generated caches only. Actual locale assertions were retained; the Overview assertion uses the actual Malay term Gambaran keseluruhan. Full raw25-file scope, not full native API/screen acceptance.
+COMMAND pnpm --filter @opchub/admin exec vitest run src/i18n/tests/malay-catalog.spec.ts src/i18n/request.spec.ts src/i18n/font-config.spec.ts --maxWorkers=2
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  3 passed (3)
+      Tests  96 passed (96)
+   Start at  17:04:57
+   Duration  5.02s (environment 68%, tests 21%, import 7%, transform 3%, worker 1%)
+
+    Isolate  3 workers spawned · ~2.05s startup each (spawn + environment, per file)
+             at least ~1.02s faster with isolate: false — reuses workers across files instead of one per file
+
+EXIT 0
+
+PROVENANCE {
+  "files": 25,
+  "retainedPortal": 707,
+  "adaptedOrReviewed": 1953,
+  "canonical": 6,
+  "total": 2666,
+  "reviewedUniqueDrafts": 138,
+  "exactEnglishRules": 41,
+  "pathRules": 17,
+  "nativeReviewed": false
+}
