@@ -15,6 +15,7 @@ import {
   type GroupStats,
 } from '../types';
 import styles from './groups.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 const VIEW_ICON = {
   grid: 'M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z',
@@ -113,6 +114,7 @@ interface FilterProps {
 
 /** Miền (Tất cả / Bắc / Trung / Nam), loại nhóm + ngành (D-89 v4), ô tìm, sắp xếp */
 export function GroupsFilters({ all, params, onChange }: FilterProps) {
+  const numberText = useNumberText();
   const t = useTranslations('groups.list');
   const labels = useDomainLabels();
   return (
@@ -128,7 +130,7 @@ export function GroupsFilters({ all, params, onChange }: FilterProps) {
               onClick={() => onChange({ region: r, page: 1 })}
             >
               {r === 'all' ? t('regionAll') : labels.canonicalRegion(r)}
-              <span className={styles.regionN}>{regionCount(all, r)}</span>
+              <span className={styles.regionN}>{numberText(regionCount(all, r))}</span>
             </button>
           ))}
         </div>
@@ -142,7 +144,7 @@ export function GroupsFilters({ all, params, onChange }: FilterProps) {
               onClick={() => onChange({ kind: k, page: 1 })}
             >
               {t(`kind.${k}`)}
-              <span className={styles.regionN}>{kindCount(all, k)}</span>
+              <span className={styles.regionN}>{numberText(kindCount(all, k))}</span>
             </button>
           ))}
         </div>

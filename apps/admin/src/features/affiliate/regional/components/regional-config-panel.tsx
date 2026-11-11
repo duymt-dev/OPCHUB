@@ -10,8 +10,10 @@ import { RegionalSlotCard } from './regional-slot-card';
 import { RegionalHistory } from './regional-history';
 import { RegionalList } from './regional-list';
 import styles from './regional.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 export function RegionalConfigPanel({ list = false }: { list?: boolean }) {
+  const numberText = useNumberText();
   const t = useTranslations('affiliate.regional');
   const q = useRegionalDirectors();
   const allowed = useCan('affiliate.regional');
@@ -57,7 +59,7 @@ export function RegionalConfigPanel({ list = false }: { list?: boolean }) {
       )}
       <div className={styles.notice}>
         {q.data.unassignedProvinces
-          ? t('unassigned', { n: q.data.unassignedProvinces })
+          ? t('unassigned', { n: numberText(q.data.unassignedProvinces) })
           : t('allAssigned')}
       </div>
       <div className={styles.slots}>

@@ -3,14 +3,20 @@ import { useLocale, useTranslations } from 'next-intl';
 import type { RegionalShareSummary } from '@opchub/shared/api-domains';
 import { affiliateDate, affiliateMoney } from '../../format';
 import styles from './regional-share.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
+
 export function RegionalShareKpis({ kpi }: { kpi: RegionalShareSummary['kpi'] }) {
+  const numberText = useNumberText();
   const locale = useLocale();
   const t = useTranslations('affiliate.regional.share');
   const cards = [
     {
       key: 'total',
       value: kpi.total,
-      hint: t('totalHint', { count: kpi.count, affiliates: kpi.affiliates }),
+      hint: t('totalHint', {
+        count: numberText(kpi.count),
+        affiliates: numberText(kpi.affiliates),
+      }),
     },
     {
       key: 'due',

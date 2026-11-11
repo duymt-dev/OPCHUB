@@ -1,0 +1,146 @@
+[
+  {
+    "file": "apps/admin/src/app/(admin)/affiliate/[[...slug]]/page.tsx",
+    "kind": "human-literal",
+    "text": "· OPC Hub Admin",
+    "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+  },
+  {
+    "file": "apps/admin/src/app/(admin)/bots/[[...slug]]/page.tsx",
+    "kind": "human-literal",
+    "text": "· OPC Hub Admin",
+    "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+  },
+  {
+    "file": "apps/admin/src/app/(admin)/events/page.tsx",
+    "kind": "human-literal",
+    "text": "· OPC Hub Admin",
+    "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+  },
+  {
+    "file": "apps/admin/src/app/(admin)/fees/page.tsx",
+    "kind": "human-literal",
+    "text": "· OPC Hub Admin",
+    "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+  },
+  {
+    "file": "apps/admin/src/app/(admin)/fees/transactions/page.tsx",
+    "kind": "human-literal",
+    "text": "· OPC Hub Admin",
+    "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+  },
+  {
+    "file": "apps/admin/src/app/(admin)/groups/[id]/chat/page.tsx",
+    "kind": "human-literal",
+    "text": "· OPC Hub Admin",
+    "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+  },
+  {
+    "file": "apps/admin/src/app/(admin)/groups/page.tsx",
+    "kind": "human-literal",
+    "text": "· OPC Hub Admin",
+    "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+  },
+  {
+    "file": "apps/admin/src/app/(admin)/investors/page.tsx",
+    "kind": "human-literal",
+    "text": "· OPC Hub Admin",
+    "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+  },
+  {
+    "file": "apps/admin/src/app/(admin)/marketing/page.tsx",
+    "kind": "human-literal",
+    "text": "· OPC Hub Admin",
+    "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+  },
+  {
+    "file": "apps/admin/src/app/(admin)/members/page.tsx",
+    "kind": "human-literal",
+    "text": "· OPC Hub Admin",
+    "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+  },
+  {
+    "file": "apps/admin/src/app/(admin)/needs/page.tsx",
+    "kind": "human-literal",
+    "text": "· OPC Hub Admin",
+    "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+  },
+  {
+    "file": "apps/admin/src/app/(admin)/overview/page.tsx",
+    "kind": "human-literal",
+    "text": "· OPC Hub Admin",
+    "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+  },
+  {
+    "file": "apps/admin/src/app/(admin)/profile/page.tsx",
+    "kind": "human-literal",
+    "text": "· OPC Hub Admin",
+    "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+  },
+  {
+    "file": "apps/admin/src/app/(admin)/projects/[[...slug]]/page.tsx",
+    "kind": "human-literal",
+    "text": "· OPC Hub Admin",
+    "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+  },
+  {
+    "file": "apps/admin/src/app/(admin)/reports/page.tsx",
+    "kind": "human-literal",
+    "text": "· OPC Hub Admin",
+    "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+  },
+  {
+    "file": "apps/admin/src/app/(admin)/requests/[[...tab]]/page.tsx",
+    "kind": "human-literal",
+    "text": "· OPC Hub Admin",
+    "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+  },
+  {
+    "file": "apps/admin/src/app/(admin)/settings/page.tsx",
+    "kind": "human-literal",
+    "text": "· OPC Hub Admin",
+    "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+  },
+  {
+    "file": "apps/admin/src/app/(admin)/stores/page.tsx",
+    "kind": "human-literal",
+    "text": "· OPC Hub Admin",
+    "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+  },
+  {
+    "file": "apps/admin/src/app/(public)/first-password/page.tsx",
+    "kind": "human-literal",
+    "text": "· OPC Hub Admin",
+    "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+  },
+  {
+    "file": "apps/admin/src/app/(public)/forgot-password/page.tsx",
+    "kind": "human-literal",
+    "text": "· OPC Hub Admin",
+    "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+  },
+  {
+    "file": "apps/admin/src/app/(public)/login/page.tsx",
+    "kind": "human-literal",
+    "text": "· OPC Hub Admin",
+    "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+  },
+  {
+    "file": "apps/admin/src/app/(public)/reset-password/page.tsx",
+    "kind": "human-literal",
+    "text": "· OPC Hub Admin",
+    "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+  },
+  {
+    "file": "apps/admin/src/app/(public)/two-factor/page.tsx",
+    "kind": "human-literal",
+    "text": "· OPC Hub Admin",
+    "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+  },
+  {
+    "file": "apps/admin/src/app/layout.tsx",
+    "kind": "ui-literal",
+    "text": "OPC Hub Admin",
+    "reason": "Required unchanged root metadata brand title."
+  }
+]

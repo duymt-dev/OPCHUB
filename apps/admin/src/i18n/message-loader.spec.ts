@@ -59,7 +59,13 @@ describe('D-141 AC824-03 source partition and fallback', () => {
     const settings = Object.fromEntries(
       Object.entries(messages.settings).filter(([key]) => key !== 'aiCalls'),
     );
-    const entries = leaves(settings).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
+    const originalSettings = {
+      ...settings,
+      ai: Object.fromEntries(
+        Object.entries(messages.settings.ai).filter(([key]) => key !== 'customProviderLabel'),
+      ),
+    };
+    const entries = leaves(originalSettings).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
     expect(entries).toHaveLength(baseline.stringLeaves);
     expect(createHash('sha256').update(JSON.stringify(entries)).digest('hex')).toBe(
       baseline.sha256,
@@ -71,7 +77,7 @@ describe('D-141 AC824-03 source partition and fallback', () => {
     );
     const original = {
       ...legacy,
-      settings,
+      settings: originalSettings,
       groups: {
         ...messages.groups,
         mod: Object.fromEntries(

@@ -55,7 +55,8 @@
     "retry": "重试",
     "purposeModel": "模型（{purpose}）",
     "providerDefault": "提供商默认模型",
-    "budgetAlert": "达到阈值或预算耗尽时，在管理后台显示警告，不发送邮件。"
+    "budgetAlert": "达到阈值或预算耗尽时，在管理后台显示警告，不发送邮件。",
+    "customProviderLabel": "自定义（兼容 OpenAI）"
   },
   "app": {
     "heading": "移动应用与推送通知",

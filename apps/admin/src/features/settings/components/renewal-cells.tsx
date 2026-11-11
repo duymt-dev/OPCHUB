@@ -3,7 +3,10 @@ import type { RenewalRow } from '@opchub/shared/api-domains';
 import { useFormatter, useTranslations, useNow } from 'next-intl';
 import { useRelTime } from '../hooks/use-rel-time';
 import styles from './renewal.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
+
 export function RenewalExpiry({ row: r }: { row: RenewalRow }) {
+  const numberText = useNumberText();
   const t = useTranslations('settings.renewal'),
     fmt = useFormatter();
   return (
@@ -17,7 +20,7 @@ export function RenewalExpiry({ row: r }: { row: RenewalRow }) {
         })}
       </span>
       <small className={r.daysLeft <= 7 ? styles.urgent : styles.soon}>
-        {t('left', { n: r.daysLeft })}
+        {t('left', { n: numberText(r.daysLeft) })}
       </small>
     </div>
   );

@@ -55,7 +55,8 @@
     "retry": "Cuba lagi",
     "purposeModel": "Model ({purpose})",
     "providerDefault": "Lalai penyedia",
-    "budgetAlert": "Paparkan amaran Admin apabila ambang dicapai atau bajet habis; tiada e-mel dihantar."
+    "budgetAlert": "Paparkan amaran Admin apabila ambang dicapai atau bajet habis; tiada e-mel dihantar.",
+    "customProviderLabel": "Tersuai (serasi OpenAI)"
   },
   "app": {
     "heading": "Aplikasi mudah alih & Pemberitahuan push",

@@ -9,7 +9,10 @@ import { RegionalPayoutHistory } from './regional-payout-history';
 import { RegionalPayoutDialog } from './regional-payout-dialog';
 import { RegionalPayeeBankDialog } from './regional-payee-bank-dialog';
 import styles from './regional-share.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
+
 export function RegionalShareRow({ row }: { row: Row }) {
+  const numberText = useNumberText();
   const locale = useLocale();
   const t = useTranslations('affiliate.regional.share');
   const [open, setOpen] = useState(false);
@@ -23,7 +26,8 @@ export function RegionalShareRow({ row }: { row: Row }) {
             <div>
               <b>{row.member?.fullName ?? t('vacant')}</b>
               <small>
-                {row.label} · {t('provinces', { n: row.provinces })} · {row.member?.email}
+                {row.label} · {t('provinces', { n: numberText(row.provinces) })} ·{' '}
+                {row.member?.email}
               </small>
             </div>
           </button>
@@ -32,8 +36,8 @@ export function RegionalShareRow({ row }: { row: Row }) {
           <b>{row.bank?.bankHolder ?? t('noBank')}</b>
           <small>{row.bank ? `${row.bank.bankName} · ${row.bank.bankNo}` : ''}</small>
         </div>
-        <div role="cell">{row.affiliates}</div>
-        <div role="cell">{row.count}</div>
+        <div role="cell">{numberText(row.affiliates)}</div>
+        <div role="cell">{numberText(row.count)}</div>
         <div role="cell">{affiliateMoney(row.total, locale)}</div>
         <div role="cell" className={styles.paid}>
           {affiliateMoney(row.paid, locale)}

@@ -1,6 +1,7 @@
 import type { BotBulkBatch } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
 import s from './bulk.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 export function BulkHeading() {
   const t = useTranslations('bots.bulk');
@@ -29,6 +30,7 @@ export function BulkFooter({
   onClose: () => void;
   onSave: (id: string) => void;
 }) {
+  const numberText = useNumberText();
   const t = useTranslations('bots.bulk');
   const selected = Math.max(0, (batch?.selectedCount ?? 0) - (batch?.savedCount ?? 0));
   return (
@@ -46,7 +48,7 @@ export function BulkFooter({
           disabled={disabled || batch.status !== 'done' || selected < 1}
           onClick={() => onSave(batch.id)}
         >
-          {t('save', { n: selected })}
+          {t('save', { n: numberText(selected) })}
         </button>
       ) : null}
     </>

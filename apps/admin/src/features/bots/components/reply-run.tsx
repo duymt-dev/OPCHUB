@@ -3,8 +3,10 @@
 import type { BotReplyRun } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
 import styles from './reply-panel.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 export function ReplyRun({ run }: { run: BotReplyRun | null }) {
+  const numberText = useNumberText();
   const t = useTranslations('bots.replies');
   if (!run) return null;
   return (
@@ -12,9 +14,9 @@ export function ReplyRun({ run }: { run: BotReplyRun | null }) {
       <span>
         {t(`run.${run.status}`, {
           group: run.groupName,
-          processed: run.processed,
-          total: run.total,
-          posted: run.posted,
+          processed: numberText(run.processed),
+          total: numberText(run.total),
+          posted: numberText(run.posted),
         })}
       </span>
       <progress

@@ -1,0 +1,176 @@
+[
+  {
+    "file": "apps/admin/src/i18n/antd/translate-locale.ts",
+    "kind": "human-literal",
+    "text": "Untranslated AntD locale text:",
+    "reason": "Internal locale integrity diagnostic; not user-facing chrome."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/translate-locale.ts",
+    "kind": "human-literal",
+    "text": "AntD locale must be serializable",
+    "reason": "Internal locale integrity diagnostic; not user-facing chrome."
+  },
+  {
+    "file": "apps/admin/src/i18n/compact-money.ts",
+    "kind": "human-literal",
+    "text": "tỷ ₫",
+    "reason": "Explicit Vietnamese-only compact-currency formatter branch; other locales use their own Intl formatter, with no FX."
+  },
+  {
+    "file": "apps/admin/src/i18n/compact-money.ts",
+    "kind": "human-literal",
+    "text": "triệu ₫",
+    "reason": "Explicit Vietnamese-only compact-currency formatter branch; other locales use their own Intl formatter, with no FX."
+  },
+  {
+    "file": "apps/admin/src/i18n/domain-labels.ts",
+    "kind": "human-literal",
+    "text": "Miền Bắc",
+    "reason": "Canonical region name/lookup key; rendered region labels use the translated domain projection and API values remain unchanged."
+  },
+  {
+    "file": "apps/admin/src/i18n/domain-labels.ts",
+    "kind": "human-literal",
+    "text": "Miền Trung",
+    "reason": "Canonical region name/lookup key; rendered region labels use the translated domain projection and API values remain unchanged."
+  },
+  {
+    "file": "apps/admin/src/i18n/domain-labels.ts",
+    "kind": "human-literal",
+    "text": "Miền Nam",
+    "reason": "Canonical region name/lookup key; rendered region labels use the translated domain projection and API values remain unchanged."
+  },
+  {
+    "file": "apps/admin/src/i18n/font-config.ts",
+    "kind": "human-literal",
+    "text": "OPCHUB SC",
+    "reason": "CSS font-family identifier or syntax fragment bound to bundled font assets; not display prose."
+  },
+  {
+    "file": "apps/admin/src/i18n/font-config.ts",
+    "kind": "human-literal",
+    "text": "OPCHUB Thai",
+    "reason": "CSS font-family identifier or syntax fragment bound to bundled font assets; not display prose."
+  },
+  {
+    "file": "apps/admin/src/i18n/font-config.ts",
+    "kind": "human-literal",
+    "text": "OPCHUB Khmer",
+    "reason": "CSS font-family identifier or syntax fragment bound to bundled font assets; not display prose."
+  },
+  {
+    "file": "apps/admin/src/i18n/font-config.ts",
+    "kind": "human-literal",
+    "text": "OPCHUB Lao",
+    "reason": "CSS font-family identifier or syntax fragment bound to bundled font assets; not display prose."
+  },
+  {
+    "file": "apps/admin/src/i18n/font-config.ts",
+    "kind": "human-literal",
+    "text": "OPCHUB Myanmar",
+    "reason": "CSS font-family identifier or syntax fragment bound to bundled font assets; not display prose."
+  },
+  {
+    "file": "apps/admin/src/i18n/font-config.ts",
+    "kind": "human-literal",
+    "text": "'OPCHUB Latin', '",
+    "reason": "CSS font-family identifier or syntax fragment bound to bundled font assets; not display prose."
+  },
+  {
+    "file": "apps/admin/src/i18n/font-config.ts",
+    "kind": "human-literal",
+    "text": "', sans-serif",
+    "reason": "CSS font-family identifier or syntax fragment bound to bundled font assets; not display prose."
+  },
+  {
+    "file": "apps/admin/src/i18n/font-config.ts",
+    "kind": "human-literal",
+    "text": "'OPCHUB Latin', sans-serif",
+    "reason": "CSS font-family identifier or syntax fragment bound to bundled font assets; not display prose."
+  },
+  {
+    "file": "apps/admin/src/i18n/format.ts",
+    "kind": "human-literal",
+    "text": "đ",
+    "reason": "Vietnamese-only currency suffix; other locales use Intl currency formatting, no FX."
+  },
+  {
+    "file": "apps/admin/src/i18n/message-loader.ts",
+    "kind": "human-literal",
+    "text": "Invalid settings catalog part",
+    "reason": "Internal catalog validation/fallback diagnostic; UI receives the validated fallback bundle, not this string."
+  },
+  {
+    "file": "apps/admin/src/i18n/message-loader.ts",
+    "kind": "human-literal",
+    "text": "Duplicate settings catalog key",
+    "reason": "Internal catalog validation/fallback diagnostic; UI receives the validated fallback bundle, not this string."
+  },
+  {
+    "file": "apps/admin/src/i18n/message-loader.ts",
+    "kind": "human-literal",
+    "text": "Catalog unavailable:",
+    "reason": "Internal catalog validation/fallback diagnostic; UI receives the validated fallback bundle, not this string."
+  },
+  {
+    "file": "apps/admin/src/i18n/message-loader.ts",
+    "kind": "human-literal",
+    "text": "Catalog fallback:",
+    "reason": "Internal catalog validation/fallback diagnostic; UI receives the validated fallback bundle, not this string."
+  },
+  {
+    "file": "apps/admin/src/i18n/validation.ts",
+    "kind": "human-literal",
+    "text": "Mật khẩu mới phải khác mật khẩu hiện tại",
+    "reason": "Finite known local-schema message matching rule projected to translated client error; raw API errors are never reverse-matched."
+  },
+  {
+    "file": "apps/admin/src/i18n/validation.ts",
+    "kind": "human-literal",
+    "text": "Số tài khoản gồm 6–20 chữ số",
+    "reason": "Finite known local-schema message matching rule projected to translated client error; raw API errors are never reverse-matched."
+  },
+  {
+    "file": "apps/admin/src/i18n/validation.ts",
+    "kind": "human-literal",
+    "text": "Tên chủ tài khoản chỉ gồm chữ cái",
+    "reason": "Finite known local-schema message matching rule projected to translated client error; raw API errors are never reverse-matched."
+  },
+  {
+    "file": "apps/admin/src/lib/api-client.ts",
+    "kind": "human-literal",
+    "text": "Authorization",
+    "reason": "HTTP protocol header/authentication token, never translated."
+  },
+  {
+    "file": "apps/admin/src/lib/api-client.ts",
+    "kind": "human-literal",
+    "text": "Bearer",
+    "reason": "HTTP protocol header/authentication token, never translated."
+  },
+  {
+    "file": "apps/admin/src/lib/api-client.ts",
+    "kind": "human-literal",
+    "text": "Content-Type",
+    "reason": "HTTP protocol header/authentication token, never translated."
+  },
+  {
+    "file": "apps/admin/src/lib/api-client.ts",
+    "kind": "human-literal",
+    "text": "Idempotency-Key",
+    "reason": "HTTP protocol header/authentication token, never translated."
+  },
+  {
+    "file": "apps/admin/src/lib/image-upload-error.ts",
+    "kind": "human-literal",
+    "text": "Local image upload failure",
+    "reason": "Typed local error diagnostic; actual Admin wrapper formats local codes with the live translator, raw API errors pass through."
+  },
+  {
+    "file": "apps/admin/src/providers/admin-intl-errors.tsx",
+    "kind": "human-literal",
+    "text": "Intl error:",
+    "reason": "Logger diagnostic prefix, not rendered UI text."
+  }
+]

@@ -8,6 +8,7 @@ import { messageOf } from '@/lib/api-errors';
 import { fetchNeeds, moderateNeeds, needKeys } from '../api';
 import { toggleAll } from '../model';
 import type { NeedParams } from '../types';
+import { useNumberText } from '@/i18n/use-number-text';
 
 export function useNeeds(params: NeedParams) {
   return useQuery({
@@ -36,6 +37,7 @@ export function useSelection() {
 
 /** Ẩn / Hiển thị (đơn lẻ, hàng loạt) — BE ghi audit_logs từng nhu cầu (luật 10) */
 export function useNeedModeration(onDone: () => void) {
+  const numberText = useNumberText();
   const t = useTranslations('needs.toast');
   const toast = useToast();
   const qc = useQueryClient();
@@ -44,7 +46,7 @@ export function useNeedModeration(onDone: () => void) {
       moderateNeeds(action, ids),
     onSuccess: (_d, v) => {
       // Prototype đếm theo số nhu cầu được chọn ("Đã ẩn N nhu cầu")
-      toast(t(v.action === 'hide' ? 'hidden' : 'shown', { n: v.ids.length }));
+      toast(t(v.action === 'hide' ? 'hidden' : 'shown', { n: numberText(v.ids.length) }));
       onDone();
       void qc.invalidateQueries({ queryKey: needKeys.all });
     },

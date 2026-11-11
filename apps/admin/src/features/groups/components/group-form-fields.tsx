@@ -7,6 +7,7 @@ import type { ReactNode } from 'react';
 import { nameForIndustry, nameForProvince } from '../model';
 import type { GroupField, GroupFormState, Person } from '../types';
 import styles from './group-form.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 export type FormPatch = (patch: Partial<GroupFormState>) => void;
 
@@ -56,6 +57,7 @@ export function CoverField({ f, set, onFile }: Props & { onFile: (file: File) =>
 
 /** `kind`: ô "Loại nhóm" / "Ngành" chen giữa Tên–Tỉnh và Mô tả như prototype v4 */
 export function BasicFields({ f, set, err, kind }: Props & Err & { kind: ReactNode }) {
+  const numberText = useNumberText();
   const t = useTranslations('groups.form');
   return (
     <>
@@ -110,7 +112,9 @@ export function BasicFields({ f, set, err, kind }: Props & Err & { kind: ReactNo
           <span>
             <Req /> {t('desc')}
           </span>
-          <span className={styles.hint}>{f.description.length}/200</span>
+          <span className={styles.hint}>
+            {numberText(f.description.length)}/{numberText(200)}
+          </span>
         </span>
         <textarea
           rows={3}

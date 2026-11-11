@@ -48,7 +48,7 @@ describe('D-141 AC824-11 stable domain values and localized labels', () => {
   it('changes bot preset display text but not any gender/tone/hour/script value sent to the API', () => {
     const vi = renderHook(useBotOptionLabels, { wrapper: wrapper('vi') }).result.current;
     const en = renderHook(useBotOptionLabels, { wrapper: wrapper('en') }).result.current;
-    for (const key of ['tones', 'genders', 'hours', 'scriptTypes'] as const) {
+    for (const key of ['tones', 'genders', 'hours', 'ages', 'scriptTypes'] as const) {
       expect(en[key].map((option) => option.value)).toEqual(vi[key].map((option) => option.value));
     }
     expect(en.tones[0]).toEqual({
@@ -56,6 +56,17 @@ describe('D-141 AC824-11 stable domain values and localized labels', () => {
       label: 'Friendly and inquisitive',
     });
     expect(en.scriptTypes[0]).toEqual({ value: 'Hỏi đáp', label: 'Questions & answers' });
+    expect(en.tone('Thân thiện, hay hỏi')).toBe('Friendly and inquisitive');
+    expect(en.activeHour('Cả ngày')).toBe('All day');
+    expect(en.tone('Custom tone')).toBe('Custom tone');
+    expect(en.activeHour('Custom schedule')).toBe('Custom schedule');
+  });
+
+  it('D-141 AC824-08/11 localizes known age digits without changing the canonical selection', () => {
+    // Numeric projection fixture only; not a claim that the Myanmar catalog exists.
+    const { result } = renderHook(useBotOptionLabels, { wrapper: wrapper('my') });
+    expect(result.current.ages[0]).toEqual({ value: '18 – 24', label: '၁၈ – ၂၄' });
+    expect(result.current.ages.at(-1)).toEqual({ value: '55+', label: '၅၅+' });
   });
 
   it('keeps submitted rejection reasons unchanged while translating their visible text', () => {

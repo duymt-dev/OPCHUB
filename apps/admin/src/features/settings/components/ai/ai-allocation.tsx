@@ -1,10 +1,12 @@
 'use client';
-import { AI_PROVIDER_CATALOG, AI_PURPOSES } from '@opchub/shared/api-domains';
+import { AI_PURPOSES } from '@opchub/shared/api-domains';
+import { useAiProviderLabel } from '../../hooks/use-ai-provider-label';
 import { useTranslations } from 'next-intl';
 import type { AiPanel } from './types';
 import styles from './ai.module.css';
 import { AiPurposeModel } from './ai-purpose-model';
 export function AiAllocation({ p }: { p: AiPanel }) {
+  const providerLabel = useAiProviderLabel();
   const t = useTranslations('settings.ai');
   const form = p.form;
   if (!form) return null;
@@ -36,7 +38,7 @@ export function AiAllocation({ p }: { p: AiPanel }) {
                 .filter((r) => r.enabled)
                 .map((r) => (
                   <option key={r.id} value={r.id}>
-                    {AI_PROVIDER_CATALOG[r.id].name}
+                    {providerLabel(r.id)}
                   </option>
                 ))}
             </select>

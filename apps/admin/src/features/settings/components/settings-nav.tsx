@@ -6,6 +6,7 @@ import styles from './settings.module.css';
 import { useQuery } from '@tanstack/react-query';
 import { aiKey, fetchAiSettings } from '../ai-api';
 import llmStyles from './ai/ai.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 /**
  * D-33 SSO + Ngôn ngữ: ngoài 7 mục của prototype v4. Ở điện thoại ẩn như v4 (D-89); màn rộng
@@ -25,6 +26,7 @@ export function SettingsNav({
   counts: { categories: number; languages: number; roles: number };
   onTab: (t: SettingsTab) => void;
 }) {
+  const numberText = useNumberText();
   const t = useTranslations('settings');
   const ai = useQuery({ queryKey: aiKey, queryFn: fetchAiSettings, enabled: tabs.includes('llm') });
   return (
@@ -59,7 +61,7 @@ export function SettingsNav({
               <span className={styles.navLabel}>{t(`tabs.${k}`)}</span>
               <span className={styles.navSub}>
                 {t(`tabSub.${k}`, {
-                  n:
+                  n: numberText(
                     k === 'llm'
                       ? (ai.data?.providers.filter((p) => p.enabled).length ?? 0)
                       : k === 'languages'
@@ -67,6 +69,7 @@ export function SettingsNav({
                         : k === 'roles'
                           ? counts.roles
                           : counts.categories,
+                  ),
                 })}
               </span>
             </span>

@@ -1,0 +1,164 @@
+[
+  {
+    "file": "apps/admin/src/i18n/antd/lo.ts",
+    "kind": "human-literal",
+    "text": "/ ໜ້າ",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/lo.ts",
+    "kind": "human-literal",
+    "text": "5 ໜ້າກ່ອນ",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/lo.ts",
+    "kind": "human-literal",
+    "text": "5 ໜ້າຕໍ່ໄປ",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/lo.ts",
+    "kind": "human-literal",
+    "text": "3 ໜ້າກ່ອນ",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/lo.ts",
+    "kind": "human-literal",
+    "text": "3 ໜ້າຕໍ່ໄປ",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/lo.ts",
+    "kind": "human-literal",
+    "text": "ຂໍ້ມູນ ${label} ບໍ່ຖືກຕ້ອງ",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/lo.ts",
+    "kind": "human-literal",
+    "text": "ກະລຸນາປ້ອນ ${label}",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/lo.ts",
+    "kind": "human-literal",
+    "text": "${label} ຕ້ອງເປັນໜຶ່ງໃນ [${enum}]",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/lo.ts",
+    "kind": "human-literal",
+    "text": "${label} ບໍ່ສາມາດເປັນຊ່ອງຫວ່າງ",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/lo.ts",
+    "kind": "human-literal",
+    "text": "ຮູບແບບວັນທີ ${label} ບໍ່ຖືກຕ້ອງ",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/lo.ts",
+    "kind": "human-literal",
+    "text": "ບໍ່ສາມາດປ່ຽນ ${label} ເປັນວັນທີ",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/lo.ts",
+    "kind": "human-literal",
+    "text": "${label} ເປັນວັນທີທີ່ບໍ່ຖືກຕ້ອງ",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/lo.ts",
+    "kind": "human-literal",
+    "text": "${label} ບໍ່ແມ່ນ ${type} ທີ່ຖືກຕ້ອງ",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/lo.ts",
+    "kind": "human-literal",
+    "text": "${label} ຕ້ອງມີ ${len} ຕົວອັກສອນ",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/lo.ts",
+    "kind": "human-literal",
+    "text": "${label} ຕ້ອງມີຢ່າງໜ້ອຍ ${min} ຕົວອັກສອນ",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/lo.ts",
+    "kind": "human-literal",
+    "text": "${label} ຕ້ອງບໍ່ເກີນ ${max} ຕົວອັກສອນ",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/lo.ts",
+    "kind": "human-literal",
+    "text": "${label} ຕ້ອງມີລະຫວ່າງ ${min}-${max} ຕົວອັກສອນ",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/lo.ts",
+    "kind": "human-literal",
+    "text": "${label} ຕ້ອງເທົ່າກັບ ${len}",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/lo.ts",
+    "kind": "human-literal",
+    "text": "${label} ຕ້ອງບໍ່ນ້ອຍກວ່າ ${min}",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/lo.ts",
+    "kind": "human-literal",
+    "text": "${label} ຕ້ອງບໍ່ຫຼາຍກວ່າ ${max}",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/lo.ts",
+    "kind": "human-literal",
+    "text": "${label} ຕ້ອງຢູ່ລະຫວ່າງ ${min}-${max}",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/lo.ts",
+    "kind": "human-literal",
+    "text": "ຕ້ອງມີ ${len} ${label}",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/lo.ts",
+    "kind": "human-literal",
+    "text": "ຢ່າງໜ້ອຍ ${min} ${label}",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/lo.ts",
+    "kind": "human-literal",
+    "text": "ບໍ່ເກີນ ${max} ${label}",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/lo.ts",
+    "kind": "human-literal",
+    "text": "ຈຳນວນ ${label} ຕ້ອງຢູ່ລະຫວ່າງ ${min}-${max}",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/lo.ts",
+    "kind": "human-literal",
+    "text": "${label} ບໍ່ກົງກັບຮູບແບບ ${pattern}",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/lo.ts",
+    "kind": "human-literal",
+    "text": "ລະຫັດ QR ໝົດອາຍຸ",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  }
+]

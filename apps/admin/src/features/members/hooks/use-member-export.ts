@@ -5,12 +5,14 @@ import { useMutation } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { type ExportOutcome, useExportJob } from '@/lib/use-export-job';
 import { exportMembers } from '../api';
+import { useNumberText } from '@/i18n/use-number-text';
 
 /**
  * Xuất CSV thành viên (BUG-013, QT-12 bước 5): tạo job → chờ xong → tải file. Mỗi lần nhận link
  * server ghi audit `export.download` (NA-14); lỗi / quá hạn chờ → toast có lý do.
  */
 export function useMemberExport(fail: (e: unknown) => void) {
+  const numberText = useNumberText();
   const t = useTranslations('members.toast');
   const toast = useToast();
   const runExport = useExportJob();
@@ -20,9 +22,9 @@ export function useMemberExport(fail: (e: unknown) => void) {
   };
   return useMutation({
     mutationFn: async (ids: string[]) => runExport((await exportMembers(ids)).jobId),
-    onMutate: (ids) => toast(t('exporting', { n: ids.length })),
+    onMutate: (ids) => toast(t('exporting', { n: numberText(ids.length) })),
     onSuccess: (out) => {
-      if (out.kind === 'done') toast(t('exported', { n: out.rows }));
+      if (out.kind === 'done') toast(t('exported', { n: numberText(out.rows) }));
       else toast(out.kind === 'error' ? out.message : reason[out.kind]);
     },
     onError: fail,

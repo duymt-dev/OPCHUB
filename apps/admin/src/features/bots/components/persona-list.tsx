@@ -6,6 +6,8 @@ import { initialOf, splitTags } from '../model';
 import { PersonaAvatar, Switch } from './bits';
 import styles from './bots.module.css';
 import c from './cards.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
+import { useBotOptionLabels } from '../option-labels';
 
 interface Props {
   personas: Persona[];
@@ -18,6 +20,8 @@ interface Props {
 
 /** D-37 tab Persona: thẻ có công tắc, giọng văn, chuyên môn, số liệu, Sửa / Xóa */
 export function PersonaList({ personas, groupName, onNew, onEdit, onToggle, onDelete }: Props) {
+  const numberText = useNumberText();
+  const options = useBotOptionLabels();
   const t = useTranslations('bots.persona');
   return (
     <>
@@ -52,7 +56,7 @@ export function PersonaList({ personas, groupName, onNew, onEdit, onToggle, onDe
             </div>
             {p.bio ? <span className={c.bio}>{p.bio}</span> : null}
             <div className={c.tags}>
-              <span className={c.tag}>{p.tone}</span>
+              <span className={c.tag}>{options.tone(p.tone)}</span>
               {splitTags(p.skills).map((s) => (
                 <span key={s} className={`${c.tag} ${c.tagBlue}`}>
                   {s}
@@ -61,15 +65,15 @@ export function PersonaList({ personas, groupName, onNew, onEdit, onToggle, onDe
             </div>
             <div className={c.metrics}>
               <div className={c.metric}>
-                <b>{p.postCount}</b>
+                <b>{numberText(p.postCount)}</b>
                 <span>{t('posts')}</span>
               </div>
               <div className={c.metric}>
-                <b>{t('freqValue', { n: p.postsPerDay })}</b>
+                <b>{t('freqValue', { n: numberText(p.postsPerDay) })}</b>
                 <span>{t('freq')}</span>
               </div>
               <div className={c.metric}>
-                <b>{p.activeHours}</b>
+                <b>{options.activeHour(p.activeHours)}</b>
                 <span>{t('hours')}</span>
               </div>
             </div>

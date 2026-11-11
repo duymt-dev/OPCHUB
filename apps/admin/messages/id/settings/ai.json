@@ -55,7 +55,8 @@
     "retry": "Coba lagi",
     "purposeModel": "Model ({purpose})",
     "providerDefault": "Bawaan penyedia",
-    "budgetAlert": "Tampilkan peringatan Admin saat ambang tercapai atau anggaran habis; tidak ada email yang dikirim."
+    "budgetAlert": "Tampilkan peringatan Admin saat ambang tercapai atau anggaran habis; tidak ada email yang dikirim.",
+    "customProviderLabel": "Kustom (kompatibel OpenAI)"
   },
   "app": {
     "heading": "Aplikasi seluler & Notifikasi push",

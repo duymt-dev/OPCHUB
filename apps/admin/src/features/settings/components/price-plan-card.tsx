@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import { vnd } from '../model';
 import styles from './price.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 /** Ô số của prototype (`inputmode="numeric"`, nhãn trên, gợi ý dưới) */
 export function PriceInput({
@@ -44,6 +45,7 @@ export function PricePlanCard({
   y: number;
   onSet: (k: 'list' | 'y', v: string) => void;
 }) {
+  const numberText = useNumberText();
   const locale = useLocale();
   const t = useTranslations('settings.price');
   return (
@@ -71,7 +73,7 @@ export function PricePlanCard({
         <b className={styles.previewPrice}>
           {t('perMonth', { amount: vnd(monthlyOf(y), locale) })}
         </b>
-        <span className={styles.off}>{t('off', { pct: discountPctOf(list, y) })}</span>
+        <span className={styles.off}>{t('off', { pct: numberText(discountPctOf(list, y)) })}</span>
       </div>
       {monthlyAboveList(list, y) ? <span className={styles.warn}>{t('warn')}</span> : null}
     </div>

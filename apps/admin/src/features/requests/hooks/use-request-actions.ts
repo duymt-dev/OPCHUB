@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { ApiError } from '@/lib/api-client';
 import { exportRequests, requestKeys, sendRequestComment } from '../api';
+import { useNumberText } from '@/i18n/use-number-text';
 
 /** Tải file CSV server dựng về máy */
 function download(filename: string, csv: string) {
@@ -21,6 +22,7 @@ function download(filename: string, csv: string) {
  * D-72: không đổi trạng thái, không giao phụ trách.
  */
 export function useRequestActions() {
+  const numberText = useNumberText();
   const t = useTranslations('requests');
   const toast = useToast();
   const qc = useQueryClient();
@@ -48,7 +50,9 @@ export function useRequestActions() {
     mutationFn: exportRequests,
     onSuccess: (d) => {
       download(d.filename, d.csv);
-      toast(t('toast.exported', { n: d.csv.split('\n').slice(1).filter(Boolean).length }));
+      toast(
+        t('toast.exported', { n: numberText(d.csv.split('\n').slice(1).filter(Boolean).length) }),
+      );
     },
     onError: fail,
   });

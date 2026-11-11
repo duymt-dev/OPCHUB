@@ -6,9 +6,11 @@ import { useTranslations } from 'next-intl';
 import { messageOf } from '@/lib/api-errors';
 import { affiliateKeys, cancelCommissions, restoreCommissions } from '../api';
 import { useAffiliateAccess } from './use-affiliate-access';
+import { useNumberText } from '@/i18n/use-number-text';
 
 /** Hủy / khôi phục khoản hoa hồng (D-110: Đã hủy → Đã ghi nhận); kiểm quyền tại ranh giới mutation. */
 export function useCommissionStatusWrites() {
+  const numberText = useNumberText();
   const access = useAffiliateAccess();
   const qc = useQueryClient();
   const toast = useToast();
@@ -22,7 +24,7 @@ export function useCommissionStatusWrites() {
     },
     onSuccess: async (result) => {
       if (!result) return;
-      toast(t('toast.cancelled', { n: result.cancelled }));
+      toast(t('toast.cancelled', { n: numberText(result.cancelled) }));
       await refresh();
     },
     onError: fail,
@@ -34,7 +36,7 @@ export function useCommissionStatusWrites() {
     },
     onSuccess: async (result) => {
       if (!result) return;
-      toast(t('toast.restored', { n: result.restored }));
+      toast(t('toast.restored', { n: numberText(result.restored) }));
       await refresh();
     },
     onError: fail,

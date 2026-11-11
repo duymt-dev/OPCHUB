@@ -7,8 +7,10 @@ import { ApiError } from '@/lib/api-client';
 import { useExportJob } from '@/lib/use-export-job';
 import { fetchAuditLog, fetchAuditLogActors, exportAuditLog, settingsKeys } from '../api';
 import { useAuditLogFilters } from './use-audit-log-filters';
+import { useNumberText } from '@/i18n/use-number-text';
 
 export function useAuditLog() {
+  const numberText = useNumberText();
   const client = useQueryClient();
   const { filters, setFilters } = useAuditLogFilters();
   const changeFilters = (next: AuditLogFilters) => {
@@ -37,7 +39,7 @@ export function useAuditLog() {
         throw new Error(result.kind === 'error' ? result.message : t('failed'));
       return result;
     },
-    onSuccess: (result) => toast(t('exported', { n: result.rows })),
+    onSuccess: (result) => toast(t('exported', { n: numberText(result.rows) })),
     onError: (error) => toast(error instanceof ApiError ? error.message : t('failed')),
   });
   return {

@@ -4,6 +4,7 @@ import { canResendMail, type MailLogRow } from '@opchub/shared/api-domains';
 import { useLocale, useTranslations } from 'next-intl';
 import { MAIL_STATUS_TONE, vnDateTime } from '../model';
 import styles from './tables.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 interface Props {
   items: MailLogRow[];
@@ -17,6 +18,7 @@ interface Props {
  * chiến dịch) và thư lỗi (trừ OTP / đặt lại mật khẩu).
  */
 export function MailLog({ items, onView, onResend }: Props) {
+  const numberText = useNumberText();
   const locale = useLocale();
   const t = useTranslations('marketing.log');
   if (items.length === 0) return <div className={styles.sub}>{t('empty')}</div>;
@@ -36,7 +38,7 @@ export function MailLog({ items, onView, onResend }: Props) {
           </div>
           <span className={styles.when}>{vnDateTime(x.sentAt, locale)}</span>
           {x.attempts > 0 ? (
-            <span className={styles.when}>{t('attempts', { n: x.attempts })}</span>
+            <span className={styles.when}>{t('attempts', { n: numberText(x.attempts) })}</span>
           ) : null}
           <span className={styles[MAIL_STATUS_TONE[x.status]]}>{t(`st.${x.status}`)}</span>
           {x.kind === 'welcome' || x.kind === 'campaign' ? (

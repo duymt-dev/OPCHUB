@@ -870,3 +870,109 @@ Serial AC824-02/07/15 work: all25 already-declared ms catalogs, exact source key
 |---|---|---|
 | create | `apps/admin/src/i18n/tests/malay-catalog.spec.ts` | Explicit25-file raw checks plus Admin-context/canonical cases; not a replacement for the final10-bundle gate. |
 | create | `coding-packs/reports/evidence/v46-824/malay.log` | Actual focused raw/runtime/glyph results and translation provenance, not full native API acceptance. |
+
+## Full production source audit follow-up
+
+AC824-06/08 inventory and verification tooling: inspect all Admin production TS/TSX (not fixture/test/mocks), including English/unaccented text, JSX accessibility/control props, indirect constants, client-message calls and type-checked numeric/enum display expressions. Review findings individually; preserve canonical payloads, raw content and exports. A source audit does not replace browser/native coverage. Exact file/literal/reason registries will be declared before creation after inventory.
+
+| Action | Exact path | Ownership / reason |
+|---|---|---|
+| create | `infra/scripts/audit-admin-i18n.mjs` | CLI orchestrator for a complete source inventory and non-skipping verification. |
+| create | `infra/scripts/admin-i18n/source-files.mjs` | Production corpus and TypeScript program/fixture setup. |
+| create | `infra/scripts/admin-i18n/literals.mjs` | AST contexts for human literals, not Vietnamese-only grep. |
+| create | `infra/scripts/admin-i18n/numeric.mjs` | Type-checked display/translation number and enum inventory; never rewrites parsers or payloads. |
+| create | `infra/scripts/admin-i18n/registry.mjs` | Exact exception verification with nonempty reasons and stale-entry detection. |
+| create | `apps/admin/src/i18n/tests/source-audit.spec.ts` | Positive/negative fixtures for the CLI using stdin, without deleting production catalogs. |
+| create | `coding-packs/reports/evidence/v46-824/source-audit.json` | Actual complete-source findings/classifications and command/version metadata. |
+| create | `apps/admin/src/i18n/number-text.ts` | Presentation-only, full Number precision; no parsing or business rounding. |
+| create | `apps/admin/src/i18n/use-number-text.ts` | Live-locale scalar formatting hook for audited display call sites. |
+| create | `apps/admin/src/i18n/number-text.spec.tsx` | Precision/null/locale/draft contract regressions. |
+| create | `apps/admin/src/features/settings/hooks/use-ai-provider-label.ts` | Translate only the fixed custom-provider label; retain provider IDs, brands, models and hints. |
+| create | `apps/admin/src/features/settings/hooks/use-ai-provider-label.spec.tsx` | Custom label switching and canonical provider contract tests. |
+
+| modify | `apps/admin/src/features/affiliate/components/affiliate-detail-tabs.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/affiliate/components/affiliate-identity.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/affiliate/components/affiliate-rate-editor.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/affiliate/components/list-toolbar.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/affiliate/components/policy-rules.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/affiliate/components/policy-year-table.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/affiliate/hooks/use-affiliate-writes.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/affiliate/hooks/use-commission-status-writes.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/affiliate/regional/components/regional-config-panel.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/affiliate/regional/components/regional-slot-summary.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/bots/components/activity-log.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/bots/components/automation-header.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/bots/components/bulk/bulk-form.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/bots/components/bulk/bulk-modal-frame.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/bots/components/bulk/bulk-progress.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/bots/components/bulk/bulk-result-card.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/bots/components/bulk/bulk-result-summary.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/bots/components/persona-list.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/bots/components/reply-groups.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/bots/components/reply-heading.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/bots/components/reply-run.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/bots/components/script-lines.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/bots/components/thread-list.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/bots/hooks/use-bot-emergency.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/groups/components/export-modal.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/groups/components/export-sections.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/groups/components/group-form-rooms.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/groups/components/keyword-panel.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/groups/components/moderation-panel.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/groups/hooks/use-group-delete.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/investors/hooks/use-investors.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/marketing/components/regional-mail-list.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/marketing/components/welcome-lists.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/members/components/assign-modal.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/members/components/cells.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/members/components/member-filters.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/members/components/members-toolbar.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/members/hooks/use-confirm-requests.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/members/hooks/use-member-actions.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/members/hooks/use-member-export.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/needs/components/need-toolbar.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/needs/hooks/use-needs.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/projects/components/projects-head.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/projects/hooks/use-project-bulk.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/requests/components/catalog-tab.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/requests/hooks/use-request-actions.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/components/admins-tab.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/components/ai/ai-tab.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/components/categories-tab.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/components/category-table.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/components/renewal-tab.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/components/role-cards.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/components/settings-nav.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/components/welcome-lists.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/hooks/use-app-notify.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/hooks/use-audit-log.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/hooks/use-rel-time.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/hooks/use-renewal.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/hooks/use-roles.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/shell/components/admin-notifications.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/shell/components/admin-search.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/shell/hooks/use-notifications.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/stores/components/store-toolbar.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/stores/hooks/use-stores.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/components/ai/ai-allocation.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/components/ai/ai-provider-grid.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/components/ai/ai-provider-fields.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+
+### Exact source-audit exception registries (reviewed before creation)
+
+| Operation | File | Scope |
+|---|---|---|
+| create | `infra/scripts/admin-i18n/exceptions/metadata-1.json` | Exact file/kind/literal/reason, and actual enum values; reject wildcard, stale and changed literals. |
+| create | `infra/scripts/admin-i18n/exceptions/domain-enums-1.json` | Exact file/kind/literal/reason, and actual enum values; reject wildcard, stale and changed literals. |
+| create | `infra/scripts/admin-i18n/exceptions/domain-1.json` | Exact file/kind/literal/reason, and actual enum values; reject wildcard, stale and changed literals. |
+| create | `infra/scripts/admin-i18n/exceptions/domain-2.json` | Exact file/kind/literal/reason, and actual enum values; reject wildcard, stale and changed literals. |
+| create | `infra/scripts/admin-i18n/exceptions/domain-3.json` | Exact file/kind/literal/reason, and actual enum values; reject wildcard, stale and changed literals. |
+| create | `infra/scripts/admin-i18n/exceptions/content-1.json` | Exact file/kind/literal/reason, and actual enum values; reject wildcard, stale and changed literals. |
+| create | `infra/scripts/admin-i18n/exceptions/antd-fil-1.json` | Exact file/kind/literal/reason, and actual enum values; reject wildcard, stale and changed literals. |
+| create | `infra/scripts/admin-i18n/exceptions/antd-fil-2.json` | Exact file/kind/literal/reason, and actual enum values; reject wildcard, stale and changed literals. |
+| create | `infra/scripts/admin-i18n/exceptions/antd-fil-3.json` | Exact file/kind/literal/reason, and actual enum values; reject wildcard, stale and changed literals. |
+| create | `infra/scripts/admin-i18n/exceptions/antd-fil-4.json` | Exact file/kind/literal/reason, and actual enum values; reject wildcard, stale and changed literals. |
+| create | `infra/scripts/admin-i18n/exceptions/antd-lo-1.json` | Exact file/kind/literal/reason, and actual enum values; reject wildcard, stale and changed literals. |
+| create | `infra/scripts/admin-i18n/exceptions/technical-1.json` | Exact file/kind/literal/reason, and actual enum values; reject wildcard, stale and changed literals. |
+
+| create | `coding-packs/reports/evidence/v46-824/source-audit.log` | Actual focused units, source scan summary and numeric migration receipt; no browser/native acceptance claimed. |

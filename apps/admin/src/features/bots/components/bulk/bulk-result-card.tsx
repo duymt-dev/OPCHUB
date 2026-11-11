@@ -3,6 +3,7 @@ import { useTranslations } from 'next-intl';
 import { initialOf } from '../../model';
 import { PersonaAvatar } from '../bits';
 import s from './bulk.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 export function BulkResultCard({
   item,
@@ -15,12 +16,13 @@ export function BulkResultCard({
   disabled: boolean;
   onSelect: (id: string, selected: boolean) => void;
 }) {
+  const numberText = useNumberText();
   const t = useTranslations('bots.bulk');
   return (
     <div className={s.result}>
       <input
         type="checkbox"
-        aria-label={t('selectItem', { n: item.ordinal + 1, topic: item.topic })}
+        aria-label={t('selectItem', { n: numberText(item.ordinal + 1), topic: item.topic })}
         checked={item.selected}
         disabled={disabled || item.savedScriptId !== null}
         onChange={(event) => onSelect(item.id, event.target.checked)}
@@ -28,7 +30,7 @@ export function BulkResultCard({
       <div className={s.dialogue}>
         <div className={s.resultTitle}>
           <b>{item.topic}</b>
-          <small>{t('turnCount', { n: item.lines.length })}</small>
+          <small>{t('turnCount', { n: numberText(item.lines.length) })}</small>
         </div>
         {item.savedScriptId ? <span className={s.unique}>{t('saved')}</span> : null}
         {item.lines.map((line, index) => (

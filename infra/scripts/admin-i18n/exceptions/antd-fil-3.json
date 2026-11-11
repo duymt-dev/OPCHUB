@@ -1,0 +1,212 @@
+[
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "mga bagay",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Alisin",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Alisin ang kasalukuyang pahina",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Alisin ang lahat ng datos",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Alisin ang pagpili sa lahat ng datos",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Ina-upload...",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Alisin ang file",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Hindi na-upload",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Silipin ang file",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "I-download ang file",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Kopyahin",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Nakopya",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Palawakin",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Paliitin",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Nakaraang slide",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Susunod na slide",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Hindi wastong halaga para sa ${label}",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Mangyaring ilagay ang ${label}",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Ang ${label} ay dapat isa sa [${enum}]",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Hindi maaaring blangko ang ${label}",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Hindi wastong format ng petsa ng ${label}",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Hindi magawang petsa ang ${label}",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Hindi wastong petsa ang ${label}",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Ang ${label} ay hindi wastong ${type}",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Ang ${label} ay dapat ${len} character",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Ang ${label} ay dapat hindi bababa sa ${min} character",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Ang ${label} ay dapat hindi hihigit sa ${max} character",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Ang ${label} ay dapat nasa ${min}-${max} character",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Ang ${label} ay dapat katumbas ng ${len}",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Ang ${label} ay dapat hindi bababa sa ${min}",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Ang ${label} ay dapat hindi hihigit sa ${max}",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Ang ${label} ay dapat nasa pagitan ng ${min}-${max}",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Dapat ay ${len} ${label}",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Hindi bababa sa ${min} ${label}",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Hindi hihigit sa ${max} ${label}",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  }
+]

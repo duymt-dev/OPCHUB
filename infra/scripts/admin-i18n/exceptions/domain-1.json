@@ -1,0 +1,212 @@
+[
+  {
+    "file": "apps/admin/src/features/affiliate/components/customer-table-columns.tsx",
+    "kind": "human-literal",
+    "text": "calc((100% - 382px) * 13 / 27)",
+    "reason": "CSS column geometry, not user-facing words."
+  },
+  {
+    "file": "apps/admin/src/features/affiliate/components/customer-table-columns.tsx",
+    "kind": "human-literal",
+    "text": "calc((100% - 382px) * 14 / 27)",
+    "reason": "CSS column geometry, not user-facing words."
+  },
+  {
+    "file": "apps/admin/src/features/auth/components/login-screen.tsx",
+    "kind": "ui-literal",
+    "text": "demoAdmin",
+    "reason": "Descriptor translation key passed to t(label); the rendered demo action label is localized."
+  },
+  {
+    "file": "apps/admin/src/features/auth/components/login-screen.tsx",
+    "kind": "ui-literal",
+    "text": "demoUser",
+    "reason": "Descriptor translation key passed to t(label); the rendered demo action label is localized."
+  },
+  {
+    "file": "apps/admin/src/features/bots/components/persona-fields.tsx",
+    "kind": "human-literal",
+    "text": "Nữ",
+    "reason": "Canonical gender/parser value; select display uses translated option labels without modifying submitted values."
+  },
+  {
+    "file": "apps/admin/src/features/bots/components/persona-fields.tsx",
+    "kind": "human-literal",
+    "text": "Khác",
+    "reason": "Canonical gender/parser value; select display uses translated option labels without modifying submitted values."
+  },
+  {
+    "file": "apps/admin/src/features/bots/components/persona-fields.tsx",
+    "kind": "human-literal",
+    "text": "Nam",
+    "reason": "Canonical gender/parser value; select display uses translated option labels without modifying submitted values."
+  },
+  {
+    "file": "apps/admin/src/features/bots/components/reply-heading.tsx",
+    "kind": "ui-literal",
+    "text": "2-digit",
+    "reason": "Intl date/time option or fixed display timezone, not a visible untranslated label."
+  },
+  {
+    "file": "apps/admin/src/features/bots/components/reply-heading.tsx",
+    "kind": "ui-literal",
+    "text": "Asia/Ho_Chi_Minh",
+    "reason": "Intl date/time option or fixed display timezone, not a visible untranslated label."
+  },
+  {
+    "file": "apps/admin/src/features/bots/hooks/use-bot-bulk.ts",
+    "kind": "human-literal",
+    "text": "No bulk batch",
+    "reason": "Internal disabled-query guard; errors are presented via localized generic fallback, not this diagnostic."
+  },
+  {
+    "file": "apps/admin/src/features/bots/model.ts",
+    "kind": "human-literal",
+    "text": "8:00 – 22:00",
+    "reason": "Canonical bot schema/default value used in payloads and prompts; presentation uses option-labels projections."
+  },
+  {
+    "file": "apps/admin/src/features/bots/model.ts",
+    "kind": "human-literal",
+    "text": "Nữ",
+    "reason": "Canonical bot schema/default value used in payloads and prompts; presentation uses option-labels projections."
+  },
+  {
+    "file": "apps/admin/src/features/bots/model.ts",
+    "kind": "human-literal",
+    "text": "Khác",
+    "reason": "Canonical bot schema/default value used in payloads and prompts; presentation uses option-labels projections."
+  },
+  {
+    "file": "apps/admin/src/features/bots/model.ts",
+    "kind": "human-literal",
+    "text": "Hỏi đáp",
+    "reason": "Canonical bot schema/default value used in payloads and prompts; presentation uses option-labels projections."
+  },
+  {
+    "file": "apps/admin/src/features/bots/types.ts",
+    "kind": "human-literal",
+    "text": "Thân thiện, hay hỏi",
+    "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+  },
+  {
+    "file": "apps/admin/src/features/bots/types.ts",
+    "kind": "human-literal",
+    "text": "Thực tế, chia sẻ kinh nghiệm",
+    "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+  },
+  {
+    "file": "apps/admin/src/features/bots/types.ts",
+    "kind": "human-literal",
+    "text": "Chuyên gia, trả lời chi tiết",
+    "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+  },
+  {
+    "file": "apps/admin/src/features/bots/types.ts",
+    "kind": "human-literal",
+    "text": "Truyền cảm hứng",
+    "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+  },
+  {
+    "file": "apps/admin/src/features/bots/types.ts",
+    "kind": "human-literal",
+    "text": "Ngắn gọn, kỹ thuật",
+    "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+  },
+  {
+    "file": "apps/admin/src/features/bots/types.ts",
+    "kind": "human-literal",
+    "text": "Tò mò, mới bắt đầu",
+    "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+  },
+  {
+    "file": "apps/admin/src/features/bots/types.ts",
+    "kind": "human-literal",
+    "text": "18 – 24",
+    "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+  },
+  {
+    "file": "apps/admin/src/features/bots/types.ts",
+    "kind": "human-literal",
+    "text": "25 – 34",
+    "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+  },
+  {
+    "file": "apps/admin/src/features/bots/types.ts",
+    "kind": "human-literal",
+    "text": "35 – 44",
+    "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+  },
+  {
+    "file": "apps/admin/src/features/bots/types.ts",
+    "kind": "human-literal",
+    "text": "45 – 54",
+    "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+  },
+  {
+    "file": "apps/admin/src/features/bots/types.ts",
+    "kind": "human-literal",
+    "text": "Nam",
+    "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+  },
+  {
+    "file": "apps/admin/src/features/bots/types.ts",
+    "kind": "human-literal",
+    "text": "Nữ",
+    "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+  },
+  {
+    "file": "apps/admin/src/features/bots/types.ts",
+    "kind": "human-literal",
+    "text": "Khác",
+    "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+  },
+  {
+    "file": "apps/admin/src/features/bots/types.ts",
+    "kind": "human-literal",
+    "text": "8:00 – 22:00",
+    "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+  },
+  {
+    "file": "apps/admin/src/features/bots/types.ts",
+    "kind": "human-literal",
+    "text": "8:00 – 12:00",
+    "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+  },
+  {
+    "file": "apps/admin/src/features/bots/types.ts",
+    "kind": "human-literal",
+    "text": "12:00 – 18:00",
+    "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+  },
+  {
+    "file": "apps/admin/src/features/bots/types.ts",
+    "kind": "human-literal",
+    "text": "18:00 – 23:00",
+    "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+  },
+  {
+    "file": "apps/admin/src/features/bots/types.ts",
+    "kind": "human-literal",
+    "text": "Cả ngày",
+    "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+  },
+  {
+    "file": "apps/admin/src/features/bots/types.ts",
+    "kind": "human-literal",
+    "text": "Hỏi đáp",
+    "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+  },
+  {
+    "file": "apps/admin/src/features/bots/types.ts",
+    "kind": "human-literal",
+    "text": "Thảo luận",
+    "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+  },
+  {
+    "file": "apps/admin/src/features/bots/types.ts",
+    "kind": "human-literal",
+    "text": "Chia sẻ kinh nghiệm",
+    "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+  }
+]

@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 import type { useExportState } from '../hooks/use-export';
 import { EXPORT_FIELDS, type AdminGroup, type ExportStatus } from '../types';
 import styles from './export-modal.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 type ExportState = ReturnType<typeof useExportState>;
 
@@ -17,6 +18,7 @@ interface GroupPickProps {
 
 /** Danh sách chọn nhóm (pill) + Chọn / Bỏ chọn tất cả */
 export function GroupPick({ s, ordered, counts }: GroupPickProps) {
+  const numberText = useNumberText();
   const t = useTranslations('groups.export');
   const allOn = ordered.every((g) => s.sel.includes(g.id));
   const toggle = (id: string) =>
@@ -45,7 +47,7 @@ export function GroupPick({ s, ordered, counts }: GroupPickProps) {
               onClick={() => toggle(g.id)}
             >
               {on ? '✓ ' : ''}
-              {g.name} <span className={styles.dim}>{counts[g.id] ?? 0}</span>
+              {g.name} <span className={styles.dim}>{numberText(counts[g.id] ?? 0)}</span>
             </button>
           );
         })}
@@ -119,13 +121,17 @@ export function StatusFormat({ s }: { s: ExportState }) {
 }
 
 export function Preview({ s }: { s: ExportState }) {
+  const numberText = useNumberText();
   const t = useTranslations('groups.export');
   return (
     <div className={styles.section}>
       <div className={styles.row}>
         <span className={styles.label}>{t('preview')}</span>
         <span className={styles.info}>
-          {t(s.more ? 'infoMore' : 'info', { rows: s.rows, groups: s.sel.length })}
+          {t(s.more ? 'infoMore' : 'info', {
+            rows: numberText(s.rows),
+            groups: numberText(s.sel.length),
+          })}
         </span>
       </div>
       <div className={styles.tableBox}>

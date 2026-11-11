@@ -6,12 +6,14 @@ import { usePriceConfig } from '../hooks/use-price-config';
 import { vnd } from '../model';
 import { PriceInput, PricePlanCard } from './price-plan-card';
 import styles from './price.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 /** Prototype: "Hoa hồng Affiliate 10% trên Gói Gọi vốn" — % cố định BR-GV-06 (D-70) */
 const FUND_AFF_RATE = 10;
 
 /** Cài đặt › Cấu hình bảng giá (D-94 5A, prototype `stPrice`) */
 export function PriceTab() {
+  const numberText = useNumberText();
   const locale = useLocale();
   const t = useTranslations('settings.price');
   const tc = useTranslations('settings.common');
@@ -71,7 +73,7 @@ export function PriceTab() {
         </div>
         <span className={styles.aff}>
           {t.rich('fund.aff', {
-            rate: FUND_AFF_RATE,
+            rate: numberText(FUND_AFF_RATE),
             amount: vnd(fundCommissionOf(f.fund.p, FUND_AFF_RATE), locale),
             b: (c) => <b>{c}</b>,
           })}

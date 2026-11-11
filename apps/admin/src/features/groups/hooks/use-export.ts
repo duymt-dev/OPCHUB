@@ -15,6 +15,7 @@ import {
   type ExportStatus,
 } from '../types';
 import { useErrorToast } from './use-groups';
+import { useNumberText } from '@/i18n/use-number-text';
 
 const PREVIEW_ROWS = 6;
 
@@ -30,6 +31,7 @@ function download(blob: Blob, name: string) {
 
 /** Trạng thái + dữ liệu hộp "Xuất danh sách thành viên nhóm" (gx* của prototype) */
 export function useExportState(initial: string[], onDone: () => void) {
+  const numberText = useNumberText();
   const t = useTranslations('groups.export');
   const tt = useTranslations('groups.toast');
   const toast = useToast();
@@ -61,7 +63,7 @@ export function useExportState(initial: string[], onDone: () => void) {
         onSuccess: () => {
           const name = `${exportName(new Date())}.${format}`;
           download(exportFile(head, table, format), name);
-          toast(tt('exported', { count: rows.length, file: name }));
+          toast(tt('exported', { count: numberText(rows.length), file: name }));
           onDone();
         },
       },

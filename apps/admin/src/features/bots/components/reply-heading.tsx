@@ -4,6 +4,7 @@ import type { BotReplyOverview, BotReplySettings } from '@opchub/shared/api-doma
 import { useFormatter, useTranslations } from 'next-intl';
 import { Switch } from './bits';
 import styles from './reply-panel.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 interface Props {
   data: BotReplyOverview;
@@ -13,6 +14,7 @@ interface Props {
 }
 
 export function ReplyHeading({ data, groupCount, disabled, onPatch }: Props) {
+  const numberText = useNumberText();
   const t = useTranslations('bots.replies');
   const format = useFormatter();
   const lastScan = data.lastScanAt
@@ -34,7 +36,9 @@ export function ReplyHeading({ data, groupCount, disabled, onPatch }: Props) {
           <span className={data.run?.status === 'running' ? styles.running : styles.watching}>
             {data.run?.status === 'running'
               ? t('replyingIn', { group: data.run.groupName })
-              : t(data.settings.autoEnabled ? 'tracking' : 'autoOff', { n: groupCount })}
+              : t(data.settings.autoEnabled ? 'tracking' : 'autoOff', {
+                  n: numberText(groupCount),
+                })}
           </span>
           <span>{lastScan}</span>
         </div>

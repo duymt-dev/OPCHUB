@@ -5,8 +5,10 @@ import { usePrices } from '@/lib/use-prices';
 import { usePolicyPreview } from '../hooks/use-policy-preview';
 import { affiliateMoney } from '../format';
 import styles from './policy-reference.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 export function PolicyPlanTable() {
+  const numberText = useNumberText();
   const locale = useLocale();
   const t = useTranslations('affiliate.policy');
   const policy = usePolicyPreview();
@@ -25,7 +27,9 @@ export function PolicyPlanTable() {
             <tr>
               <th>{t('planPrice')}</th>
               {[1, 2, 3, 4].map((year) => (
-                <th key={year}>{t(year === 4 ? 'fromFourth' : 'year', { year })}</th>
+                <th key={year}>
+                  {t(year === 4 ? 'fromFourth' : 'year', { year: numberText(year) })}
+                </th>
               ))}
             </tr>
           </thead>

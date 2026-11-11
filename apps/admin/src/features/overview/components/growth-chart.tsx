@@ -6,6 +6,7 @@ import { useOverview } from '../hooks/use-overview';
 import { useOverviewUrl } from '../hooks/use-overview-url';
 import styles from './overview.module.css';
 import { seriesLabel } from '../series-labels';
+import { useNumberText } from '@/i18n/use-number-text';
 
 interface PeriodTabsProps {
   current: string;
@@ -55,6 +56,7 @@ function PeriodTabs({ current, onChange, label, labels }: PeriodTabsProps) {
 
 /** Biểu đồ cột chồng tăng trưởng thành viên theo tháng; số tổng = thành viên đã kích hoạt phí (v4) */
 export function GrowthChart() {
+  const numberText = useNumberText();
   const t = useTranslations('overview.growth');
   const chart = useTranslations('ui');
   const locale = useLocale();
@@ -116,8 +118,8 @@ export function GrowthChart() {
               </div>
               <div className={styles.month}>
                 {seriesLabel(m, currentPeriod, {
-                  month: (n) => chart('chart.month', { n }),
-                  week: (n) => chart('chart.week', { n }),
+                  month: (n) => chart('chart.month', { n: numberText(n) }),
+                  week: (n) => chart('chart.week', { n: numberText(n) }),
                 })}
               </div>
             </div>

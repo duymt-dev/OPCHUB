@@ -13,6 +13,7 @@ import { createRole, deleteRole, fetchRoles, saveMatrix, settingsKeys } from '..
 import { countPermissionChanges, matrixOf, type RoleMatrix, togglePermission } from '../model';
 import type { ConfirmRequest } from '../types';
 import { useSettingsMutation } from './use-settings-mutation';
+import { useNumberText } from '@/i18n/use-number-text';
 
 /**
  * RB-R04, R05, NA-28 "Vai trò & phân quyền": bản nháp ma trận ở client; "Lưu" hỏi xác nhận rồi
@@ -20,6 +21,7 @@ import { useSettingsMutation } from './use-settings-mutation';
  * lưu áp ngay. Thêm / xoá vai trò tự tạo (AT-RB05: còn TK giữ → server 409, toast câu server).
  */
 export function useRoles(ask: (r: ConfirmRequest) => void) {
+  const numberText = useNumberText();
   const t = useTranslations('settings.roles');
   const c = useTranslations('settings.common');
   const toast = useToast();
@@ -51,7 +53,7 @@ export function useRoles(ask: (r: ConfirmRequest) => void) {
       if (!n) return toast(t('noChange'));
       ask({
         title: t('confirmTitle'),
-        body: t('confirmBody', { n }),
+        body: t('confirmBody', { n: numberText(n) }),
         okLabel: t('confirmOk'),
         cancelLabel: c('cancel'),
         onOk: () =>

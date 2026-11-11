@@ -5,6 +5,7 @@ import { useLayoutEffect, useRef } from 'react';
 import { affiliateMoney } from '../format';
 import type { AffiliateParams } from '../types';
 import styles from './affiliate.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 export function AffiliateTabs({
   tab,
@@ -17,6 +18,7 @@ export function AffiliateTabs({
   counts: { com: number | undefined; aff: number | undefined; gdv?: number | undefined };
   net: number | undefined;
 }) {
+  const numberText = useNumberText();
   const locale = useLocale();
   const t = useTranslations('affiliate');
   const tabs = useRef<HTMLDivElement>(null);
@@ -46,10 +48,10 @@ export function AffiliateTabs({
           >
             {key === 'gdv' ? t('regional.share.director') : t(`tabs.${key}`)}
             {key === 'gdv' && counts.gdv !== undefined && (
-              <span className={styles.hint}>{counts.gdv}</span>
+              <span className={styles.hint}>{numberText(counts.gdv)}</span>
             )}
             {(key === 'com' || key === 'aff') && counts[key] !== undefined ? (
-              <span className={styles.hint}>{counts[key]}</span>
+              <span className={styles.hint}>{numberText(counts[key])}</span>
             ) : null}
           </button>
         ))}

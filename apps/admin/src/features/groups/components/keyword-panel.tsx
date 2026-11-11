@@ -6,9 +6,11 @@ import { useState } from 'react';
 import { useKeywordMutations, useKeywords } from '../hooks/use-moderation';
 import { ModerationRules } from './moderation-rules';
 import styles from './moderation.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 /** Cột phải: quy tắc xử lý vi phạm (V4-612) + "Bộ lọc từ khóa" — bấm chip để xóa, Thêm (hoặc Enter) để thêm */
 export function KeywordPanel() {
+  const numberText = useNumberText();
   const t = useTranslations('groups.mod');
   const tt = useTranslations('groups.toast');
   const toast = useToast();
@@ -32,7 +34,7 @@ export function KeywordPanel() {
       <ModerationRules />
       <div className={styles.kwHead}>
         <span className={styles.kwTitle}>{t('keywords')}</span>
-        <span className={styles.kwCount}>{t('kwCount', { count: words.length })}</span>
+        <span className={styles.kwCount}>{t('kwCount', { count: numberText(words.length) })}</span>
       </div>
       <div className={styles.chips}>
         {words.map((w) => (
