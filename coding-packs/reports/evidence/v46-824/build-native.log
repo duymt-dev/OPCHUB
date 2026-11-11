@@ -1,21 +1,21 @@
-APP=@opchub/admin MODE=off; build only, not API/browser acceptance
+Source 8aa9c974; Admin build mode=native dist=.next-server-tip824; compile only, no API verification
 $ next build
 ▲ Next.js 16.4.2 (Turbopack)
 - Environments: .env.local
-✓ Running next.config.ts took 2.9s
+✓ Running next.config.ts took 359ms
 - Experiments (use with caution):
   · optimizePackageImports
 
   Creating an optimized production build ...
-✓ Compiled successfully in 10.7s
+✓ Compiled successfully in 1564ms
   Running TypeScript ...
-  Finished TypeScript in 55s ...
+  Finished TypeScript in 6.8s ...
   Collecting page data using 5 workers ...
   Generating static pages using 5 workers (0/10) ...
   Generating static pages using 5 workers (2/10)
   Generating static pages using 5 workers (4/10)
   Generating static pages using 5 workers (7/10)
-✓ Generating static pages using 5 workers (10/10) in 2.3s
+✓ Generating static pages using 5 workers (10/10) in 434ms
   Finalizing page optimization ...
 
 Route (app)
@@ -47,3 +47,5 @@ Route (app)
 
 
 ƒ  (Dynamic)  server-rendered on demand
+
+EXIT 0
