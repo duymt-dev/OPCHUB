@@ -81,7 +81,7 @@ Các mục B khác để sau (D-138). TIP viết lúc tới bước, dựa trên
 
 | TIP | Tên | REQ / D | Phụ thuộc | Ước lượng | Files / trạng thái |
 |---|---|---|---|---|---|
-| V46-824 | [TIP](tips/TIP-V46-824-admin-i18n.md) · branch `feature/TIP-V46-824-admin-i18n` · **IN PROGRESS / PARTIAL, NOT READY TO MERGE** · 42 shared controls +93 live display callers +self-hosted script fonts; vi/en2660 leaves, other8 bundles pending | D-141, D-06, D-37, D-65, D-133, D-134; D-140 / REQ-122 / REQ-625 | V2-117, V46-822, V46-823 (merged) | XL | [Report](reports/TIP-V46-824-completion.md) · source `c90db9f8`; unit2579 +2 existing skips, Admin864 fresh;48 font-only MSW/off cases; both Admin builds pass, prior Portal build unchanged; full i18n browser/native/font/performance acceptance pending |
+| V46-824 | [TIP](tips/TIP-V46-824-admin-i18n.md) · branch `feature/TIP-V46-824-admin-i18n` · **IN PROGRESS / PARTIAL, NOT READY TO MERGE** · 42 shared controls +93 live display callers +self-hosted script fonts; vi/en/zh2660 leaves each, other7 bundles pending | D-141, D-06, D-37, D-65, D-133, D-134; D-140 / REQ-122 / REQ-625 | V2-117, V46-822, V46-823 (merged) | XL | [Report](reports/TIP-V46-824-completion.md) · source `f1cca64b`; unit2623 +2 existing skips, Admin908 fresh;48 font-only MSW/off cases plus Chinese login assertions/images; both Admin builds pass, prior Portal build unchanged; full i18n browser/native/font/performance acceptance pending |
 
 Thứ tự: V46-822 + V46-823 đã tích hợp → **V46-824** (execute khi owner yêu cầu). Một TIP implementation, manifest là phụ lục chứ không phải làn song song. Không tự release/merge `main`.
 

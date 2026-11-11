@@ -6,7 +6,7 @@
 - Native-speaker reviewed: **false for every target locale**, including custom AntD Filipino/Lao dictionaries.
 - AI-produced English now covers all25 physical catalogs /2660 source leaves, raw-contract tested against the complete explicit file list before fallback. This is catalog completeness, not a claim that all UI call sites or browser acceptance are complete.
 - Provenance: the earlier checkpoint reused464 unambiguous exact-text matches from Portal English catalogs. The remaining English was translated directly from the unchanged Vietnamese source. No Portal app import exists at runtime. No missing key is filled with Vietnamese/TODO stand-ins.
-- Simplified Chinese now covers25/25 physical files and2660/2660 leaves; raw-contract checked before fallback. Other target bundles id/th/ms/fil/km/lo/my: pending. Aliases en-SG and ms-BN share en/ms catalogs, not separate translations.
+- Simplified Chinese source checkpoint f1cca64b, 2026-11-11, now covers25/25 physical files and2660/2660 leaves; raw-contract checked before fallback. Other target bundles id/th/ms/fil/km/lo/my: pending. Aliases en-SG and ms-BN share en/ms catalogs, not separate translations.
 - Confidence: English moderate pending owner review; Khmer/Lao/Myanmar require special native-speaker attention when their catalogs are produced. Human review is not fabricated and does not replace technical gates.
 - Self-hosted font assets, licenses and reproducible build provenance are recorded below. Full translated-screen/visual/performance acceptance is still pending; font contracts alone do not complete this TIP.
 
