@@ -1,21 +1,21 @@
-Source 150dec81; Admin build mode=msw dist=.next-msw-tip824; compile only, no API verification
+Source 3bd94726; Admin build mode=msw dist=.next-msw-tip824; compile only, no API verification
 $ next build
 ▲ Next.js 16.4.2 (Turbopack)
 - Environments: .env.local
-✓ Running next.config.ts took 418ms
+✓ Running next.config.ts took 435ms
 - Experiments (use with caution):
   · optimizePackageImports
 
   Creating an optimized production build ...
-✓ Compiled successfully in 2.5s
+✓ Compiled successfully in 5.3s
   Running TypeScript ...
-  Finished TypeScript in 19.5s ...
+  Finished TypeScript in 16.3s ...
   Collecting page data using 5 workers ...
   Generating static pages using 5 workers (0/10) ...
   Generating static pages using 5 workers (2/10)
   Generating static pages using 5 workers (4/10)
   Generating static pages using 5 workers (7/10)
-✓ Generating static pages using 5 workers (10/10) in 662ms
+✓ Generating static pages using 5 workers (10/10) in 1094ms
   Finalizing page optimization ...
 
 Route (app)

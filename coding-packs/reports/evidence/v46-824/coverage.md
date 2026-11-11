@@ -2,7 +2,17 @@
 
 **Partial evidence only.** Metadata implementation is not proof that a route body, dialog, every locale or API is verified.
 
-## Current staged Khmer checkpoint (2026-11-12, source150dec81)
+## Current complete Khmer checkpoint (2026-11-12, source3bd94726)
+
+Nine complete bundles/225 of250 raw files: Khmer25/2667 now complete, all25 Myanmar/2667 leaves still absent. Earlier12 Khmer files/729 leaves remain byte-identical. Actual request config loads all six Khmer settings parts plus auth/Profile/Overview/reports without warning/fallback; raw84 +request14 =focused98 pass. Final fixed10-bundle positive/negative gate remains required, not replaced by physical file presence.
+
+Root3200 unique passed +2 existing skips: fresh Admin1477/190files,5 suites cached. Both Admin production builds use actual committed3bd94726;20 frozen source/catalog/test/manifest/harness blobs match after normal hooks. A verified stale Vitest transformed dynamic-import map was cleared using the supported test-cache CLI; final default tests pass without cache/fallback/assertion/timeout/skip bypass. See khmer-raw.log for failed observations/default98 retry.
+
+Current64 browser cases pass:12 actual Khmer Overview/Profile/Settings1440/390 (same6 MSW/native assertions and strict real-login/read-only guards),48 public font/auth (4 Khmer auth captures included),4 actual read-only Fees en→lo→en date/currency/independent Node DTO/payload-hash checks. Native public font is not private DB proof; authenticated native6+2 use revalidated approved isolated listener/wrapper/endpoints. No original PG5432/test data/service, SQL/seed/reset/repair or business writes; auth sessions only. No fresh70/262-case full-regression claim.
+
+Twelve actual unmasked km-{overview,profile,settings}-{msw,server}-{1440,390}.png images captured; native Profile1440/Settings390/Overview390 inspected, no owner/native-human approval. Four Khmer public-auth images regenerated. Both built data inventories require six distinct unmixed payloads/mode and retain identical payload bytes/hashes; only build/source metadata refresh. Post-artifact direct e2e typecheck passes. Full all-language body/control/state/value/RBAC/export/performance acceptance still open, with no scope waiver.
+
+## Historical staged Khmer checkpoint (2026-11-12, source150dec81)
 
 Raw212/250: eight complete bundles plus Khmer12/25 files/729 leaves. Missing Khmer13/1938 leaves and Myanmar25/2667 leaves; runtime fallback is not translated coverage. Raw settings/audit alone does not load as translated settings while other five parts are absent. Fixed44 raw/context/script/cmap tests pass, included in root3159 +2 existing skips. This remains partial overall.
 

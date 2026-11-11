@@ -2,7 +2,7 @@
   "status": "PASS",
   "command": "node infra/scripts/audit-admin-i18n.mjs",
   "source": {
-    "gitHead": "150dec8185d994b9ddf83f19f15f75139d9e0997",
+    "gitHead": "3bd9472675075d1c27676d0ce5b33f4f54171502",
     "dirty": false,
     "corpusSha256": "a2d9af154a0aef504a3ee07c556ff54ebb05f15ce288b24d7f37a511b3a716c4",
     "fingerprintFiles": 608,
@@ -13,7 +13,7 @@
     "test/spec/declaration files",
     "tests/__tests__/mocks/__mocks__ fixture directories"
   ],
-  "durationMs": 32904,
+  "durationMs": 37784,
   "rows": [
     {
       "file": "apps/admin/src/app/(admin)/affiliate/[[...slug]]/page.tsx",

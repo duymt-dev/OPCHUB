@@ -1,8 +1,8 @@
-# TIP824 raw catalog readiness - staged Khmer checkpoint
+# TIP824 raw catalog readiness - complete Khmer checkpoint
 
 **INCOMPLETE / FAIL.** File presence alone is not completion. Counts below are raw source-key presence before any Vietnamese fallback, not native review or proof of ICU validity.
 
-2026-11-12: raw212/250 files, eight complete bundles plus staged Khmer12/25 (729/2667 leaves); Myanmar remains absent. Khmer still lacks13 files/1938 leaves. Private pinned CLDR date/number resources are formatting data, not message translations. Overall10-bundle acceptance remains FAIL; native-reviewed=false. Focused Khmer raw/ICU/context/script/cmap evidence is separate from font/public-login rendering and full browser acceptance.
+2026-11-12: raw225/250 files, nine complete bundles including Khmer25/25 (2667/2667 leaves); Myanmar25/2667 remains absent. Overall10-bundle readiness is still FAIL. Standard CLDR formatting data and runtime fallback do not count as UI translation. Native-reviewed=false.
 
 | Bundle | Raw files | Required files | String leaves present | Missing string leaves |
 |---|---:|---:|---:|---:|
@@ -13,13 +13,15 @@
 | th | 25 | 25 | 2667 | 0 |
 | ms | 25 | 25 | 2667 | 0 |
 | fil | 25 | 25 | 2667 | 0 |
-| km | 12 | 25 | 729 | 1938 |
+| km | 25 | 25 | 2667 | 0 |
 | lo | 25 | 25 | 2667 | 0 |
 | my | 0 | 25 | 0 | 2667 |
 
-Required source tree:2667 string leaves/25 files. Original2456 legacy leaves and524 settings leaves retain baseline hash protection. All additions retain existing schema/keys; this stage changes no Vietnamese source. The existing complete vi/en/zh/id/th/ms/fil/lo bundles remain unchanged. Khmer has12 explicit raw catalogs: auth, common, bot-options, meta, overview, investors, needs, reports, requests, stores, ui, settings/audit. The missing13 are affiliate, bots, events, fees, groups, marketing, members, projects and settings/core/access/mail/finance/ai. Existing settings merge requires all six parts, so raw settings/audit alone is not runtime-translated settings evidence. Runtime Vietnamese fallback is not a translation and does not complete the bundle. No placeholder production catalogs are created.
+Required source tree2667 leaves/25 files; original2456 legacy and524 settings leaves remain baseline-hash protected. All25 Khmer raw physical files now exist with exact source shape/keys/types/ICU/NFC before fallback. Previous12/729 leaves remain byte-identical; remaining13/1938 are added. All six settings parts now exist; actual request config tests auth/Profile/Overview/reports/general/roles/mail/audit/pricing/AI with no fallback. No placeholder or English/Vietnamese prose filler. No Vietnamese/other locale, runtime loader, API/business/DB/Portal/shared or font binary/license change.
 
-Khmer provenance:305 unambiguous exact-source Portal matches retained;424 leaves directly translated/context-corrected (411 leaves from351 distinct direct pairs plus13 corrected reused matches from six distinct phrases). Fixed44 staged tests =12 raw key/type/ICU/NFC/no-copy +30 exact Admin-context +1 script/no-English filler +1 every-glyph font-cmap. These do not replace final fixed10-bundle/25-file positive and negative gate or native-human review. Canonical12 neutral examples are explicit, not namespace-wide exceptions. See messages/REVIEW.md for glossary/provenance. Khmer human-review confidence is moderate/pending; no claimed native approval.
+Fixed Khmer84 =25 raw-contract +50 Admin-context +1 exact52-neutral/script/no-English-filler +6 canonical +1 actual three-line topic example +1 complete font-cmap. Together with actual request14, focused98 passes. A stale Vitest filesystem-transformed dynamic import map initially rejected all20 Khmer namespaces; diagnostic no-fs-cache14 passed, supported test-cache clear then default98 passed. No production loader/fallback or assertion/timeout/skip modification; observations/commands retained in khmer-raw.log. Final fixed10-bundle positive/negative production gate remains pending while Myanmar is absent.
+
+Whole-Khmer accounting:479 exact-source Portal retained +295 reuse of staged Admin Khmer +1876 leaves from1671 explicit source/target pairs +17 context-corrected leaves =2667. New13/1938:295 Admin reuse,174 Portal retained,1465 explicit-pair leaves,4 context corrections (month-end payout, attendee list, two email-content labels). Canonical names/OPCHUB reference/technical examples and blank header are exact key-specific exceptions. AI-produced/native-reviewed=false, glossary/provenance/legacy-copy caveats in REVIEW; technical contracts do not prove native fluency or all-language/body/control/state/performance acceptance.
 Chinese provenance:692 exact-source Portal matches retained,1969 Admin-specific/context-reviewed leaves,6 canonical examples unchanged. Indonesian:728 retained matches,1933 translated/context-corrected leaves,6 canonical examples. Native-reviewed=false for every target. Real-loader request regressions cover English, Chinese, Indonesian and Malay plus all six physical settings parts; raw-file presence is not used as runtime proof. Overall10-bundle readiness remains FAIL.
 
 Malay:707 final leaves retain unambiguous exact-source Portal Malay matches,1953 are adapted from the reviewed Admin Indonesian catalogs with Malay/context corrections and1 new custom-provider label is translated directly for Admin,6 canonical examples remain exact.54 fixed raw/context/canonical cases, actual ms/ms-BN request loading without fallback and32 current glyph/contract units pass (focused96 total).34 retained Portal leaves corrected for Admin context. Native-reviewed=false; the official DBP term cross-check in REVIEW is not native approval or certification of this UI. Filipino raw contracts pass; th/km/lo/my remain absent; the final mandatory10-bundle gate is still pending.
