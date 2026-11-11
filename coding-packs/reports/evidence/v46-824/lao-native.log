@@ -1,18 +1,18 @@
-TIP824 native authenticated Lao Overview/Profile/Settings 1440/390 visual subset; production/test source44f7c443. Private API listener belongs to unchanged approved wrapper; local database port is not5432. No seed/reset/migration, no original service stop; authenticated session creation only. Full6-case Lao actual three-screen suite, identical assertions to MSW; no global seed/reset. Not all-language/error/loading/native feature acceptance.
+TIP824 native authenticated Lao Overview/Profile/Settings 1440/390 visual subset; production/test sourcec56da166 (production build70f46a3c, identical runtime inputs). Private API listener belongs to unchanged approved wrapper; local database port is not5432. No seed/reset/migration, no original service stop; authenticated session creation only. Full6-case Lao actual three-screen suite, identical assertions to MSW; no global seed/reset. Not all-language/error/loading/native feature acceptance.
 COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-lao.spec.ts
-[WebServer] (node:15736) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (node:4576) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
 
 Running 6 tests using 1 worker
 
-(node:27684) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:10192) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 (Use `node --trace-warnings ...` to show where the warning was created)
-  ok 1 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual overview 1440, not all-language acceptance (4.3s)
-  ok 2 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual overview 390, not all-language acceptance (3.7s)
-  ok 3 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual profile 1440, not all-language acceptance (4.2s)
-  ok 4 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual profile 390, not all-language acceptance (3.6s)
+  ok 1 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual overview 1440, not all-language acceptance (4.4s)
+  ok 2 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual overview 390, not all-language acceptance (3.8s)
+  ok 3 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual profile 1440, not all-language acceptance (4.3s)
+  ok 4 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual profile 390, not all-language acceptance (3.8s)
   ok 5 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual settings 1440, not all-language acceptance (4.2s)
-  ok 6 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual settings 390, not all-language acceptance (3.6s)
+  ok 6 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual settings 390, not all-language acceptance (3.7s)
 
-  6 passed (27.3s)
+  6 passed (28.4s)
 EXIT 0

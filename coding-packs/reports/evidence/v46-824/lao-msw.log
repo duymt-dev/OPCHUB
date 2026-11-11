@@ -1,20 +1,20 @@
-TIP824 authenticated Lao Overview/Profile/Settings 1440/390 visual subset; production Admin/test source44f7c443; full Lao25-file catalog, actual language-specific body anchors. Portal source unchanged since77484e3f. Requires real MSW Portal Affiliate relay, no DB/global seed/reset. Same6 Lao three-screen browser assertions in native; actual UI login/read-only API and no masks. Not complete16-AC acceptance.
+TIP824 authenticated Lao Overview/Profile/Settings 1440/390 visual subset; production Admin/test sourcec56da166 (production build70f46a3c, identical runtime inputs); full Lao25-file catalog, actual language-specific body anchors. Portal source unchanged since77484e3f. Requires real MSW Portal Affiliate relay, no DB/global seed/reset. Same6 Lao three-screen browser assertions in native; actual UI login/read-only API and no masks. Not complete16-AC acceptance.
 COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-lao.spec.ts
-[WebServer] (node:24344) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (node:29640) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
-[WebServer] (node:20052) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (node:11352) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
 
 Running 6 tests using 1 worker
 
-(node:28524) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:9892) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 (Use `node --trace-warnings ...` to show where the warning was created)
-  ok 1 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual overview 1440, not all-language acceptance (5.2s)
+  ok 1 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual overview 1440, not all-language acceptance (4.8s)
   ok 2 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual overview 390, not all-language acceptance (4.0s)
-  ok 3 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual profile 1440, not all-language acceptance (4.9s)
-  ok 4 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual profile 390, not all-language acceptance (4.3s)
-  ok 5 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual settings 1440, not all-language acceptance (4.5s)
-  ok 6 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual settings 390, not all-language acceptance (4.4s)
+  ok 3 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual profile 1440, not all-language acceptance (5.1s)
+  ok 4 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual profile 390, not all-language acceptance (4.5s)
+  ok 5 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual settings 1440, not all-language acceptance (4.6s)
+  ok 6 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual settings 390, not all-language acceptance (4.1s)
 
-  6 passed (32.8s)
+  6 passed (33.6s)
 EXIT 0

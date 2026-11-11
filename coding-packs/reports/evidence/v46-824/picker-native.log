@@ -1,0 +1,18 @@
+TIP824 actual numeric picker, ten currently translated selector identities incl aliases, three explicit canonical ranges (21Nov, year boundary, leap day) at1440/390. Six cases/mode, same assertions both modes, actual login and read-only guard, actual selector pointer switches, retained URL/API YYYY-MM-DD and alias/F5. General Intl date/number formatting and missing km/my catalog acceptance remain open. Sourcec56da166, production build70f46a3c with identical production inputs; exact default-period omission assertion corrected, no runtime change. Private native listener and unchanged approved wrapper/isolated endpoints revalidated; no SQL/reset/seed/original PG5432 or service changes; authentication sessions only.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-picker.spec.ts
+[WebServer] (node:6948) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+(node:6432) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker nonambiguous 1440, ten translated identities not full Intl acceptance (4.7s)
+  ok 2 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker year-boundary 1440, ten translated identities not full Intl acceptance (3.8s)
+  ok 3 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker leap-day 1440, ten translated identities not full Intl acceptance (3.9s)
+  ok 4 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker nonambiguous 390, ten translated identities not full Intl acceptance (3.7s)
+  ok 5 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker year-boundary 390, ten translated identities not full Intl acceptance (3.7s)
+  ok 6 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker leap-day 390, ten translated identities not full Intl acceptance (3.7s)
+
+  6 passed (27.5s)
+EXIT 0

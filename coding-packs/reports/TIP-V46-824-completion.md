@@ -3,7 +3,23 @@
 **STATUS: IN PROGRESS / PARTIAL — NOT DONE, NOT READY TO MERGE.**
 The active goal remains the entire approved TIP and all16 ACs. No scope reduction; the agent has not opened a PR, merged or released.
 
-## Current checkpoint
+## Current checkpoint — 2026-11-12, c56da166 / implementation70f46a3c
+
+**Still PARTIAL / NOT DONE / NOT READY TO MERGE.** The previous goal turn made concrete progress (complete Lao catalogs); this turn corrects numeric picker order and adds real cross-locale picker verification. The full16-AC goal is unchanged.
+
+- Implementation70f46a3c makes approved numeric picker order deterministic for all12 profiles, independent of optional browser ICU: zh YYYY/MM/DD, fil MM/DD/YYYY, other profiles DD/MM/YYYY. Aliases/invalid-locale fallback, Gregorian year, canonical YYYY-MM-DD values, Vietnam presets, D-140, backend/DB/API/Portal/shared behavior remain unchanged. General unsupported-locale Intl date/number/month-name formatting is **still OPEN**, not solved by this picker correction. No dependency/polyfill/global Intl replacement was added.
+- Final source/test harnessc56da166 differs from70f46a3c only in test/manifest. Six final tested blobs match committed HEAD/worktree after normal hooks. Root **3081 unique passed +2 existing skips**: fresh Admin1358/185files with one worker, five other suites cached; final harness-only rerun replays all six identical unit inputs. Do not double-count. Final lint/typecheck8 tasks/7 cached (e2e fresh); depcheck2794modules/8574dependencies plus server1260/5995. Both Admin production builds70f46a3c pass, identical production inputs in finalc56da166.
+- Focused45 =17 new fixed cases (12 profiles with Intl.DateTimeFormat forced to throw +5 invalid locales),13 existing picker/preset and15 generic formatter cases. Included in root, not additional. Initial regression failed12/17 before the implementation. An initial full root had two unchanged source-audit tests exceed the existing5000ms default with2 workers; unchanged19-case retry and full root passed with1 worker. No timeout/assertion/skip change; complete failed output and successful retry retained in [picker-unit.log](evidence/v46-824/picker-unit.log). Timing variation is not claimed as a diagnosed product defect.
+- Current [picker MSW6](evidence/v46-824/picker-msw.log) and [native6](evidence/v46-824/picker-native.log) use the same assertions: three explicit canonical ranges (21–30Nov2026,31Dec2026–1Jan2027,28–29Feb2024) at1440/390, each checks ten translated selector identities by actual pointer switches (60 locale/range/width combinations per mode), exact numeric inputs, unchanged URL/API from/to, explicit URL period=month and F5 en-SG identity/range. This is loaded read-only range evidence, **not manual date editing,17:00Z browser clock proof, missing km/my catalog acceptance or complete Intl/control acceptance**.
+- Initial six MSW harness cases wrongly expected period=month in the API query. Existing fetchOverview deliberately omits that default. Final harness asserts exact null plus only from/to API keys, not a permissive alternative; URL period=month and every range/locale/guard/F5 assertion remain exact. No production/query/fixture or timeout change. Initial output is preserved in picker-unit.log; native had not run in that stopped chain.
+- Current Lao Overview/Profile/Settings6+6 also pass on the corrected production build; twelve unmasked body images regenerated. Current fresh browser total24 =2×(6 picker+6 Lao body), not286 same-source cases; earlier262-chain belongs to264842f8 and was not rerun. Native listener/unchanged approved launch wrapper/isolated endpoints revalidated, no original PG5432/test data/service/reset/seed/SQL change, auth sessions only. No owner/native-human translation or visual approval.
+- Static audit584 production files/301 findings/291 exact exceptions/zero unreviewed/dirty=false; corpus01440207b8df8aa87d8345b749b15626d47227e9c4f9cbb96547989580351e9c over601 fingerprint files. Only the intended picker implementation changes the production fingerprint; catalogs/browser evidence remain outside it.878 manifest paths, no undeclared changed path/cap violation. Raw200/250/eight complete bundles,35 font units/seven font binaries/six OFLs unchanged. km/my, final fixed10-bundle gate and remaining full state/native/formatting/value/visual/performance acceptance remain open.
+
+Current logs: [gates](evidence/v46-824/quality-gates.log), [unit/cache replay](evidence/v46-824/unit.log), [MSW build](evidence/v46-824/build-msw.log), [native build](evidence/v46-824/build-native.log), [source audit](evidence/v46-824/source-audit.json). Portal476 is a root cache replay; historical direct/build proof has unchanged inputs, no fresh Portal build claimed.
+
+Technical investigation only: [FormatJS conditional date-polyfill/data loading](https://formatjs.github.io/docs/polyfills/intl-datetimeformat/) and [Next client-instrumentation lifecycle](https://nextjs.org/docs/app/api-reference/file-conventions/instrumentation-client) were inspected. No package or async bootstrap was introduced; full unsupported-locale formatting still requires implementation.
+
+## Historical Lao checkpoint — source44f7c443, superseded above
 
 - Date:2026-11-11. Branch: `feature/TIP-V46-824-admin-i18n`, baseline `dev f7c1b2b8` (822/823 merged). Current source **44f7c443**; all33 tested catalog/test/REVIEW/manifest blobs match committed HEAD and working tree after normal hooks. This checkpoint adds complete Lao raw catalogs and six actual screens per mode; historical Thai/badge/English evidence below retains its named source, not a fresh rerun.
 - Previous goal turn made concrete progress. No blocking external condition: substantial implementation/verification remains.
@@ -99,9 +115,9 @@ Fresh six authenticated Overview/Profile/Settings cases at1440/390 in **each** m
 
 Root3064 passed +2 existing skips: Admin1341/184 files fresh, five suites cache-replayed (Portal476/UI88/shared757/server276/integrations126). Lint/typecheck8 successful/6 cached each; depcheck2792modules/8572dependencies plus server1260/5995. Both Admin production builds pass. Source CLI584 files/301 retained findings/291 exact exceptions/zero unreviewed/dirty=false, unchanged corpusb145416ef4c6391489ba21d77aeaae2a4c29af4d8f7f69a9d2324025e6df5e81 across601 fingerprint files; catalogs/browser proof are outside that fingerprint.873 exact manifest paths, no undeclared changed path/source cap violation. Entire TIP remains PARTIAL; km/my and the final10-bundle gate/full16-AC acceptance remain open.
 
-### Observed reduced-ICU date defect — OPEN
+### General reduced-ICU date defect — OPEN; numeric picker order corrected
 
-Actual installed Chromium reports Intl.DateTimeFormat.supportedLocalesOf empty for lo-LA/my-MM/km-KH, resolves en-US and formats the fixed Vietnam-calendar day as 11/21/2026; Node supports all three and returns 21/11/2026 (Myanmar native digits). Native Overview390 image consequently shows month/day order for Lao. The current six-screen suite checks prose/layout, not this date order; no assertion was relaxed. Probe output is retained in lao.log. Fix date/picker/runtime parity and add browser numeric/date boundary assertions before accepting AC09/15; do not treat selected catalog/fonts or existing Myanmar number-digit fix as solving dates. No business parser/calendar value or API change is authorized.
+Actual installed Chromium reports Intl.DateTimeFormat.supportedLocalesOf empty for lo-LA/my-MM/km-KH, resolves en-US and formats the fixed Vietnam-calendar day as 11/21/2026; Node supports all three and returns 21/11/2026 (Myanmar native digits). Historical source44f7c443 Overview390 showed month/day order for Lao. Numeric picker order is now corrected independently of ICU and verified across ten translated identities; current images have been regenerated. The original diagnostic is retained in lao.log. General date/number/month-name runtime parity and full unsupported-locale control/boundary proof remain required before AC09/15 acceptance. No business parser/calendar value or API change is authorized.
 
 ## Raw translation readiness — FAIL / INCOMPLETE
 
@@ -119,7 +135,9 @@ Actual installed Chromium reports Intl.DateTimeFormat.supportedLocalesOf empty f
 
 Presence200/250 and eight complete raw bundles are NOT whole-TIP acceptance. Lao now has25/25 raw files; km/my are absent. These two missing target bundles and the final fixed10-bundle production gate remain open. Runtime fallback never counts as a translation. See [catalog audit](evidence/v46-824/catalog-audit.md) and [REVIEW](../../apps/admin/messages/REVIEW.md).
 
-## Current verification — source44f7c443
+## Historical verification — source44f7c443
+
+The table below records that checkpoint only. Shared log filenames now contain the current runs listed above, not this historical table's counts.
 
 | Command / check | Actual evidence |
 |---|---|
@@ -152,7 +170,7 @@ A real loader test initially fell back despite valid raw files: installed Vitest
 |06|584-file typed literal scan passes;47 loaded English states and14 dialogs x2 viewports pass in both modes. Remaining loading/empty/error/403/chat and unvisited secondary flows keep AC open.|
 |07|Thai and Filipino raw/auth/Overview/Profile/Settings subsets now have proof; three target catalogs are absent. Twelve English full-screen Overview/Profile/Settings images and four Chinese auth-only images exist; required other-locale full-screen/control proof remains incomplete.|
 |08|Approved optional badge formatter, reduced-ICU Myanmar digit units and actual my/vi/en badge switches now pass both modes, preserving counts/URL/hrefs; full Myanmar prose remains absent. Pure/compact/domain/event/picker/optional-number and export-byte units pass;93 model callers have live-locale AST proof, only fixed-vi export Intl remains. Raw number interpolation audit passes with2 exact email-content exceptions; browser boundaries still pending.|
-|09|All10 AntD locale import/serialization/custom-string units and42 caller AST checks pass; actual all-locale controls/fonts/browser proof pending.|
+|09|All10 AntD locale import/serialization/custom-string units and42 caller AST checks pass. Numeric picker now has12-profile reduced-ICU units and actual ten-translated-identity range/F5 proof both modes. General unsupported Intl formatting, missing km/my and full controls remain open.|
 |10|Profile + auth local-code/raw negatives and typed upload boundaries pass by unit; public vi/en error switching passes both modes. Affiliate policy/bank, bot type, pricing and notification local/raw unit cases now pass; Profile actual local error/password/name/phone drafts pass vi/en/vi in both modes; group open-state provider refresh is synthetic handler proof, not modal accessibility. Actual uploads/2FA and remaining domains remain pending.|
 |11|Canonical projections, event default, AI filter/moderation/optional numeric callback units pass; browser save-value/RBAC assertions pending.|
 |12|Raw API negative and CSV/Excel/email-preview boundaries pass by unit; actual translated-mode API/audit/notification/email/export browser negatives pending.|
@@ -176,7 +194,7 @@ Historical source264842f8 Thai proof: [Profile1440](evidence/v46-824/th-profile-
 
 Historical source264842f8 Filipino images: [Profile1440 — sidebar clipping corrected](evidence/v46-824/fil-profile-server-1440.png), [Overview390](evidence/v46-824/fil-overview-server-390.png), [Settings390](evidence/v46-824/fil-settings-server-390.png). Representative images inspected for glyphs and real layout; no native-human or owner approval. Native data/counts retained, not reseeded to mimic MSW.
 
-Current Lao proof: [Profile1440](evidence/v46-824/lo-profile-server-1440.png), [Overview390](evidence/v46-824/lo-overview-server-390.png), [Settings390](evidence/v46-824/lo-settings-server-390.png). Agent inspected representative native screenshots; no owner/native-speaker approval. Same-source six cases/mode are narrowly loaded-state evidence, not full screen/control acceptance.
+Current sourcec56da166 Lao proof: [Profile1440](evidence/v46-824/lo-profile-server-1440.png), [Overview390](evidence/v46-824/lo-overview-server-390.png), [Settings390](evidence/v46-824/lo-settings-server-390.png), regenerated after numeric-picker correction. Agent inspected these native screenshots for readable glyphs, sidebar geometry and correct day/month picker order; no owner/native-speaker approval. Six cases/mode are narrowly loaded-state evidence, not full screen/control acceptance.
 
 ## Historical evidence
 
