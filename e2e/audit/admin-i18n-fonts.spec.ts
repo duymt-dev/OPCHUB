@@ -125,6 +125,22 @@ for (const option of languageOptions) {
           animations: 'disabled',
         });
       }
+      if (option.code === 'my') {
+        // Public auth/meta only; eight Myanmar business catalogs remain incomplete.
+        await expect(
+          page.getByRole('heading', { name: 'ပြန်လည်ကြိုဆိုပါသည်!', exact: true }),
+        ).toBeVisible();
+        await expect(page).toHaveTitle('အကောင့်ဝင်ရန် · OPC Hub Admin');
+        const directory = fileURLToPath(
+          new URL('../../coding-packs/reports/evidence/v46-824/', import.meta.url),
+        );
+        mkdirSync(directory, { recursive: true });
+        await page.screenshot({
+          path: resolve(directory, `my-auth-${env.E2E_TARGET}-${width}.png`),
+          fullPage: true,
+          animations: 'disabled',
+        });
+      }
       if (option.code === 'ms' || option.code === 'ms-BN') {
         await expect(
           page.getByRole('heading', { name: 'Selamat kembali!', exact: true }),

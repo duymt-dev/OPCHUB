@@ -1205,3 +1205,35 @@ Complete the13 existing explicitly declared km paths, preserving all12 staged fi
 | create | `coding-packs/reports/evidence/v46-824/km-settings-msw-390.png` | Actual unmasked Khmer settings body at390; not owner/native-human approval. |
 | create | `coding-packs/reports/evidence/v46-824/km-settings-server-1440.png` | Actual unmasked Khmer settings body at1440; not owner/native-human approval. |
 | create | `coding-packs/reports/evidence/v46-824/km-settings-server-390.png` | Actual unmasked Khmer settings body at390; not owner/native-human approval. |
+
+## Myanmar catalog implementation (2026-11-12)
+
+Implement all25 existing explicit my paths in domain-sized stages, without placeholder files or treating runtime fallback as translation. First17 physical catalogs (1260 source leaves) cover auth, bot-options, common, investors, meta, needs, overview, reports, requests, stores, ui and all six settings parts. Other8 business catalogs (1407 leaves) remain required. Preserve all nine completed bundles. Exact-source Portal Myanmar matches are offline input only; review Admin-specific context. No business/API/DB/Portal/shared/dependency/font change. This does not narrow the full16-AC goal.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| create | `apps/admin/src/i18n/tests/myanmar-catalog.spec.ts` | Fixed17-file raw/ICU/NFC/no-copy/script/context/neutral/cmap proof, extending to all25 when complete; not final10-bundle acceptance. |
+| create | `coding-packs/reports/evidence/v46-824/myanmar-raw.log` | Actual staged Myanmar raw test commands/results and limitations. |
+
+| create | `e2e/behavior/admin-i18n-myanmar.spec.ts` | Six actual Myanmar core Overview/Profile/Settings1440/390 cases, same strict read-only assertions both modes; not missing8-domain or all-language acceptance. |
+| modify | `e2e/behavior/admin-i18n/fixtures.ts` | Add explicit Myanmar login/notification identity, no guard change. |
+| modify | `e2e/playwright.admin-i18n.config.ts` | Register explicit Myanmar core suite without seed/global DB fixtures. |
+| modify | `e2e/audit/admin-i18n-fonts.spec.ts` | Keep24 font cases/mode; add actual Myanmar public auth heading/title/image, not full body proof. |
+| create | `coding-packs/reports/evidence/v46-824/myanmar-msw.log` | Actual six-case Myanmar core browser output. |
+| create | `coding-packs/reports/evidence/v46-824/myanmar-native.log` | Same assertions on revalidated approved isolated native API, original5432 retained. |
+| create | `coding-packs/reports/evidence/v46-824/my-auth-msw-1440.png` | Actual unmasked Myanmar auth at1440; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-auth-msw-390.png` | Actual unmasked Myanmar auth at390; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-auth-server-1440.png` | Actual unmasked Myanmar auth at1440; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-auth-server-390.png` | Actual unmasked Myanmar auth at390; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-overview-msw-1440.png` | Actual unmasked Myanmar overview at1440; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-overview-msw-390.png` | Actual unmasked Myanmar overview at390; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-overview-server-1440.png` | Actual unmasked Myanmar overview at1440; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-overview-server-390.png` | Actual unmasked Myanmar overview at390; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-profile-msw-1440.png` | Actual unmasked Myanmar profile at1440; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-profile-msw-390.png` | Actual unmasked Myanmar profile at390; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-profile-server-1440.png` | Actual unmasked Myanmar profile at1440; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-profile-server-390.png` | Actual unmasked Myanmar profile at390; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-settings-msw-1440.png` | Actual unmasked Myanmar settings at1440; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-settings-msw-390.png` | Actual unmasked Myanmar settings at390; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-settings-server-1440.png` | Actual unmasked Myanmar settings at1440; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-settings-server-390.png` | Actual unmasked Myanmar settings at390; not owner/native-human review. |

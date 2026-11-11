@@ -1,5 +1,17 @@
 # Admin translation review (D-141)
 
+## Staged Myanmar core catalogs — 2026-11-12
+
+Sourcebf4c1d0d; Vietnamese schema2667 leaves/25files unchanged, native-reviewed: **false**. Myanmar now has17 physical files/1260 leaves: auth, bot-options, common (including Profile), investors, meta, needs, overview, reports, requests, stores, ui and all six settings parts. Eight business files/1407 leaves remain absent: affiliate, bots, events, fees, groups, marketing, members, projects. Nine complete bundles plus staged Myanmar is242/250 raw files, **not** full10-bundle acceptance. No production placeholders or English/Vietnamese prose filler; runtime fallback is not translation.
+
+Offline provenance:369 unambiguous exact-source Portal candidates,15 leaves from9 source phrases corrected for Admin context,354 retained.768 explicit source/target pairs cover891 leaves (including canonical technical examples and one intentionally blank actions header). Thus354 retained +891 explicit-pair +15 context-corrected =1260. Existing Vietnamese/all nine complete bundles, runtime loader/canonical payloads/API/business/DB/shared/Portal/dependencies/font binaries/licenses remain unchanged. No remote translator or cross-app runtime import.
+
+Glossary: Member = အဖွဲ့ဝင်; Administrator = စီမံခန့်ခွဲသူ; Regional Director = ဒေသဒါရိုက်တာ; referrer/Affiliate = မိတ်ဆက်သူ, not generic မိတ်ဖက် (partner); report noun = အစီရင်ခံစာများ, not တိုင်ကြားရန် (report-action). Activated အသက်သွင်းပြီးပြီ and not-yet-activated အသက်မသွင်းရသေးပါ remain distinct; locked လော့ခ်ချထားသည် is not generic closed/disabled. Central အလယ်ပိုင်း and Central+Highlands အလယ်ပိုင်းနှင့် အလယ်ပိုင်းကုန်းမြင့်ဒေသ remain distinct. Plan renewal is generic အစီအစဉ် သက်တမ်းတိုးသတိပေးချက်များ, not membership-only. Copyright wording, fully Myanmar Admin/member-portal greetings and loan-term consistency are context-corrected, not copied blindly from Portal.
+
+Fixed65 tests =17 raw shape/key/type/ICU/NFC/no-copied-Vietnamese +42 exact Admin-context +1 exact31-neutral/script/no-English-filler +4 canonical-example +1 existing Myanmar/Latin cmap across all1260 leaves. All non-neutral text contains Myanmar script, not Latin transliteration. Neutral examples are explicit keys (numeric/time/date examples, required brand, provider/protocol names, unchanged person/timezone/OPCHUB examples and blank header), no namespace-wide exemption. Direct prose uses Myanmar digits where natural; canonical protocol/URL/port/examples remain unchanged. No content/enum/permission/API value is translated.
+
+Confidence moderate pending native idiom/line-break review. Technical raw/font tests and automated browser anchors are not native-language approval. Legacy removed-assistant source prose is translated as existing UI copy without adding that feature; no business decision is inferred. Missing8 files and final full10-bundle/control/state/value/performance obligations remain mandatory.
+
 ## Complete Khmer raw bundle — 2026-11-12
 
 Source9145beff, unchanged Vietnamese2667-leaf/25-file schema. Khmer now has all25 physical catalogs/2667 leaves; the earlier12 files/729 leaves are byte-identical. All six settings parts now exist and the actual request loader is tested across auth/Profile/Overview/reports/general/roles/mail/audit/pricing/AI with no warning/fallback. Nine complete bundles/225 of250 raw files is still **not** the final10-bundle acceptance: all25 Myanmar files remain absent. Native-reviewed: **false**, confidence moderate pending native idiom/layout review.
@@ -32,7 +44,7 @@ Fixed tests cover decimal/grouping separators, Myanmar digits/explicit Latin ove
 
 Actual built locale-data chunks are mapped and hashed separately for both modes; missing/duplicate/mixed-locale data fails the auditor. Browser evidence checks actual Lao dates/VND against independent Node Intl/raw DTOs, zero unused data payload on public auth, only selected Lao data responses with exact hashes and unchanged global constructor snapshots. This is not the original-baseline/per-route JS budget proof. Full performance and all-language controls/states remain required.
 
-The standard-data implementation itself added no UI messages. The complete Khmer section above now updates raw readiness to225/250 files: nine complete bundles; all25 Myanmar files remain absent. Standard CLDR names are not substitutes for those translations. Native-speaker-reviewed=false remains unchanged; licensed fonts/binaries and Vietnamese source text remain unchanged.
+The standard-data implementation itself added no UI messages. The staged Myanmar section above updates raw readiness to242/250 files: nine complete bundles plus17 Myanmar files; eight Myanmar business catalogs remain absent. Standard CLDR names are not substitutes for those translations. Native-speaker-reviewed=false remains unchanged; licensed fonts/binaries and Vietnamese source text remain unchanged.
 
 - Scope: Admin UI only; API errors, email, CSV and user content retain their original contract.
 - Source baseline: f7c1b2b8; current source has2667 string leaves in25 physical catalogs.

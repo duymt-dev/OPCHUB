@@ -144,9 +144,10 @@ export const test = base.extend<{ guard: BrowserGuard }>({
 export async function openLocalized(
   page: Page,
   path: string,
-  locale: 'en' | 'en-SG' | 'vi' | 'zh' | 'id' | 'ms' | 'ms-BN' | 'fil' | 'th' | 'lo' | 'km',
+  locale: 'en' | 'en-SG' | 'vi' | 'zh' | 'id' | 'ms' | 'ms-BN' | 'fil' | 'th' | 'lo' | 'km' | 'my',
 ): Promise<void> {
   const labels = {
+    my: { signIn: 'အကောင့်ဝင်ရန်', notifications: 'အသိပေးချက်များ' },
     km: { signIn: 'ចូលប្រើ', notifications: 'ការជូនដំណឹង' },
     en: { signIn: 'Sign in', notifications: 'Notifications' },
     'en-SG': { signIn: 'Sign in', notifications: 'Notifications' },
