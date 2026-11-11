@@ -1,0 +1,19 @@
+Filipino STAGED12/25 files,941/2667 leaves; whole bundle incomplete. Test/catalog working tree based on55504b45. No production logic, Portal/shared, font binary, API or database changes.
+COMMAND pnpm --filter @opchub/admin test src/i18n/tests/filipino-catalog.spec.ts
+$ vitest run --passWithNoTests src/i18n/tests/filipino-catalog.spec.ts
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  1 passed (1)
+      Tests  43 passed (43)
+   Start at  20:30:15
+   Duration  1.92s (environment 90%, tests 7%, import 2%, transform 1%, worker 1%)
+
+EXIT 0
+
+Fixed whole-Filipino inventory: required25, present12, missing13. Required2667 leaves, present941, missing1726. Whole bundle readiness FAIL; fallback is not counted.
+MISSING bots, events, fees, groups, marketing, members, projects, settings/access, settings/ai, settings/audit, settings/core, settings/finance, settings/mail
+Provenance:277 retained exact-source Portal leaves +664 direct/context-corrected leaves;40 Portal-context corrections;537 unique direct context pairs used in624 leaves. Native-reviewed=false. No proper-name/contract copy exceptions needed in these12 files.
+
+Postcommit receipt: all15 tested catalog/test/manifest blobs equal committed sourcec12b477d and working tree after normal hooks. REVIEW Markdown hook diff is formatting only; no catalog/logic/test edit after final gates. Precommit run base55504b45 is retained truthfully.

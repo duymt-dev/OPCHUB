@@ -28,3 +28,21 @@ COMMAND node infra/scripts/audit-admin-i18n.mjs
   "errors": 0
 }
 TypeScript static corpus scan is not arbitrary runtime/interprocedural proof. Two actual Vietnamese email-preview numeric counters remain exact contractual exceptions. Group region projection does not change canonical province values, form callbacks or raw draft content.
+
+Current CLI refresh for sourcec12b477d (earlier focused3 above remains source016b9077 historical proof).
+COMMAND node infra/scripts/audit-admin-i18n.mjs
+{
+  "status": "PASS",
+  "source": {
+    "gitHead": "c12b477db1bbaaf081e81eeb85e0d0faba7f8490",
+    "dirty": false,
+    "corpusSha256": "2022fe8ac2abd4a92823c93a5720ac81adbed57110c49907922546bcf1651b4f",
+    "fingerprintFiles": 601,
+    "fingerprintScope": "Scanned production source plus audit scripts and exact exception registries; not catalogs or browser evidence"
+  },
+  "files": 584,
+  "rows": 301,
+  "unreviewed": 0,
+  "errors": 0
+}
+Production TS/TSX/audit sources unchanged; this fingerprint explicitly excludes catalogs/browser evidence. New Filipino subset proof is in filipino.log, never inferred from this AST scan.
