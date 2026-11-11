@@ -1,21 +1,21 @@
-Source working tree based on 1a6b0117; Admin build mode=msw dist=.next-msw-tip824; compile only, no API verification
+Source working tree based on 757b4ad9; Admin build mode=msw dist=.next-msw-tip824; compile only, no API verification
 $ next build
 ▲ Next.js 16.4.2 (Turbopack)
 - Environments: .env.local
-✓ Running next.config.ts took 356ms
+✓ Running next.config.ts took 422ms
 - Experiments (use with caution):
   · optimizePackageImports
 
   Creating an optimized production build ...
-✓ Compiled successfully in 1260ms
+✓ Compiled successfully in 4.4s
   Running TypeScript ...
-  Finished TypeScript in 6.5s ...
+  Finished TypeScript in 8.6s ...
   Collecting page data using 5 workers ...
   Generating static pages using 5 workers (0/10) ...
   Generating static pages using 5 workers (2/10)
   Generating static pages using 5 workers (4/10)
   Generating static pages using 5 workers (7/10)
-✓ Generating static pages using 5 workers (10/10) in 458ms
+✓ Generating static pages using 5 workers (10/10) in 480ms
   Finalizing page optimization ...
 
 Route (app)
@@ -50,4 +50,4 @@ Route (app)
 
 EXIT 0
 
-Postcommit receipt: tested source blobs verified identical to b9e50ace and working tree after normal hooks. Original precommit run header retained. No source edit after final gates.
+Postcommit receipt: tested source/helper/test/manifest blobs verified identical to 016b9077 and working tree after normal hooks. Original precommit working-tree header retained; no source edits after final gates.

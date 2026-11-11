@@ -1,14 +1,14 @@
-Source b9e50ace; tested blobs verified identical to committed HEAD after normal hooks. Focused tests are included in root2820, not additional coverage.
-COMMAND pnpm --filter @opchub/admin test src/features/settings/components/ai/ai-call-i18n.spec.tsx src/features/affiliate/regional/components/regional-labels-i18n.spec.tsx src/i18n/tests/source-audit.spec.ts
+Source016b9077; actual committed source. Focused3 group region projection cases are included in root2823, not additional root tests.
+COMMAND pnpm --filter @opchub/admin test src/features/groups/components/group-form-fields-i18n.spec.tsx
+$ vitest run --passWithNoTests src/features/groups/components/group-form-fields-i18n.spec.tsx
+
  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
 
-Not implemented: Window's getComputedStyle() method: with pseudo-elements
-Not implemented: Window's getComputedStyle() method: with pseudo-elements
 
- Test Files  3 passed (3)
-      Tests  26 passed (26)
-   Start at  19:53:54
-   Duration  19.90s (tests 51%, import 34%, environment 13%, transform 2%)
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  20:19:56
+   Duration  9.36s (import 74%, environment 17%, transform 5%, tests 3%)
 
 EXIT 0
 
@@ -16,15 +16,15 @@ COMMAND node infra/scripts/audit-admin-i18n.mjs
 {
   "status": "PASS",
   "source": {
-    "gitHead": "b9e50acea5ce3483b0016c61e904fe44c9aab9c1",
+    "gitHead": "016b9077643b4d89de94638b0d37e3a24d4f81bd",
     "dirty": false,
-    "corpusSha256": "d769765feae2266781e712111abdee559767e669e4a8677957313b400507862d",
+    "corpusSha256": "2022fe8ac2abd4a92823c93a5720ac81adbed57110c49907922546bcf1651b4f",
     "fingerprintFiles": 601,
     "fingerprintScope": "Scanned production source plus audit scripts and exact exception registries; not catalogs or browser evidence"
   },
-  "sourceFiles": 584,
+  "files": 584,
   "rows": 301,
   "unreviewed": 0,
   "errors": 0
 }
-Two actual Vietnamese email-preview numeric counters remain exact contractual exceptions. Static scan is not arbitrary runtime/interprocedural proof. All other targeted raw numbers now use live-locale display formatting without changing payloads.
+TypeScript static corpus scan is not arbitrary runtime/interprocedural proof. Two actual Vietnamese email-preview numeric counters remain exact contractual exceptions. Group region projection does not change canonical province values, form callbacks or raw draft content.
