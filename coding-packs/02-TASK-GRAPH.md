@@ -77,6 +77,14 @@ Các mục B khác để sau (D-138). TIP viết lúc tới bước, dựa trên
 | V46-822 | [TIP](tips/TIP-V46-822-admin-profile.md) · nhánh `feature/TIP-V46-822-admin-profile` · **DONE** — Hồ sơ Admin, avatar/topbar sync, đổi mật khẩu giữ phiên hiện tại và thu hồi phiên cũ, audit/outbox/GC; 6 AC verified, unit2308 + 2 existing skips, native27, native/MSW browser2+2; owner PR/image review pending | RB-R02, RB-R03, D-52, D-89, SEC-R01 | 821 | M | [Report](reports/TIP-V46-822-completion.md) · [PR118](https://github.com/duymt-dev/OPCHUB/pull/118) · `b843efb0` |
 | V46-823 | [TIP](tips/TIP-V46-823-admin-overview-interactive-controls.md) · nhánh `feature/TIP-V46-823-admin-overview-interactive-controls` · **DONE** — Tổng quan Admin: chọn khoảng lịch, chu kỳ Tuần/Tháng/Năm và phản hồi tìm kiếm; D-140 corrective implementation; 13 AC verified, native 26 tests, MSW/native browser 10+10, six SQL plans index-only; original DB preserved, owner PR/image review pending | REQ-122, REQ-625, D-140, D-89, D-95, BR-491, BUG-029, S-03 | 818, 821 | M | [Report](reports/TIP-V46-823-completion.md) · [PR116](https://github.com/duymt-dev/OPCHUB/pull/116) · `1c8006d4` |
 
+## V4.6 — ADMIN I18N (D-141, sau 822/823)
+
+| TIP | Tên | REQ / D | Phụ thuộc | Ước lượng | Files / trạng thái |
+|---|---|---|---|---|---|
+| V46-824 | [TIP](tips/TIP-V46-824-admin-i18n.md) · nhánh `feature/TIP-V46-824-admin-i18n` · **TIP đã viết, chưa code** — i18n toàn bộ Admin: Việt + 9 bản dịch, 12 lựa chọn quốc gia; metadata/AntD/dayjs/format/local validation, catalog gates và MSW/native | D-141, D-06, D-37, D-65, D-133, D-134; hồi quy D-140 / REQ-122 / REQ-625 | V2-117, V46-822, V46-823 (đã merge) | XL | [Manifest file-level](tips/TIP-V46-824-admin-i18n-manifest.md); sequential, không song song Admin/shared UI; chưa có implementation report |
+
+Thứ tự: V46-822 + V46-823 đã tích hợp → **V46-824** (execute khi owner yêu cầu). Một TIP implementation, manifest là phụ lục chứ không phải làn song song. Không tự release/merge `main`.
+
 Số 819 không dùng (gộp vào 818 theo D-139).
 
 ## V4.6 — GIT (nhánh xếp chồng, không tự merge)
