@@ -2,6 +2,10 @@
 
 **Partial evidence only.** Metadata implementation is not proof that a route body, dialog, every locale or API is verified.
 
+## Reduced-ICU follow-up — test89c2ed1b / production0e3803b3
+
+Fees real date/VND/raw DTO/independent Node full-ICU comparisons now pass for Khmer/Lao/Myanmar at1440/390:6 native +6 MSW. Selected actual response hashes/locale-only registration, no public auth data fetch, unchanged global Intl constructors and en→target→en canonical URL/data checks retained. No API/DB/service change, native preflight/strict guards unchanged. Apps/packages/infra/lockfiles byte-identical to built0e3803b3; reused both builds. Fresh root lint/typecheck/depcheck PASS, all6 unit tasks cached3367+2existing skips. This focused12-case run does not claim the expanded212-case full suite was executed. Exact commands/results appended to intl-runtime.log; full16-AC goal remains open.
+
 ## Current registered full behavior — source0e3803b3
 
 **PARTIAL overall, not DONE or merge-ready.** Full208/208 MSW and208/208 isolated-native PASS with identical assertions and source, no per-server skips. Includes72 core cases/mode across12 identities,3 routes,2 widths;11 helper classifier cases,2 synthetic modal probes and1 clipping negative per mode are not independent user workflows. Other AC obligations are not inferred from the416 total.

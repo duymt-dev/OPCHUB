@@ -3,6 +3,12 @@
 **STATUS: IN PROGRESS / PARTIAL — NOT DONE, NOT READY TO MERGE.**
 The active goal remains the entire approved TIP and all16 ACs. No scope reduction; the agent has not opened a PR, merged or released.
 
+## Reduced-ICU follow-up — test source89c2ed1b, production source0e3803b3
+
+Actual Fees date/VND/CLDR isolation now PASS for **all three Khmer/Lao/Myanmar locales at1440/390,6 cases/mode**. Each authenticates against real MSW/native API, parses actual summary/row DTOs, compares visible date and currency to independent Node full-ICU, asserts selected payload response SHA256/locale and no other locale-data fetch, unchanged global Intl constructors, no public-login data registration/fetch, exact en→target→en values and retained URL/query/hash. Native preflight and strict HTTP/JSON/read-only guards remain unchanged; no DB/seed/reset/repair/original/private service changes.
+
+Both production outputs are reused from0e3803b3: `git diff --exit-code 0e3803b3 HEAD -- apps packages infra pnpm-lock.yaml pnpm-workspace.yaml package.json` is empty. Only browser test/manifest changed, frozen2 inputs match after normal hooks. Root lint/typecheck PASS (8tasks/7cached each); depcheck2838modules/8683dependencies plus1260/5995; root3367+2existing skips all6 tasks cached, not a fresh unit run or added unique unit count. Native6 PASS21.8s, MSW6 PASS34.0s. This is a focused12-case run, **not a rerun of the full expanded212-case inventory**; prior full208/mode proof remains explicitly source0e3803b3. [Preserved history and exact new commands/results](evidence/v46-824/intl-runtime.log). Full TIP still PARTIAL.
+
 ## Current mobile geometry and complete registered behavior checkpoint — source0e3803b3
 
 **IN PROGRESS / PARTIAL, not DONE or merge-ready.** Fixed the measured Indonesian mobile header/popover defect with an Admin-only LanguageSwitch facade. Before correction, the390px document measured393px and the avatar right edge392.859375; the country popover started at-43.9375px. Mobile trigger padding and viewport-anchored, vertically scrollable popover now preserve the complete native label, flag, caret,12 options and original hit height. No overflow hiding, clipping, locale special case, shared/Portal change or business/API/data mutation.
@@ -30,7 +36,7 @@ Evidence: [root gates](evidence/v46-824/quality-gates.log), [units](evidence/v46
 |05|PASS for specified actual vi→en→th→vi member URL/query/paging/session/no-write sequence, aliases and F5 in both full runs.|
 |06|PARTIAL: all registered loaded English routes/tabs/dialogs pass both modes plus592-file scan; loading/empty/error/403/chat/secondary-state matrix still required.|
 |07|PARTIAL: all12 identities on actual loaded Overview/Profile/Settings at1440/390 pass both modes with unmasked images; complete representative native controls still required.|
-|08|PARTIAL: formatting/canonical/export units, actual Myanmar flow and English/Lao Fees date/VND proof pass; remaining browser numeric/date/currency boundaries remain.|
+|08|PARTIAL: formatting/canonical/export units, actual Myanmar flow and English plus all three scoped CLDR Fees date/VND proofs pass; remaining browser numeric/date/currency boundaries remain.|
 |09|PARTIAL: all10 AntD definitions/provider units and all12 range/F5 cases pass; full actual empty/pagination/editor/dialog/calendar control coverage remains.|
 |10|PARTIAL: actual Profile local error/drafts and units pass; synthetic modal-handler probes are not actual open-modal/accessibility/upload/2FA proof.|
 |11|PARTIAL: canonical projections and read-only browser guards pass; actual canonical save-value and RBAC negatives remain.|
