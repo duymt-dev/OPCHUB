@@ -11,6 +11,7 @@ import { uploadImage } from '@/lib/upload-image';
 import source from '../../messages/vi/ui.json';
 import english from '../../messages/en/ui.json';
 import { useUploadImage } from './use-upload-image';
+import { importSpecifiers } from './tests/import-contract';
 
 vi.mock('@/lib/upload-image', () => ({ uploadImage: vi.fn() }));
 beforeEach(() => vi.clearAllMocks());
@@ -90,13 +91,9 @@ describe('D-141 AC824-10/12 typed Admin upload translation', () => {
     const consumers: string[] = [];
     for (const file of files(root)) {
       const text = readFileSync(file, 'utf8');
-      const ast = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
-      for (const statement of ast.statements) {
-        if (!ts.isImportDeclaration(statement) || !ts.isStringLiteral(statement.moduleSpecifier))
-          continue;
-        expect(statement.moduleSpecifier.text, file).not.toBe('@/lib/upload-image');
-        if (statement.moduleSpecifier.text === '@/i18n/use-upload-image')
-          consumers.push(file.replaceAll('\\', '/'));
+      for (const specifier of importSpecifiers(text)) {
+        expect(specifier, file).not.toBe('@/lib/upload-image');
+        if (specifier === '@/i18n/use-upload-image') consumers.push(file.replaceAll('\\', '/'));
       }
     }
     expect(consumers.map((file) => file.slice(file.indexOf('/features/') + 10)).sort()).toEqual([

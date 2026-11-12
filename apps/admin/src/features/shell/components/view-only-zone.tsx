@@ -8,7 +8,7 @@ import styles from './rbac.module.css';
 
 function pathOf(target: EventTarget, root: HTMLElement): RoTarget[] {
   const out: RoTarget[] = [];
-  let el = target instanceof HTMLElement ? target : null;
+  let el = target instanceof Element ? target : null;
   while (el && el !== root) {
     out.push({
       tag: el.tagName,

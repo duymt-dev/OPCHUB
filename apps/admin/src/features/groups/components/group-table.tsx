@@ -7,6 +7,7 @@ import { formatCount } from '../model';
 import type { AdminGroup } from '../types';
 import { Cover, type GroupRowActions } from './group-grid';
 import styles from './group-table.module.css';
+import { GroupTableActions } from './group-table-actions';
 
 type Mark = 'on' | 'part' | 'off';
 
@@ -86,25 +87,7 @@ export function GroupTable({ items, selected, onToggle, onToggleAll, actions }: 
               <span>{formatCount(g.memberCount, locale)}</span>
               <span>{formatCount(g.weeklyActive, locale)}</span>
               <span className={styles.status}>{t('active')}</span>
-              <div className={styles.actions}>
-                <button type="button" className={styles.btn} onClick={() => actions.onEdit(g)}>
-                  {t('edit')}
-                </button>
-                <button
-                  type="button"
-                  title={t('exportOneTitle')}
-                  className={`${styles.btn} ${styles.btnBlue}`}
-                  onClick={() => actions.onExport(g)}
-                >
-                  {t('exportOne')}
-                </button>
-                <button type="button" className={styles.btn} onClick={() => actions.onChat(g)}>
-                  {t('chat')}
-                </button>
-                <button type="button" className={styles.btnDel} onClick={() => actions.onDelete(g)}>
-                  {t('delete')}
-                </button>
-              </div>
+              <GroupTableActions group={g} actions={actions} />
             </div>
           );
         })}

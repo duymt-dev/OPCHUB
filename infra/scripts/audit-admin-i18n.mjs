@@ -4,10 +4,12 @@ import { createHash } from 'node:crypto';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { performance } from 'node:perf_hooks';
-import { productionProgram, fixtureProgram, pathOf } from './admin-i18n/source-files.mjs';
-import { literalFindings } from './admin-i18n/literals.mjs';
-import { numericFindings } from './admin-i18n/numeric.mjs';
-import { loadExceptions, classify } from './admin-i18n/registry.mjs';
+import { productionProgram, pathOf } from './admin-i18n/source-files.mjs';
+import {
+  analyzeSourceContext,
+  sourceAuditStatus,
+  sourceFixtureContext,
+} from './admin-i18n/audit-core.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const started = performance.now();
@@ -52,26 +54,10 @@ try {
   const fixture = process.argv.includes('--fixture')
     ? JSON.parse(readFileSync(0, 'utf8'))
     : undefined;
-  if (fixture && (typeof fixture.source !== 'string' || typeof fixture.file !== 'string'))
-    throw new Error('Invalid fixture');
-  const context = fixture ? fixtureProgram(fixture.source, fixture.file) : productionProgram(root);
-  const findings = context.files.flatMap((file) => {
-    const source = context.program.getSourceFile(file);
-    if (!source) throw new Error(`Missing source: ${file}`);
-    return [
-      ...literalFindings(source, context.checker),
-      ...numericFindings(source, context.checker),
-    ].map((row) => ({ file: fixture ? fixture.file : pathOf(root, file), ...row }));
-  });
-  const exceptions =
-    fixture?.exceptions ?? loadExceptions(resolve(root, 'infra/scripts/admin-i18n/exceptions'));
-  const result = classify(findings, exceptions);
+  const context = fixture ? sourceFixtureContext(root, fixture) : productionProgram(root);
+  const result = analyzeSourceContext(context, root, fixture);
   const inventory = process.argv.includes('--inventory');
-  const status = inventory
-    ? 'INVENTORY_ONLY'
-    : result.unreviewed.length || result.errors.length
-      ? 'FAIL'
-      : 'PASS';
+  const status = sourceAuditStatus(result, inventory);
   process.stdout.write(
     JSON.stringify(
       {

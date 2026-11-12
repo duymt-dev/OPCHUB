@@ -1,7 +1,9 @@
+// @vitest-environment node
 import { spawnSync } from 'node:child_process';
 import { resolve } from 'node:path';
 import { z } from 'zod';
 import { describe, expect, it } from 'vitest';
+import { auditSourceFixture } from '../../../../../infra/scripts/admin-i18n/audit-core.mjs';
 
 const root = resolve(__dirname, '../../../../..');
 const file = 'apps/admin/src/__source_audit_fixture.tsx';
@@ -17,13 +19,8 @@ const schema = z.object({
   errors: z.array(z.unknown()),
 });
 function audit(source: string, exceptions: readonly unknown[] = []) {
-  const result = spawnSync(process.execPath, ['infra/scripts/audit-admin-i18n.mjs', '--fixture'], {
-    cwd: root,
-    encoding: 'utf8',
-    input: JSON.stringify({ file, source, exceptions }),
-  });
-  expect(result.status, result.stderr).not.toBe(2);
-  return { code: result.status, ...schema.parse(JSON.parse(result.stdout) as unknown) };
+  const result = schema.parse(auditSourceFixture(root, { file, source, exceptions }));
+  return { code: result.status === 'PASS' ? 0 : 1, ...result };
 }
 const translated = "import {useTranslations as useT} from 'next-intl';";
 
@@ -101,4 +98,41 @@ describe('D-141 AC824-06/08 complete-source audit negative fixtures', () => {
       audit("function C({state}:{state:'A'|'B'|'C'}){return <b>{state}</b>}", [exception]).status,
     ).toBe('FAIL');
   });
+});
+
+it.each(['const n=1;', '<b>Untranslated</b>'])(
+  'D-141 AC824-06/08 actual CLI matches shared core JSON and exit: %s',
+  (source) => {
+    const fixture = { file, source, exceptions: [] };
+    const contract = schema.extend({
+      sourceFiles: z.number(),
+      rows: z.array(z.json()),
+      unreviewed: z.array(z.json()),
+    });
+    const expected = contract.parse(
+      JSON.parse(JSON.stringify(auditSourceFixture(root, fixture))) as unknown,
+    );
+    const actual = spawnSync(
+      process.execPath,
+      ['infra/scripts/audit-admin-i18n.mjs', '--fixture'],
+      {
+        cwd: root,
+        encoding: 'utf8',
+        input: JSON.stringify(fixture),
+      },
+    );
+    expect(actual.status, actual.stderr).toBe(expected.status === 'PASS' ? 0 : 1);
+    expect(contract.parse(JSON.parse(actual.stdout) as unknown)).toEqual(expected);
+  },
+);
+
+it('D-141 AC824-06 actual CLI retains invalid-fixture exit2 and stderr contract', () => {
+  const actual = spawnSync(process.execPath, ['infra/scripts/audit-admin-i18n.mjs', '--fixture'], {
+    cwd: root,
+    encoding: 'utf8',
+    input: JSON.stringify({ file, source: 42 }),
+  });
+  expect(actual.status).toBe(2);
+  expect(actual.stdout.trim()).toBe('');
+  expect(actual.stderr).toContain('Invalid fixture');
 });

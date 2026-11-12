@@ -32,6 +32,7 @@ export default defineConfig({
         'admin-i18n-values.spec.ts',
         'admin-i18n-disabled.spec.ts',
         'admin-i18n-chat.spec.ts',
+        'admin-i18n-preview.spec.ts',
         'admin-i18n-values/protocol-contract.spec.ts',
         'admin-i18n-auth/totp-contract.spec.ts',
         'admin-i18n-auth/protocol-contract.spec.ts',

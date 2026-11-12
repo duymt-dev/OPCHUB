@@ -1645,3 +1645,80 @@ Existing seeded province/industry groups and their rooms/messages are read-only 
 ## Owner approval: isolated unassigned role fixture (2026-11-12)
 
 Owner explicitly permits creating and editing one prefix-owned `tip824-i18n-*` role via the existing Admin API on the approved isolated cluster for AC824-11 matrix-wire verification. Never assign this role to any account, alter an existing role/permission or original PG5432 data/service. Retain the fixture for independent inspection. Snapshot/read back unchanged existing role permissions and account associations; if the UI batches matrix writes for unrelated roles, do not submit that batch merely for this test. Declare the exact role-test/helper/evidence paths before implementing the next phase. This approval does not change the current chat phase's strict read-only scope.
+## Read-only role-preview UI and internal forbidden state
+
+Only the existing Super Admin's documented in-memory role preview is used, through its real selector with the unchanged existing editor role. No role/account/permission write or assignment; original roles are freshly read and compared after leaving preview. This proves UI preview/internal forbidden/read-only behavior, not genuine backend403 authorization for a restricted account. Existing read-only guard remains unchanged. If translated read-only actions actually open an editor, preserve the failing result and declare a narrowly scoped semantic-action correction before touching production.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| create | `e2e/behavior/admin-i18n-preview.spec.ts` | EN/VI/My preview forbidden state and real view-only edit click at1440/390; no data mutation. |
+| create | `e2e/behavior/admin-i18n/preview.ts` | Actual typed role reads, existing preview selector and raw-role restoration oracle. |
+| modify | `e2e/playwright.admin-i18n.config.ts` | Register role-preview UI probes with unchanged guards/timeouts. |
+| create | `coding-packs/reports/evidence/v46-824/preview-msw.log` | Actual MSW preview UI results, including original failures. |
+| create | `coding-packs/reports/evidence/v46-824/preview-native.log` | Same preview UI assertions against approved isolated native API. |
+| create | `coding-packs/reports/evidence/v46-824/preview-quality.log` | Actual required gates/provenance, not cached test results counted as new. |
+
+## Measured translated group read-only action defect
+
+Original preview MSW run: internal forbidden2/2 pass, view-only edit0/2 fail. Error context shows actual English Edit dialog opened; the existing VI verb-prefix guard does not recognize English Edit. Correct only group primary write buttons by marking their established write semantics with the existing `data-act` mechanism already enforced by ViewOnlyZone. No change to guard policy, backend permissions, label text, callbacks when writable, schema or Portal. Grid/table edit/export/delete and group header create/export must behave identically for all12 identities. Safe view/chat/list/grid actions remain unmarked and usable. Do not claim all other domains audited by this scoped correction.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| modify | `apps/admin/src/features/groups/components/group-table.tsx` | Mark edit/export/delete write buttons using existing semantic guard hook. |
+| modify | `apps/admin/src/features/groups/components/group-grid.tsx` | Same semantic write markers for grid actions; chat remains safe. |
+| modify | `apps/admin/src/features/groups/components/groups-toolbar.tsx` | Mark create/export writes; view/filter actions unchanged. |
+| create | `apps/admin/src/features/groups/components/group-read-only.spec.tsx` | All12 identities: translated table actions blocked in real ViewOnlyZone, safe chat passed, writable callbacks unchanged; static grid/header marker contract. |
+| create | `coding-packs/reports/evidence/v46-824/preview-build.log` | Actual both-mode candidate Admin builds after semantic marker correction. |
+
+| create | `apps/admin/src/i18n/tests/group-read-only.spec.tsx` | Cross-domain integration tests live outside feature internals: real GroupTable/Grid/Header inside ViewOnlyZone for all12 identities, both writable/read-only, safe actions preserved. Supersedes the uncreated group-components test path above; no cross-feature production import. |
+
+| create | `apps/admin/src/features/groups/components/group-table-actions.tsx` | Extract unchanged table action markup after semantic attributes make the table function81 lines; obey80-line function cap without policy suppression. |
+
+Measured second finding after semantic fix: Myanmar390 group-table action row is non-wrapping; clicking Delete scrolls the document horizontally44px, document width434/viewport390, Delete text reaches423.875 in document coordinates. Internal region-button scrolling is intentional and separately clipped; toast bounds/text remain contained (width195, right292.5/text273.34), so do not change shared toast or hide document overflow. Add wrapping only to the mobile table action flex row, preserving full labels, all actions and desktop/VI geometry when the actions already fit. Retain the original geometry failures; final assertion remains document width<=viewport.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| modify | `apps/admin/src/features/groups/components/group-table.module.css` | Mobile-only action wrapping for measured Myanmar434/390 overflow; no clipping, shortened labels, shared/Portal/desktop change. |
+
+## Semantic write marker nested-icon regression probe
+
+The group header export button contains SVG; test an actual SVG path target through the existing ViewOnlyZone capture handler, not only a button's text node. If the current HTMLElement-only target walk bypasses the existing data-act marker, accept only a target traversal correction (Element, not permission policy/verb lists), preserving writable and safe actions. This does not authorize changes to backend RBAC or shared UI.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| create | `apps/admin/src/features/shell/components/view-only-zone-svg.spec.tsx` | Actual SVG-path click respects established semantic write/safe markers in read-only and writable states. |
+| modify | `apps/admin/src/features/shell/components/view-only-zone.tsx` | Only if probe fails: include SVG Element targets when walking to the existing capture root; same policy/callbacks. |
+
+Nested SVG probe actually fails in read-only mode (write callback1 rather than0); writable case passes. The target walk starts with HTMLElement only, and the old classifier can stop on a descendant's inherited pointer cursor before reaching the enclosing semantic button. Correct both traversal and nearest explicit control selection: existing roOk/act/Button/Anchor semantics precede inherited-pointer fallback. Preserve the existing VI label rules for unmarked legacy controls, safe actions and writable behavior; no backend RBAC/shared/Portal change.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| modify | `apps/admin/src/features/shell/model-ro.ts` | Find nearest explicit semantic control before legacy inherited-pointer heuristic; no permission changes. |
+| create | `apps/admin/src/features/shell/model-ro-semantic.spec.ts` | Descendant pointer/SVG, safe markers, actual control boundary and legacy fallback regressions. |
+
+| create | `coding-packs/reports/evidence/v46-824/acceptance.md` | Current16-AC completion audit separating source-bound functional evidence from final rerun obligations; historical checkpoints remain historical. |
+
+## Deterministic upload import-contract scan (test-only)
+
+Final13-file full root run terminal failed: Admin1746/1747, only existing upload consumer AST audit timed out at5000ms under full load (observed9088ms), while its unchanged focused diagnostic passes. Preserve this failure, do not increase timeout/skip a file or waive the full gate. Optimize only import extraction using the installed TypeScript import preprocessor instead of building complete parent-linked TSX trees for every feature file. Every physical feature source is still freshly read/scanned, exact five consumers and raw/aliased-import negatives unchanged. Prove escaped/type/namespace imports and comment/string negatives, and record an independent full-AST-versus-preprocessor comparison on all actual current production feature files for both relevant module specifiers. Production source/CSS/catalog/browser binaries stay unchanged; build/browser proof reused only for those unchanged bytes.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| modify | `apps/admin/src/i18n/use-upload-image.spec.tsx` | Same complete physical source inventory/consumer/raw-import assertions; use dedicated lexical import extractor instead of full-file AST allocation. |
+| create | `apps/admin/src/i18n/tests/import-contract.ts` | Test-only installed TypeScript preProcessFile adapter, no cache/discovery exclusion/runtime import. |
+| create | `apps/admin/src/i18n/tests/import-contract.spec.ts` | Static/type/namespace/escaped import and non-import negatives against independent AST oracle; additional re-export/dynamic guards. |
+
+## Shared audit cores, preserving negative coverage and real CLI smoke
+
+Bounded QoS full root39155 terminated FAIL: Admin1750/1757,203/205 files; all7 failures are unchanged5000ms deadlines in spawn-per-case source/chunk audit tests (not business assertions). Resource wrapper restored Normal/63. Do not retry unchanged full roots indefinitely or increase deadlines. Extract the existing exact source-analysis and chunk-classification bodies into small shared pure modules used by the same production CLIs and their unit tests. Retain all19 source and6 chunk contract cases/assertions and fresh TypeScript fixture programs, no new source exclusions or result/AST cache; run these pure Node tests in Node, not unused JSDOM. Add real subprocess CLI/core parity smoke for valid/invalid classification and retain exit-code/JSON behavior. Report direct-core cases separately from CLI smoke; never claim19 separate CLI invocations after refactor. Production Admin/CSS/catalog/browser bytes remain unchanged, verifier source provenance must be refreshed after commit.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| create | `infra/scripts/admin-i18n/audit-core.mjs` | Extract unchanged analysis/status logic shared by CLI and fresh fixture tests. |
+| create | `infra/scripts/admin-i18n/audit-core.d.mts` | Strict unknown-return typed test boundary, no any/production app dependency. |
+| modify | `infra/scripts/audit-admin-i18n.mjs` | Wire shared core, preserve production program, JSON/inventory/status/exit contract and full source fingerprint. |
+| modify | `apps/admin/src/i18n/tests/source-audit.spec.ts` | Same19 semantic cases through actual shared core, fresh fixture contexts; Node environment and real CLI parity smoke. |
+| create | `infra/scripts/admin-intl/chunk-contract.mjs` | Exact extracted chunk payload classifier, no algorithm or asset-inventory changes. |
+| create | `infra/scripts/admin-intl/chunk-contract.d.mts` | Typed pure chunk-classification boundary. |
+| modify | `infra/scripts/audit-admin-intl-chunks.mjs` | Existing real build/fixture CLI uses extracted classifier unchanged. |
+| modify | `apps/admin/src/i18n/intl/chunks.spec.ts` | Same6 plain/escaped/mixed/missing cases through actual shared classifier plus subprocess CLI parity smoke; no deadline changes. |

@@ -1,7 +1,9 @@
+// @vitest-environment node
 import { spawnSync } from 'node:child_process';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { z } from 'zod';
+import { classifyChunkPayloads } from '../../../../../infra/scripts/admin-intl/chunk-contract.mjs';
 
 const schema = z.object({
   assets: z.array(
@@ -10,17 +12,7 @@ const schema = z.object({
   errors: z.array(z.string()),
 });
 function audit(source: string, complete = false) {
-  const result = spawnSync(
-    process.execPath,
-    ['infra/scripts/audit-admin-intl-chunks.mjs', '--fixture'],
-    {
-      cwd: resolve(__dirname, '../../../../..'),
-      encoding: 'utf8',
-      input: JSON.stringify({ files: [{ file: 'fixture.js', source }], complete }),
-    },
-  );
-  expect(result.status, result.stderr).toBe(0);
-  return schema.parse(JSON.parse(result.stdout) as unknown);
+  return schema.parse(classifyChunkPayloads([{ file: 'fixture.js', source }], complete));
 }
 
 describe('D-141 AC824-16 actual chunk markers and negative isolation gate', () => {
@@ -47,4 +39,21 @@ describe('D-141 AC824-16 actual chunk markers and negative isolation gate', () =
   it('fails a full build inventory with missing/unrecognized data rather than claiming zero payload', () => {
     expect(audit('unrecognized core', true).errors).toHaveLength(6);
   });
+});
+
+it.each([
+  'intervalFormatTemplates;{"locale":"lo"}',
+  'intervalFormatTemplates;{"locale":"lo"};{"locale":"my"}',
+])('D-141 AC824-16 actual chunk CLI matches shared classifier JSON and exit: %s', (source) => {
+  const actual = spawnSync(
+    process.execPath,
+    ['infra/scripts/audit-admin-intl-chunks.mjs', '--fixture'],
+    {
+      cwd: resolve(__dirname, '../../../../..'),
+      encoding: 'utf8',
+      input: JSON.stringify({ files: [{ file: 'fixture.js', source }], complete: false }),
+    },
+  );
+  expect(actual.status, actual.stderr).toBe(0);
+  expect(schema.parse(JSON.parse(actual.stdout) as unknown)).toEqual(audit(source));
 });

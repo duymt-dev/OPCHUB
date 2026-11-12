@@ -60,10 +60,11 @@ function Card({ g, a }: { g: AdminGroup; a: GroupRowActions }) {
         </div>
       </div>
       <div className={styles.actions}>
-        <button type="button" className={styles.act} onClick={() => a.onEdit(g)}>
+        <button data-act="write" type="button" className={styles.act} onClick={() => a.onEdit(g)}>
           {t('edit')}
         </button>
         <button
+          data-act="write"
           type="button"
           className={`${styles.act} ${styles.blue}`}
           onClick={() => a.onExport(g)}
@@ -74,6 +75,7 @@ function Card({ g, a }: { g: AdminGroup; a: GroupRowActions }) {
           {t('chat')}
         </button>
         <button
+          data-act="write"
           type="button"
           className={`${styles.act} ${styles.red}`}
           onClick={() => a.onDelete(g)}

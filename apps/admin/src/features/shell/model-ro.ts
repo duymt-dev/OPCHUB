@@ -18,7 +18,10 @@ export interface RoTarget {
 
 /** Duyệt từ phần tử được bấm lên vùng nội dung: `true` nếu là thao tác ghi cần chặn */
 export function isWriteClick(path: readonly RoTarget[]): boolean {
-  for (const el of path) {
+  // A descendant may inherit cursor:pointer. Its enclosing button/marker defines the action.
+  const control = path.find((el) => el.roOk || el.act || el.tag === 'BUTTON' || el.tag === 'A');
+  const targets = control ? [control] : path;
+  for (const el of targets) {
     if (el.roOk) return false;
     if (el.act) return true;
     if (el.pointer || el.tag === 'BUTTON' || el.tag === 'A') {
