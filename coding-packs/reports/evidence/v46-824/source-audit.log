@@ -89,3 +89,20 @@ Canonical values committed source ff6be9ee; clean worktree at audit. COMMAND nod
     "errors":  0
 }
 EXIT 0
+
+COMMAND node infra/scripts/audit-admin-i18n.mjs
+{
+  "status": "PASS",
+  "source": {
+    "gitHead": "7761350cf7aeb1e0298d0f24b0c85cd4fb0bb3df",
+    "dirty": false,
+    "corpusSha256": "ef4f1047b5ca044d1d4f5576aa1624bd82baeef4062f610657c1166b4d148bf2",
+    "fingerprintFiles": 613,
+    "fingerprintScope": "Scanned production source plus audit scripts and exact exception registries; not catalogs or browser evidence"
+  },
+  "sourceFiles": 595,
+  "findings": 303,
+  "unreviewed": 0,
+  "errors": 0
+}
+EXIT 0

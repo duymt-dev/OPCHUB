@@ -6,9 +6,8 @@ are not a current-source full-suite result.
 
 ## Evidence boundary
 
-- HEAD before the current correction: `ef4a08b0`. Current correction is not yet
-  committed;24 production/CSS/unit/harness/verifier blobs are frozen in the task's local
-  receipt. Never substitute that receipt's hashes for a Git commit SHA.
+- Current implementation commit: `7761350c`, pushed. All24 frozen production/CSS/unit/
+  harness/verifier Git blobs match HEAD and worktree after normal hooks; clean status verified.
 - Current production changes: semantic group write markers, extracted table actions,
   mobile-only action wrapping, SVG Element target traversal and nearest explicit
   control classification. Backend permissions, shared UI, Portal and catalogs unchanged.
@@ -27,7 +26,7 @@ are not a current-source full-suite result.
   Root39155 terminated with7 deadline failures; replacement full root PASS:3492 passed
   +2 existing integration skips, Admin1762/205 files fresh and5 other suites cached.
   Lint/typecheck8/8cached and depcheck2932/8960 plus1260/5995 PASS.
-  Resource wrapper restored Normal priority/affinity63. Clean committed-source audit follows commit.
+  Resource wrapper restored Normal priority/affinity63. Clean committed-source audit PASS at7761350c:595 files/303 findings/0 unreviewed/errors.
 - Original PG5432/opchub_test untouched. Native services held for independent checking;
   browser-owned helpers closed. Browser harness opens no direct PG pool/client.
 
@@ -88,3 +87,7 @@ Owner requested closing the implementation instead of expanding testing. No furt
 ## Delivery checkpoint
 
 Mandatory repository gates are complete and passing on the frozen24-file candidate. This closes the pending implementation checkpoint, not a fabricated all16-AC/final383-case acceptance. No additional fixtures or test cases are introduced after the owner requested handoff. The whole-TIP limitations above remain reviewable; no automatic merge/release.
+
+## Committed handoff receipt
+
+Source7761350c committed/pushed; all24 frozen code/CSS/unit/harness/verifier blobs match both HEAD and worktree after normal hooks, clean status verified. Fresh clean-source audit PASS:595 production files/303 findings/0 unreviewed/errors,613 fingerprint files, corpus ef4f1047b5ca044d1d4f5576aa1624bd82baeef4062f610657c1166b4d148bf2. Fingerprint excludes CSS/catalogs/browser evidence; those are separately source-bound. No further fixtures/test expansion after owner handoff direction. Whole-TIP final expanded browser/performance/acceptance gaps remain explicitly listed, not silently marked PASS.
