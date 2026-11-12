@@ -1,9 +1,61 @@
-# TIP-V46-824 — Admin i18n execution report
+# TIP-V46-824 — Admin i18n completion report
 
-**STATUS: IN PROGRESS / PARTIAL — NOT DONE, NOT READY TO MERGE.**
-The active goal remains the entire approved TIP and all16 ACs. No scope reduction; the agent has not opened a PR, merged or released.
+**STATUS: DONE — READY FOR OWNER PR REVIEW (Application SHA `4b21efb4` / `4b21efb4908a2a9c14672ec091ab9a6823cb989a`; [PR #120](https://github.com/duymt-dev/OPCHUB/pull/120) → `dev`)**
 
-Current requirement-by-requirement audit: [all16 ACs and final delivery gates](evidence/v46-824/acceptance.md). Historical checkpoint tables below are not current full-suite acceptance.
+All 16 acceptance criteria (`AC824-01` → `AC824-16`) and all mandatory repository, static-AST, physical-catalog, chunk-isolation, bundle-budget, and dual-mode (`MSW` + isolated `Native`) Playwright gates are **PASS** on committed application source `4b21efb4`. Detailed matrices and raw logs live under `coding-packs/reports/evidence/v46-824/`:
+- Requirement-by-requirement final audit: [acceptance.md](evidence/v46-824/acceptance.md)
+- Route/tab/dialog/control coverage matrix (23 named routes + public/auth + shared controls): [coverage.md](evidence/v46-824/coverage.md)
+- Production JS/catalog/font & SSR isolation receipts: [performance.md](evidence/v46-824/performance.md) · [performance.json](evidence/v46-824/performance.json) · [performance.log](evidence/v46-824/performance.log)
+- Clean committed-source AST & CLDR chunk receipts: [source-audit.json](evidence/v46-824/source-audit.json) · [source-audit.log](evidence/v46-824/source-audit.log) · [intl-chunks.json](evidence/v46-824/intl-chunks.json)
+
+## Executive summary & final gate receipts (`4b21efb4`)
+
+1. **Complete 10-bundle Admin catalog & runtime architecture (`D-141`):**
+   - **10 physical bundles × 25 namespace files = 250 JSON files / 26,670 string leaves** (`vi, en, zh, id, th, ms, fil, km, lo, my`), with `vi/settings.json` split into 6 domain files (`core, access, mail, audit, finance, ai`) preserving the exact 524-leaf baseline SHA before additions.
+   - Country/language selector preserves **12 options** (`en-SG → en`, `ms-BN → ms`) with distinct cookie/flag/`html lang`/Intl identity, host-only `NEXT_LOCALE`, safe allowlist before dynamic import, deep per-leaf `vi` fallback, synchronized AntD 6 + `dayjs` locales (including typed `fil` and `lo` control patches), `Asia/Ho_Chi_Minh` Gregorian formatting, and self-hosted Noto Sans (`Latin, SC, Thai, Khmer, Lao, Myanmar`) with OFL provenance in `apps/admin/messages/REVIEW.md`.
+   - Active-locale read-only write guard (`apps/admin/src/features/shell/{ro-catalog-paths,ro-matcher,model-ro}.ts` + `view-only-zone.tsx`) compiles active-locale labels from loaded `useMessages()` (183 write paths, 87 safe paths, WeakMap-cached, zero extra payload) and marks `nav,[role="tablist"],[role="tab"]` `roOk`, blocking translated write triggers across all 10 bundles without Thai/Lao tab homograph false positives.
+2. **Mandatory repository & build gates (`4b21efb4`):**
+
+| Gate | Result | Exact receipt |
+|---|---|---|
+| `pnpm lint` | **PASS (8/8)** | [final-quality.log](evidence/v46-824/final-quality.log) |
+| `pnpm typecheck` | **PASS (8/8)** | [final-quality.log](evidence/v46-824/final-quality.log) |
+| `pnpm test` | **PASS (6/6)** | **3,506 unique unit tests passed + 2 existing skips** (`@opchub/admin` **206 files / 1,776 tests** run fresh; cached `@opchub/shared` 757, `@opchub/ui` 95, `@opchub/server` 276, `@opchub/portal` 476, `@opchub/integrations` 126 + 2 skips) — [final-quality.log](evidence/v46-824/final-quality.log) |
+| `pnpm depcheck` | **PASS (0 violations)** | `2942 modules / 8991 dependencies` + `1260 modules / 5995 dependencies` — [final-quality.log](evidence/v46-824/final-quality.log) |
+| Admin + Portal production builds | **PASS** | `apps/admin/.next-msw-tip824` (`VYyyMCo0uHJ2DOM1_GblD`), `apps/admin/.next-server-tip824` (`XpZirtsgd23QI91cwwv6V`), `apps/admin/.next`, and `apps/portal/.next` (49/49 physical raw-catalog build gate passed on every Admin build) |
+| Clean static AST & CLDR chunk audits | **PASS (`dirty: false`)** | `audit-admin-i18n.mjs`: 597 files, 303 reviewed exceptions, **0 unreviewed / 0 errors**, corpus `19650b61...`; `audit-admin-intl-chunks.mjs`: 6 unmixed CLDR payloads per build mode — [source-audit.json](evidence/v46-824/source-audit.json), [intl-chunks.json](evidence/v46-824/intl-chunks.json) |
+| Full `playwright.admin-i18n.config.ts` (Isolated Native) | **PASS (386/386)** | 26.6m across all 23 spec files, zero server skips — [final-full-native.log](evidence/v46-824/final-full-native.log) |
+| Full `playwright.admin-i18n.config.ts` (MSW) | **PASS (386/386)** | 33.0m unmodified full rerun across all 23 spec files (initial `385/386` run with 1 transient `/login` `networkidle` stall on `actual my calendar 1440` preserved at top of log) — [final-full-msw.log](evidence/v46-824/final-full-msw.log) |
+| Step 9 regressions + `vi` prototype check | **88/89 PASS** + `A-01 <= 3%` | `a-01-login` 9/9, `admin-overview` 5/5, `admin-profile` 2/2, `admin-rbac` 9/9, `admin-shell` 2/2, `global-search`, `i18n`, `i18n-screens`, `portal-shell` 8/8 PASS; 1 pre-existing `dev` timeout in `auth-flows.spec.ts:28` (`ac29aa7b`); `vi` parity in [final-parity-vi.log](evidence/v46-824/final-parity-vi.log) |
+| `AC824-16` performance & bundle budget | **PASS (`+1.22%` → `+2.28%`)** | `/login` `+1.22%`, `/overview` `+2.28%`, `/profile` `+2.07%`, `/settings` `+2.10%` vs `f7c1b2b8` (`<= 15%` gate); 1 catalog/request; script-only fonts — [performance.md](evidence/v46-824/performance.md) |
+
+## Reproduction commands
+
+```powershell
+# 1. Static AST, chunk & root quality gates
+node infra/scripts/audit-admin-i18n.mjs
+node infra/scripts/audit-admin-intl-chunks.mjs
+pnpm lint; pnpm typecheck; pnpm test; pnpm depcheck
+
+# 2. Full 386-case Admin i18n browser suite (MSW & Isolated Native)
+$env:NEXT_PUBLIC_API_MOCKING='msw'; $env:NEXT_PUBLIC_PORTAL_URL='http://localhost:60096'
+pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts --project=behavior --workers=1
+
+$env:NEXT_PUBLIC_API_MOCKING='off'; $env:SKIP_SEED='1'; $env:API_PROXY_URL='http://127.0.0.1:53792'; $env:ADMIN_PORT='53795'; $env:PORTAL_PORT='53794'; $env:E2E_ADMIN_DIST_DIR='.next-server-tip824'
+pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts --project=behavior --workers=1
+```
+
+## Explicit disclosures, non-claims & held environment status
+
+- **Owner review & merge policy:** [PR #120](https://github.com/duymt-dev/OPCHUB/pull/120) targets `dev` (`base: dev`, `head: feature/TIP-V46-824-admin-i18n`) and is left open for owner review. No auto-merge or push to `dev`/`main` was performed.
+- **Visual & linguistic review boundaries (`D-134` / spec §19):** Unmasked `1440` and `390` screenshots across `vi, en, zh, th, km, lo, my` are committed under `coding-packs/reports/evidence/v46-824/screenshots/`. Vietnamese pixel diffs on `D-01` (`3.96%`/`5.91%`), `D-66` (`14.42%`/`7.57%`), and `D-69` (`9.47%`/`5.59%`) reflect intentional `D-141` topbar `LanguageSwitch` and `D-140` Overview interactive controls (`A-01` passes `<= 3%`); owner visual sign-off per `D-134` and optional human native-speaker linguistic review (`native-reviewed: false` in `apps/admin/messages/REVIEW.md`) remain pending owner/human review.
+- **Baseline First Load JS debt (TIP §37):** Pre-existing `dev` (`f7c1b2b8`) Admin routes already exceeded the 250 KiB absolute First Load JS target (`399.8–653.9 KiB` gzip); TIP-824 kept route JS growth between `+1.22%` and `+2.28%` (`<= 15%` budget) and discloses the baseline `> 250 KiB` debt transparently.
+- **Out-of-scope `dev` baseline debt (`AGENTS.md` §Các bước Rule 3):** `e2e/behavior/auth-flows.spec.ts:28` (`enterOtp(page, '123')`) times out because `dev` commit `ac29aa7b` disabled `< 6`-digit OTP submission in `packages/ui/src/auth/otp-modal.tsx`; zero Portal/OTP files were modified by TIP-824, so it was not touched here.
+- **PostgreSQL & Native service hygiene (`AGENTS.md` Rule 15):** Original PG `5432` / `opchub_test` was never touched. All temporary Playwright/Next listeners (`60096..60098`, `53794..53796`) and test processes were closed with zero leaked task connections. Isolated Native services (`127.0.0.1:53790` PostgreSQL, `127.0.0.1:53791` Redis, `127.0.0.1:53792` OPCHUB API) remain intentionally running under **STRICT HOLD** for independent owner verification.
+
+---
+
+# Historical execution checkpoints (preserved audit trail)
 
 ## Focused owner-requested acceptance review ? source f457f472 / application7761350c
 

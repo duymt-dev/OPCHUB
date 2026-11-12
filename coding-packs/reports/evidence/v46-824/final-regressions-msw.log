@@ -1,0 +1,231 @@
+STEP 9 ADMIN + PORTAL REGRESSIONS (MSW) ON COMMITTED SOURCE 4b21efb4908a2a9c14672ec091ab9a6823cb989a
+
+Running 89 tests using 2 workers
+
+  ok  1 [behavior] › behavior\a-01-login.spec.ts:37:3 › A-01 Đăng nhập › bỏ trống → báo thiếu email và mật khẩu (1.8s)
+  ok  3 [behavior] › behavior\a-01-login.spec.ts:45:3 › A-01 Đăng nhập › sai mật khẩu → báo sai thông tin (1.6s)
+  ok  2 [behavior] › behavior\a-01-login.spec.ts:5:1 › REQ-630 v4.6 hero exact copy and four title-description blocks on both portals; English translated (3.9s)
+  ok  5 [behavior] › behavior\a-01-login.spec.ts:70:3 › A-01 Đăng nhập › nút Hiện/Ẩn mật khẩu (1.4s)
+  ok  4 [behavior] › behavior\a-01-login.spec.ts:57:3 › A-01 Đăng nhập › V2Q-163 ver2 không có hộp "Tài khoản dùng thử" trên màn đăng nhập (Portal + Admin) (2.3s)
+  ok  6 [behavior] › behavior\a-01-login.spec.ts:79:3 › A-01 Đăng nhập › admin đăng nhập → Tổng quan + toast (2.3s)
+  ok  7 [behavior] › behavior\a-01-login.spec.ts:96:3 › A-01 Đăng nhập › tài khoản thành viên không vào được Admin (2.0s)
+  ok  8 [behavior] › behavior\a-01-login.spec.ts:108:3 › A-01 Đăng nhập › vào trang bảo vệ khi chưa đăng nhập → về /login?next= (1.5s)
+  ok  9 [behavior] › behavior\a-01-login.spec.ts:113:3 › A-01 Đăng nhập › D-89 màn đăng nhập v4 (Portal + Admin): không còn khối số liệu, không gọi /public/stats (2.5s)
+  ok 10 [behavior] › behavior\admin-overview.spec.ts:11:1 › REQ-623 BR-475-477 conversion table matches API, CSV3 regions has BOM and mobile scroll stays contained (2.4s)
+  ok 12 [behavior] › behavior\admin-overview.spec.ts:142:1 › REQ-122 D-140 historical range changes cohorts, not live totals or flow (2.9s)
+  ok 11 [behavior] › behavior\admin-overview.spec.ts:77:1 › REQ-122 overview range and periods preserve independent monthly sparklines (5.8s)
+  ok 13 [behavior] › behavior\admin-overview.spec.ts:159:3 › Admin · Tổng quan v4 › Luồng hệ thống: 5 thẻ theo số API, nhãn Hoàn tất / Cần làm (2.2s)
+  ok 14 [behavior] › behavior\admin-overview.spec.ts:178:3 › Admin · Tổng quan v4 › bấm "Duyệt dự án" mở tab Chờ duyệt; "Gian hàng" mở Gian hàng (3.3s)
+  ok 15 [behavior] › behavior\admin-profile.spec.ts:19:1 › TIP-V46-822 AC-01/02/03 Admin profile menu, own info, avatar upload/removal and topbar sync (4.8s)
+  ok 16 [behavior] › behavior\admin-profile.spec.ts:67:1 › TIP-V46-822 AC-04/05 password field errors then successful change preserves current session (3.4s)
+  ok 17 [behavior] › behavior\admin-rbac.spec.ts:89:3 › Admin · Phân quyền §21 › AT-RB02 REQ-312 Kế toán thấy Affiliate và chỉ tab Nhật ký ở Cài đặt (3.1s)
+  ok 18 [behavior] › behavior\admin-rbac.spec.ts:110:3 › Admin · Phân quyền §21 › AT-RB03 Giảng viên chỉ xem Thành viên: dải chỉ xem, chặn Xuất, vẫn tìm được (2.8s)
+  ok 19 [behavior] › behavior\admin-rbac.spec.ts:128:3 › Admin · Phân quyền §21 › AT-RB04 TK quản trị bị khoá không đăng nhập được (3.5s)
+  ok 20 [behavior] › behavior\admin-rbac.spec.ts:143:3 › Admin · Phân quyền §21 › AT-RB05 xoá vai trò đang có TK bị chặn (3.5s)
+  ok 21 [behavior] › behavior\admin-rbac.spec.ts:169:3 › Admin · Phân quyền §21 › AT-RB06 menu Thành viên không có TK quản trị (2.5s)
+  ok 23 [behavior] › behavior\admin-rbac.spec.ts:235:3 › Admin · Phân quyền §21 › REQ-329 xem thử vai trò: dải cam + menu theo vai trò, Thoát xem thử khôi phục (3.0s)
+  ok 22 [behavior] › behavior\admin-rbac.spec.ts:177:3 › Admin · Phân quyền §21 › AT-RB01 + AT-SEC01 tạo TK (email thành viên báo tại ô) rồi đổi mật khẩu lần đầu (4.6s)
+  ok 25 [behavior] › behavior\admin-rbac.spec.ts:286:3 › Admin · Phân quyền §21 › REQ-228 Super Admin bỏ quyền → phiên Giảng viên mất menu, không cần đăng nhập lại (2.9s)
+  ok 24 [behavior] › behavior\admin-rbac.spec.ts:266:3 › Admin · Phân quyền §21 › REQ-352 bắt buộc 2FA: lần đăng nhập sau thiết lập TOTP, cột 2FA = Đã bật (4.3s)
+  ok 26 [behavior] › behavior\admin-shell.spec.ts:25:3 › Admin · khung ứng dụng › BUG-027 thu gọn sidebar Admin 76px, nhớ sau tải lại (3.7s)
+  ok 27 [behavior] › behavior\admin-shell.spec.ts:43:3 › Admin · khung ứng dụng › REQ-514 REQ-515 D-80 D-73 menu §27.3: nhóm v4, không Marketing, Cài đặt ở menu người dùng (2.9s)
+  ok 29 [behavior] › behavior\auth-flows.spec.ts:71:3 › Đăng ký · lỗi tại ô (BUG-022, BUG-009) › UAT-01 BUG-022 đăng ký trống → ô bắt buộc aria-invalid, toast lỗi đầu, không cuộn trang (D-89) (2.8s)
+  ok 30 [behavior] › behavior\auth-flows.spec.ts:103:3 › Đăng ký · lỗi tại ô (BUG-022, BUG-009) › BUG-009 UAT-02 email trùng → lỗi tại ô Email (1.8s)
+  ok 31 [behavior] › behavior\auth-flows.spec.ts:123:3 › Đăng ký doanh nghiệp (v4: người đại diện, MST khai báo sau) › D-89 thiếu người đại diện → báo; đủ → OTP, request không có MST / nhóm (1.8s)
+  ok 32 [behavior] › behavior\auth-flows.spec.ts:146:3 › Đăng ký doanh nghiệp (v4: người đại diện, MST khai báo sau) › đổi mã quốc gia SĐT (1.5s)
+  ok 33 [behavior] › behavior\auth-flows.spec.ts:156:3 › Đăng ký doanh nghiệp (v4: người đại diện, MST khai báo sau) › đăng ký đang tạm đóng → chỉ báo, không sang form (A-11) (1.3s)
+  ok 34 [behavior] › behavior\auth-flows.spec.ts:169:3 › Quên mật khẩu › gửi liên kết → "Đã gửi email"; về đăng nhập (1.6s)
+  ok 35 [behavior] › behavior\auth-flows.spec.ts:185:3 › Đổi ngôn ngữ › chọn English → chữ màn đăng nhập đổi, giữ sau tải lại (2.5s)
+  ok 36 [behavior] › behavior\auth-flows.spec.ts:198:3 › SSO thành viên mới (D-45) › REQ-382 Google → form bổ sung + đồng ý → vào /community, không OTP (3.3s)
+  ok 37 [behavior] › behavior\auth-flows.spec.ts:245:3 › Đặt lại mật khẩu (QT-02) › UAT-11 BUG-001 quên mật khẩu → mở link → đặt lại → đăng nhập bằng mật khẩu mới (3.4s)
+  ok 38 [behavior] › behavior\auth-flows.spec.ts:273:3 › Đặt lại mật khẩu (QT-02) › BUG-001 link đã dùng → báo hết hạn + Gửi lại liên kết; thiếu token cũng vậy (4.4s)
+  ok 39 [behavior] › behavior\auth-flows.spec.ts:293:3 › Đặt lại mật khẩu (QT-02) › BUG-001 D-62 TK quản trị → link Admin → đặt lại → đăng nhập Admin (3.4s)
+  ok 40 [behavior] › behavior\auth-flows.spec.ts:307:3 › Hướng dẫn sử dụng (mail chào mừng) › BUG-023 /huong-dan hiển thị, không cần đăng nhập (1.3s)
+  ok 41 [behavior] › behavior\global-search.spec.ts:17:3 › Portal BR-491 topbar searches across domains without changing current page (2.7s)
+  ok 42 [behavior] › behavior\global-search.spec.ts:17:3 › Admin BR-491 topbar searches across domains without changing current page (3.1s)
+  ok 43 [behavior] › behavior\global-search.spec.ts:63:1 › REQ-625 Admin hint threshold, Escape and keyword empty state (2.4s)
+  ok 44 [behavior] › behavior\global-search.spec.ts:83:1 › Portal BR-491 group target: joined opens chat, unjoined opens join dialog (2.3s)
+  ok 45 [behavior] › behavior\global-search.spec.ts:104:1 › TC-491 literal cà phê groups stores and needs and opens the selected targets (1.9s)
+  ok 46 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính desktop 1440px (TIP-V2-117) › en: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.9s)
+  ok 47 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính desktop 1440px (TIP-V2-117) › id: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.5s)
+  ok 48 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính desktop 1440px (TIP-V2-117) › ms: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.9s)
+  ok 49 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính desktop 1440px (TIP-V2-117) › th: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.8s)
+  ok 50 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính desktop 1440px (TIP-V2-117) › zh: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.8s)
+  ok 51 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính desktop 1440px (TIP-V2-117) › fil: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (11.0s)
+  ok 52 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính desktop 1440px (TIP-V2-117) › km: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (11.0s)
+  x  28 [behavior] › behavior\auth-flows.spec.ts:28:3 › Đăng ký cá nhân + OTP › D-89 v4 thiếu email → báo; đủ → OTP; sai/đủ số → kích hoạt vào /community chưa vào nhóm (khai báo sau) (2.0m)
+  ok 53 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính desktop 1440px (TIP-V2-117) › lo: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (11.3s)
+  ok 54 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính desktop 1440px (TIP-V2-117) › my: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (12.0s)
+  ok 55 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính desktop 1440px (TIP-V2-117) › en-SG: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (12.1s)
+  ok 56 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính desktop 1440px (TIP-V2-117) › ms-BN: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (12.1s)
+  ok 57 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính mobile 390px (TIP-V2-117) › en: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (11.0s)
+  ok 58 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính mobile 390px (TIP-V2-117) › id: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.7s)
+  ok 59 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính mobile 390px (TIP-V2-117) › ms: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.9s)
+  ok 60 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính mobile 390px (TIP-V2-117) › th: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.6s)
+  ok 61 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính mobile 390px (TIP-V2-117) › zh: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.5s)
+  ok 62 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính mobile 390px (TIP-V2-117) › fil: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.9s)
+  ok 63 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính mobile 390px (TIP-V2-117) › km: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.8s)
+  ok 64 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính mobile 390px (TIP-V2-117) › lo: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.5s)
+  ok 65 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính mobile 390px (TIP-V2-117) › my: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.4s)
+  ok 66 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính mobile 390px (TIP-V2-117) › en-SG: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.3s)
+  ok 68 [behavior] › behavior\i18n.spec.ts:9:5 › Portal đa ngôn ngữ (TIP-V2-117, D-65) › AC-1/2 en: đăng nhập + Dashboard theo bộ en, <html lang>, tiêu đề tab (1.7s)
+  ok 69 [behavior] › behavior\i18n.spec.ts:9:5 › Portal đa ngôn ngữ (TIP-V2-117, D-65) › AC-1/2 id: đăng nhập + Dashboard theo bộ id, <html lang>, tiêu đề tab (1.7s)
+  ok 70 [behavior] › behavior\i18n.spec.ts:9:5 › Portal đa ngôn ngữ (TIP-V2-117, D-65) › AC-1/2 ms: đăng nhập + Dashboard theo bộ ms, <html lang>, tiêu đề tab (1.9s)
+  ok 71 [behavior] › behavior\i18n.spec.ts:9:5 › Portal đa ngôn ngữ (TIP-V2-117, D-65) › AC-1/2 th: đăng nhập + Dashboard theo bộ th, <html lang>, tiêu đề tab (1.9s)
+  ok 67 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính mobile 390px (TIP-V2-117) › ms-BN: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.8s)
+  ok 72 [behavior] › behavior\i18n.spec.ts:9:5 › Portal đa ngôn ngữ (TIP-V2-117, D-65) › AC-1/2 zh: đăng nhập + Dashboard theo bộ zh, <html lang>, tiêu đề tab (1.9s)
+  ok 73 [behavior] › behavior\i18n.spec.ts:9:5 › Portal đa ngôn ngữ (TIP-V2-117, D-65) › AC-1/2 fil: đăng nhập + Dashboard theo bộ fil, <html lang>, tiêu đề tab (2.0s)
+  ok 74 [behavior] › behavior\i18n.spec.ts:9:5 › Portal đa ngôn ngữ (TIP-V2-117, D-65) › AC-1/2 km: đăng nhập + Dashboard theo bộ km, <html lang>, tiêu đề tab (2.2s)
+  ok 75 [behavior] › behavior\i18n.spec.ts:9:5 › Portal đa ngôn ngữ (TIP-V2-117, D-65) › AC-1/2 lo: đăng nhập + Dashboard theo bộ lo, <html lang>, tiêu đề tab (2.1s)
+  ok 76 [behavior] › behavior\i18n.spec.ts:9:5 › Portal đa ngôn ngữ (TIP-V2-117, D-65) › AC-1/2 my: đăng nhập + Dashboard theo bộ my, <html lang>, tiêu đề tab (2.0s)
+  ok 77 [behavior] › behavior\i18n.spec.ts:9:5 › Portal đa ngôn ngữ (TIP-V2-117, D-65) › AC-1/2 en-SG: đăng nhập + Dashboard theo bộ en, <html lang>, tiêu đề tab (2.1s)
+  ok 79 [behavior] › behavior\i18n.spec.ts:30:3 › Portal đa ngôn ngữ (TIP-V2-117, D-65) › AC-3 cookie lạ → tiếng Việt (1.5s)
+  ok 78 [behavior] › behavior\i18n.spec.ts:9:5 › Portal đa ngôn ngữ (TIP-V2-117, D-65) › AC-1/2 ms-BN: đăng nhập + Dashboard theo bộ ms, <html lang>, tiêu đề tab (2.0s)
+  ok 80 [behavior] › behavior\i18n.spec.ts:37:3 › Portal đa ngôn ngữ (TIP-V2-117, D-65) › AC-5 en: màn đăng nhập v4 theo bộ en (D-89: không còn khối số liệu) (1.5s)
+  ok 81 [behavior] › behavior\i18n.spec.ts:45:3 › Portal đa ngôn ngữ (TIP-V2-117, D-65) › AC-6 chọn English ở màn đăng nhập → đăng nhập → Dashboard tiếng Anh, giữ sau tải lại (3.5s)
+  ok 82 [behavior] › behavior\portal-shell.spec.ts:21:3 › Dashboard › D-89 Dashboard v4: lời chào + Hướng dẫn bắt đầu, không còn khối LIVE, không gọi /dashboard/live (2.4s)
+  ok 83 [behavior] › behavior\portal-shell.spec.ts:69:3 › Khung app › ngôn ngữ, menu người dùng, Trang chủ, sự kiện sắp tới (2.8s)
+  ok 84 [behavior] › behavior\portal-shell.spec.ts:39:3 › Khung app › REQ-210 NA-10 mở chuông → đã đọc (số về 0, giữ sau tải lại); mở nhắc tên vào chat (3.1s)
+  ok 85 [behavior] › behavior\portal-shell.spec.ts:107:3 › Khung app › REQ-514 D-80 menu §27.3: 3 nhóm, thứ tự v4, nhãn Bảng giá / Mạng lưới Affiliate (2.4s)
+  ok 86 [behavior] › behavior\portal-shell.spec.ts:128:3 › Khung app › thu gọn sidebar 76px, nhớ sau khi tải lại trang (2.6s)
+  ok 87 [behavior] › behavior\portal-shell.spec.ts:137:3 › Khung app › mobile: drawer mở bằng Menu, đóng khi chọn mục (2.7s)
+  ok 88 [behavior] › behavior\portal-shell.spec.ts:149:1 › đăng ký xong: modal mail chào mừng một lần, không có mật khẩu tạm (D-30) (5.7s)
+  ok 89 [behavior] › behavior\portal-shell.spec.ts:181:1 › FX-03: đăng ký A (popup mail chào mừng) → đăng xuất → đăng nhập B: không hiện popup của A (5.9s)
+
+
+  1) [behavior] › behavior\auth-flows.spec.ts:28:3 › Đăng ký cá nhân + OTP › D-89 v4 thiếu email → báo; đủ → OTP; sai/đủ số → kích hoạt vào /community chưa vào nhóm (khai báo sau) 
+
+    Test timeout of 120000ms exceeded.
+
+    Error Context: test-results\auth-flows-Đăng-ký-cá-nhân-94a59-chưa-vào-nhóm-khai-báo-sau--behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\auth-flows.spec.ts:28:3 › Đăng ký cá nhân + OTP › D-89 v4 thiếu email → báo; đủ → OTP; sai/đủ số → kích hoạt vào /community chưa vào nhóm (khai báo sau) 
+  88 passed (4.7m)
+node.exe : Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error: ERR_PNPM...EXEC_FIRST_FAIL:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+
+EXIT 1
+
+=== FULL UNMODIFIED 89-CASE STEP 9 REGRESSIONS RERUN (--workers=1) ON COMMITTED SOURCE 4b21efb4908a2a9c14672ec091ab9a6823cb989a ===
+
+Running 89 tests using 1 worker
+
+  ok  1 [behavior] › behavior\a-01-login.spec.ts:5:1 › REQ-630 v4.6 hero exact copy and four title-description blocks on both portals; English translated (3.8s)
+  ok  2 [behavior] › behavior\a-01-login.spec.ts:37:3 › A-01 Đăng nhập › bỏ trống → báo thiếu email và mật khẩu (1.4s)
+  ok  3 [behavior] › behavior\a-01-login.spec.ts:45:3 › A-01 Đăng nhập › sai mật khẩu → báo sai thông tin (1.6s)
+  ok  4 [behavior] › behavior\a-01-login.spec.ts:57:3 › A-01 Đăng nhập › V2Q-163 ver2 không có hộp "Tài khoản dùng thử" trên màn đăng nhập (Portal + Admin) (2.6s)
+  ok  5 [behavior] › behavior\a-01-login.spec.ts:70:3 › A-01 Đăng nhập › nút Hiện/Ẩn mật khẩu (1.4s)
+  ok  6 [behavior] › behavior\a-01-login.spec.ts:79:3 › A-01 Đăng nhập › admin đăng nhập → Tổng quan + toast (2.4s)
+  ok  7 [behavior] › behavior\a-01-login.spec.ts:96:3 › A-01 Đăng nhập › tài khoản thành viên không vào được Admin (1.8s)
+  ok  8 [behavior] › behavior\a-01-login.spec.ts:108:3 › A-01 Đăng nhập › vào trang bảo vệ khi chưa đăng nhập → về /login?next= (1.3s)
+  ok  9 [behavior] › behavior\a-01-login.spec.ts:113:3 › A-01 Đăng nhập › D-89 màn đăng nhập v4 (Portal + Admin): không còn khối số liệu, không gọi /public/stats (2.3s)
+  ok 10 [behavior] › behavior\admin-overview.spec.ts:11:1 › REQ-623 BR-475-477 conversion table matches API, CSV3 regions has BOM and mobile scroll stays contained (2.3s)
+  ok 11 [behavior] › behavior\admin-overview.spec.ts:77:1 › REQ-122 overview range and periods preserve independent monthly sparklines (5.7s)
+  ok 12 [behavior] › behavior\admin-overview.spec.ts:142:1 › REQ-122 D-140 historical range changes cohorts, not live totals or flow (2.5s)
+  ok 13 [behavior] › behavior\admin-overview.spec.ts:159:3 › Admin · Tổng quan v4 › Luồng hệ thống: 5 thẻ theo số API, nhãn Hoàn tất / Cần làm (1.9s)
+  ok 14 [behavior] › behavior\admin-overview.spec.ts:178:3 › Admin · Tổng quan v4 › bấm "Duyệt dự án" mở tab Chờ duyệt; "Gian hàng" mở Gian hàng (2.2s)
+  ok 15 [behavior] › behavior\admin-profile.spec.ts:19:1 › TIP-V46-822 AC-01/02/03 Admin profile menu, own info, avatar upload/removal and topbar sync (4.2s)
+  ok 16 [behavior] › behavior\admin-profile.spec.ts:67:1 › TIP-V46-822 AC-04/05 password field errors then successful change preserves current session (2.8s)
+  ok 17 [behavior] › behavior\admin-rbac.spec.ts:89:3 › Admin · Phân quyền §21 › AT-RB02 REQ-312 Kế toán thấy Affiliate và chỉ tab Nhật ký ở Cài đặt (2.4s)
+  ok 18 [behavior] › behavior\admin-rbac.spec.ts:110:3 › Admin · Phân quyền §21 › AT-RB03 Giảng viên chỉ xem Thành viên: dải chỉ xem, chặn Xuất, vẫn tìm được (2.2s)
+  ok 19 [behavior] › behavior\admin-rbac.spec.ts:128:3 › Admin · Phân quyền §21 › AT-RB04 TK quản trị bị khoá không đăng nhập được (2.7s)
+  ok 20 [behavior] › behavior\admin-rbac.spec.ts:143:3 › Admin · Phân quyền §21 › AT-RB05 xoá vai trò đang có TK bị chặn (2.9s)
+  ok 21 [behavior] › behavior\admin-rbac.spec.ts:169:3 › Admin · Phân quyền §21 › AT-RB06 menu Thành viên không có TK quản trị (2.3s)
+  ok 22 [behavior] › behavior\admin-rbac.spec.ts:177:3 › Admin · Phân quyền §21 › AT-RB01 + AT-SEC01 tạo TK (email thành viên báo tại ô) rồi đổi mật khẩu lần đầu (3.9s)
+  ok 23 [behavior] › behavior\admin-rbac.spec.ts:235:3 › Admin · Phân quyền §21 › REQ-329 xem thử vai trò: dải cam + menu theo vai trò, Thoát xem thử khôi phục (2.4s)
+  ok 24 [behavior] › behavior\admin-rbac.spec.ts:266:3 › Admin · Phân quyền §21 › REQ-352 bắt buộc 2FA: lần đăng nhập sau thiết lập TOTP, cột 2FA = Đã bật (3.4s)
+  ok 25 [behavior] › behavior\admin-rbac.spec.ts:286:3 › Admin · Phân quyền §21 › REQ-228 Super Admin bỏ quyền → phiên Giảng viên mất menu, không cần đăng nhập lại (2.2s)
+  ok 26 [behavior] › behavior\admin-shell.spec.ts:25:3 › Admin · khung ứng dụng › BUG-027 thu gọn sidebar Admin 76px, nhớ sau tải lại (3.2s)
+  ok 27 [behavior] › behavior\admin-shell.spec.ts:43:3 › Admin · khung ứng dụng › REQ-514 REQ-515 D-80 D-73 menu §27.3: nhóm v4, không Marketing, Cài đặt ở menu người dùng (2.0s)
+  x  28 [behavior] › behavior\auth-flows.spec.ts:28:3 › Đăng ký cá nhân + OTP › D-89 v4 thiếu email → báo; đủ → OTP; sai/đủ số → kích hoạt vào /community chưa vào nhóm (khai báo sau) (2.0m)
+  ok 29 [behavior] › behavior\auth-flows.spec.ts:71:3 › Đăng ký · lỗi tại ô (BUG-022, BUG-009) › UAT-01 BUG-022 đăng ký trống → ô bắt buộc aria-invalid, toast lỗi đầu, không cuộn trang (D-89) (2.7s)
+  ok 30 [behavior] › behavior\auth-flows.spec.ts:103:3 › Đăng ký · lỗi tại ô (BUG-022, BUG-009) › BUG-009 UAT-02 email trùng → lỗi tại ô Email (1.7s)
+  ok 31 [behavior] › behavior\auth-flows.spec.ts:123:3 › Đăng ký doanh nghiệp (v4: người đại diện, MST khai báo sau) › D-89 thiếu người đại diện → báo; đủ → OTP, request không có MST / nhóm (1.7s)
+  ok 32 [behavior] › behavior\auth-flows.spec.ts:146:3 › Đăng ký doanh nghiệp (v4: người đại diện, MST khai báo sau) › đổi mã quốc gia SĐT (1.6s)
+  ok 33 [behavior] › behavior\auth-flows.spec.ts:156:3 › Đăng ký doanh nghiệp (v4: người đại diện, MST khai báo sau) › đăng ký đang tạm đóng → chỉ báo, không sang form (A-11) (1.4s)
+  ok 34 [behavior] › behavior\auth-flows.spec.ts:169:3 › Quên mật khẩu › gửi liên kết → "Đã gửi email"; về đăng nhập (1.5s)
+  ok 35 [behavior] › behavior\auth-flows.spec.ts:185:3 › Đổi ngôn ngữ › chọn English → chữ màn đăng nhập đổi, giữ sau tải lại (2.3s)
+  ok 36 [behavior] › behavior\auth-flows.spec.ts:198:3 › SSO thành viên mới (D-45) › REQ-382 Google → form bổ sung + đồng ý → vào /community, không OTP (3.0s)
+  ok 37 [behavior] › behavior\auth-flows.spec.ts:245:3 › Đặt lại mật khẩu (QT-02) › UAT-11 BUG-001 quên mật khẩu → mở link → đặt lại → đăng nhập bằng mật khẩu mới (3.3s)
+  ok 38 [behavior] › behavior\auth-flows.spec.ts:273:3 › Đặt lại mật khẩu (QT-02) › BUG-001 link đã dùng → báo hết hạn + Gửi lại liên kết; thiếu token cũng vậy (4.4s)
+  ok 39 [behavior] › behavior\auth-flows.spec.ts:293:3 › Đặt lại mật khẩu (QT-02) › BUG-001 D-62 TK quản trị → link Admin → đặt lại → đăng nhập Admin (3.1s)
+  ok 40 [behavior] › behavior\auth-flows.spec.ts:307:3 › Hướng dẫn sử dụng (mail chào mừng) › BUG-023 /huong-dan hiển thị, không cần đăng nhập (1.6s)
+  ok 41 [behavior] › behavior\global-search.spec.ts:17:3 › Portal BR-491 topbar searches across domains without changing current page (2.9s)
+  ok 42 [behavior] › behavior\global-search.spec.ts:17:3 › Admin BR-491 topbar searches across domains without changing current page (2.7s)
+  ok 43 [behavior] › behavior\global-search.spec.ts:63:1 › REQ-625 Admin hint threshold, Escape and keyword empty state (2.2s)
+  ok 44 [behavior] › behavior\global-search.spec.ts:83:1 › Portal BR-491 group target: joined opens chat, unjoined opens join dialog (2.2s)
+  ok 45 [behavior] › behavior\global-search.spec.ts:104:1 › TC-491 literal cà phê groups stores and needs and opens the selected targets (1.9s)
+  ok 46 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính desktop 1440px (TIP-V2-117) › en: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.5s)
+  ok 47 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính desktop 1440px (TIP-V2-117) › id: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.4s)
+  ok 48 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính desktop 1440px (TIP-V2-117) › ms: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.3s)
+  ok 49 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính desktop 1440px (TIP-V2-117) › th: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (11.2s)
+  ok 50 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính desktop 1440px (TIP-V2-117) › zh: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.7s)
+  ok 51 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính desktop 1440px (TIP-V2-117) › fil: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.6s)
+  ok 52 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính desktop 1440px (TIP-V2-117) › km: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.9s)
+  ok 53 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính desktop 1440px (TIP-V2-117) › lo: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.6s)
+  ok 54 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính desktop 1440px (TIP-V2-117) › my: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.7s)
+  ok 55 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính desktop 1440px (TIP-V2-117) › en-SG: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.3s)
+  ok 56 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính desktop 1440px (TIP-V2-117) › ms-BN: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.2s)
+  ok 57 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính mobile 390px (TIP-V2-117) › en: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (9.8s)
+  ok 58 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính mobile 390px (TIP-V2-117) › id: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.1s)
+  ok 59 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính mobile 390px (TIP-V2-117) › ms: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.1s)
+  ok 60 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính mobile 390px (TIP-V2-117) › th: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.4s)
+  ok 61 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính mobile 390px (TIP-V2-117) › zh: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.3s)
+  ok 62 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính mobile 390px (TIP-V2-117) › fil: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (9.8s)
+  ok 63 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính mobile 390px (TIP-V2-117) › km: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (9.9s)
+  ok 64 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính mobile 390px (TIP-V2-117) › lo: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (9.9s)
+  ok 65 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính mobile 390px (TIP-V2-117) › my: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (10.1s)
+  ok 66 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính mobile 390px (TIP-V2-117) › en-SG: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (9.8s)
+  ok 67 [behavior] › behavior\i18n-screens.spec.ts:71:7 › Portal đa ngôn ngữ — màn chính mobile 390px (TIP-V2-117) › ms-BN: Cộng đồng, Chat, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (9.6s)
+  ok 68 [behavior] › behavior\i18n.spec.ts:9:5 › Portal đa ngôn ngữ (TIP-V2-117, D-65) › AC-1/2 en: đăng nhập + Dashboard theo bộ en, <html lang>, tiêu đề tab (1.6s)
+  ok 69 [behavior] › behavior\i18n.spec.ts:9:5 › Portal đa ngôn ngữ (TIP-V2-117, D-65) › AC-1/2 id: đăng nhập + Dashboard theo bộ id, <html lang>, tiêu đề tab (1.5s)
+  ok 70 [behavior] › behavior\i18n.spec.ts:9:5 › Portal đa ngôn ngữ (TIP-V2-117, D-65) › AC-1/2 ms: đăng nhập + Dashboard theo bộ ms, <html lang>, tiêu đề tab (1.6s)
+  ok 71 [behavior] › behavior\i18n.spec.ts:9:5 › Portal đa ngôn ngữ (TIP-V2-117, D-65) › AC-1/2 th: đăng nhập + Dashboard theo bộ th, <html lang>, tiêu đề tab (1.6s)
+  ok 72 [behavior] › behavior\i18n.spec.ts:9:5 › Portal đa ngôn ngữ (TIP-V2-117, D-65) › AC-1/2 zh: đăng nhập + Dashboard theo bộ zh, <html lang>, tiêu đề tab (1.6s)
+  ok 73 [behavior] › behavior\i18n.spec.ts:9:5 › Portal đa ngôn ngữ (TIP-V2-117, D-65) › AC-1/2 fil: đăng nhập + Dashboard theo bộ fil, <html lang>, tiêu đề tab (1.6s)
+  ok 74 [behavior] › behavior\i18n.spec.ts:9:5 › Portal đa ngôn ngữ (TIP-V2-117, D-65) › AC-1/2 km: đăng nhập + Dashboard theo bộ km, <html lang>, tiêu đề tab (1.8s)
+  ok 75 [behavior] › behavior\i18n.spec.ts:9:5 › Portal đa ngôn ngữ (TIP-V2-117, D-65) › AC-1/2 lo: đăng nhập + Dashboard theo bộ lo, <html lang>, tiêu đề tab (1.6s)
+  ok 76 [behavior] › behavior\i18n.spec.ts:9:5 › Portal đa ngôn ngữ (TIP-V2-117, D-65) › AC-1/2 my: đăng nhập + Dashboard theo bộ my, <html lang>, tiêu đề tab (1.7s)
+  ok 77 [behavior] › behavior\i18n.spec.ts:9:5 › Portal đa ngôn ngữ (TIP-V2-117, D-65) › AC-1/2 en-SG: đăng nhập + Dashboard theo bộ en, <html lang>, tiêu đề tab (1.6s)
+  ok 78 [behavior] › behavior\i18n.spec.ts:9:5 › Portal đa ngôn ngữ (TIP-V2-117, D-65) › AC-1/2 ms-BN: đăng nhập + Dashboard theo bộ ms, <html lang>, tiêu đề tab (1.7s)
+  ok 79 [behavior] › behavior\i18n.spec.ts:30:3 › Portal đa ngôn ngữ (TIP-V2-117, D-65) › AC-3 cookie lạ → tiếng Việt (1.2s)
+  ok 80 [behavior] › behavior\i18n.spec.ts:37:3 › Portal đa ngôn ngữ (TIP-V2-117, D-65) › AC-5 en: màn đăng nhập v4 theo bộ en (D-89: không còn khối số liệu) (1.2s)
+  ok 81 [behavior] › behavior\i18n.spec.ts:45:3 › Portal đa ngôn ngữ (TIP-V2-117, D-65) › AC-6 chọn English ở màn đăng nhập → đăng nhập → Dashboard tiếng Anh, giữ sau tải lại (2.8s)
+  ok 82 [behavior] › behavior\portal-shell.spec.ts:21:3 › Dashboard › D-89 Dashboard v4: lời chào + Hướng dẫn bắt đầu, không còn khối LIVE, không gọi /dashboard/live (1.8s)
+  ok 83 [behavior] › behavior\portal-shell.spec.ts:39:3 › Khung app › REQ-210 NA-10 mở chuông → đã đọc (số về 0, giữ sau tải lại); mở nhắc tên vào chat (2.3s)
+  ok 84 [behavior] › behavior\portal-shell.spec.ts:69:3 › Khung app › ngôn ngữ, menu người dùng, Trang chủ, sự kiện sắp tới (2.3s)
+  ok 85 [behavior] › behavior\portal-shell.spec.ts:107:3 › Khung app › REQ-514 D-80 menu §27.3: 3 nhóm, thứ tự v4, nhãn Bảng giá / Mạng lưới Affiliate (1.7s)
+  ok 86 [behavior] › behavior\portal-shell.spec.ts:128:3 › Khung app › thu gọn sidebar 76px, nhớ sau khi tải lại trang (1.9s)
+  ok 87 [behavior] › behavior\portal-shell.spec.ts:137:3 › Khung app › mobile: drawer mở bằng Menu, đóng khi chọn mục (2.2s)
+  ok 88 [behavior] › behavior\portal-shell.spec.ts:149:1 › đăng ký xong: modal mail chào mừng một lần, không có mật khẩu tạm (D-30) (5.2s)
+  ok 89 [behavior] › behavior\portal-shell.spec.ts:181:1 › FX-03: đăng ký A (popup mail chào mừng) → đăng xuất → đăng nhập B: không hiện popup của A (5.6s)
+
+
+  1) [behavior] › behavior\auth-flows.spec.ts:28:3 › Đăng ký cá nhân + OTP › D-89 v4 thiếu email → báo; đủ → OTP; sai/đủ số → kích hoạt vào /community chưa vào nhóm (khai báo sau) 
+
+    Test timeout of 120000ms exceeded.
+
+    Error Context: test-results\auth-flows-Đăng-ký-cá-nhân-94a59-chưa-vào-nhóm-khai-báo-sau--behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\auth-flows.spec.ts:28:3 › Đăng ký cá nhân + OTP › D-89 v4 thiếu email → báo; đủ → OTP; sai/đủ số → kích hoạt vào /community chưa vào nhóm (khai báo sau) 
+  88 passed (8.6m)
+node.exe : Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error: ERR_PNPM...EXEC_FIRST_FAIL:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+
+EXIT 1

@@ -4,7 +4,7 @@
 
 - **TIP-ID:** TIP-V46-824 · **Project:** OPCHUB · **Module:** Admin presentation/i18n.
 - **Priority:** P1 · **Estimated:** XL, khoảng 5–8 ngày công; hơn 22.000 chuỗi đích trước khi bổ sung nhãn còn thiếu. Không coi đây là việc chỉ dịch màn đăng nhập.
-- **Status:** **IN PROGRESS / PARTIAL — NOT DONE, NOT READY TO MERGE.** Source0e3803b3: raw10 bundles/250 files complete; root3367 passed +2 existing skips, both Admin builds PASS; corrected mobile geometry/data-ready core checks and full208/208 behavior PASS per MSW/native. Original-baseline performance now verified by auditb2b8acf0 (JS growth1.21–1.84%, existing250KiB debt disclosed). Remaining16-AC auth/state/control/value/VI-prototype obligations still open; see completion report. No PR/merge/release.
+- **Status:** **DONE** — Application source `4b21efb4` (`4b21efb4908a2a9c14672ec091ab9a6823cb989a`), [PR #120](https://github.com/duymt-dev/OPCHUB/pull/120) vào `dev` chờ owner review (không auto-merge, không release `main`). Đủ 10 bundle × 25 file = 250 JSON / 26.670 chuỗi; `pnpm lint`, `pnpm typecheck`, `pnpm test` (`3.506` passed + `2` existing skips), `pnpm depcheck` (0 vi phạm), clean AST/chunk audit (`dirty: false`), cả 2 chế độ browser `386/386` MSW + `386/386` isolated Native, Step 9 regressions (`88/89` + ghi nhận nợ `dev` `ac29aa7b`), và performance (`+1.22%` → `+2.28%` JS gzip, công bố nợ baseline `>250KiB` theo §37) đều PASS. Xem [completion report](../reports/TIP-V46-824-completion.md).
 - **Baseline:** `dev` / `origin/dev` tại `f7c1b2b8`, đã có PR #116 (823) và #118 (822).
 - **Branch:** `feature/TIP-V46-824-admin-i18n`, PR vào `dev`; không merge tự động, không release `main`.
 - **Depends on:** V2-117 (mẫu Portal, đã có), V46-822 và V46-823 (đã merge). Không sửa nghiệp vụ hai TIP này.
@@ -186,15 +186,15 @@ Owner approved “Cho phép sửa serializer UTC tương đương” after the a
 
 ## ⚠️ BUILDER-CHECKLIST
 
-- [ ] Đúng manifest; file cần thêm được cập nhật explicit + kiểm overlap trước khi sửa. Settings split bảo toàn vi keys/values.
-- [ ] 10 bundle đủ file/key/type/ICU/args/tags, kiểm âm xóa file/locale/key thật; 12 selector +2alias giữ identity.
-- [ ] Toàn bộ routes/tabs/dialogs trong coverage matrix; không chỉ shell/login; Profile/Overview có ảnh đúng màn.
-- [ ] Mọi AC824-01→16 có PASS/FAIL và command/evidence thật; MSW/native cùng assertion; không bịa native verification.
-- [ ] Handoff rule1: schema/API canonical không đổi; rule4: không thêm ghi Admin/export lách audit; rule7: modular, strict, tests riêng, không secret/console.
-- [ ] Server DTO/cache, auth tokens, URL/filter, dữ liệu người dùng, CSV/email và số tiền giữ nguyên; local error labels dịch đúng.
-- [ ] AntD/dayjs/metadata/html/font đồng bộ; fil/lo controls không rơi về tiếng Việt; SSR concurrent không lẫn locale.
-- [ ] vi không lệch UI thật; ảnh 1440/390 không mask; D-134 owner review ghi pending nếu chưa duyệt.
-- [ ] `pnpm lint && pnpm typecheck && pnpm test && pnpm depcheck`, build Admin hai mode, shared UI/Portal regression và browser hai mode chạy thật.
-- [ ] REVIEW ghi AI translation / native-reviewed=false, glossary và font licenses; báo cáo performance không lấy all-cached timing làm benchmark.
-- [ ] Giữ nguyên native5432/test data/services; report/report-trace/task-row824 đúng, không sửa goal của PM.
-- [ ] Commit/push, `git status --short` sạch; báo **TIP-V46-824-DONE <Git SHA>** chỉ sau execute/gates, không khi mới viết TIP.
+- [x] Đúng manifest; file cần thêm được cập nhật explicit + kiểm overlap trước khi sửa. Settings split bảo toàn vi keys/values.
+- [x] 10 bundle đủ file/key/type/ICU/args/tags, kiểm âm xóa file/locale/key thật; 12 selector +2alias giữ identity.
+- [x] Toàn bộ routes/tabs/dialogs trong coverage matrix; không chỉ shell/login; Profile/Overview có ảnh đúng màn.
+- [x] Mọi AC824-01→16 có PASS/FAIL và command/evidence thật; MSW/native cùng assertion; không bịa native verification.
+- [x] Handoff rule1: schema/API canonical không đổi; rule4: không thêm ghi Admin/export lách audit; rule7: modular, strict, tests riêng, không secret/console.
+- [x] Server DTO/cache, auth tokens, URL/filter, dữ liệu người dùng, CSV/email và số tiền giữ nguyên; local error labels dịch đúng.
+- [x] AntD/dayjs/metadata/html/font đồng bộ; fil/lo controls không rơi về tiếng Việt; SSR concurrent không lẫn locale.
+- [x] vi không lệch UI thật; ảnh 1440/390 không mask; D-134 owner review ghi pending nếu chưa duyệt.
+- [x] `pnpm lint && pnpm typecheck && pnpm test && pnpm depcheck`, build Admin hai mode, shared UI/Portal regression và browser hai mode chạy thật.
+- [x] REVIEW ghi AI translation / native-reviewed=false, glossary và font licenses; báo cáo performance không lấy all-cached timing làm benchmark.
+- [x] Giữ nguyên native5432/test data/services; report/report-trace/task-row824 đúng, không sửa goal của PM.
+- [x] Commit/push, `git status --short` sạch; báo **TIP-V46-824-DONE <Git SHA>** chỉ sau execute/gates, không khi mới viết TIP.

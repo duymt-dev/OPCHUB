@@ -106,3 +106,21 @@ COMMAND node infra/scripts/audit-admin-i18n.mjs
   "errors": 0
 }
 EXIT 0
+
+FINAL CLOSURE AUDIT — committed source 4b21efb4908a2a9c14672ec091ab9a6823cb989a (clean worktree before evidence logs)
+COMMAND node infra/scripts/audit-admin-i18n.mjs
+{
+  "status": "PASS",
+  "source": {
+    "gitHead": "4b21efb4908a2a9c14672ec091ab9a6823cb989a",
+    "dirty": false,
+    "corpusSha256": "19650b6186ca64fbc78d369e8ff8b7c623a5bdd293422f06e071ff469ca8c984",
+    "fingerprintFiles": 615,
+    "fingerprintScope": "Scanned production source plus audit scripts and exact exception registries; not catalogs or browser evidence"
+  },
+  "sourceFiles": 597,
+  "rows": 303,
+  "unreviewed": 0,
+  "errors": 0
+}
+EXIT 0

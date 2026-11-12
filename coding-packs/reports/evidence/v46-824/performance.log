@@ -1017,3 +1017,40 @@ Running 5 tests using 1 worker
 
   5 passed (5.4s)
 EXIT 0
+
+=== FINAL CURRENT16 & BUDGET5 ON COMMITTED SOURCE 4b21efb4908a2a9c14672ec091ab9a6823cb989a ===
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c TEMP-current.config.mjs
+
+Running 16 tests using 1 worker
+
+  ok  1 [performance-current] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold vi /login executable/data/font inventory (1.1s)
+  ok  2 [performance-current] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold vi /overview executable/data/font inventory (1.7s)
+  ok  3 [performance-current] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold vi /profile executable/data/font inventory (1.6s)
+  ok  4 [performance-current] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold vi /settings executable/data/font inventory (1.5s)
+  ok  5 [performance-current] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /login executable/data/font inventory (991ms)
+  ok  6 [performance-current] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /overview executable/data/font inventory (1.4s)
+  ok  7 [performance-current] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /profile executable/data/font inventory (1.5s)
+  ok  8 [performance-current] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /settings executable/data/font inventory (1.3s)
+  ok  9 [performance-current] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /login executable/data/font inventory (998ms)
+  ok 10 [performance-current] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /overview executable/data/font inventory (1.4s)
+  ok 11 [performance-current] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /profile executable/data/font inventory (1.4s)
+  ok 12 [performance-current] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /settings executable/data/font inventory (1.5s)
+  ok 13 [performance-current] › audit\admin-i18n-performance.spec.ts:14:1 › D-141 AC824-09/16 concurrent SSR never mixes selected vi/en/th catalogs (269ms)
+  ok 14 [performance-current] › audit\admin-performance-contract.spec.ts:10:1 › D-141 AC824-16 decodes actual queue JSON without executing inline script (2ms)
+  ok 15 [performance-current] › audit\admin-performance-contract.spec.ts:22:1 › D-141 AC824-16 rejects missing, duplicate, mixed and malformed catalog data (6ms)
+  ok 16 [performance-current] › audit\admin-performance-contract.spec.ts:34:1 › D-141 AC824-16 metadata rejects external/default listeners and path-shaped dist (4ms)
+
+  16 passed (22.2s)
+EXIT 0
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c TEMP-budget.config.mjs
+
+Running 5 tests using 1 worker
+
+  ok 1 [performance-current] › audit\admin-performance-budget.spec.ts:7:1 › D-141 AC824-16 all12 actual original-baseline route comparisons satisfy15% with explicit debt (69ms)
+  ok 2 [performance-current] › audit\admin-performance-budget.spec.ts:18:1 › D-141 AC824-16 rejects absent/nonpositive or over15% executable measurements (19ms)
+  ok 3 [performance-current] › audit\admin-performance-contract.spec.ts:10:1 › D-141 AC824-16 decodes actual queue JSON without executing inline script (9ms)
+  ok 4 [performance-current] › audit\admin-performance-contract.spec.ts:22:1 › D-141 AC824-16 rejects missing, duplicate, mixed and malformed catalog data (12ms)
+  ok 5 [performance-current] › audit\admin-performance-contract.spec.ts:34:1 › D-141 AC824-16 metadata rejects external/default listeners and path-shaped dist (3ms)
+
+  5 passed (1.6s)
+EXIT 0

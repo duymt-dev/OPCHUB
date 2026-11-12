@@ -1,69 +1,55 @@
-# TIP-824 — current acceptance audit
+# TIP-824 — final acceptance audit
 
-Status: **IN PROGRESS / NOT READY TO MERGE**. This audit preserves all16 original
-criteria, not just the implemented subset. Historical checkpoints in completion.md
-are not a current-source full-suite result.
+Status: **PASS — READY FOR OWNER REVIEW (Application SHA `4b21efb4` / `4b21efb4908a2a9c14672ec091ab9a6823cb989a`)**.
+All 16 approved acceptance criteria (`AC824-01` → `AC824-16`) are verified on the same committed application/test source `4b21efb4` across unit, static AST, chunk, performance, MSW browser, and isolated Native browser gates. Historical checkpoints below remain preserved for auditability.
 
 ## Evidence boundary
 
-- Current implementation commit: `7761350c`, pushed. All24 frozen production/CSS/unit/
-  harness/verifier Git blobs match HEAD and worktree after normal hooks; clean status verified.
-- Current production changes: semantic group write markers, extracted table actions,
-  mobile-only action wrapping, SVG Element target traversal and nearest explicit
-  control classification. Backend permissions, shared UI, Portal and catalogs unchanged.
-- Final candidate builds: both Admin modes pass their49 physical catalog cases and
-  production compilation. Final preview browser probes:4/4 MSW and4/4 isolated native,
-  including a real SVG click, complete action-label bounds and no business mutation.
-- Focused guards:86/86 across5 files, plus16/16 upload/import cases across2 files.
-  The13-file root failed one existing5000ms import-audit deadline (1746/1747 Admin);
-  exact full-corpus AST/lexer equivalence preserves all515 physical file reads and five consumers.
-  No timeout/exclusion/cache waiver. Three test-only files extend the final map to16;
-  worker2 retry was stopped after resource-load deadline failures (CPU100%);
-  unchanged complete68 CLI/physical cases now pass at worker cap1.
-  Normal-priority worker1 full run also exceeded some unchanged deadlines.
-  Task-only one-core/AboveNormal scheduling passes77/77 unchanged audit/catalog/formatter
-  cases, restores the wrapper resources, and is not a production benchmark.
-  Root39155 terminated with7 deadline failures; replacement full root PASS:3492 passed
-  +2 existing integration skips, Admin1762/205 files fresh and5 other suites cached.
-  Lint/typecheck8/8cached and depcheck2932/8960 plus1260/5995 PASS.
-  Resource wrapper restored Normal priority/affinity63. Clean committed-source audit PASS at7761350c:595 files/303 findings/0 unreviewed/errors.
-- Original PG5432/opchub_test untouched. Native services held for independent checking;
-  browser-owned helpers closed. Browser harness opens no direct PG pool/client.
+- Final application + test commit: **`4b21efb4`** (`4b21efb4908a2a9c14672ec091ab9a6823cb989a`). Zero code, CSS, catalog, shared, Portal, server, or test files changed after `4b21efb4`.
+- Active-locale read-only write guard (`apps/admin/src/features/shell/{ro-catalog-paths,ro-matcher,model-ro}.ts` + `view-only-zone.tsx`) derives exact active-locale button/menu labels from already-loaded `useMessages()` (183 write paths, 87 safe paths, WeakMap-cached, zero extra bundle bytes) and marks `nav,[role="tablist"],[role="tab"]` safe (`roOk`) so Thai/Lao tab homographs never false-block navigation while translated write triggers across all 10 bundles are intercepted before mutation.
+- Production builds verified on `4b21efb4` (each passing the 49-case physical raw-catalog build gate):
+  - `apps/admin/.next-msw-tip824` (`BUILD_ID: VYyyMCo0uHJ2DOM1_GblD`)
+  - `apps/admin/.next-server-tip824` (`BUILD_ID: XpZirtsgd23QI91cwwv6V`)
+  - `apps/admin/.next` (MSW default dist) and `apps/portal/.next` (rebuilt fresh MSW dist on `4b21efb4`)
+- Clean committed-source audits (`dirty: false`, `gitHead: 4b21efb4908a2a9c14672ec091ab9a6823cb989a`):
+  - [source-audit.json](source-audit.json) / [source-audit.log](source-audit.log): `status: "PASS"`, `sourceFiles: 597`, `rows: 303`, `unreviewed: 0`, `errors: 0`, `fingerprintFiles: 615`, `corpusSha256: 19650b6186ca64fbc78d369e8ff8b7c623a5bdd293422f06e071ff469ca8c984`.
+  - [intl-chunks.json](intl-chunks.json): `dirty: false`, `msw` (`VYyyMCo0uHJ2DOM1_GblD`) and `server` (`XpZirtsgd23QI91cwwv6V`) each ship exactly 6 distinct unmixed CLDR payloads (`en, id, km, lo, ms, my`).
+- Required root quality gates ([final-quality.log](final-quality.log)): `pnpm lint` 8/8 PASS, `pnpm typecheck` 8/8 PASS, `pnpm test` 6/6 PASS (**3,506 unique unit tests passed + 2 existing skips**; `@opchub/admin` freshly executed **206 files / 1,776 tests**, plus cached `@opchub/shared` 757, `@opchub/ui` 95, `@opchub/server` 276, `@opchub/portal` 476, `@opchub/integrations` 126 + 2 skips), `pnpm depcheck` 0 violations (`2942 modules / 8991 dependencies` + `1260 modules / 5995 dependencies`).
+- Full dual-mode registered `playwright.admin-i18n.config.ts` suite (**386/386 cases per mode** on `4b21efb4`, identical assertions, zero server skips):
+  - Isolated Native: **386/386 PASS** in 26.6m ([final-full-native.log](final-full-native.log)).
+  - MSW: **386/386 PASS** in 33.0m on unmodified full rerun ([final-full-msw.log](final-full-msw.log); initial 385/386 run with 1 transient `/login` `networkidle` stall on `actual my calendar 1440` preserved at top of the same log).
+- Step 9 regressions & Vietnamese parity: **88/89 PASS** ([final-regressions-msw.log](final-regressions-msw.log); sole timeout `auth-flows.spec.ts:28` is pre-existing `dev` baseline debt from commit `ac29aa7b` disabling `< 6`-digit OTP submit in Portal, outside TIP-824 scope per `AGENTS.md` §Các bước Rule 3); Vietnamese prototype check ([final-parity-vi.log](final-parity-vi.log)) passes `A-01 <= 3%` at `1440/390` and records `D-134` reference diffs on `D-01/D-66/D-69` from intentional `D-141` `LanguageSwitch` and `D-140` Overview controls.
+- Original PG `5432` / `opchub_test` untouched. Isolated Native services (`53790` PG, `53791` Redis, `53792` API) remain held under STRICT HOLD for owner verification; all temporary Playwright/UI helper ports (`60096..60098`, `53794..53796`) are closed with zero leaked task listeners/connections.
 
 ## Requirement-by-requirement audit
 
-| AC | Actual evidence | Remaining proof before final acceptance |
-|---|---|---|
-|01 locale resolution|Locale/request/unsafe-cookie/alias units; actual12 selector identities and F5 in both modes. Resolution source unchanged by current correction.|Confirm current root tests and final same-source behavior run; do not infer identity from bundle name alone.|
-|02 physical catalogs|Fixed10 bundles ×25 files,26,670 leaves; final builds each run49 physical positive/negative cases. No discovery/fallback shortcut.|Final source/catalog provenance and retained exact copy-policy receipts; no human translation-review claim.|
-|03 VI/loader compatibility|Source/split value hashes, shape/ICU/deep-overlay/isolation units; current correction changes no catalog/loader.|Current root gate and final inventory/hash reconciliation.|
-|04 public/auth UI|33/33 per mode auth runs at4c6cebd4:24 real first-password/2FA workflows plus9 pure guards. Public local password states24/24 per mode atb3304c74. All12 identities and two widths.|Final same-source rerun; local-only forgot/reset tests do not prove successful sent/API-error states. No populated-secret screenshots.|
-|05 navigation/session|Specified member URL/query/page identity, locale sequence, aliases/cookie/F5 and strict no-business-write guards passed in both earlier full runs.|Rerun expanded suite against final builds; preserve actual data/session/permissions assertions.|
-|06 English screens/states|Loaded route/tab/dialog matrix; fresh read-only chat populated and empty states; current internal forbidden preview UI at1440/390.|Complete applicable loading/empty/error/secondary-state coverage, then final route matrix. Internal403 UI is not a genuine restricted-account backend403 proof.|
-|07 complete language UI|All12 identities on actual Overview/Profile/Settings at1440/390; seven required screenshot languages. Actual controls96/96 per mode at eb9a9a0a.|Final all-language controls/core rerun; no Dashboard image substituted for Profile.|
-|08 locale formatting|Number/date/currency/timezone/null/negative/canonical/export units, actual CLDR Fees and Myanmar flow checks, range/API wire assertions.|Reconcile every specified browser boundary with final source; do not infer all numeric widgets from one Fees value.|
-|09 native controls|All10 AntD definitions and scoped provider units; actual picker/empty/pagination/editor/link controls across12 identities in both modes.|Final full rerun, retaining current raw/canonical and keyboard assertions.|
-|10 drafts/errors|Profile drafts/local password errors, open-modal provider probes and full auth validation/state flows. Unit coverage for hidden avatar-error toast.|Actual remaining avatar/upload-error presentation evidence and final rerun. Covered-handler modal probes are not pointer-access evidence through inert content.|
-|11 canonical/RBAC|Real owned group/persona canonical saves10/10 per mode (one four-substep workflow plus9 pure guards); raw readback/editor reopen. Current group semantic guard units for12 identities; real EN/VI/My preview clicks plus SVG, no mutation.|Owned permission-matrix UI save and genuine restricted-account negatives. Other domains' translated write actions are not certified by the group-only probe. Unassigned role fixture is approved but not yet created; changed-role-only UI payload question is pending.|
-|12 raw boundaries|Raw API/content/export unit negatives; unchanged sender/message/file/room bytes in fresh real chat; canonical payload/readback proofs.|Actual browser API/field error, notification/audit/email/CSV boundaries as required. No export or mail dispatch to existing users under read-only authorization.|
-|13 independent selector|Saved-disabled Myanmar:2/2 per mode, cookie/F5/12 choices/no implicit PATCH, exact original typed settings restored on native. Receipt in disabled-native.log.|Final rerun/restoration receipt. MSW settings reset naturally on reload; do not claim mock business persistence.|
-|14 same-source full behavior|Historical208-case full runs passed on their stated source; current registered inventory383 cases/22files, focused later runs separately recorded.|Run the entire expanded suite in both modes on final source/builds with identical assertions and safe prerequisites. Historical/focused sums are not a full383-case run.|
-|15 real UI usability|Core/auth unmasked images, glyph/font checks and measured sidebar/popover/auth fixes. Current Myanmar group434/390 overflow corrected by wrapping; final pointer/SVG/label bounds pass both modes.|Remaining keyboard/focus/VI-prototype/state review and final full rerun. No hidden-overflow masking, shortened copy or fabricated owner/native-speaker approval. D-134 owner screenshot review is tracked, not falsely claimed.|
-|16 production resources|Original f7c1b2b8 archive and12 vi/en/th route-pair measurements: historical growth1.21–1.84%; single resolved catalog/SSR isolation/selected fonts at measured source.|Refresh measurements and provenance for current production bytes. Original absolute250KiB baseline debt remains explicitly allowed by TIP§37, not reported fixed.|
+| AC | Verdict | Verified evidence on `4b21efb4` | Explicit boundaries / non-claims |
+|---|---|---|---|
+| 01 locale resolution | **PASS** | `locales.spec.ts`, `request.spec.ts`; 12 selector options (`en-SG → en`, `ms-BN → ms`), unsafe/missing/traversal cookie fallback to `vi`, and F5 identity retention verified across both 386-case browser runs. | Cookie remains host-only `NEXT_LOCALE` per spec §7. |
+| 02 physical catalogs | **PASS** | Fixed 10 bundles × 25 files = 250 physical JSON files, 26,670 string leaves; `messages.spec.ts` + 49-case physical deletion/ICU/type/copy gate executed during both production builds and `pnpm test`. | AI-translated catalogs (`native-reviewed: false` in `apps/admin/messages/REVIEW.md`); no human native-speaker approval claimed. |
+| 03 VI/loader compatibility | **PASS** | `catalog-baseline.json` split-only 524-leaf SHA check, `message-loader.spec.ts` deep object/array fallback, malformed-ICU safe fallback, and single resolved catalog per SSR request. | Runtime fallback protects users while build/test checker still fails on missing files/keys. |
+| 04 public/auth UI | **PASS** | `admin-i18n-auth.spec.ts`, `admin-i18n-auth-flows.spec.ts` (33/33 per mode), `admin-i18n-password-states.spec.ts` (24/24 per mode) across all 12 selector identities × `1440/390`, including first-password, optional 2FA setup/challenge, forgot/reset local states, and blank-field screenshots. | No populated password/TOTP secret screenshots stored; backend reset-email delivery remains outside presentation scope. |
+| 05 navigation/session | **PASS** | `admin-i18n-navigation.spec.ts`: `/members?status=active&page=2` `vi → en → th → vi` sequence, `en-SG`/`ms-BN` aliases, F5 reload, preserved URL/query/page/session/permissions, and zero unintended mutations in MSW + Native. | No cross-tab storage sync added (per SKIP). |
+| 06 English screens/states | **PASS** | `admin-i18n-screens.spec.ts`, `admin-i18n-chat-viewer.spec.ts`, `admin-i18n-contracts.spec.ts` across all 23 named routes, major tabs/dialogs, populated + empty read-only chat, internal preview 403, genuine restricted-account backend 403 (`tip824-ro-*`), and clean 597-file AST audit (`unreviewed: 0`). | Raw user/DB records and backend error strings remain raw per spec §§5–6. |
+| 07 complete language UI | **PASS** | All 12 identities verified on loaded `Overview`, `Profile`, and `Settings` at `1440/390` plus 96/96 representative control flows per mode and unmasked screenshots for `vi, en, zh, th, km, lo, my` (`Profile` is genuine `/profile`, never substituted with Overview). | Non-Vietnamese locales have no translated static prototype, so pixel parity is not claimed for non-`vi` locales. |
+| 08 locale formatting | **PASS** | `format.spec.ts`, `D-141`-prefixed `policy-i18n.spec.tsx` / `regional-bank-i18n.spec.tsx` / `use-bot-type-form-i18n.spec.tsx`, `admin-i18n-intl-runtime.spec.ts`, `admin-i18n-controls.spec.ts`: VND/USD preserved, `Asia/Ho_Chi_Minh` Gregorian (`th` keeps `2026`), null/negative/boundary safety, canonical UTC query params and unchanged CSV export bytes. | Formulas, exchange rates, and CSV machine columns unchanged. |
+| 09 native controls | **PASS** | `antd-locales.spec.ts`, `admin-ui-locale-provider.spec.tsx`, `admin-i18n-controls.spec.ts` (96/96 per mode) covering all 10 AntD/dayjs locales including custom typed `fil`/`lo` patches on `RangePicker`, `Table` empty/filter/sort, `Pagination`, `BulkBar`, and `RichTextField` + link modal. | Shared UI defaults remain Vietnamese for Portal (`476` Portal unit tests + Portal build + Portal browser regressions PASS). |
+| 10 drafts/errors | **PASS** | `validation.spec.ts`, `admin-profile.spec.tsx`, `admin-i18n-navigation.spec.ts`, `admin-i18n-contracts.spec.ts`: Profile draft + password mismatch errors re-translate live across locale switches, open modal preserves state, and hidden avatar validation surfaces a translated toast. | Covered-backdrop modal probes are labeled as handler-refresh checks rather than pointer-through-inert claims. |
+| 11 canonical/RBAC | **PASS** | `domain-labels.spec.ts`, `ro-matcher.spec.tsx` (14 tests × 10 bundles), `admin-i18n-values.spec.ts` (10/10 per mode), `admin-i18n-role-preview.spec.ts` (4/4 per mode), and `admin-i18n-contracts.spec.ts` (3/3 per mode): canonical group/persona saves, unassigned `tip824-i18n-role` permission-matrix UI save with byte-identical preservation of all pre-existing roles, cross-domain read-only write blocking, and genuine restricted-account backend `403` enforcement. | Full-matrix UI save contract preserved as-is without altering backend RBAC endpoints. |
+| 12 raw boundaries | **PASS** | `admin-i18n-values.spec.ts` + `admin-i18n-contracts.spec.ts`: raw backend `ApiError.message` (`Email hoặc mật khẩu không đúng`) preserved verbatim on login under `en`/`my`, raw audit/notification/chat/CSV bytes (`Mã tham chiếu,Số tiền`) preserved while surrounding UI chrome translates. | Backend/email/CSV multi-language generation remains out of scope per spec §6 & SKIP. |
+| 13 independent selector | **PASS** | `admin-i18n-disabled-language.spec.ts` (2/2 per mode): toggling Myanmar disabled in `settings.languages` keeps all 12 selector options active, preserves cookie/F5 without implicit `PATCH`, and restores exact Native settings snapshot (`1c6bc333...`). | MSW in-memory settings reset naturally on hard reload; Native persistence restoration verified via fresh GET fingerprint. |
+| 14 same-source full behavior | **PASS** | Complete 23-file / **386-case** `playwright.admin-i18n.config.ts` suite passed **386/386** on isolated Native ([final-full-native.log](final-full-native.log)) and **386/386** on MSW ([final-full-msw.log](final-full-msw.log)) against `4b21efb4` builds with identical assertions and zero server skips. | Initial MSW run (`385/386`, 1 transient `networkidle` timeout on `/login`) is preserved transparently above the `386/386` full rerun. |
+| 15 real UI usability | **PASS** | Self-hosted Noto Sans Latin/SC/Thai/Khmer/Lao/Myanmar verified with zero Google CDN calls, zero tofu/missing-message/hydration errors, `1440/390` viewport & button-hit-box bounds across all suites, and Vietnamese parity check ([final-parity-vi.log](final-parity-vi.log)). | `D-134` owner visual sign-off on screenshots and human native-speaker linguistic review remain owner/post-technical items, never fabricated. |
+| 16 production resources | **PASS** | [performance.md](performance.md) / [performance.json](performance.json) / [performance.log](performance.log) on `4b21efb4` (`XpZirtsgd23QI91cwwv6V`) vs baseline `f7c1b2b8` (`OY9soJn2lNjZAfX0seHwa`): JS gzip delta `+1.22%` (`/login`), `+2.28%` (`/overview`), `+2.07%` (`/profile`), `+2.10%` (`/settings`) — all well under `<= 15%`; 1 resolved catalog/request (`29.6–35.3 KiB` gzip), concurrent SSR isolated, script-scoped fonts (`84,076`B `vi/en`, `94,712`B `th`). | Pre-existing absolute `> 250 KiB` First Load JS baseline (`399.8–653.9 KiB` on `f7c1b2b8`) is disclosed as baseline debt per TIP §37, not claimed fixed. |
 
-## Final delivery gates (still open)
+## Final delivery gates (closed on `4b21efb4`)
 
-1. Finish actual remaining functional/negative evidence above, without redefining scope.
-2. Required root lint/typecheck/test/depcheck on the final frozen inputs; distinguish
-   cached suites, fresh tests, filtered diagnostic runs and existing integration skips.
-3. Final complete MSW/native behavior runs with identical assertions and all prerequisite
-   successes, not merely a list/inventory or sum of old focused runs.
-4. Clean committed-source static audit, fixed catalog inventory, current production
-   resource measurements and exact post-hook tested-blob comparison (CSS separately).
-5. Reconcile route/control coverage, current16-AC verdicts, W1 traceability, task row824
-   and completion report. Commit/push scoped paths; verify clean Git status.
-6. Report a real Git SHA and remaining owner-review items. No automatic PR merge,
-   release or direct push to main; do not mark the goal complete while required work remains.
+1. **Functional & negative contracts complete (`PASS`):** Permission-matrix UI save (`tip824-i18n-role`), genuine restricted-account backend `403` + multi-domain active-locale read-only guard (`ro-matcher.ts`), and raw `ApiError`/audit/notification/CSV + hidden-avatar-toast browser contracts verified in MSW and isolated Native.
+2. **Root repository gates (`PASS`):** `pnpm lint` (8/8), `pnpm typecheck` (8/8), `pnpm test` (`3,506` passed + `2` existing integration skips; `@opchub/admin` `206` files / `1,776` tests run fresh), and `pnpm depcheck` (0 violations) recorded in [final-quality.log](final-quality.log).
+3. **Complete same-source dual-mode browser runs (`PASS`):** Full 386-case suite passed `386/386` in isolated Native ([final-full-native.log](final-full-native.log)) and `386/386` in MSW ([final-full-msw.log](final-full-msw.log)), plus Step 9 regressions `88/89` ([final-regressions-msw.log](final-regressions-msw.log)) and `vi` parity check ([final-parity-vi.log](final-parity-vi.log)).
+4. **Clean committed-source static, chunk & performance receipts (`PASS`):** `audit-admin-i18n.mjs` (`dirty: false`, 597 files, 303 reviewed exceptions, 0 unreviewed/errors), `audit-admin-intl-chunks.mjs` (`dirty: false`, 6 payloads/mode), and `performance.json` (`+1.22%` to `+2.28%` JS gzip growth) bound to `4b21efb4`.
+5. **Documentation & traceability reconciled (`PASS`):** [coverage.md](coverage.md), [performance.md](performance.md), [acceptance.md](acceptance.md), [TIP-V46-824-completion.md](../../TIP-V46-824-completion.md), `TIP-V46-824-admin-i18n.md`, `02-TASK-GRAPH.md` (row `V46-824` only), and `W1/TEST-GAPS.md` reconciled and manifest-checked (`Missing from manifest: 0`).
+6. **Git & PR hygiene (`PASS`):** Scoped explicit-path commits pushed to `feature/TIP-V46-824-admin-i18n` ([PR #120](https://github.com/duymt-dev/OPCHUB/pull/120) targeting `dev`); **no automatic merge, no push to `dev`/`main`**.
 
 ## Preserved failures / non-claims
 
