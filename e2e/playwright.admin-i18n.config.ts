@@ -30,6 +30,7 @@ export default defineConfig({
         'admin-i18n-auth.spec.ts',
         'admin-i18n-password.spec.ts',
         'admin-i18n-values.spec.ts',
+        'admin-i18n-disabled.spec.ts',
         'admin-i18n-values/protocol-contract.spec.ts',
         'admin-i18n-auth/totp-contract.spec.ts',
         'admin-i18n-auth/protocol-contract.spec.ts',

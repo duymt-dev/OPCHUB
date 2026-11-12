@@ -1624,3 +1624,7 @@ Next-phase files are declared before implementation; existing read-only/canonica
 | modify | `e2e/playwright.admin-i18n.config.ts` | Register the isolated disabled-language probe after canonical phase is committed. |
 | create | `coding-packs/reports/evidence/v46-824/disabled-msw.log` | Actual MSW selector behavior and restoration receipt, limitations explicit. |
 | create | `coding-packs/reports/evidence/v46-824/disabled-native.log` | Actual isolated native saved-disabled state and exact API restoration receipt. |
+
+| create | `coding-packs/reports/evidence/v46-824/disabled-quality.log` | Actual final required root gates and frozen harness provenance; existing production ff6be9ee unchanged. |
+
+Disabled probe scope: identical UI/wire assertions in both modes. Before reload, repeated fresh Settings reads must equal the exact one-code disabled snapshot. After F5, require all12 selector options and selected cookie identity, with zero implicit PATCHes. Finally accepts only the exact disabled snapshot or exact original snapshot (MSW browser-memory settings can naturally reset on reload); any unrelated drift fails without overwriting it. Record which restoration path actually occurred. This does not claim MSW business configuration persists through F5, change its persistence model, or waive native full restoration verification.
