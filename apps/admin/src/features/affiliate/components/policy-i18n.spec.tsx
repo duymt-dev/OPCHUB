@@ -45,7 +45,7 @@ function context() {
     rerender: () => view.rerender(<Harness />),
   };
 }
-it('AC824-10 policy numeric schema errors change language without saving or changing the draft', () => {
+it('D-141 AC824-10 policy numeric schema errors change language without saving or changing the draft', () => {
   const h = context();
   act(() => h.hook.form.setFieldValue('cookieDays', 366));
   act(() => h.hook.submit({ ...policy, cookieDays: 366 }));
@@ -57,7 +57,7 @@ it('AC824-10 policy numeric schema errors change language without saving or chan
   expect(h.hook.form.getFieldValue('cookieDays')).toBe(366);
   expect(state.mutate).not.toHaveBeenCalled();
 });
-it('AC824-12 policy server fields remain raw and hidden legacy fields are not injected', async () => {
+it('D-141 AC824-12 policy server fields remain raw and hidden legacy fields are not injected', async () => {
   state.mutate.mockImplementation(
     (_value: unknown, options: { onError: (error: Error) => void }) => {
       options.onError(

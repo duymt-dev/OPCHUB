@@ -1731,3 +1731,41 @@ Re-run existing read-only core screens and controls for vi/en/my at1440/390, nav
 |---|---|---|
 | create | `coding-packs/reports/evidence/v46-824/review-msw.log` | Focused existing read-only acceptance commands/results. |
 | create | `coding-packs/reports/evidence/v46-824/review-native.log` | Same assertions on approved isolated native runtime. |
+
+## Final TIP-DONE closure — cross-domain ViewOnlyZone, remaining browser ACs, regressions and SHA-bound gates (2026-11-12)
+
+Resolve the remaining cross-domain `ViewOnlyZone` write-guard gap across all 10 locales using active-locale catalog message paths already loaded in `NextIntlClientProvider` (zero extra bundle/catalog payload, keeping existing `WRITE_LABEL`/`SAFE_LABEL` and semantic `data-act`/`data-ro-ok` behavior intact), align `D-141 AC824-xx` test prefixes, add dual-mode (`msw` + isolated `server`) browser proofs for `AC824-06/10/11/12/14` (prefix-owned `tip824-*` role matrix save keeping existing roles unchanged, genuine restricted `lecturer` account read-only + 403 boundaries in `en`/`my`, hidden profile avatar client upload toast, and raw backend error/notification/audit/email preview boundaries), run full suites + Step 9 regressions + Vietnamese parity + final-SHA performance receipts, and reconcile completion artifacts.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| create | `apps/admin/src/features/shell/ro-catalog-paths.ts` | Canonical catalog dot-paths for write actions and safe navigation/selection controls across Admin domains. |
+| create | `apps/admin/src/features/shell/ro-matcher.ts` | Cached active-locale ICU-template regex matcher from `useMessages()` for `ViewOnlyZone`. |
+| modify | `apps/admin/src/features/shell/model-ro.ts` | Accept optional active-locale `RoLabelMatcher` alongside legacy Vietnamese `WRITE_LABEL`/`SAFE_LABEL` and semantic markers. |
+| modify | `apps/admin/src/features/shell/components/view-only-zone.tsx` | Wire active-locale `createRoMatcher(useMessages())` and treat `<nav>`/`[role="tablist"]`/`[role="tab"]` as safe navigation. |
+| create | `apps/admin/src/features/shell/ro-matcher.spec.tsx` | Verify write blocking and safe-control pass-through across all 10 real locale bundles (`vi, en, zh, id, th, ms, fil, km, lo, my`). |
+| modify | `apps/admin/src/features/affiliate/components/policy-i18n.spec.tsx` | Prepend `D-141 ` prefix to `AC824-10` and `AC824-12` test titles. |
+| modify | `apps/admin/src/features/affiliate/regional/components/regional-bank-i18n.spec.tsx` | Prepend `D-141 ` prefix to `AC824-10` test title. |
+| modify | `apps/admin/src/features/bots/hooks/use-bot-type-form-i18n.spec.tsx` | Prepend `D-141 ` prefix to `AC824-10` and `AC824-12` test titles. |
+| create | `e2e/behavior/admin-i18n-contracts.spec.ts` | Dual-mode `D-141 AC824-06/10/11/12/14` browser contract entry suite. |
+| create | `e2e/behavior/admin-i18n-contracts/fixtures.ts` | Browser/console error guard, private-native preflight and authenticated helpers without demo reset/seed. |
+| create | `e2e/behavior/admin-i18n-contracts/matrix.ts` | Prefix-owned `tip824-i18n-role` UI matrix toggle/save preserving canonical permission keys and pre-existing roles. |
+| create | `e2e/behavior/admin-i18n-contracts/restricted.ts` | Prefix-owned restricted `lecturer` account login, `en`/`my` `ViewOnlyZone` write block on `/members`, Forbidden UI and backend 403 check. |
+| create | `e2e/behavior/admin-i18n-contracts/boundaries.ts` | Profile invalid-avatar client upload toast (`en`/`my`) and raw backend error/notification/audit-log/welcome-mail boundaries. |
+| modify | `e2e/playwright.admin-i18n.config.ts` | Register `admin-i18n-contracts.spec.ts` in the dual-mode Admin i18n Playwright suite. |
+| create | `coding-packs/reports/evidence/v46-824/final-full-msw.log` | Full `playwright.admin-i18n.config.ts` MSW run log on final application SHA. |
+| create | `coding-packs/reports/evidence/v46-824/final-full-native.log` | Full `playwright.admin-i18n.config.ts` isolated Native run log on final application SHA. |
+| create | `coding-packs/reports/evidence/v46-824/final-regressions-msw.log` | Mandatory Step 9 Admin + Portal Playwright regressions log. |
+| create | `coding-packs/reports/evidence/v46-824/final-parity-vi.log` | Vietnamese prototype parity reference log (`D-01`, auth, settings) per `D-134`. |
+| create | `coding-packs/reports/evidence/v46-824/final-quality.log` | Root `lint`, `typecheck`, `test`, `depcheck`, static source audit and Intl chunk audit on final SHA. |
+| modify | `coding-packs/reports/evidence/v46-824/source-audit.json` | Refresh clean-source AST audit receipt (`dirty: false`) bound to final application SHA. |
+| modify | `coding-packs/reports/evidence/v46-824/source-audit.log` | Append final application SHA static audit summary. |
+| modify | `coding-packs/reports/evidence/v46-824/intl-chunks.json` | Refresh clean-source Intl chunk payload isolation receipt (`dirty: false`) bound to final application SHA. |
+| modify | `coding-packs/reports/evidence/v46-824/performance.json` | Refresh `AC824-16` performance and bundle-budget receipt bound to final application SHA. |
+| modify | `coding-packs/reports/evidence/v46-824/performance.md` | Document final-SHA `AC824-16` cold measurements and baseline >250KiB First Load JS disclosure. |
+| modify | `coding-packs/reports/evidence/v46-824/performance.log` | Record final-SHA performance measurement execution output. |
+| modify | `coding-packs/reports/evidence/v46-824/coverage.md` | Reconcile top Coverage Matrix table with verified MSW + isolated Native dual-mode coverage. |
+| modify | `coding-packs/reports/evidence/v46-824/acceptance.md` | Finalize 16-AC acceptance matrix bound to final SHA. |
+| modify | `coding-packs/reports/TIP-V46-824-completion.md` | Finalize `STATUS: DONE` completion report with full gates, verification steps and disclosures. |
+| modify | `coding-packs/tips/TIP-V46-824-admin-i18n.md` | Update `Status` header and complete 12 `BUILDER-CHECKLIST` items. |
+| modify | `coding-packs/02-TASK-GRAPH.md` | Update row `V46-824` only to `DONE` with final SHA, counts and PR #120 link. |
+| modify | `coding-packs/audit/W1/TEST-GAPS.md` | Append final `TIP-V46-824` completion trace entry. |

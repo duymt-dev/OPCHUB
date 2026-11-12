@@ -1,3 +1,5 @@
+import type { RoLabelMatcher } from './ro-matcher';
+
 /**
  * RB-R07 (prototype `roGuard`): nút thao tác ghi bị chặn trong chế độ chỉ xem. Nhãn bắt đầu bằng
  * động từ ghi → chặn; nút xem/đóng/điều hướng → cho qua. `data-ro-ok` đánh dấu nút luôn được phép.
@@ -17,7 +19,7 @@ export interface RoTarget {
 }
 
 /** Duyệt từ phần tử được bấm lên vùng nội dung: `true` nếu là thao tác ghi cần chặn */
-export function isWriteClick(path: readonly RoTarget[]): boolean {
+export function isWriteClick(path: readonly RoTarget[], matcher?: RoLabelMatcher): boolean {
   // A descendant may inherit cursor:pointer. Its enclosing button/marker defines the action.
   const control = path.find((el) => el.roOk || el.act || el.tag === 'BUTTON' || el.tag === 'A');
   const targets = control ? [control] : path;
@@ -26,8 +28,16 @@ export function isWriteClick(path: readonly RoTarget[]): boolean {
     if (el.act) return true;
     if (el.pointer || el.tag === 'BUTTON' || el.tag === 'A') {
       const tx = el.text.trim();
-      if (SAFE_LABEL.test(tx)) return false;
-      return WRITE_LABEL.test(tx) || WRITE_LABEL.test(el.title);
+      const ttl = el.title.trim();
+      if (SAFE_LABEL.test(tx) || matcher?.isSafe(tx) || (ttl !== '' && matcher?.isSafe(ttl))) {
+        return false;
+      }
+      return (
+        WRITE_LABEL.test(tx) ||
+        WRITE_LABEL.test(ttl) ||
+        Boolean(matcher?.isWrite(tx)) ||
+        Boolean(ttl !== '' && matcher?.isWrite(ttl))
+      );
     }
   }
   return false;

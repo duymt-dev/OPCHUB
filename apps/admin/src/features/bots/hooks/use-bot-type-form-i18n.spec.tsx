@@ -52,7 +52,7 @@ function context() {
     rerender: () => view.rerender(<Harness />),
   };
 }
-it('AC824-10 bot type local errors update in place while retaining the definition', async () => {
+it('D-141 AC824-10 bot type local errors update in place while retaining the definition', async () => {
   const h = context();
   await act(() => h.hook.submit({ name: '', description: 'Raw definition' }));
   expect(h.hook.form.getFieldError('name')).toEqual([viBots.bulk.invalidType]);
@@ -63,7 +63,7 @@ it('AC824-10 bot type local errors update in place while retaining the definitio
   expect(api.createBotConversationType).not.toHaveBeenCalled();
   expect(h.onCreated).not.toHaveBeenCalled();
 });
-it('AC824-12 bot type server errors remain raw across language changes', async () => {
+it('D-141 AC824-12 bot type server errors remain raw across language changes', async () => {
   vi.mocked(api.createBotConversationType).mockRejectedValue(
     new ApiError('CONFLICT', 409, 'raw', [
       { path: 'name', message: viBots.bulk.invalidType },
