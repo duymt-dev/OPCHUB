@@ -1,5 +1,12 @@
 # TIP-V46-824 - Exact file manifest
 
+## Reduced-ICU browser completion phase — after source0e3803b3
+
+| Action | Exact path | Scope |
+|---|---|---|
+| modify | `e2e/behavior/admin-i18n-intl.spec.ts` | Extend unchanged real Fees/raw DTO/independent Node date-VND/global-Intl/selected-payload oracles from Lao to all three scoped CLDR locales, Khmer/Lao/Myanmar at both widths. No production/API/data/guard change. |
+| modify | `coding-packs/reports/evidence/v46-824/intl-runtime.log` | Preserve prior focused failures/results and append actual six-case-per-mode reduced-ICU run, explicit source/build scope. |
+
 Mandatory HEADER appendix to [TIP-V46-824](TIP-V46-824-admin-i18n.md). This is NOT a second implementation TIP. Baseline: `dev f7c1b2b8`, 2026-11-11.
 
 ## Ownership and scope
