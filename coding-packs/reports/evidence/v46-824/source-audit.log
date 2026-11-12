@@ -72,3 +72,20 @@ Current badge checkpoint source e7c6ca13: actual CLI PASS, committed dirty=false
 Current Thai source264842f8 CLI PASS; committed dirty=false,584 production files/301 findings/291 exact exceptions/0 unreviewed/0 errors; unchanged production corpusb145416ef4c6391489ba21d77aeaae2a4c29af4d8f7f69a9d2324025e6df5e81, not catalog/browser coverage. Thai83 + request12 + font34 =129 focused included in root3003 +2 existing skips. First full root Admin1280/183files fresh/5 suites cached; final harness-only rerun replays6 unchanged unit suites. Unique counts not doubled.
 
 Auth source audit at4c6cebd4, after normal hooks/source commit and push; all24 frozen source/unit/harness Git blobs match tested candidate and HEAD/worktree, clean status verified. COMMAND node infra/scripts/audit-admin-i18n.mjs; EXIT0. PASS/dirty=false; production files594, findings303, unreviewed0, errors0, fingerprintFiles611, corpus677c066cdd1a4b4fa42936366f8b19e21e6f803b56d5c5f0117cc56f093fb817. CSS/catalogs/browser evidence excluded from fingerprint; no claim of fresh full341/browser/performance proof.
+
+Canonical values committed source ff6be9ee; clean worktree at audit. COMMAND node infra/scripts/audit-admin-i18n.mjs
+{
+    "status":  "PASS",
+    "source":  {
+                   "gitHead":  "ff6be9ee330d21ceefb84182bb73f9eda3cdf569",
+                   "dirty":  false,
+                   "corpusSha256":  "b24fe393c6d95b831d132ccec77e9c37bdef0ed344de037917a2359d38064df9",
+                   "fingerprintFiles":  611,
+                   "fingerprintScope":  "Scanned production source plus audit scripts and exact exception registries; not catalogs or browser evidence"
+               },
+    "sourceFiles":  594,
+    "findings":  303,
+    "unreviewed":  0,
+    "errors":  0
+}
+EXIT 0
