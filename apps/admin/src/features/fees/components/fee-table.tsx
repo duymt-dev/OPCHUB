@@ -1,7 +1,7 @@
 'use client';
 
 import type { FeeRow } from '@opchub/shared/api-domains';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { FEE_TONE, rowActions, vnDate } from '../model';
 import styles from './fee-table.module.css';
 
@@ -51,6 +51,7 @@ function Row({
   onToggle: () => void;
   onAction: (a: RowAction) => void;
 }) {
+  const locale = useLocale();
   const t = useTranslations('fees');
   const can = rowActions(r.status);
   return (
@@ -78,7 +79,7 @@ function Row({
         {t(`type.${r.accountType}`)}
       </span>
       <span className={`${styles.td} ${styles.muted}`} role="cell">
-        {vnDate(r.joinedAt)}
+        {vnDate(r.joinedAt, locale)}
       </span>
       <div className={styles.td} role="cell">
         <span className={`${styles.tag} ${styles[FEE_TONE[r.status]]}`}>
@@ -86,10 +87,10 @@ function Row({
         </span>
       </div>
       <span className={styles.td} role="cell">
-        {vnDate(r.paidAt)}
+        {vnDate(r.paidAt, locale)}
       </span>
       <span className={`${styles.td} ${styles.strong}`} role="cell">
-        {vnDate(r.validUntil)}
+        {vnDate(r.validUntil, locale)}
       </span>
       <div className={styles.actions} role="cell">
         {can.collect ? (

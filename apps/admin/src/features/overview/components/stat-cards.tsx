@@ -1,7 +1,7 @@
 'use client';
 
 import { tones } from '@opchub/ui';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { formatCount, sparkPoints, statCards, STAT_TONES } from '../data';
 import { useOverview } from '../hooks/use-overview';
 import { useOverviewUrl } from '../hooks/use-overview-url';
@@ -9,6 +9,7 @@ import styles from './overview.module.css';
 
 export function StatCards() {
   const t = useTranslations('overview.stats');
+  const locale = useLocale();
   const { data } = useOverview();
   const custom = !!useOverviewUrl().params.from;
   return (
@@ -24,7 +25,7 @@ export function StatCards() {
             >
               <div className={styles.statLabel}>{t(s.key)}</div>
               <div className={styles.statRow}>
-                <div className={styles.statValue}>{formatCount(s.value)}</div>
+                <div className={styles.statValue}>{formatCount(s.value, locale)}</div>
                 <svg width="52" height="22" viewBox="0 0 52 22" aria-hidden="true">
                   <polyline
                     points={sparkPoints(s.spark)}
@@ -43,7 +44,12 @@ export function StatCards() {
                     : custom && s.key === 'fresh'
                       ? 'freshRangeDelta'
                       : `${s.key}Delta`,
-                  s.delta,
+                  Object.fromEntries(
+                    Object.entries(s.delta).map(([key, value]) => [
+                      key,
+                      typeof value === 'number' ? formatCount(value, locale) : value,
+                    ]),
+                  ),
                 )}
               </div>
             </div>

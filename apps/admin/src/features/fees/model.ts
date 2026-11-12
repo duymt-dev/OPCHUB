@@ -1,34 +1,28 @@
 import type { MembershipFeeStatus } from '@opchub/shared';
 import type { FeeRow } from '@opchub/shared/api-domains';
+import { formatCurrency, formatDate } from '@/i18n/format';
 
 /** Hiển thị: ngày theo giờ VN (luật 9), tiền VND số nguyên */
 
-const DATE_FMT = new Intl.DateTimeFormat('vi-VN', {
-  day: '2-digit',
-  month: '2-digit',
-  year: 'numeric',
-  timeZone: 'Asia/Ho_Chi_Minh',
-});
+export const vnDate = (iso: string | null, locale = 'vi') => formatDate(iso, locale);
 
-export const vnDate = (iso: string | null) => (iso ? DATE_FMT.format(new Date(iso)) : '—');
-
-const DATE_TIME_FMT = new Intl.DateTimeFormat('vi-VN', {
+const DATE_TIME_OPTIONS = {
   day: '2-digit',
   month: '2-digit',
   year: 'numeric',
   hour: '2-digit',
   minute: '2-digit',
   hour12: false,
-  timeZone: 'Asia/Ho_Chi_Minh',
-});
+} as const;
 
 /** Thời gian nhận giao dịch: "HH:mm dd/mm/yyyy" giờ VN (luật 9) */
-export const vnDateTime = (iso: string) => DATE_TIME_FMT.format(new Date(iso));
+export const vnDateTime = (iso: string, locale = 'vi') =>
+  formatDate(iso, locale, DATE_TIME_OPTIONS);
 
 /** Nút toolbar: số giao dịch trang đầu, "9+" khi còn nhiều hơn */
 export const txnBadge = (count: number, cap: number) => (count > cap ? `${cap}+` : String(count));
 
-export const vnd = (amount: number) => `${amount.toLocaleString('vi-VN')}đ`;
+export const vnd = (amount: number, locale = 'vi') => formatCurrency(amount, 'VND', locale);
 
 export type FeeTone = 'trial' | 'pending' | 'active' | 'soon' | 'expired' | 'gdv';
 

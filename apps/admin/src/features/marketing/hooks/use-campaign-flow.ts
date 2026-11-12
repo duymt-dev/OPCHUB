@@ -2,7 +2,7 @@
 
 import type { Campaign, CampaignSaveMode } from '@opchub/shared/api-domains';
 import { useQueryClient } from '@tanstack/react-query';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { fetchEstimate, marketingKeys } from '../api';
 import { duplicateForm, emptyCampaignForm, fmtN, formToCreate } from '../model';
@@ -14,6 +14,7 @@ import { useMarketingActions } from './use-marketing-actions';
  * luật 10) rồi mới gọi API.
  */
 export function useCampaignFlow() {
+  const locale = useLocale();
   const t = useTranslations('marketing.confirm');
   const act = useMarketingActions();
   const qc = useQueryClient();
@@ -48,7 +49,7 @@ export function useCampaignFlow() {
     }
     setConfirm({
       title: t('sendTitle'),
-      body: t('sendBody', { name: c.name, n: n === null ? '—' : fmtN(n) }),
+      body: t('sendBody', { name: c.name, n: n === null ? '—' : fmtN(n, locale) }),
       okLabel: t('sendOk'),
       cancelLabel: t('cancel'),
       danger: false,

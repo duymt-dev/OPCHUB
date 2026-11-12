@@ -9,6 +9,7 @@ import { Icon } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import styles from './needs.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 type Summary = AdminNeedList['summary'];
 
@@ -24,6 +25,7 @@ const countOf = (s: Summary | undefined, k: AdminNeedFilter) =>
 
 /** Prototype `aKpi`: Tổng nhu cầu · Đang mở · Đã đóng · Admin đã ẩn */
 export function NeedKpis({ s }: { s: Summary | undefined }) {
+  const numberText = useNumberText();
   const t = useTranslations('needs.kpi');
   return (
     <div className={styles.kpis}>
@@ -31,7 +33,7 @@ export function NeedKpis({ s }: { s: Summary | undefined }) {
         <div key={k} className={styles.kpi}>
           <span className={styles.kpiLabel}>{t(k)}</span>
           <b className={styles.kpiValue} style={{ color: c }}>
-            {s ? s[k] : '—'}
+            {s ? numberText(s[k]) : '—'}
           </b>
         </div>
       ))}
@@ -49,6 +51,7 @@ interface Props {
 
 /** Ô tìm (nhu cầu / gian hàng / tỉnh) + chip trạng thái kèm số + ghi chú (prototype `aFilters`) */
 export function NeedToolbar({ q, status, summary, onSearch, onStatus }: Props) {
+  const numberText = useNumberText();
   const t = useTranslations('needs');
   // Giữ chữ đang gõ tại chỗ; URL cập nhật cùng lúc (useUrlParams)
   const [text, setText] = useState(q);
@@ -78,7 +81,7 @@ export function NeedToolbar({ q, status, summary, onSearch, onStatus }: Props) {
             className={`${styles.chip} ${status === k ? styles.chipOn : ''}`}
             onClick={() => onStatus(k)}
           >
-            {t(`filter.${k}`)} {countOf(summary, k)}
+            {t(`filter.${k}`)} {numberText(countOf(summary, k))}
           </button>
         ))}
       </div>

@@ -1,0 +1,126 @@
+{
+  "shell": {
+    "navTitle": "ADMINISTRASI",
+    "search": "Cari...",
+    "notifications": "Notifikasi",
+    "menu": "Menu",
+    "back": "Beranda",
+    "collapse": "Ciutkan sidebar",
+    "expand": "Perluas sidebar",
+    "language": "Bahasa Indonesia",
+    "profile": "Profil pribadi",
+    "logout": "Keluar",
+    "brandTag": "ADMIN",
+    "upcoming": "Acara mendatang",
+    "viewAll": "Lihat semua",
+    "settings": "Pengaturan sistem",
+    "globalSearch": {
+      "placeholder": "Cari anggota, toko, kebutuhan, proyek, grup…",
+      "empty": "Tidak ada hasil",
+      "clear": "Hapus pencarian",
+      "hint": "Masukkan minimal 2 karakter untuk mencari...",
+      "emptyQuery": "Tidak ada hasil untuk ‘{query}’",
+      "loading": "Mencari…",
+      "failed": "Tidak dapat memuat hasil pencarian",
+      "groups": {
+        "store": "Toko",
+        "need": "Kebutuhan lokal",
+        "project": "Proyek OPC",
+        "group": "Grup komunitas",
+        "member": "Anggota"
+      },
+      "members": "{n} anggota"
+    }
+  },
+  "nav": {
+    "overview": "Ringkasan",
+    "members": "Anggota",
+    "fees": "Biaya keanggotaan",
+    "groups": "Grup komunitas",
+    "bots": "Bot interaksi",
+    "events": "Konten & Acara",
+    "needs": "Kebutuhan lokal",
+    "stores": "Toko",
+    "projects": "Proyek OPC",
+    "investors": "Investor",
+    "requests": "Layanan",
+    "affiliate": "Jaringan afiliasi",
+    "reports": "Laporan",
+    "marketing": "Pemasaran",
+    "settings": "Pengaturan sistem"
+  },
+  "navGroup": {
+    "people": "ANGGOTA & KOMUNITAS",
+    "business": "KONEKSI BISNIS",
+    "revenue": "PENDAPATAN & MITRA"
+  },
+  "role": {
+    "super_admin": "Admin Utama",
+    "admin": "Administrator",
+    "moderator": "Moderator",
+    "member": "Anggota"
+  },
+  "state": {
+    "loading": "Memuat…",
+    "error": "Gagal memuat data",
+    "retry": "Coba lagi",
+    "notFound": "Halaman tidak ditemukan"
+  },
+  "notifications": {
+    "title": "Notifikasi",
+    "markAll": "Tandai semua sudah dibaca",
+    "tabAll": "Semua",
+    "tabUnread": "Belum dibaca ({n})",
+    "empty": "Tidak ada notifikasi"
+  },
+  "ago": {
+    "now": "Baru saja",
+    "minutes": "{n} menit lalu",
+    "hours": "{n} jam lalu",
+    "days": "{n} hari lalu"
+  },
+  "errors": {
+    "fixFields": "Silakan periksa kolom yang ditandai",
+    "failed": "Tindakan gagal, silakan coba lagi"
+  },
+  "rbac": {
+    "viewOnly": "Mode lihat saja — peran <b>{role}</b> tidak dapat melakukan tindakan di bagian ini.",
+    "viewOnlyToast": "Peran {role} hanya dapat melihat bagian ini",
+    "preview": "Pratinjau Admin sebagai <b>{role}</b> — hanya menu yang diizinkan untuk peran ini yang ditampilkan.",
+    "previewExit": "Keluar dari pratinjau",
+    "forbiddenTitle": "Anda tidak memiliki izin untuk melihat bagian ini",
+    "forbiddenBody": "Peran Anda tidak diizinkan membuka bagian ini.",
+    "forbiddenBack": "Buka bagian yang diizinkan",
+    "twoFactor": "Aktifkan autentikasi dua faktor"
+  },
+  "adminProfile": {
+    "nameRequired": "Masukkan nama lengkap Anda",
+    "enabled": "Diaktifkan",
+    "name": "Nama lengkap",
+    "currentPassword": "Kata sandi saat ini",
+    "newPassword": "Kata sandi baru",
+    "passwordRule": "Minimal 8 karakter, termasuk huruf kapital dan angka",
+    "noRole": "Belum ada peran",
+    "security": "Keamanan & Peran",
+    "passwordSaved": "Kata sandi telah diperbarui",
+    "emailHint": "Email yang ditetapkan administrator",
+    "passwordTitle": "Ganti kata sandi",
+    "role": "Peran saat ini",
+    "changePassword": "Perbarui kata sandi",
+    "enable": "Aktifkan autentikasi dua faktor",
+    "email": "Email untuk masuk",
+    "failed": "Tidak dapat memperbarui. Silakan coba lagi",
+    "disabled": "Belum diaktifkan",
+    "save": "Simpan informasi",
+    "saved": "Informasi pribadi disimpan",
+    "personal": "Informasi pribadi",
+    "phone": "Nomor telepon",
+    "imageRule": "Gambar JPG/PNG/WebP, maksimal 5 MB",
+    "subtitle": "Kelola informasi pribadi dan keamanan akun administrator Anda",
+    "confirmPassword": "Konfirmasi kata sandi baru",
+    "upload": "Unggah foto baru",
+    "remove": "Hapus gambar",
+    "title": "Profil pribadi",
+    "twoFactor": "Autentikasi dua faktor (2FA)"
+  }
+}

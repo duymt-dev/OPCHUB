@@ -4,6 +4,8 @@ import styles from './pagination.module.css';
 import { clampPage, pageNumbers } from './page-numbers';
 
 export interface PaginationLabels {
+  /** Optional presentation only. Page identifiers and onChange always remain numbers. */
+  number?: (n: number) => string;
   /** Đơn vị sau tổng, vd "thành viên", "nhóm" */
   unit: string;
   prev: string;
@@ -95,7 +97,7 @@ export function Pagination({
             aria-current={n === page ? 'page' : undefined}
             onClick={() => go(n)}
           >
-            {n}
+            {labels.number ? labels.number(n) : n}
           </button>
         ),
       )}

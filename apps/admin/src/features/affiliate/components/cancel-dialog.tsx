@@ -6,8 +6,10 @@ import { useTranslations } from 'next-intl';
 import { useId, useState } from 'react';
 import { useAffiliateWrites } from '../hooks/use-affiliate-writes';
 import styles from './affiliate.module.css';
+import { useAdminUiLabels } from '@/i18n/ui-labels';
 
 export function CancelDialog({ ids, onClose }: { ids: string[]; onClose: () => void }) {
+  const ui = useAdminUiLabels();
   const t = useTranslations('affiliate');
   const [reason, setReason] = useState('');
   const { cancel } = useAffiliateWrites();
@@ -22,6 +24,7 @@ export function CancelDialog({ ids, onClose }: { ids: string[]; onClose: () => v
   };
   return (
     <Modal
+      closeLabel={ui.close}
       open
       title={t('cancelTitle')}
       onClose={onClose}

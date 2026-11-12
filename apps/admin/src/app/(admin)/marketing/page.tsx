@@ -1,7 +1,11 @@
+import { getTranslations } from 'next-intl/server';
 import type { Metadata } from 'next';
 import { MarketingScreen } from '@/features/marketing';
 
-export const metadata: Metadata = { title: 'Marketing · OPC Hub Admin' };
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('meta');
+  return { title: `${t('marketing')} · OPC Hub Admin` };
+}
 // Tab đọc từ URL ở client — không bọc Suspense (đồng hồ parity dừng thì fallback kẹt)
 export const dynamic = 'force-dynamic';
 

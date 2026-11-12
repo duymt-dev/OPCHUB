@@ -3,6 +3,7 @@
 import { affiliatePolicySchema, type AffiliatePolicy } from '@opchub/shared/api-domains';
 import { Form } from 'antd';
 import { fieldsOf } from '@/lib/api-errors';
+import { useSchemaFormErrors } from '@/i18n/use-schema-form-errors';
 import { useAffiliateWrites } from './use-affiliate-writes';
 
 const POLICY_FIELDS = [
@@ -17,28 +18,18 @@ const POLICY_FIELDS = [
 export function useAffiliatePolicyForm() {
   const [form] = Form.useForm<AffiliatePolicy>();
   const { policy } = useAffiliateWrites();
+  const errors = useSchemaFormErrors(form, POLICY_FIELDS);
   const submit = (values: AffiliatePolicy) => {
     const result = affiliatePolicySchema.safeParse(values);
     if (!result.success) {
-      form.setFields(
-        result.error.issues.flatMap((issue) => {
-          const key = issue.path[0];
-          const name = POLICY_FIELDS.find((name) => name === key);
-          return name ? [{ name, errors: [issue.message] }] : [];
-        }),
-      );
+      errors.local(result.error);
       return;
     }
+    errors.clear();
     policy.mutate(result.data, {
       onError: (error) => {
-        const errors = fieldsOf<keyof AffiliatePolicy>(error);
         // Only registered policy fields may receive server errors; keep the draft.
-        form.setFields(
-          POLICY_FIELDS.flatMap((name) => {
-            const message = errors[name];
-            return message ? [{ name, errors: [message] }] : [];
-          }),
-        );
+        errors.raw(fieldsOf<keyof AffiliatePolicy>(error));
       },
     });
   };

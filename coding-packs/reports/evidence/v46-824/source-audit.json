@@ -1,0 +1,3160 @@
+{
+  "status": "PASS",
+  "command": "node infra/scripts/audit-admin-i18n.mjs",
+  "source": {
+    "gitHead": "4b21efb4908a2a9c14672ec091ab9a6823cb989a",
+    "dirty": false,
+    "corpusSha256": "19650b6186ca64fbc78d369e8ff8b7c623a5bdd293422f06e071ff469ca8c984",
+    "fingerprintFiles": 615,
+    "fingerprintScope": "Scanned production source plus audit scripts and exact exception registries; not catalogs or browser evidence"
+  },
+  "sourceFiles": 597,
+  "excluded": [
+    "test/spec/declaration files",
+    "tests/__tests__/mocks/__mocks__ fixture directories"
+  ],
+  "durationMs": 27070,
+  "rows": [
+    {
+      "file": "apps/admin/src/app/(admin)/affiliate/[[...slug]]/page.tsx",
+      "kind": "human-literal",
+      "line": 8,
+      "text": "· OPC Hub Admin",
+      "start": 354,
+      "end": 372,
+      "disposition": "retained-contract",
+      "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+    },
+    {
+      "file": "apps/admin/src/app/(admin)/bots/[[...slug]]/page.tsx",
+      "kind": "human-literal",
+      "line": 7,
+      "text": "· OPC Hub Admin",
+      "start": 272,
+      "end": 290,
+      "disposition": "retained-contract",
+      "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+    },
+    {
+      "file": "apps/admin/src/app/(admin)/events/page.tsx",
+      "kind": "human-literal",
+      "line": 7,
+      "text": "· OPC Hub Admin",
+      "start": 278,
+      "end": 296,
+      "disposition": "retained-contract",
+      "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+    },
+    {
+      "file": "apps/admin/src/app/(admin)/fees/page.tsx",
+      "kind": "human-literal",
+      "line": 7,
+      "text": "· OPC Hub Admin",
+      "start": 272,
+      "end": 290,
+      "disposition": "retained-contract",
+      "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+    },
+    {
+      "file": "apps/admin/src/app/(admin)/fees/transactions/page.tsx",
+      "kind": "human-literal",
+      "line": 7,
+      "text": "· OPC Hub Admin",
+      "start": 291,
+      "end": 309,
+      "disposition": "retained-contract",
+      "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+    },
+    {
+      "file": "apps/admin/src/app/(admin)/groups/[id]/chat/page.tsx",
+      "kind": "human-literal",
+      "line": 7,
+      "text": "· OPC Hub Admin",
+      "start": 274,
+      "end": 292,
+      "disposition": "retained-contract",
+      "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+    },
+    {
+      "file": "apps/admin/src/app/(admin)/groups/page.tsx",
+      "kind": "human-literal",
+      "line": 7,
+      "text": "· OPC Hub Admin",
+      "start": 278,
+      "end": 296,
+      "disposition": "retained-contract",
+      "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+    },
+    {
+      "file": "apps/admin/src/app/(admin)/investors/page.tsx",
+      "kind": "human-literal",
+      "line": 7,
+      "text": "· OPC Hub Admin",
+      "start": 287,
+      "end": 305,
+      "disposition": "retained-contract",
+      "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+    },
+    {
+      "file": "apps/admin/src/app/(admin)/marketing/page.tsx",
+      "kind": "human-literal",
+      "line": 7,
+      "text": "· OPC Hub Admin",
+      "start": 287,
+      "end": 305,
+      "disposition": "retained-contract",
+      "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+    },
+    {
+      "file": "apps/admin/src/app/(admin)/members/page.tsx",
+      "kind": "human-literal",
+      "line": 7,
+      "text": "· OPC Hub Admin",
+      "start": 281,
+      "end": 299,
+      "disposition": "retained-contract",
+      "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+    },
+    {
+      "file": "apps/admin/src/app/(admin)/needs/page.tsx",
+      "kind": "human-literal",
+      "line": 7,
+      "text": "· OPC Hub Admin",
+      "start": 275,
+      "end": 293,
+      "disposition": "retained-contract",
+      "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+    },
+    {
+      "file": "apps/admin/src/app/(admin)/overview/page.tsx",
+      "kind": "human-literal",
+      "line": 7,
+      "text": "· OPC Hub Admin",
+      "start": 284,
+      "end": 302,
+      "disposition": "retained-contract",
+      "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+    },
+    {
+      "file": "apps/admin/src/app/(admin)/profile/page.tsx",
+      "kind": "human-literal",
+      "line": 10,
+      "text": "· OPC Hub Admin",
+      "start": 361,
+      "end": 379,
+      "disposition": "retained-contract",
+      "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+    },
+    {
+      "file": "apps/admin/src/app/(admin)/projects/[[...slug]]/page.tsx",
+      "kind": "human-literal",
+      "line": 7,
+      "text": "· OPC Hub Admin",
+      "start": 284,
+      "end": 302,
+      "disposition": "retained-contract",
+      "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+    },
+    {
+      "file": "apps/admin/src/app/(admin)/reports/page.tsx",
+      "kind": "human-literal",
+      "line": 7,
+      "text": "· OPC Hub Admin",
+      "start": 281,
+      "end": 299,
+      "disposition": "retained-contract",
+      "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+    },
+    {
+      "file": "apps/admin/src/app/(admin)/requests/[[...tab]]/page.tsx",
+      "kind": "human-literal",
+      "line": 7,
+      "text": "· OPC Hub Admin",
+      "start": 284,
+      "end": 302,
+      "disposition": "retained-contract",
+      "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+    },
+    {
+      "file": "apps/admin/src/app/(admin)/settings/page.tsx",
+      "kind": "human-literal",
+      "line": 7,
+      "text": "· OPC Hub Admin",
+      "start": 284,
+      "end": 302,
+      "disposition": "retained-contract",
+      "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+    },
+    {
+      "file": "apps/admin/src/app/(admin)/stores/page.tsx",
+      "kind": "human-literal",
+      "line": 7,
+      "text": "· OPC Hub Admin",
+      "start": 278,
+      "end": 296,
+      "disposition": "retained-contract",
+      "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+    },
+    {
+      "file": "apps/admin/src/app/(public)/first-password/page.tsx",
+      "kind": "human-literal",
+      "line": 7,
+      "text": "· OPC Hub Admin",
+      "start": 301,
+      "end": 319,
+      "disposition": "retained-contract",
+      "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+    },
+    {
+      "file": "apps/admin/src/app/(public)/forgot-password/page.tsx",
+      "kind": "human-literal",
+      "line": 8,
+      "text": "· OPC Hub Admin",
+      "start": 318,
+      "end": 336,
+      "disposition": "retained-contract",
+      "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+    },
+    {
+      "file": "apps/admin/src/app/(public)/login/page.tsx",
+      "kind": "human-literal",
+      "line": 8,
+      "text": "· OPC Hub Admin",
+      "start": 308,
+      "end": 326,
+      "disposition": "retained-contract",
+      "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+    },
+    {
+      "file": "apps/admin/src/app/(public)/reset-password/page.tsx",
+      "kind": "human-literal",
+      "line": 8,
+      "text": "· OPC Hub Admin",
+      "start": 316,
+      "end": 334,
+      "disposition": "retained-contract",
+      "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+    },
+    {
+      "file": "apps/admin/src/app/(public)/two-factor/page.tsx",
+      "kind": "human-literal",
+      "line": 7,
+      "text": "· OPC Hub Admin",
+      "start": 293,
+      "end": 311,
+      "disposition": "retained-contract",
+      "reason": "Required unchanged OPC Hub Admin metadata brand suffix; localized page title is composed separately."
+    },
+    {
+      "file": "apps/admin/src/app/layout.tsx",
+      "kind": "ui-literal",
+      "line": 16,
+      "text": "OPC Hub Admin",
+      "start": 703,
+      "end": 718,
+      "disposition": "retained-contract",
+      "reason": "Required unchanged root metadata brand title."
+    },
+    {
+      "file": "apps/admin/src/features/affiliate/components/affiliate-identity.tsx",
+      "kind": "enum-jsx",
+      "line": 41,
+      "text": "agent.bank.bankName",
+      "start": 1513,
+      "end": 1532,
+      "values": [
+        "Vietcombank",
+        "VietinBank",
+        "BIDV",
+        "Agribank",
+        "Techcombank",
+        "MB Bank",
+        "ACB",
+        "VPBank",
+        "Sacombank",
+        "TPBank",
+        "HDBank",
+        "VIB",
+        "SHB",
+        "OCB",
+        "MSB"
+      ],
+      "disposition": "retained-contract",
+      "reason": "Bank proper names from the fixed catalog; preserve bank identity and selected API values."
+    },
+    {
+      "file": "apps/admin/src/features/affiliate/components/agent-identity.tsx",
+      "kind": "enum-jsx",
+      "line": 24,
+      "text": "bank.bankName",
+      "start": 919,
+      "end": 932,
+      "values": [
+        "Vietcombank",
+        "VietinBank",
+        "BIDV",
+        "Agribank",
+        "Techcombank",
+        "MB Bank",
+        "ACB",
+        "VPBank",
+        "Sacombank",
+        "TPBank",
+        "HDBank",
+        "VIB",
+        "SHB",
+        "OCB",
+        "MSB"
+      ],
+      "disposition": "retained-contract",
+      "reason": "Bank proper names from the fixed catalog; preserve bank identity and selected API values."
+    },
+    {
+      "file": "apps/admin/src/features/affiliate/components/customer-payout-history.tsx",
+      "kind": "enum-jsx",
+      "line": 28,
+      "text": "row.bank.bankName",
+      "start": 1151,
+      "end": 1168,
+      "values": [
+        "Vietcombank",
+        "VietinBank",
+        "BIDV",
+        "Agribank",
+        "Techcombank",
+        "MB Bank",
+        "ACB",
+        "VPBank",
+        "Sacombank",
+        "TPBank",
+        "HDBank",
+        "VIB",
+        "SHB",
+        "OCB",
+        "MSB"
+      ],
+      "disposition": "retained-contract",
+      "reason": "Bank proper names from the fixed catalog; preserve bank identity and selected API values."
+    },
+    {
+      "file": "apps/admin/src/features/affiliate/components/customer-table-columns.tsx",
+      "kind": "human-literal",
+      "line": 19,
+      "text": "calc((100% - 382px) * 13 / 27)",
+      "start": 698,
+      "end": 730,
+      "disposition": "retained-contract",
+      "reason": "CSS column geometry, not user-facing words."
+    },
+    {
+      "file": "apps/admin/src/features/affiliate/components/customer-table-columns.tsx",
+      "kind": "human-literal",
+      "line": 53,
+      "text": "calc((100% - 382px) * 14 / 27)",
+      "start": 1700,
+      "end": 1732,
+      "disposition": "retained-contract",
+      "reason": "CSS column geometry, not user-facing words."
+    },
+    {
+      "file": "apps/admin/src/features/auth/components/login-screen.tsx",
+      "kind": "ui-literal",
+      "line": 25,
+      "text": "demoAdmin",
+      "start": 1071,
+      "end": 1082,
+      "disposition": "retained-contract",
+      "reason": "Descriptor translation key passed to t(label); the rendered demo action label is localized."
+    },
+    {
+      "file": "apps/admin/src/features/auth/components/login-screen.tsx",
+      "kind": "ui-literal",
+      "line": 26,
+      "text": "demoUser",
+      "start": 1136,
+      "end": 1146,
+      "disposition": "retained-contract",
+      "reason": "Descriptor translation key passed to t(label); the rendered demo action label is localized."
+    },
+    {
+      "file": "apps/admin/src/features/bots/components/persona-fields.tsx",
+      "kind": "human-literal",
+      "line": 16,
+      "text": "Nữ",
+      "start": 620,
+      "end": 624,
+      "disposition": "retained-contract",
+      "reason": "Canonical gender/parser value; select display uses translated option labels without modifying submitted values."
+    },
+    {
+      "file": "apps/admin/src/features/bots/components/persona-fields.tsx",
+      "kind": "human-literal",
+      "line": 16,
+      "text": "Khác",
+      "start": 634,
+      "end": 640,
+      "disposition": "retained-contract",
+      "reason": "Canonical gender/parser value; select display uses translated option labels without modifying submitted values."
+    },
+    {
+      "file": "apps/admin/src/features/bots/components/persona-fields.tsx",
+      "kind": "human-literal",
+      "line": 48,
+      "text": "Nam",
+      "start": 1506,
+      "end": 1511,
+      "disposition": "retained-contract",
+      "reason": "Canonical gender/parser value; select display uses translated option labels without modifying submitted values."
+    },
+    {
+      "file": "apps/admin/src/features/bots/components/persona-fields.tsx",
+      "kind": "human-literal",
+      "line": 49,
+      "text": "Nữ",
+      "start": 1554,
+      "end": 1558,
+      "disposition": "retained-contract",
+      "reason": "Canonical gender/parser value; select display uses translated option labels without modifying submitted values."
+    },
+    {
+      "file": "apps/admin/src/features/bots/components/persona-fields.tsx",
+      "kind": "human-literal",
+      "line": 50,
+      "text": "Khác",
+      "start": 1603,
+      "end": 1609,
+      "disposition": "retained-contract",
+      "reason": "Canonical gender/parser value; select display uses translated option labels without modifying submitted values."
+    },
+    {
+      "file": "apps/admin/src/features/bots/components/reply-heading.tsx",
+      "kind": "ui-literal",
+      "line": 24,
+      "text": "2-digit",
+      "start": 800,
+      "end": 809,
+      "disposition": "retained-contract",
+      "reason": "Intl date/time option or fixed display timezone, not a visible untranslated label."
+    },
+    {
+      "file": "apps/admin/src/features/bots/components/reply-heading.tsx",
+      "kind": "ui-literal",
+      "line": 25,
+      "text": "2-digit",
+      "start": 829,
+      "end": 838,
+      "disposition": "retained-contract",
+      "reason": "Intl date/time option or fixed display timezone, not a visible untranslated label."
+    },
+    {
+      "file": "apps/admin/src/features/bots/components/reply-heading.tsx",
+      "kind": "ui-literal",
+      "line": 26,
+      "text": "2-digit",
+      "start": 858,
+      "end": 867,
+      "disposition": "retained-contract",
+      "reason": "Intl date/time option or fixed display timezone, not a visible untranslated label."
+    },
+    {
+      "file": "apps/admin/src/features/bots/components/reply-heading.tsx",
+      "kind": "ui-literal",
+      "line": 27,
+      "text": "Asia/Ho_Chi_Minh",
+      "start": 889,
+      "end": 907,
+      "disposition": "retained-contract",
+      "reason": "Intl date/time option or fixed display timezone, not a visible untranslated label."
+    },
+    {
+      "file": "apps/admin/src/features/bots/components/script-lines.tsx",
+      "kind": "enum-jsx",
+      "line": 111,
+      "text": "b.ch",
+      "start": 3663,
+      "end": 3667,
+      "values": [
+        "↑",
+        "↓",
+        "×"
+      ],
+      "disposition": "retained-contract",
+      "reason": "Direction/remove glyph commands; accessible button titles are separately localized."
+    },
+    {
+      "file": "apps/admin/src/features/bots/hooks/use-bot-bulk.ts",
+      "kind": "human-literal",
+      "line": 24,
+      "text": "No bulk batch",
+      "start": 886,
+      "end": 901,
+      "disposition": "retained-contract",
+      "reason": "Internal disabled-query guard; errors are presented via localized generic fallback, not this diagnostic."
+    },
+    {
+      "file": "apps/admin/src/features/bots/model.ts",
+      "kind": "human-literal",
+      "line": 63,
+      "text": "8:00 – 22:00",
+      "start": 1809,
+      "end": 1823,
+      "disposition": "retained-contract",
+      "reason": "Canonical bot schema/default value used in payloads and prompts; presentation uses option-labels projections."
+    },
+    {
+      "file": "apps/admin/src/features/bots/model.ts",
+      "kind": "human-literal",
+      "line": 76,
+      "text": "Nữ",
+      "start": 2117,
+      "end": 2121,
+      "disposition": "retained-contract",
+      "reason": "Canonical bot schema/default value used in payloads and prompts; presentation uses option-labels projections."
+    },
+    {
+      "file": "apps/admin/src/features/bots/model.ts",
+      "kind": "human-literal",
+      "line": 76,
+      "text": "Khác",
+      "start": 2138,
+      "end": 2144,
+      "disposition": "retained-contract",
+      "reason": "Canonical bot schema/default value used in payloads and prompts; presentation uses option-labels projections."
+    },
+    {
+      "file": "apps/admin/src/features/bots/model.ts",
+      "kind": "human-literal",
+      "line": 121,
+      "text": "Hỏi đáp",
+      "start": 3457,
+      "end": 3466,
+      "disposition": "retained-contract",
+      "reason": "Canonical bot schema/default value used in payloads and prompts; presentation uses option-labels projections."
+    },
+    {
+      "file": "apps/admin/src/features/bots/types.ts",
+      "kind": "human-literal",
+      "line": 27,
+      "text": "Thân thiện, hay hỏi",
+      "start": 823,
+      "end": 844,
+      "disposition": "retained-contract",
+      "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+    },
+    {
+      "file": "apps/admin/src/features/bots/types.ts",
+      "kind": "human-literal",
+      "line": 28,
+      "text": "Thực tế, chia sẻ kinh nghiệm",
+      "start": 848,
+      "end": 878,
+      "disposition": "retained-contract",
+      "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+    },
+    {
+      "file": "apps/admin/src/features/bots/types.ts",
+      "kind": "human-literal",
+      "line": 29,
+      "text": "Chuyên gia, trả lời chi tiết",
+      "start": 882,
+      "end": 912,
+      "disposition": "retained-contract",
+      "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+    },
+    {
+      "file": "apps/admin/src/features/bots/types.ts",
+      "kind": "human-literal",
+      "line": 30,
+      "text": "Truyền cảm hứng",
+      "start": 916,
+      "end": 933,
+      "disposition": "retained-contract",
+      "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+    },
+    {
+      "file": "apps/admin/src/features/bots/types.ts",
+      "kind": "human-literal",
+      "line": 31,
+      "text": "Ngắn gọn, kỹ thuật",
+      "start": 937,
+      "end": 957,
+      "disposition": "retained-contract",
+      "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+    },
+    {
+      "file": "apps/admin/src/features/bots/types.ts",
+      "kind": "human-literal",
+      "line": 32,
+      "text": "Tò mò, mới bắt đầu",
+      "start": 961,
+      "end": 981,
+      "disposition": "retained-contract",
+      "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+    },
+    {
+      "file": "apps/admin/src/features/bots/types.ts",
+      "kind": "human-literal",
+      "line": 45,
+      "text": "18 – 24",
+      "start": 1189,
+      "end": 1198,
+      "disposition": "retained-contract",
+      "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+    },
+    {
+      "file": "apps/admin/src/features/bots/types.ts",
+      "kind": "human-literal",
+      "line": 45,
+      "text": "25 – 34",
+      "start": 1200,
+      "end": 1209,
+      "disposition": "retained-contract",
+      "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+    },
+    {
+      "file": "apps/admin/src/features/bots/types.ts",
+      "kind": "human-literal",
+      "line": 45,
+      "text": "35 – 44",
+      "start": 1211,
+      "end": 1220,
+      "disposition": "retained-contract",
+      "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+    },
+    {
+      "file": "apps/admin/src/features/bots/types.ts",
+      "kind": "human-literal",
+      "line": 45,
+      "text": "45 – 54",
+      "start": 1222,
+      "end": 1231,
+      "disposition": "retained-contract",
+      "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+    },
+    {
+      "file": "apps/admin/src/features/bots/types.ts",
+      "kind": "human-literal",
+      "line": 46,
+      "text": "Nam",
+      "start": 1274,
+      "end": 1279,
+      "disposition": "retained-contract",
+      "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+    },
+    {
+      "file": "apps/admin/src/features/bots/types.ts",
+      "kind": "human-literal",
+      "line": 46,
+      "text": "Nữ",
+      "start": 1281,
+      "end": 1285,
+      "disposition": "retained-contract",
+      "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+    },
+    {
+      "file": "apps/admin/src/features/bots/types.ts",
+      "kind": "human-literal",
+      "line": 46,
+      "text": "Khác",
+      "start": 1287,
+      "end": 1293,
+      "disposition": "retained-contract",
+      "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+    },
+    {
+      "file": "apps/admin/src/features/bots/types.ts",
+      "kind": "human-literal",
+      "line": 48,
+      "text": "8:00 – 22:00",
+      "start": 1337,
+      "end": 1351,
+      "disposition": "retained-contract",
+      "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+    },
+    {
+      "file": "apps/admin/src/features/bots/types.ts",
+      "kind": "human-literal",
+      "line": 49,
+      "text": "8:00 – 12:00",
+      "start": 1355,
+      "end": 1369,
+      "disposition": "retained-contract",
+      "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+    },
+    {
+      "file": "apps/admin/src/features/bots/types.ts",
+      "kind": "human-literal",
+      "line": 50,
+      "text": "12:00 – 18:00",
+      "start": 1373,
+      "end": 1388,
+      "disposition": "retained-contract",
+      "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+    },
+    {
+      "file": "apps/admin/src/features/bots/types.ts",
+      "kind": "human-literal",
+      "line": 51,
+      "text": "18:00 – 23:00",
+      "start": 1392,
+      "end": 1407,
+      "disposition": "retained-contract",
+      "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+    },
+    {
+      "file": "apps/admin/src/features/bots/types.ts",
+      "kind": "human-literal",
+      "line": 52,
+      "text": "Cả ngày",
+      "start": 1411,
+      "end": 1420,
+      "disposition": "retained-contract",
+      "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+    },
+    {
+      "file": "apps/admin/src/features/bots/types.ts",
+      "kind": "human-literal",
+      "line": 55,
+      "text": "Hỏi đáp",
+      "start": 1466,
+      "end": 1475,
+      "disposition": "retained-contract",
+      "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+    },
+    {
+      "file": "apps/admin/src/features/bots/types.ts",
+      "kind": "human-literal",
+      "line": 56,
+      "text": "Thảo luận",
+      "start": 1479,
+      "end": 1490,
+      "disposition": "retained-contract",
+      "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+    },
+    {
+      "file": "apps/admin/src/features/bots/types.ts",
+      "kind": "human-literal",
+      "line": 57,
+      "text": "Chia sẻ kinh nghiệm",
+      "start": 1494,
+      "end": 1515,
+      "disposition": "retained-contract",
+      "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+    },
+    {
+      "file": "apps/admin/src/features/bots/types.ts",
+      "kind": "human-literal",
+      "line": 58,
+      "text": "Giới thiệu sự kiện / dự án",
+      "start": 1519,
+      "end": 1547,
+      "disposition": "retained-contract",
+      "reason": "Canonical bot preset/prompt/API value; option-labels translates known tone/gender/hour/script labels and formats age digits while preserving custom content and values."
+    },
+    {
+      "file": "apps/admin/src/features/events/components/events-screen.tsx",
+      "kind": "ui-literal",
+      "line": 104,
+      "text": "Admin · Nội dung & Sự kiện",
+      "start": 3459,
+      "end": 3487,
+      "disposition": "retained-contract",
+      "reason": "Stable non-visible data-screen-label instrumentation/test locator; visible heading uses translations. Not an aria/title/placeholder."
+    },
+    {
+      "file": "apps/admin/src/features/events/model.ts",
+      "kind": "ui-literal",
+      "line": 146,
+      "text": "title",
+      "start": 4689,
+      "end": 4696,
+      "disposition": "retained-contract",
+      "reason": "Validation field marker mapped to a localized error, not visible error text."
+    },
+    {
+      "file": "apps/admin/src/features/fees/components/fee-table.tsx",
+      "kind": "enum-jsx",
+      "line": 21,
+      "text": "mark",
+      "start": 615,
+      "end": 619,
+      "values": [
+        "",
+        "✓",
+        "–"
+      ],
+      "disposition": "retained-contract",
+      "reason": "Selection-state glyphs; not translatable words."
+    },
+    {
+      "file": "apps/admin/src/features/groups/components/report-card.tsx",
+      "kind": "ui-literal",
+      "line": 87,
+      "text": "AI ·",
+      "start": 3001,
+      "end": 3009,
+      "disposition": "retained-contract",
+      "reason": "Locale-independent AI acronym and separator."
+    },
+    {
+      "file": "apps/admin/src/features/groups/model.ts",
+      "kind": "human-literal",
+      "line": 85,
+      "text": "Tôn trọng thành viên, không công kích cá nhân",
+      "start": 3093,
+      "end": 3140,
+      "disposition": "retained-contract",
+      "reason": "Editable Vietnamese group-rule content persisted/submitted unchanged; not Admin chrome."
+    },
+    {
+      "file": "apps/admin/src/features/groups/model.ts",
+      "kind": "human-literal",
+      "line": 86,
+      "text": "Không spam, quảng cáo khi chưa được phép",
+      "start": 3144,
+      "end": 3186,
+      "disposition": "retained-contract",
+      "reason": "Editable Vietnamese group-rule content persisted/submitted unchanged; not Admin chrome."
+    },
+    {
+      "file": "apps/admin/src/features/groups/model.ts",
+      "kind": "human-literal",
+      "line": 87,
+      "text": "Không chia sẻ thông tin cá nhân nhạy cảm của người khác",
+      "start": 3190,
+      "end": 3247,
+      "disposition": "retained-contract",
+      "reason": "Editable Vietnamese group-rule content persisted/submitted unchanged; not Admin chrome."
+    },
+    {
+      "file": "apps/admin/src/features/groups/model.ts",
+      "kind": "ui-literal",
+      "line": 163,
+      "text": "description",
+      "start": 5740,
+      "end": 5753,
+      "disposition": "retained-contract",
+      "reason": "Validation field marker mapped to a localized error, not visible error text."
+    },
+    {
+      "file": "apps/admin/src/features/groups/model.ts",
+      "kind": "human-literal",
+      "line": 240,
+      "text": "<html><head><meta charset=\"utf-8\"></head><body><table border=\"1\">",
+      "start": 8040,
+      "end": 8108,
+      "disposition": "retained-contract",
+      "reason": "Excel export markup bytes remain unchanged under the export contract; not rendered Admin chrome."
+    },
+    {
+      "file": "apps/admin/src/features/groups/types.ts",
+      "kind": "human-literal",
+      "line": 13,
+      "text": "Miền Bắc",
+      "start": 522,
+      "end": 532,
+      "disposition": "retained-contract",
+      "reason": "Canonical region name/lookup key; rendered region labels use the translated domain projection and API values remain unchanged."
+    },
+    {
+      "file": "apps/admin/src/features/groups/types.ts",
+      "kind": "human-literal",
+      "line": 13,
+      "text": "Miền Trung",
+      "start": 534,
+      "end": 546,
+      "disposition": "retained-contract",
+      "reason": "Canonical region name/lookup key; rendered region labels use the translated domain projection and API values remain unchanged."
+    },
+    {
+      "file": "apps/admin/src/features/groups/types.ts",
+      "kind": "human-literal",
+      "line": 13,
+      "text": "Miền Nam",
+      "start": 548,
+      "end": 558,
+      "disposition": "retained-contract",
+      "reason": "Canonical region name/lookup key; rendered region labels use the translated domain projection and API values remain unchanged."
+    },
+    {
+      "file": "apps/admin/src/features/investors/components/investors-screen.tsx",
+      "kind": "ui-literal",
+      "line": 36,
+      "text": "Admin · Nhà đầu tư",
+      "start": 1580,
+      "end": 1600,
+      "disposition": "retained-contract",
+      "reason": "Stable non-visible data-screen-label instrumentation/test locator; visible heading uses translations. Not an aria/title/placeholder."
+    },
+    {
+      "file": "apps/admin/src/features/marketing/components/campaign-form-fields.tsx",
+      "kind": "enum-jsx",
+      "line": 193,
+      "text": "v",
+      "start": 6037,
+      "end": 6038,
+      "values": [
+        "{{ten}}",
+        "{{email}}",
+        "{{nhom}}",
+        "{{link_dang_nhap}}"
+      ],
+      "disposition": "retained-contract",
+      "reason": "Immutable email-template variable syntax; never translate token bytes."
+    },
+    {
+      "file": "apps/admin/src/features/marketing/components/marketing-screen.tsx",
+      "kind": "ui-literal",
+      "line": 52,
+      "text": "Admin · Marketing",
+      "start": 2012,
+      "end": 2031,
+      "disposition": "retained-contract",
+      "reason": "Stable non-visible data-screen-label instrumentation/test locator; visible heading uses translations. Not an aria/title/placeholder."
+    },
+    {
+      "file": "apps/admin/src/features/marketing/components/onboarding-mail.tsx",
+      "kind": "enum-jsx",
+      "line": 60,
+      "text": "v",
+      "start": 2090,
+      "end": 2091,
+      "values": [
+        "link",
+        "ten",
+        "con_thieu"
+      ],
+      "disposition": "retained-contract",
+      "reason": "Immutable email-template variable names; never translate token bytes."
+    },
+    {
+      "file": "apps/admin/src/features/marketing/components/regional-mail-list.tsx",
+      "kind": "ui-literal",
+      "line": 18,
+      "text": "EM-GDV",
+      "start": 627,
+      "end": 633,
+      "disposition": "retained-contract",
+      "reason": "Stable email-template ID prefix, not translatable chrome."
+    },
+    {
+      "file": "apps/admin/src/features/marketing/components/regional-mail-list.tsx",
+      "kind": "ui-literal",
+      "line": 21,
+      "text": "{vùng}",
+      "start": 813,
+      "end": 821,
+      "disposition": "retained-contract",
+      "reason": "Canonical email-template variable placeholder; preserve token bytes."
+    },
+    {
+      "file": "apps/admin/src/features/marketing/components/welcome-preview.tsx",
+      "kind": "ui-literal",
+      "line": 25,
+      "text": "OPC Hub",
+      "start": 966,
+      "end": 975,
+      "disposition": "retained-contract",
+      "reason": "Locale-independent OPC Hub brand identity."
+    },
+    {
+      "file": "apps/admin/src/features/marketing/components/welcome-preview.tsx",
+      "kind": "numeric-jsx",
+      "line": 36,
+      "text": "i + 1",
+      "start": 1427,
+      "end": 1432,
+      "disposition": "retained-contract",
+      "reason": "Number inside actual Vietnamese outgoing email preview content; preserve email bytes and content contract, not Admin chrome."
+    },
+    {
+      "file": "apps/admin/src/features/marketing/model.ts",
+      "kind": "human-literal",
+      "line": 113,
+      "text": "(bản sao)",
+      "start": 3569,
+      "end": 3581,
+      "disposition": "retained-contract",
+      "reason": "Editable duplicate-campaign name suffix carried in domain data; content and payload remain unchanged."
+    },
+    {
+      "file": "apps/admin/src/features/members/components/member-drawer.tsx",
+      "kind": "ui-literal",
+      "line": 37,
+      "text": "reject",
+      "start": 1324,
+      "end": 1332,
+      "disposition": "retained-contract",
+      "reason": "Internal dialog action discriminator; visible title/buttons use translated messages."
+    },
+    {
+      "file": "apps/admin/src/features/members/components/members-screen.tsx",
+      "kind": "ui-literal",
+      "line": 32,
+      "text": "Admin · Thành viên",
+      "start": 1166,
+      "end": 1186,
+      "disposition": "retained-contract",
+      "reason": "Stable non-visible data-screen-label instrumentation/test locator; visible heading uses translations. Not an aria/title/placeholder."
+    },
+    {
+      "file": "apps/admin/src/features/needs/components/needs-screen.tsx",
+      "kind": "ui-literal",
+      "line": 44,
+      "text": "Admin · Nhu cầu địa phương",
+      "start": 1546,
+      "end": 1574,
+      "disposition": "retained-contract",
+      "reason": "Stable non-visible data-screen-label instrumentation/test locator; visible heading uses translations. Not an aria/title/placeholder."
+    },
+    {
+      "file": "apps/admin/src/features/overview/hooks/overview-range.ts",
+      "kind": "ui-literal",
+      "line": 31,
+      "text": "Hôm nay",
+      "start": 1024,
+      "end": 1033,
+      "disposition": "retained-contract",
+      "reason": "Pure D-140 preset fallback contract; actual Admin controls supply locale-specific presetLabels. Date range calculations are unchanged."
+    },
+    {
+      "file": "apps/admin/src/features/overview/hooks/overview-range.ts",
+      "kind": "ui-literal",
+      "line": 32,
+      "text": "7 ngày qua",
+      "start": 1073,
+      "end": 1085,
+      "disposition": "retained-contract",
+      "reason": "Pure D-140 preset fallback contract; actual Admin controls supply locale-specific presetLabels. Date range calculations are unchanged."
+    },
+    {
+      "file": "apps/admin/src/features/overview/hooks/overview-range.ts",
+      "kind": "ui-literal",
+      "line": 33,
+      "text": "30 ngày qua",
+      "start": 1125,
+      "end": 1138,
+      "disposition": "retained-contract",
+      "reason": "Pure D-140 preset fallback contract; actual Admin controls supply locale-specific presetLabels. Date range calculations are unchanged."
+    },
+    {
+      "file": "apps/admin/src/features/overview/hooks/overview-range.ts",
+      "kind": "ui-literal",
+      "line": 35,
+      "text": "Tháng này",
+      "start": 1185,
+      "end": 1196,
+      "disposition": "retained-contract",
+      "reason": "Pure D-140 preset fallback contract; actual Admin controls supply locale-specific presetLabels. Date range calculations are unchanged."
+    },
+    {
+      "file": "apps/admin/src/features/overview/hooks/overview-range.ts",
+      "kind": "ui-literal",
+      "line": 39,
+      "text": "Tháng trước",
+      "start": 1308,
+      "end": 1321,
+      "disposition": "retained-contract",
+      "reason": "Pure D-140 preset fallback contract; actual Admin controls supply locale-specific presetLabels. Date range calculations are unchanged."
+    },
+    {
+      "file": "apps/admin/src/features/projects/components/projects-screen.tsx",
+      "kind": "ui-literal",
+      "line": 63,
+      "text": "Admin · Dự án",
+      "start": 2161,
+      "end": 2176,
+      "disposition": "retained-contract",
+      "reason": "Stable non-visible data-screen-label instrumentation/test locator; visible heading uses translations. Not an aria/title/placeholder."
+    },
+    {
+      "file": "apps/admin/src/features/projects/types.ts",
+      "kind": "human-literal",
+      "line": 39,
+      "text": "Thiếu thông tin mô tả",
+      "start": 1257,
+      "end": 1280,
+      "disposition": "retained-contract",
+      "reason": "Canonical rejection reason submitted unchanged; useRejectionLabels projects only known display labels and preserves custom content."
+    },
+    {
+      "file": "apps/admin/src/features/projects/types.ts",
+      "kind": "human-literal",
+      "line": 40,
+      "text": "Ảnh bìa không phù hợp",
+      "start": 1284,
+      "end": 1307,
+      "disposition": "retained-contract",
+      "reason": "Canonical rejection reason submitted unchanged; useRejectionLabels projects only known display labels and preserves custom content."
+    },
+    {
+      "file": "apps/admin/src/features/projects/types.ts",
+      "kind": "human-literal",
+      "line": 41,
+      "text": "Nội dung quảng cáo / spam",
+      "start": 1311,
+      "end": 1338,
+      "disposition": "retained-contract",
+      "reason": "Canonical rejection reason submitted unchanged; useRejectionLabels projects only known display labels and preserves custom content."
+    },
+    {
+      "file": "apps/admin/src/features/projects/types.ts",
+      "kind": "human-literal",
+      "line": 42,
+      "text": "Vi phạm nội quy cộng đồng",
+      "start": 1342,
+      "end": 1369,
+      "disposition": "retained-contract",
+      "reason": "Canonical rejection reason submitted unchanged; useRejectionLabels projects only known display labels and preserves custom content."
+    },
+    {
+      "file": "apps/admin/src/features/projects/types.ts",
+      "kind": "human-literal",
+      "line": 43,
+      "text": "Trùng lặp dự án đã có",
+      "start": 1373,
+      "end": 1396,
+      "disposition": "retained-contract",
+      "reason": "Canonical rejection reason submitted unchanged; useRejectionLabels projects only known display labels and preserves custom content."
+    },
+    {
+      "file": "apps/admin/src/features/reports/components/reports-screen.tsx",
+      "kind": "ui-literal",
+      "line": 32,
+      "text": "Admin · Báo cáo",
+      "start": 1386,
+      "end": 1403,
+      "disposition": "retained-contract",
+      "reason": "Stable non-visible data-screen-label instrumentation/test locator; visible heading uses translations. Not an aria/title/placeholder."
+    },
+    {
+      "file": "apps/admin/src/features/requests/components/requests-screen.tsx",
+      "kind": "ui-literal",
+      "line": 41,
+      "text": "Admin · Yêu cầu dịch vụ",
+      "start": 1797,
+      "end": 1822,
+      "disposition": "retained-contract",
+      "reason": "Stable non-visible data-screen-label instrumentation/test locator; visible heading uses translations. Not an aria/title/placeholder."
+    },
+    {
+      "file": "apps/admin/src/features/requests/model.ts",
+      "kind": "human-literal",
+      "line": 22,
+      "text": "Lê Minh Châu",
+      "start": 770,
+      "end": 784,
+      "disposition": "retained-contract",
+      "reason": "Assignee identity/proper name in domain data, never translate identity content."
+    },
+    {
+      "file": "apps/admin/src/features/requests/model.ts",
+      "kind": "human-literal",
+      "line": 23,
+      "text": "Phạm Thu Hà",
+      "start": 794,
+      "end": 807,
+      "disposition": "retained-contract",
+      "reason": "Assignee identity/proper name in domain data, never translate identity content."
+    },
+    {
+      "file": "apps/admin/src/features/requests/model.ts",
+      "kind": "human-literal",
+      "line": 24,
+      "text": "Trần Đức Anh",
+      "start": 817,
+      "end": 831,
+      "disposition": "retained-contract",
+      "reason": "Assignee identity/proper name in domain data, never translate identity content."
+    },
+    {
+      "file": "apps/admin/src/features/settings/components/ai/ai-call-log.tsx",
+      "kind": "ui-literal",
+      "line": 50,
+      "text": "VND",
+      "start": 1602,
+      "end": 1607,
+      "disposition": "retained-contract",
+      "reason": "Currency code; amounts are localized without currency conversion."
+    },
+    {
+      "file": "apps/admin/src/features/settings/components/ai/ai-provider-detail.tsx",
+      "kind": "ui-literal",
+      "line": 42,
+      "text": "numeric",
+      "start": 1808,
+      "end": 1817,
+      "disposition": "retained-contract",
+      "reason": "Intl.DateTimeFormat option value, not a visible untranslated label."
+    },
+    {
+      "file": "apps/admin/src/features/settings/components/ai/ai-provider-detail.tsx",
+      "kind": "ui-literal",
+      "line": 42,
+      "text": "numeric",
+      "start": 1826,
+      "end": 1835,
+      "disposition": "retained-contract",
+      "reason": "Intl.DateTimeFormat option value, not a visible untranslated label."
+    },
+    {
+      "file": "apps/admin/src/features/settings/components/ai/ai-provider-detail.tsx",
+      "kind": "ui-literal",
+      "line": 42,
+      "text": "numeric",
+      "start": 1842,
+      "end": 1851,
+      "disposition": "retained-contract",
+      "reason": "Intl.DateTimeFormat option value, not a visible untranslated label."
+    },
+    {
+      "file": "apps/admin/src/features/settings/components/ai/ai-provider-detail.tsx",
+      "kind": "ui-literal",
+      "line": 42,
+      "text": "numeric",
+      "start": 1859,
+      "end": 1868,
+      "disposition": "retained-contract",
+      "reason": "Intl.DateTimeFormat option value, not a visible untranslated label."
+    },
+    {
+      "file": "apps/admin/src/features/settings/components/ai/ai-provider-detail.tsx",
+      "kind": "ui-literal",
+      "line": 42,
+      "text": "2-digit",
+      "start": 1878,
+      "end": 1887,
+      "disposition": "retained-contract",
+      "reason": "Intl.DateTimeFormat option value, not a visible untranslated label."
+    },
+    {
+      "file": "apps/admin/src/features/settings/components/ai/ai-provider-detail.tsx",
+      "kind": "ui-literal",
+      "line": 42,
+      "text": "2-digit",
+      "start": 1897,
+      "end": 1906,
+      "disposition": "retained-contract",
+      "reason": "Intl.DateTimeFormat option value, not a visible untranslated label."
+    },
+    {
+      "file": "apps/admin/src/features/settings/components/ai/ai-provider-detail.tsx",
+      "kind": "ui-literal",
+      "line": 42,
+      "text": "h23",
+      "start": 1919,
+      "end": 1924,
+      "disposition": "retained-contract",
+      "reason": "Intl.DateTimeFormat option value, not a visible untranslated label."
+    },
+    {
+      "file": "apps/admin/src/features/settings/components/ai/ai-provider-detail.tsx",
+      "kind": "enum-jsx",
+      "line": 23,
+      "text": "catalog.initials",
+      "start": 1139,
+      "end": 1155,
+      "values": [
+        "D",
+        "G",
+        "+",
+        "A",
+        "O",
+        "U"
+      ],
+      "disposition": "retained-contract",
+      "reason": "Provider brand monograms, not translatable names."
+    },
+    {
+      "file": "apps/admin/src/features/settings/components/ai/ai-provider-fields.tsx",
+      "kind": "ui-literal",
+      "line": 74,
+      "text": "https://…/v1",
+      "start": 2569,
+      "end": 2583,
+      "disposition": "retained-contract",
+      "reason": "Canonical endpoint URL example, not translatable prose."
+    },
+    {
+      "file": "apps/admin/src/features/settings/components/ai/ai-provider-fields.tsx",
+      "kind": "enum-jsx",
+      "line": 25,
+      "text": "catalog.keyHint",
+      "start": 978,
+      "end": 993,
+      "values": [
+        "sk-ant-…",
+        "sk-…",
+        "AIza…",
+        "usg_…",
+        "API key"
+      ],
+      "disposition": "retained-contract",
+      "reason": "Canonical provider key-prefix examples; the custom provider branch displays translated key. Preserve all actual provider-prefix bytes."
+    },
+    {
+      "file": "apps/admin/src/features/settings/components/ai/ai-provider-fields.tsx",
+      "kind": "enum-jsx",
+      "line": 65,
+      "text": "m",
+      "start": 2395,
+      "end": 2396,
+      "values": [
+        "auto",
+        "claude-sonnet-5-5",
+        "claude-opus-5-5",
+        "claude-haiku-5-5",
+        "gpt-4.1",
+        "gpt-4.1-mini",
+        "gpt-4o",
+        "gemini-3.8-flash",
+        "gemini-3.5-flash-lite",
+        "gemini-4-argon",
+        "deepseek-flash",
+        "deepseek-v4-pro"
+      ],
+      "disposition": "retained-contract",
+      "reason": "Stable AI model IDs used by provider APIs; never translate model identifiers."
+    },
+    {
+      "file": "apps/admin/src/features/settings/components/ai/ai-provider-grid.tsx",
+      "kind": "enum-jsx",
+      "line": 24,
+      "text": "c.initials",
+      "start": 959,
+      "end": 969,
+      "values": [
+        "D",
+        "G",
+        "+",
+        "A",
+        "O",
+        "U"
+      ],
+      "disposition": "retained-contract",
+      "reason": "Provider brand monograms, not translatable names."
+    },
+    {
+      "file": "apps/admin/src/features/settings/components/logo-picker.tsx",
+      "kind": "ui-literal",
+      "line": 43,
+      "text": "OPC HUB",
+      "start": 1358,
+      "end": 1367,
+      "disposition": "retained-contract",
+      "reason": "Locale-independent OPC Hub brand identity."
+    },
+    {
+      "file": "apps/admin/src/features/settings/components/smtp-tab.tsx",
+      "kind": "ui-literal",
+      "line": 28,
+      "text": "B",
+      "start": 903,
+      "end": 913,
+      "disposition": "retained-contract",
+      "reason": "Brevo provider monogram; stable brand identity."
+    },
+    {
+      "file": "apps/admin/src/features/settings/components/welcome-preview.tsx",
+      "kind": "ui-literal",
+      "line": 26,
+      "text": "OPC Hub",
+      "start": 1082,
+      "end": 1091,
+      "disposition": "retained-contract",
+      "reason": "Locale-independent OPC Hub brand identity."
+    },
+    {
+      "file": "apps/admin/src/features/settings/components/welcome-preview.tsx",
+      "kind": "numeric-jsx",
+      "line": 50,
+      "text": "i + 1",
+      "start": 2318,
+      "end": 2323,
+      "disposition": "retained-contract",
+      "reason": "Number inside actual Vietnamese outgoing email preview content; preserve email bytes and content contract, not Admin chrome."
+    },
+    {
+      "file": "apps/admin/src/features/settings/hooks/use-ai-calls.ts",
+      "kind": "human-literal",
+      "line": 42,
+      "text": "export failed",
+      "start": 1606,
+      "end": 1621,
+      "disposition": "retained-contract",
+      "reason": "Internal export failure sentinel; onError always renders translated exportFailed."
+    },
+    {
+      "file": "apps/admin/src/features/settings/hooks/use-app-notify-device.ts",
+      "kind": "human-literal",
+      "line": 27,
+      "text": "(display-mode: standalone)",
+      "start": 1192,
+      "end": 1220,
+      "disposition": "retained-contract",
+      "reason": "Browser CSS media query/API property name, not a visible untranslated label."
+    },
+    {
+      "file": "apps/admin/src/features/settings/hooks/use-app-notify-device.ts",
+      "kind": "human-literal",
+      "line": 28,
+      "text": "Notification",
+      "start": 1253,
+      "end": 1267,
+      "disposition": "retained-contract",
+      "reason": "Browser CSS media query/API property name, not a visible untranslated label."
+    },
+    {
+      "file": "apps/admin/src/features/settings/hooks/use-smtp.ts",
+      "kind": "human-literal",
+      "line": 37,
+      "text": "OPC Hub",
+      "start": 1060,
+      "end": 1069,
+      "disposition": "retained-contract",
+      "reason": "Fallback outgoing email sender identity/content, not Admin chrome."
+    },
+    {
+      "file": "apps/admin/src/features/stores/components/stores-screen.tsx",
+      "kind": "ui-literal",
+      "line": 43,
+      "text": "Admin · Gian hàng",
+      "start": 1538,
+      "end": 1557,
+      "disposition": "retained-contract",
+      "reason": "Stable non-visible data-screen-label instrumentation/test locator; visible heading uses translations. Not an aria/title/placeholder."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 8,
+      "text": "/ pahina",
+      "start": 312,
+      "end": 322,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 9,
+      "text": "Pumunta sa",
+      "start": 335,
+      "end": 347,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 11,
+      "text": "Pahina",
+      "start": 383,
+      "end": 391,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 12,
+      "text": "Nakaraang pahina",
+      "start": 412,
+      "end": 430,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 13,
+      "text": "Susunod na pahina",
+      "start": 447,
+      "end": 466,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 14,
+      "text": "Nakaraang 5 pahina",
+      "start": 490,
+      "end": 510,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 15,
+      "text": "Susunod na 5 pahina",
+      "start": 530,
+      "end": 551,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 16,
+      "text": "Nakaraang 3 pahina",
+      "start": 575,
+      "end": 595,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 17,
+      "text": "Susunod na 3 pahina",
+      "start": 615,
+      "end": 636,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 18,
+      "text": "Laki ng pahina",
+      "start": 653,
+      "end": 669,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 19,
+      "text": "Pumili ng petsa",
+      "start": 688,
+      "end": 705,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 20,
+      "text": "Pumili ng taon",
+      "start": 724,
+      "end": 740,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 21,
+      "text": "Pumili ng kuwarter",
+      "start": 762,
+      "end": 782,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 22,
+      "text": "Pumili ng buwan",
+      "start": 802,
+      "end": 819,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 23,
+      "text": "Pumili ng linggo",
+      "start": 838,
+      "end": 856,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 24,
+      "text": "Petsa ng simula",
+      "start": 874,
+      "end": 891,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 25,
+      "text": "Petsa ng pagtatapos",
+      "start": 907,
+      "end": 928,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 26,
+      "text": "Taon ng simula",
+      "start": 946,
+      "end": 962,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 27,
+      "text": "Taon ng pagtatapos",
+      "start": 978,
+      "end": 998,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 28,
+      "text": "Kuwarter ng simula",
+      "start": 1019,
+      "end": 1039,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 29,
+      "text": "Kuwarter ng pagtatapos",
+      "start": 1058,
+      "end": 1082,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 30,
+      "text": "Buwan ng simula",
+      "start": 1101,
+      "end": 1118,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 31,
+      "text": "Buwan ng pagtatapos",
+      "start": 1135,
+      "end": 1156,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 32,
+      "text": "Linggo ng simula",
+      "start": 1174,
+      "end": 1192,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 33,
+      "text": "Linggo ng pagtatapos",
+      "start": 1208,
+      "end": 1230,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 34,
+      "text": "Ngayon",
+      "start": 1241,
+      "end": 1249,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 35,
+      "text": "Sa ngayon",
+      "start": 1258,
+      "end": 1269,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 36,
+      "text": "Bumalik sa araw na ito",
+      "start": 1290,
+      "end": 1314,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 37,
+      "text": "Sige",
+      "start": 1322,
+      "end": 1328,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 38,
+      "text": "Burahin",
+      "start": 1339,
+      "end": 1348,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 39,
+      "text": "Linggo",
+      "start": 1358,
+      "end": 1366,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 40,
+      "text": "Buwan",
+      "start": 1377,
+      "end": 1384,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 41,
+      "text": "Taon",
+      "start": 1394,
+      "end": 1400,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 42,
+      "text": "Pumili ng oras",
+      "start": 1419,
+      "end": 1435,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 43,
+      "text": "Pumili ng buwan",
+      "start": 1457,
+      "end": 1474,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 44,
+      "text": "Pumili ng taon",
+      "start": 1495,
+      "end": 1511,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 45,
+      "text": "Pumili ng dekada",
+      "start": 1534,
+      "end": 1552,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 46,
+      "text": "Nakaraang buwan",
+      "start": 1574,
+      "end": 1591,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 47,
+      "text": "Susunod na buwan",
+      "start": 1609,
+      "end": 1627,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 48,
+      "text": "Nakaraang taon",
+      "start": 1644,
+      "end": 1660,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 49,
+      "text": "Susunod na taon",
+      "start": 1677,
+      "end": 1694,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 50,
+      "text": "Nakaraang dekada",
+      "start": 1713,
+      "end": 1731,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 51,
+      "text": "Susunod na dekada",
+      "start": 1750,
+      "end": 1769,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 52,
+      "text": "Nakaraang siglo",
+      "start": 1789,
+      "end": 1806,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 53,
+      "text": "Susunod na siglo",
+      "start": 1826,
+      "end": 1844,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 54,
+      "text": "Oras ng simula",
+      "start": 1862,
+      "end": 1878,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 55,
+      "text": "Oras ng pagtatapos",
+      "start": 1894,
+      "end": 1914,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 56,
+      "text": "Mangyaring pumili",
+      "start": 1935,
+      "end": 1954,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 57,
+      "text": "Isara",
+      "start": 1965,
+      "end": 1972,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 58,
+      "text": "maaaring ayusin",
+      "start": 1986,
+      "end": 2003,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 59,
+      "text": "Ipakita",
+      "start": 2013,
+      "end": 2022,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 60,
+      "text": "Itago",
+      "start": 2032,
+      "end": 2039,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 61,
+      "text": "Menu ng pagsala",
+      "start": 2058,
+      "end": 2075,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 63,
+      "text": "Walang pansala",
+      "start": 2113,
+      "end": 2129,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 64,
+      "text": "Piliin ang lahat ng bagay",
+      "start": 2153,
+      "end": 2180,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 65,
+      "text": "Maghanap sa mga pansala",
+      "start": 2205,
+      "end": 2230,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 66,
+      "text": "Walang datos",
+      "start": 2245,
+      "end": 2259,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 67,
+      "text": "Piliin ang kasalukuyang pahina",
+      "start": 2286,
+      "end": 2318,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 68,
+      "text": "Baligtarin ang pagpili sa pahina",
+      "start": 2345,
+      "end": 2379,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 69,
+      "text": "Burahin ang lahat ng datos",
+      "start": 2401,
+      "end": 2429,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 70,
+      "text": "Piliin ang lahat ng datos",
+      "start": 2452,
+      "end": 2479,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 71,
+      "text": "Ayusin",
+      "start": 2489,
+      "end": 2497,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 72,
+      "text": "Palawakin ang hanay",
+      "start": 2515,
+      "end": 2536,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 73,
+      "text": "Paliitin ang hanay",
+      "start": 2556,
+      "end": 2576,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 74,
+      "text": "I-click upang ayusin pababa",
+      "start": 2608,
+      "end": 2637,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 75,
+      "text": "I-click upang ayusin pataas",
+      "start": 2668,
+      "end": 2697,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 76,
+      "text": "I-click upang kanselahin ang pag-aayos",
+      "start": 2728,
+      "end": 2768,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 77,
+      "text": "Susunod",
+      "start": 2778,
+      "end": 2787,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 78,
+      "text": "Nakaraan",
+      "start": 2801,
+      "end": 2811,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 79,
+      "text": "Tapusin",
+      "start": 2823,
+      "end": 2832,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 80,
+      "text": "Kanselahin",
+      "start": 2844,
+      "end": 2856,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 81,
+      "text": "Maghanap dito",
+      "start": 2875,
+      "end": 2890,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 83,
+      "text": "mga bagay",
+      "start": 2918,
+      "end": 2929,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 84,
+      "text": "Alisin",
+      "start": 2941,
+      "end": 2949,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 85,
+      "text": "Alisin ang kasalukuyang pahina",
+      "start": 2976,
+      "end": 3008,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 86,
+      "text": "Alisin ang lahat ng datos",
+      "start": 3031,
+      "end": 3058,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 87,
+      "text": "Alisin ang pagpili sa lahat ng datos",
+      "start": 3083,
+      "end": 3121,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 88,
+      "text": "Ina-upload...",
+      "start": 3141,
+      "end": 3156,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 89,
+      "text": "Alisin ang file",
+      "start": 3175,
+      "end": 3192,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 90,
+      "text": "Hindi na-upload",
+      "start": 3212,
+      "end": 3229,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 91,
+      "text": "Silipin ang file",
+      "start": 3249,
+      "end": 3267,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 92,
+      "text": "I-download ang file",
+      "start": 3288,
+      "end": 3309,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 95,
+      "text": "Kopyahin",
+      "start": 3356,
+      "end": 3366,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 96,
+      "text": "Nakopya",
+      "start": 3378,
+      "end": 3387,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 97,
+      "text": "Palawakin",
+      "start": 3399,
+      "end": 3410,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 98,
+      "text": "Paliitin",
+      "start": 3424,
+      "end": 3434,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 99,
+      "text": "Nakaraang slide",
+      "start": 3456,
+      "end": 3473,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 100,
+      "text": "Susunod na slide",
+      "start": 3491,
+      "end": 3509,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 102,
+      "text": "Hindi wastong halaga para sa ${label}",
+      "start": 3582,
+      "end": 3621,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 103,
+      "text": "Mangyaring ilagay ang ${label}",
+      "start": 3650,
+      "end": 3682,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 104,
+      "text": "Ang ${label} ay dapat isa sa [${enum}]",
+      "start": 3723,
+      "end": 3763,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 105,
+      "text": "Hindi maaaring blangko ang ${label}",
+      "start": 3807,
+      "end": 3844,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 106,
+      "text": "Hindi wastong format ng petsa ng ${label}",
+      "start": 3883,
+      "end": 3926,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 107,
+      "text": "Hindi magawang petsa ang ${label}",
+      "start": 3972,
+      "end": 4007,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 108,
+      "text": "Hindi wastong petsa ang ${label}",
+      "start": 4042,
+      "end": 4076,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 109,
+      "text": "Ang ${label} ay hindi wastong ${type}",
+      "start": 4115,
+      "end": 4154,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 110,
+      "text": "Ang ${label} ay dapat ${len} character",
+      "start": 4196,
+      "end": 4236,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 112,
+      "text": "Ang ${label} ay dapat hindi bababa sa ${min} character",
+      "start": 4291,
+      "end": 4347,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 114,
+      "text": "Ang ${label} ay dapat hindi hihigit sa ${max} character",
+      "start": 4399,
+      "end": 4456,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 116,
+      "text": "Ang ${label} ay dapat nasa ${min}-${max} character",
+      "start": 4517,
+      "end": 4569,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 117,
+      "text": "Ang ${label} ay dapat katumbas ng ${len}",
+      "start": 4609,
+      "end": 4651,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 118,
+      "text": "Ang ${label} ay dapat hindi bababa sa ${min}",
+      "start": 4690,
+      "end": 4736,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 119,
+      "text": "Ang ${label} ay dapat hindi hihigit sa ${max}",
+      "start": 4775,
+      "end": 4822,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 120,
+      "text": "Ang ${label} ay dapat nasa pagitan ng ${min}-${max}",
+      "start": 4868,
+      "end": 4921,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 121,
+      "text": "Dapat ay ${len} ${label}",
+      "start": 4952,
+      "end": 4978,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 122,
+      "text": "Hindi bababa sa ${min} ${label}",
+      "start": 5010,
+      "end": 5043,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 123,
+      "text": "Hindi hihigit sa ${max} ${label}",
+      "start": 5074,
+      "end": 5108,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 125,
+      "text": "Ang dami ng ${label} ay dapat nasa pagitan ng ${min}-${max}",
+      "start": 5172,
+      "end": 5233,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 127,
+      "text": "Hindi tumutugma ang ${label} sa pattern na ${pattern}",
+      "start": 5291,
+      "end": 5346,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 128,
+      "text": "Nag-expire ang QR code",
+      "start": 5369,
+      "end": 5393,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 130,
+      "text": "Na-scan",
+      "start": 5430,
+      "end": 5439,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 131,
+      "text": "Walang laman",
+      "start": 5450,
+      "end": 5464,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 132,
+      "text": "Malinaw",
+      "start": 5481,
+      "end": 5490,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 133,
+      "text": "Iisa",
+      "start": 5502,
+      "end": 5508,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/fil.ts",
+      "kind": "human-literal",
+      "line": 134,
+      "text": "Unti-unting kulay",
+      "start": 5522,
+      "end": 5541,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/lo.ts",
+      "kind": "human-literal",
+      "line": 8,
+      "text": "/ ໜ້າ",
+      "start": 257,
+      "end": 264,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/lo.ts",
+      "kind": "human-literal",
+      "line": 14,
+      "text": "5 ໜ້າກ່ອນ",
+      "start": 401,
+      "end": 412,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/lo.ts",
+      "kind": "human-literal",
+      "line": 15,
+      "text": "5 ໜ້າຕໍ່ໄປ",
+      "start": 432,
+      "end": 444,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/lo.ts",
+      "kind": "human-literal",
+      "line": 16,
+      "text": "3 ໜ້າກ່ອນ",
+      "start": 468,
+      "end": 479,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/lo.ts",
+      "kind": "human-literal",
+      "line": 17,
+      "text": "3 ໜ້າຕໍ່ໄປ",
+      "start": 499,
+      "end": 511,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/lo.ts",
+      "kind": "human-literal",
+      "line": 102,
+      "text": "ຂໍ້ມູນ ${label} ບໍ່ຖືກຕ້ອງ",
+      "start": 3077,
+      "end": 3105,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/lo.ts",
+      "kind": "human-literal",
+      "line": 103,
+      "text": "ກະລຸນາປ້ອນ ${label}",
+      "start": 3134,
+      "end": 3155,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/lo.ts",
+      "kind": "human-literal",
+      "line": 104,
+      "text": "${label} ຕ້ອງເປັນໜຶ່ງໃນ [${enum}]",
+      "start": 3196,
+      "end": 3231,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/lo.ts",
+      "kind": "human-literal",
+      "line": 105,
+      "text": "${label} ບໍ່ສາມາດເປັນຊ່ອງຫວ່າງ",
+      "start": 3275,
+      "end": 3307,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/lo.ts",
+      "kind": "human-literal",
+      "line": 106,
+      "text": "ຮູບແບບວັນທີ ${label} ບໍ່ຖືກຕ້ອງ",
+      "start": 3346,
+      "end": 3379,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/lo.ts",
+      "kind": "human-literal",
+      "line": 107,
+      "text": "ບໍ່ສາມາດປ່ຽນ ${label} ເປັນວັນທີ",
+      "start": 3425,
+      "end": 3458,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/lo.ts",
+      "kind": "human-literal",
+      "line": 108,
+      "text": "${label} ເປັນວັນທີທີ່ບໍ່ຖືກຕ້ອງ",
+      "start": 3493,
+      "end": 3526,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/lo.ts",
+      "kind": "human-literal",
+      "line": 109,
+      "text": "${label} ບໍ່ແມ່ນ ${type} ທີ່ຖືກຕ້ອງ",
+      "start": 3565,
+      "end": 3602,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/lo.ts",
+      "kind": "human-literal",
+      "line": 110,
+      "text": "${label} ຕ້ອງມີ ${len} ຕົວອັກສອນ",
+      "start": 3644,
+      "end": 3678,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/lo.ts",
+      "kind": "human-literal",
+      "line": 111,
+      "text": "${label} ຕ້ອງມີຢ່າງໜ້ອຍ ${min} ຕົວອັກສອນ",
+      "start": 3729,
+      "end": 3771,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/lo.ts",
+      "kind": "human-literal",
+      "line": 112,
+      "text": "${label} ຕ້ອງບໍ່ເກີນ ${max} ຕົວອັກສອນ",
+      "start": 3819,
+      "end": 3858,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/lo.ts",
+      "kind": "human-literal",
+      "line": 114,
+      "text": "${label} ຕ້ອງມີລະຫວ່າງ ${min}-${max} ຕົວອັກສອນ",
+      "start": 3919,
+      "end": 3967,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/lo.ts",
+      "kind": "human-literal",
+      "line": 115,
+      "text": "${label} ຕ້ອງເທົ່າກັບ ${len}",
+      "start": 4007,
+      "end": 4037,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/lo.ts",
+      "kind": "human-literal",
+      "line": 116,
+      "text": "${label} ຕ້ອງບໍ່ນ້ອຍກວ່າ ${min}",
+      "start": 4076,
+      "end": 4109,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/lo.ts",
+      "kind": "human-literal",
+      "line": 117,
+      "text": "${label} ຕ້ອງບໍ່ຫຼາຍກວ່າ ${max}",
+      "start": 4148,
+      "end": 4181,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/lo.ts",
+      "kind": "human-literal",
+      "line": 118,
+      "text": "${label} ຕ້ອງຢູ່ລະຫວ່າງ ${min}-${max}",
+      "start": 4227,
+      "end": 4266,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/lo.ts",
+      "kind": "human-literal",
+      "line": 119,
+      "text": "ຕ້ອງມີ ${len} ${label}",
+      "start": 4297,
+      "end": 4321,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/lo.ts",
+      "kind": "human-literal",
+      "line": 120,
+      "text": "ຢ່າງໜ້ອຍ ${min} ${label}",
+      "start": 4353,
+      "end": 4379,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/lo.ts",
+      "kind": "human-literal",
+      "line": 121,
+      "text": "ບໍ່ເກີນ ${max} ${label}",
+      "start": 4410,
+      "end": 4435,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/lo.ts",
+      "kind": "human-literal",
+      "line": 123,
+      "text": "ຈຳນວນ ${label} ຕ້ອງຢູ່ລະຫວ່າງ ${min}-${max}",
+      "start": 4499,
+      "end": 4544,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/lo.ts",
+      "kind": "human-literal",
+      "line": 124,
+      "text": "${label} ບໍ່ກົງກັບຮູບແບບ ${pattern}",
+      "start": 4598,
+      "end": 4635,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/lo.ts",
+      "kind": "human-literal",
+      "line": 125,
+      "text": "ລະຫັດ QR ໝົດອາຍຸ",
+      "start": 4658,
+      "end": 4676,
+      "disposition": "retained-contract",
+      "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/translate-locale.ts",
+      "kind": "human-literal",
+      "line": 14,
+      "text": "Untranslated AntD locale text:",
+      "start": 587,
+      "end": 621,
+      "disposition": "retained-contract",
+      "reason": "Internal locale integrity diagnostic; not user-facing chrome."
+    },
+    {
+      "file": "apps/admin/src/i18n/antd/translate-locale.ts",
+      "kind": "human-literal",
+      "line": 21,
+      "text": "AntD locale must be serializable",
+      "start": 955,
+      "end": 989,
+      "disposition": "retained-contract",
+      "reason": "Internal locale integrity diagnostic; not user-facing chrome."
+    },
+    {
+      "file": "apps/admin/src/i18n/compact-money.ts",
+      "kind": "human-literal",
+      "line": 27,
+      "text": "tỷ ₫",
+      "start": 1106,
+      "end": 1113,
+      "disposition": "retained-contract",
+      "reason": "Explicit Vietnamese-only compact-currency formatter branch; other locales use their own Intl formatter, with no FX."
+    },
+    {
+      "file": "apps/admin/src/i18n/compact-money.ts",
+      "kind": "human-literal",
+      "line": 29,
+      "text": "triệu ₫",
+      "start": 1177,
+      "end": 1187,
+      "disposition": "retained-contract",
+      "reason": "Explicit Vietnamese-only compact-currency formatter branch; other locales use their own Intl formatter, with no FX."
+    },
+    {
+      "file": "apps/admin/src/i18n/domain-labels.ts",
+      "kind": "human-literal",
+      "line": 13,
+      "text": "Miền Bắc",
+      "start": 576,
+      "end": 586,
+      "disposition": "retained-contract",
+      "reason": "Canonical region name/lookup key; rendered region labels use the translated domain projection and API values remain unchanged."
+    },
+    {
+      "file": "apps/admin/src/i18n/domain-labels.ts",
+      "kind": "human-literal",
+      "line": 13,
+      "text": "Miền Trung",
+      "start": 597,
+      "end": 609,
+      "disposition": "retained-contract",
+      "reason": "Canonical region name/lookup key; rendered region labels use the translated domain projection and API values remain unchanged."
+    },
+    {
+      "file": "apps/admin/src/i18n/domain-labels.ts",
+      "kind": "human-literal",
+      "line": 13,
+      "text": "Miền Nam",
+      "start": 622,
+      "end": 632,
+      "disposition": "retained-contract",
+      "reason": "Canonical region name/lookup key; rendered region labels use the translated domain projection and API values remain unchanged."
+    },
+    {
+      "file": "apps/admin/src/i18n/font-config.ts",
+      "kind": "human-literal",
+      "line": 5,
+      "text": "OPCHUB SC",
+      "start": 115,
+      "end": 126,
+      "disposition": "retained-contract",
+      "reason": "CSS font-family identifier or syntax fragment bound to bundled font assets; not display prose."
+    },
+    {
+      "file": "apps/admin/src/i18n/font-config.ts",
+      "kind": "human-literal",
+      "line": 6,
+      "text": "OPCHUB Thai",
+      "start": 134,
+      "end": 147,
+      "disposition": "retained-contract",
+      "reason": "CSS font-family identifier or syntax fragment bound to bundled font assets; not display prose."
+    },
+    {
+      "file": "apps/admin/src/i18n/font-config.ts",
+      "kind": "human-literal",
+      "line": 7,
+      "text": "OPCHUB Khmer",
+      "start": 155,
+      "end": 169,
+      "disposition": "retained-contract",
+      "reason": "CSS font-family identifier or syntax fragment bound to bundled font assets; not display prose."
+    },
+    {
+      "file": "apps/admin/src/i18n/font-config.ts",
+      "kind": "human-literal",
+      "line": 8,
+      "text": "OPCHUB Lao",
+      "start": 177,
+      "end": 189,
+      "disposition": "retained-contract",
+      "reason": "CSS font-family identifier or syntax fragment bound to bundled font assets; not display prose."
+    },
+    {
+      "file": "apps/admin/src/i18n/font-config.ts",
+      "kind": "human-literal",
+      "line": 9,
+      "text": "OPCHUB Myanmar",
+      "start": 197,
+      "end": 213,
+      "disposition": "retained-contract",
+      "reason": "CSS font-family identifier or syntax fragment bound to bundled font assets; not display prose."
+    },
+    {
+      "file": "apps/admin/src/i18n/font-config.ts",
+      "kind": "human-literal",
+      "line": 20,
+      "text": "'OPCHUB Latin', '",
+      "start": 646,
+      "end": 666,
+      "disposition": "retained-contract",
+      "reason": "CSS font-family identifier or syntax fragment bound to bundled font assets; not display prose."
+    },
+    {
+      "file": "apps/admin/src/i18n/font-config.ts",
+      "kind": "human-literal",
+      "line": 20,
+      "text": "', sans-serif",
+      "start": 672,
+      "end": 687,
+      "disposition": "retained-contract",
+      "reason": "CSS font-family identifier or syntax fragment bound to bundled font assets; not display prose."
+    },
+    {
+      "file": "apps/admin/src/i18n/font-config.ts",
+      "kind": "human-literal",
+      "line": 21,
+      "text": "'OPCHUB Latin', sans-serif",
+      "start": 696,
+      "end": 724,
+      "disposition": "retained-contract",
+      "reason": "CSS font-family identifier or syntax fragment bound to bundled font assets; not display prose."
+    },
+    {
+      "file": "apps/admin/src/i18n/format.ts",
+      "kind": "human-literal",
+      "line": 29,
+      "text": "đ",
+      "start": 1026,
+      "end": 1029,
+      "disposition": "retained-contract",
+      "reason": "Vietnamese-only currency suffix; other locales use Intl currency formatting, no FX."
+    },
+    {
+      "file": "apps/admin/src/i18n/intl/registration-data.ts",
+      "kind": "human-literal",
+      "line": 14,
+      "text": "Admin Intl locale data unavailable:",
+      "start": 728,
+      "end": 767,
+      "disposition": "retained-contract",
+      "reason": "Technical registration failure wrapped as a structured resource error; the localized boundary renders common.state.error/retry, never this diagnostic or its cause."
+    },
+    {
+      "file": "apps/admin/src/i18n/intl/resource-error.ts",
+      "kind": "human-literal",
+      "line": 6,
+      "text": "Admin Intl resources unavailable",
+      "start": 191,
+      "end": 225,
+      "disposition": "retained-contract",
+      "reason": "Typed resource error diagnostic for logger/cause only; selected-language error/retry UI and absence of this raw message are explicitly tested in admin-intl-ready.spec.tsx."
+    },
+    {
+      "file": "apps/admin/src/i18n/message-loader.ts",
+      "kind": "human-literal",
+      "line": 30,
+      "text": "Invalid settings catalog part",
+      "start": 1513,
+      "end": 1544,
+      "disposition": "retained-contract",
+      "reason": "Internal catalog validation/fallback diagnostic; UI receives the validated fallback bundle, not this string."
+    },
+    {
+      "file": "apps/admin/src/i18n/message-loader.ts",
+      "kind": "human-literal",
+      "line": 33,
+      "text": "Duplicate settings catalog key",
+      "start": 1662,
+      "end": 1694,
+      "disposition": "retained-contract",
+      "reason": "Internal catalog validation/fallback diagnostic; UI receives the validated fallback bundle, not this string."
+    },
+    {
+      "file": "apps/admin/src/i18n/message-loader.ts",
+      "kind": "human-literal",
+      "line": 55,
+      "text": "Catalog unavailable:",
+      "start": 2435,
+      "end": 2459,
+      "disposition": "retained-contract",
+      "reason": "Internal catalog validation/fallback diagnostic; UI receives the validated fallback bundle, not this string."
+    },
+    {
+      "file": "apps/admin/src/i18n/message-loader.ts",
+      "kind": "human-literal",
+      "line": 68,
+      "text": "Catalog fallback:",
+      "start": 2818,
+      "end": 2839,
+      "disposition": "retained-contract",
+      "reason": "Internal catalog validation/fallback diagnostic; UI receives the validated fallback bundle, not this string."
+    },
+    {
+      "file": "apps/admin/src/i18n/validation.ts",
+      "kind": "human-literal",
+      "line": 33,
+      "text": "Mật khẩu mới phải khác mật khẩu hiện tại",
+      "start": 868,
+      "end": 910,
+      "disposition": "retained-contract",
+      "reason": "Finite known local-schema message matching rule projected to translated client error; raw API errors are never reverse-matched."
+    },
+    {
+      "file": "apps/admin/src/i18n/validation.ts",
+      "kind": "human-literal",
+      "line": 34,
+      "text": "Số tài khoản gồm 6–20 chữ số",
+      "start": 932,
+      "end": 962,
+      "disposition": "retained-contract",
+      "reason": "Finite known local-schema message matching rule projected to translated client error; raw API errors are never reverse-matched."
+    },
+    {
+      "file": "apps/admin/src/i18n/validation.ts",
+      "kind": "human-literal",
+      "line": 35,
+      "text": "Tên chủ tài khoản chỉ gồm chữ cái",
+      "start": 989,
+      "end": 1024,
+      "disposition": "retained-contract",
+      "reason": "Finite known local-schema message matching rule projected to translated client error; raw API errors are never reverse-matched."
+    },
+    {
+      "file": "apps/admin/src/lib/api-client.ts",
+      "kind": "human-literal",
+      "line": 90,
+      "text": "Authorization",
+      "start": 2891,
+      "end": 2906,
+      "disposition": "retained-contract",
+      "reason": "HTTP protocol header/authentication token, never translated."
+    },
+    {
+      "file": "apps/admin/src/lib/api-client.ts",
+      "kind": "human-literal",
+      "line": 90,
+      "text": "Bearer",
+      "start": 2908,
+      "end": 2918,
+      "disposition": "retained-contract",
+      "reason": "HTTP protocol header/authentication token, never translated."
+    },
+    {
+      "file": "apps/admin/src/lib/api-client.ts",
+      "kind": "human-literal",
+      "line": 91,
+      "text": "Content-Type",
+      "start": 2971,
+      "end": 2985,
+      "disposition": "retained-contract",
+      "reason": "HTTP protocol header/authentication token, never translated."
+    },
+    {
+      "file": "apps/admin/src/lib/api-client.ts",
+      "kind": "human-literal",
+      "line": 92,
+      "text": "Idempotency-Key",
+      "start": 3047,
+      "end": 3064,
+      "disposition": "retained-contract",
+      "reason": "HTTP protocol header/authentication token, never translated."
+    },
+    {
+      "file": "apps/admin/src/lib/image-upload-error.ts",
+      "kind": "human-literal",
+      "line": 7,
+      "text": "Local image upload failure",
+      "start": 259,
+      "end": 287,
+      "disposition": "retained-contract",
+      "reason": "Typed local error diagnostic; actual Admin wrapper formats local codes with the live translator, raw API errors pass through."
+    },
+    {
+      "file": "apps/admin/src/providers/admin-intl-errors.tsx",
+      "kind": "human-literal",
+      "line": 24,
+      "text": "Intl error:",
+      "start": 994,
+      "end": 1009,
+      "disposition": "retained-contract",
+      "reason": "Logger diagnostic prefix, not rendered UI text."
+    }
+  ],
+  "errors": [],
+  "unreviewed": []
+}

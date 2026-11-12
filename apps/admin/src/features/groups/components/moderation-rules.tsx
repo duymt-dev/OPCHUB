@@ -6,9 +6,11 @@ import { useTranslations } from 'next-intl';
 import { useModerationSettings } from '../hooks/use-moderation';
 import styles from './moderation.module.css';
 import { Switch } from 'antd';
+import { useNumberText } from '@/i18n/use-number-text';
 
 /** "Quy tắc xử lý vi phạm" + chọn "Thời gian khóa" (prototype v4 2850, D-77/D-83) */
 export function ModerationRules() {
+  const numberText = useNumberText();
   const t = useTranslations('groups.mod');
   const tt = useTranslations('groups.toast');
   const toast = useToast();
@@ -17,16 +19,16 @@ export function ModerationRules() {
     const next = lockDaysSchema.safeParse(Number(raw));
     if (!next.success) return;
     const value: LockDays = next.data;
-    save.mutate(value, { onSuccess: () => toast(tt('lockTime', { days: value })) });
+    save.mutate(value, { onSuccess: () => toast(tt('lockTime', { days: numberText(value) })) });
   };
   return (
     <div className={styles.rules}>
       <span className={styles.kwTitle}>{t('rules')}</span>
       <label className={styles.lockTime} htmlFor="ai-moderation-enabled">
-        Dùng AI phân loại tin vi phạm
+        {t('aiEnabled')}
         <Switch
           id="ai-moderation-enabled"
-          aria-label="Dùng AI phân loại tin vi phạm"
+          aria-label={t('aiEnabled')}
           checked={ai}
           loading={aiSave.isPending}
           onChange={(value) => aiSave.mutate({ autoLockDays: days, ai: value })}
@@ -47,7 +49,7 @@ export function ModerationRules() {
         >
           {LOCK_DAYS.map((n) => (
             <option key={n} value={String(n)}>
-              {t('dayOpt', { days: n })}
+              {t('dayOpt', { days: numberText(n) })}
             </option>
           ))}
         </select>

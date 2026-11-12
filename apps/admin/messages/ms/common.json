@@ -1,0 +1,126 @@
+{
+  "shell": {
+    "navTitle": "PENTADBIRAN",
+    "search": "Cari...",
+    "notifications": "Pemberitahuan",
+    "menu": "Menu",
+    "back": "Laman utama",
+    "collapse": "Kuncupkan bar sisi",
+    "expand": "Kembangkan bar sisi",
+    "language": "Bahasa Melayu",
+    "profile": "Profil peribadi",
+    "logout": "Log keluar",
+    "brandTag": "ADMIN",
+    "upcoming": "Acara akan datang",
+    "viewAll": "Lihat semua",
+    "settings": "Tetapan sistem",
+    "globalSearch": {
+      "placeholder": "Cari ahli, kedai, keperluan, projek, kumpulan…",
+      "empty": "Tiada hasil ditemui",
+      "clear": "Kosongkan carian",
+      "hint": "Masukkan minimum 2 aksara untuk mencari...",
+      "emptyQuery": "Tiada hasil untuk ‘{query}’",
+      "loading": "Mencari…",
+      "failed": "Tidak dapat memuatkan hasil carian",
+      "groups": {
+        "store": "Kedai",
+        "need": "Keperluan tempatan",
+        "project": "Projek OPC",
+        "group": "Kumpulan komuniti",
+        "member": "Ahli"
+      },
+      "members": "{n} ahli"
+    }
+  },
+  "nav": {
+    "overview": "Gambaran keseluruhan",
+    "members": "Ahli",
+    "fees": "Yuran keahlian",
+    "groups": "Kumpulan komuniti",
+    "bots": "Bot interaksi",
+    "events": "Kandungan & Acara",
+    "needs": "Keperluan tempatan",
+    "stores": "Kedai",
+    "projects": "Projek OPC",
+    "investors": "Pelabur",
+    "requests": "Perkhidmatan",
+    "affiliate": "Rangkaian Affiliate",
+    "reports": "Laporan",
+    "marketing": "Pemasaran",
+    "settings": "Tetapan sistem"
+  },
+  "navGroup": {
+    "people": "AHLI & KOMUNITI",
+    "business": "HUBUNGAN PERNIAGAAN",
+    "revenue": "PENDAPATAN & RAKAN KONGSI"
+  },
+  "role": {
+    "super_admin": "Admin Utama",
+    "admin": "Pentadbir",
+    "moderator": "Moderator",
+    "member": "Ahli"
+  },
+  "state": {
+    "loading": "Memuatkan…",
+    "error": "Gagal memuatkan data",
+    "retry": "Cuba lagi",
+    "notFound": "Halaman tidak ditemui"
+  },
+  "notifications": {
+    "title": "Pemberitahuan",
+    "markAll": "Tandakan semua sudah dibaca",
+    "tabAll": "Semua",
+    "tabUnread": "Belum dibaca ({n})",
+    "empty": "Tiada pemberitahuan"
+  },
+  "ago": {
+    "now": "Baru sahaja",
+    "minutes": "{n} minit lalu",
+    "hours": "{n} jam lalu",
+    "days": "{n} hari lalu"
+  },
+  "errors": {
+    "fixFields": "Sila semak medan yang ditanda",
+    "failed": "Tindakan tidak berjaya, sila cuba lagi"
+  },
+  "rbac": {
+    "viewOnly": "Mod lihat sahaja — peranan <b>{role}</b> tidak dapat melakukan tindakan di bahagian ini.",
+    "viewOnlyToast": "Peranan {role} hanya dapat melihat bahagian ini",
+    "preview": "Pratonton Admin sebagai <b>{role}</b> — hanya menu yang dibenarkan untuk peranan ini yang dipaparkan.",
+    "previewExit": "Keluar daripada pratonton",
+    "forbiddenTitle": "Anda tidak mempunyai kebenaran untuk melihat bahagian ini",
+    "forbiddenBody": "Peranan Anda tidak dibenarkan membuka bahagian ini.",
+    "forbiddenBack": "Buka bahagian yang dibenarkan",
+    "twoFactor": "Aktifkan pengesahan dua faktor"
+  },
+  "adminProfile": {
+    "nameRequired": "Masukkan nama penuh Anda",
+    "enabled": "Diaktifkan",
+    "name": "Nama penuh",
+    "currentPassword": "Kata laluan semasa",
+    "newPassword": "Kata laluan baharu",
+    "passwordRule": "Minimum 8 aksara, termasuk huruf besar dan angka",
+    "noRole": "Belum ada peranan",
+    "security": "Keselamatan & Peranan",
+    "passwordSaved": "Kata laluan telah dikemas kini",
+    "emailHint": "E-mel yang ditetapkan pentadbir",
+    "passwordTitle": "Tukar kata laluan",
+    "role": "Peranan kini",
+    "changePassword": "Kemas kini kata laluan",
+    "enable": "Aktifkan pengesahan dua faktor",
+    "email": "E-mel untuk log masuk",
+    "failed": "Tidak dapat mengemas kini. Sila cuba lagi",
+    "disabled": "Belum diaktifkan",
+    "save": "Simpan maklumat",
+    "saved": "Maklumat peribadi disimpan",
+    "personal": "Maklumat peribadi",
+    "phone": "Nombor telefon",
+    "imageRule": "Gambar JPG/PNG/WebP, maksimum 5 MB",
+    "subtitle": "Urus maklumat peribadi dan keselamatan akaun pentadbir Anda",
+    "confirmPassword": "Sahkan kata laluan baharu",
+    "upload": "Muat naik foto baharu",
+    "remove": "Buang imej",
+    "title": "Profil peribadi",
+    "twoFactor": "Pengesahan dua faktor (2FA)"
+  }
+}

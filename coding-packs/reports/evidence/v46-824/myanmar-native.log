@@ -1,0 +1,18 @@
+Source 17f74404. Staged17-file Myanmar raw core/1260 leaves; missing8 business catalogs/1407 leaves remain required; actual Overview/Profile/Settings1440/390, same6 assertions both modes, real login200 and strict HTTP/JSON/no-business-write guard. Approved native wrapper/listener/endpoints revalidated by native preflight; original PG5432/opchub_test/services/data retained, no SQL/seed/reset/repair. Unmasked images and exact Myanmar anchors, not all-language/state/control/value/performance or human approval.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-myanmar.spec.ts
+[WebServer] (node:15544) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+(node:8812) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\admin-i18n-myanmar.spec.ts:40:5 › D-141 AC824-07/15 Myanmar core overview 1440, not missing8-domain/full acceptance (4.5s)
+  ok 2 [behavior] › behavior\admin-i18n-myanmar.spec.ts:40:5 › D-141 AC824-07/15 Myanmar core overview 390, not missing8-domain/full acceptance (3.8s)
+  ok 3 [behavior] › behavior\admin-i18n-myanmar.spec.ts:40:5 › D-141 AC824-07/15 Myanmar core profile 1440, not missing8-domain/full acceptance (3.9s)
+  ok 4 [behavior] › behavior\admin-i18n-myanmar.spec.ts:40:5 › D-141 AC824-07/15 Myanmar core profile 390, not missing8-domain/full acceptance (3.5s)
+  ok 5 [behavior] › behavior\admin-i18n-myanmar.spec.ts:40:5 › D-141 AC824-07/15 Myanmar core settings 1440, not missing8-domain/full acceptance (4.0s)
+  ok 6 [behavior] › behavior\admin-i18n-myanmar.spec.ts:40:5 › D-141 AC824-07/15 Myanmar core settings 390, not missing8-domain/full acceptance (3.4s)
+
+  6 passed (27.4s)
+EXIT 0

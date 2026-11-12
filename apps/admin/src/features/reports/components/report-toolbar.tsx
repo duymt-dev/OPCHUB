@@ -1,17 +1,17 @@
 'use client';
 
 import {
-  REPORT_REGION_LABEL,
   REPORT_REGIONS,
   REPORT_TEMPLATES,
   type ReportScopes,
   type ReportTemplate,
 } from '@opchub/shared/api-domains';
 import { Button, Segmented, Select } from 'antd';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { monthLabel } from '../model';
 import type { ReportFilter } from '../types';
 import styles from './reports.module.css';
+import { useDomainLabels } from '@/i18n/domain-labels';
 
 interface Props {
   filter: ReportFilter;
@@ -25,9 +25,12 @@ interface Props {
   onExport: () => void;
 }
 
-function scopeOptions(template: ReportTemplate, scopes: ReportScopes | undefined) {
-  if (template === 'b3')
-    return REPORT_REGIONS.map((r) => ({ value: r, label: REPORT_REGION_LABEL[r] }));
+function scopeOptions(
+  template: ReportTemplate,
+  scopes: ReportScopes | undefined,
+  labels: ReturnType<typeof useDomainLabels>,
+) {
+  if (template === 'b3') return REPORT_REGIONS.map((r) => ({ value: r, label: labels.region(r) }));
   if (!scopes) return [];
   return template === 'b1'
     ? scopes.groups.map((g) => ({ value: g.id, label: `${g.name} · ${g.province}` }))
@@ -36,7 +39,9 @@ function scopeOptions(template: ReportTemplate, scopes: ReportScopes | undefined
 
 /** Thanh lọc: mẫu (segmented) · tháng · phạm vi theo mẫu · "Xuất CSV" */
 export function ReportToolbar(p: Props) {
+  const locale = useLocale();
   const t = useTranslations('reports');
+  const labels = useDomainLabels();
   return (
     <div className={styles.toolbar}>
       <Segmented
@@ -53,7 +58,7 @@ export function ReportToolbar(p: Props) {
           value={p.filter.month}
           options={p.months.map((m) => ({
             value: m,
-            label: t('monthOption', { month: monthLabel(m) }),
+            label: t('monthOption', { month: monthLabel(m, locale) }),
           }))}
           onChange={p.onMonth}
         />
@@ -66,7 +71,7 @@ export function ReportToolbar(p: Props) {
           showSearch={{ optionFilterProp: 'label' }}
           value={p.filter.scope || null}
           placeholder={t('pickScope')}
-          options={scopeOptions(p.filter.template, p.scopes)}
+          options={scopeOptions(p.filter.template, p.scopes, labels)}
           onChange={p.onScope}
         />
       </label>

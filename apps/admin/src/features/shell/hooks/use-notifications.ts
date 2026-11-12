@@ -8,12 +8,14 @@ import { useRouter } from 'next/navigation';
 import { fetchNotifications, markRead, shellKeys } from '../api';
 import { adminLinkOf, noticeAgo } from '../model';
 import { ADMIN_NAV } from '../nav';
+import { useNumberText } from '@/i18n/use-number-text';
 
 /**
  * Thông báo của TK quản trị (D-04, D-29). BUG-023: mở thông báo → đánh dấu đã đọc rồi điều hướng
  * nếu `link` là route Admin (khớp prefix menu); link Portal bỏ qua.
  */
 export function useNotifications() {
+  const numberText = useNumberText();
   const t = useTranslations('common.ago');
   const qc = useQueryClient();
   const router = useRouter();
@@ -40,7 +42,7 @@ export function useNotifications() {
       title: n.title,
       body: n.body,
       read: n.read,
-      ago: t(a.key, { n: a.n }),
+      ago: t(a.key, { n: numberText(a.n) }),
     };
   });
 

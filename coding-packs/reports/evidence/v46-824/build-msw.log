@@ -1,0 +1,60 @@
+Source 0e3803b3; Admin build mode=msw dist=.next-msw-tip824; compile only, no API verification
+$ vitest run src/i18n/tests/production-catalogs.spec.ts && next build
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  1 passed (1)
+      Tests  49 passed (49)
+   Start at  08:23:26
+   Duration  18.75s (tests 91%, environment 9%)
+
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 596ms
+- Experiments (use with caution):
+  · optimizePackageImports
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 4.8s
+  Running TypeScript ...
+  Finished TypeScript in 8.8s ...
+  Collecting page data using 5 workers ...
+  Generating static pages using 5 workers (0/10) ...
+  Generating static pages using 5 workers (2/10)
+  Generating static pages using 5 workers (4/10)
+  Generating static pages using 5 workers (7/10)
+✓ Generating static pages using 5 workers (10/10) in 558ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /affiliate/[[...slug]]
+├ ƒ /bots/[[...slug]]
+├ ƒ /events
+├ ƒ /fees
+├ ƒ /fees/transactions
+├ ƒ /first-password
+├ ƒ /forgot-password
+├ ƒ /groups
+├ ƒ /groups/[id]/chat
+├ ƒ /investors
+├ ƒ /login
+├ ƒ /marketing
+├ ƒ /members
+├ ƒ /needs
+├ ƒ /overview
+├ ƒ /profile
+├ ƒ /projects/[[...slug]]
+├ ƒ /reports
+├ ƒ /requests/[[...tab]]
+├ ƒ /reset-password
+├ ƒ /settings
+├ ƒ /stores
+└ ƒ /two-factor
+
+
+ƒ  (Dynamic)  server-rendered on demand
+
+EXIT 0

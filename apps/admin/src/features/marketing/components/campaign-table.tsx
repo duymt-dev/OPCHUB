@@ -1,7 +1,7 @@
 'use client';
 
 import type { Campaign } from '@opchub/shared/api-domains';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { campaignCells, STATUS_TONE } from '../model';
 import styles from './tables.module.css';
 
@@ -16,8 +16,9 @@ export interface CampaignActions {
 const HEAD = ['name', 'audience', 'recipients', 'open', 'click', 'at', 'status'] as const;
 
 function Row({ c, act }: { c: Campaign; act: CampaignActions }) {
+  const locale = useLocale();
   const t = useTranslations('marketing');
-  const v = campaignCells(c);
+  const v = campaignCells(c, locale);
   return (
     <div className={`${styles.grid} ${styles.row}`} role="row">
       <div className={styles.name} role="cell">

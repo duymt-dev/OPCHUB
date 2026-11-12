@@ -8,6 +8,7 @@ import { useEscape } from '../hooks/use-escape';
 import type { GroupLookup } from '../types';
 import { AssignGroupList } from './assign-group-list';
 import styles from './assign-modal.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 const SHOWN_NAMES = 6;
 type GroupRole = 'member' | 'lecturer';
@@ -44,6 +45,7 @@ function useAssignState(onSave: Props['onSave'], onClose: () => void) {
  * (không motion antd — parity dừng đồng hồ).
  */
 export function AssignModal({ targets, groups, onClose, onSave }: Props) {
+  const numberText = useNumberText();
   const t = useTranslations('members.assign');
   const tRole = useTranslations('members.role');
   const s = useAssignState(onSave, onClose);
@@ -57,7 +59,7 @@ export function AssignModal({ targets, groups, onClose, onSave }: Props) {
   const title =
     targets.length === 1 && first
       ? t('titleOne', { name: first.fullName })
-      : t('titleMany', { n: targets.length });
+      : t('titleMany', { n: numberText(targets.length) });
 
   return (
     <div className={styles.mask}>
@@ -79,7 +81,7 @@ export function AssignModal({ targets, groups, onClose, onSave }: Props) {
               </span>
             ))}
             <span className={styles.moreNames}>
-              {targets.length > SHOWN_NAMES ? `+${targets.length - SHOWN_NAMES}` : ''}
+              {targets.length > SHOWN_NAMES ? `+${numberText(targets.length - SHOWN_NAMES)}` : ''}
             </span>
           </div>
           <div className={styles.filters}>
@@ -104,7 +106,7 @@ export function AssignModal({ targets, groups, onClose, onSave }: Props) {
         </div>
         <div className={styles.foot}>
           <span className={styles.info}>
-            {s.picked.size ? t('count', { n: s.picked.size }) : t('none')}
+            {s.picked.size ? t('count', { n: numberText(s.picked.size) }) : t('none')}
           </span>
           <button type="button" className={styles.cancel} onClick={onClose}>
             {t('cancel')}

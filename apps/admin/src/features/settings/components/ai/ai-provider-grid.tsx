@@ -1,9 +1,11 @@
 'use client';
 import { AI_PROVIDER_CATALOG } from '@opchub/shared/api-domains';
+import { useAiProviderLabel } from '../../hooks/use-ai-provider-label';
 import { useTranslations } from 'next-intl';
 import type { AiPanel } from './types';
 import styles from './ai.module.css';
 export function AiProviderGrid({ p }: { p: AiPanel }) {
+  const providerLabel = useAiProviderLabel();
   const t = useTranslations('settings.ai');
   return (
     <div className={styles.grid}>
@@ -22,7 +24,7 @@ export function AiProviderGrid({ p }: { p: AiPanel }) {
               {c.initials}
             </span>
             <span>
-              <b>{c.name}</b>
+              <b>{providerLabel(r.id)}</b>
               <small>
                 <i
                   style={{

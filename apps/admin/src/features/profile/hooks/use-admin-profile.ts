@@ -8,15 +8,19 @@ import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useToast } from '@opchub/ui';
 import { useAuthStore } from '@/lib/auth-store';
-import { uploadImage } from '@/lib/upload-image';
+import { useUploadImage } from '@/i18n/use-upload-image';
 import { updateProfile } from '../api';
-import { profileFormErrors } from '../form-errors';
+import { useProfileErrors } from './use-profile-errors';
+
+const FIELDS = ['name', 'phone'] as const;
 
 export function useAdminProfile() {
+  const uploadImage = useUploadImage();
   const t = useTranslations('common.adminProfile');
   const toast = useToast();
   const me = useAuthStore((s) => s.me);
   const [form] = Form.useForm<AdminUpdateProfileRequest>();
+  const showErrors = useProfileErrors(form, FIELDS, t('failed'));
   const avatar = Form.useWatch('avatarUrl', form);
   const [uploading, setUploading] = useState(false);
   useEffect(() => {
@@ -31,7 +35,7 @@ export function useAdminProfile() {
     },
     onError: (error) => {
       // Avatar is a hidden form value: its server error must be a visible toast, not hidden help.
-      const message = profileFormErrors(form, error, ['name', 'phone'], t('failed'));
+      const message = showErrors(error);
       if (message) toast(message);
     },
   });

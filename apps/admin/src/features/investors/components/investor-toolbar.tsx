@@ -1,7 +1,7 @@
 'use client';
 
 import type { AdminInvestorSummary } from '@opchub/shared/api-domains';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { money } from '../model';
 import { INVESTOR_TABS, type InvestorTab } from '../types';
@@ -9,13 +9,14 @@ import styles from './investors.module.css';
 
 /** 5 thẻ thống kê (prototype ivStats) */
 export function InvestorStats({ s }: { s: AdminInvestorSummary | undefined }) {
+  const locale = useLocale();
   const t = useTranslations('investors.stats');
   const items = [
     ['total', s ? String(s.total) : '—'],
     ['fund', s ? String(s.fund) : '—'],
     ['business', s ? String(s.business) : '—'],
     ['individual', s ? String(s.individual) : '—'],
-    ['amount', s ? money(s.totalAmount) : '—'],
+    ['amount', s ? money(s.totalAmount, 'VND', locale) : '—'],
   ] as const;
   return (
     <div className={styles.stats}>

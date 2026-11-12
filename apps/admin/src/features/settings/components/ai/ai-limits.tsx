@@ -1,5 +1,6 @@
 'use client';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { formatNumber, formatPercentPoints } from '@/i18n/format';
 import { useState } from 'react';
 import { Button } from 'antd';
 import { AiCallLog } from './ai-call-log';
@@ -8,6 +9,8 @@ import type { AiPanel } from './types';
 import styles from './ai.module.css';
 export function AiLimits({ p }: { p: AiPanel }) {
   const t = useTranslations('settings.ai');
+  const tCalls = useTranslations('settings.aiCalls');
+  const locale = useLocale();
   const [logOpen, setLogOpen] = useState(false);
   const form = p.form;
   if (!form) return null;
@@ -38,7 +41,7 @@ export function AiLimits({ p }: { p: AiPanel }) {
         <span>{t('spend', { month })}</span>
         <span>
           {form.budget
-            ? `${cost.toLocaleString('vi-VN')} / ${form.budget.toLocaleString('vi-VN')} · ${pct}%`
+            ? `${formatNumber(cost, locale)} / ${formatNumber(form.budget, locale)} · ${formatPercentPoints(pct, locale)}`
             : t('unlimited')}
         </span>
       </div>
@@ -51,7 +54,7 @@ export function AiLimits({ p }: { p: AiPanel }) {
       )}
       <small>{t('exhausted')}</small>
       <small>{t('budgetAlert')}</small>
-      <Button onClick={() => setLogOpen(true)}>Xem nhật ký</Button>
+      <Button onClick={() => setLogOpen(true)}>{tCalls('view')}</Button>
       <AiCallLog
         open={logOpen}
         close={() => setLogOpen(false)}

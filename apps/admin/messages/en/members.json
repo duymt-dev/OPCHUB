@@ -1,0 +1,179 @@
+{
+  "title": "Members",
+  "sub": "Manage member accounts, registration roles and groups",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "card": {
+    "title": "Members",
+    "count": "· Accounts: {n}",
+    "search": "Search by name, email...",
+    "grid": "Grid view",
+    "list": "List view",
+    "types": "Account type",
+    "typeAll": "All",
+    "typeBiz": "Business",
+    "typePer": "Individual"
+  },
+  "col": {
+    "member": "Member",
+    "type": "Account type",
+    "groups": "Joined groups",
+    "role": "Registration role",
+    "date": "Joined",
+    "status": "Status",
+    "selectAll": "Select all on this page",
+    "select": "Select {name}",
+    "actions": "Actions for {name}"
+  },
+  "type": {
+    "business": "Business",
+    "personal": "Individual",
+    "businessLong": "Business / Organization"
+  },
+  "role": {
+    "member": "Member",
+    "lecturer": "Lecturer",
+    "admin": "Administrator"
+  },
+  "status": {
+    "active": "Active",
+    "locked": "Locked"
+  },
+  "grid": {
+    "joined": "Joined {date}",
+    "profile": "View registration profile →"
+  },
+  "menu": {
+    "title": "Change status",
+    "active": "Active",
+    "lock": "Lock account",
+    "unlock": "Unlock",
+    "assign": "Assign to groups…",
+    "profile": "View registration profile"
+  },
+  "bulk": {
+    "selected": "Selected",
+    "unit": "items",
+    "assign": "+ Assign to groups",
+    "lock": "Lock accounts",
+    "unlock": "Unlock",
+    "export": "Export CSV",
+    "clear": "Clear selection"
+  },
+  "assign": {
+    "titleOne": "Assign {name} to groups",
+    "titleMany": "Assign members to groups: {n}",
+    "search": "Search groups by name or province/city...",
+    "groupRole": "Group role",
+    "already": "Already a member",
+    "none": "No groups selected",
+    "count": "Groups selected: {n}",
+    "cancel": "Cancel",
+    "save": "Assign to groups",
+    "close": "Close"
+  },
+  "drawer": {
+    "title": "Registration profile",
+    "close": "Close",
+    "biz": "Business information",
+    "rep": "Representative",
+    "per": "Personal information",
+    "groups": "Groups selected at registration",
+    "sys": "System",
+    "taxCode": "Tax ID",
+    "company": "Business name",
+    "field": "Industry",
+    "size": "Size",
+    "country": "Country of registration",
+    "name": "Full name",
+    "position": "Position",
+    "phone": "Phone number",
+    "email": "Email",
+    "persona": "You are",
+    "registered": "Registration date",
+    "role": "Registration role",
+    "status": "Status",
+    "pending": "Pending verification",
+    "rejected": "Verification rejected",
+    "reject": "Reject",
+    "approve": "Verify business",
+    "rejectTitle": "Reject business profile?",
+    "rejectBody": "{company} will not receive the \"Verified\" badge. The account remains usable (D-40).",
+    "confirm": "Reject",
+    "cancel": "Cancel"
+  },
+  "roleConfirm": {
+    "title": "Change system permissions?",
+    "body": "{name}: {from} → {to}. This change is recorded in the activity log.",
+    "ok": "Change permissions",
+    "cancel": "Cancel"
+  },
+  "lockConfirm": {
+    "title": "Lock account?",
+    "body": "{who} will be unable to sign in until unlocked. This action is recorded in the activity log.",
+    "many": "Accounts: {n}",
+    "ok": "Lock",
+    "cancel": "Cancel"
+  },
+  "pager": {
+    "unit": "members",
+    "prev": "Previous page",
+    "next": "Next page",
+    "pageSize": "Rows per page"
+  },
+  "toast": {
+    "locked": "Locked · {name}",
+    "unlocked": "Unlocked · {name}",
+    "activated": "Set to Active · {name}",
+    "bulkLocked": "Accounts locked: {n}",
+    "bulkUnlocked": "Accounts unlocked: {n}",
+    "exporting": "Exporting items to CSV: {n}…",
+    "exported": "Members exported: {n}",
+    "exportFailed": "Export failed: unable to create the file. Please try again",
+    "exportTimeout": "Export failed: file creation timed out. Please try again",
+    "role": "Role updated for {name}",
+    "assigned": "Members assigned: {n} · Groups: {g} · Role: {role}",
+    "pickGroup": "Please select at least 1 group",
+    "verified": "{name} verified",
+    "rejected": "Profile rejected for {name}",
+    "failed": "Action unsuccessful"
+  },
+  "filters": {
+    "all": "All",
+    "results": "Results: {n}",
+    "clear": "Clear filters ({n})",
+    "grp": "Community group",
+    "role": {
+      "label": "Registration role",
+      "business": "Business",
+      "expert": "Expert",
+      "lecturer": "Lecturer",
+      "engineer": "Engineer",
+      "investor": "Investor",
+      "freelancer": "Freelancer",
+      "student": "Student"
+    },
+    "fee": {
+      "label": "Membership fee",
+      "paid": "Paid",
+      "trial": "3-month free trial",
+      "unpaid": "Unpaid / Expired"
+    },
+    "st": {
+      "label": "Status",
+      "active": "Active",
+      "locked": "Locked"
+    },
+    "prof": {
+      "label": "Profile",
+      "done": "Completed",
+      "inc": "Incomplete"
+    },
+    "day": {
+      "7": "Last 7 days",
+      "30": "Last 30 days",
+      "90": "Last 90 days",
+      "365": "Last 12 months",
+      "label": "Registration date"
+    }
+  }
+}

@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import type { KeyboardEvent } from 'react';
 import { hasPendingRevision, vnDate } from '../model';
 import type { AdminProject } from '../types';
@@ -44,6 +44,7 @@ interface Props {
 
 /** D-53 / D-54: bảng dự án (dạng danh sách) có chọn nhiều */
 export function ProjectTable({ items, selected, onToggle, onToggleAll, actions }: Props) {
+  const locale = useLocale();
   const t = useTranslations('projects');
   const actLabel = useActLabel();
   const n = items.filter((p) => selected.has(p.id)).length;
@@ -82,7 +83,7 @@ export function ProjectTable({ items, selected, onToggle, onToggleAll, actions }
                 <span>{p.ownerName}</span>
                 <span className={styles.sub}>{p.country}</span>
               </div>
-              <span className={styles.muted}>{vnDate(p.createdAt)}</span>
+              <span className={styles.muted}>{vnDate(p.createdAt, locale)}</span>
               <StatusBadge
                 status={p.status}
                 featured={p.featured}

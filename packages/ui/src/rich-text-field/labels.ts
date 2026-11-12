@@ -1,5 +1,6 @@
 /** Nhãn thanh công cụ + hộp liên kết của RichTextField — app truyền bản dịch qua `labels` (D-65) */
 export interface RichTextLabels {
+  close?: string;
   undo: string;
   redo: string;
   heading: string;

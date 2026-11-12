@@ -2,19 +2,23 @@
 
 import type { WelcomeMail } from '@opchub/shared/api-domains';
 import { Icon } from '@opchub/ui';
-import { useTranslations } from 'next-intl';
+import { createTranslator, useTranslations } from 'next-intl';
+import source from '../../../../messages/vi/settings/mail.json';
 import styles from './welcome-preview.module.css';
+
+const emailText = createTranslator({ locale: 'vi', messages: source.mail });
 
 /** "Xem trước" email chào mừng theo bản nháp đang sửa (prototype wPrev) */
 export function WelcomePreview({ mail }: { mail: WelcomeMail }) {
-  const t = useTranslations('settings.mail');
+  const ui = useTranslations('settings.mail');
+  const t = emailText;
   const atts = mail.attachments
     .filter((a) => a.title.trim() || a.url.trim())
     .map((a) => ({ title: a.title || a.url, url: a.url }));
 
   return (
     <div className={styles.col}>
-      <span className={styles.label}>{t('preview')}</span>
+      <span className={styles.label}>{ui('preview')}</span>
       <div className={styles.bg}>
         <div className={styles.mail}>
           <div className={styles.top}>

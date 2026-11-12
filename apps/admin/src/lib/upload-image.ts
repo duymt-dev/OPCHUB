@@ -5,6 +5,7 @@ import {
 } from '@opchub/shared/api-domains';
 import { AVATAR_MAX_EDGE, COVER_MAX_EDGE, compressImage, isImageType } from '@opchub/ui';
 import { api } from './api-client';
+import { LocalImageUploadError } from './image-upload-error';
 
 /** Ảnh bìa nén cạnh 1600px; ảnh đại diện / logo / persona / đội ngũ 512px (NA-26) */
 const COVER_KINDS: readonly ImageUploadKind[] = ['group-cover', 'event-cover', 'project-cover'];
@@ -15,8 +16,10 @@ const COVER_KINDS: readonly ImageUploadKind[] = ['group-cover', 'event-cover', '
  */
 export async function uploadImage(file: File, kind: ImageUploadKind): Promise<string> {
   const maxEdge = COVER_KINDS.includes(kind) ? COVER_MAX_EDGE : AVATAR_MAX_EDGE;
-  const img = await compressImage(file, { maxEdge });
-  if (!isImageType(img.type)) throw new Error('Ảnh phải là PNG/JPEG/WEBP');
+  const img = await compressImage(file, { maxEdge }).catch((cause: unknown) => {
+    throw new LocalImageUploadError('imageUpload', { cause });
+  });
+  if (!isImageType(img.type)) throw new LocalImageUploadError('imageType');
   const req: PresignRequest = { kind, contentType: img.type, size: img.size };
   const { uploadUrl, publicUrl } = await api('/uploads/presign', {
     method: 'POST',
@@ -27,7 +30,9 @@ export async function uploadImage(file: File, kind: ImageUploadKind): Promise<st
     method: 'PUT',
     body: img,
     headers: { 'Content-Type': img.type },
+  }).catch((cause: unknown) => {
+    throw new LocalImageUploadError('imageUpload', { cause });
   });
-  if (!res.ok) throw new Error('Tải ảnh lên thất bại, vui lòng thử lại');
+  if (!res.ok) throw new LocalImageUploadError('imageUpload');
   return publicUrl;
 }

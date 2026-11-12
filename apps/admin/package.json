@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev -p 3001",
-    "build": "next build",
+    "build": "vitest run src/i18n/tests/production-catalogs.spec.ts && next build",
     "start": "next start -p 3001",
     "typecheck": "next typegen && tsc --noEmit",
     "lint": "eslint src",
@@ -14,6 +14,8 @@
   "dependencies": {
     "@ant-design/icons": "catalog:",
     "@ant-design/nextjs-registry": "catalog:",
+    "@formatjs/intl-datetimeformat": "catalog:",
+    "@formatjs/intl-numberformat": "catalog:",
     "@opchub/shared": "workspace:*",
     "@opchub/ui": "workspace:*",
     "@tanstack/react-query": "catalog:",
@@ -34,6 +36,7 @@
     "@types/react-dom": "catalog:",
     "@vitejs/plugin-react": "catalog:",
     "eslint": "catalog:",
+    "intl-messageformat": "catalog:",
     "jsdom": "catalog:",
     "msw": "catalog:",
     "typescript": "catalog:",

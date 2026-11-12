@@ -1,7 +1,7 @@
 'use client';
 
 import type { AdminInvestor } from '@opchub/shared/api-domains';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { money, projectList, shortDate } from '../model';
 import { InvestorAvatar, KindTag } from './tags';
 import styles from './investor-table.module.css';
@@ -9,6 +9,7 @@ import styles from './investor-table.module.css';
 const COLS = ['investor', 'kind', 'org', 'phone', 'projects', 'total'] as const;
 
 function Row({ x, onOpen }: { x: AdminInvestor; onOpen: () => void }) {
+  const locale = useLocale();
   const t = useTranslations('investors');
   return (
     <div className={`${styles.grid} ${styles.row}`} role="row">
@@ -16,7 +17,7 @@ function Row({ x, onOpen }: { x: AdminInvestor; onOpen: () => void }) {
         <InvestorAvatar src={x.avatarUrl} size={36} />
         <div className={styles.whoText}>
           <b className={styles.name}>{x.name}</b>
-          <span className={styles.meta}>{shortDate(x.lastAt)}</span>
+          <span className={styles.meta}>{shortDate(x.lastAt, locale)}</span>
         </div>
       </div>
       <div className={styles.td} role="cell">
@@ -32,7 +33,7 @@ function Row({ x, onOpen }: { x: AdminInvestor; onOpen: () => void }) {
         {projectList(x.items.map((i) => i.projectName))}
       </span>
       <b className={`${styles.td} ${styles.money}`} role="cell">
-        {money(x.totalAmount)}
+        {money(x.totalAmount, 'VND', locale)}
       </b>
       <div className={styles.actions} role="cell">
         <button type="button" className={styles.link} onClick={onOpen}>

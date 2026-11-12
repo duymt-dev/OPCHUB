@@ -1,0 +1,79 @@
+{
+  "title": "服务",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "tabs": {
+    "label": "服务",
+    "list": "报名申请",
+    "catalog": "计划与服务目录"
+  },
+  "heading": "服务报名申请",
+  "search": "搜索代码、姓名、邮箱或组织...",
+  "searchLabel": "按代码、姓名、邮箱或组织查找申请",
+  "csv": "导出 CSV",
+  "col": {
+    "code": "代码",
+    "contact": "联系人",
+    "service": "服务",
+    "province": "省市",
+    "date": "提交日期"
+  },
+  "kind": {
+    "business": "企业 / 组织",
+    "personal": "个人"
+  },
+  "detail": "详情",
+  "empty": "没有匹配的申请",
+  "pager": {
+    "unit": "份申请",
+    "prev": "上一页",
+    "next": "下一页",
+    "pageSize": "每页行数"
+  },
+  "drawer": {
+    "title": "申请 {code}",
+    "close": "关闭",
+    "service": "服务",
+    "kind": "客户类型",
+    "contact": "联系人",
+    "phone": "电话号码",
+    "email": "电子邮箱",
+    "org": "组织／税号",
+    "province": "省市",
+    "date": "提交日期",
+    "note": "申请描述",
+    "thread": "内部讨论",
+    "threadCount": "评论：{n} · 仅管理员可见",
+    "editor": "撰写内部备注：报价、合同、进度等…",
+    "mention": "提及：",
+    "send": "发送评论"
+  },
+  "confirm": {
+    "deleteTitle": "删除服务？",
+    "deleteBody": "“{name}”将从目录中移除，并不再显示在会员门户。",
+    "delete": "删除",
+    "cancel": "取消"
+  },
+  "catalog": {
+    "heading": "计划与服务目录",
+    "sub": "显示在会员门户服务套餐弹窗的“其他服务与计划”部分，以及咨询申请表的服务选择框中。关闭显示后将从会员门户隐藏。",
+    "name": "计划／服务名称",
+    "model": "形式",
+    "desc": "简短描述",
+    "used": "申请：{n}",
+    "visible": "可见",
+    "delete": "删除",
+    "add": "+ 添加计划／服务"
+  },
+  "toast": {
+    "commented": "评论已发送",
+    "notified": "已发送并通知 {names}",
+    "emptyComment": "请输入评论内容",
+    "exported": "已导出申请：{n}",
+    "deleted": "服务已删除",
+    "inUse": "此服务已有申请，请将其隐藏而非删除",
+    "failed": "无法完成操作，请重试"
+  },
+  "error": "无法加载服务申请列表",
+  "retry": "重试",
+  "sub": "来自会员门户 › 服务套餐的咨询申请"
+}

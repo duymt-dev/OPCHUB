@@ -1,7 +1,8 @@
 'use client';
 
 import { COVER_DEFAULT_SRC, groupCoverSrc } from '@opchub/ui';
-import { useTranslations } from 'next-intl';
+import { useDomainLabels } from '@/i18n/domain-labels';
+import { useLocale, useTranslations } from 'next-intl';
 import type { SyntheticEvent } from 'react';
 import { formatCount, initialsOf, toneOf } from '../model';
 import type { AdminGroup } from '../types';
@@ -25,7 +26,9 @@ export function Cover({ g }: { g: AdminGroup }) {
 }
 
 function Card({ g, a }: { g: AdminGroup; a: GroupRowActions }) {
+  const locale = useLocale();
   const t = useTranslations('groups.list');
+  const labels = useDomainLabels();
   const tone = toneOf(g.order);
   return (
     <article className={styles.card}>
@@ -42,25 +45,26 @@ function Card({ g, a }: { g: AdminGroup; a: GroupRowActions }) {
           </span>
           <div className={styles.names}>
             <b className={styles.name}>{g.name}</b>
-            <span className={styles.region}>{g.region}</span>
+            <span className={styles.region}>{labels.canonicalRegion(g.region)}</span>
           </div>
         </div>
         <div className={styles.metrics}>
           <div className={styles.metric}>
-            <b>{formatCount(g.memberCount)}</b>
+            <b>{formatCount(g.memberCount, locale)}</b>
             <span>{t('membersLabel')}</span>
           </div>
           <div className={styles.metric}>
-            <b>{formatCount(g.weeklyActive)}</b>
+            <b>{formatCount(g.weeklyActive, locale)}</b>
             <span>{t('weeklyLabel')}</span>
           </div>
         </div>
       </div>
       <div className={styles.actions}>
-        <button type="button" className={styles.act} onClick={() => a.onEdit(g)}>
+        <button data-act="write" type="button" className={styles.act} onClick={() => a.onEdit(g)}>
           {t('edit')}
         </button>
         <button
+          data-act="write"
           type="button"
           className={`${styles.act} ${styles.blue}`}
           onClick={() => a.onExport(g)}
@@ -71,6 +75,7 @@ function Card({ g, a }: { g: AdminGroup; a: GroupRowActions }) {
           {t('chat')}
         </button>
         <button
+          data-act="write"
           type="button"
           className={`${styles.act} ${styles.red}`}
           onClick={() => a.onDelete(g)}

@@ -1,0 +1,42 @@
+{
+  "log": {
+    "filterTag": "Nhóm",
+    "filterActor": "Người thực hiện",
+    "filterRange": "Khoảng ngày",
+    "from": "Từ ngày",
+    "to": "Đến ngày",
+    "system": "Hệ thống",
+    "clearFilters": "Xóa lọc",
+    "retryActors": "Tải lại người thực hiện",
+    "emptyFiltered": "Không có thao tác phù hợp",
+    "heading": "Nhật ký hoạt động quản trị",
+    "headingSub": "Tự động ghi mọi thao tác của quản trị viên (khóa, duyệt, chi trả, đổi cấu hình…) trong 90 ngày.",
+    "empty": "Chưa có hoạt động nào",
+    "tag": {
+      "affiliate": "Affiliate",
+      "sso": "SSO",
+      "member": "Thành viên",
+      "permission": "Phân quyền",
+      "project": "Dự án",
+      "language": "Ngôn ngữ",
+      "moderation": "Kiểm duyệt",
+      "settings": "Cấu hình",
+      "content": "Nội dung",
+      "report": "Báo cáo",
+      "pricing": "Bảng giá"
+    },
+    "export": "Xuất CSV",
+    "more": "Xem thêm",
+    "loading": "Đang tải nhật ký…",
+    "failed": "Không tải được nhật ký hoặc xuất CSV",
+    "retry": "Thử lại",
+    "exported": "Đã xuất {n} dòng – nhat-ky-hoat-dong.csv"
+  },
+  "time": {
+    "now": "vừa xong",
+    "minutes": "{n} phút trước",
+    "hours": "{n} giờ trước",
+    "yesterday": "Hôm qua",
+    "days": "{n} ngày trước"
+  }
+}

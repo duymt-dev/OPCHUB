@@ -1,0 +1,58 @@
+{
+  "cldr": "49",
+  "packages": {
+    "@formatjs/intl-datetimeformat": {
+      "version": "8.0.3",
+      "licenseSha256": "b1cc980e28e9e48f377db191578a9361494ca7117185b69dd66cabaf5b460fb7"
+    },
+    "@formatjs/intl-numberformat": {
+      "version": "10.0.4",
+      "licenseSha256": "b1cc980e28e9e48f377db191578a9361494ca7117185b69dd66cabaf5b460fb7"
+    }
+  },
+  "localeSources": {
+    "km-date": {
+      "package": "@formatjs/intl-datetimeformat",
+      "file": "locale-data/km.js",
+      "bytes": 516913,
+      "sha256": "85d310f15758abc15969bded183eac1f12272eeab0a986946d737f97241caf15"
+    },
+    "lo-date": {
+      "package": "@formatjs/intl-datetimeformat",
+      "file": "locale-data/lo.js",
+      "bytes": 439544,
+      "sha256": "e5d3bba886d24502ef50437c4279db40e0e7c4c05eb41447cc0f4f627dafdf8c"
+    },
+    "my-date": {
+      "package": "@formatjs/intl-datetimeformat",
+      "file": "locale-data/my.js",
+      "bytes": 439973,
+      "sha256": "83d8b1d9693b86f4b185f46fa4f2c809c50e075f6e82c37650cc4377785bb40a"
+    },
+    "km-number": {
+      "package": "@formatjs/intl-numberformat",
+      "file": "locale-data/km.js",
+      "bytes": 87727,
+      "sha256": "b35e8949cb141582625296b6d3a52638f44c0426136afdbac26005b3f1fca209"
+    },
+    "lo-number": {
+      "package": "@formatjs/intl-numberformat",
+      "file": "locale-data/lo.js",
+      "bytes": 121877,
+      "sha256": "0a3c75c9c1199728f6b6a0498835fc0d9dc1106a3c290cb29da1a373749babb2"
+    },
+    "my-number": {
+      "package": "@formatjs/intl-numberformat",
+      "file": "locale-data/my.js",
+      "bytes": 107749,
+      "sha256": "f0026ba33aa545561b8fb1b3e145a88564d6453390306e608be66ea00e977abe"
+    }
+  },
+  "assets": {
+    "vietnam-time-zone.json": {
+      "bytes": 2489,
+      "sha256": "600f1df1214233547a771874700188480697e988c3a919d71d988eba2571a862",
+      "sourceSha256": "fd5a910329cbe3b3d3c626eb22365a1cbfaec69166b0d2c3522314bcd2e63965"
+    }
+  }
+}

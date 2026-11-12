@@ -4,7 +4,10 @@ import { useRenewal } from '../hooks/use-renewal';
 import { RenewalConfig } from './renewal-config';
 import { RenewalTable } from './renewal-table';
 import styles from './renewal.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
+
 export function RenewalTab() {
+  const numberText = useNumberText();
   const t = useTranslations('settings.renewal');
   const p = useRenewal();
   if (p.error)
@@ -35,7 +38,7 @@ export function RenewalTab() {
         </div>
       ) : null}
       <div className={styles.head}>
-        <b className={styles.listHeading}>{t('list', { n: p.total })}</b>
+        <b className={styles.listHeading}>{t('list', { n: numberText(p.total) })}</b>
         <button
           type="button"
           className={styles.secondary}

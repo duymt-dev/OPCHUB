@@ -1,0 +1,284 @@
+Working tree based on38f0c17d. Fixed10 bundles/25 files=250 raw catalogs; reviewed92 exact source/key/locale copy receipts, no target-inferred exceptions at runtime. Strict ASCII/Vietnamese source-copy checks, raw contracts, physical isolated missing-locale/file/key/type/ICU/empty/TODO negative fixtures. Admin build now gates on this same spec before next build; no new dependency/runtime/business/DB/Portal/shared change. No full16-AC claim.
+COMMAND pnpm --filter @opchub/admin exec vitest run src/i18n/tests/production-catalogs.spec.ts
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  1 passed (1)
+      Tests  48 passed (48)
+   Start at  06:19:15
+   Duration  65.63s (tests 97%, environment 3%)
+
+EXIT 0
+
+Final fixed gate adds Vietnamese-source plain-TODO negative (49 total); no production raw source changes. Same raw gates also run before Admin build. Combined Myanmar99 +actual request15 +production raw gate49=163 focused cases, included in subsequent root count, not additional unique tests.
+COMMAND pnpm --filter @opchub/admin exec vitest run src/i18n/tests/myanmar-catalog.spec.ts src/i18n/request.spec.ts src/i18n/tests/production-catalogs.spec.ts
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  3 passed (3)
+      Tests  163 passed (163)
+   Start at  06:21:50
+   Duration  87.52s (tests 88%, environment 10%, transform 1%, import 1%)
+
+    Isolate  3 workers spawned · ~3.33s startup each (spawn + environment, per file)
+             at least ~6.67s faster with isolate: false — reuses workers across files instead of one per file
+
+EXIT 0
+
+First full-root attempt observed49 filesystem gate cases with2 failures, my/auth16693ms and my/bot-options5711ms, despite focused163 pass. Root was explicitly interrupted after these reported failures, not a PASS; detailed terminal assertion stack was not collected, so duration alone is not definitive root-cause proof. Full original root output follows. Optimize repeated pure ICU contract compilation with bounded immutable string+locale signatures; never cache physical reads/fallbacks/failures, retain every mutation/assertion/default5000ms timeout. New unit proof checks cache identity, defensive copies and malformed changed inputs. Final full-root retry remains mandatory.
+Source working tree based on38f0c17d; complete Myanmar raw bundle and fixed full-inventory production checker; Admin unit inputs changed, Turbo cache hits identified explicitly. Full root tests; VITEST_MAX_WORKERS=1 passed through Turbo loose mode, a resource cap only. No test skip, assertion or timeout reductions. No overlapping production builds.
+COMMAND pnpm test --env-mode=loose
+$ turbo run test --concurrency=2 --env-mode=loose
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running test in 9 packages
+   • Remote caching disabled
+
+@opchub/admin:test: cache miss, executing d4a812e7798366fc
+@opchub/server:test: cache hit, replaying logs c2e070d3adeeddab
+@opchub/server:test: $ vitest run --project unit
+@opchub/server:test:
+@opchub/server:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+@opchub/server:test:
+@opchub/server:test:
+@opchub/server:test:  Test Files  57 passed (57)
+@opchub/server:test:       Tests  276 passed (276)
+@opchub/server:test:    Start at  16:03:29
+@opchub/server:test:    Duration  57.63s (import 83%, transform 12%, tests 4%, worker 1%)
+@opchub/server:test:
+@opchub/server:test:      Import  |unit| 400 modules were evaluated 1913 times · 65.27s total, 83% of tracked time
+@opchub/server:test:              ~22.11s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/server:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
+@opchub/server:test:
+@opchub/portal:test: cache hit, replaying logs c499ac8b2dccf1b3
+@opchub/portal:test: $ vitest run --passWithNoTests
+@opchub/portal:test:
+@opchub/portal:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/portal
+@opchub/portal:test:
+@opchub/portal:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/portal:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/portal:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/portal:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/portal:test:
+@opchub/portal:test:  Test Files  85 passed (85)
+@opchub/portal:test:       Tests  476 passed (476)
+@opchub/portal:test:    Start at  16:04:29
+@opchub/portal:test:    Duration  353.37s (environment 47%, import 47%, tests 4%, transform 1%)
+@opchub/portal:test:
+@opchub/portal:test:      Import  804 modules were evaluated 5111 times · 309.19s total, 47% of tracked time
+@opchub/portal:test:              ~113.00s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/portal:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
+@opchub/portal:test:
+@opchub/ui:test: cache hit, replaying logs 93ecb6a3e3980f04
+@opchub/ui:test: $ vitest run
+@opchub/ui:test:
+@opchub/ui:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/ui
+@opchub/ui:test:
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test:
+@opchub/ui:test:  Test Files  24 passed (24)
+@opchub/ui:test:       Tests  88 passed (88)
+@opchub/ui:test:    Start at  22:02:39
+@opchub/ui:test:    Duration  124.68s (import 50%, environment 44%, tests 4%, transform 1%)
+@opchub/ui:test:
+@opchub/ui:test:     Isolate  24 workers spawned · ~4.78s startup each (spawn + environment, per file)
+@opchub/ui:test:              at least ~52.62s faster with isolate: false — reuses workers across files instead of one per file
+@opchub/ui:test:
+@opchub/shared:test: cache hit, replaying logs b0ac9becdf974ad3
+@opchub/shared:test: $ vitest run
+@opchub/shared:test:
+@opchub/shared:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/shared
+@opchub/shared:test:
+@opchub/shared:test:
+@opchub/shared:test:  Test Files  127 passed (127)
+@opchub/shared:test:       Tests  757 passed (757)
+@opchub/shared:test:    Start at  16:00:10
+@opchub/shared:test:    Duration  158.12s (import 86%, transform 9%, tests 4%, worker 1%)
+@opchub/shared:test:
+@opchub/shared:test:      Import  432 modules were evaluated 893 times · 162.66s total, 86% of tracked time
+@opchub/shared:test:              ~18.76s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/shared:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
+@opchub/shared:test:
+@opchub/integrations:test: cache hit, replaying logs b6c214e97c1022b8
+@opchub/integrations:test: $ vitest run
+@opchub/integrations:test:
+@opchub/integrations:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/integrations
+@opchub/integrations:test:
+@opchub/integrations:test:
+@opchub/integrations:test:  Test Files  13 passed | 1 skipped (14)
+@opchub/integrations:test:       Tests  126 passed | 2 skipped (128)
+@opchub/integrations:test:    Start at  16:03:15
+@opchub/integrations:test:    Duration  11.26s (import 54%, transform 25%, tests 18%, worker 3%)
+@opchub/integrations:test:
+@opchub/integrations:test:      Import  151 modules were evaluated 343 times · 6.24s total, 54% of tracked time
+@opchub/integrations:test:              ~709ms faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/integrations:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
+@opchub/integrations:test:
+@opchub/admin:test: $ vitest run --passWithNoTests
+@opchub/admin:test:
+@opchub/admin:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+@opchub/admin:test:
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test:  ❯ src/i18n/tests/production-catalogs.spec.ts (49 tests | 2 failed) 85727ms
+@opchub/admin:test:    ❯ D-141 AC824-02 fixed10-bundle production gate, raw filesystem not fallback (49)
+@opchub/admin:test:      × fails when physical my/auth catalog is removed 16693ms
+@opchub/admin:test:      × fails when physical my/bot-options catalog is removed 5711ms
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+
+INTERRUPTED ROOT EXIT 1
+
+Validator follow-up: memoize only immutable ICU signatures, never files/fallbacks/failures; cap32768, defensive returned copies. Initial cache unit spy incorrectly targeted own-instance getAst on prototype and failed1/3; corrected instrumentation to installed declared static __parse, unchanged hit-count assertions, then3/3 passed. Physical fixture suite is explicitly sequential and restores only actually mutated paths after initial250-file copy (not250 unchanged copies per mutation); each assertion still validates the whole physical tree. Same49 negatives, default timeouts unchanged.
+COMMAND pnpm --filter @opchub/admin exec vitest run src/i18n/tests/myanmar-catalog.spec.ts src/i18n/request.spec.ts src/i18n/tests/production-catalogs.spec.ts src/i18n/tests/icu-contract-cache.spec.ts src/i18n/tests/message-contract.spec.ts
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+ ❯ src/i18n/tests/production-catalogs.spec.ts (0 test)
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+System.Management.Automation.RemoteException
+ FAIL  src/i18n/tests/production-catalogs.spec.ts [ src/i18n/tests/production-catalogs.spec.ts ]
+TypeError: describe.sequential is not a function
+ ❯ src/i18n/tests/production-catalogs.spec.ts:14:10
+     12| import { COPY_POLICY } from './production-copy-policy';
+     13|
+     14| describe.sequential(
+       |          ^
+     15|   'D-141 AC824-02 fixed10-bundle production gate, raw filesystem not f…
+     16|   () => {
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+System.Management.Automation.RemoteException
+
+ Test Files  1 failed | 4 passed (5)
+      Tests  132 passed (132)
+   Start at  06:34:55
+   Duration  5.88s (environment 83%, tests 10%, import 4%, transform 3%, worker 1%)
+
+    Isolate  5 workers spawned · ~2.60s startup each (spawn + environment, per file)
+             at least ~1.73s faster with isolate: false — reuses workers across files instead of one per file
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\admin
+System.Management.Automation.RemoteException
+EXIT 1
+
+Installed Vitest5 does not expose describe.sequential; collection failed before49 cases. Use supported default non-concurrent describe/it, no timeout/assertion/fixture change. All failed attempts retained; final full-root remains mandatory.
+COMMAND pnpm --filter @opchub/admin exec vitest run src/i18n/tests/myanmar-catalog.spec.ts src/i18n/request.spec.ts src/i18n/tests/production-catalogs.spec.ts src/i18n/tests/icu-contract-cache.spec.ts src/i18n/tests/message-contract.spec.ts
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  5 passed (5)
+      Tests  181 passed (181)
+   Start at  06:35:27
+   Duration  22.26s (tests 59%, environment 38%, import 2%, transform 1%)
+
+    Isolate  5 workers spawned · ~3.01s startup each (spawn + environment, per file)
+             at least ~2.01s faster with isolate: false — reuses workers across files instead of one per file
+
+EXIT 0
+
+Next root attempt stopped at typecheck before unit execution: optional declared __parse is rejected by spyOn's overload although runtime probe passed. Use an explicitly checked real-parser vi.fn wrapper, restore in finally; same hit-count/locale/text/malformed/defensive-copy assertions, no type suppression. Actual failed root quality output follows.
+Source working tree based on38f0c17d; complete Myanmar25/2667 with8 new business catalogs/1407 leaves, preserving earlier17 files. Fixed10-bundle250-file raw/build gate49 physical positive/negative cases and92 exact source/key/locale copy receipts. Full16-AC/control/state/value/performance acceptance remains open; raw presence alone is not DONE. No other locale/runtime/business/API/DB/Portal/shared/dependency/font change. Actual root commands, cached tasks identified by Turbo; no DB/service mutation.
+COMMAND pnpm lint
+$ turbo run lint
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running lint in 9 packages
+   • Remote caching disabled
+
+@opchub/db:lint: cache hit, replaying logs 8df791dba6501ec7
+@opchub/integrations:lint: cache hit, replaying logs 1fb607819a53b21e
+@opchub/portal:lint: cache hit, replaying logs 71e3df361172b94e
+@opchub/server:lint: cache hit, replaying logs 7f4b11d47879bedd
+@opchub/ui:lint: cache hit, replaying logs eea5bd38bfdbc884
+@opchub/integrations:lint: $ eslint src
+@opchub/server:lint: $ eslint src test
+@opchub/portal:lint: $ eslint src
+@opchub/e2e:lint: cache miss, executing 262e2e5dd8bd5c95
+@opchub/ui:lint: $ eslint src
+@opchub/shared:lint: cache hit, replaying logs f9d493ea0cb6d67f
+@opchub/db:lint: $ eslint src seed test
+@opchub/shared:lint: $ eslint src
+@opchub/admin:lint: cache miss, executing 53b6d654c099fa31
+@opchub/e2e:lint: $ eslint parity behavior audit server llm env.ts urls.ts
+@opchub/admin:lint: $ eslint src
+
+ Tasks:    8 successful, 8 total
+Cached:    6 cached, 8 total
+  Time:    1m21.527s
+
+EXIT 0
+COMMAND pnpm typecheck
+$ turbo run typecheck
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running typecheck in 9 packages
+   • Remote caching disabled
+
+@opchub/admin:typecheck: cache miss, executing bccc53cdec67e322
+@opchub/portal:typecheck: cache hit, replaying logs 384ceac62a366d53
+@opchub/e2e:typecheck: cache miss, executing e3f96f8bef59081e
+@opchub/shared:typecheck: cache hit, replaying logs 2af37fea5a693c30
+@opchub/db:typecheck: cache hit, replaying logs 35eaf239ef03390a
+@opchub/server:typecheck: cache hit, replaying logs f44a5951da8d2c30
+@opchub/portal:typecheck: $ next typegen && tsc --noEmit
+@opchub/portal:typecheck: Generating route types...
+@opchub/portal:typecheck: ✓ Types generated successfully
+@opchub/shared:typecheck: $ tsc -p tsconfig.json
+@opchub/db:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/server:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/integrations:typecheck: cache hit, replaying logs 60f5b494e043fdc4
+@opchub/integrations:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/ui:typecheck: cache hit, replaying logs 24d1fa8fcf34937b
+@opchub/ui:typecheck: $ tsc -p tsconfig.json
+@opchub/admin:typecheck: $ next typegen && tsc --noEmit
+@opchub/e2e:typecheck: $ tsc -p tsconfig.json
+@opchub/admin:typecheck: Generating route types...
+@opchub/admin:typecheck: ✓ Types generated successfully
+@opchub/admin:typecheck: src/i18n/tests/icu-contract-cache.spec.ts(8,47): error TS2769: No overload matches this call.
+@opchub/admin:typecheck:   Overload 1 of 4, '(object: typeof IntlMessageFormat, key: "resolveLocale"): Mock<(locales: string | string[]) => Locale | undefined>', gave the following error.
+@opchub/admin:typecheck:     Argument of type '"__parse"' is not assignable to parameter of type '"resolveLocale"'.
+@opchub/admin:typecheck:   Overload 2 of 4, '(object: typeof IntlMessageFormat, key: never): never', gave the following error.
+@opchub/admin:typecheck:     Argument of type '"__parse"' is not assignable to parameter of type 'never'.
+@opchub/admin:typecheck: [ELIFECYCLE] Command failed with exit code 2.
+@opchub/admin#typecheck:  ERROR  command (D:\CODING\OPCHUB\CODING\apps\admin) C:\Users\PC\AppData\Local\Temp\opchub-tip823-pnpm-12-11-2\pnpm.cmd run typecheck exited (2)
+
+ Tasks:    7 successful, 8 total
+Cached:    6 cached, 8 total
+  Time:    14.138s
+Failed:    @opchub/admin#typecheck
+
+ ERROR  run failed: command  exited (2)
+[ELIFECYCLE] Command failed with exit code 2.
+EXIT 2
+
+
+Final checkpoint source6022d311: root3364 unique pass +2 existing skips, fresh Admin1641/193files, other5 cached; lint/typecheck8tasks/7cached, depcheck2830modules/8668dependencies plus server1260/5995. Both production builds PASS including49 raw gates each; post-artifact E2E typecheck PASS. All23 code/catalog/harness inputs still identical to tested commit after documentation-only manifest/status changes; earlier17 My catalogs unchanged. Full behavior FAILED: MSW198/208 and native197/208; font48 PASS is not a substitute. Recorded UI overflow, fixture alias/menu errors, native proxy reset and unready screenshots remain required corrections. Manifest987 unique paths,67 changed docs/evidence paths,0 undeclared or over400 source files;20 UTF8/control/secret/Intl-log text checks and47 PNG signatures PASS, git diff --check. No DONE/full16-AC/performance claim.

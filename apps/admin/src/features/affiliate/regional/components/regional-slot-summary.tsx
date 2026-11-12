@@ -3,6 +3,8 @@ import { Button } from 'antd';
 import { useTranslations } from 'next-intl';
 import type { RegionalSlot } from '@opchub/shared/api-domains';
 import styles from './regional.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
+import { useDomainLabels } from '@/i18n/domain-labels';
 
 export function RegionalSlotSummary({
   slot,
@@ -15,7 +17,9 @@ export function RegionalSlotSummary({
   pending: boolean;
   onRevoke: () => void;
 }) {
+  const numberText = useNumberText();
   const t = useTranslations('affiliate.regional');
+  const labels = useDomainLabels();
   return (
     <>
       <header className={styles.slotHead}>
@@ -23,7 +27,7 @@ export function RegionalSlotSummary({
         <div className={styles.identity}>
           <div>
             <b>{slot.member?.fullName ?? t('vacant')}</b>
-            <span className={styles.region}>{slot.label}</span>
+            <span className={styles.region}>{labels.region(slot.region, true)}</span>
           </div>
           <small>{slot.member?.email ?? '—'}</small>
         </div>
@@ -36,11 +40,11 @@ export function RegionalSlotSummary({
       <div className={styles.counts}>
         <div>
           <span>{t('provinces')}</span>
-          <b>{t('provinceCount', { n: slot.provinces.length })}</b>
+          <b>{t('provinceCount', { n: numberText(slot.provinces.length) })}</b>
         </div>
         <div>
           <span>{t('network')}</span>
-          <b>{t('affiliateCount', { n: slot.affiliateCount })}</b>
+          <b>{t('affiliateCount', { n: numberText(slot.affiliateCount) })}</b>
         </div>
       </div>
     </>

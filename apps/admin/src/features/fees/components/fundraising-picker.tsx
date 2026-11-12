@@ -1,7 +1,7 @@
 'use client';
 
 import type { PendingFundraising } from '@opchub/shared/api-domains';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { usePendingFundraisings } from '../hooks/use-member-lookup';
 import { vnd } from '../model';
@@ -19,6 +19,7 @@ interface Props {
  * Gợi ý mã GV khớp đúng 1 khoản → chọn sẵn ở hộp Khớp tay.
  */
 export function FundraisingPicker({ hint, selected, onSelect }: Props) {
+  const locale = useLocale();
   const t = useTranslations('fees.txn.dialog');
   const [term, setTerm] = useState(hint ?? '');
   const found = usePendingFundraisings(term);
@@ -57,7 +58,7 @@ export function FundraisingPicker({ hint, selected, onSelect }: Props) {
                     {f.code} · {f.projectName}
                   </b>
                   <span className={styles.muted}>
-                    {f.ownerName} · {f.ownerCode} · {vnd(f.amount)}
+                    {f.ownerName} · {f.ownerCode} · {vnd(f.amount, locale)}
                   </span>
                 </button>
               </li>

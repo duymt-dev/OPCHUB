@@ -1,7 +1,7 @@
 'use client';
 
 import type { TableProps } from 'antd';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { affiliateDate, affiliateMoney } from '../format';
 import { affiliateMonthLabel } from '../model';
 import type { AffiliateMonthRow } from '../types';
@@ -9,6 +9,7 @@ import { MonthStatus } from './month-status';
 import styles from './affiliate-detail.module.css';
 
 export function usePayoutColumns(): NonNullable<TableProps<AffiliateMonthRow>['columns']> {
+  const locale = useLocale();
   const t = useTranslations('affiliate');
   return [
     {
@@ -16,7 +17,7 @@ export function usePayoutColumns(): NonNullable<TableProps<AffiliateMonthRow>['c
       key: 'month',
       render: (_, row) => (
         <b>
-          {t('columns.month')} {affiliateMonthLabel(row.monthKey)}
+          {t('columns.month')} {affiliateMonthLabel(row.monthKey, locale)}
         </b>
       ),
     },
@@ -25,7 +26,7 @@ export function usePayoutColumns(): NonNullable<TableProps<AffiliateMonthRow>['c
       title: t('columns.commission'),
       key: 'amount',
       width: 120,
-      render: (_, row) => <b className={styles.monthMoney}>{affiliateMoney(row.amount)}</b>,
+      render: (_, row) => <b className={styles.monthMoney}>{affiliateMoney(row.amount, locale)}</b>,
     },
     {
       title: t('columns.status'),
@@ -37,7 +38,7 @@ export function usePayoutColumns(): NonNullable<TableProps<AffiliateMonthRow>['c
       title: t('columns.paidAt'),
       key: 'paidAt',
       width: 100,
-      render: (_, row) => affiliateDate(row.paidAt),
+      render: (_, row) => affiliateDate(row.paidAt, locale),
     },
     {
       title: t('regionalPays'),

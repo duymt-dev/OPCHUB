@@ -6,12 +6,14 @@ import { useLanguages } from '../hooks/use-security';
 import { SwitchMark } from './switch';
 import styles from './sso.module.css';
 import ui from './settings.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 const meta = new Map(languages.map((l) => [l.code, l]));
 const nativeOf = (code: string) => meta.get(code)?.native ?? code;
 
 /** D-77 (unreachable trên prototype, dựng theo D-33): ngôn ngữ mặc định + bật/tắt, % bản dịch */
 export function LanguagesTab() {
+  const numberText = useNumberText();
   const t = useTranslations('settings.lang');
   const { data, patch, toast } = useLanguages();
   if (!data) return null;
@@ -77,7 +79,7 @@ export function LanguagesTab() {
                       style={{ ['--p' as string]: `${l.progress}%` }}
                     />
                   </span>
-                  {l.progress}%
+                  {numberText(l.progress)}%
                 </span>
               </span>
               <SwitchMark on={l.enabled} />

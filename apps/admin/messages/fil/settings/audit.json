@@ -1,0 +1,42 @@
+{
+  "log": {
+    "filterTag": "Kategorya",
+    "filterActor": "Gumawa ng aksyon",
+    "filterRange": "Saklaw ng petsa",
+    "from": "Mula sa petsa",
+    "to": "Hanggang sa petsa",
+    "system": "System",
+    "clearFilters": "I-clear ang mga filter",
+    "retryActors": "I-reload ang mga gumawa ng aksyon",
+    "emptyFiltered": "Walang tumutugmang aksyon",
+    "heading": "Talaan ng aktibidad ng administrador",
+    "headingSub": "Awtomatikong itinatala ang lahat ng aksyon ng administrador (pag-lock, pag-apruba, pagbabayad, pagbabago ng konfigurasyon…) sa nakaraang 90 araw.",
+    "empty": "Wala pang aktibidad",
+    "tag": {
+      "affiliate": "Affiliate",
+      "sso": "SSO",
+      "member": "Mga Miyembro",
+      "permission": "Mga Pahintulot",
+      "project": "Proyekto",
+      "language": "Mga Wika",
+      "moderation": "Pagmo-moderate",
+      "settings": "Konfigurasyon",
+      "content": "Nilalaman",
+      "report": "Mga Ulat",
+      "pricing": "Presyo"
+    },
+    "export": "I-export bilang CSV",
+    "more": "Mag-load pa",
+    "loading": "Nilo-load ang talaan ng aktibidad…",
+    "failed": "Hindi ma-load ang talaan ng aktibidad o ma-export ang CSV",
+    "retry": "Subukang muli",
+    "exported": "Mga na-export na row: {n} – nhat-ky-hoat-dong.csv"
+  },
+  "time": {
+    "now": "ngayon lang",
+    "minutes": "{n} minuto ang nakalipas",
+    "hours": "{n} oras ang nakalipas",
+    "yesterday": "Kahapon",
+    "days": "{n} araw ang nakalipas"
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "title": "Layanan",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "tabs": {
+    "label": "Layanan",
+    "list": "Permintaan pendaftaran",
+    "catalog": "Katalog program & layanan"
+  },
+  "heading": "Permintaan pendaftaran layanan",
+  "search": "Cari kode, nama, email, organisasi...",
+  "searchLabel": "Cari permintaan menurut kode, nama, email, atau organisasi",
+  "csv": "Ekspor CSV",
+  "col": {
+    "code": "Kode",
+    "contact": "Narahubung",
+    "service": "Layanan",
+    "province": "Provinsi/kota",
+    "date": "Diajukan"
+  },
+  "kind": {
+    "business": "Bisnis / Organisasi",
+    "personal": "Perorangan"
+  },
+  "detail": "Detail",
+  "empty": "Tidak ada permintaan yang cocok",
+  "pager": {
+    "unit": "permintaan",
+    "prev": "Halaman sebelumnya",
+    "next": "Halaman berikutnya",
+    "pageSize": "Baris per halaman"
+  },
+  "drawer": {
+    "title": "Permintaan {code}",
+    "close": "Tutup",
+    "service": "Layanan",
+    "kind": "Jenis pelanggan",
+    "contact": "Narahubung",
+    "phone": "Nomor telepon",
+    "email": "Email",
+    "org": "Organisasi / Nomor pajak",
+    "province": "Provinsi/kota",
+    "date": "Diajukan",
+    "note": "Deskripsi permintaan",
+    "thread": "Diskusi internal",
+    "threadCount": "Komentar: {n} · hanya terlihat oleh administrator",
+    "editor": "Tulis catatan internal: penawaran, kontrak, progres…",
+    "mention": "Sebut:",
+    "send": "Kirim komentar"
+  },
+  "confirm": {
+    "deleteTitle": "Hapus layanan?",
+    "deleteBody": "\"{name}\" akan dihapus dari katalog dan tidak lagi muncul di Portal Pengguna.",
+    "delete": "Hapus",
+    "cancel": "Batal"
+  },
+  "catalog": {
+    "heading": "Katalog program & layanan",
+    "sub": "Ditampilkan di Portal Pengguna pada popup Paket layanan di bagian “Layanan & program lainnya” serta pemilih layanan pada formulir permintaan konsultasi. Nonaktifkan visibilitas untuk menyembunyikannya dari Portal Pengguna.",
+    "name": "Nama program / layanan",
+    "model": "Format",
+    "desc": "Deskripsi singkat",
+    "used": "Permintaan: {n}",
+    "visible": "Ditampilkan",
+    "delete": "Hapus",
+    "add": "+ Tambah program / layanan"
+  },
+  "toast": {
+    "commented": "Komentar dikirim",
+    "notified": "Dikirim dan memberi tahu {names}",
+    "emptyComment": "Masukkan komentar",
+    "exported": "Permintaan diekspor: {n}",
+    "deleted": "Layanan dihapus",
+    "inUse": "Layanan ini memiliki permintaan — sembunyikan, bukan hapus",
+    "failed": "Tidak dapat diproses, silakan coba lagi"
+  },
+  "error": "Tidak dapat memuat permintaan layanan",
+  "retry": "Coba lagi",
+  "sub": "Permintaan konsultasi dari Portal Pengguna › Paket layanan"
+}

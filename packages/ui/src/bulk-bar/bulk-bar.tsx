@@ -5,6 +5,8 @@ import styles from './bulk-bar.module.css';
 
 export interface BulkBarProps {
   count: number;
+  /** Optional presentation only; visibility/selection still use the raw numeric count. */
+  formatCount?: (n: number) => string;
   /** Đơn vị sau số, vd "thành viên"; mặc định "mục" */
   unit?: string;
   /** Các nút thao tác hàng loạt (Button của antd) */
@@ -18,6 +20,7 @@ export interface BulkBarProps {
 /** Thanh "Đã chọn N mục" + thao tác hàng loạt; ẩn khi chưa chọn gì */
 export function BulkBar({
   count,
+  formatCount,
   unit = 'mục',
   actions,
   onClear,
@@ -29,7 +32,8 @@ export function BulkBar({
   return (
     <section className={styles.bar} aria-label={ariaLabel}>
       <span className={styles.text} aria-live="polite">
-        {selectedLabel} <b className={styles.count}>{count}</b> {unit}
+        {selectedLabel} <b className={styles.count}>{formatCount ? formatCount(count) : count}</b>{' '}
+        {unit}
       </span>
       <div className={styles.actions}>
         {actions}

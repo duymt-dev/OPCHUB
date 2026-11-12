@@ -9,16 +9,18 @@ import { NeedBulkBar, NeedPager } from './need-bars';
 import { NeedTable } from './need-table';
 import { NeedKpis, NeedToolbar } from './need-toolbar';
 import styles from './needs.module.css';
+import { useAdminUiLabels } from '@/i18n/ui-labels';
 
 /** Tiêu đề trang + ô khoảng ngày (prototype `showRange`) */
 function NeedsHeader() {
+  const ui = useAdminUiLabels();
   const t = useTranslations('needs');
   return (
     <PageHeader
       title={t('title')}
       // Prototype có dòng mô tả rỗng (pageSub '') vẫn chiếm khoảng cách 4px; khoảng trắng → cao 0
       subtitle=" "
-      extra={<DateRangePicker />}
+      extra={<DateRangePicker {...ui.dateRange} />}
     />
   );
 }

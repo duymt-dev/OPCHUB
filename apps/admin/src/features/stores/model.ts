@@ -1,3 +1,4 @@
+import { formatCurrency, formatDate } from '@/i18n/format';
 import type { StoreItem, StoreStatus } from '@opchub/shared/api-domains';
 
 /** Prototype `SL`: màu nền / chữ / viền thẻ trạng thái gian hàng */
@@ -25,17 +26,11 @@ export function storeInitials(name: string): string {
     .toUpperCase();
 }
 
-const DATE = new Intl.DateTimeFormat('vi-VN', {
-  day: '2-digit',
-  month: '2-digit',
-  year: 'numeric',
-  timeZone: 'Asia/Ho_Chi_Minh',
-});
-export const storeDate = (iso: string) => DATE.format(new Date(iso));
+export const storeDate = (iso: string, locale = 'vi') => formatDate(iso, locale);
 
 /** Giá item: số nguyên VND; `null` / 0 = "Liên hệ báo giá" (prototype `+i.price`) */
-export const itemPrice = (i: Pick<StoreItem, 'price'>, contact: string) =>
-  i.price ? `${i.price.toLocaleString('vi-VN')}đ` : contact;
+export const itemPrice = (i: Pick<StoreItem, 'price'>, contact: string, locale = 'vi') =>
+  i.price ? formatCurrency(i.price, 'VND', locale) : contact;
 
 export const allChecked = (sel: ReadonlySet<string>, pageIds: readonly string[]) =>
   pageIds.length > 0 && pageIds.every((id) => sel.has(id));

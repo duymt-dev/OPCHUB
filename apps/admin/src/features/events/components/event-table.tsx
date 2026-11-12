@@ -1,12 +1,15 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { formatNumber } from '@/i18n/format';
+import { eventDay, eventTime } from '../presentation';
+import { useLocale, useTranslations } from 'next-intl';
 import type { EventView } from '../types';
 import { Cover, FillBar, FillTag, type EventActions } from './event-grid';
 import styles from './event-table.module.css';
 
 /** Bảng sự kiện (aeList); ở màn hẹp mỗi dòng thành thẻ như prototype (data-m="tbl") */
 export function EventTable({ items, actions }: { items: EventView[]; actions: EventActions }) {
+  const locale = useLocale();
   const t = useTranslations('events');
   return (
     <div className={styles.wrap}>
@@ -30,7 +33,7 @@ export function EventTable({ items, actions }: { items: EventView[]; actions: Ev
               {e.title}
             </b>
             <span className={styles.muted} role="cell">
-              {e.day} · {e.time}
+              {eventDay(e.startsAt, e.day, locale)} · {eventTime(e, locale)}
             </span>
             <span className={styles.muted} role="cell">
               {e.place}
@@ -43,7 +46,7 @@ export function EventTable({ items, actions }: { items: EventView[]; actions: Ev
                 <FillBar e={e} />
               </div>
               <span className={styles.regText}>
-                {e.registered}/{e.seats}
+                {formatNumber(e.registered, locale)}/{formatNumber(e.seats, locale)}
               </span>
             </div>
             <span className={styles.status} role="cell">

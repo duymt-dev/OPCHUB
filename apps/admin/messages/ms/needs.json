@@ -1,0 +1,70 @@
+{
+  "title": "Keperluan tempatan",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "kpi": {
+    "total": "Jumlah keperluan",
+    "open": "Terbuka",
+    "closed": "Ditutup",
+    "hidden": "Disembunyikan Admin"
+  },
+  "search": "Cari keperluan, kedai, provinsi...",
+  "filtersLabel": "Penapis mengikut status keperluan",
+  "filter": {
+    "all": "Semua",
+    "open": "Terbuka",
+    "closed": "Ditutup",
+    "hidden": "Disembunyikan"
+  },
+  "note": "Keperluan terus kelihatan ketika disiarkan ahli; Admin hanya menyembunyikannya jika ada pelanggaran.",
+  "type": {
+    "buy": "Ingin membeli",
+    "sell": "Perlu pembeli",
+    "partner": "Perlu rakan kongsi",
+    "service": "Perlu perkhidmatan",
+    "solution": "Perlu penyelesaian",
+    "staff": "Perlu kakitangan",
+    "space": "Perlu premis / gudang",
+    "capital": "Perlu modal",
+    "other": "Keperluan lain"
+  },
+  "status": {
+    "open": "Terbuka",
+    "closed": "Ditutup",
+    "hidden": "Disembunyikan Admin"
+  },
+  "table": {
+    "label": "Senarai keperluan",
+    "all": "Pilih semua di halaman ini",
+    "need": "Keperluan",
+    "type": "Jenis",
+    "store": "Kedai",
+    "area": "Kawasan",
+    "date": "Disiarkan pada",
+    "status": "Status",
+    "actions": "Tindakan",
+    "hide": "Sembunyi",
+    "show": "Paparkan"
+  },
+  "bulk": {
+    "label": "Tindakan pukal",
+    "selected": "Keperluan dipilih: {n}",
+    "show": "Paparkan",
+    "hide": "Sembunyi",
+    "clear": "Padam pilihan"
+  },
+  "pager": {
+    "text": "Halaman {page} / {pages} · Keperluan: {total}",
+    "prev": "Halaman sebelumnya",
+    "next": "Halaman seterusnya",
+    "prevBtn": "‹ Sebelum",
+    "nextBtn": "Seterusnya ›"
+  },
+  "toast": {
+    "hidden": "Keperluan disembunyikan: {n}",
+    "shown": "Keperluan dipaparkan: {n}",
+    "failed": "Tidak dapat dilaksanakan, sila cuba lagi"
+  },
+  "empty": "Tiada keperluan yang sepadan.",
+  "error": "Tidak dapat memuatkan senarai keperluan",
+  "retry": "Cuba lagi"
+}

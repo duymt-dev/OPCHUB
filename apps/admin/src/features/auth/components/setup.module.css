@@ -69,7 +69,11 @@
 }
 
 .btn {
-  height: 36px;
+  height: auto;
+  min-height: 36px;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
   padding: 0 15px;
   border: 1px solid #d9d9d9;
   border-radius: 6px;
@@ -80,7 +84,11 @@
 }
 
 .primary {
-  height: 36px;
+  height: auto;
+  min-height: 36px;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
   padding: 0 18px;
   border: 0;
   border-radius: 6px;

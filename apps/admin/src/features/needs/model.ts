@@ -1,3 +1,4 @@
+import { formatDate } from '@/i18n/format';
 import type { AdminNeed, NeedStatus, NeedType } from '@opchub/shared/api-domains';
 
 interface Tone {
@@ -26,13 +27,7 @@ export const NEED_STATUS_TONE: Record<NeedStatus, Tone> = {
   hidden: { bg: '#FFF1F0', fg: '#CF1322', bd: '#FFA39E' },
 };
 
-const DATE = new Intl.DateTimeFormat('vi-VN', {
-  day: '2-digit',
-  month: '2-digit',
-  year: 'numeric',
-  timeZone: 'Asia/Ho_Chi_Minh',
-});
-export const needDate = (iso: string) => DATE.format(new Date(iso));
+export const needDate = (iso: string, locale = 'vi') => formatDate(iso, locale);
 
 /** Prototype `r.qty · r.mf` — bỏ phần trống (nhu cầu không ghi số lượng) */
 export const needSub = (n: Pick<AdminNeed, 'quantity' | 'field'>) =>

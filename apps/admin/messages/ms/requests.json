@@ -1,0 +1,79 @@
+{
+  "title": "Perkhidmatan",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "tabs": {
+    "label": "Perkhidmatan",
+    "list": "Permintaan pendaftaran",
+    "catalog": "Katalog program & perkhidmatan"
+  },
+  "heading": "Permintaan pendaftaran perkhidmatan",
+  "search": "Cari kod, nama, e-mel, organisasi...",
+  "searchLabel": "Cari permintaan mengikut kod, nama, e-mel, atau organisasi",
+  "csv": "Eksport CSV",
+  "col": {
+    "code": "Kod",
+    "contact": "Orang untuk dihubungi",
+    "service": "Perkhidmatan",
+    "province": "Provinsi/bandar",
+    "date": "Dikemukakan"
+  },
+  "kind": {
+    "business": "Perniagaan / Organisasi",
+    "personal": "Individu"
+  },
+  "detail": "Butiran",
+  "empty": "Tiada permintaan yang sepadan",
+  "pager": {
+    "unit": "permintaan",
+    "prev": "Halaman sebelumnya",
+    "next": "Halaman seterusnya",
+    "pageSize": "Bilangan baris setiap halaman"
+  },
+  "drawer": {
+    "title": "Permintaan {code}",
+    "close": "Tutup",
+    "service": "Perkhidmatan",
+    "kind": "Jenis pelanggan",
+    "contact": "Orang untuk dihubungi",
+    "phone": "Nombor telefon",
+    "email": "E-mel",
+    "org": "Organisasi / Nombor cukai",
+    "province": "Provinsi/bandar",
+    "date": "Dikemukakan",
+    "note": "Penerangan permintaan",
+    "thread": "Perbincangan dalaman",
+    "threadCount": "Komen: {n} · hanya kelihatan oleh pentadbir",
+    "editor": "Tulis catatan dalaman: tawaran, kontrak, kemajuan…",
+    "mention": "Sebut:",
+    "send": "Hantar komen"
+  },
+  "confirm": {
+    "deleteTitle": "Padam perkhidmatan?",
+    "deleteBody": "\"{name}\" akan dipadam dari katalog dan tidak lagi muncul di Portal Pengguna.",
+    "delete": "Padam",
+    "cancel": "Batal"
+  },
+  "catalog": {
+    "heading": "Katalog program & perkhidmatan",
+    "sub": "Dipaparkan di Portal Pengguna dalam tetingkap timbul Pakej Perkhidmatan di bawah “Perkhidmatan & program lain” dan dalam pemilih perkhidmatan pada borang permintaan perundingan. Matikan paparan untuk menyembunyikannya daripada Portal Pengguna.",
+    "name": "Nama program / perkhidmatan",
+    "model": "Format",
+    "desc": "Penerangan ringkas",
+    "used": "Permintaan: {n}",
+    "visible": "Dipaparkan",
+    "delete": "Padam",
+    "add": "+ Tambah program / perkhidmatan"
+  },
+  "toast": {
+    "commented": "Komen dihantar",
+    "notified": "Dihantar dan memaklumkan {names}",
+    "emptyComment": "Masukkan komen",
+    "exported": "Permintaan dieksport: {n}",
+    "deleted": "Perkhidmatan dipadam",
+    "inUse": "Perkhidmatan ini mempunyai permintaan — sembunyikan, bukan padam",
+    "failed": "Tidak dapat dilaksanakan, sila cuba lagi"
+  },
+  "error": "Tidak dapat memuatkan permintaan perkhidmatan",
+  "retry": "Cuba lagi",
+  "sub": "Permintaan perundingan dari Portal Pengguna › Pakej perkhidmatan"
+}

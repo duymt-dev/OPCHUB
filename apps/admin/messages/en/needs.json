@@ -1,0 +1,70 @@
+{
+  "title": "Local needs",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "kpi": {
+    "total": "Total needs",
+    "open": "Open",
+    "closed": "Closed",
+    "hidden": "Hidden by Admin"
+  },
+  "search": "Search needs, stores, provinces...",
+  "filtersLabel": "Filter by need status",
+  "filter": {
+    "all": "All",
+    "open": "Open",
+    "closed": "Closed",
+    "hidden": "Hidden"
+  },
+  "note": "Needs become visible immediately when members post them; Admin hides them only for violations.",
+  "type": {
+    "buy": "Buying",
+    "sell": "Seeking buyers",
+    "partner": "Seeking partners",
+    "service": "Seeking services",
+    "solution": "Seeking solutions",
+    "staff": "Hiring",
+    "space": "Seeking premises / Storage",
+    "capital": "Seeking capital",
+    "other": "Other needs"
+  },
+  "status": {
+    "open": "Open",
+    "closed": "Closed",
+    "hidden": "Hidden by Admin"
+  },
+  "table": {
+    "label": "Needs list",
+    "all": "Select all on this page",
+    "need": "Need",
+    "type": "Type",
+    "store": "Store",
+    "area": "Area",
+    "date": "Posted on",
+    "status": "Status",
+    "actions": "Actions",
+    "hide": "Hide",
+    "show": "Show"
+  },
+  "bulk": {
+    "label": "Bulk actions",
+    "selected": "Selected needs: {n}",
+    "show": "Show",
+    "hide": "Hide",
+    "clear": "Clear selection"
+  },
+  "pager": {
+    "text": "Page {page} / {pages} · Needs: {total}",
+    "prev": "Previous page",
+    "next": "Next page",
+    "prevBtn": "‹ Previous",
+    "nextBtn": "Next ›"
+  },
+  "toast": {
+    "hidden": "Needs hidden: {n}",
+    "shown": "Needs shown: {n}",
+    "failed": "Unable to perform this action. Please try again"
+  },
+  "empty": "No matching needs.",
+  "error": "Unable to load the needs list",
+  "retry": "Try again"
+}

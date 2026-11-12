@@ -9,6 +9,7 @@ import { PAGE_SIZES, type AdminProject, type ProjectsParams } from '../types';
 import { ProjectGrid, type ProjectRowActions } from './project-grid';
 import { ProjectTable } from './project-table';
 import styles from './projects.module.css';
+import { useAdminUiLabels } from '@/i18n/ui-labels';
 
 interface Props {
   rows: AdminProject[];
@@ -23,6 +24,7 @@ interface Props {
  * Màn cha đặt `key` theo tab / kiểu xem / trang nên đổi phạm vi thì bỏ chọn.
  */
 export function ProjectListPanel({ rows, params, onChange, onBulk, actions }: Props) {
+  const ui = useAdminUiLabels();
   const t = useTranslations('projects');
   const { page, items } = pageSlice(rows, params.page, params.size);
   const { selected, picked, toggle, toggleAll, clear } = useSelection(items);
@@ -37,6 +39,7 @@ export function ProjectListPanel({ rows, params, onChange, onBulk, actions }: Pr
   return (
     <>
       <BulkBar
+        {...ui.bulk}
         count={picked.length}
         unit={t('bulk.unit')}
         selectedLabel={t('bulk.selected')}
@@ -76,6 +79,7 @@ export function ProjectListPanel({ rows, params, onChange, onBulk, actions }: Pr
         onChange={(n) => onChange({ page: n })}
         onSizeChange={(size) => onChange({ size, page: 1 })}
         labels={{
+          ...ui.pagination,
           unit: t('pager.unit'),
           prev: t('pager.prev'),
           next: t('pager.next'),

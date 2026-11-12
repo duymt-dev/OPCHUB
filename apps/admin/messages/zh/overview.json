@@ -1,0 +1,76 @@
+{
+  "title": "概览",
+  "sub": "跟踪增长、活动及社群内容审核",
+  "stats": {
+    "members": "会员",
+    "membersDelta": "本月 +{pct}%",
+    "membersRangeDelta": "所选期间 +{pct}%",
+    "freshRangeDelta": "所选期间内",
+    "communities": "社区",
+    "communitiesDelta": "+{n} 个新群组",
+    "fresh": "新会员",
+    "freshDelta": "月份：{month}",
+    "events": "活动",
+    "eventsDelta": "即将举行：{n}"
+  },
+  "growth": {
+    "title": "会员增长",
+    "week": "周",
+    "month": "月份",
+    "year": "年",
+    "delta": "+{pct}%",
+    "deltaNote": "本月 +{n} 位会员",
+    "rangeDeltaNote": "所选期间 +{n} 位会员",
+    "active": "活跃",
+    "new": "新增",
+    "inactive": "未激活"
+  },
+  "flow": {
+    "title": "系统流程",
+    "sub": "各模块实时数据",
+    "done": "已完成",
+    "todo": "待处理",
+    "fees": {
+      "name": "已缴费会员",
+      "sub": "转账对账后自动激活",
+      "cta": "会员费"
+    },
+    "stores": {
+      "name": "正在显示的店铺",
+      "sub": "已隐藏：{hidden} · 草稿：{draft}",
+      "cta": "店铺"
+    },
+    "needs": {
+      "name": "开放需求",
+      "sub": "已关闭：{closed}",
+      "cta": "需求"
+    },
+    "projects": {
+      "name": "待审核项目",
+      "sub": "正在显示的项目：{published}",
+      "cta": "审核项目"
+    },
+    "groups": {
+      "name": "社区群组",
+      "sub": "省级及行业群组",
+      "cta": "社区"
+    }
+  },
+  "conversion": {
+    "heading": "各区域免费转付费转化率",
+    "sub": "转化率 = 已付费／（已付费＋到期未付费）· 适用于三个月免费试用结束后的会员",
+    "export": "导出 CSV",
+    "region": "区域",
+    "director": "区域总监",
+    "trial": "试用中",
+    "paid": "已付费",
+    "expired": "到期未付费",
+    "rate": "转化率",
+    "total": "全国",
+    "unappointed": "尚未任命",
+    "exported": "已导出三行 — chuyen-doi-theo-vung.csv",
+    "failed": "无法加载数据或导出 CSV",
+    "loading": "正在加载数据…",
+    "retry": "重试"
+  }
+}

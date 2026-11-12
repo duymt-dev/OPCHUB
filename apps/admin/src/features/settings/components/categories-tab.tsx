@@ -10,6 +10,7 @@ import { CategoryForm } from './category-form';
 import { CategoryTable } from './category-table';
 import styles from './categories.module.css';
 import ui from './settings.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 const draftOf = (c: AdminCategory): CategoryDraft => ({
   id: c.id,
@@ -20,6 +21,7 @@ const draftOf = (c: AdminCategory): CategoryDraft => ({
 
 /** D-67 / D-68 "Danh mục lĩnh vực": form thêm/sửa (`?edit=id`), lọc, bảng, ghi chú */
 export function CategoriesTab({ ask }: { ask: AskConfirm }) {
+  const numberText = useNumberText();
   const t = useTranslations('settings.cat');
   const c = useTranslations('settings.common');
   const { params, update } = useSettingsRoute();
@@ -66,11 +68,13 @@ export function CategoriesTab({ ask }: { ask: AskConfirm }) {
               onClick={() => update({ scope: f })}
             >
               {f === 'net' ? t('scopeLong.net') : t(f)}
-              <span className={styles.segN}>{count(f)}</span>
+              <span className={styles.segN}>{numberText(count(f))}</span>
             </button>
           ))}
         </div>
-        <span className={styles.info}>{t('info', { on, off: rows.length - on })}</span>
+        <span className={styles.info}>
+          {t('info', { on: numberText(on), off: numberText(rows.length - on) })}
+        </span>
       </div>
       <CategoryTable
         rows={shown}

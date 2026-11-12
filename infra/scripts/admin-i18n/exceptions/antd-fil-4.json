@@ -1,0 +1,50 @@
+[
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Ang dami ng ${label} ay dapat nasa pagitan ng ${min}-${max}",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Hindi tumutugma ang ${label} sa pattern na ${pattern}",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Nag-expire ang QR code",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Na-scan",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Walang laman",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Malinaw",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Iisa",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  },
+  {
+    "file": "apps/admin/src/i18n/antd/fil.ts",
+    "kind": "human-literal",
+    "text": "Unti-unting kulay",
+    "reason": "Locale-specific AntD translation dictionary leaf, selected only for this language; not hardcoded global UI. Technical locale tests exist; native linguistic review remains pending."
+  }
+]

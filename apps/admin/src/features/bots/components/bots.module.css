@@ -44,6 +44,15 @@
   min-width: 0;
 }
 
+/* The shared skeleton's 360px line must fit inside nested mobile Bot cards. */
+.card :global(.ant-skeleton) {
+  table-layout: fixed;
+}
+
+.card :global(.ant-skeleton-paragraph) > li {
+  max-width: 100%;
+}
+
 .head {
   display: flex;
   flex-direction: column;
@@ -204,5 +213,11 @@
 @media (max-width: 767px) {
   .tabs {
     display: contents;
+  }
+
+  /* Long translated words must shrink/wrap within the existing single tab row. */
+  .tabs [role='tab'] {
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 }

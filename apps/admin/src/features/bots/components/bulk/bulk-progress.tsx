@@ -1,6 +1,7 @@
 import type { BotBulkBatch } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
 import s from './bulk.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 export function BulkProgress({
   batch,
@@ -11,6 +12,7 @@ export function BulkProgress({
   disabled: boolean;
   onRetry: () => void;
 }) {
+  const numberText = useNumberText();
   const t = useTranslations('bots.bulk');
   return (
     <div
@@ -19,10 +21,10 @@ export function BulkProgress({
       aria-live="polite"
     >
       <b>
-        {t(`status.${batch.status}`)} · {batch.cursor}/{batch.total}
+        {t(`status.${batch.status}`)} · {numberText(batch.cursor)}/{numberText(batch.total)}
       </b>
       <span className={s.hint}>
-        {batch.typeName} · {t('savedCount', { n: batch.savedCount })}
+        {batch.typeName} · {t('savedCount', { n: numberText(batch.savedCount) })}
       </span>
       {batch.status === 'running' ? <span className={s.hint}>{t('recoverHint')}</span> : null}
       {batch.error ? <span className={s.error}>{t(`failure.${batch.error}`)}</span> : null}

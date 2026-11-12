@@ -1,3 +1,4 @@
+import { formatDate, formatNumber } from '@/i18n/format';
 import {
   REPORT_REGIONS,
   type ReportMetricKey,
@@ -20,7 +21,10 @@ export function reportMonths(now: number): string[] {
 }
 
 /** `2026-10` → `10/2026` */
-export const monthLabel = (month: string) => `${month.slice(5, 7)}/${month.slice(0, 4)}`;
+export const monthLabel = (month: string, locale = 'vi') =>
+  locale === 'vi'
+    ? `${month.slice(5, 7)}/${month.slice(0, 4)}`
+    : formatDate(month + '-01', locale, { month: '2-digit', year: 'numeric' });
 
 /** Phạm vi mặc định của mẫu: nhóm / tỉnh đầu tiên, vùng Miền Bắc */
 export function defaultScope(template: ReportTemplate, scopes: ReportScopes | undefined): string {
@@ -79,5 +83,4 @@ export const METRIC_ROWS: Record<ReportTemplate, readonly MetricRow[]> = {
   ],
 };
 
-const vnd = new Intl.NumberFormat('vi-VN');
-export const fmt = (n: number) => vnd.format(n);
+export const fmt = (n: number, locale = 'vi') => formatNumber(n, locale);

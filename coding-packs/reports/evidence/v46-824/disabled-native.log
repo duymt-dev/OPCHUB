@@ -1,0 +1,28 @@
+Candidate harness based9f8cab20; production ff6be9ee unchanged, reuse verified MSW/native builds. Two viewport workflows; approved isolated one non-default language toggle only, exact full snapshot restoration in finally. No default/progress/other setting or original PG5432 change; no DB clients/reset/seed/service restart. Same UI assertions both modes. MSW settings are browser-memory; F5 can naturally restore its original snapshot, recorded explicitly rather than claiming persisted disabled configuration through reload. Native restoration must use the existing API if still changed. COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-disabled.spec.ts
+[WebServer] (node:1328) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:2800) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\admin-i18n-disabled.spec.ts:10:3 › D-141 AC824-13 saved-disabled selector/F5 and exact restoration 1440 (3.8s)
+  ok 2 [behavior] › behavior\admin-i18n-disabled.spec.ts:10:3 › D-141 AC824-13 saved-disabled selector/F5 and exact restoration 390 (4.0s)
+
+  2 passed (11.7s)
+EXIT 0
+Candidate harness based9f8cab20; production ff6be9ee unchanged, reuse verified MSW/native builds. Two viewport workflows; approved isolated one non-default language toggle only, exact full snapshot restoration in finally. No default/progress/other setting or original PG5432 change; no DB clients/reset/seed/service restart. Same UI assertions both modes. MSW settings are browser-memory; F5 can naturally restore its original snapshot, recorded explicitly rather than claiming persisted disabled configuration through reload. Native restoration must use the existing API if still changed. COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-disabled.spec.ts
+[WebServer] (node:10732) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:28528) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Language restoration receipt: {"width":1440,"code":"my","original":{"defaultLocale":"vi","items":[{"code":"vi","enabled":true,"progress":100},{"code":"en","enabled":true,"progress":100},{"code":"zh","enabled":true,"progress":90},{"code":"id","enabled":true,"progress":88},{"code":"th","enabled":true,"progress":92},{"code":"ms","enabled":true,"progress":86},{"code":"en-SG","enabled":true,"progress":100},{"code":"fil","enabled":true,"progress":74},{"code":"km","enabled":true,"progress":58},{"code":"lo","enabled":true,"progress":55},{"code":"my","enabled":true,"progress":61},{"code":"ms-BN","enabled":true,"progress":86}]},"receipt":{"alreadyOriginal":false,"before":"1c6bc33339569f6c779ff9609f56b62f630c8141469a5cf34ed314a52c6c5974","after":"1c6bc33339569f6c779ff9609f56b62f630c8141469a5cf34ed314a52c6c5974"},"mutations":2}
+  ok 1 [behavior] › behavior\admin-i18n-disabled.spec.ts:10:3 › D-141 AC824-13 saved-disabled selector/F5 and exact restoration 1440 (4.6s)
+Language restoration receipt: {"width":390,"code":"my","original":{"defaultLocale":"vi","items":[{"code":"vi","enabled":true,"progress":100},{"code":"en","enabled":true,"progress":100},{"code":"zh","enabled":true,"progress":90},{"code":"id","enabled":true,"progress":88},{"code":"th","enabled":true,"progress":92},{"code":"ms","enabled":true,"progress":86},{"code":"en-SG","enabled":true,"progress":100},{"code":"fil","enabled":true,"progress":74},{"code":"km","enabled":true,"progress":58},{"code":"lo","enabled":true,"progress":55},{"code":"my","enabled":true,"progress":61},{"code":"ms-BN","enabled":true,"progress":86}]},"receipt":{"alreadyOriginal":false,"before":"1c6bc33339569f6c779ff9609f56b62f630c8141469a5cf34ed314a52c6c5974","after":"1c6bc33339569f6c779ff9609f56b62f630c8141469a5cf34ed314a52c6c5974"},"mutations":2}
+  ok 2 [behavior] › behavior\admin-i18n-disabled.spec.ts:10:3 › D-141 AC824-13 saved-disabled selector/F5 and exact restoration 390 (4.0s)
+
+  2 passed (15.2s)
+EXIT 0

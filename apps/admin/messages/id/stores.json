@@ -1,0 +1,79 @@
+{
+  "title": "Toko",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "kpi": {
+    "total": "Total toko",
+    "published": "Ditampilkan",
+    "draft": "Draf",
+    "hidden": "Disembunyikan Admin"
+  },
+  "search": "Cari toko, industri, provinsi...",
+  "filtersLabel": "Filter menurut status toko",
+  "filter": {
+    "all": "Semua",
+    "published": "Ditampilkan",
+    "draft": "Draf",
+    "hidden": "Disembunyikan"
+  },
+  "status": {
+    "published": "Ditampilkan",
+    "draft": "Draf",
+    "hidden": "Disembunyikan Admin"
+  },
+  "kind": {
+    "product": "Produk",
+    "service": "Layanan"
+  },
+  "table": {
+    "label": "Daftar toko",
+    "all": "Pilih semua di halaman ini",
+    "store": "Toko",
+    "field": "Bidang usaha",
+    "province": "Provinsi / kota",
+    "items": "Produk/layanan",
+    "updated": "Diperbarui",
+    "status": "Status",
+    "actions": "Tindakan",
+    "view": "Lihat",
+    "hide": "Sembunyikan",
+    "show": "Tampilkan"
+  },
+  "bulk": {
+    "label": "Tindakan massal",
+    "selected": "Toko terpilih: {n}",
+    "show": "Tampilkan",
+    "hide": "Sembunyikan",
+    "clear": "Hapus pilihan"
+  },
+  "pager": {
+    "text": "Halaman {page} / {pages} · Toko: {total}",
+    "prev": "Halaman sebelumnya",
+    "next": "Halaman berikutnya"
+  },
+  "drawer": {
+    "title": "Detail toko",
+    "close": "Tutup detail",
+    "closeBtn": "Tutup",
+    "meta": "Pemilik: {owner} · {loc} · diperbarui {date}",
+    "items": "Produk & layanan",
+    "contactPrice": "Hubungi untuk penawaran harga",
+    "hide": "Sembunyikan toko",
+    "show": "Tampilkan kembali",
+    "feature": "Tandai Unggulan",
+    "unfeature": "Hapus Unggulan",
+    "publicPage": "Halaman publik",
+    "publicCopy": "Salin",
+    "publicCopied": "Tautan halaman publik disalin",
+    "publicCopyError": "Tidak dapat menyalin tautan"
+  },
+  "toast": {
+    "hidden": "Toko disembunyikan: {n}",
+    "shown": "Toko ditampilkan: {n}",
+    "failed": "Tidak dapat diproses, silakan coba lagi",
+    "featured": "\"{name}\" ditandai sebagai Unggulan",
+    "unfeatured": "Status Unggulan dihapus dari \"{name}\""
+  },
+  "empty": "Tidak ada toko yang cocok.",
+  "error": "Tidak dapat memuat toko",
+  "retry": "Coba lagi"
+}

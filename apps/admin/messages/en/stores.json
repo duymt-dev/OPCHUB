@@ -1,0 +1,79 @@
+{
+  "title": "Stores",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "kpi": {
+    "total": "Total stores",
+    "published": "Published",
+    "draft": "Drafts",
+    "hidden": "Hidden by Admin"
+  },
+  "search": "Search stores, industries, provinces...",
+  "filtersLabel": "Filter by store status",
+  "filter": {
+    "all": "All",
+    "published": "Published",
+    "draft": "Drafts",
+    "hidden": "Hidden"
+  },
+  "status": {
+    "published": "Published",
+    "draft": "Draft",
+    "hidden": "Hidden by Admin"
+  },
+  "kind": {
+    "product": "Product",
+    "service": "Service"
+  },
+  "table": {
+    "label": "Store list",
+    "all": "Select all on this page",
+    "store": "Store",
+    "field": "Industry",
+    "province": "Province / city",
+    "items": "Products/services",
+    "updated": "Updated",
+    "status": "Status",
+    "actions": "Actions",
+    "view": "View",
+    "hide": "Hide",
+    "show": "Show"
+  },
+  "bulk": {
+    "label": "Bulk actions",
+    "selected": "Stores selected: {n}",
+    "show": "Show",
+    "hide": "Hide",
+    "clear": "Clear selection"
+  },
+  "pager": {
+    "text": "Page {page} / {pages} · Stores: {total}",
+    "prev": "Previous page",
+    "next": "Next page"
+  },
+  "drawer": {
+    "title": "Store details",
+    "close": "Close details",
+    "closeBtn": "Close",
+    "meta": "Owner: {owner} · {loc} · updated {date}",
+    "items": "Products & services",
+    "contactPrice": "Contact for a quote",
+    "hide": "Hide store",
+    "show": "Show again",
+    "feature": "Mark as Featured",
+    "unfeature": "Remove Featured",
+    "publicPage": "Public page",
+    "publicCopy": "Copy",
+    "publicCopied": "Public page link copied",
+    "publicCopyError": "Unable to copy the link"
+  },
+  "toast": {
+    "hidden": "Stores hidden: {n}",
+    "shown": "Stores shown: {n}",
+    "failed": "Unable to complete the action. Please try again",
+    "featured": "\"{name}\" marked as Featured",
+    "unfeatured": "Featured removed from \"{name}\""
+  },
+  "empty": "No matching stores.",
+  "error": "Unable to load stores",
+  "retry": "Try again"
+}

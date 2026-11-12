@@ -1,6 +1,7 @@
 import type { AdminMember, GroupItem } from '@opchub/shared/api-domains';
 import { tones, type ToneName } from '@opchub/ui';
 import type { GroupChip, GroupLookup } from './types';
+import { formatDate as displayDate } from '@/i18n/format';
 
 /** Thứ tự tone theo prototype: TK = Object.keys(TONES), nhóm thứ i dùng TK[i % 5] */
 const TONE_ORDER: ToneName[] = ['blue', 'rose', 'green', 'amber', 'violet'];
@@ -21,15 +22,8 @@ export function splitGroups(ids: string[], lookup: GroupLookup, shown = 2) {
   return { chips: chips.slice(0, shown), more: Math.max(0, chips.length - shown), all: chips };
 }
 
-const DATE_FMT = new Intl.DateTimeFormat('vi-VN', {
-  day: '2-digit',
-  month: '2-digit',
-  year: 'numeric',
-  timeZone: 'Asia/Ho_Chi_Minh',
-});
-
 /** ISO UTC → "dd/mm/yyyy" giờ Việt Nam */
-export const formatDate = (iso: string) => DATE_FMT.format(new Date(iso));
+export const formatDate = (iso: string, locale = 'vi') => displayDate(iso, locale);
 
 /** Dòng phụ dưới nhãn loại: DN → tên công ty; cá nhân → "Bạn là" */
 export const subOf = (m: AdminMember) =>

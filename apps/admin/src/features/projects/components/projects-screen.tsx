@@ -12,9 +12,11 @@ import { ProjectListPanel } from './project-list-panel';
 import { ProjectsHead, ReviewTabs } from './projects-head';
 import styles from './projects.module.css';
 import { ReviewDrawer } from './review-drawer';
+import { useAdminUiLabels } from '@/i18n/ui-labels';
 
 /** D-51 → D-57: Admin "Dự án" — Kiểm duyệt dự án (orchestrator) */
 export function ProjectsScreen() {
+  const ui = useAdminUiLabels();
   const t = useTranslations('projects');
   const { params, update } = useProjectsParams();
   const route = useReviewRoute();
@@ -53,7 +55,11 @@ export function ProjectsScreen() {
 
   return (
     <>
-      <PageHeader title={t('title')} subtitle={t('sub')} extra={<DateRangePicker />} />
+      <PageHeader
+        title={t('title')}
+        subtitle={t('sub')}
+        extra={<DateRangePicker {...ui.dateRange} />}
+      />
       <div data-screen-label="Admin · Dự án" className={styles.card}>
         <ProjectsHead view={params.view} onView={(view) => update({ view })} />
         <ReviewTabs

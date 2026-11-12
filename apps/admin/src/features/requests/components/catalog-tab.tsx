@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useCatalogActions } from '../hooks/use-catalog-actions';
 import type { ConfirmRequest } from '@opchub/ui';
 import styles from './catalog-tab.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 type Field = 'name' | 'model' | 'description';
 
@@ -40,6 +41,7 @@ interface Props {
 
 /** D-65 "Danh mục chương trình & dịch vụ" — hiển thị trong popup Gói dịch vụ của Portal */
 export function CatalogTab({ rows, confirm }: Props) {
+  const numberText = useNumberText();
   const t = useTranslations('requests.catalog');
   const c = useTranslations('requests.confirm');
   const act = useCatalogActions();
@@ -65,7 +67,7 @@ export function CatalogTab({ rows, confirm }: Props) {
       </div>
       {rows.map((s, i) => (
         <div key={s.id} className={styles.row}>
-          <span className={styles.n}>{i + 1}</span>
+          <span className={styles.n}>{numberText(i + 1)}</span>
           <Cell value={s.name} placeholder={t('name')} onSave={save(s, 'name')} />
           <Cell value={s.model} placeholder={t('model')} onSave={save(s, 'model')} />
           <Cell value={s.description} placeholder={t('desc')} onSave={save(s, 'description')} />
@@ -80,7 +82,7 @@ export function CatalogTab({ rows, confirm }: Props) {
             <span className={`${styles.sw} ${s.enabled ? styles.swOn : ''}`}>
               <span className={styles.knob} />
             </span>
-            {t('used', { n: s.requestCount })}
+            {t('used', { n: numberText(s.requestCount) })}
           </button>
           <button
             type="button"

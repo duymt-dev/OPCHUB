@@ -4,8 +4,10 @@ import { NextIntlClientProvider } from 'next-intl';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ToastProvider } from '@opchub/ui';
 import { emptyAiProviders } from '@opchub/shared/mock-domains';
-import settings from '../../../../../messages/vi/settings.json';
+import { messages as sourceMessages } from '@/i18n/messages';
+const settings = sourceMessages.settings;
 import common from '../../../../../messages/vi/common.json';
+import ui from '../../../../../messages/vi/ui.json';
 import * as api from '../../ai-api';
 import { AiTab } from './ai-tab';
 vi.mock('../../ai-api', async (original) => ({
@@ -16,7 +18,11 @@ vi.mock('../../ai-api', async (original) => ({
 }));
 const mount = () =>
   render(
-    <NextIntlClientProvider locale="vi" timeZone="Asia/Ho_Chi_Minh" messages={{ settings, common }}>
+    <NextIntlClientProvider
+      locale="vi"
+      timeZone="Asia/Ho_Chi_Minh"
+      messages={{ settings, common, ui }}
+    >
       <QueryClientProvider
         client={
           new QueryClient({

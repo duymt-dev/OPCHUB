@@ -1,8 +1,12 @@
+import { getTranslations } from 'next-intl/server';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { AffiliateScreen, AffiliateDetailScreen } from '@/features/affiliate';
 
-export const metadata: Metadata = { title: 'Affiliate · OPC Hub Admin' };
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('meta');
+  return { title: `${t('affiliate')} · OPC Hub Admin` };
+}
 export const dynamic = 'force-dynamic';
 
 export default async function AffiliatePage({ params }: { params: Promise<{ slug?: string[] }> }) {

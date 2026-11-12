@@ -8,6 +8,7 @@ import type { ScriptLineForm } from '../types';
 import { PersonaAvatar } from './bits';
 import f from './form.module.css';
 import s from './script-drawer.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 interface Props {
   lines: ScriptLineForm[];
@@ -19,6 +20,7 @@ interface Props {
 
 /** Danh sách lượt: chọn persona, ↑ ↓ ×, nội dung, "+ Thêm lượt" */
 export function ScriptLines({ lines, personas, onChange, error }: Props) {
+  const numberText = useNumberText();
   const t = useTranslations('bots.sf');
   const patch = (i: number, p: Partial<ScriptLineForm>) =>
     onChange(lines.map((l, j) => (j === i ? { ...l, ...p } : l)));
@@ -39,7 +41,7 @@ export function ScriptLines({ lines, personas, onChange, error }: Props) {
               />
               <select
                 className={f.select}
-                aria-label={t('persona', { n: i + 1 })}
+                aria-label={t('persona', { n: numberText(i + 1) })}
                 value={l.personaId}
                 onChange={(e) => patch(i, { personaId: e.target.value })}
               >
@@ -58,7 +60,7 @@ export function ScriptLines({ lines, personas, onChange, error }: Props) {
             <textarea
               className={f.textarea}
               rows={2}
-              aria-label={t('text', { n: i + 1 })}
+              aria-label={t('text', { n: numberText(i + 1) })}
               placeholder={i === 0 ? t('first') : t('reply')}
               value={l.body}
               {...(i === 0 ? invalidProps(error) : {})}

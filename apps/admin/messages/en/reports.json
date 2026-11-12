@@ -1,0 +1,61 @@
+{
+  "title": "Reports",
+  "subtitle": "Monthly figures and CSV exports using B1 / B2 / B3 templates",
+  "template": {
+    "label": "Report template",
+    "b1": "B1 · Industry group",
+    "b2": "B2 · Province",
+    "b3": "B3 · Region"
+  },
+  "month": "Month",
+  "monthOption": "Month {month}",
+  "scope": {
+    "b1": "Group",
+    "b2": "Province / City",
+    "b3": "Region"
+  },
+  "pickScope": "Select a scope to view figures",
+  "export": "Export CSV",
+  "metric": {
+    "newMembers": "New members",
+    "newPaidMembers": "New paid members",
+    "totalMembers": "Total members",
+    "activeMembers": "Active members",
+    "events": "Events / Coffee Chat",
+    "topics": "Discussion topics",
+    "feeRevenue": "Membership fee revenue (VND)",
+    "commission": "Accrued affiliate commission (VND)",
+    "fundraisingRevenue": "Fundraising plans (VND)",
+    "totalRevenue": "Total revenue (VND)",
+    "contracts": "G2B/B2B contracts",
+    "sponsorship": "Event sponsorship (VND)",
+    "partners": "Partner / Supplier connections",
+    "opportunities": "Collaboration opportunities"
+  },
+  "table": {
+    "metrics": "Monthly metrics",
+    "metric": "Metric",
+    "actual": "Actual",
+    "groups": "Industry groups",
+    "group": "Group",
+    "owner": "Group leader",
+    "members": "Members",
+    "messages": "Monthly activity",
+    "provinces": "Provincial KPIs",
+    "province": "Province / City",
+    "events": "Events",
+    "revenue": "Revenue (VND)",
+    "total": "Regional total"
+  },
+  "noData": "No data available in the system",
+  "empty": "No rows",
+  "error": "Unable to load report figures",
+  "retry": "Try again",
+  "toast": {
+    "exporting": "Creating report file…",
+    "exported": "Exported {file}",
+    "exportFailed": "Report export failed",
+    "exportTimeout": "File creation took too long. Please try again",
+    "failed": "Unable to export the report"
+  }
+}

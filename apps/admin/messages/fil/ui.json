@@ -1,0 +1,174 @@
+{
+  "close": "Isara",
+  "clear": "I-clear",
+  "pagination": {
+    "unit": "item",
+    "prev": "Nakaraang pahina",
+    "next": "Susunod na pahina",
+    "page": "Pahina {n}",
+    "pageSize": "Bilang ng row bawat pahina",
+    "perPage": "{n} / pahina",
+    "range": "Ipinapakita ang {from}–{to} / {total} {unit}"
+  },
+  "bulk": {
+    "selected": "Napili",
+    "clear": "Alisin ang pagpili",
+    "aria": "Mga maramihang aksyon"
+  },
+  "calendar": {
+    "today": "Ngayong araw",
+    "week": "Nakaraang 7 araw",
+    "days30": "Nakaraang 30 araw",
+    "month": "Ngayong buwan",
+    "previousMonth": "Nakaraang buwan",
+    "from": "Mula sa petsa",
+    "to": "Hanggang sa petsa"
+  },
+  "editor": {
+    "undo": "I-undo (Ctrl+Z)",
+    "redo": "I-redo (Ctrl+Y)",
+    "heading": "Heading",
+    "paragraph": "Talata",
+    "bold": "Makapal",
+    "italic": "Pahilis",
+    "underline": "Salungguhit",
+    "strike": "Guhit sa gitna",
+    "bulletList": "• Listahan",
+    "bulletListTitle": "Listahan",
+    "orderedList": "1. Listahan",
+    "orderedListTitle": "Listahang may numero",
+    "quote": "Sipi",
+    "link": "Link",
+    "linkTitle": "Maglagay ng link",
+    "clear": "Alisin ang format",
+    "linkUrl": "URL",
+    "linkInsert": "Ilagay",
+    "linkRemove": "Alisin ang link",
+    "linkCancel": "Kanselahin",
+    "linkInvalid": "Dapat magsimula ang URL sa http:// o https://"
+  },
+  "errors": {
+    "minNumber": "Pinakamababang halaga: {min}",
+    "maxNumber": "Pinakamataas na halaga: {max}",
+    "integer": "Maglagay ng buong bilang",
+    "bankAccountNumber": "Dapat may 6–20 digit ang numero ng account",
+    "bankHolderLetters": "Mga titik lamang ang dapat nasa pangalan ng may-ari ng account",
+    "notifyDeviceFailed": "Hindi ma-update ang mga abiso",
+    "adminPasswordRule": "Dapat may hindi bababa sa 8 character, malaking titik at numero ang bagong password",
+    "currentPasswordRequired": "Ilagay ang iyong kasalukuyang password",
+    "confirmPasswordRequired": "Kumpirmahin ang iyong bagong password",
+    "newPasswordRequired": "Pakilagay ang bagong password",
+    "nameMin": "Dapat may hindi bababa sa 2 character ang buong pangalan",
+    "nameMax": "Hindi dapat lumampas sa 100 character ang buong pangalan",
+    "phoneMax": "Hindi dapat lumampas sa 30 character ang numero ng telepono",
+    "avatarUrl": "Hindi wastong URL ng larawan",
+    "required": "Punan ang field na ito",
+    "invalid": "Hindi wastong halaga",
+    "minLength": "Maglagay ng hindi bababa sa {min} character",
+    "maxLength": "Maglagay ng hindi hihigit sa {max} character",
+    "passwordRule": "Gumamit ng hindi bababa sa 8 character, kasama ang malaking titik at numero",
+    "passwordMismatch": "Hindi tugma ang muling inilagay na password",
+    "passwordSame": "Dapat iba sa kasalukuyang password ang bagong password",
+    "imageType": "Dapat PNG/JPEG/WEBP ang larawan",
+    "imageUpload": "Nabigo ang pag-upload ng larawan, pakisubukang muli",
+    "imageSize": "Hanggang 5 MB lang ang larawan",
+    "failed": "Hindi nagtagumpay ang aksyon, pakisubukang muli",
+    "dateRange": "Dapat nasa pagitan ng 0 at 90 araw ang saklaw ng petsa"
+  },
+  "regions": {
+    "north": "Hilaga",
+    "central": "Gitna",
+    "centralDirector": "Gitna at Gitnang Kabundukan",
+    "south": "Timog"
+  },
+  "reviewReasons": [
+    "Hindi kumpleto ang paglalarawan",
+    "Hindi angkop na cover image",
+    "Anunsyo / spam",
+    "Paglabag sa mga tuntunin ng komunidad",
+    "Dobleng proyekto"
+  ],
+  "aiSuggestion": {
+    "failed": "Hindi makapagmungkahi ngayon. Subukan muli mamaya",
+    "suggest": "Magmungkahi gamit ang AI",
+    "use": "Gamitin ang mungkahi",
+    "skip": "Huwag gamitin",
+    "title": "Mungkahing nilalaman"
+  },
+  "permissions": {
+    "overview": {
+      "view": "Tingnan ang buod at mga bilang"
+    },
+    "members": {
+      "view": "Tingnan ang listahan at mga detalye ng miyembro",
+      "action": "I-lock / i-unlock, magtalaga ng mga grupo, mag-export ng datos"
+    },
+    "fees": {
+      "view": "Tingnan ang katayuan ng bayad",
+      "action": "Itala ang mga nakolektang bayad, magpadala ng mga paalala sa bayad"
+    },
+    "groups": {
+      "view": "Tingnan ang mga grupo at chat room",
+      "action": "Gumawa / mag-edit ng mga grupo at paksa, suriin ang mga miyembro",
+      "moderate": "I-moderate ang mga sensitibong mensahe"
+    },
+    "bots": {
+      "view": "Tingnan ang mga bot",
+      "action": "I-configure ang mga persona at script"
+    },
+    "events": {
+      "view": "Tingnan ang mga kaganapan at pagpaparehistro",
+      "action": "Gumawa / mag-edit ng mga kaganapan, mag-check in"
+    },
+    "projects": {
+      "view": "Tingnan ang mga proyekto",
+      "action": "Suriin / itago ang mga proyekto"
+    },
+    "investors": {
+      "view": "Tingnan ang mga mamumuhunan",
+      "action": "Makipag-ugnayan sa mga mamumuhunan at mag-export ng datos"
+    },
+    "services": {
+      "view": "Tingnan ang mga kahilingan sa serbisyo",
+      "action": "Asikasuhin ang mga kahilingan at katalogo ng serbisyo"
+    },
+    "affiliate": {
+      "view": "Tingnan ang mga affiliate at komisyon",
+      "action": "I-edit ang mga porsiyento ng komisyon, kanselahin ang mga komisyon",
+      "payout": "Bayaran ang mga Direktor ng Rehiyon",
+      "regional": "Magtalaga / bawiin ang mga Direktor ng Rehiyon (libre sa bayad sa pagiging miyembro)"
+    },
+    "settings": {
+      "general": "Pangkalahatang detalye at mga kategorya ng industriya",
+      "mail": "Welcome email at SMTP",
+      "admins": "Mga administrator account at pahintulot",
+      "log": "Talaan ng aktibidad"
+    },
+    "stores": {
+      "view": "Tingnan ang mga tindahan at lokal na pangangailangan",
+      "action": "Itago / ipakita ang mga tindahan at pangangailangang may paglabag"
+    },
+    "reports": {
+      "view": "Tingnan at i-export ang mga ulat na B1 / B2 / B3"
+    }
+  },
+  "permissionMenus": {
+    "overview": "Pangkalahatang-ideya",
+    "members": "Mga Miyembro",
+    "fees": "Mga bayad sa pagiging miyembro",
+    "groups": "Mga grupo ng komunidad",
+    "bots": "Mga interaction bot",
+    "events": "Nilalaman at Mga Kaganapan",
+    "projects": "Proyekto",
+    "investors": "Mga Mamumuhunan",
+    "services": "Mga Serbisyo",
+    "affiliate": "Affiliate",
+    "settings": "Mga setting ng system",
+    "stores": "Mga Tindahan at Pangangailangan",
+    "reports": "Mga Ulat"
+  },
+  "chart": {
+    "month": "B{n}",
+    "week": "L{n}"
+  }
+}

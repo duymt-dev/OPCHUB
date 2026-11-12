@@ -1,0 +1,175 @@
+{
+  "scope": "Actual locale-data payload isolation only; NOT original-baseline/per-route JS budget acceptance",
+  "source": {
+    "gitHead": "4b21efb4908a2a9c14672ec091ab9a6823cb989a",
+    "dirty": false
+  },
+  "builds": {
+    "msw": {
+      "buildId": "VYyyMCo0uHJ2DOM1_GblD",
+      "assets": [
+        {
+          "file": "0yni7qybhz5vm.js",
+          "tags": [
+            "lo-number"
+          ],
+          "locales": [
+            "lo"
+          ],
+          "path": "/_next/static/chunks/0yni7qybhz5vm.js",
+          "bytes": 53561,
+          "gzip": 11575,
+          "sha256": "cc043ff5216551ad09f0f34aa4bb6af2de55d59943305049f1878959724d0ef8"
+        },
+        {
+          "file": "171_2u4hc_-nk.js",
+          "tags": [
+            "my-number"
+          ],
+          "locales": [
+            "my"
+          ],
+          "path": "/_next/static/chunks/171_2u4hc_-nk.js",
+          "bytes": 43277,
+          "gzip": 8969,
+          "sha256": "70f4aa4eebd5a3faca537df5bf3097b9535b79e3e623e75ad3a98b9152edcaad"
+        },
+        {
+          "file": "1n092nm98od93.js",
+          "tags": [
+            "km-date"
+          ],
+          "locales": [
+            "km"
+          ],
+          "path": "/_next/static/chunks/1n092nm98od93.js",
+          "bytes": 324086,
+          "gzip": 33953,
+          "sha256": "8d2b790c79df32704474c07003b49f9d6068ce2370363a3989599c140c6947b2"
+        },
+        {
+          "file": "2nth1xpxtnz8_.js",
+          "tags": [
+            "km-number"
+          ],
+          "locales": [
+            "km"
+          ],
+          "path": "/_next/static/chunks/2nth1xpxtnz8_.js",
+          "bytes": 38392,
+          "gzip": 7730,
+          "sha256": "b66c26905cfca9dd7fdc0b89dc1d834abfb836237ca8e0351247187dc4cb1b6b"
+        },
+        {
+          "file": "3cjigoxx63yxh.js",
+          "tags": [
+            "lo-date"
+          ],
+          "locales": [
+            "lo"
+          ],
+          "path": "/_next/static/chunks/3cjigoxx63yxh.js",
+          "bytes": 285649,
+          "gzip": 33478,
+          "sha256": "bd11b18f90a4da01f6c2d50c06ce2339742a0df73d479849d0db57c368d508b7"
+        },
+        {
+          "file": "3w2rg9varce-g.js",
+          "tags": [
+            "my-date"
+          ],
+          "locales": [
+            "my"
+          ],
+          "path": "/_next/static/chunks/3w2rg9varce-g.js",
+          "bytes": 284752,
+          "gzip": 32284,
+          "sha256": "0ca29c4cd35bff79e0bbee4095e1feb51a60f5222fcd26850e1fe5ca34097527"
+        }
+      ]
+    },
+    "server": {
+      "buildId": "XpZirtsgd23QI91cwwv6V",
+      "assets": [
+        {
+          "file": "0yni7qybhz5vm.js",
+          "tags": [
+            "lo-number"
+          ],
+          "locales": [
+            "lo"
+          ],
+          "path": "/_next/static/chunks/0yni7qybhz5vm.js",
+          "bytes": 53561,
+          "gzip": 11575,
+          "sha256": "cc043ff5216551ad09f0f34aa4bb6af2de55d59943305049f1878959724d0ef8"
+        },
+        {
+          "file": "171_2u4hc_-nk.js",
+          "tags": [
+            "my-number"
+          ],
+          "locales": [
+            "my"
+          ],
+          "path": "/_next/static/chunks/171_2u4hc_-nk.js",
+          "bytes": 43277,
+          "gzip": 8969,
+          "sha256": "70f4aa4eebd5a3faca537df5bf3097b9535b79e3e623e75ad3a98b9152edcaad"
+        },
+        {
+          "file": "1n092nm98od93.js",
+          "tags": [
+            "km-date"
+          ],
+          "locales": [
+            "km"
+          ],
+          "path": "/_next/static/chunks/1n092nm98od93.js",
+          "bytes": 324086,
+          "gzip": 33953,
+          "sha256": "8d2b790c79df32704474c07003b49f9d6068ce2370363a3989599c140c6947b2"
+        },
+        {
+          "file": "2nth1xpxtnz8_.js",
+          "tags": [
+            "km-number"
+          ],
+          "locales": [
+            "km"
+          ],
+          "path": "/_next/static/chunks/2nth1xpxtnz8_.js",
+          "bytes": 38392,
+          "gzip": 7730,
+          "sha256": "b66c26905cfca9dd7fdc0b89dc1d834abfb836237ca8e0351247187dc4cb1b6b"
+        },
+        {
+          "file": "3cjigoxx63yxh.js",
+          "tags": [
+            "lo-date"
+          ],
+          "locales": [
+            "lo"
+          ],
+          "path": "/_next/static/chunks/3cjigoxx63yxh.js",
+          "bytes": 285649,
+          "gzip": 33478,
+          "sha256": "bd11b18f90a4da01f6c2d50c06ce2339742a0df73d479849d0db57c368d508b7"
+        },
+        {
+          "file": "3w2rg9varce-g.js",
+          "tags": [
+            "my-date"
+          ],
+          "locales": [
+            "my"
+          ],
+          "path": "/_next/static/chunks/3w2rg9varce-g.js",
+          "bytes": 284752,
+          "gzip": 32284,
+          "sha256": "0ca29c4cd35bff79e0bbee4095e1feb51a60f5222fcd26850e1fe5ca34097527"
+        }
+      ]
+    }
+  }
+}

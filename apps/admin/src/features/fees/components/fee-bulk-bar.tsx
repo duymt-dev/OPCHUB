@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import styles from './fee-table.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 interface Props {
   count: number;
@@ -16,12 +17,13 @@ interface Props {
  * Không dùng `BulkBar` của packages/ui: prototype màn Phí bố cục khác (chữ co giãn, nút liền kề).
  */
 export function FeeBulkBar({ count, onCollect, onRemind, onCsv, onClear }: Props) {
+  const numberText = useNumberText();
   const t = useTranslations('fees.bulk');
   if (count <= 0) return null;
   return (
     <section className={styles.bulk} aria-label={t('label')}>
       <span className={styles.bulkText} aria-live="polite">
-        {t('selected')} <b>{count}</b> {t('unit')}
+        {t('selected')} <b>{numberText(count)}</b> {t('unit')}
       </span>
       <button type="button" className={`${styles.bulkBtn} ${styles.primary}`} onClick={onCollect}>
         {t('collect')}

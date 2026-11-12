@@ -1,0 +1,79 @@
+{
+  "title": "Mga Serbisyo",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "tabs": {
+    "label": "Mga Serbisyo",
+    "list": "Mga kahilingan sa pagpaparehistro",
+    "catalog": "Katalogo ng mga programa at serbisyo"
+  },
+  "heading": "Mga kahilingan sa pagpaparehistro ng serbisyo",
+  "search": "Maghanap ng code, pangalan, email, organisasyon...",
+  "searchLabel": "Maghanap ng mga kahilingan ayon sa code, pangalan, email o organisasyon",
+  "csv": "I-export bilang CSV",
+  "col": {
+    "code": "Code",
+    "contact": "Taong kontak",
+    "service": "Serbisyo",
+    "province": "Lalawigan/lungsod",
+    "date": "Isinumite"
+  },
+  "kind": {
+    "business": "Negosyo / Organisasyon",
+    "personal": "Indibidwal"
+  },
+  "detail": "Detalye",
+  "empty": "Walang tumutugmang kahilingan",
+  "pager": {
+    "unit": "kahilingan",
+    "prev": "Nakaraang pahina",
+    "next": "Susunod na pahina",
+    "pageSize": "Bilang ng row bawat pahina"
+  },
+  "drawer": {
+    "title": "Kahilingan {code}",
+    "close": "Isara",
+    "service": "Serbisyo",
+    "kind": "Uri ng customer",
+    "contact": "Taong kontak",
+    "phone": "Numero ng telepono",
+    "email": "Email",
+    "org": "Organisasyon / Tax ID",
+    "province": "Lalawigan/lungsod",
+    "date": "Isinumite",
+    "note": "Paglalarawan ng kahilingan",
+    "thread": "Panloob na talakayan",
+    "threadCount": "Mga komento: {n} · para lamang sa mga administrador",
+    "editor": "Sumulat ng panloob na tala: quotation, kontrata, progreso…",
+    "mention": "Banggitin:",
+    "send": "Ipadala ang komento"
+  },
+  "confirm": {
+    "deleteTitle": "Tanggalin ang serbisyo?",
+    "deleteBody": "Aalisin ang \"{name}\" sa katalogo at hindi na ito makikita sa User Portal.",
+    "delete": "Tanggalin",
+    "cancel": "Kanselahin"
+  },
+  "catalog": {
+    "heading": "Katalogo ng mga programa at serbisyo",
+    "sub": "Ipinapakita sa User Portal sa popup ng mga Plano ng Serbisyo sa ilalim ng “Iba pang serbisyo at programa” at sa pagpili ng serbisyo sa form ng kahilingan sa konsultasyon. I-off ang pagiging nakikita upang itago sa User Portal.",
+    "name": "Pangalan ng programa / serbisyo",
+    "model": "Format",
+    "desc": "Maikling paglalarawan",
+    "used": "Mga kahilingan: {n}",
+    "visible": "Nakikita",
+    "delete": "Tanggalin",
+    "add": "+ Magdagdag ng programa / serbisyo"
+  },
+  "toast": {
+    "commented": "Naipadala ang komento",
+    "notified": "Naipadala at naabisuhan ang {names}",
+    "emptyComment": "Maglagay ng komento",
+    "exported": "Na-export na mga kahilingan: {n}",
+    "deleted": "Natanggal ang serbisyo",
+    "inUse": "May mga kahilingan ang serbisyong ito — itago sa halip na tanggalin",
+    "failed": "Hindi makumpleto ang aksyon. Subukang muli"
+  },
+  "error": "Hindi ma-load ang mga kahilingan sa serbisyo",
+  "retry": "Subukang muli",
+  "sub": "Mga kahilingan sa konsultasyon mula sa User Portal › Mga Plano ng Serbisyo"
+}

@@ -1,0 +1,42 @@
+{
+  "log": {
+    "filterTag": "Kategori",
+    "filterActor": "Pelaku",
+    "filterRange": "Rentang tanggal",
+    "from": "Dari tanggal",
+    "to": "Sampai tanggal",
+    "system": "Sistem",
+    "clearFilters": "Hapus filter",
+    "retryActors": "Muat ulang pelaku",
+    "emptyFiltered": "Tidak ada tindakan yang cocok",
+    "heading": "Log aktivitas administrator",
+    "headingSub": "Mencatat otomatis semua tindakan administrator (penguncian, persetujuan, pembayaran, perubahan konfigurasi…) selama 90 hari terakhir.",
+    "empty": "Belum ada aktivitas",
+    "tag": {
+      "affiliate": "Afiliasi",
+      "sso": "SSO",
+      "member": "Anggota",
+      "permission": "Izin",
+      "project": "Proyek",
+      "language": "Bahasa",
+      "moderation": "Moderasi",
+      "settings": "Konfigurasi",
+      "content": "Konten",
+      "report": "Laporan",
+      "pricing": "Harga"
+    },
+    "export": "Ekspor CSV",
+    "more": "Lihat lainnya",
+    "loading": "Memuat log aktivitas…",
+    "failed": "Tidak dapat memuat log aktivitas atau mengekspor CSV",
+    "retry": "Coba lagi",
+    "exported": "Baris diekspor: {n} – nhat-ky-hoat-dong.csv"
+  },
+  "time": {
+    "now": "baru saja",
+    "minutes": "{n} menit lalu",
+    "hours": "{n} jam lalu",
+    "yesterday": "Kemarin",
+    "days": "{n} hari lalu"
+  }
+}

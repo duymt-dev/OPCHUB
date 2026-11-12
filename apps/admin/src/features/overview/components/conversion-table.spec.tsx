@@ -1,3 +1,4 @@
+import ui from '../../../../messages/vi/ui.json';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { cleanup, render, screen } from '@testing-library/react';
 import { NextIntlClientProvider } from 'next-intl';
@@ -31,7 +32,7 @@ describe('REQ-623 conversion table', () => {
     const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
     try {
       render(
-        <NextIntlClientProvider locale="vi" messages={{ overview }}>
+        <NextIntlClientProvider locale="vi" messages={{ overview, ui }}>
           <QueryClientProvider client={client}>
             <ToastProvider>
               <ConversionTable />

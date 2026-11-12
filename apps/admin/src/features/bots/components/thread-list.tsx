@@ -7,6 +7,7 @@ import { PersonaAvatar } from './bits';
 import styles from './bots.module.css';
 import c from './cards.module.css';
 import s from './threads.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 interface Props {
   threads: BotThread[];
@@ -17,6 +18,7 @@ interface Props {
 
 /** D-50: scheduled/running/done progress; only unfinished threads offer Stop. */
 export function ThreadList({ threads, now, busy, onStop }: Props) {
+  const numberText = useNumberText();
   const t = useTranslations('bots');
   if (!threads.length) return <div className={styles.empty}>{t('thread.empty')}</div>;
   return (
@@ -31,13 +33,13 @@ export function ThreadList({ threads, now, busy, onStop }: Props) {
               {th.isAuto ? <span className={`${s.tag} ${s.auto}`}>{t('thread.auto')}</span> : null}
               {th.live ? <span className={`${s.tag} ${s.live}`}>{t('thread.live')}</span> : null}
               <span className={s.meta}>
-                {th.groupNames.join(', ')} · {t(`ago.${a.key}`, { n: a.n })}
+                {th.groupNames.join(', ')} · {t(`ago.${a.key}`, { n: numberText(a.n) })}
               </span>
               <span className={`${s.tag} ${pending ? s.pending : s.posted}`}>
                 {/* D-91 (4): đăng đủ mọi lượt = "Đã đăng" như prototype; dừng giữa chừng giữ tiến độ */}
                 {!pending && th.cursor >= th.total
                   ? t('thread.posted')
-                  : `${t(`thread.${th.status}`)} · ${t('thread.progress', { current: th.cursor, total: th.total })}`}
+                  : `${t(`thread.${th.status}`)} · ${t('thread.progress', { current: numberText(th.cursor), total: numberText(th.total) })}`}
               </span>
             </div>
             {th.lines.map((l, i) => (

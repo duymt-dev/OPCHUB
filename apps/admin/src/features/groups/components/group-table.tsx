@@ -1,11 +1,13 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { useDomainLabels } from '@/i18n/domain-labels';
 import type { KeyboardEvent } from 'react';
 import { formatCount } from '../model';
 import type { AdminGroup } from '../types';
 import { Cover, type GroupRowActions } from './group-grid';
 import styles from './group-table.module.css';
+import { GroupTableActions } from './group-table-actions';
 
 type Mark = 'on' | 'part' | 'off';
 
@@ -42,6 +44,8 @@ interface Props {
 
 /** D-24 / D-26: bảng nhóm (dạng danh sách) có chọn nhiều */
 export function GroupTable({ items, selected, onToggle, onToggleAll, actions }: Props) {
+  const labels = useDomainLabels();
+  const locale = useLocale();
   const t = useTranslations('groups.list');
   const n = items.filter((g) => selected.has(g.id)).length;
   const all: Mark = n > 0 && n === items.length ? 'on' : n > 0 ? 'part' : 'off';
@@ -78,30 +82,12 @@ export function GroupTable({ items, selected, onToggle, onToggleAll, actions }: 
                 </div>
               </div>
               <span className={styles.muted}>
-                {g.province} · {g.region}
+                {g.province} · {labels.canonicalRegion(g.region)}
               </span>
-              <span>{formatCount(g.memberCount)}</span>
-              <span>{formatCount(g.weeklyActive)}</span>
+              <span>{formatCount(g.memberCount, locale)}</span>
+              <span>{formatCount(g.weeklyActive, locale)}</span>
               <span className={styles.status}>{t('active')}</span>
-              <div className={styles.actions}>
-                <button type="button" className={styles.btn} onClick={() => actions.onEdit(g)}>
-                  {t('edit')}
-                </button>
-                <button
-                  type="button"
-                  title={t('exportOneTitle')}
-                  className={`${styles.btn} ${styles.btnBlue}`}
-                  onClick={() => actions.onExport(g)}
-                >
-                  {t('exportOne')}
-                </button>
-                <button type="button" className={styles.btn} onClick={() => actions.onChat(g)}>
-                  {t('chat')}
-                </button>
-                <button type="button" className={styles.btnDel} onClick={() => actions.onDelete(g)}>
-                  {t('delete')}
-                </button>
-              </div>
+              <GroupTableActions group={g} actions={actions} />
             </div>
           );
         })}

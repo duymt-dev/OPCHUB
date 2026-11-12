@@ -9,6 +9,7 @@ import { Icon } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import styles from './stores.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 const KPI = [
   ['total', 'rgba(0,0,0,0.88)'],
@@ -22,6 +23,7 @@ const countOf = (s: AdminStoreSummary | undefined, k: AdminStoreFilter) =>
 
 /** Prototype `aKpi`: Tổng gian hàng · Đang hiển thị · Bản nháp · Admin đã ẩn */
 export function StoreKpis({ s }: { s: AdminStoreSummary | undefined }) {
+  const numberText = useNumberText();
   const t = useTranslations('stores.kpi');
   return (
     <div className={styles.kpis}>
@@ -29,7 +31,7 @@ export function StoreKpis({ s }: { s: AdminStoreSummary | undefined }) {
         <div key={k} className={styles.kpi}>
           <span className={styles.kpiLabel}>{t(k)}</span>
           <b className={styles.kpiValue} style={{ color: c }}>
-            {s ? s[k] : '—'}
+            {s ? numberText(s[k]) : '—'}
           </b>
         </div>
       ))}
@@ -47,6 +49,7 @@ interface Props {
 
 /** Ô tìm (tên / ngành / tỉnh) + chip trạng thái kèm số (prototype `aFilters`) */
 export function StoreToolbar({ q, status, summary, onSearch, onStatus }: Props) {
+  const numberText = useNumberText();
   const t = useTranslations('stores');
   // Giữ chữ đang gõ tại chỗ; URL cập nhật cùng lúc (useUrlParams)
   const [text, setText] = useState(q);
@@ -76,7 +79,7 @@ export function StoreToolbar({ q, status, summary, onSearch, onStatus }: Props) 
             className={`${styles.chip} ${status === k ? styles.chipOn : ''}`}
             onClick={() => onStatus(k)}
           >
-            {t(`filter.${k}`)} {countOf(summary, k)}
+            {t(`filter.${k}`)} {numberText(countOf(summary, k))}
           </button>
         ))}
       </div>

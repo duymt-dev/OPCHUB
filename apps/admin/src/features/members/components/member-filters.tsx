@@ -11,6 +11,7 @@ import {
   type MemberFilters,
 } from '../types';
 import styles from './member-filters.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 interface Props {
   value: MemberFilters;
@@ -103,6 +104,7 @@ function useFilterFields(groups: GroupLookup): Field[] {
 
 /** Thanh lọc Thành viên — prototype v4 `mFilters` (6 select + "N kết quả" + "Xóa lọc (n)") */
 export function MemberFiltersBar({ value, groups, total, onChange }: Props) {
+  const numberText = useNumberText();
   const t = useTranslations('members.filters');
   const fields = useFilterFields(groups);
   const n = fields.filter((f) => isOn(value[f.key])).length;
@@ -130,9 +132,9 @@ export function MemberFiltersBar({ value, groups, total, onChange }: Props) {
       ))}
       {n > 0 ? (
         <div className={styles.result}>
-          <span className={styles.count}>{t('results', { n: total })}</span>
+          <span className={styles.count}>{t('results', { n: numberText(total) })}</span>
           <button type="button" className={styles.clear} onClick={() => onChange(CLEARED)}>
-            {t('clear', { n })}
+            {t('clear', { n: numberText(n) })}
           </button>
         </div>
       ) : null}

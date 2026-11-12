@@ -5,11 +5,13 @@ import {
   type BotConversationTypeInput,
 } from '@opchub/shared/api-domains';
 import { Form } from 'antd';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { ApiError } from '@/lib/api-client';
+import { useSchemaFormErrors } from '@/i18n/use-schema-form-errors';
 import type { useBotConversationTypes } from './use-bot-conversation-types';
 
+const FIELDS = ['name', 'description'] as const;
 function fieldName(path: unknown): keyof BotConversationTypeInput | null {
   return path === 'name' || path === 'description' ? path : null;
 }
@@ -19,26 +21,26 @@ export function useBotTypeForm(
 ) {
   const t = useTranslations('bots.bulk');
   const [form] = Form.useForm<BotConversationTypeInput>();
+  const invalid = useCallback(() => t('invalidType'), [t]);
+  const { local, raw, clear } = useSchemaFormErrors(form, FIELDS, invalid);
   useEffect(() => {
     if (catalog.error instanceof ApiError)
-      form.setFields(
-        catalog.error.fields.flatMap((field) => {
-          const name = fieldName(field.path);
-          return name ? [{ name, errors: [field.message] }] : [];
-        }),
+      raw(
+        Object.fromEntries(
+          catalog.error.fields.flatMap((field) => {
+            const name = fieldName(field.path);
+            return name ? [[name, field.message]] : [];
+          }),
+        ),
       );
-  }, [catalog.error, form]);
+  }, [catalog.error, raw]);
   const submit = async (values: BotConversationTypeInput) => {
     const parsed = botConversationTypeInputSchema.safeParse(values);
     if (!parsed.success) {
-      form.setFields(
-        parsed.error.issues.flatMap((issue) => {
-          const name = fieldName(issue.path[0]);
-          return name ? [{ name, errors: [t('invalidType')] }] : [];
-        }),
-      );
+      local(parsed.error);
       return;
     }
+    clear();
     const result = await catalog.create(parsed.data);
     if (result.ok && result.value) {
       form.resetFields();

@@ -5,6 +5,7 @@ import { Button } from 'antd';
 import { useTranslations } from 'next-intl';
 import type { AffiliateAgentBulkBarProps } from '../types';
 import layout from './bulk-layout.module.css';
+import { useAdminUiLabels } from '@/i18n/ui-labels';
 
 export function AgentBulkBar({
   count,
@@ -13,11 +14,13 @@ export function AgentBulkBar({
   onExport,
   exportLoading,
 }: AffiliateAgentBulkBarProps) {
+  const ui = useAdminUiLabels();
   const t = useTranslations('affiliate');
   if (count <= 0) return null;
   return (
     <div className={layout.bulk}>
       <BulkBar
+        {...ui.bulk}
         count={count}
         unit=""
         onClear={onClear}

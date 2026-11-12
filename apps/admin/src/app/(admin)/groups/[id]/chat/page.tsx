@@ -1,7 +1,11 @@
+import { getTranslations } from 'next-intl/server';
 import type { Metadata } from 'next';
 import { ChatViewer } from '@/features/groups';
 
-export const metadata: Metadata = { title: 'Xem chat · OPC Hub Admin' };
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('meta');
+  return { title: `${t('chat')} · OPC Hub Admin` };
+}
 
 export const dynamic = 'force-dynamic';
 

@@ -1,0 +1,174 @@
+{
+  "close": "Tutup",
+  "clear": "Padam",
+  "pagination": {
+    "unit": "item",
+    "prev": "Halaman sebelumnya",
+    "next": "Halaman seterusnya",
+    "page": "Halaman {n}",
+    "pageSize": "Bilangan baris setiap halaman",
+    "perPage": "{n} / halaman",
+    "range": "Memaparkan {from}–{to} / {total} {unit}"
+  },
+  "bulk": {
+    "selected": "Dipilih",
+    "clear": "Padam pilihan",
+    "aria": "Tindakan pukal"
+  },
+  "calendar": {
+    "today": "Hari ini",
+    "week": "7 hari lepas",
+    "days30": "30 hari terakhir",
+    "month": "Bulan ini",
+    "previousMonth": "Bulan lalu",
+    "from": "Dari tarikh",
+    "to": "Hingga tarikh"
+  },
+  "editor": {
+    "undo": "Buat asal (Ctrl+Z)",
+    "redo": "Buat semula (Ctrl+Y)",
+    "heading": "Tajuk",
+    "paragraph": "Perenggan",
+    "bold": "Tebal",
+    "italic": "Condong",
+    "underline": "Garis bawah",
+    "strike": "Garis lorek",
+    "bulletList": "• Senarai",
+    "bulletListTitle": "Senarai",
+    "orderedList": "1. Senarai",
+    "orderedListTitle": "Senarai bernombor",
+    "quote": "Petikan",
+    "link": "Pautan",
+    "linkTitle": "Sisipkan pautan",
+    "clear": "Kosongkan format",
+    "linkUrl": "Pautan URL",
+    "linkInsert": "Sisipkan",
+    "linkRemove": "Buang pautan",
+    "linkCancel": "Batal",
+    "linkInvalid": "Pautan mesti bermula dengan http:// atau https://"
+  },
+  "errors": {
+    "minNumber": "Nilai minimum: {min}",
+    "maxNumber": "Nilai maksimum: {max}",
+    "integer": "Masukkan bilangan bulat",
+    "bankAccountNumber": "Nombor akaun mesti mengandungi 6–20 digit",
+    "bankHolderLetters": "Nama pemilik akaun hanya boleh mengandungi huruf",
+    "notifyDeviceFailed": "Tidak dapat mengemas kini pemberitahuan",
+    "adminPasswordRule": "Kata laluan baharu mesti mengandungi minimum 8 aksara, huruf besar, dan angka",
+    "currentPasswordRequired": "Masukkan kata laluan kini",
+    "confirmPasswordRequired": "Sila sahkan kata laluan baharu anda",
+    "newPasswordRequired": "Sila masukkan kata laluan baharu",
+    "nameMin": "Nama penuh mesti mengandungi minimum 2 aksara",
+    "nameMax": "Nama penuh maksimum 100 aksara",
+    "phoneMax": "Nombor telefon maksimum 30 aksara",
+    "avatarUrl": "URL gambar tidak sah",
+    "required": "Sila isi medan ini",
+    "invalid": "Nilai tidak sah",
+    "minLength": "Masukkan minimum {min} aksara",
+    "maxLength": "Masukkan maksimum {max} aksara",
+    "passwordRule": "Gunakan minimum 8 aksara, termasuk huruf besar dan angka",
+    "passwordMismatch": "Kata laluan yang dimasukkan semula tidak sepadan",
+    "passwordSame": "Kata laluan baharu mesti berbeza dari kata laluan kini",
+    "imageType": "Imej mestilah PNG/JPEG/WEBP",
+    "imageUpload": "Gagal memuat naik imej, sila cuba lagi",
+    "imageSize": "Imej maksimum 5 MB",
+    "failed": "Tindakan tidak berjaya, sila cuba lagi",
+    "dateRange": "Julat tarikh mesti antara 0 dan 90 hari"
+  },
+  "regions": {
+    "north": "Utara",
+    "central": "Tengah",
+    "centralDirector": "Tengah & Dataran Tinggi Tengah",
+    "south": "Selatan"
+  },
+  "reviewReasons": [
+    "Penerangan belum penuh",
+    "Gambar sampul tidak sesuai",
+    "Iklan / spam",
+    "Pelanggaran peraturan komuniti",
+    "Projek pendua"
+  ],
+  "aiSuggestion": {
+    "failed": "Cadangan tidak tersedia. Cuba lagi kemudian",
+    "suggest": "Cadangan AI",
+    "use": "Gunakan cadangan",
+    "skip": "Abaikan",
+    "title": "Cadangan kandungan"
+  },
+  "permissions": {
+    "overview": {
+      "view": "Lihat ringkasan & angka"
+    },
+    "members": {
+      "view": "Lihat senarai & butiran ahli",
+      "action": "Kunci / buka kunci, tetapkan kumpulan, eksport data"
+    },
+    "fees": {
+      "view": "Lihat status yuran",
+      "action": "Rekod kutipan dan hantar peringatan yuran"
+    },
+    "groups": {
+      "view": "Lihat kumpulan & ruang sembang",
+      "action": "Cipta / sunting kumpulan dan topik, semak ahli",
+      "moderate": "Moderasi mesej sensitif"
+    },
+    "bots": {
+      "view": "Lihat bot",
+      "action": "Konfigurasikan persona & skrip"
+    },
+    "events": {
+      "view": "Lihat acara & pendaftaran",
+      "action": "Cipta / sunting acara, tandakan kehadiran"
+    },
+    "projects": {
+      "view": "Lihat projek",
+      "action": "Semak / sembunyikan projek"
+    },
+    "investors": {
+      "view": "Lihat pelabur",
+      "action": "Berkomunikasi dengan pelabur & eksport data"
+    },
+    "services": {
+      "view": "Lihat permintaan perkhidmatan",
+      "action": "Tangani permintaan & katalog perkhidmatan"
+    },
+    "affiliate": {
+      "view": "Lihat afiliasi & komisen",
+      "action": "Sunting peratusan komisen, batalkan komisen",
+      "payout": "Bayar Pengarah Wilayah",
+      "regional": "Lantik / tarik balik Pengarah Wilayah (pengecualian yuran)"
+    },
+    "settings": {
+      "general": "Maklumat umum & kategori industri",
+      "mail": "E-mel sambutan & SMTP",
+      "admins": "Akaun pentadbir & kebenaran",
+      "log": "Log aktiviti"
+    },
+    "stores": {
+      "view": "Lihat kedai & keperluan tempatan",
+      "action": "Sembunyikan / paparkan kedai & keperluan yang melanggar"
+    },
+    "reports": {
+      "view": "Lihat & eksport laporan B1 / B2 / B3"
+    }
+  },
+  "permissionMenus": {
+    "overview": "Gambaran keseluruhan",
+    "members": "Ahli",
+    "fees": "Yuran keahlian",
+    "groups": "Kumpulan komuniti",
+    "bots": "Bot interaksi",
+    "events": "Kandungan & Acara",
+    "projects": "Projek",
+    "investors": "Pelabur",
+    "services": "Perkhidmatan",
+    "affiliate": "Ahli gabungan",
+    "settings": "Tetapan sistem",
+    "stores": "Kedai & Keperluan",
+    "reports": "Laporan"
+  },
+  "chart": {
+    "month": "B{n}",
+    "week": "M{n}"
+  }
+}

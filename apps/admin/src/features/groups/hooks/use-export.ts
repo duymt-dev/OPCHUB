@@ -5,7 +5,8 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
 import { exportGroupMembers, fetchGroupMembers, groupKeys } from '../api';
-import { exportCell, exportFile, exportName, type CellLabels } from '../model';
+import { exportFile, exportName } from '../model';
+import { groupExportContent } from '../export-content';
 import {
   DEFAULT_EXPORT_FIELDS,
   EXPORT_FIELDS,
@@ -14,6 +15,7 @@ import {
   type ExportStatus,
 } from '../types';
 import { useErrorToast } from './use-groups';
+import { useNumberText } from '@/i18n/use-number-text';
 
 const PREVIEW_ROWS = 6;
 
@@ -29,6 +31,7 @@ function download(blob: Blob, name: string) {
 
 /** Trạng thái + dữ liệu hộp "Xuất danh sách thành viên nhóm" (gx* của prototype) */
 export function useExportState(initial: string[], onDone: () => void) {
+  const numberText = useNumberText();
   const t = useTranslations('groups.export');
   const tt = useTranslations('groups.toast');
   const toast = useToast();
@@ -46,13 +49,7 @@ export function useExportState(initial: string[], onDone: () => void) {
   });
   const rows = useMemo(() => (sel.length ? (members.data?.items ?? []) : []), [members.data, sel]);
   const cols = EXPORT_FIELDS.filter((f) => fields.includes(f));
-  const labels = Object.fromEntries(
-    (['business', 'personal', 'owner', 'lecturer', 'member', 'active', 'locked'] as const).map(
-      (k) => [k, t(`cell.${k}`)],
-    ),
-  ) as CellLabels;
-  const head = cols.map((c) => t(`field.${c}`));
-  const table = rows.map((r) => cols.map((c) => exportCell(r, c, labels) || '—'));
+  const { head, table } = groupExportContent(rows, cols);
 
   const job = useMutation({ mutationFn: exportGroupMembers, onError });
   const submit = () => {
@@ -66,7 +63,7 @@ export function useExportState(initial: string[], onDone: () => void) {
         onSuccess: () => {
           const name = `${exportName(new Date())}.${format}`;
           download(exportFile(head, table, format), name);
-          toast(tt('exported', { count: rows.length, file: name }));
+          toast(tt('exported', { count: numberText(rows.length), file: name }));
           onDone();
         },
       },

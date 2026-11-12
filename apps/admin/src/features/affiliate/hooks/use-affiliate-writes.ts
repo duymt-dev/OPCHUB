@@ -15,6 +15,7 @@ import {
 } from '../api';
 import { useAffiliateAccess } from './use-affiliate-access';
 import { useCommissionStatusWrites } from './use-commission-status-writes';
+import { useNumberText } from '@/i18n/use-number-text';
 
 function download(filename: string, csv: string) {
   const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
@@ -27,6 +28,7 @@ function download(filename: string, csv: string) {
 
 /** Recheck permission at the mutation boundary, including forms rendered in portals. */
 export function useAffiliateWrites() {
+  const numberText = useNumberText();
   const access = useAffiliateAccess();
   const qc = useQueryClient();
   const toast = useToast();
@@ -43,7 +45,7 @@ export function useAffiliateWrites() {
     },
     onSuccess: async (result, body) => {
       if (!result) return;
-      toast(t('toast.rates', { rate: body.rate, n: result.updated }));
+      toast(t('toast.rates', { rate: numberText(body.rate), n: numberText(result.updated) }));
       await refresh();
     },
     onError: fail,

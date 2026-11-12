@@ -1,12 +1,16 @@
 'use client';
 
 import { RichTextField, SafeHtml } from '@opchub/ui';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { infoRows, type InfoLabels } from '../model';
-import { REVIEW_REASONS, type AdminProject } from '../types';
+import type { AdminProject } from '../types';
+import { useRejectionLabels } from '../rejection-labels';
+import { useAdminUiLabels } from '@/i18n/ui-labels';
+import { formatNumber } from '@/i18n/format';
 import styles from './review.module.css';
 
 function useInfoLabels(): InfoLabels {
+  const locale = useLocale();
   const t = useTranslations('projects');
   return {
     stage: {
@@ -23,14 +27,15 @@ function useInfoLabels(): InfoLabels {
     visPublic: t('val.visPublic'),
     visPrivate: t('val.visPrivate'),
     noFunding: t('val.noFunding'),
-    funding: (amount, equity) => t('val.funding', { amount, equity }),
+    funding: (amount, equity) => t('val.funding', { amount, equity: formatNumber(equity, locale) }),
   };
 }
 
 /** Ảnh bìa, tên, tóm tắt, thẻ, bảng thông tin, mô tả, ghi chú lần duyệt trước */
 export function ReviewInfo({ p }: { p: AdminProject }) {
+  const locale = useLocale();
   const t = useTranslations('projects');
-  const rows = infoRows(p, useInfoLabels());
+  const rows = infoRows(p, useInfoLabels(), locale);
   return (
     <>
       <div className={styles.cover}>
@@ -105,6 +110,8 @@ interface FeedbackProps {
 /** Lý do + lời nhắn gửi chủ dự án (khi yêu cầu chỉnh sửa / từ chối) */
 export function ReviewFeedback({ reason, note, onReason, onNote }: FeedbackProps) {
   const t = useTranslations('projects.drawer');
+  const reasons = useRejectionLabels();
+  const ui = useAdminUiLabels();
   return (
     <div className={styles.feedback}>
       <span className={styles.feedbackTitle}>{t('feedback')}</span>
@@ -115,13 +122,15 @@ export function ReviewFeedback({ reason, note, onReason, onNote }: FeedbackProps
         onChange={(e) => onReason(e.target.value)}
       >
         <option value="">{t('reasonPlaceholder')}</option>
-        {REVIEW_REASONS.map((r) => (
-          <option key={r} value={r}>
-            {r}
+        {reasons.map((r) => (
+          <option key={r.value} value={r.value}>
+            {r.label}
           </option>
         ))}
       </select>
       <RichTextField
+        labels={ui.editor}
+        keyboardControls
         value={note}
         onChange={onNote}
         minHeight={90}

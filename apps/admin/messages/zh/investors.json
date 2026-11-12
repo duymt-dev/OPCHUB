@@ -1,0 +1,61 @@
+{
+  "title": "投资人",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "stats": {
+    "total": "投资者总数",
+    "fund": "投资基金",
+    "business": "企业投资者",
+    "individual": "个人投资者",
+    "amount": "意向投资总额"
+  },
+  "heading": "投资人",
+  "sub": "已表达 OPC 项目投资意向的基金及个人",
+  "search": "搜索姓名、企业、基金或电话号码...",
+  "searchLabel": "搜索投资者",
+  "csv": "导出 CSV",
+  "tabsLabel": "按投资者类型筛选",
+  "tabs": {
+    "all": "全部",
+    "fund": "投资基金",
+    "business": "企业",
+    "individual": "个人"
+  },
+  "kind": {
+    "fund": "投资基金",
+    "business": "企业",
+    "individual": "个人"
+  },
+  "col": {
+    "investor": "投资人",
+    "kind": "类型",
+    "org": "企业／基金",
+    "phone": "电话号码",
+    "projects": "关注的项目",
+    "total": "意向总额"
+  },
+  "detail": "详情",
+  "empty": "没有匹配的投资者",
+  "pager": {
+    "unit": "位投资者",
+    "prev": "上一页",
+    "next": "下一页",
+    "pageSize": "每页行数"
+  },
+  "drawer": {
+    "title": "投资者详情",
+    "close": "关闭",
+    "org": "企业／基金",
+    "phone": "电话号码",
+    "total": "意向投资总额",
+    "copy": "复制号码",
+    "projects": "已关注项目（{n}）",
+    "owner": "项目所有者：{owner} · {date}"
+  },
+  "toast": {
+    "copied": "电话号码已复制",
+    "exported": "已导出投资者：{n}",
+    "failed": "无法执行此操作，请重试"
+  },
+  "error": "无法加载投资者列表",
+  "retry": "重试"
+}

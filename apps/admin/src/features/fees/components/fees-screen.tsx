@@ -12,9 +12,11 @@ import { FeeStats } from './fee-stats';
 import { FeeTable } from './fee-table';
 import { FeeToolbar } from './fee-toolbar';
 import styles from './fees.module.css';
+import { useAdminUiLabels } from '@/i18n/ui-labels';
 
 /** D-18 → D-22 Phí thành viên: thống kê, lọc, chọn hàng loạt, thao tác dòng, phân trang */
 export function FeesScreen() {
+  const ui = useAdminUiLabels();
   const t = useTranslations('fees');
   const { params, update } = useFeeParams();
   const { list, summary } = useFees(params);
@@ -28,7 +30,7 @@ export function FeesScreen() {
         title={t('title')}
         // Prototype có dòng mô tả rỗng (pageSub '') vẫn chiếm khoảng cách 4px; khoảng trắng → cao 0
         subtitle=" "
-        extra={<DateRangePicker />}
+        extra={<DateRangePicker {...ui.dateRange} />}
       />
       <div className={styles.wrap}>
         <FeeStats summary={summary.data} />
@@ -74,6 +76,7 @@ export function FeesScreen() {
             onChange={(page) => update({ page })}
             onSizeChange={(size) => update({ size, page: 1 })}
             labels={{
+              ...ui.pagination,
               unit: t('pager.unit'),
               prev: t('pager.prev'),
               next: t('pager.next'),

@@ -1,0 +1,126 @@
+{
+  "shell": {
+    "navTitle": "管理",
+    "search": "搜索...",
+    "notifications": "通知",
+    "menu": "菜单",
+    "back": "首页",
+    "collapse": "收起侧边栏",
+    "expand": "展开侧边栏",
+    "language": "简体中文",
+    "profile": "个人资料",
+    "logout": "退出登录",
+    "brandTag": "管理员",
+    "upcoming": "即将举行的活动",
+    "viewAll": "查看全部",
+    "settings": "系统设置",
+    "globalSearch": {
+      "placeholder": "搜索会员、店铺、需求、项目、群组…",
+      "empty": "未找到结果",
+      "clear": "清除搜索",
+      "hint": "请输入至少两个字符进行搜索...",
+      "emptyQuery": "未找到与“{query}”匹配的结果",
+      "loading": "搜索中…",
+      "failed": "无法加载搜索结果",
+      "groups": {
+        "store": "店铺",
+        "need": "本地需求",
+        "project": "OPC 项目",
+        "group": "社区群组",
+        "member": "会员"
+      },
+      "members": "会员：{n}"
+    }
+  },
+  "nav": {
+    "overview": "概览",
+    "members": "会员",
+    "fees": "会员费",
+    "groups": "社区群组",
+    "bots": "互动机器人",
+    "events": "内容与活动",
+    "needs": "本地需求",
+    "stores": "店铺",
+    "projects": "OPC 项目",
+    "investors": "投资者",
+    "requests": "服务",
+    "affiliate": "推广网络",
+    "reports": "报表",
+    "marketing": "营销",
+    "settings": "系统设置"
+  },
+  "navGroup": {
+    "people": "用户与社群",
+    "business": "商业对接",
+    "revenue": "收入与合作伙伴"
+  },
+  "role": {
+    "super_admin": "超级管理员",
+    "admin": "管理员",
+    "moderator": "协调员",
+    "member": "会员"
+  },
+  "state": {
+    "loading": "加载中…",
+    "error": "数据加载失败",
+    "retry": "重试",
+    "notFound": "页面未找到"
+  },
+  "notifications": {
+    "title": "通知",
+    "markAll": "全部标为已读",
+    "tabAll": "全部",
+    "tabUnread": "未读（{n}）",
+    "empty": "暂无通知"
+  },
+  "ago": {
+    "now": "刚刚",
+    "minutes": "{n} 分钟前",
+    "hours": "{n} 小时前",
+    "days": "{n} 天前"
+  },
+  "errors": {
+    "fixFields": "请检查标记的字段",
+    "failed": "操作失败，请重试"
+  },
+  "rbac": {
+    "viewOnly": "只读模式 — <b>{role}</b> 角色无权在此部分执行操作。",
+    "viewOnlyToast": "{role} 角色仅可查看此部分",
+    "preview": "正以 <b>{role}</b> 角色预览管理后台 — 仅显示该角色有权访问的菜单。",
+    "previewExit": "退出预览",
+    "forbiddenTitle": "您无权查看此部分",
+    "forbiddenBody": "您的角色无权打开此部分。",
+    "forbiddenBack": "前往可访问的部分",
+    "twoFactor": "启用双重身份验证"
+  },
+  "adminProfile": {
+    "nameRequired": "请输入完整姓名",
+    "enabled": "已启用",
+    "name": "姓名",
+    "currentPassword": "当前密码",
+    "newPassword": "新密码",
+    "passwordRule": "至少 8 个字符，须包含大写字母及数字",
+    "noRole": "尚未分配角色",
+    "security": "安全信息与角色",
+    "passwordSaved": "密码已更新",
+    "emailHint": "由管理员分配的邮箱",
+    "passwordTitle": "修改密码",
+    "role": "当前角色",
+    "changePassword": "更新密码",
+    "enable": "启用双重身份验证",
+    "email": "登录邮箱",
+    "failed": "无法更新，请重试",
+    "disabled": "未激活",
+    "save": "保存信息",
+    "saved": "个人信息已保存",
+    "personal": "个人信息",
+    "phone": "电话号码",
+    "imageRule": "JPG／PNG／WebP 图片，最大 5 MB",
+    "subtitle": "管理个人信息及管理员账户安全",
+    "confirmPassword": "确认新密码",
+    "upload": "上传新照片",
+    "remove": "删除图片",
+    "title": "个人资料",
+    "twoFactor": "双重身份验证（2FA）"
+  }
+}

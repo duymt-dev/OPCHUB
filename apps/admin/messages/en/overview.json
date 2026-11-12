@@ -1,0 +1,72 @@
+{
+  "title": "Overview",
+  "sub": "Track growth, events and community content moderation",
+  "stats": {
+    "members": "Members",
+    "membersDelta": "+{pct}% this month",
+    "membersRangeDelta": "+{pct}% in the selected period",
+    "freshRangeDelta": "In the selected period",
+    "communities": "Community",
+    "communitiesDelta": "+{n} new groups",
+    "fresh": "New members",
+    "freshDelta": "Month {month}",
+    "events": "Events",
+    "eventsDelta": "{n} upcoming"
+  },
+  "growth": {
+    "title": "Member growth",
+    "week": "Week",
+    "month": "Month",
+    "year": "Year",
+    "delta": "+{pct}%",
+    "deltaNote": "+{n} members this month",
+    "rangeDeltaNote": "+{n} members in the selected period",
+    "active": "Active",
+    "new": "New",
+    "inactive": "Not activated"
+  },
+  "flow": {
+    "title": "System workflow",
+    "sub": "Live figures from the modules",
+    "done": "Complete",
+    "todo": "Action needed",
+    "fees": {
+      "name": "Paid members",
+      "sub": "Automatically activated when transfers are reconciled",
+      "cta": "Membership fees"
+    },
+    "stores": {
+      "name": "Visible stores",
+      "sub": "{hidden} hidden · {draft} drafts",
+      "cta": "Stores"
+    },
+    "needs": { "name": "Open needs", "sub": "{closed} closed", "cta": "Needs" },
+    "projects": {
+      "name": "Projects awaiting review",
+      "sub": "{published} visible projects",
+      "cta": "Review projects"
+    },
+    "groups": {
+      "name": "Community groups",
+      "sub": "Provincial & industry groups",
+      "cta": "Community"
+    }
+  },
+  "conversion": {
+    "heading": "Free-to-paid conversion by region",
+    "sub": "Rate = Paid / (Paid + Expired and unpaid) · members after the 3-month free trial",
+    "export": "Export CSV",
+    "region": "Region",
+    "director": "Regional Director",
+    "trial": "On trial",
+    "paid": "Paid",
+    "expired": "Expired and unpaid",
+    "rate": "Conversion rate",
+    "total": "Nationwide",
+    "unappointed": "Not appointed",
+    "exported": "Exported 3 rows – chuyen-doi-theo-vung.csv",
+    "failed": "Unable to load figures or export CSV",
+    "loading": "Loading figures…",
+    "retry": "Try again"
+  }
+}

@@ -2,7 +2,7 @@
 
 import type { FeeRow, PendingFundraising, UnmatchedTxn } from '@opchub/shared/api-domains';
 import { Modal } from '@opchub/ui';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useMatchTransaction } from '../hooks/use-fee-transactions';
 import { useHintMember } from '../hooks/use-member-lookup';
@@ -26,6 +26,7 @@ interface Props {
  * Lý do bắt buộc ≤ 500 ký tự, bước xác nhận "Khớp giao dịch … cho …?" rồi mới gửi.
  */
 export function MatchDialog({ txn, onClose }: Props) {
+  const locale = useLocale();
   const t = useTranslations('fees.txn.dialog');
   const [mode, setMode] = useState<Mode>(txn.fundraisingHint ? 'fundraising' : 'fee');
   const hint = useHintMember(mode === 'fee' ? txn.matchedHint : null);
@@ -51,12 +52,12 @@ export function MatchDialog({ txn, onClose }: Props) {
     <Modal open title={t('title')} onClose={onClose} closeLabel={t('cancel')}>
       <div className={styles.stack}>
         <p className={styles.summary}>
-          {t('txn', { amount: vnd(txn.amount) })}
+          {t('txn', { amount: vnd(txn.amount, locale) })}
           <br />
           <span className={styles.muted}>{txn.content}</span>
         </p>
         {confirming && target ? (
-          <p role="alert">{t('confirm', { amount: vnd(txn.amount), name: target })}</p>
+          <p role="alert">{t('confirm', { amount: vnd(txn.amount, locale), name: target })}</p>
         ) : (
           <>
             <ModePicker value={mode} onChange={setMode} />

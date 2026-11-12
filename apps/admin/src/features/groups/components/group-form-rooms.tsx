@@ -6,6 +6,7 @@ import type { ReactNode } from 'react';
 import type { GroupFormState } from '../types';
 import type { FormPatch } from './group-form-fields';
 import styles from './group-form.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 interface Props {
   f: GroupFormState;
@@ -13,6 +14,7 @@ interface Props {
 }
 
 function RoomsHead({ count, manage }: { count: number; manage?: ReactNode }) {
+  const numberText = useNumberText();
   const t = useTranslations('groups.form');
   return (
     <div className={styles.split}>
@@ -21,7 +23,7 @@ function RoomsHead({ count, manage }: { count: number; manage?: ReactNode }) {
       </span>
       <div className={styles.splitEnd}>
         {manage}
-        <span className={styles.hint}>{t('roomCount', { count })}</span>
+        <span className={styles.hint}>{t('roomCount', { count: numberText(count) })}</span>
       </div>
     </div>
   );
@@ -103,23 +105,24 @@ export function RoomFields({ f, set, manage }: Props & { manage?: ReactNode }) {
 }
 
 export function RuleFields({ f, set }: Props) {
+  const numberText = useNumberText();
   const t = useTranslations('groups.form');
   return (
     <div className={styles.field}>
       {t('rules')}
       {f.rules.map((r, i) => (
         <div key={i} className={styles.rule}>
-          <span className={styles.ruleN}>{i + 1}.</span>
+          <span className={styles.ruleN}>{numberText(i + 1)}.</span>
           <input
             className={styles.input}
             value={r}
-            aria-label={t('rule', { n: i + 1 })}
+            aria-label={t('rule', { n: numberText(i + 1) })}
             onChange={(e) => set({ rules: f.rules.map((x, j) => (j === i ? e.target.value : x)) })}
           />
           <button
             type="button"
             className={styles.ruleX}
-            aria-label={t('removeRule', { n: i + 1 })}
+            aria-label={t('removeRule', { n: numberText(i + 1) })}
             onClick={() => set({ rules: f.rules.filter((_, j) => j !== i) })}
           >
             ✕

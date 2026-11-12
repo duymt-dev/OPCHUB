@@ -1,0 +1,198 @@
+Source working tree based on0001c46f; complete Myanmar25/2667 with8 new business catalogs/1407 leaves, preserving earlier17 files. Fixed10-bundle250-file raw/build gate49 physical positive/negative cases and92 exact source/key/locale copy receipts. Full16-AC/control/state/value/performance acceptance remains open; raw presence alone is not DONE. Admin-only mobile language wrapper, real loaded-data/popover browser checks, canonical picker/sidebar fixtures and unambiguous ICU cache tuple. Actual control phase: optional Admin RichText keyboard/close labels preserving Portal defaults, Admin mobile calendar layout, nested Event Escape preservation, owner-approved equivalent UTC serializer. No schema/API/DB/dependency/font change. Actual root commands, cached tasks identified by Turbo; no DB/service mutation.
+COMMAND pnpm lint
+$ turbo run lint
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running lint in 9 packages
+   • Remote caching disabled
+
+@opchub/portal:lint: cache hit, replaying logs 71e3df361172b94e
+@opchub/server:lint: cache hit, replaying logs 7f4b11d47879bedd
+@opchub/server:lint: $ eslint src test
+@opchub/admin:lint: cache hit, replaying logs bd214c2ec6780931
+@opchub/e2e:lint: cache miss, executing 88fabde6b4815d30
+@opchub/shared:lint: cache hit, replaying logs f9d493ea0cb6d67f
+@opchub/ui:lint: cache miss, executing 83c0b0731ba71c3a
+@opchub/portal:lint: $ eslint src
+@opchub/admin:lint: $ eslint src
+@opchub/shared:lint: $ eslint src
+@opchub/db:lint: cache hit, replaying logs 8df791dba6501ec7
+@opchub/db:lint: $ eslint src seed test
+@opchub/integrations:lint: cache hit, replaying logs 1fb607819a53b21e
+@opchub/integrations:lint: $ eslint src
+@opchub/e2e:lint: $ eslint parity behavior audit server llm env.ts urls.ts
+@opchub/ui:lint: $ eslint src
+
+ Tasks:    8 successful, 8 total
+Cached:    6 cached, 8 total
+  Time:    19.631s
+
+EXIT 0
+COMMAND pnpm typecheck
+$ turbo run typecheck
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running typecheck in 9 packages
+   • Remote caching disabled
+
+@opchub/admin:typecheck: cache hit, replaying logs d43bd2a6d3626e3f
+@opchub/db:typecheck: cache hit, replaying logs 35eaf239ef03390a
+@opchub/admin:typecheck: $ next typegen && tsc --noEmit
+@opchub/admin:typecheck: Generating route types...
+@opchub/admin:typecheck: ✓ Types generated successfully
+@opchub/db:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/shared:typecheck: cache hit, replaying logs 2af37fea5a693c30
+@opchub/ui:typecheck: cache miss, executing e28363fa83524181
+@opchub/e2e:typecheck: cache miss, executing b7d6465c08adf950
+@opchub/integrations:typecheck: cache hit, replaying logs 60f5b494e043fdc4
+@opchub/shared:typecheck: $ tsc -p tsconfig.json
+@opchub/integrations:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/portal:typecheck: cache hit, replaying logs 384ceac62a366d53
+@opchub/portal:typecheck: $ next typegen && tsc --noEmit
+@opchub/portal:typecheck: Generating route types...
+@opchub/portal:typecheck: ✓ Types generated successfully
+@opchub/server:typecheck: cache hit, replaying logs f44a5951da8d2c30
+@opchub/server:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/ui:typecheck: $ tsc -p tsconfig.json
+@opchub/e2e:typecheck: $ tsc -p tsconfig.json
+
+ Tasks:    8 successful, 8 total
+Cached:    6 cached, 8 total
+  Time:    9.376s
+
+EXIT 0
+COMMAND pnpm depcheck
+$ depcruise apps/portal apps/admin packages e2e --config .dependency-cruiser.cjs && depcruise apps/server --config .dependency-cruiser.cjs --ts-config tsconfig.depcruise.server.json
+
+✔ no dependency violations found (2861 modules, 8743 dependencies cruised)
+
+
+✔ no dependency violations found (1260 modules, 5995 dependencies cruised)
+
+EXIT 0
+
+--- Candidate Admin production build msw; working tree based on0001c46f; frozen production inputs, not final full-TIP acceptance ---
+Source working tree based on 0001c46f; Admin build mode=msw dist=.next-msw-tip824; compile only, no API verification
+$ vitest run src/i18n/tests/production-catalogs.spec.ts && next build
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  1 passed (1)
+      Tests  49 passed (49)
+   Start at  10:17:10
+   Duration  18.19s (tests 91%, environment 9%)
+
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 357ms
+- Experiments (use with caution):
+  · optimizePackageImports
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 3.4s
+  Running TypeScript ...
+  Finished TypeScript in 16.1s ...
+  Collecting page data using 5 workers ...
+  Generating static pages using 5 workers (0/10) ...
+  Generating static pages using 5 workers (2/10)
+  Generating static pages using 5 workers (4/10)
+  Generating static pages using 5 workers (7/10)
+✓ Generating static pages using 5 workers (10/10) in 614ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /affiliate/[[...slug]]
+├ ƒ /bots/[[...slug]]
+├ ƒ /events
+├ ƒ /fees
+├ ƒ /fees/transactions
+├ ƒ /first-password
+├ ƒ /forgot-password
+├ ƒ /groups
+├ ƒ /groups/[id]/chat
+├ ƒ /investors
+├ ƒ /login
+├ ƒ /marketing
+├ ƒ /members
+├ ƒ /needs
+├ ƒ /overview
+├ ƒ /profile
+├ ƒ /projects/[[...slug]]
+├ ƒ /reports
+├ ƒ /requests/[[...tab]]
+├ ƒ /reset-password
+├ ƒ /settings
+├ ƒ /stores
+└ ƒ /two-factor
+
+
+ƒ  (Dynamic)  server-rendered on demand
+
+EXIT 0
+
+--- Candidate Admin production build native; working tree based on0001c46f; frozen production inputs, not final full-TIP acceptance ---
+Source working tree based on 0001c46f; Admin build mode=native dist=.next-server-tip824; compile only, no API verification
+$ vitest run src/i18n/tests/production-catalogs.spec.ts && next build
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  1 passed (1)
+      Tests  49 passed (49)
+   Start at  10:18:58
+   Duration  38.07s (tests 93%, environment 6%)
+
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 6.1s
+- Experiments (use with caution):
+  · optimizePackageImports
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 10.5s
+  Running TypeScript ...
+  Finished TypeScript in 37.2s ...
+  Collecting page data using 5 workers ...
+  Generating static pages using 5 workers (0/10) ...
+  Generating static pages using 5 workers (2/10)
+  Generating static pages using 5 workers (4/10)
+  Generating static pages using 5 workers (7/10)
+✓ Generating static pages using 5 workers (10/10) in 1159ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /affiliate/[[...slug]]
+├ ƒ /bots/[[...slug]]
+├ ƒ /events
+├ ƒ /fees
+├ ƒ /fees/transactions
+├ ƒ /first-password
+├ ƒ /forgot-password
+├ ƒ /groups
+├ ƒ /groups/[id]/chat
+├ ƒ /investors
+├ ƒ /login
+├ ƒ /marketing
+├ ƒ /members
+├ ƒ /needs
+├ ƒ /overview
+├ ƒ /profile
+├ ƒ /projects/[[...slug]]
+├ ƒ /reports
+├ ƒ /requests/[[...tab]]
+├ ƒ /reset-password
+├ ƒ /settings
+├ ƒ /stores
+└ ƒ /two-factor
+
+
+ƒ  (Dynamic)  server-rendered on demand
+
+EXIT 0

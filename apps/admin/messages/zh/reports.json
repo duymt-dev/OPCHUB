@@ -1,0 +1,61 @@
+{
+  "title": "报表",
+  "subtitle": "汇总月度数据，并按 B1／B2／B3 模板导出 CSV",
+  "template": {
+    "label": "报表模板",
+    "b1": "B1 · 行业群组",
+    "b2": "B2 · 省份",
+    "b3": "B3 · 区域"
+  },
+  "month": "月份",
+  "monthOption": "月份：{month}",
+  "scope": {
+    "b1": "群组",
+    "b2": "省 / 市",
+    "b3": "区域"
+  },
+  "pickScope": "选择范围以查看数据",
+  "export": "导出 CSV",
+  "metric": {
+    "newMembers": "新会员",
+    "newPaidMembers": "新缴费会员",
+    "totalMembers": "会员总数",
+    "activeMembers": "活跃会员",
+    "events": "活动／Coffee Chat",
+    "topics": "讨论主题数",
+    "feeRevenue": "会员费收入（越南盾）",
+    "commission": "产生的推广佣金（越南盾）",
+    "fundraisingRevenue": "融资套餐（越南盾）",
+    "totalRevenue": "总收入（越南盾）",
+    "contracts": "G2B／B2B 合同",
+    "sponsorship": "活动赞助（越南盾）",
+    "partners": "合作伙伴／供应商对接",
+    "opportunities": "合作机会"
+  },
+  "table": {
+    "metrics": "月度指标",
+    "metric": "指标",
+    "actual": "实际完成",
+    "groups": "行业群组",
+    "group": "群组",
+    "owner": "群主",
+    "members": "会员",
+    "messages": "月内活动",
+    "provinces": "省级 KPI",
+    "province": "省 / 市",
+    "events": "活动",
+    "revenue": "收入（越南盾）",
+    "total": "区域合计"
+  },
+  "noData": "系统中暂无数据",
+  "empty": "没有数据行",
+  "error": "无法加载报表数据",
+  "retry": "重试",
+  "toast": {
+    "exporting": "正在创建报表文件…",
+    "exported": "已导出 {file}",
+    "exportFailed": "报表导出失败",
+    "exportTimeout": "创建文件耗时过长，请重试",
+    "failed": "无法导出报表"
+  }
+}

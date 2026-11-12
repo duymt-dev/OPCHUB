@@ -12,6 +12,7 @@ import { BulkNumbers } from './bulk-numbers';
 import { BulkGroups } from './bulk-groups';
 import { TypePicker } from './type-picker';
 import s from './bulk.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 interface Props {
   groups: GroupRef[];
@@ -21,6 +22,7 @@ interface Props {
   create: (input: BotBulkInput) => Promise<boolean>;
 }
 export function BulkForm({ groups, automaticTopics, disabled, error, create }: Props) {
+  const numberText = useNumberText();
   const t = useTranslations('bots.bulk');
   const { form, submit } = useBotBulkForm(create, error);
   const topics: string = Form.useWatch('topicsText', form) ?? '';
@@ -61,7 +63,13 @@ export function BulkForm({ groups, automaticTopics, disabled, error, create }: P
           <BulkGroups groups={groups} disabled={disabled} />
         </Form.Item>
         <div className={s.generate}>
-          <span>{t('summary', { topics: count, perTopic, total: count * perTopic })}</span>
+          <span>
+            {t('summary', {
+              topics: numberText(count),
+              perTopic: numberText(perTopic),
+              total: numberText(count * perTopic),
+            })}
+          </span>
           <button type="submit" className={s.purple} disabled={disabled}>
             {t('generate')}
           </button>

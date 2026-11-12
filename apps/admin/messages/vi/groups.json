@@ -218,6 +218,10 @@
     }
   },
   "mod": {
+    "aiEnabled": "Dùng AI phân loại tin vi phạm",
+    "aiPending": "Chờ Admin xử lý · chưa tính vi phạm",
+    "aiHide": "Ẩn tin",
+    "aiDismiss": "Bỏ qua",
     "title": "Tin nhắn nhạy cảm",
     "sub": "Tin nhắn chứa từ khóa cấm hoặc bị thành viên báo cáo được ẩn ngay khỏi phòng chat. Vi phạm từ lần 2 trở đi tự động khóa tài khoản {days} ngày.",
     "pending": "{count} chờ xử lý",

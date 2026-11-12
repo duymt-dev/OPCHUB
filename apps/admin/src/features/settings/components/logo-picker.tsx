@@ -3,7 +3,7 @@
 import { IMAGE_ACCEPT, useImageUpload } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useRef } from 'react';
-import { uploadImage } from '@/lib/upload-image';
+import { useUploadImage } from '@/i18n/use-upload-image';
 import g from './general-tab.module.css';
 
 /**
@@ -19,6 +19,7 @@ export function LogoPicker({
   onChange: (url: string | null) => void;
   onError: (msg: string) => void;
 }) {
+  const uploadImage = useUploadImage();
   const t = useTranslations('settings.general');
   const file = useRef<HTMLInputElement>(null);
 

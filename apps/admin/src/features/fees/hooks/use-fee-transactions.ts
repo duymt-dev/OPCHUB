@@ -3,7 +3,7 @@
 import type { PendingFundraising, UnmatchedTxn } from '@opchub/shared/api-domains';
 import { useToast } from '@opchub/ui';
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { ApiError } from '@/lib/api-client';
 import { messageOf } from '@/lib/api-errors';
 import { feeKeys, fetchUnmatched, matchTransaction, searchFeeMembers } from '../api';
@@ -45,6 +45,7 @@ export type MatchInput =
  * "chờ thẩm định". Làm mới mọi query phí. 409 (đã có người xử lý) → toast thông điệp server + tải lại.
  */
 export function useMatchTransaction(onDone: () => void) {
+  const locale = useLocale();
   const t = useTranslations('fees.txn.toast');
   const toast = useToast();
   const qc = useQueryClient();
@@ -69,7 +70,7 @@ export function useMatchTransaction(onDone: () => void) {
       toast(
         input.kind === 'fundraising'
           ? t('matchedFundraising', { code: input.fundraising.code })
-          : t('matched', { name: input.member.fullName, date: vnDate(validUntil) }),
+          : t('matched', { name: input.member.fullName, date: vnDate(validUntil, locale) }),
       );
       onDone();
       void qc.invalidateQueries({ queryKey: feeKeys.all });

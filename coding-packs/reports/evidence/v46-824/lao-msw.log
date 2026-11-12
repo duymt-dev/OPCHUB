@@ -1,0 +1,20 @@
+TIP824 authenticated Lao Overview/Profile/Settings 1440/390 visual subset; production Admin/test current scoped Intl working tree based one5e5bf05; full Lao25-file catalog, actual language-specific body anchors. Portal source unchanged since77484e3f. Requires real MSW Portal Affiliate relay, no DB/global seed/reset. Same6 Lao three-screen browser assertions in native; actual UI login/read-only API and no masks. Not complete16-AC acceptance.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-lao.spec.ts
+[WebServer] (node:31960) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:27080) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+(node:19964) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual overview 1440, not all-language acceptance (5.9s)
+  ok 2 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual overview 390, not all-language acceptance (4.7s)
+  ok 3 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual profile 1440, not all-language acceptance (5.4s)
+  ok 4 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual profile 390, not all-language acceptance (4.4s)
+  ok 5 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual settings 1440, not all-language acceptance (5.7s)
+  ok 6 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual settings 390, not all-language acceptance (4.9s)
+
+  6 passed (39.8s)
+EXIT 0

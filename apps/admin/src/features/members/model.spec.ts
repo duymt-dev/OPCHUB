@@ -25,6 +25,20 @@ const group = (id: string, name: string): GroupItem => ({
 });
 
 describe('members model', () => {
+  it.each([
+    ['vi', '02/03/2026'],
+    ['en', '02/03/2026'],
+    ['zh', '2026/03/02'],
+    ['fil', '03/02/2026'],
+    ['th', '02/03/2026'],
+  ])(
+    'D-141 AC824-08 member display dates use %s with Vietnam/Gregorian semantics',
+    (locale, expected) => {
+      const iso = '2026-03-01T17:00:00.000Z';
+      expect(formatDate(iso, locale)).toBe(expected);
+      expect(iso).toBe('2026-03-01T17:00:00.000Z');
+    },
+  );
   it('tone nhóm theo thứ tự, gộp +N', () => {
     const lookup = groupLookup([group('c1', 'A'), group('c2', 'B'), group('c3', 'C')]);
     expect(lookup.chipOf('c2')).toMatchObject({ name: 'B', fg: '#FF4D4F' });

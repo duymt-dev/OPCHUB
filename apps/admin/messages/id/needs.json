@@ -1,0 +1,70 @@
+{
+  "title": "Kebutuhan lokal",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "kpi": {
+    "total": "Total kebutuhan",
+    "open": "Terbuka",
+    "closed": "Ditutup",
+    "hidden": "Disembunyikan Admin"
+  },
+  "search": "Cari kebutuhan, toko, provinsi...",
+  "filtersLabel": "Filter menurut status kebutuhan",
+  "filter": {
+    "all": "Semua",
+    "open": "Terbuka",
+    "closed": "Ditutup",
+    "hidden": "Disembunyikan"
+  },
+  "note": "Kebutuhan langsung terlihat saat diposting anggota; Admin hanya menyembunyikannya jika ada pelanggaran.",
+  "type": {
+    "buy": "Ingin membeli",
+    "sell": "Butuh pembeli",
+    "partner": "Butuh mitra",
+    "service": "Butuh layanan",
+    "solution": "Butuh solusi",
+    "staff": "Butuh tenaga kerja",
+    "space": "Butuh tempat / gudang",
+    "capital": "Butuh modal",
+    "other": "Kebutuhan lain"
+  },
+  "status": {
+    "open": "Terbuka",
+    "closed": "Ditutup",
+    "hidden": "Disembunyikan Admin"
+  },
+  "table": {
+    "label": "Daftar kebutuhan",
+    "all": "Pilih semua di halaman ini",
+    "need": "Kebutuhan",
+    "type": "Jenis",
+    "store": "Toko",
+    "area": "Area",
+    "date": "Diposting pada",
+    "status": "Status",
+    "actions": "Tindakan",
+    "hide": "Sembunyikan",
+    "show": "Tampilkan"
+  },
+  "bulk": {
+    "label": "Tindakan massal",
+    "selected": "Kebutuhan terpilih: {n}",
+    "show": "Tampilkan",
+    "hide": "Sembunyikan",
+    "clear": "Hapus pilihan"
+  },
+  "pager": {
+    "text": "Halaman {page} / {pages} · Kebutuhan: {total}",
+    "prev": "Halaman sebelumnya",
+    "next": "Halaman berikutnya",
+    "prevBtn": "‹ Sebelumnya",
+    "nextBtn": "Berikutnya ›"
+  },
+  "toast": {
+    "hidden": "Kebutuhan disembunyikan: {n}",
+    "shown": "Kebutuhan ditampilkan: {n}",
+    "failed": "Tidak dapat diproses, silakan coba lagi"
+  },
+  "empty": "Tidak ada kebutuhan yang cocok.",
+  "error": "Tidak dapat memuat daftar kebutuhan",
+  "retry": "Coba lagi"
+}

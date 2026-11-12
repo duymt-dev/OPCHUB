@@ -1,0 +1,42 @@
+{
+  "log": {
+    "filterTag": "Category",
+    "filterActor": "Actor",
+    "filterRange": "Date range",
+    "from": "From date",
+    "to": "To date",
+    "system": "System",
+    "clearFilters": "Clear filters",
+    "retryActors": "Reload actors",
+    "emptyFiltered": "No matching actions",
+    "heading": "Administrator activity log",
+    "headingSub": "Automatically records all administrator actions (locking, approval, payouts, configuration changes…) within the last 90 days.",
+    "empty": "No activity yet",
+    "tag": {
+      "affiliate": "Affiliate",
+      "sso": "SSO",
+      "member": "Members",
+      "permission": "Permissions",
+      "project": "Projects",
+      "language": "Languages",
+      "moderation": "Moderation",
+      "settings": "Configuration",
+      "content": "Content",
+      "report": "Reports",
+      "pricing": "Pricing"
+    },
+    "export": "Export CSV",
+    "more": "Load more",
+    "loading": "Loading activity log…",
+    "failed": "Unable to load the activity log or export CSV",
+    "retry": "Try again",
+    "exported": "Exported rows: {n} – nhat-ky-hoat-dong.csv"
+  },
+  "time": {
+    "now": "just now",
+    "minutes": "{n} minutes ago",
+    "hours": "{n} hours ago",
+    "yesterday": "Yesterday",
+    "days": "{n} days ago"
+  }
+}

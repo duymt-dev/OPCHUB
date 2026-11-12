@@ -7,6 +7,7 @@ import type { AffiliateDetail } from '../types';
 import { CommissionStatus } from './commission-status';
 import styles from './affiliate.module.css';
 import layout from './affiliate-detail.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 export interface AffiliateIdentityProps {
   agent: AffiliateDetail;
@@ -15,6 +16,7 @@ export interface AffiliateIdentityProps {
 
 /** Identity metadata uses current policy; missing policy must never become a fake 30 days. */
 export function AffiliateIdentity({ agent, cookieDays }: AffiliateIdentityProps) {
+  const numberText = useNumberText();
   const t = useTranslations('affiliate');
   return (
     <div className={layout.header}>
@@ -30,7 +32,9 @@ export function AffiliateIdentity({ agent, cookieDays }: AffiliateIdentityProps)
           <h2>{agent.name}</h2>
           <span className={styles.hint}>
             {t('columns.code')} {agent.code} · {agent.email}
-            {cookieDays !== undefined ? ` · ${t('attributionDays', { days: cookieDays })}` : ''}
+            {cookieDays !== undefined
+              ? ` · ${t('attributionDays', { days: numberText(cookieDays) })}`
+              : ''}
           </span>
           {agent.bank ? (
             <span aria-label={t('bank')}>

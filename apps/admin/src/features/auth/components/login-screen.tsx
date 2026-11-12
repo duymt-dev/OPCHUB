@@ -17,7 +17,8 @@ import { safeNext } from '../safe-next';
 import { AuthFrame } from './auth-frame';
 import { LOGIN_SSO, useLoginLabels } from './login-labels';
 import { TotpStep } from './totp-step';
-import { KEEP_SCROLL, leaveAuth } from '../keep-scroll';
+import { KEEP_SCROLL } from '../keep-scroll';
+import { navigateAfterAdminAuth } from '../navigate-after-auth';
 
 /** TK dùng thử của prototype (`ACCOUNTS`): loại fixture → nhãn + màu thẻ */
 const DEMO_KIND = {
@@ -27,6 +28,9 @@ const DEMO_KIND = {
 /** A-01 Đăng nhập (Admin) */
 export function LoginScreen() {
   const t = useTranslations('auth');
+  const [localError, setLocalError] = useState<
+    'errorEmpty' | NonNullable<ReturnType<typeof loginErrorKey>>['key']
+  >();
   const router = useRouter();
   const params = useSearchParams();
   const next = safeNext(params.get('next'), '/overview');
@@ -41,13 +45,16 @@ export function LoginScreen() {
     setSession(res.accessToken, res.admin);
     const setup = setupRouteOf(res.admin);
     if (!setup) toast(t('login.welcomeAdmin'));
-    leaveAuth(() => router.replace(setup ?? next));
+    navigateAfterAdminAuth(router, setup, next);
   };
 
   const labels = useLoginLabels();
 
   const onSubmit = async ({ identifier, password, remember }: LoginValues) => {
-    if (!identifier.trim() || !password) return t('login.errorEmpty');
+    if (!identifier.trim() || !password) {
+      setLocalError('errorEmpty');
+      return t('login.errorEmpty');
+    }
     try {
       enter(await login({ identifier, password, remember }));
       return undefined;
@@ -60,7 +67,12 @@ export function LoginScreen() {
       }
       const err = loginErrorKey(e);
       if (!err) throw e;
-      return 'raw' in err && err.raw ? err.raw : t(`login.${err.key}`);
+      if ('raw' in err && err.raw) {
+        setLocalError(undefined);
+        return err.raw;
+      }
+      setLocalError(err.key);
+      return t(`login.${err.key}`);
     }
   };
 
@@ -89,6 +101,7 @@ export function LoginScreen() {
   return (
     <AuthFrame>
       <LoginPanel
+        formatError={(message) => (localError ? t(`login.${localError}`) : message)}
         labels={labels}
         sso={LOGIN_SSO}
         demoAccounts={accounts}

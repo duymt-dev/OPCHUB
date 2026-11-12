@@ -1,7 +1,9 @@
 'use client';
 
 import { colorOf, initials } from '@opchub/ui';
-import { useTranslations } from 'next-intl';
+import { formatNumber } from '@/i18n/format';
+import { eventDay, eventTime } from '../presentation';
+import { useLocale, useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useCheckIn, useExportRegistrants, useRegistrants } from '../hooks/use-events';
 import { daysAgo, meetShort } from '../model';
@@ -42,6 +44,7 @@ function MeetBox({ url }: { url: string }) {
 }
 
 function Body({ event }: { event: EventView }) {
+  const locale = useLocale();
   const t = useTranslations('events.regs');
   const list = useRegistrants(event.id);
   const check = useCheckIn(event.id);
@@ -55,14 +58,22 @@ function Body({ event }: { event: EventView }) {
       <div className={styles.summary}>
         <div className={styles.evTitle}>{event.title}</div>
         <div className={styles.evMeta}>
-          {event.day} · {event.time} · {event.place}
+          {eventDay(event.startsAt, event.day, locale)} · {eventTime(event, locale)} · {event.place}
         </div>
         {event.meetUrl ? <MeetBox url={event.meetUrl} /> : null}
         <div className={styles.tags}>
           <span className={styles.seats}>
-            {t('seats', { reg: event.registered, seats: event.seats })}
+            {t('seats', {
+              reg: formatNumber(event.registered, locale),
+              seats: formatNumber(event.seats, locale),
+            })}
           </span>
-          <span className={styles.checked}>{t('checked', { n: done, total: rows.length })}</span>
+          <span className={styles.checked}>
+            {t('checked', {
+              n: formatNumber(done, locale),
+              total: formatNumber(rows.length, locale),
+            })}
+          </span>
           <button
             type="button"
             className={styles.checkAll}
@@ -89,7 +100,9 @@ function Body({ event }: { event: EventView }) {
                 <span className={styles.name}>{r.fullName}</span>
                 <span className={styles.org}>{r.org}</span>
               </div>
-              <span className={styles.when}>{n ? t('daysAgo', { n }) : t('today')}</span>
+              <span className={styles.when}>
+                {n ? t('daysAgo', { n: formatNumber(n, locale) }) : t('today')}
+              </span>
               <button
                 type="button"
                 className={`${styles.ck} ${on ? styles.ckOn : ''}`}

@@ -1,8 +1,9 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { ErrorState } from '@opchub/ui';
 import type { UseQueryResult } from '@tanstack/react-query';
+import { formatNumber } from '@/i18n/format';
 import { affiliateMoney } from '../format';
 import type { AffiliateSummary } from '../types';
 import { affiliateCostRatio, affiliatePayoutCalendar } from '../summary-presentation';
@@ -35,19 +36,29 @@ export function AffiliateStats({
   summary: AffiliateSummary | undefined;
   customers?: number | undefined;
 }) {
+  const locale = useLocale();
   const t = useTranslations('affiliate.stats');
-  const ratio = summary ? affiliateCostRatio(summary.totalCommission, summary.revenue) : undefined;
+  const ratio = summary
+    ? affiliateCostRatio(summary.totalCommission, summary.revenue, locale)
+    : undefined;
   const hints = {
     // BR-AFF-REV (v4.2): "{n} Gói DN · {n} Gói Cá nhân · {n} Gói Gọi vốn"; trang chi tiết đại lý giữ số khách
     revenue:
       customers !== undefined
-        ? t('convertedHint', { count: customers })
+        ? t('convertedHint', { count: formatNumber(customers, locale) })
         : summary
-          ? t('plansHint', summary.plans)
+          ? t(
+              'plansHint',
+              Object.fromEntries(
+                Object.entries(summary.plans).map(([key, n]) => [key, formatNumber(n, locale)]),
+              ),
+            )
           : undefined,
     totalCommission: ratio === undefined ? undefined : t('costHint', { ratio }),
     payable: t('payableHint'),
-    paid: summary ? t('nextPayoutHint', { date: affiliatePayoutCalendar() }) : undefined,
+    paid: summary
+      ? t('nextPayoutHint', { date: affiliatePayoutCalendar(undefined, locale) })
+      : undefined,
   };
   return (
     <StatCards
@@ -55,7 +66,7 @@ export function AffiliateStats({
         const hint = hints[key];
         return {
           label: t(key),
-          value: summary ? affiliateMoney(summary[key]) : '—',
+          value: summary ? affiliateMoney(summary[key], locale) : '—',
           ...(hint ? { hint } : {}),
         };
       })}

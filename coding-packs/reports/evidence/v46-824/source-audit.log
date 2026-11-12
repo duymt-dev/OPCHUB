@@ -1,0 +1,126 @@
+Source016b9077; actual committed source. Focused3 group region projection cases are included in root2823, not additional root tests.
+COMMAND pnpm --filter @opchub/admin test src/features/groups/components/group-form-fields-i18n.spec.tsx
+$ vitest run --passWithNoTests src/features/groups/components/group-form-fields-i18n.spec.tsx
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  20:19:56
+   Duration  9.36s (import 74%, environment 17%, transform 5%, tests 3%)
+
+EXIT 0
+
+COMMAND node infra/scripts/audit-admin-i18n.mjs
+{
+  "status": "PASS",
+  "source": {
+    "gitHead": "016b9077643b4d89de94638b0d37e3a24d4f81bd",
+    "dirty": false,
+    "corpusSha256": "2022fe8ac2abd4a92823c93a5720ac81adbed57110c49907922546bcf1651b4f",
+    "fingerprintFiles": 601,
+    "fingerprintScope": "Scanned production source plus audit scripts and exact exception registries; not catalogs or browser evidence"
+  },
+  "files": 584,
+  "rows": 301,
+  "unreviewed": 0,
+  "errors": 0
+}
+TypeScript static corpus scan is not arbitrary runtime/interprocedural proof. Two actual Vietnamese email-preview numeric counters remain exact contractual exceptions. Group region projection does not change canonical province values, form callbacks or raw draft content.
+
+Current CLI refresh for sourcec12b477d (earlier focused3 above remains source016b9077 historical proof).
+COMMAND node infra/scripts/audit-admin-i18n.mjs
+{
+  "status": "PASS",
+  "source": {
+    "gitHead": "c12b477db1bbaaf081e81eeb85e0d0faba7f8490",
+    "dirty": false,
+    "corpusSha256": "2022fe8ac2abd4a92823c93a5720ac81adbed57110c49907922546bcf1651b4f",
+    "fingerprintFiles": 601,
+    "fingerprintScope": "Scanned production source plus audit scripts and exact exception registries; not catalogs or browser evidence"
+  },
+  "files": 584,
+  "rows": 301,
+  "unreviewed": 0,
+  "errors": 0
+}
+Production TS/TSX/audit sources unchanged; this fingerprint explicitly excludes catalogs/browser evidence. New Filipino subset proof is in filipino.log, never inferred from this AST scan.
+
+Current CLI refresh sourcec0b97b51; earlier focused outputs above retain their dated source scope.
+COMMAND node infra/scripts/audit-admin-i18n.mjs
+{
+  "status": "PASS",
+  "source": {
+    "gitHead": "c0b97b512d4235063da9ebeac405f1c775d21271",
+    "dirty": false,
+    "corpusSha256": "2022fe8ac2abd4a92823c93a5720ac81adbed57110c49907922546bcf1651b4f",
+    "fingerprintFiles": 601,
+    "fingerprintScope": "Scanned production source plus audit scripts and exact exception registries; not catalogs or browser evidence"
+  },
+  "files": 584,
+  "rows": 301,
+  "unreviewed": 0,
+  "errors": 0
+}
+Production TS/TSX unchanged; catalogs and visual evidence are explicitly outside this fingerprint. Filipino raw126 and actual three-screen logs are separate; sidebar clipping remains a known visual failure.
+
+Current sidebar checkpoint source d6efb178, actual node infra/scripts/audit-admin-i18n.mjs PASS; committed dirty=false,584 production files/301 retained findings/291 exact exceptions/0 unreviewed/0 errors, corpus071a0c2dac01e16a2f8ac522f73e62f82dc4b7694d7e421078a3f6f20fd7f54f. CSS/catalog/browser proof excluded; RootLayout import is the production TS change. Three new Admin-only style tests passed in actual full root1192 Admin/2910 total +2 existing skips.
+
+Current badge checkpoint source e7c6ca13: actual CLI PASS, committed dirty=false,584 production files/301 findings/291 exact exceptions/0 unreviewed/0 errors; corpusb145416ef4c6391489ba21d77aeaae2a4c29af4d8f7f69a9d2324025e6df5e81. CSS/catalogs/browser proof excluded.8 new focused cases included in full root2918 +2 existing skips; real9+9 sidebar production cases include My/VI/English count-preserving digit switches.
+
+Current Thai source264842f8 CLI PASS; committed dirty=false,584 production files/301 findings/291 exact exceptions/0 unreviewed/0 errors; unchanged production corpusb145416ef4c6391489ba21d77aeaae2a4c29af4d8f7f69a9d2324025e6df5e81, not catalog/browser coverage. Thai83 + request12 + font34 =129 focused included in root3003 +2 existing skips. First full root Admin1280/183files fresh/5 suites cached; final harness-only rerun replays6 unchanged unit suites. Unique counts not doubled.
+
+Auth source audit at4c6cebd4, after normal hooks/source commit and push; all24 frozen source/unit/harness Git blobs match tested candidate and HEAD/worktree, clean status verified. COMMAND node infra/scripts/audit-admin-i18n.mjs; EXIT0. PASS/dirty=false; production files594, findings303, unreviewed0, errors0, fingerprintFiles611, corpus677c066cdd1a4b4fa42936366f8b19e21e6f803b56d5c5f0117cc56f093fb817. CSS/catalogs/browser evidence excluded from fingerprint; no claim of fresh full341/browser/performance proof.
+
+Canonical values committed source ff6be9ee; clean worktree at audit. COMMAND node infra/scripts/audit-admin-i18n.mjs
+{
+    "status":  "PASS",
+    "source":  {
+                   "gitHead":  "ff6be9ee330d21ceefb84182bb73f9eda3cdf569",
+                   "dirty":  false,
+                   "corpusSha256":  "b24fe393c6d95b831d132ccec77e9c37bdef0ed344de037917a2359d38064df9",
+                   "fingerprintFiles":  611,
+                   "fingerprintScope":  "Scanned production source plus audit scripts and exact exception registries; not catalogs or browser evidence"
+               },
+    "sourceFiles":  594,
+    "findings":  303,
+    "unreviewed":  0,
+    "errors":  0
+}
+EXIT 0
+
+COMMAND node infra/scripts/audit-admin-i18n.mjs
+{
+  "status": "PASS",
+  "source": {
+    "gitHead": "7761350cf7aeb1e0298d0f24b0c85cd4fb0bb3df",
+    "dirty": false,
+    "corpusSha256": "ef4f1047b5ca044d1d4f5576aa1624bd82baeef4062f610657c1166b4d148bf2",
+    "fingerprintFiles": 613,
+    "fingerprintScope": "Scanned production source plus audit scripts and exact exception registries; not catalogs or browser evidence"
+  },
+  "sourceFiles": 595,
+  "findings": 303,
+  "unreviewed": 0,
+  "errors": 0
+}
+EXIT 0
+
+FINAL CLOSURE AUDIT — committed source 4b21efb4908a2a9c14672ec091ab9a6823cb989a (clean worktree before evidence logs)
+COMMAND node infra/scripts/audit-admin-i18n.mjs
+{
+  "status": "PASS",
+  "source": {
+    "gitHead": "4b21efb4908a2a9c14672ec091ab9a6823cb989a",
+    "dirty": false,
+    "corpusSha256": "19650b6186ca64fbc78d369e8ff8b7c623a5bdd293422f06e071ff469ca8c984",
+    "fingerprintFiles": 615,
+    "fingerprintScope": "Scanned production source plus audit scripts and exact exception registries; not catalogs or browser evidence"
+  },
+  "sourceFiles": 597,
+  "rows": 303,
+  "unreviewed": 0,
+  "errors": 0
+}
+EXIT 0

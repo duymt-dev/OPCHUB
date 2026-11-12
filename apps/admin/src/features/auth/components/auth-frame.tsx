@@ -23,25 +23,27 @@ export function AuthFrame({ children }: { children: ReactNode }) {
     })),
   };
   return (
-    <Frame
-      copy={{
-        hero,
-        footer: {
-          tagline: t('hero.tagline'),
-          copyright: t('hero.copyright'),
-          terms: t('hero.terms'),
-          privacy: t('hero.privacy'),
-        },
-        support: t('support'),
-        contact: t('contact'),
-        langTitle: t('langTitle'),
-      }}
-      locale={useLocale()}
-      languages={languageOptions}
-      cookieName={LOCALE_COOKIE}
-      flags={authFooterFlags}
-    >
-      <AuthPanel>{children}</AuthPanel>
-    </Frame>
+    <div data-admin-auth-font>
+      <Frame
+        copy={{
+          hero,
+          footer: {
+            tagline: t('hero.tagline'),
+            copyright: t('hero.copyright'),
+            terms: t('hero.terms'),
+            privacy: t('hero.privacy'),
+          },
+          support: t('support'),
+          contact: t('contact'),
+          langTitle: t('langTitle'),
+        }}
+        locale={useLocale()}
+        languages={languageOptions}
+        cookieName={LOCALE_COOKIE}
+        flags={authFooterFlags}
+      >
+        <AuthPanel>{children}</AuthPanel>
+      </Frame>
+    </div>
   );
 }

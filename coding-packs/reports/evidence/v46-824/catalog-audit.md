@@ -1,0 +1,94 @@
+# TIP824 raw catalog readiness — complete fixed inventory
+
+**RAW CONTRACT PASS ONLY — entire TIP remains PARTIAL / NOT DONE.** Source6022d311,2026-11-12:10 required bundles/250 physical JSON files/26,670 string leaves, before fallback. Fixed49-case production checker passes all250 and physically removes every required locale and every Myanmar file in isolated fixtures; missing keys/types/ICU/blank/TODO/copy-policy mutations also fail as required. Both Admin build scripts run this gate before Next. File discovery/resolved Vietnamese fallback never counts as coverage.
+
+| Bundle | Raw files | Required | String leaves | Missing |
+|---|---:|---:|---:|---:|
+| vi |25|25|2667|0|
+| en |25|25|2667|0|
+| zh |25|25|2667|0|
+| id |25|25|2667|0|
+| th |25|25|2667|0|
+| ms |25|25|2667|0|
+| fil |25|25|2667|0|
+| km |25|25|2667|0|
+| lo |25|25|2667|0|
+| my |25|25|2667|0|
+
+Myanmar now25/2667; earlier17/1260 remain byte-identical. Final8/1407 =249 retained Portal exact-source leaves +1148 explicit-pair leaves +10 context-corrected leaves. Whole bundle603 retained +2039 explicit +25 context corrections =2667. New918 source/target pairs plus89 reused earlier-core pairs cover1007 distinct selected source strings. Native-reviewed=false; confidence moderate, not native-human approval.
+
+My99 raw/context/canonical/script/cmap +actual request15 =114 default focused PASS after supported test-cache clear; first default My request failed all20 namespaces with40 warnings, diagnostic no-filesystem-module-cache passed then default114 passed. Production loader/fallback/cache/timeout/skip policy is unchanged. Only two exact English neutral-example variants are accepted for comparison, while target keeps the canonical source examples.
+
+The complete build gate binds92 reviewed copy receipts to exact path/source value/allowed bundle, rejects unknown ASCII copies too, and invalidates stale source receipts. Bounded immutable ICU signature memoization never caches files/fallbacks/failures; physical fixture restoration touches only mutated paths and every check still reads the whole tree.49 production +3 parser-cache +15 checker-contract +My99/request15 =181 focused cases PASS, included in root3364 unique +2 existing skips. First full-root2 slow filesystem-case failures/interrupted run and instrumentation/type/collection corrections remain in production-catalogs.log; final fresh Admin1641/193files/default timeout/worker cap1 PASS, other5 root suites cached.
+
+Both builds on6022d311 PASS including49 gates each. Whole i18n behavior is **not green**: first same-source MSW198/208 and native197/208;21 failed cases total, classified in completion report. Raw correctness is not layout/state/control/value/performance acceptance.
+
+## Historical inventory observations before6022d311
+
+### TIP824 raw catalog readiness - staged Myanmar core checkpoint
+
+**INCOMPLETE / FAIL.** File presence alone is not completion. Counts below are raw source-key presence before any Vietnamese fallback, not native review or proof of ICU validity.
+
+2026-11-12: raw242/250 files, nine complete bundles plus Myanmar17/25 (1260/2667 leaves); eight Myanmar business catalogs/1407 leaves remain absent. Overall10-bundle readiness remains FAIL; runtime fallback/standard CLDR names do not count as translated UI. Native-reviewed=false.
+
+| Bundle | Raw files | Required files | String leaves present | Missing string leaves |
+|---|---:|---:|---:|---:|
+| vi | 25 | 25 | 2667 | 0 |
+| en | 25 | 25 | 2667 | 0 |
+| zh | 25 | 25 | 2667 | 0 |
+| id | 25 | 25 | 2667 | 0 |
+| th | 25 | 25 | 2667 | 0 |
+| ms | 25 | 25 | 2667 | 0 |
+| fil | 25 | 25 | 2667 | 0 |
+| km | 25 | 25 | 2667 | 0 |
+| lo | 25 | 25 | 2667 | 0 |
+| my | 17 | 25 | 1260 | 1407 |
+
+Myanmar stage:17 fixed raw catalogs cover auth/bot-options/common/Profile/investors/meta/needs/overview/reports/requests/stores/ui and all six settings parts. Missing8 are affiliate, bots, events, fees, groups, marketing, members, projects; no filler production files.354 retained Portal exact-source +891 leaves from768 explicit source/target pairs (including canonical examples/one blank header) +15 context-corrected leaves =1260. Fixed65 raw/context/script/neutral/canonical/cmap checks pass;31 neutral keys only, no broad exemption. AI-produced/native-reviewed=false, glossary/provenance in REVIEW. This does not prove absent8 domains, final10-bundle gate or whole-TIP browser/performance acceptance.
+
+Prior complete Khmer evidence (unchanged25 files/2667 leaves) follows; historical source-bound results are not automatically fresh current-browser proof.
+
+Required source tree2667 leaves/25 files; original2456 legacy and524 settings leaves remain baseline-hash protected. All25 Khmer raw physical files now exist with exact source shape/keys/types/ICU/NFC before fallback. Previous12/729 leaves remain byte-identical; remaining13/1938 are added. All six settings parts now exist; actual request config tests auth/Profile/Overview/reports/general/roles/mail/audit/pricing/AI with no fallback. No placeholder or English/Vietnamese prose filler. No Vietnamese/other locale, runtime loader, API/business/DB/Portal/shared or font binary/license change.
+
+Fixed Khmer84 =25 raw-contract +50 Admin-context +1 exact52-neutral/script/no-English-filler +6 canonical +1 actual three-line topic example +1 complete font-cmap. Together with actual request14, focused98 passes. A stale Vitest filesystem-transformed dynamic import map initially rejected all20 Khmer namespaces; diagnostic no-fs-cache14 passed, supported test-cache clear then default98 passed. No production loader/fallback or assertion/timeout/skip modification; observations/commands retained in khmer-raw.log. Final fixed10-bundle positive/negative production gate remains pending while Myanmar is absent.
+
+Whole-Khmer accounting:479 exact-source Portal retained +295 reuse of staged Admin Khmer +1876 leaves from1671 explicit source/target pairs +17 context-corrected leaves =2667. New13/1938:295 Admin reuse,174 Portal retained,1465 explicit-pair leaves,4 context corrections (month-end payout, attendee list, two email-content labels). Canonical names/OPCHUB reference/technical examples and blank header are exact key-specific exceptions. AI-produced/native-reviewed=false, glossary/provenance/legacy-copy caveats in REVIEW; technical contracts do not prove native fluency or all-language/body/control/state/performance acceptance.
+Chinese provenance:692 exact-source Portal matches retained,1969 Admin-specific/context-reviewed leaves,6 canonical examples unchanged. Indonesian:728 retained matches,1933 translated/context-corrected leaves,6 canonical examples. Native-reviewed=false for every target. Real-loader request regressions cover English, Chinese, Indonesian and Malay plus all six physical settings parts; raw-file presence is not used as runtime proof. Overall10-bundle readiness remains FAIL.
+
+Malay:707 final leaves retain unambiguous exact-source Portal Malay matches,1953 are adapted from the reviewed Admin Indonesian catalogs with Malay/context corrections and1 new custom-provider label is translated directly for Admin,6 canonical examples remain exact.54 fixed raw/context/canonical cases, actual ms/ms-BN request loading without fallback and32 current glyph/contract units pass (focused96 total).34 retained Portal leaves corrected for Admin context. Native-reviewed=false; the official DBP term cross-check in REVIEW is not native approval or certification of this UI. Filipino raw contracts pass; th/km/lo/my remain absent; the final mandatory10-bundle gate is still pending.
+
+
+Filipino staged provenance:277 exact-source Portal matches retained +664 directly translated/context-corrected leaves =941. Includes40 context-corrected Portal leaves and537 direct distinct draft pairs across624 leaves.43 fixed tests (12 raw files,30 Admin-context cases,1 actual Latin cmap check) validate the stated subset only. Remaining files: bots/events/fees/groups/marketing/members/projects/settings core/access/mail/audit/finance/ai. No fallback/placeholder is counted. Native-reviewed=false.
+
+
+Latest sourcec0b97b51: complete Filipino25-file raw inventory/2667 leaves,82 cases (25 raw +50 Admin-context +6 canonical +1 full Latin-cmap), request loading of actual domains/all6 settings parts without fallback,33 full font/contract units; focused126 total. Complete provenance531 retained Portal matches +2130 direct/context-corrected leaves (includes1 intentionally blank header) +6 canonical examples.1726 unique direct pairs cover2068 leaves;61 Portal-context corrections. Native-reviewed=false. Six authenticated Overview/Profile/Settings browser cases pass per mode,12 unmasked Filipino images; real desktop sidebar label/badge clipping found on visual review remains a known AC15 FAIL, not hidden by the no-page-overflow check. Whole10-bundle readiness is still FAIL because th/km/lo/my are missing.
+
+
+## Sidebar visual finding supersession (raw inventory unchanged)
+
+Admin-only sidebar correction — source d6efb178 (2026-11-11). Original Filipino fees label extended to283.9375px while its link ended at231px desktop /255px mobile, despite a passing page-width assertion. RootLayout now imports a10-line Admin-only navigation stylesheet: min-width0, normal whitespace/overflow-wrap on labels and nonshrinking badges. Shared/Portal production, copy, fonts, colors, sidebar widths248/76/272 and icon19 remain unchanged.
+
+Actual same-source sidebar7/7 MSW +7/7 approved private-native cases: vi/en/fil at1440/390, every actual text Range line and badge within its link, label/badge separation, full real badges, VI retains single-line layout, Filipino wraps. Real collapse/expand, visible icons/hidden mini labels, unchanged hrefs, focus+Enter navigation and mobile drawer close pass. The seventh case intentionally restores nowrap only on the actual long Filipino label, requires the internal-bounds assertion to fail while document width still passes, then removes the fixture and passes again. This is2 explicitly injected negative cases across modes, not extra user flows. Four unmasked expanded-sidebar images fil-sidebar-{msw,server}-{1440,390}.png and regenerated12 Filipino/12 English images; representative final native Profile1440 and expanded sidebars1440/390 were visually inspected. No owner/native-human approval.
+
+Fresh full regression chain:68 loaded English +10 navigation/probe +6 Filipino +24 font +8 public-error cases per mode, plus7 sidebar =123/mode /246 total. The20 navigation cases include4 explicitly synthetic covered-modal selector-handler probes, not pointer-accessibility evidence. Fonts/public errors have distinct limited scopes. All authenticated subsets require real login200/read-only guard; native listener/approved launch isolation revalidated, no seed/reset/SQL/business writes/original PG5432/testDB/service change; login/refresh sessions only.
+
+Root2910 passed +2 existing skips, Admin1192/180 files fresh,5 suites cached; lint/typecheck8 tasks/6 cached, depcheck2784modules/8543deps plus server1260/5995. Both Admin production builds pass; unchanged Portal build remains historical77484e3f, no fresh Portal build claimed.828 unique manifest paths, no undeclared changed source, all source caps/UTF8/log scans pass. Source AST584 files/301 retained findings/291 exceptions/zero unreviewed, corpus071a0c2dac01e16a2f8ac522f73e62f82dc4b7694d7e421078a3f6f20fd7f54f; CSS/catalogs/browser proof are outside that fingerprint.
+
+Specific sidebar clipping finding is corrected and regression-verified, NOT a whole AC15/TIP PASS. vi/en/zh/id/ms/fil each25files/2667leaves; th/km/lo/my absent,150/250 files and final10-bundle raw gate still FAIL. All-language/state/chat/auth/control/value/API/export/native/VI/visual/performance and named regressions remain open. Owner has now approved an optional AppShell/Sidebar badge-number presentation callback with unchanged raw counts/navigation/default Portal; approved, not yet implemented in this source checkpoint. Entire TIP remains IN PROGRESS / NOT DONE / NOT READY TO MERGE.
+
+
+Latest Thai raw checkpoint source264842f8:25files/2667 leaves,83 fixed Thai cases, actual request loading of all6 merged settings without fallback,34 full font cases; focused129 included in root3003.693 retained Portal matches +1968 direct/context-corrected (1 blank header) +6 canonical examples,37 Portal context corrections,1693 direct draft pairs. Native-reviewed=false. Six Thai actual Overview/Profile/Settings browser cases/mode,12 body images plus4 auth-only images, no font/Portal/shared/API/DB production change. Seven raw bundles complete,175/250 files; km/lo/my and final fixed10-bundle gate still absent. Older dated checkpoint inventories below/above retain their historical scope, not current readiness.
+
+## Current Lao source44f7c443
+
+Supersedes historical inventories above: vi/en/zh/id/ms/fil/th/lo each25files/2667leaves,200/250 total; km/my missing. Final fixed10-bundle gate remains FAIL/incomplete.667 retained Portal leaves +1993 direct/context-corrected +6 canonical +1 blank header;28 Portal-context corrections,1701 direct draft pairs. Native-reviewed=false.59 raw/context/canonical/prose/Lao-script/cmap +13 actual request +35 full font =107 focused cases, included in root3064, not added twice. Source VI2456 legacy/524 settings hashes preserved; all7 existing font binaries/6 OFLs unchanged. Six actual loaded Lao screens/mode and12 unmasked body images do not prove every control/state/native business path. Full TIP remains NOT DONE / NOT READY TO MERGE.
+
+Open observed formatting defect: installed reduced-ICU Chromium falls back lo-LA/my-MM/km-KH dates to en-US unlike Node; fixed21Nov2026 gives11/21/2026 in browser,21/11/2026 in Node (Myanmar native digits). Actual diagnostic in lao.log; six Lao screen cases do not assert date order. Date/picker runtime parity and boundary browser assertions remain required before AC09/15 acceptance.
+
+## Current numeric-picker checkpoint: c56da166 / implementation70f46a3c (2026-11-12)
+
+Supersedes earlier current root/hash/browser counts, not historical scope. Numeric picker order is deterministic for12 approved profiles with Intl unavailable; general unsupported date/number/month names remain OPEN.45 focused (17 new), root3081 unique+2existing skips, fresh Admin1358/185files with1worker and5cached suites. Initial root2 audit timeouts at unchanged5000ms with2workers, unchanged19-case retry/full root then passed with1worker; initial output retained in picker-unit.log. Final harness-only gates lint/types8/7cached, unit6/6cached on identical inputs; counts not doubled.
+
+Actual6+6 picker cases: ten translated selector identities, three explicit canonical ranges (21Nov, year boundary, leap day),1440/390, actual pointer changes, exact numeric inputs, unchanged URL/API YYYY-MM-DD/default-period omission and F5 en-SG identity. Not manual date entry or17:00Z browser clock proof; km/my still missing. Initial six MSW cases had wrong API-default-period expectation; final asserts exact null/only from-to API keys while URL month stays exact. Complete initial failure retained in picker-unit.log; native had not run in that stopped chain. No production/API/fixture/assertion tolerance/timeout workaround.
+
+Fresh Lao6+6,12 unmasked body images regenerated; native Profile1440/Overview390/Settings390 inspected, correct day/month picker order/readable glyphs/sidebar geometry, intentional internal table scroll. No owner/native-human approval.24 fresh cases, not286 same-source cases; earlier262 chain is historical264842f8. Both Admin builds70f46a3c pass; c56da166 changes test/manifest only, production inputs identical. Source584/301/291exact exceptions/zero unreviewed/dirty=false, corpus01440207b8df8aa87d8345b749b15626d47227e9c4f9cbb96547989580351e9c across601fingerprint files, excluding catalogs/browser proof.878 declared paths,6 tested blobs identical post-hook. Raw200/250/eight complete bundles, fonts/Portal/shared/backend/DB unchanged. Approved private native listener/wrapper/isolation revalidated, no original PG5432/testDB/service/reset/seed/SQL changes, auth sessions only. Whole TIP remains PARTIAL/NOT DONE/NOT READY TO MERGE; original16 ACs, two missing catalogs/final10-bundle gate and full formatting/state/native/value/visual/performance remain required.

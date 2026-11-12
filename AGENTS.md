@@ -79,6 +79,7 @@ pnpm e2e                                  # Playwright
 12. **Không secret trong repo**; biến env mới phải có trong `.env.example` + zod env schema. Không `console.*`, dùng logger.
 13. **Test ở file riêng.** → [testing/testing](coding-packs/standards/testing/testing.md)
 14. **Commit ngay khi xong và test pass**; `git status --short` sạch; báo DONE kèm **git commit SHA**. → [global/git-workflow](coding-packs/standards/global/git-workflow.md)
+15. **Dùng xong PostgreSQL phải giải phóng kết nối trước khi chuyển việc hoặc báo kết quả**: đóng client/pool, kết thúc phiên `psql` và tiến trình test/helper do task tạo khi không còn dùng; kiểm tra lại không để rò rỉ kết nối. Nếu pool tự reconnect, xử lý đúng pool/tiến trình sở hữu trong phạm vi được phép, không ngắt phiên lặp đi lặp lại. Không xóa DB/dữ liệu, không dừng dịch vụ PostgreSQL hoặc ngắt kết nối của app/task khác. Với dịch vụ cần giữ chạy hoặc yêu cầu Strict Native HOLD, chỉ giải phóng kết nối tạm của task và ghi rõ phần còn giữ cùng lý do.
 
 ## Frontend: đọc thêm trước khi làm màn hình
 

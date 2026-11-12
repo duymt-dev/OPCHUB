@@ -1,0 +1,87 @@
+Working tree based on0001c46f; owner-approved optional RichText close label/keyboard activation, Portal does not opt in and Portal production source is unchanged. Fresh direct Portal unit tests for shared change; not native API/browser acceptance. Root unit log records Portal tests/cache status separately.
+COMMAND pnpm --filter @opchub/portal exec vitest run --maxWorkers=2
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/portal
+
+Not implemented: Window's getComputedStyle() method: with pseudo-elements
+Not implemented: Window's getComputedStyle() method: with pseudo-elements
+Not implemented: Window's getComputedStyle() method: with pseudo-elements
+Not implemented: Window's getComputedStyle() method: with pseudo-elements
+
+ Test Files  85 passed (85)
+      Tests  476 passed (476)
+   Start at  10:23:30
+   Duration  665.31s (import 63%, environment 31%, transform 4%, tests 3%)
+
+     Import  805 modules were evaluated 5197 times · 798.73s total, 63% of tracked time
+             ~292.70s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+             learn more: https://vitest.dev/guide/improving-performance#test-isolation
+
+EXIT 0
+Working tree based on0001c46f; owner-approved optional RichText close label/keyboard activation, Portal does not opt in and Portal production source is unchanged. Fresh Portal production MSW build for shared change; not native API/browser acceptance. Root unit log records Portal tests/cache status separately.
+COMMAND pnpm --filter @opchub/portal build
+$ next build
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 685ms
+- Experiments (use with caution):
+  · optimizePackageImports
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 6.6s
+  Running TypeScript ...
+  Finished TypeScript in 30.7s ...
+  Collecting page data using 5 workers ...
+{"level":"warn","scope":"portal-seo","event":"store_sitemap_unavailable"}
+  Generating static pages using 5 workers (0/15) ...
+  Generating static pages using 5 workers (3/15)
+  Generating static pages using 5 workers (7/15)
+{"level":"warn","scope":"portal-seo","event":"store_sitemap_unavailable"}
+{"level":"warn","scope":"portal-seo","event":"store_sitemap_unavailable"}
+{"level":"warn","scope":"portal-seo","event":"store_sitemap_unavailable"}
+  Generating static pages using 5 workers (11/15)
+✓ Generating static pages using 5 workers (15/15) in 1015ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /affiliate
+├ ƒ /chat/[[...slug]]
+├ ƒ /community
+├ ƒ /dashboard
+├ ƒ /events/[[...id]]
+├ ƒ /forgot-password
+├ ƒ /g/[slug]
+├ ƒ /g/[slug]/opengraph-image
+├ ƒ /g/[slug]/opengraph-image-1rfkr9
+├ ƒ /huong-dan
+├ ƒ /login
+├ ○ /manifest.webmanifest
+├ ƒ /membership/pay
+├ ƒ /mock-affiliate-state
+├ ƒ /needs
+├ ƒ /needs/mine
+├ ƒ /profile
+├ ƒ /projects
+├ ƒ /projects/[id]
+├ ƒ /projects/mine
+├ ƒ /r/[code]
+├ ƒ /register
+├ ƒ /reset-password
+├ ƒ /robots.txt
+├ ƒ /services/[[...slug]]
+├ ƒ /sitemap.xml
+├ ƒ /sso/callback
+├ ƒ /sso/callback/[provider]
+├ ƒ /store-sitemaps/sitemap/[__metadata_id__]
+├ ƒ /stores
+├ ƒ /stores/[id]
+├ ƒ /stores/mine
+└ ƒ /unsubscribe
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+EXIT 0

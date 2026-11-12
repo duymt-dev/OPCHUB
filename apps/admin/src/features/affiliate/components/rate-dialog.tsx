@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { useId, useState } from 'react';
 import { useAffiliateWrites } from '../hooks/use-affiliate-writes';
 import styles from './affiliate.module.css';
+import { useAdminUiLabels } from '@/i18n/ui-labels';
 
 export function RateDialog({
   ids,
@@ -16,6 +17,7 @@ export function RateDialog({
   initialRate?: number;
   onClose: () => void;
 }) {
+  const ui = useAdminUiLabels();
   const t = useTranslations('affiliate');
   const [rate, setRate] = useState<number | null>(initialRate);
   const { rates } = useAffiliateWrites();
@@ -32,6 +34,7 @@ export function RateDialog({
   };
   return (
     <Modal
+      closeLabel={ui.close}
       open
       title={t('rateTitle')}
       onClose={onClose}

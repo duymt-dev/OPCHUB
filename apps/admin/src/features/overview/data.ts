@@ -6,6 +6,7 @@ import {
 import type { AdminOverview, AdminOverviewQuery } from '@opchub/shared/api-domains';
 import type { ToneName } from '@opchub/ui';
 import { api } from '@/lib/api-client';
+import { formatNumber, formatPercentPoints } from '@/i18n/format';
 
 /** D-01 Tổng quan — `GET /admin/overview` (B44) */
 export const overviewKeys = {
@@ -75,8 +76,7 @@ export function statCards(o: AdminOverview): StatCard[] {
   ];
 }
 
-const nf = new Intl.NumberFormat('vi-VN');
-export const formatCount = (v: number) => nf.format(v);
+export const formatCount = (v: number, locale = 'vi') => formatNumber(v, locale);
 
 /** Chuỗi giá trị → polyline trong khung 52×22 (x 2…50, y 3…18; lớn hơn = cao hơn) */
 export function sparkPoints(values: number[]): string {
@@ -116,5 +116,5 @@ export const rangeLabel = (r: { from: string; to: string }) => {
   const f = (d: string) => d.split('-').reverse().join('/');
   return `${f(r.from)} – ${f(r.to)}`;
 };
-export const growthPct = (active: number, fresh: number) =>
-  active > 0 ? `+${Math.round(((fresh / active) * 100) / 3)}%` : '+0%';
+export const growthPct = (active: number, fresh: number, locale = 'vi') =>
+  `+${formatPercentPoints(active > 0 ? Math.round(((fresh / active) * 100) / 3) : 0, locale)}`;

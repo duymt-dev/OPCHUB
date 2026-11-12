@@ -1,0 +1,16 @@
+Source e6c241bb; focused domain client-validation verification. 19 new cases plus existing11 validation regressions, not added again to root total. Component/hook/schema proof, not full browser or native API acceptance.
+COMMAND pnpm --filter @opchub/admin exec vitest run src/i18n/schema-validation.spec.ts src/i18n/validation.spec.ts src/i18n/use-schema-form-errors.spec.tsx src/features/affiliate/components/policy-i18n.spec.tsx src/features/affiliate/regional/components/regional-bank-i18n.spec.tsx src/features/bots/hooks/use-bot-type-form-i18n.spec.tsx src/features/settings/hooks/use-price-config-i18n.spec.tsx src/features/settings/hooks/use-app-notify-device-i18n.spec.tsx --maxWorkers=2
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  8 passed (8)
+      Tests  30 passed (30)
+   Start at  16:17:28
+   Duration  34.37s (import 68%, environment 26%, tests 4%, transform 2%)
+
+     Import  304 modules were evaluated 910 times · 44.18s total, 68% of tracked time
+             ~8.74s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+             learn more: https://vitest.dev/guide/improving-performance#test-isolation
+
+EXIT 0

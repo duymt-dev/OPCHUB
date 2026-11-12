@@ -12,8 +12,10 @@ import {
   renewalKeys,
 } from '../renewal-api';
 import { useSettingsMutation } from './use-settings-mutation';
+import { useNumberText } from '@/i18n/use-number-text';
 
 export function useRenewal() {
+  const numberText = useNumberText();
   const t = useTranslations('settings.renewal');
   const toast = useToast();
   const q = useQuery({ queryKey: renewalKeys.config, queryFn: fetchRenewal });
@@ -41,7 +43,7 @@ export function useRenewal() {
     onDone: (r) =>
       toast(
         t('sent', {
-          n: r.sent,
+          n: numberText(r.sent),
           channels: r.channels
             .map((c) => t(c === 'email' ? 'channelEmail' : 'channelApp'))
             .join(', '),

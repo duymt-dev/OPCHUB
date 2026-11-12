@@ -1,0 +1,174 @@
+{
+  "close": "Tutup",
+  "clear": "Hapus",
+  "pagination": {
+    "unit": "item",
+    "prev": "Halaman sebelumnya",
+    "next": "Halaman berikutnya",
+    "page": "Halaman {n}",
+    "pageSize": "Baris per halaman",
+    "perPage": "{n} / halaman",
+    "range": "Menampilkan {from}–{to} / {total} {unit}"
+  },
+  "bulk": {
+    "selected": "Terpilih",
+    "clear": "Hapus pilihan",
+    "aria": "Tindakan massal"
+  },
+  "calendar": {
+    "today": "Hari ini",
+    "week": "7 hari terakhir",
+    "days30": "30 hari terakhir",
+    "month": "Bulan ini",
+    "previousMonth": "Bulan lalu",
+    "from": "Dari tanggal",
+    "to": "Sampai tanggal"
+  },
+  "editor": {
+    "undo": "Urungkan (Ctrl+Z)",
+    "redo": "Ulangi (Ctrl+Y)",
+    "heading": "Judul",
+    "paragraph": "Paragraf",
+    "bold": "Tebal",
+    "italic": "Miring",
+    "underline": "Garis bawah",
+    "strike": "Coret",
+    "bulletList": "• Daftar",
+    "bulletListTitle": "Daftar",
+    "orderedList": "1. Daftar",
+    "orderedListTitle": "Daftar bernomor",
+    "quote": "Kutipan",
+    "link": "Tautan",
+    "linkTitle": "Sisipkan tautan",
+    "clear": "Hapus format",
+    "linkUrl": "Alamat tautan",
+    "linkInsert": "Sisipkan",
+    "linkRemove": "Hapus tautan",
+    "linkCancel": "Batal",
+    "linkInvalid": "Tautan harus diawali dengan http:// atau https://"
+  },
+  "errors": {
+    "minNumber": "Nilai minimum: {min}",
+    "maxNumber": "Nilai maksimum: {max}",
+    "integer": "Masukkan bilangan bulat",
+    "bankAccountNumber": "Nomor rekening harus terdiri dari 6–20 digit",
+    "bankHolderLetters": "Nama pemilik rekening hanya boleh berisi huruf",
+    "notifyDeviceFailed": "Tidak dapat memperbarui notifikasi",
+    "adminPasswordRule": "Kata sandi baru harus terdiri dari minimal 8 karakter, huruf kapital, dan angka",
+    "currentPasswordRequired": "Masukkan kata sandi saat ini",
+    "confirmPasswordRequired": "Konfirmasi kata sandi baru Anda",
+    "newPasswordRequired": "Silakan masukkan kata sandi baru",
+    "nameMin": "Nama lengkap harus terdiri dari minimal 2 karakter",
+    "nameMax": "Nama lengkap maksimal 100 karakter",
+    "phoneMax": "Nomor telepon maksimal 30 karakter",
+    "avatarUrl": "URL gambar tidak valid",
+    "required": "Isi kolom ini",
+    "invalid": "Nilai tidak valid",
+    "minLength": "Masukkan minimal {min} karakter",
+    "maxLength": "Masukkan maksimal {max} karakter",
+    "passwordRule": "Gunakan minimal 8 karakter, termasuk huruf kapital dan angka",
+    "passwordMismatch": "Kata sandi yang diulang tidak cocok",
+    "passwordSame": "Kata sandi baru harus berbeda dari kata sandi saat ini",
+    "imageType": "Gambar harus PNG/JPEG/WEBP",
+    "imageUpload": "Gagal mengunggah gambar, silakan coba lagi",
+    "imageSize": "Gambar maksimal 5 MB",
+    "failed": "Tindakan gagal, silakan coba lagi",
+    "dateRange": "Rentang tanggal harus antara 0 dan 90 hari"
+  },
+  "regions": {
+    "north": "Utara",
+    "central": "Tengah",
+    "centralDirector": "Tengah & Dataran Tinggi Tengah",
+    "south": "Selatan"
+  },
+  "reviewReasons": [
+    "Deskripsi belum lengkap",
+    "Gambar sampul tidak pantas",
+    "Iklan / spam",
+    "Pelanggaran aturan komunitas",
+    "Proyek duplikat"
+  ],
+  "aiSuggestion": {
+    "failed": "Belum dapat memberi saran. Coba lagi nanti",
+    "suggest": "Saran dengan AI",
+    "use": "Gunakan saran",
+    "skip": "Abaikan",
+    "title": "Saran konten"
+  },
+  "permissions": {
+    "overview": {
+      "view": "Lihat ringkasan & angka"
+    },
+    "members": {
+      "view": "Lihat daftar & detail anggota",
+      "action": "Kunci / buka kunci, tetapkan grup, ekspor data"
+    },
+    "fees": {
+      "view": "Lihat status biaya",
+      "action": "Catat penerimaan, kirim pengingat biaya"
+    },
+    "groups": {
+      "view": "Lihat grup & ruang obrolan",
+      "action": "Buat / edit grup dan topik, tinjau anggota",
+      "moderate": "Moderasi pesan sensitif"
+    },
+    "bots": {
+      "view": "Lihat bot",
+      "action": "Konfigurasikan persona & skrip"
+    },
+    "events": {
+      "view": "Lihat acara & pendaftaran",
+      "action": "Buat / edit acara, tandai kehadiran"
+    },
+    "projects": {
+      "view": "Lihat proyek",
+      "action": "Tinjau / sembunyikan proyek"
+    },
+    "investors": {
+      "view": "Lihat investor",
+      "action": "Berkomunikasi dengan investor & ekspor data"
+    },
+    "services": {
+      "view": "Lihat permintaan layanan",
+      "action": "Tangani permintaan & katalog layanan"
+    },
+    "affiliate": {
+      "view": "Lihat afiliasi & komisi",
+      "action": "Edit persentase komisi, batalkan komisi",
+      "payout": "Bayar Direktur Wilayah",
+      "regional": "Angkat / cabut Direktur Wilayah (bebas biaya)"
+    },
+    "settings": {
+      "general": "Informasi umum & kategori industri",
+      "mail": "Email sambutan & SMTP",
+      "admins": "Akun administrator & izin",
+      "log": "Log aktivitas"
+    },
+    "stores": {
+      "view": "Lihat toko & kebutuhan lokal",
+      "action": "Sembunyikan / tampilkan toko & kebutuhan yang melanggar"
+    },
+    "reports": {
+      "view": "Lihat & ekspor laporan B1 / B2 / B3"
+    }
+  },
+  "permissionMenus": {
+    "overview": "Ringkasan",
+    "members": "Anggota",
+    "fees": "Biaya keanggotaan",
+    "groups": "Grup komunitas",
+    "bots": "Bot interaksi",
+    "events": "Konten & Acara",
+    "projects": "Proyek",
+    "investors": "Investor",
+    "services": "Layanan",
+    "affiliate": "Afiliasi",
+    "settings": "Pengaturan sistem",
+    "stores": "Toko & Kebutuhan",
+    "reports": "Laporan"
+  },
+  "chart": {
+    "month": "B{n}",
+    "week": "M{n}"
+  }
+}

@@ -6,7 +6,10 @@ import { AiProviderDetail } from './ai-provider-detail';
 import { AiAllocation } from './ai-allocation';
 import { AiLimits } from './ai-limits';
 import styles from './ai.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
+
 export function AiTab() {
+  const numberText = useNumberText();
   const t = useTranslations('settings.ai');
   const p = useAiSettings();
   if (p.query.error)
@@ -29,7 +32,9 @@ export function AiTab() {
       <section className={`${styles.card} ${styles.catalog}`} aria-label={t('heading')}>
         <div className={styles.row}>
           <h2>{t('heading')}</h2>
-          <span>{t('count', { n: p.form.providers.filter((r) => r.enabled).length })}</span>
+          <span>
+            {t('count', { n: numberText(p.form.providers.filter((r) => r.enabled).length) })}
+          </span>
         </div>
         <p>{t('sub')}</p>
         <AiProviderGrid p={p} />

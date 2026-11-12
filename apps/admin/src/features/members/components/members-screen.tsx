@@ -11,9 +11,11 @@ import { MemberTable } from './member-table';
 import { MembersToolbar } from './members-toolbar';
 import { MemberFiltersBar } from './member-filters';
 import styles from './members-screen.module.css';
+import { useAdminUiLabels } from '@/i18n/ui-labels';
 
 /** D-07 → D-17 Thành viên: orchestrator — bố cục + nối trạng thái với các phần con */
 export function MembersScreen() {
+  const ui = useAdminUiLabels();
   const t = useTranslations('members');
   const s = useMembersScreen();
   const { params, act, h } = s;
@@ -22,7 +24,11 @@ export function MembersScreen() {
 
   return (
     <>
-      <PageHeader title={t('title')} subtitle={t('sub')} extra={<DateRangePicker />} />
+      <PageHeader
+        title={t('title')}
+        subtitle={t('sub')}
+        extra={<DateRangePicker {...ui.dateRange} />}
+      />
       <div data-screen-label="Admin · Thành viên" className={styles.card}>
         <MembersToolbar
           counts={s.list.data?.counts}
@@ -68,6 +74,7 @@ export function MembersScreen() {
           onChange={(page) => s.update({ page })}
           onSizeChange={(size) => s.setFilter({ size })}
           labels={{
+            ...ui.pagination,
             unit: t('pager.unit'),
             prev: t('pager.prev'),
             next: t('pager.next'),

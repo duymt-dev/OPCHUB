@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { MEMBER_TYPE_FILTERS, type MemberTypeFilter, type MemberView } from '../types';
 import styles from './members-toolbar.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 const VIEW_ICON: Record<MemberView, string> = {
   grid: 'M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z',
@@ -24,6 +25,7 @@ interface Props {
 
 /** Tiêu đề "Thành viên · N tài khoản", ô tìm, đổi lưới / danh sách, chip loại tài khoản */
 export function MembersToolbar(p: Props) {
+  const numberText = useNumberText();
   const t = useTranslations('members.card');
   // Ô nhập giữ chữ đang gõ; URL chỉ nhận giá trị đã trim
   const [draft, setDraft] = useState(p.q);
@@ -36,7 +38,8 @@ export function MembersToolbar(p: Props) {
     <>
       <div className={styles.head}>
         <div className={styles.title}>
-          {t('title')} <span className={styles.count}>{t('count', { n: p.counts?.all ?? 0 })}</span>
+          {t('title')}{' '}
+          <span className={styles.count}>{t('count', { n: numberText(p.counts?.all ?? 0) })}</span>
         </div>
         <input
           className={styles.search}
@@ -87,7 +90,7 @@ export function MembersToolbar(p: Props) {
             onClick={() => p.onType(k)}
           >
             {label[k]}
-            <span className={styles.n}>{p.counts?.[k] ?? 0}</span>
+            <span className={styles.n}>{numberText(p.counts?.[k] ?? 0)}</span>
           </button>
         ))}
       </div>

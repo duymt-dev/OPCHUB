@@ -1,0 +1,61 @@
+{
+  "title": "Laporan",
+  "subtitle": "Angka bulanan dan eksport CSV menggunakan templat B1 / B2 / B3",
+  "template": {
+    "label": "Templat laporan",
+    "b1": "B1 · Kumpulan industri",
+    "b2": "B2 · Provinsi",
+    "b3": "B3 · Wilayah"
+  },
+  "month": "Bulan",
+  "monthOption": "Bulan {month}",
+  "scope": {
+    "b1": "Kumpulan",
+    "b2": "Provinsi / Bandar",
+    "b3": "Wilayah"
+  },
+  "pickScope": "Pilih skop untuk melihat angka",
+  "export": "Eksport CSV",
+  "metric": {
+    "newMembers": "Ahli baharu",
+    "newPaidMembers": "Ahli berbayar baharu",
+    "totalMembers": "Jumlah ahli",
+    "activeMembers": "Ahli aktif",
+    "events": "Acara / Coffee Chat",
+    "topics": "Topik perbincangan",
+    "feeRevenue": "Pendapatan yuran keahlian (VND)",
+    "commission": "Komisen afiliasi terkumpul (VND)",
+    "fundraisingRevenue": "Pakej pengumpulan dana (VND)",
+    "totalRevenue": "Jumlah pendapatan (VND)",
+    "contracts": "Kontrak G2B/B2B",
+    "sponsorship": "Penajaan acara (VND)",
+    "partners": "Sambungan rakan kongsi / pembekal",
+    "opportunities": "Peluang kerjasama"
+  },
+  "table": {
+    "metrics": "Metrik bulanan",
+    "metric": "Metrik",
+    "actual": "Sebenar",
+    "groups": "Kumpulan industri",
+    "group": "Kumpulan",
+    "owner": "Ketua kumpulan",
+    "members": "Ahli",
+    "messages": "Aktiviti bulanan",
+    "provinces": "KPI provinsi",
+    "province": "Provinsi / Bandar",
+    "events": "Acara",
+    "revenue": "Pendapatan (VND)",
+    "total": "Jumlah wilayah"
+  },
+  "noData": "Tiada data dalam sistem",
+  "empty": "Tiada baris",
+  "error": "Tidak dapat memuatkan angka laporan",
+  "retry": "Cuba lagi",
+  "toast": {
+    "exporting": "Mencipta fail laporan…",
+    "exported": "{file} dieksport",
+    "exportFailed": "Eksport laporan gagal",
+    "exportTimeout": "Penciptaan fail terlalu lama. Sila cuba lagi",
+    "failed": "Tidak dapat mengeksport laporan"
+  }
+}

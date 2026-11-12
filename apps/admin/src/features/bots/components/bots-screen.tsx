@@ -13,6 +13,7 @@ import { BotDrawers } from './bot-drawers';
 import { BotTabs } from './bot-tabs';
 import { EmergencyBar } from './emergency-bar';
 import styles from './bots.module.css';
+import { useAdminUiLabels } from '@/i18n/ui-labels';
 
 const STAT_KEYS = ['personas', 'scripts', 'posted', 'pending'] as const;
 
@@ -89,6 +90,13 @@ export function BotsScreen() {
 }
 
 function BotsHeader() {
+  const ui = useAdminUiLabels();
   const t = useTranslations('bots');
-  return <PageHeader title={t('title')} subtitle={t('sub')} extra={<DateRangePicker />} />;
+  return (
+    <PageHeader
+      title={t('title')}
+      subtitle={t('sub')}
+      extra={<DateRangePicker {...ui.dateRange} />}
+    />
+  );
 }
