@@ -3,7 +3,46 @@
 **STATUS: IN PROGRESS / PARTIAL — NOT DONE, NOT READY TO MERGE.**
 The active goal remains the entire approved TIP and all16 ACs. No scope reduction; the agent has not opened a PR, merged or released.
 
-## Current complete raw250 and full behavior audit — source6022d311,2026-11-12
+## Current mobile geometry and complete registered behavior checkpoint — source0e3803b3
+
+**IN PROGRESS / PARTIAL, not DONE or merge-ready.** Fixed the measured Indonesian mobile header/popover defect with an Admin-only LanguageSwitch facade. Before correction, the390px document measured393px and the avatar right edge392.859375; the country popover started at-43.9375px. Mobile trigger padding and viewport-anchored, vertically scrollable popover now preserve the complete native label, flag, caret,12 options and original hit height. No overflow hiding, clipping, locale special case, shared/Portal change or business/API/data mutation.
+
+Core browser cases now register successful API waiters before login/navigation, parse actual Overview/Settings responses, assert independently formatted paid/member values or actual platform-name field, verify populated Profile name/email, and wait for the localized login toast to disappear. Every390px core case opens the actual12-option menu, checks its left/right bounds and closes it with Escape. Existing identity/title/URL/cookie/sidebar/error/write assertions remain. The picker explicitly reselects en-SG before its unchanged F5 oracle; Myanmar sidebar uses the exact translated menu trigger. The test/build-only ICU cache uses an unambiguous JSON tuple, with a delimiter-collision negative. No app cache, timeout, skip, fallback, or guard relaxation.
+
+Required root gates PASS: lint8tasks/6cached; typecheck8/6cached; depcheck2834modules/8679dependencies plus server1260/5995. Root **3367 unique tests passed +2 existing integration skips**, fresh Admin1644/194files and other5 suites cached. Admin1245.46s/root20m47.125s are execution durations, not benchmarks. All12 frozen source/unit/harness/manifest blobs match the tested bytes in commit and worktree after normal hooks. Earlier17 Myanmar catalogs remain byte-identical. Both Admin builds PASS on committed0e3803b3, including the49-case physical raw gate each.
+
+**Full registered behavior PASS:208/208 per mode,416 total**, serial native10.4m then MSW14.3m, identical assertions/source and separate production outputs. Includes72 core cases/mode (12 identities ×3 routes ×2 widths),11 response-lifetime helper cases/mode,2 synthetic modal-handler probes/mode, and an injected clipping negative/mode; not416 independent end-user workflows. No server-only skips. Original failures remain in full-i18n-first-msw/native.log and mobile-layout-first.log. Native Lao Settings390 now passes the unchanged HTTP guard; the earlier proxy500 is not attributed to this CSS fix and its cause remains unproven. No original/private service restart, SQL, migration, seed, DB reset/repair or business writes. Approved private API listener/wrapper/endpoints were revalidated; only real auth sessions/refresh are allowed.
+
+Fresh static audit PASS/dirty=false at0e3803b3:592 production files/303 findings/293 exact exceptions/0 unreviewed/errors,609 fingerprint files, corpus `fb448434818fec0c038780a6e57a7bfbf05baac7530fa73e182c82e7b719b1a0`. This honestly changes the earlier fingerprint because the new production facade is scanned. Catalogs/tests/CSS are outside the fingerprint and have separate raw/DOM/build proof. Actual built-data audit still finds6 distinct unmixed CLDR payloads/mode; direct E2E typecheck after refreshed receipt PASS. This is not a JS-budget/baseline performance PASS.
+
+Fresh public font/auth48 PASS (24/mode) on0e3803b3, separate from authenticated/private data proof. Agent inspected regenerated Chinese native Overview390 and Profile1440: the former contains actual KPI/chart/table data without the login toast; the latter is genuinely Profile with populated fields and untouched personal data. Chinese MSW Overview390 was also inspected. No owner/native-speaker approval is claimed. Human translation review remains explicitly SKIP/native-reviewed=false.
+
+Evidence: [root gates](evidence/v46-824/quality-gates.log), [units](evidence/v46-824/unit.log), [MSW208](evidence/v46-824/full-i18n-msw.log), [native208](evidence/v46-824/full-i18n-native.log), [initial geometry/selector/lint failures](evidence/v46-824/mobile-layout-first.log), [six-case candidate diagnostic](evidence/v46-824/mobile-layout.log), [source audit](evidence/v46-824/source-audit.json). Candidate diagnostic is six MSW cases on working-tree source, not additional unique full-suite cases.
+
+### Current acceptance audit — all16 retained
+
+| AC | Verdict / evidence and remaining work |
+|---|---|
+|01|PASS: fixed locale/alias/unsafe-cookie/request units and actual12-identity core/picker/F5 cases.|
+|02|PASS:10 raw bundles/250 files/26,670 leaves; physical49-case production gate runs in both builds.|
+|03|PASS: retained source/split hashes and loader/key/type/ICU/deep-fallback/isolation contracts; earlier17 My catalogs unchanged.|
+|04|PARTIAL: all12 public auth/font identities and core login prerequisite; full forgot/reset/first-password/2FA flow browser evidence remains.|
+|05|PASS for specified actual vi→en→th→vi member URL/query/paging/session/no-write sequence, aliases and F5 in both full runs.|
+|06|PARTIAL: all registered loaded English routes/tabs/dialogs pass both modes plus592-file scan; loading/empty/error/403/chat/secondary-state matrix still required.|
+|07|PARTIAL: all12 identities on actual loaded Overview/Profile/Settings at1440/390 pass both modes with unmasked images; complete representative native controls still required.|
+|08|PARTIAL: formatting/canonical/export units, actual Myanmar flow and English/Lao Fees date/VND proof pass; remaining browser numeric/date/currency boundaries remain.|
+|09|PARTIAL: all10 AntD definitions/provider units and all12 range/F5 cases pass; full actual empty/pagination/editor/dialog/calendar control coverage remains.|
+|10|PARTIAL: actual Profile local error/drafts and units pass; synthetic modal-handler probes are not actual open-modal/accessibility/upload/2FA proof.|
+|11|PARTIAL: canonical projections and read-only browser guards pass; actual canonical save-value and RBAC negatives remain.|
+|12|PARTIAL: raw API/content/export byte unit negatives pass; translated browser API/audit/notification/email/export boundary evidence remains.|
+|13|PARTIAL: real saved configuration/12-option independence/no-PATCH/F5 cases pass; explicit disabled-configuration negative remains.|
+|14|PASS for all208 currently registered i18n cases/mode on the same source/build inputs, identical assertions and retained valid native prerequisites; does not close missing cases in other ACs.|
+|15|PARTIAL: measured mobile overflow/popover corrected, loaded core images regenerated, all registered geometry/sidebar tests pass; remaining controls/focus/keyboard/VI prototype evidence required. Owner/native review not fabricated.|
+|16|PARTIAL: selected CLDR payload/font isolation and source/request units pass; original f7c1b2b8 vi/en/th route JS gzip/RSC/catalog/font measurements and15%/250KB debt assessment remain unverified.|
+
+Next: finish missing auth/state/control/value/RBAC/performance browser evidence, reconcile the full route/control matrix and traceability, then final gates/report/task-row824/owner-review PR into dev. No scope reduction or automatic merge/release.
+
+## Historical complete raw250 and first full behavior audit — source6022d311,2026-11-12
 
 **Still IN PROGRESS / PARTIAL / NOT DONE / NOT READY TO MERGE.** Entire approved16-AC goal remains active, no scope reduction/PR/merge/release.
 
@@ -279,7 +318,7 @@ Historical complete-raw checkpoint (sourcec0b97b51, superseded by sidebar checkp
 
 A real loader test initially fell back despite valid raw files: installed Vitest5 fsModuleCache retained an import map compiled before Filipino existed. A comment-only diagnostic invalidated the map and passed; restoring the exact production source reproduced failure. Documented vitest --clearCache then made the unchanged loader/full request assertions pass; temporary diagnostic edits/probes were removed. Only disposable test caches were cleared, not DB data/services. That historical CLI audit sourcec0b97b51/dirty=false retained corpus2022fe8ac2abd4a92823c93a5720ac81adbed57110c49907922546bcf1651b4f (584 files/301 findings/zero unreviewed); catalogs/browser proof are explicitly outside that fingerprint. [Filipino126](evidence/v46-824/filipino.log), [MSW6](evidence/v46-824/filipino-msw.log), [private-native6](evidence/v46-824/filipino-native.log). At sourcec0b97b51 sidebar clipping was a known AC15 failure; the specific finding is corrected by source d6efb178 as recorded above. Full TIP is not DONE.
 
-## Current acceptance audit — all16 retained
+## Historical acceptance audit — superseded by current all16 table above
 
 | AC | Authoritative proof / remaining requirement |
 |---|---|
@@ -302,7 +341,7 @@ A real loader test initially fell back despite valid raw files: installed Vitest
 
 Chinese current browser coverage: login title + heading in both modes, with unmasked [MSW desktop](evidence/v46-824/zh-auth-msw-1440.png), [MSW mobile](evidence/v46-824/zh-auth-msw-390.png), [mocking-off desktop](evidence/v46-824/zh-auth-server-1440.png) and [mocking-off mobile](evidence/v46-824/zh-auth-server-390.png). These are actual login images, not Profile or Dashboard. Initial screenshot persistence failed on ESM __dirname; using import.meta.url fixed the test harness, and the unchanged title/heading/custom-font assertions then passed.
 
-## Next work — same full goal
+## Historical next-work list — superseded by current all16 table above
 
 1. The approved optional badge callback is implemented and regression-verified (Portal defaults unchanged). Continue with full English domain/upload/browser flows, including indirect runtime strings beyond static analysis. The584-file source audit and raw-number migration now pass; the five domain client-error integrations have unit proof, not full browser acceptance. Do not alter parsers/search/date machine fields, API errors, exports, content or D-140.
 2. Complete km/my catalogs/glossaries and final fixed10-bundle gate, plus English edge/chat/auth/navigation/control/value scenarios beyond the loaded47-state/14-dialog matrix and mandatory fixed-bundle raw gate. No directory-discovery skip, copied vi or TODO stand-ins.

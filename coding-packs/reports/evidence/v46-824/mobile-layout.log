@@ -1,0 +1,20 @@
+Source f833e240. Complete10 raw bundles/250 files. Six targeted Indonesian/Chinese Overview/Profile/Settings390 cases against candidate working-tree MSW build, not208 cases or native proof; real login200 and strict HTTP/JSON/no-business-write guard. No native preflight invoked by this MSW-only diagnostic; original PG5432/opchub_test/services/data retained, no SQL/seed/reset/repair. Unmasked images and exact Myanmar anchors, not all-language/state/control/value/performance or human approval.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-all-locales.spec.ts --grep "actual (id|zh) (overview|profile|settings) 390" --output TEMP-verified-mobile-core-results
+[WebServer] (node:9732) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:14900) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+(node:14448) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\admin-i18n-all-locales.spec.ts:18:7 › D-141 AC824-07/15 actual zh overview 390, loaded core only not all states (4.9s)
+  ok 2 [behavior] › behavior\admin-i18n-all-locales.spec.ts:18:7 › D-141 AC824-07/15 actual zh profile 390, loaded core only not all states (4.7s)
+  ok 3 [behavior] › behavior\admin-i18n-all-locales.spec.ts:18:7 › D-141 AC824-07/15 actual zh settings 390, loaded core only not all states (5.0s)
+  ok 4 [behavior] › behavior\admin-i18n-all-locales.spec.ts:18:7 › D-141 AC824-07/15 actual id overview 390, loaded core only not all states (6.4s)
+  ok 5 [behavior] › behavior\admin-i18n-all-locales.spec.ts:18:7 › D-141 AC824-07/15 actual id profile 390, loaded core only not all states (4.8s)
+  ok 6 [behavior] › behavior\admin-i18n-all-locales.spec.ts:18:7 › D-141 AC824-07/15 actual id settings 390, loaded core only not all states (4.2s)
+
+  6 passed (38.8s)
+EXIT 0

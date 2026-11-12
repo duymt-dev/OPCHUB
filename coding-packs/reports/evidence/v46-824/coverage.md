@@ -2,7 +2,19 @@
 
 **Partial evidence only.** Metadata implementation is not proof that a route body, dialog, every locale or API is verified.
 
-## Current complete raw250 / failed full behavior checkpoint — source6022d311
+## Current registered full behavior — source0e3803b3
+
+**PARTIAL overall, not DONE or merge-ready.** Full208/208 MSW and208/208 isolated-native PASS with identical assertions and source, no per-server skips. Includes72 core cases/mode across12 identities,3 routes,2 widths;11 helper classifier cases,2 synthetic modal probes and1 clipping negative per mode are not independent user workflows. Other AC obligations are not inferred from the416 total.
+
+Core cases now wait for actual schema-validated Overview/Settings data or populated Profile, and localized login-toast disappearance. Actual12-option mobile popover bounds/Escape and document-width checks pass. Measured old Indonesian393px document/negative popover left edge corrected by mobile Admin-only wrapper; Portal/shared defaults and API/data/business contracts unchanged. Picker explicitly selects en-SG before F5; Myanmar menu locator uses translated label. No assertion/timeout/guard relaxation.
+
+Root3367 passed +2 existing skips (Admin1644 fresh/194 files, other5 suites cached); lint/typecheck/depcheck and both builds with49 raw physical cases PASS. Static audit592 files/303 findings/293 exact exceptions/zero unreviewed, fingerprint609/corpusfb448434818fec0c038780a6e57a7bfbf05baac7530fa73e182c82e7b719b1a0. Updated actual CLDR receipt6 unmixed payloads/mode and post-receipt E2E typecheck PASS, not original-baseline performance proof.
+
+All10 raw bundles/250 files are complete. Full auth/2FA, English edge/chat/state matrix, actual native controls across locales, canonical save/export/RBAC negatives, VI-prototype and original-baseline performance remain open. See current all16-AC table in completion report; historical claims of absent km/my below are explicitly obsolete. Native original5432/opchub_test/data/services untouched; approved private listener/endpoints revalidated, no SQL/reset/seed/repair/business writes. Earlier native proxy500 observation preserved; current unchanged guard passes, cause unproven.
+
+Current logs: full-i18n-msw.log/full-i18n-native.log. Initial failed runs retained as full-i18n-first-msw.log/full-i18n-first-native.log; mobile-layout-first.log preserves geometry, selector and initial lint observations. Agent inspected Chinese native Overview390/Profile1440 and MSW Overview390 with loaded data/no login toast; no owner/native-human approval.
+
+## Historical complete raw250 / failed first full behavior checkpoint — source6022d311
 
 **Still IN PROGRESS / PARTIAL / NOT DONE / NOT READY TO MERGE.** Entire approved16-AC goal remains active, no scope reduction/PR/merge/release.
 
