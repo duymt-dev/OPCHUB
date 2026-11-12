@@ -38,4 +38,8 @@ describe('D-141 AC824-02 immutable ICU signature cache, never a filesystem cache
     }
     expect(icuContract('Mutable fixture {newArgument}', 'en')).toEqual(['1:newArgument']);
   });
+  it('does not let a delimiter collision turn an invalid locale into a cached valid contract', () => {
+    expect(icuContract('prefix\0suffix {value}', 'en')).toEqual(['1:value']);
+    expect(() => icuContract('suffix {value}', 'en\0prefix')).toThrow();
+  });
 });

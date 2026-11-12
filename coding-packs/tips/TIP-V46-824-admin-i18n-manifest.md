@@ -1311,6 +1311,26 @@ After raw250 completion, exercise every one of12 selector identities (10 bundles
 | create | `coding-packs/reports/evidence/v46-824/full-i18n-first-msw.log` | Preserve source6022 first full run:198 pass/10 fail, not full acceptance. |
 | create | `coding-packs/reports/evidence/v46-824/full-i18n-first-native.log` | Preserve source6022 first full run:197 pass/11 fail, strict native proxy failures retained. |
 | modify | `coding-packs/tips/TIP-V46-824-admin-i18n.md` | Update only execution status to reflect complete raw250; retain original full16-AC scope and NOT DONE/no merge status. |
+
+## Correct full-regression findings and loaded-state evidence
+
+Preserve original6022 failures. Measure Indonesian390 DOM overflow before choosing a scoped Admin-only fix, never mask document overflow. Keep all12 picker identities and explicitly select en-SG before the unchanged alias/F5 oracle. Use exact translated Myanmar menu trigger, retaining real clicks and every badge/geometry/URL assertion. Require actual schema-valid core responses/rendered data and hidden login toast before screenshots; keep every HTTP/JSON/write/error guard and timeout unchanged.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| modify | `e2e/behavior/admin-i18n-all-locales.spec.ts` | Actual data-ready assertions and diagnostic page overflow geometry, not weaker width checks. |
+| modify | `e2e/behavior/admin-i18n/core-labels.ts` | Raw translated field/toast expectations for loaded-core checks. |
+| create | `e2e/behavior/admin-i18n/core-ready.ts` | Schema-valid real Overview/General response wait and rendered-value/hidden-toast prerequisites. |
+| modify | `e2e/behavior/admin-i18n-picker.spec.ts` | Restore explicit en-SG selection before existing F5/canonical checks after all12 traversals. |
+| modify | `e2e/behavior/admin-i18n-sidebar.spec.ts` | Exact translated My menu trigger; no count, geometry or real-click relaxation. |
+| create | `coding-packs/reports/evidence/v46-824/mobile-layout.log` | Measured original mobile overflow, correction attempts and actual regression outputs. |
+| create | `coding-packs/reports/evidence/v46-824/mobile-layout-first.log` | Preserve original measured393/390 viewport overflow and language popover left=-43.94 before correction, including label-query diagnostic correction. |
+| create | `apps/admin/src/features/shell/components/admin-language-switch.tsx` | Admin-only styling facade forwarding every existing LanguageSwitch prop; Portal/shared untouched. |
+| create | `apps/admin/src/features/shell/components/admin-language-switch.module.css` | Mobile-only trigger padding and viewport-contained scrolling popover, preserving full names/flags/options, no hidden-overflow mask. |
+| create | `apps/admin/src/features/shell/components/admin-language-switch.spec.tsx` | Exact prop forwarding and Admin-scoped/mobile-only style contract; real geometry checked in browser. |
+| modify | `apps/admin/src/features/shell/components/admin-shell.tsx` | Wire small Admin-only language facade; preserve auth/nav/permission/badge logic. |
+| modify | `apps/admin/src/i18n/tests/icu-contract.ts` | Encode cache tuple unambiguously, preserving locale/text identity even for malformed fixture strings. |
+| modify | `apps/admin/src/i18n/tests/icu-contract-cache.spec.ts` | Negative delimiter-collision fixture must still reject an invalid locale; no raw-gate relaxation. |
 | create | `coding-packs/reports/evidence/v46-824/vi-overview-msw-1440.png` | Unmasked actual required-language overview image; no owner/native-human approval implied. |
 | create | `coding-packs/reports/evidence/v46-824/vi-overview-msw-390.png` | Unmasked actual required-language overview image; no owner/native-human approval implied. |
 | create | `coding-packs/reports/evidence/v46-824/vi-overview-server-1440.png` | Unmasked actual required-language overview image; no owner/native-human approval implied. |

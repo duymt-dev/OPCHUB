@@ -1,0 +1,16 @@
+@media (max-width: 767px) {
+  /* Preserve the full native label, flag, caret and original40px hit height. */
+  .control :global(button[aria-haspopup='listbox']) {
+    padding-inline: 10px;
+  }
+
+  /* The shared popover anchors to its trigger; Admin mobile has controls to its right. */
+  .control :global(div:has(> [role='listbox'])) {
+    position: fixed;
+    inset-inline: 16px;
+    top: 64px;
+    width: auto;
+    max-height: calc(100dvh - 80px);
+    overflow-y: auto;
+  }
+}

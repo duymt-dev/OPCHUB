@@ -31,6 +31,8 @@ const profileSchema = z.object({
     personal: z.string(),
     passwordTitle: z.string(),
     security: z.string(),
+    name: z.string(),
+    email: z.string(),
   }),
 });
 const overviewSchema = z.object({
@@ -43,6 +45,7 @@ const settingsSchema = z.object({
   general: z.object({
     heading: z.string(),
     registration: z.string(),
+    name: z.string(),
   }),
 });
 
@@ -52,6 +55,9 @@ export function coreScreens(locale: (typeof CORE_LOCALES)[number]) {
   const overview = overviewSchema.parse(raw(bundle, 'overview'));
   const profile = profileSchema.parse(raw(bundle, 'common')).adminProfile;
   const settings = settingsSchema.parse(raw(bundle, 'settings/core'));
+  const toast = z
+    .object({ login: z.object({ welcomeAdmin: z.string() }) })
+    .parse(raw(bundle, 'auth')).login.welcomeAdmin;
   return [
     {
       path: '/overview',
@@ -59,6 +65,8 @@ export function coreScreens(locale: (typeof CORE_LOCALES)[number]) {
       title: meta['overview'],
       heading: overview.title,
       anchors: [overview.growth.title, overview.conversion.heading],
+      toast,
+      field: '',
     },
     {
       path: '/profile',
@@ -66,6 +74,9 @@ export function coreScreens(locale: (typeof CORE_LOCALES)[number]) {
       title: meta['profile'],
       heading: profile.title,
       anchors: [profile.personal, profile.passwordTitle, profile.security],
+      toast,
+      field: profile.name,
+      email: profile.email,
     },
     {
       path: '/settings',
@@ -73,6 +84,8 @@ export function coreScreens(locale: (typeof CORE_LOCALES)[number]) {
       title: meta['settings'],
       heading: settings.title,
       anchors: [settings.general.heading, settings.general.registration],
+      toast,
+      field: settings.general.name,
     },
-  ];
+  ] as const;
 }

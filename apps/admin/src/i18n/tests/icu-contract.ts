@@ -30,7 +30,7 @@ function signatures(elements: Elements, result = new Set<string>()): Set<string>
 }
 
 export function icuContract(message: string, locale: string): string[] {
-  const key = `${locale}\0${message}`;
+  const key = JSON.stringify([locale, message]);
   const cached = contracts.get(key);
   if (cached) return [...cached];
   const ast = new IntlMessageFormat(message, locale).getAst();

@@ -6,6 +6,7 @@ import { test, expect, openLocalized } from './admin-i18n/fixtures';
 import { englishChrome } from './admin-i18n/chrome';
 import { assertSidebarLabels } from './admin-i18n/sidebar';
 import { CORE_LOCALES, IMAGE_LOCALES, coreScreens } from './admin-i18n/core-labels';
+import { coreDataWaiter } from './admin-i18n/core-ready';
 
 const evidence = fileURLToPath(
   new URL('../../coding-packs/reports/evidence/v46-824/', import.meta.url),
@@ -19,7 +20,9 @@ for (const locale of CORE_LOCALES)
         guard,
       }) => {
         await page.setViewportSize({ width, height: 1000 });
+        const ready = coreDataWaiter(page, screen, locale);
         await openLocalized(page, screen.path, locale);
+        await ready();
         await expect(page.locator('html')).toHaveAttribute('lang', locale);
         await expect(page).toHaveTitle(`${screen.title} · OPC Hub Admin`);
         await expect(
@@ -33,9 +36,38 @@ for (const locale of CORE_LOCALES)
         ).toBe(locale);
         if (locale !== 'vi') await englishChrome(page, guard);
         else await guard.settle(); // Vietnamese UI is intentional; retain every HTTP/write/error guard.
-        expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
-          true,
-        );
+        let menuBounds: { left: number; right: number } | undefined;
+        if (width === 390) {
+          await page.locator('button[aria-haspopup="listbox"]').click();
+          const choices = page.getByRole('listbox');
+          await expect(choices.getByRole('option')).toHaveCount(12);
+          menuBounds = await choices.locator('..').evaluate((element) => {
+            const rect = element.getBoundingClientRect();
+            return { left: rect.left, right: rect.right };
+          });
+          await page.keyboard.press('Escape');
+          await expect(choices).toBeHidden();
+        }
+        const layout = await page.evaluate(() => ({
+          width: innerWidth,
+          scroll: document.documentElement.scrollWidth,
+          overflow: [...document.querySelectorAll('body *')]
+            .filter((e) => e.getBoundingClientRect().right > innerWidth + 1)
+            .slice(0, 18)
+            .map((e) => ({
+              tag: e.tagName,
+              class: e.className,
+              right: e.getBoundingClientRect().right,
+              width: e.getBoundingClientRect().width,
+              text: e.textContent?.slice(0, 70),
+            })),
+        }));
+        const diagnostics = JSON.stringify({ ...layout, menuBounds });
+        expect(layout.scroll, diagnostics).toBeLessThanOrEqual(layout.width);
+        if (menuBounds) {
+          expect(menuBounds.left, diagnostics).toBeGreaterThanOrEqual(0);
+          expect(menuBounds.right, diagnostics).toBeLessThanOrEqual(width);
+        }
         await page.evaluate(() => document.fonts.ready);
         if (width === 1440) await assertSidebarLabels(page.locator('aside[data-mini]'));
         if (IMAGE_LOCALES.has(locale)) {

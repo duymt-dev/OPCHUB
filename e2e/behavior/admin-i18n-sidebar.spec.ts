@@ -31,8 +31,11 @@ for (const width of [1440, 390]) {
       ['en', 'en-GB'],
     ] as const) {
       await selectLocale(page, locale);
-      // Missing Myanmar prose still falls back to VI. This checks the approved number boundary only.
-      if (width === 390) await page.getByRole('button', { name: 'Menu', exact: true }).click();
+      // Complete Myanmar now supplies its own trigger, not the earlier fallback label.
+      if (width === 390)
+        await page
+          .getByRole('button', { name: locale === 'my' ? 'မီနူး' : 'Menu', exact: true })
+          .click();
       for (const item of original) {
         const badge = sidebar.locator(`a[href="${item.href}"] > span:nth-of-type(2)`);
         await expect(badge).toHaveText(new Intl.NumberFormat(intl).format(item.count));

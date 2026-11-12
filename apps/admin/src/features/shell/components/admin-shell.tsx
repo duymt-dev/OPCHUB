@@ -1,7 +1,8 @@
 'use client';
 
 import { AdminSearch } from './admin-search';
-import { AppShell, LanguageSwitch, useToast } from '@opchub/ui';
+import { AppShell, useToast } from '@opchub/ui';
+import { AdminLanguageSwitch } from './admin-language-switch';
 import { useLocale, useTranslations } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
 import type { ReactNode } from 'react';
@@ -123,7 +124,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
       labels={labels}
       notifications={<AdminNotifications />}
       language={
-        <LanguageSwitch
+        <AdminLanguageSwitch
           title={tAuth('langTitle')}
           current={locale}
           options={languageOptions}

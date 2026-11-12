@@ -69,6 +69,7 @@ for (const width of [1440, 390])
         expect([...query.keys()].sort()).toEqual(['from', 'to']);
       }
       // F5 must keep selected alias identity and canonical range, not locale-formatted URL values.
+      await selectLocale(page, 'en-SG');
       await page.reload({ waitUntil: 'networkidle' });
       await expect(page.locator('html')).toHaveAttribute('lang', 'en-SG');
       await expect(inputs.nth(0)).toHaveValue(expectedDate(from, 'en-SG'));
