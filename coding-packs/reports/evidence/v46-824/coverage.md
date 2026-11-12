@@ -2,6 +2,13 @@
 
 **Partial evidence only.** Metadata implementation is not proof that a route body, dialog, every locale or API is verified.
 
+## Read-only chat viewer — candidate based3876c864
+
+2/2 MSW +2/2 approved native PASS, identical1440/390 assertions. Real seeded Hanoi province chat:4 rooms/9 actual messages; industry chat:1 room/0 messages in each mode/viewport. Typed successful API reads independently establish the displayed oldest-first sender/body/attachment name/size and empty state. Every room is actually clicked; en→vi→en retains active room, raw room/content bytes, translated title/heading/read-only notice/back action and full12 selector identity. Room pane has no composer/input/editable content; strict existing read-only browser guard permits only login/refresh mutations and no business writes. English chrome scan and viewport bounds apply to every room/locale substep. No intercept/fake payload, fixture provisioning, settings/RBAC/message/read-marker/moderation/export mutation or original DB/service change.
+
+Required root gates PASS: lint8/7cached, typecheck8/7cached; depcheck2901 modules/8895 dependencies plus1260/5995;3398 unique tests +2 existing integration skips, all6 suites cached, not fresh/additional units. Three source/harness/config blobs frozen; source commit pending. Production remains ff6be9ee byte-identical, reuse its two verified builds and clean source audit. No direct PG client/pool opened, browser-owned UI helpers exited after suites; approved native API/services remain held. This closes actual populated/empty chat evidence, not arbitrary loading/error/403 or server authorization negatives, all-route/all-language acceptance, final full-suite/performance or VI-prototype review. Whole TIP remains PARTIAL/NOT DONE/NOT READY TO MERGE.
+
+Evidence: `chat-msw.log`, `chat-native.log`, `chat-quality.log`; actual data counts are receipts, not fabricated screenshot proof or owner approval.
 ## Saved-disabled language independence — candidate based9f8cab20
 
 Final2/2 MSW +2/2 approved native PASS at1440/390 with identical assertions. Existing Super login, typed full Settings snapshot, one non-default Myanmar toggle tofalse; exact disabled snapshot is re-read after each actual my→vi→my selector switch. All12 choices remain available, URL/query/hash and cookie identity survive F5, and selector/F5 produce no implicit PATCH. No defaultLocale/progress/other setting mutation, role/permission change, original PG5432/opchub_test access, SQL/seed/reset or native service restart.

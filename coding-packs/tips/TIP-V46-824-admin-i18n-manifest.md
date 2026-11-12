@@ -1628,3 +1628,20 @@ Next-phase files are declared before implementation; existing read-only/canonica
 | create | `coding-packs/reports/evidence/v46-824/disabled-quality.log` | Actual final required root gates and frozen harness provenance; existing production ff6be9ee unchanged. |
 
 Disabled probe scope: identical UI/wire assertions in both modes. Before reload, repeated fresh Settings reads must equal the exact one-code disabled snapshot. After F5, require all12 selector options and selected cookie identity, with zero implicit PATCHes. Finally accepts only the exact disabled snapshot or exact original snapshot (MSW browser-memory settings can naturally reset on reload); any unrelated drift fails without overwriting it. Record which restoration path actually occurred. This does not claim MSW business configuration persists through F5, change its persistence model, or waive native full restoration verification.
+
+## Read-only chat viewer and raw messages (declared before implementation)
+
+Existing seeded province/industry groups and their rooms/messages are read-only prerequisites, not new chat fixtures. Real API DTOs must match rendered sender/body/file bytes and room names, English/VI chrome must switch without changing selected room or adding a composer. Both populated and empty room states, exact successful API prerequisites, translated metadata and mobile bounds use identical assertions in MSW/native. No new mutation permission, message send/read-marker/moderation/export, interception, seed/reset or production change is authorized by this test declaration.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| create | `e2e/behavior/admin-i18n-chat.spec.ts` | Actual read-only populated/empty group chat, raw payload/render and EN/VI room-state checks at1440/390. |
+| create | `e2e/behavior/admin-i18n/chat.ts` | Typed existing chat response readers and rendered raw-message oracle; no runtime app imports or writes. |
+| modify | `e2e/playwright.admin-i18n.config.ts` | Register scoped chat coverage without relaxing current guards/timeouts. |
+| create | `coding-packs/reports/evidence/v46-824/chat-msw.log` | Actual focused chat results, failures retained if any. |
+| create | `coding-packs/reports/evidence/v46-824/chat-native.log` | Same assertions on approved isolated native API; original services/DB untouched. |
+| create | `coding-packs/reports/evidence/v46-824/chat-quality.log` | Actual required root gates and source/provenance checks. |
+
+## Owner approval: isolated unassigned role fixture (2026-11-12)
+
+Owner explicitly permits creating and editing one prefix-owned `tip824-i18n-*` role via the existing Admin API on the approved isolated cluster for AC824-11 matrix-wire verification. Never assign this role to any account, alter an existing role/permission or original PG5432 data/service. Retain the fixture for independent inspection. Snapshot/read back unchanged existing role permissions and account associations; if the UI batches matrix writes for unrelated roles, do not submit that batch merely for this test. Declare the exact role-test/helper/evidence paths before implementing the next phase. This approval does not change the current chat phase's strict read-only scope.
