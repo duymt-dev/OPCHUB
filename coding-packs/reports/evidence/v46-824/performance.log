@@ -1,0 +1,1019 @@
+Test source b2b8acf0. Final nine frozen inputs match commit/worktree after normal hooks. Production source0e3803b3 retained exactly; baseline f7c1b2b8 built in isolated archive with1513 bit-identical original build inputs and original frozen lock. Real cold contexts, no previously loaded route code, native-only size audit (not identical dual-mode behavior proof or timing benchmark). Strict no-business-write/HTTP/JSON/browser-error checks; auth sessions only; original PG5432/test data/services untouched.
+DRAFT FINDINGS: first12/16 measurement failures were collector assumptions: ambiguous login h1, unapproved random-origin CSRF refresh403, and original hardcoded html lang=vi. Kept source baseline unchanged, narrowed login heading by exact raw label, reused approved private Admin origin (no API/CORS/service mutation), asserted the documented old html=vi defect only on original baseline; current must match selected locale. SSR selected catalog expected equality unchanged. Nonsecret cookie diagnosis confirmed no data/auth contract issue; no header values/tokens persisted. Second8/16 failed only old html expectation. Root lint/type errors corrected with type-safe selectors, exact fixture input and small helpers, no test/timeout reduction.
+
+INITIAL RANDOM-ORIGIN/HEADING DIAGNOSTIC
+D-141 AC824-16 production baseline/current cold audit, explicit temporary local listener; native wrapper/endpoint preflight retained. No DB/seed/reset/repair/business writes. API sessions only. Initial collector typecheck found unsupported getByDisplayValue (corrected to actual raw label); initial lint found regex escape and oversized helper (split data readiness). First external config reporter tuple was flattened by PowerShell and rejected before tests; corrected to supported list string. No assertion/timeout/guard relaxation.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c TEMP-baseline.config.mjs
+[WebServer] (node:21880) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 16 tests using 1 worker
+
+(node:31032) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   1 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold vi /login executable/data/font inventory (1.8s)
+(node:24100) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   2 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold vi /overview executable/data/font inventory (7.9s)
+(node:20384) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   3 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold vi /profile executable/data/font inventory (7.5s)
+(node:2972) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   4 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold vi /settings executable/data/font inventory (7.0s)
+(node:12812) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   5 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /login executable/data/font inventory (6.1s)
+(node:11520) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   6 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /overview executable/data/font inventory (6.8s)
+(node:10164) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   7 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /profile executable/data/font inventory (6.9s)
+(node:30796) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   8 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /settings executable/data/font inventory (7.8s)
+(node:24200) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   9 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /login executable/data/font inventory (7.1s)
+(node:20840) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  10 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /overview executable/data/font inventory (10.1s)
+(node:14228) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  11 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /profile executable/data/font inventory (7.8s)
+(node:23372) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  12 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /settings executable/data/font inventory (7.9s)
+(node:24776) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 13 [performance-baseline] › audit\admin-i18n-performance.spec.ts:14:1 › D-141 AC824-09/16 concurrent SSR never mixes selected vi/en/th catalogs (420ms)
+  ok 14 [performance-baseline] › audit\admin-performance-contract.spec.ts:10:1 › D-141 AC824-16 decodes actual queue JSON without executing inline script (10ms)
+  ok 15 [performance-baseline] › audit\admin-performance-contract.spec.ts:22:1 › D-141 AC824-16 rejects missing, duplicate, mixed and malformed catalog data (15ms)
+  ok 16 [performance-baseline] › audit\admin-performance-contract.spec.ts:34:1 › D-141 AC824-16 metadata rejects external/default listeners and path-shaped dist (4ms)
+
+
+  1) [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold vi /login executable/data/font inventory
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('h1')
+    Expected: visible
+    Error: strict mode violation: locator('h1') resolved to 2 elements:
+        1) <h1 class="t8stcq_headline">…</h1> aka getByRole('heading', { name: 'Kết nối năng lực địa phương' })
+        2) <h1 class="yr_Gta_title">Chào mừng trở lại!</h1> aka getByRole('heading', { name: 'Chào mừng trở lại!' })
+
+    Call log:
+      - Expect "toBeVisible" locator('h1') with timeout 5000ms
+      - waiting for locator('h1')
+
+
+       at admin-performance\measure.ts:81
+
+      79 |     await expect(page).toHaveURL(`${config.origin}${route}`);
+      80 |     await expect(page.locator('html')).toHaveAttribute('lang', locale);
+    > 81 |     await expect(page.locator('h1')).toBeVisible();
+         |                                      ^
+      82 |     await dataReady(page, config, locale, route, data);
+      83 |     await page.evaluate(() => document.fonts.ready);
+      84 |     await page.waitForLoadState('networkidle');
+        at measureRoute (D:\CODING\OPCHUB\CODING\e2e\audit\admin-performance\measure.ts:81:38)
+        at D:\CODING\OPCHUB\CODING\e2e\audit\admin-i18n-performance.spec.ts:11:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-performance-a3413169\playwright-baseline\admin-i18n-performance-D-1-7ff5e-cutable-data-font-inventory-performance-baseline\error-context.md
+
+  2) [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold vi /overview executable/data/font inventory
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected: "http://127.0.0.1:50617/overview"
+    Received: "http://127.0.0.1:50617/login?next=%2Foverview"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveURL" with timeout 5000ms
+        13 × locator resolved to <html lang="vi">…</html>
+           - unexpected value "http://127.0.0.1:50617/login?next=%2Foverview"
+
+
+       at admin-performance\measure.ts:79
+
+      77 |     const response = await page.goto(`${config.origin}${route}`, { waitUntil: 'networkidle' });
+      78 |     expect(response?.ok()).toBe(true);
+    > 79 |     await expect(page).toHaveURL(`${config.origin}${route}`);
+         |                        ^
+      80 |     await expect(page.locator('html')).toHaveAttribute('lang', locale);
+      81 |     await expect(page.locator('h1')).toBeVisible();
+      82 |     await dataReady(page, config, locale, route, data);
+        at measureRoute (D:\CODING\OPCHUB\CODING\e2e\audit\admin-performance\measure.ts:79:24)
+        at D:\CODING\OPCHUB\CODING\e2e\audit\admin-i18n-performance.spec.ts:11:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-performance-a3413169\playwright-baseline\admin-i18n-performance-D-1-74b3a-cutable-data-font-inventory-performance-baseline\error-context.md
+
+  3) [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold vi /profile executable/data/font inventory
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected: "http://127.0.0.1:50617/profile"
+    Received: "http://127.0.0.1:50617/login?next=%2Fprofile"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveURL" with timeout 5000ms
+        13 × locator resolved to <html lang="vi">…</html>
+           - unexpected value "http://127.0.0.1:50617/login?next=%2Fprofile"
+
+
+       at admin-performance\measure.ts:79
+
+      77 |     const response = await page.goto(`${config.origin}${route}`, { waitUntil: 'networkidle' });
+      78 |     expect(response?.ok()).toBe(true);
+    > 79 |     await expect(page).toHaveURL(`${config.origin}${route}`);
+         |                        ^
+      80 |     await expect(page.locator('html')).toHaveAttribute('lang', locale);
+      81 |     await expect(page.locator('h1')).toBeVisible();
+      82 |     await dataReady(page, config, locale, route, data);
+        at measureRoute (D:\CODING\OPCHUB\CODING\e2e\audit\admin-performance\measure.ts:79:24)
+        at D:\CODING\OPCHUB\CODING\e2e\audit\admin-i18n-performance.spec.ts:11:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-performance-a3413169\playwright-baseline\admin-i18n-performance-D-1-36ab1-cutable-data-font-inventory-performance-baseline\error-context.md
+
+  4) [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold vi /settings executable/data/font inventory
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected: "http://127.0.0.1:50617/settings"
+    Received: "http://127.0.0.1:50617/login?next=%2Fsettings"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveURL" with timeout 5000ms
+        13 × locator resolved to <html lang="vi">…</html>
+           - unexpected value "http://127.0.0.1:50617/login?next=%2Fsettings"
+
+
+       at admin-performance\measure.ts:79
+
+      77 |     const response = await page.goto(`${config.origin}${route}`, { waitUntil: 'networkidle' });
+      78 |     expect(response?.ok()).toBe(true);
+    > 79 |     await expect(page).toHaveURL(`${config.origin}${route}`);
+         |                        ^
+      80 |     await expect(page.locator('html')).toHaveAttribute('lang', locale);
+      81 |     await expect(page.locator('h1')).toBeVisible();
+      82 |     await dataReady(page, config, locale, route, data);
+        at measureRoute (D:\CODING\OPCHUB\CODING\e2e\audit\admin-performance\measure.ts:79:24)
+        at D:\CODING\OPCHUB\CODING\e2e\audit\admin-i18n-performance.spec.ts:11:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-performance-a3413169\playwright-baseline\admin-i18n-performance-D-1-2f5dc-cutable-data-font-inventory-performance-baseline\error-context.md
+
+  5) [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /login executable/data/font inventory
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('html')
+    Expected: "en"
+    Received: "vi"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('html') with timeout 5000ms
+      - waiting for locator('html')
+        14 × locator resolved to <html lang="vi">…</html>
+           - unexpected value "vi"
+
+
+       at admin-performance\measure.ts:80
+
+      78 |     expect(response?.ok()).toBe(true);
+      79 |     await expect(page).toHaveURL(`${config.origin}${route}`);
+    > 80 |     await expect(page.locator('html')).toHaveAttribute('lang', locale);
+         |                                        ^
+      81 |     await expect(page.locator('h1')).toBeVisible();
+      82 |     await dataReady(page, config, locale, route, data);
+      83 |     await page.evaluate(() => document.fonts.ready);
+        at measureRoute (D:\CODING\OPCHUB\CODING\e2e\audit\admin-performance\measure.ts:80:40)
+        at D:\CODING\OPCHUB\CODING\e2e\audit\admin-i18n-performance.spec.ts:11:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-performance-a3413169\playwright-baseline\admin-i18n-performance-D-1-fc0c8-cutable-data-font-inventory-performance-baseline\error-context.md
+
+  6) [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /overview executable/data/font inventory
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected: "http://127.0.0.1:50617/overview"
+    Received: "http://127.0.0.1:50617/login?next=%2Foverview"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveURL" with timeout 5000ms
+        14 × locator resolved to <html lang="vi">…</html>
+           - unexpected value "http://127.0.0.1:50617/login?next=%2Foverview"
+
+
+       at admin-performance\measure.ts:79
+
+      77 |     const response = await page.goto(`${config.origin}${route}`, { waitUntil: 'networkidle' });
+      78 |     expect(response?.ok()).toBe(true);
+    > 79 |     await expect(page).toHaveURL(`${config.origin}${route}`);
+         |                        ^
+      80 |     await expect(page.locator('html')).toHaveAttribute('lang', locale);
+      81 |     await expect(page.locator('h1')).toBeVisible();
+      82 |     await dataReady(page, config, locale, route, data);
+        at measureRoute (D:\CODING\OPCHUB\CODING\e2e\audit\admin-performance\measure.ts:79:24)
+        at D:\CODING\OPCHUB\CODING\e2e\audit\admin-i18n-performance.spec.ts:11:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-performance-a3413169\playwright-baseline\admin-i18n-performance-D-1-448a5-cutable-data-font-inventory-performance-baseline\error-context.md
+
+  7) [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /profile executable/data/font inventory
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected: "http://127.0.0.1:50617/profile"
+    Received: "http://127.0.0.1:50617/login?next=%2Fprofile"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveURL" with timeout 5000ms
+        13 × locator resolved to <html lang="vi">…</html>
+           - unexpected value "http://127.0.0.1:50617/login?next=%2Fprofile"
+
+
+       at admin-performance\measure.ts:79
+
+      77 |     const response = await page.goto(`${config.origin}${route}`, { waitUntil: 'networkidle' });
+      78 |     expect(response?.ok()).toBe(true);
+    > 79 |     await expect(page).toHaveURL(`${config.origin}${route}`);
+         |                        ^
+      80 |     await expect(page.locator('html')).toHaveAttribute('lang', locale);
+      81 |     await expect(page.locator('h1')).toBeVisible();
+      82 |     await dataReady(page, config, locale, route, data);
+        at measureRoute (D:\CODING\OPCHUB\CODING\e2e\audit\admin-performance\measure.ts:79:24)
+        at D:\CODING\OPCHUB\CODING\e2e\audit\admin-i18n-performance.spec.ts:11:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-performance-a3413169\playwright-baseline\admin-i18n-performance-D-1-05c4f-cutable-data-font-inventory-performance-baseline\error-context.md
+
+  8) [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /settings executable/data/font inventory
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected: "http://127.0.0.1:50617/settings"
+    Received: "http://127.0.0.1:50617/login?next=%2Fsettings"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveURL" with timeout 5000ms
+        12 × locator resolved to <html lang="vi">…</html>
+           - unexpected value "http://127.0.0.1:50617/login?next=%2Fsettings"
+
+
+       at admin-performance\measure.ts:79
+
+      77 |     const response = await page.goto(`${config.origin}${route}`, { waitUntil: 'networkidle' });
+      78 |     expect(response?.ok()).toBe(true);
+    > 79 |     await expect(page).toHaveURL(`${config.origin}${route}`);
+         |                        ^
+      80 |     await expect(page.locator('html')).toHaveAttribute('lang', locale);
+      81 |     await expect(page.locator('h1')).toBeVisible();
+      82 |     await dataReady(page, config, locale, route, data);
+        at measureRoute (D:\CODING\OPCHUB\CODING\e2e\audit\admin-performance\measure.ts:79:24)
+        at D:\CODING\OPCHUB\CODING\e2e\audit\admin-i18n-performance.spec.ts:11:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-performance-a3413169\playwright-baseline\admin-i18n-performance-D-1-35388-cutable-data-font-inventory-performance-baseline\error-context.md
+
+  9) [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /login executable/data/font inventory
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('html')
+    Expected: "th"
+    Received: "vi"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('html') with timeout 5000ms
+      - waiting for locator('html')
+        13 × locator resolved to <html lang="vi">…</html>
+           - unexpected value "vi"
+
+
+       at admin-performance\measure.ts:80
+
+      78 |     expect(response?.ok()).toBe(true);
+      79 |     await expect(page).toHaveURL(`${config.origin}${route}`);
+    > 80 |     await expect(page.locator('html')).toHaveAttribute('lang', locale);
+         |                                        ^
+      81 |     await expect(page.locator('h1')).toBeVisible();
+      82 |     await dataReady(page, config, locale, route, data);
+      83 |     await page.evaluate(() => document.fonts.ready);
+        at measureRoute (D:\CODING\OPCHUB\CODING\e2e\audit\admin-performance\measure.ts:80:40)
+        at D:\CODING\OPCHUB\CODING\e2e\audit\admin-i18n-performance.spec.ts:11:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-performance-a3413169\playwright-baseline\admin-i18n-performance-D-1-f5efd-cutable-data-font-inventory-performance-baseline\error-context.md
+
+  10) [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /overview executable/data/font inventory
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected: "http://127.0.0.1:50617/overview"
+    Received: "http://127.0.0.1:50617/login?next=%2Foverview"
+    Timeout:  5000ms
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+System.Management.Automation.RemoteException
+
+    Call log:
+      - Expect "toHaveURL" with timeout 5000ms
+        13 × locator resolved to <html lang="vi">…</html>
+           - unexpected value "http://127.0.0.1:50617/login?next=%2Foverview"
+
+
+       at admin-performance\measure.ts:79
+
+      77 |     const response = await page.goto(`${config.origin}${route}`, { waitUntil: 'networkidle' });
+      78 |     expect(response?.ok()).toBe(true);
+    > 79 |     await expect(page).toHaveURL(`${config.origin}${route}`);
+         |                        ^
+      80 |     await expect(page.locator('html')).toHaveAttribute('lang', locale);
+      81 |     await expect(page.locator('h1')).toBeVisible();
+      82 |     await dataReady(page, config, locale, route, data);
+        at measureRoute (D:\CODING\OPCHUB\CODING\e2e\audit\admin-performance\measure.ts:79:24)
+        at D:\CODING\OPCHUB\CODING\e2e\audit\admin-i18n-performance.spec.ts:11:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-performance-a3413169\playwright-baseline\admin-i18n-performance-D-1-e2d1e-cutable-data-font-inventory-performance-baseline\error-context.md
+
+  11) [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /profile executable/data/font inventory
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected: "http://127.0.0.1:50617/profile"
+    Received: "http://127.0.0.1:50617/login?next=%2Fprofile"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveURL" with timeout 5000ms
+        13 × locator resolved to <html lang="vi">…</html>
+           - unexpected value "http://127.0.0.1:50617/login?next=%2Fprofile"
+
+
+       at admin-performance\measure.ts:79
+
+      77 |     const response = await page.goto(`${config.origin}${route}`, { waitUntil: 'networkidle' });
+      78 |     expect(response?.ok()).toBe(true);
+    > 79 |     await expect(page).toHaveURL(`${config.origin}${route}`);
+         |                        ^
+      80 |     await expect(page.locator('html')).toHaveAttribute('lang', locale);
+      81 |     await expect(page.locator('h1')).toBeVisible();
+      82 |     await dataReady(page, config, locale, route, data);
+        at measureRoute (D:\CODING\OPCHUB\CODING\e2e\audit\admin-performance\measure.ts:79:24)
+        at D:\CODING\OPCHUB\CODING\e2e\audit\admin-i18n-performance.spec.ts:11:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-performance-a3413169\playwright-baseline\admin-i18n-performance-D-1-1d142-cutable-data-font-inventory-performance-baseline\error-context.md
+
+  12) [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /settings executable/data/font inventory
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected: "http://127.0.0.1:50617/settings"
+    Received: "http://127.0.0.1:50617/login?next=%2Fsettings"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveURL" with timeout 5000ms
+        13 × locator resolved to <html lang="vi">…</html>
+           - unexpected value "http://127.0.0.1:50617/login?next=%2Fsettings"
+
+
+       at admin-performance\measure.ts:79
+
+      77 |     const response = await page.goto(`${config.origin}${route}`, { waitUntil: 'networkidle' });
+      78 |     expect(response?.ok()).toBe(true);
+    > 79 |     await expect(page).toHaveURL(`${config.origin}${route}`);
+         |                        ^
+      80 |     await expect(page.locator('html')).toHaveAttribute('lang', locale);
+      81 |     await expect(page.locator('h1')).toBeVisible();
+      82 |     await dataReady(page, config, locale, route, data);
+        at measureRoute (D:\CODING\OPCHUB\CODING\e2e\audit\admin-performance\measure.ts:79:24)
+        at D:\CODING\OPCHUB\CODING\e2e\audit\admin-i18n-performance.spec.ts:11:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-performance-a3413169\playwright-baseline\admin-i18n-performance-D-1-3d747-cutable-data-font-inventory-performance-baseline\error-context.md
+
+  12 failed
+    [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold vi /login executable/data/font inventory
+    [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold vi /overview executable/data/font inventory
+    [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold vi /profile executable/data/font inventory
+    [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold vi /settings executable/data/font inventory
+    [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /login executable/data/font inventory
+    [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /overview executable/data/font inventory
+    [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /profile executable/data/font inventory
+    [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /settings executable/data/font inventory
+    [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /login executable/data/font inventory
+    [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /overview executable/data/font inventory
+    [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /profile executable/data/font inventory
+    [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /settings executable/data/font inventory
+  4 passed (2.4m)
+EXIT 1
+
+HISTORICAL HTML-LANG EXPECTATION DIAGNOSTIC
+D-141 AC824-16 production baseline/current cold audit, explicit temporary local listener; native wrapper/endpoint preflight retained. No DB/seed/reset/repair/business writes. API sessions only. Initial collector typecheck found unsupported getByDisplayValue (corrected to actual raw label); initial lint found regex escape and oversized helper (split data readiness). First external config reporter tuple was flattened by PowerShell and rejected before tests; corrected to supported list string. No assertion/timeout/guard relaxation.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c TEMP-baseline.config.mjs
+[WebServer] (node:14808) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 16 tests using 1 worker
+
+(node:27504) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold vi /login executable/data/font inventory (1.2s)
+  ok  2 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold vi /overview executable/data/font inventory (1.9s)
+  ok  3 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold vi /profile executable/data/font inventory (1.7s)
+  ok  4 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold vi /settings executable/data/font inventory (1.9s)
+  x   5 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /login executable/data/font inventory (5.9s)
+(node:16248) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   6 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /overview executable/data/font inventory (6.7s)
+(node:12780) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   7 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /profile executable/data/font inventory (6.5s)
+(node:20572) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   8 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /settings executable/data/font inventory (6.4s)
+(node:30576) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   9 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /login executable/data/font inventory (6.0s)
+(node:20524) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  10 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /overview executable/data/font inventory (6.7s)
+(node:22908) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  11 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /profile executable/data/font inventory (6.5s)
+(node:11052) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  12 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /settings executable/data/font inventory (6.6s)
+(node:12896) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 13 [performance-baseline] › audit\admin-i18n-performance.spec.ts:14:1 › D-141 AC824-09/16 concurrent SSR never mixes selected vi/en/th catalogs (270ms)
+  ok 14 [performance-baseline] › audit\admin-performance-contract.spec.ts:10:1 › D-141 AC824-16 decodes actual queue JSON without executing inline script (3ms)
+  ok 15 [performance-baseline] › audit\admin-performance-contract.spec.ts:22:1 › D-141 AC824-16 rejects missing, duplicate, mixed and malformed catalog data (7ms)
+  ok 16 [performance-baseline] › audit\admin-performance-contract.spec.ts:34:1 › D-141 AC824-16 metadata rejects external/default listeners and path-shaped dist (3ms)
+
+
+  1) [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /login executable/data/font inventory
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('html')
+    Expected: "en"
+    Received: "vi"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('html') with timeout 5000ms
+      - waiting for locator('html')
+        14 × locator resolved to <html lang="vi">…</html>
+           - unexpected value "vi"
+
+
+       at admin-performance\measure.ts:80
+
+      78 |     expect(response?.ok()).toBe(true);
+      79 |     await expect(page).toHaveURL(`${config.origin}${route}`);
+    > 80 |     await expect(page.locator('html')).toHaveAttribute('lang', locale);
+         |                                        ^
+      81 |     if (route === '/login') {
+      82 |       const labels = z
+      83 |         .object({ auth: z.object({ login: z.object({ title: z.string() }) }) })
+        at measureRoute (D:\CODING\OPCHUB\CODING\e2e\audit\admin-performance\measure.ts:80:40)
+        at D:\CODING\OPCHUB\CODING\e2e\audit\admin-i18n-performance.spec.ts:11:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-performance-a3413169\playwright-baseline\admin-i18n-performance-D-1-fc0c8-cutable-data-font-inventory-performance-baseline\error-context.md
+
+  2) [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /overview executable/data/font inventory
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('html')
+    Expected: "en"
+    Received: "vi"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('html') with timeout 5000ms
+      - waiting for locator('html')
+        13 × locator resolved to <html lang="vi">…</html>
+           - unexpected value "vi"
+
+
+       at admin-performance\measure.ts:80
+
+      78 |     expect(response?.ok()).toBe(true);
+      79 |     await expect(page).toHaveURL(`${config.origin}${route}`);
+    > 80 |     await expect(page.locator('html')).toHaveAttribute('lang', locale);
+         |                                        ^
+      81 |     if (route === '/login') {
+      82 |       const labels = z
+      83 |         .object({ auth: z.object({ login: z.object({ title: z.string() }) }) })
+        at measureRoute (D:\CODING\OPCHUB\CODING\e2e\audit\admin-performance\measure.ts:80:40)
+        at D:\CODING\OPCHUB\CODING\e2e\audit\admin-i18n-performance.spec.ts:11:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-performance-a3413169\playwright-baseline\admin-i18n-performance-D-1-448a5-cutable-data-font-inventory-performance-baseline\error-context.md
+
+  3) [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /profile executable/data/font inventory
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('html')
+    Expected: "en"
+    Received: "vi"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('html') with timeout 5000ms
+      - waiting for locator('html')
+        14 × locator resolved to <html lang="vi">…</html>
+           - unexpected value "vi"
+
+
+       at admin-performance\measure.ts:80
+
+      78 |     expect(response?.ok()).toBe(true);
+      79 |     await expect(page).toHaveURL(`${config.origin}${route}`);
+    > 80 |     await expect(page.locator('html')).toHaveAttribute('lang', locale);
+         |                                        ^
+      81 |     if (route === '/login') {
+      82 |       const labels = z
+      83 |         .object({ auth: z.object({ login: z.object({ title: z.string() }) }) })
+        at measureRoute (D:\CODING\OPCHUB\CODING\e2e\audit\admin-performance\measure.ts:80:40)
+        at D:\CODING\OPCHUB\CODING\e2e\audit\admin-i18n-performance.spec.ts:11:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-performance-a3413169\playwright-baseline\admin-i18n-performance-D-1-05c4f-cutable-data-font-inventory-performance-baseline\error-context.md
+
+  4) [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /settings executable/data/font inventory
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('html')
+    Expected: "en"
+    Received: "vi"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('html') with timeout 5000ms
+      - waiting for locator('html')
+        14 × locator resolved to <html lang="vi">…</html>
+           - unexpected value "vi"
+
+
+       at admin-performance\measure.ts:80
+
+      78 |     expect(response?.ok()).toBe(true);
+      79 |     await expect(page).toHaveURL(`${config.origin}${route}`);
+    > 80 |     await expect(page.locator('html')).toHaveAttribute('lang', locale);
+         |                                        ^
+      81 |     if (route === '/login') {
+      82 |       const labels = z
+      83 |         .object({ auth: z.object({ login: z.object({ title: z.string() }) }) })
+        at measureRoute (D:\CODING\OPCHUB\CODING\e2e\audit\admin-performance\measure.ts:80:40)
+        at D:\CODING\OPCHUB\CODING\e2e\audit\admin-i18n-performance.spec.ts:11:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-performance-a3413169\playwright-baseline\admin-i18n-performance-D-1-35388-cutable-data-font-inventory-performance-baseline\error-context.md
+
+  5) [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /login executable/data/font inventory
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('html')
+    Expected: "th"
+    Received: "vi"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('html') with timeout 5000ms
+      - waiting for locator('html')
+        14 × locator resolved to <html lang="vi">…</html>
+           - unexpected value "vi"
+
+
+       at admin-performance\measure.ts:80
+
+      78 |     expect(response?.ok()).toBe(true);
+      79 |     await expect(page).toHaveURL(`${config.origin}${route}`);
+    > 80 |     await expect(page.locator('html')).toHaveAttribute('lang', locale);
+         |                                        ^
+      81 |     if (route === '/login') {
+      82 |       const labels = z
+      83 |         .object({ auth: z.object({ login: z.object({ title: z.string() }) }) })
+        at measureRoute (D:\CODING\OPCHUB\CODING\e2e\audit\admin-performance\measure.ts:80:40)
+        at D:\CODING\OPCHUB\CODING\e2e\audit\admin-i18n-performance.spec.ts:11:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-performance-a3413169\playwright-baseline\admin-i18n-performance-D-1-f5efd-cutable-data-font-inventory-performance-baseline\error-context.md
+
+  6) [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /overview executable/data/font inventory
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('html')
+    Expected: "th"
+    Received: "vi"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('html') with timeout 5000ms
+      - waiting for locator('html')
+        14 × locator resolved to <html lang="vi">…</html>
+           - unexpected value "vi"
+
+
+       at admin-performance\measure.ts:80
+
+      78 |     expect(response?.ok()).toBe(true);
+      79 |     await expect(page).toHaveURL(`${config.origin}${route}`);
+    > 80 |     await expect(page.locator('html')).toHaveAttribute('lang', locale);
+         |                                        ^
+      81 |     if (route === '/login') {
+      82 |       const labels = z
+      83 |         .object({ auth: z.object({ login: z.object({ title: z.string() }) }) })
+        at measureRoute (D:\CODING\OPCHUB\CODING\e2e\audit\admin-performance\measure.ts:80:40)
+        at D:\CODING\OPCHUB\CODING\e2e\audit\admin-i18n-performance.spec.ts:11:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-performance-a3413169\playwright-baseline\admin-i18n-performance-D-1-e2d1e-cutable-data-font-inventory-performance-baseline\error-context.md
+
+  7) [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /profile executable/data/font inventory
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('html')
+    Expected: "th"
+    Received: "vi"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('html') with timeout 5000ms
+      - waiting for locator('html')
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+System.Management.Automation.RemoteException
+        14 × locator resolved to <html lang="vi">…</html>
+           - unexpected value "vi"
+
+
+       at admin-performance\measure.ts:80
+
+      78 |     expect(response?.ok()).toBe(true);
+      79 |     await expect(page).toHaveURL(`${config.origin}${route}`);
+    > 80 |     await expect(page.locator('html')).toHaveAttribute('lang', locale);
+         |                                        ^
+      81 |     if (route === '/login') {
+      82 |       const labels = z
+      83 |         .object({ auth: z.object({ login: z.object({ title: z.string() }) }) })
+        at measureRoute (D:\CODING\OPCHUB\CODING\e2e\audit\admin-performance\measure.ts:80:40)
+        at D:\CODING\OPCHUB\CODING\e2e\audit\admin-i18n-performance.spec.ts:11:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-performance-a3413169\playwright-baseline\admin-i18n-performance-D-1-1d142-cutable-data-font-inventory-performance-baseline\error-context.md
+
+  8) [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /settings executable/data/font inventory
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('html')
+    Expected: "th"
+    Received: "vi"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('html') with timeout 5000ms
+      - waiting for locator('html')
+        14 × locator resolved to <html lang="vi">…</html>
+           - unexpected value "vi"
+
+
+       at admin-performance\measure.ts:80
+
+      78 |     expect(response?.ok()).toBe(true);
+      79 |     await expect(page).toHaveURL(`${config.origin}${route}`);
+    > 80 |     await expect(page.locator('html')).toHaveAttribute('lang', locale);
+         |                                        ^
+      81 |     if (route === '/login') {
+      82 |       const labels = z
+      83 |         .object({ auth: z.object({ login: z.object({ title: z.string() }) }) })
+        at measureRoute (D:\CODING\OPCHUB\CODING\e2e\audit\admin-performance\measure.ts:80:40)
+        at D:\CODING\OPCHUB\CODING\e2e\audit\admin-i18n-performance.spec.ts:11:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-performance-a3413169\playwright-baseline\admin-i18n-performance-D-1-3d747-cutable-data-font-inventory-performance-baseline\error-context.md
+
+  8 failed
+    [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /login executable/data/font inventory
+    [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /overview executable/data/font inventory
+    [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /profile executable/data/font inventory
+    [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /settings executable/data/font inventory
+    [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /login executable/data/font inventory
+    [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /overview executable/data/font inventory
+    [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /profile executable/data/font inventory
+    [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /settings executable/data/font inventory
+  8 passed (1.3m)
+EXIT 1
+
+FINAL ROOT QUALITY (unit tasks cached, not new unique tests)
+Source working tree based on4c5f1a01; complete Myanmar25/2667 with8 new business catalogs/1407 leaves, preserving earlier17 files. Fixed10-bundle250-file raw/build gate49 physical positive/negative cases and92 exact source/key/locale copy receipts. Full16-AC/control/state/value/performance acceptance remains open; raw presence alone is not DONE. Admin-only mobile language wrapper, real loaded-data/popover browser checks, canonical picker/sidebar fixtures and unambiguous ICU cache tuple. Only browser audit tooling added: actual original-baseline archive/response/Flight/catalog/font comparison, no production/API/DB/Portal/shared/dependency/font change. Actual root commands, cached tasks identified by Turbo; no DB/service mutation.
+COMMAND pnpm lint
+$ turbo run lint
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running lint in 9 packages
+   • Remote caching disabled
+
+@opchub/shared:lint: cache hit, replaying logs f9d493ea0cb6d67f
+@opchub/integrations:lint: cache hit, replaying logs 1fb607819a53b21e
+@opchub/e2e:lint: cache miss, executing d531aed079be46f5
+@opchub/shared:lint: $ eslint src
+@opchub/server:lint: cache hit, replaying logs 7f4b11d47879bedd
+@opchub/admin:lint: cache hit, replaying logs 5f5bda6cf8822dc7
+@opchub/admin:lint: $ eslint src
+@opchub/server:lint: $ eslint src test
+@opchub/portal:lint: cache hit, replaying logs 71e3df361172b94e
+@opchub/ui:lint: cache hit, replaying logs eea5bd38bfdbc884
+@opchub/portal:lint: $ eslint src
+@opchub/ui:lint: $ eslint src
+@opchub/integrations:lint: $ eslint src
+@opchub/db:lint: cache hit, replaying logs 8df791dba6501ec7
+@opchub/db:lint: $ eslint src seed test
+@opchub/e2e:lint: $ eslint parity behavior audit server llm env.ts urls.ts
+
+ Tasks:    8 successful, 8 total
+Cached:    7 cached, 8 total
+  Time:    28.619s
+
+EXIT 0
+COMMAND pnpm typecheck
+$ turbo run typecheck
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running typecheck in 9 packages
+   • Remote caching disabled
+
+@opchub/e2e:typecheck: cache miss, executing 01fc92c91a9deb4d
+@opchub/db:typecheck: cache hit, replaying logs 35eaf239ef03390a
+@opchub/db:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/shared:typecheck: cache hit, replaying logs 2af37fea5a693c30
+@opchub/integrations:typecheck: cache hit, replaying logs 60f5b494e043fdc4
+@opchub/ui:typecheck: cache hit, replaying logs 24d1fa8fcf34937b
+@opchub/integrations:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/shared:typecheck: $ tsc -p tsconfig.json
+@opchub/ui:typecheck: $ tsc -p tsconfig.json
+@opchub/server:typecheck: cache hit, replaying logs f44a5951da8d2c30
+@opchub/server:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/admin:typecheck: cache hit, replaying logs a4b90a948f740b8d
+@opchub/admin:typecheck: $ next typegen && tsc --noEmit
+@opchub/admin:typecheck: Generating route types...
+@opchub/admin:typecheck: ✓ Types generated successfully
+@opchub/portal:typecheck: cache hit, replaying logs 384ceac62a366d53
+@opchub/portal:typecheck: $ next typegen && tsc --noEmit
+@opchub/portal:typecheck: Generating route types...
+@opchub/portal:typecheck: ✓ Types generated successfully
+@opchub/e2e:typecheck: $ tsc -p tsconfig.json
+
+ Tasks:    8 successful, 8 total
+Cached:    7 cached, 8 total
+  Time:    13.323s
+
+EXIT 0
+COMMAND pnpm depcheck
+$ depcruise apps/portal apps/admin packages e2e --config .dependency-cruiser.cjs && depcruise apps/server --config .dependency-cruiser.cjs --ts-config tsconfig.depcruise.server.json
+
+✔ no dependency violations found (2847 modules, 8711 dependencies cruised)
+
+
+✔ no dependency violations found (1260 modules, 5995 dependencies cruised)
+
+EXIT 0
+
+FINAL ROOT UNIT CACHE RECEIPT
+Source working tree based on4c5f1a01; complete Myanmar raw bundle and fixed full-inventory production checker; Admin unit inputs changed, Turbo cache hits identified explicitly. Full root tests; VITEST_MAX_WORKERS=1 passed through Turbo loose mode, a resource cap only. No test skip, assertion or timeout reductions. No overlapping production builds.
+COMMAND pnpm test --env-mode=loose
+$ turbo run test --concurrency=2 --env-mode=loose
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running test in 9 packages
+   • Remote caching disabled
+
+@opchub/portal:test: cache hit, replaying logs c499ac8b2dccf1b3
+@opchub/server:test: cache hit, replaying logs c2e070d3adeeddab
+@opchub/portal:test: $ vitest run --passWithNoTests
+@opchub/portal:test:
+@opchub/portal:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/portal
+@opchub/portal:test:
+@opchub/portal:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/portal:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/portal:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/portal:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/portal:test:
+@opchub/portal:test:  Test Files  85 passed (85)
+@opchub/portal:test:       Tests  476 passed (476)
+@opchub/portal:test:    Start at  16:04:29
+@opchub/portal:test:    Duration  353.37s (environment 47%, import 47%, tests 4%, transform 1%)
+@opchub/portal:test:
+@opchub/portal:test:      Import  804 modules were evaluated 5111 times · 309.19s total, 47% of tracked time
+@opchub/portal:test:              ~113.00s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/portal:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
+@opchub/portal:test:
+@opchub/server:test: $ vitest run --project unit
+@opchub/server:test:
+@opchub/server:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+@opchub/server:test:
+@opchub/server:test:
+@opchub/server:test:  Test Files  57 passed (57)
+@opchub/server:test:       Tests  276 passed (276)
+@opchub/server:test:    Start at  16:03:29
+@opchub/server:test:    Duration  57.63s (import 83%, transform 12%, tests 4%, worker 1%)
+@opchub/server:test:
+@opchub/server:test:      Import  |unit| 400 modules were evaluated 1913 times · 65.27s total, 83% of tracked time
+@opchub/server:test:              ~22.11s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/server:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
+@opchub/server:test:
+@opchub/shared:test: cache hit, replaying logs b0ac9becdf974ad3
+@opchub/ui:test: cache hit, replaying logs 93ecb6a3e3980f04
+@opchub/ui:test: $ vitest run
+@opchub/ui:test:
+@opchub/shared:test: $ vitest run
+@opchub/shared:test:
+@opchub/shared:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/shared
+@opchub/shared:test:
+@opchub/shared:test:
+@opchub/shared:test:  Test Files  127 passed (127)
+@opchub/shared:test:       Tests  757 passed (757)
+@opchub/shared:test:    Start at  16:00:10
+@opchub/shared:test:    Duration  158.12s (import 86%, transform 9%, tests 4%, worker 1%)
+@opchub/shared:test:
+@opchub/shared:test:      Import  432 modules were evaluated 893 times · 162.66s total, 86% of tracked time
+@opchub/shared:test:              ~18.76s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/shared:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
+@opchub/shared:test:
+@opchub/ui:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/ui
+@opchub/ui:test:
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test:
+@opchub/ui:test:  Test Files  24 passed (24)
+@opchub/ui:test:       Tests  88 passed (88)
+@opchub/ui:test:    Start at  22:02:39
+@opchub/ui:test:    Duration  124.68s (import 50%, environment 44%, tests 4%, transform 1%)
+@opchub/ui:test:
+@opchub/ui:test:     Isolate  24 workers spawned · ~4.78s startup each (spawn + environment, per file)
+@opchub/ui:test:              at least ~52.62s faster with isolate: false — reuses workers across files instead of one per file
+@opchub/ui:test:
+@opchub/admin:test: cache hit, replaying logs abde063efe269f5e
+@opchub/integrations:test: cache hit, replaying logs b6c214e97c1022b8
+@opchub/admin:test: $ vitest run --passWithNoTests
+@opchub/admin:test:
+@opchub/admin:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+@opchub/admin:test:
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test:
+@opchub/admin:test:  Test Files  194 passed (194)
+@opchub/admin:test:       Tests  1644 passed (1644)
+@opchub/admin:test:    Start at  08:01:30
+@opchub/admin:test:    Duration  1245.46s (import 54%, environment 35%, tests 10%, transform 1%)
+@opchub/admin:test:
+@opchub/admin:test:      Import  1307 modules were evaluated 6471 times · 647.94s total, 54% of tracked time
+@opchub/admin:test:              ~517.07s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/admin:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
+@opchub/admin:test:
+@opchub/integrations:test: $ vitest run
+@opchub/integrations:test:
+@opchub/integrations:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/integrations
+@opchub/integrations:test:
+@opchub/integrations:test:
+@opchub/integrations:test:  Test Files  13 passed | 1 skipped (14)
+@opchub/integrations:test:       Tests  126 passed | 2 skipped (128)
+@opchub/integrations:test:    Start at  16:03:15
+@opchub/integrations:test:    Duration  11.26s (import 54%, transform 25%, tests 18%, worker 3%)
+@opchub/integrations:test:
+@opchub/integrations:test:      Import  151 modules were evaluated 343 times · 6.24s total, 54% of tracked time
+@opchub/integrations:test:              ~709ms faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/integrations:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
+@opchub/integrations:test:
+
+ Tasks:    6 successful, 6 total
+Cached:    6 cached, 6 total
+  Time:    409ms >>> FULL TURBO
+
+EXIT 0
+
+FINAL BASELINE16 (12 cold routes,1 concurrent SSR case,3 pure helper cases)
+D-141 AC824-16 production baseline/current cold audit, explicit temporary local listener; native wrapper/endpoint preflight retained. No DB/seed/reset/repair/business writes. API sessions only. Initial collector typecheck found unsupported getByDisplayValue (corrected to actual raw label); initial lint found regex escape and oversized helper (split data readiness). First external config reporter tuple was flattened by PowerShell and rejected before tests; corrected to supported list string. No assertion/timeout/guard relaxation.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c TEMP-baseline.config.mjs
+[WebServer] (node:18156) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 16 tests using 1 worker
+
+(node:21604) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold vi /login executable/data/font inventory (1.7s)
+  ok  2 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold vi /overview executable/data/font inventory (3.1s)
+  ok  3 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold vi /profile executable/data/font inventory (2.3s)
+  ok  4 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold vi /settings executable/data/font inventory (2.4s)
+  ok  5 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /login executable/data/font inventory (1.4s)
+  ok  6 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /overview executable/data/font inventory (2.0s)
+  ok  7 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /profile executable/data/font inventory (1.9s)
+  ok  8 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /settings executable/data/font inventory (2.1s)
+  ok  9 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /login executable/data/font inventory (1.3s)
+  ok 10 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /overview executable/data/font inventory (2.0s)
+  ok 11 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /profile executable/data/font inventory (2.5s)
+  ok 12 [performance-baseline] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /settings executable/data/font inventory (1.9s)
+  ok 13 [performance-baseline] › audit\admin-i18n-performance.spec.ts:14:1 › D-141 AC824-09/16 concurrent SSR never mixes selected vi/en/th catalogs (541ms)
+  ok 14 [performance-baseline] › audit\admin-performance-contract.spec.ts:10:1 › D-141 AC824-16 decodes actual queue JSON without executing inline script (3ms)
+  ok 15 [performance-baseline] › audit\admin-performance-contract.spec.ts:22:1 › D-141 AC824-16 rejects missing, duplicate, mixed and malformed catalog data (6ms)
+  ok 16 [performance-baseline] › audit\admin-performance-contract.spec.ts:34:1 › D-141 AC824-16 metadata rejects external/default listeners and path-shaped dist (4ms)
+
+  16 passed (1.0m)
+EXIT 0
+
+FINAL CURRENT16 (same assertions, original html-only exception explicitly baseline)
+D-141 AC824-16 production baseline/current cold audit, explicit temporary local listener; native wrapper/endpoint preflight retained. No DB/seed/reset/repair/business writes. API sessions only. Initial collector typecheck found unsupported getByDisplayValue (corrected to actual raw label); initial lint found regex escape and oversized helper (split data readiness). First external config reporter tuple was flattened by PowerShell and rejected before tests; corrected to supported list string. No assertion/timeout/guard relaxation.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c TEMP-current.config.mjs
+[WebServer] (node:20276) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 16 tests using 1 worker
+
+(node:11548) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [performance-current] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold vi /login executable/data/font inventory (1.8s)
+  ok  2 [performance-current] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold vi /overview executable/data/font inventory (3.6s)
+  ok  3 [performance-current] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold vi /profile executable/data/font inventory (4.5s)
+  ok  4 [performance-current] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold vi /settings executable/data/font inventory (4.5s)
+  ok  5 [performance-current] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /login executable/data/font inventory (2.1s)
+  ok  6 [performance-current] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /overview executable/data/font inventory (3.7s)
+  ok  7 [performance-current] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /profile executable/data/font inventory (3.7s)
+  ok  8 [performance-current] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold en /settings executable/data/font inventory (4.9s)
+  ok  9 [performance-current] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /login executable/data/font inventory (2.6s)
+  ok 10 [performance-current] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /overview executable/data/font inventory (4.4s)
+  ok 11 [performance-current] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /profile executable/data/font inventory (4.6s)
+  ok 12 [performance-current] › audit\admin-i18n-performance.spec.ts:8:5 › D-141 AC824-16 actual cold th /settings executable/data/font inventory (3.8s)
+  ok 13 [performance-current] › audit\admin-i18n-performance.spec.ts:14:1 › D-141 AC824-09/16 concurrent SSR never mixes selected vi/en/th catalogs (1.0s)
+  ok 14 [performance-current] › audit\admin-performance-contract.spec.ts:10:1 › D-141 AC824-16 decodes actual queue JSON without executing inline script (4ms)
+  ok 15 [performance-current] › audit\admin-performance-contract.spec.ts:22:1 › D-141 AC824-16 rejects missing, duplicate, mixed and malformed catalog data (7ms)
+  ok 16 [performance-current] › audit\admin-performance-contract.spec.ts:34:1 › D-141 AC824-16 metadata rejects external/default listeners and path-shaped dist (3ms)
+
+  16 passed (1.3m)
+EXIT 0
+
+FINAL BUDGET5 (1 actual24-receipt comparison,1 numeric negative contract,3 repeated pure extraction contracts)
+Test source b2b8acf0; compare actual24 final cold browser receipts against original f7c1b2b8, helpers negative cases included; not a browser/auth workflow.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c TEMP-budget.config.mjs
+
+Running 5 tests using 1 worker
+
+(node:17752) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [performance-current] › audit\admin-performance-budget.spec.ts:7:1 › D-141 AC824-16 all12 actual original-baseline route comparisons satisfy15% with explicit debt (134ms)
+  ok 2 [performance-current] › audit\admin-performance-budget.spec.ts:18:1 › D-141 AC824-16 rejects absent/nonpositive or over15% executable measurements (14ms)
+  ok 3 [performance-current] › audit\admin-performance-contract.spec.ts:10:1 › D-141 AC824-16 decodes actual queue JSON without executing inline script (10ms)
+  ok 4 [performance-current] › audit\admin-performance-contract.spec.ts:22:1 › D-141 AC824-16 rejects missing, duplicate, mixed and malformed catalog data (55ms)
+  ok 5 [performance-current] › audit\admin-performance-contract.spec.ts:34:1 › D-141 AC824-16 metadata rejects external/default listeners and path-shaped dist (8ms)
+
+  5 passed (5.4s)
+EXIT 0

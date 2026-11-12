@@ -3,6 +3,14 @@
 **STATUS: IN PROGRESS / PARTIAL — NOT DONE, NOT READY TO MERGE.**
 The active goal remains the entire approved TIP and all16 ACs. No scope reduction; the agent has not opened a PR, merged or released.
 
+## Original-baseline performance acceptance — audit sourceb2b8acf0
+
+Actual original `f7c1b2b8` is now built in an isolated archive with its own frozen dependencies.1513 original tracked build-input blobs remain bit-identical after install/build. Current production remains0e3803b3; only audit tooling changed. Fresh cold contexts measured vi/en/th × login/overview/profile/settings with no previously loaded route JS, real native sessions/read-only API/data readiness, actual response SHA256 and deterministic per-resource gzip6, separate HTML/Flight/catalog/font sizes and concurrent SSR exact-catalog isolation. All9 frozen audit/manifest inputs match after normal hooks. No DB/reset/seed/original/private API service mutation; preflight retained.
+
+**Relative gate PASS: JS increases1.21–1.84%, below15% on all12 pairs.** Original/current JS gzip bytes by route: login399816→404670, overview460566→469058, profile495287→503525, settings653912→665617 (identical across the three locales). **Absolute250KiB remains existing baseline debt, not claimed PASS or fixed.** Every request contains exactly one selected raw catalog; vi/en fetch Latin84076 font bytes, th Latin+Thai94712, no unrelated script fonts. Actual baseline16 +current16 +budget5 executions PASS, including repeated pure contracts, not37 unique browser workflows. Root lint/typecheck8tasks/7cached each, depcheck2847modules/8711dependencies plus1260/5995, root3367+2existing skips all6 cached tasks. No new production/Portal build or cached timing benchmark claim.
+
+AC16 measurement/relative-budget obligation now has evidence; missing auth/state/control/value/VI-prototype obligations still keep the full TIP PARTIAL. Original hardcoded html lang=vi is documented only for baseline, current must match identity. Initial random-origin CSRF403 and collector heading/html assumptions are preserved and corrected using the already-approved origin, not API/CORS changes. [Method/results/reproduction](evidence/v46-824/performance.md), [all24 raw receipts/12 comparisons](evidence/v46-824/performance.json), [failures and final commands](evidence/v46-824/performance.log), [original archive/install/build](evidence/v46-824/performance-baseline-build.log).
+
 ## Reduced-ICU follow-up — test source89c2ed1b, production source0e3803b3
 
 Actual Fees date/VND/CLDR isolation now PASS for **all three Khmer/Lao/Myanmar locales at1440/390,6 cases/mode**. Each authenticates against real MSW/native API, parses actual summary/row DTOs, compares visible date and currency to independent Node full-ICU, asserts selected payload response SHA256/locale and no other locale-data fetch, unchanged global Intl constructors, no public-login data registration/fetch, exact en→target→en values and retained URL/query/hash. Native preflight and strict HTTP/JSON/read-only guards remain unchanged; no DB/seed/reset/repair/original/private service changes.
@@ -44,9 +52,9 @@ Evidence: [root gates](evidence/v46-824/quality-gates.log), [units](evidence/v46
 |13|PARTIAL: real saved configuration/12-option independence/no-PATCH/F5 cases pass; explicit disabled-configuration negative remains.|
 |14|PASS for all208 currently registered i18n cases/mode on the same source/build inputs, identical assertions and retained valid native prerequisites; does not close missing cases in other ACs.|
 |15|PARTIAL: measured mobile overflow/popover corrected, loaded core images regenerated, all registered geometry/sidebar tests pass; remaining controls/focus/keyboard/VI prototype evidence required. Owner/native review not fabricated.|
-|16|PARTIAL: selected CLDR payload/font isolation and source/request units pass; original f7c1b2b8 vi/en/th route JS gzip/RSC/catalog/font measurements and15%/250KB debt assessment remain unverified.|
+|16|PASS for specified original-baseline measurement/relative budget: all12 vi/en/th route pairs measured, JS growth1.21–1.84%, exact single catalog/SSR isolation and selected fonts proven. Existing absolute250KiB baseline debt explicitly remains, not reported fixed. See performance.md/json/log.|
 
-Next: finish missing auth/state/control/value/RBAC/performance browser evidence, reconcile the full route/control matrix and traceability, then final gates/report/task-row824/owner-review PR into dev. No scope reduction or automatic merge/release.
+Next: finish missing auth/state/control/value/RBAC/VI-prototype browser evidence, reconcile the full route/control matrix and traceability, then final gates/report/task-row824/owner-review PR into dev. No scope reduction or automatic merge/release.
 
 ## Historical complete raw250 and first full behavior audit — source6022d311,2026-11-12
 

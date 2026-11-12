@@ -4,7 +4,7 @@
 
 - **TIP-ID:** TIP-V46-824 · **Project:** OPCHUB · **Module:** Admin presentation/i18n.
 - **Priority:** P1 · **Estimated:** XL, khoảng 5–8 ngày công; hơn 22.000 chuỗi đích trước khi bổ sung nhãn còn thiếu. Không coi đây là việc chỉ dịch màn đăng nhập.
-- **Status:** **IN PROGRESS / PARTIAL — NOT DONE, NOT READY TO MERGE.** Source0e3803b3: raw10 bundles/250 files complete; root3367 passed +2 existing skips, both Admin builds PASS; corrected mobile geometry/data-ready core checks and full208/208 behavior PASS per MSW/native. Full16-AC auth/state/control/value/performance obligations remain; see completion report. No PR/merge/release.
+- **Status:** **IN PROGRESS / PARTIAL — NOT DONE, NOT READY TO MERGE.** Source0e3803b3: raw10 bundles/250 files complete; root3367 passed +2 existing skips, both Admin builds PASS; corrected mobile geometry/data-ready core checks and full208/208 behavior PASS per MSW/native. Original-baseline performance now verified by auditb2b8acf0 (JS growth1.21–1.84%, existing250KiB debt disclosed). Remaining16-AC auth/state/control/value/VI-prototype obligations still open; see completion report. No PR/merge/release.
 - **Baseline:** `dev` / `origin/dev` tại `f7c1b2b8`, đã có PR #116 (823) và #118 (822).
 - **Branch:** `feature/TIP-V46-824-admin-i18n`, PR vào `dev`; không merge tự động, không release `main`.
 - **Depends on:** V2-117 (mẫu Portal, đã có), V46-822 và V46-823 (đã merge). Không sửa nghiệp vụ hai TIP này.
