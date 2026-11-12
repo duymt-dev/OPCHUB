@@ -1,0 +1,158 @@
+VIETNAMESE PROTOTYPE PARITY REFERENCE (D-134: A-01, D-01, D-66, D-69) ON COMMITTED SOURCE 4b21efb4908a2a9c14672ec091ab9a6823cb989a
+
+Running 12 tests using 1 worker
+
+  ok  1 [parity] › parity\capture-element.spec.ts:8:1 › region capture preserves the complete box at fractional origins (501ms)
+  ok  2 [parity] › parity\capture-element.spec.ts:32:1 › oversized regions retain full-element capture, including the bottom (212ms)
+  ok  3 [parity] › parity\measurement-readiness.spec.ts:7:1 › Dashboard onboarding measures the complete same page scope as Dashboard (3ms)
+  ok  4 [parity] › parity\measurement-readiness.spec.ts:17:1 › paused-clock queued smooth scroll settles to zero without clipping content (1.2s)
+  ok  5 [parity] › parity\parity.spec.ts:68:5 › A-01 Đăng nhập @1440 (4.6s)
+  ok  6 [parity] › parity\parity.spec.ts:68:5 › A-01 Đăng nhập @390 (3.7s)
+  x   7 [parity] › parity\parity.spec.ts:68:5 › D-01 Admin AppShell · Tổng quan @1440 (4.8s)
+  x   8 [parity] › parity\parity.spec.ts:68:5 › D-01 Admin AppShell · Tổng quan @390 (4.6s)
+  x   9 [parity] › parity\parity.spec.ts:68:5 › D-66 Cài đặt · Chung @1440 (5.3s)
+  x  10 [parity] › parity\parity.spec.ts:68:5 › D-66 Cài đặt · Chung @390 (4.7s)
+  x  11 [parity] › parity\parity.spec.ts:68:5 › D-69 Cài đặt · Vai trò & phân quyền @1440 (5.4s)
+  x  12 [parity] › parity\parity.spec.ts:68:5 › D-69 Cài đặt · Vai trò & phân quyền @390 (5.5s)
+
+
+  1) [parity] › parity\parity.spec.ts:68:5 › D-01 Admin AppShell · Tổng quan @1440 ─────────────────
+
+    Error: D-01-1440 chênh 3.96%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    3.9637070105820107
+
+      91 |           }),
+      92 |         );
+    > 93 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      94 |           MAX_DIFF_PCT,
+      95 |         );
+      96 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:93:69
+
+    Error Context: test-results\parity-D-01-Admin-AppShell-·-Tổng-quan-1440-parity\error-context.md
+
+  2) [parity] › parity\parity.spec.ts:68:5 › D-01 Admin AppShell · Tổng quan @390 ──────────────────
+
+    Error: D-01-390 chênh 5.91%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    5.905949300444713
+
+      91 |           }),
+      92 |         );
+    > 93 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      94 |           MAX_DIFF_PCT,
+      95 |         );
+      96 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:93:69
+
+    Error Context: test-results\parity-D-01-Admin-AppShell-·-Tổng-quan-390-parity\error-context.md
+
+  3) [parity] › parity\parity.spec.ts:68:5 › D-66 Cài đặt · Chung @1440 ────────────────────────────
+
+    Error: D-66-1440 chênh 14.42%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    14.415389826975192
+
+      91 |           }),
+      92 |         );
+    > 93 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      94 |           MAX_DIFF_PCT,
+      95 |         );
+      96 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:93:69
+
+    Error Context: test-results\parity-D-66-Cài-đặt-·-Chung-1440-parity\error-context.md
+
+  4) [parity] › parity\parity.spec.ts:68:5 › D-66 Cài đặt · Chung @390 ─────────────────────────────
+
+    Error: D-66-390 chênh 7.57%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    7.57478099622738
+
+      91 |           }),
+      92 |         );
+    > 93 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      94 |           MAX_DIFF_PCT,
+      95 |         );
+      96 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:93:69
+
+    Error Context: test-results\parity-D-66-Cài-đặt-·-Chung-390-parity\error-context.md
+
+  5) [parity] › parity\parity.spec.ts:68:5 › D-69 Cài đặt · Vai trò & phân quyền @1440 ─────────────
+
+    Error: D-69-1440 chênh 9.47%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    9.46518878578092
+
+      91 |           }),
+      92 |         );
+    > 93 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      94 |           MAX_DIFF_PCT,
+      95 |         );
+      96 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:93:69
+
+    Error Context: test-results\parity-D-69-Cài-đặt-·-Vai-trò-phân-quyền-1440-parity\error-context.md
+
+  6) [parity] › parity\parity.spec.ts:68:5 › D-69 Cài đặt · Vai trò & phân quyền @390 ──────────────
+
+    Error: D-69-390 chênh 5.59%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    5.5947799713399275
+
+      91 |           }),
+      92 |         );
+    > 93 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      94 |           MAX_DIFF_PCT,
+      95 |         );
+      96 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:93:69
+
+    Error Context: test-results\parity-D-69-Cài-đặt-·-Vai-trò-phân-quyền-390-parity\error-context.md
+
+  6 failed
+    [parity] › parity\parity.spec.ts:68:5 › D-01 Admin AppShell · Tổng quan @1440 ──────────────────
+    [parity] › parity\parity.spec.ts:68:5 › D-01 Admin AppShell · Tổng quan @390 ───────────────────
+    [parity] › parity\parity.spec.ts:68:5 › D-66 Cài đặt · Chung @1440 ─────────────────────────────
+    [parity] › parity\parity.spec.ts:68:5 › D-66 Cài đặt · Chung @390 ──────────────────────────────
+    [parity] › parity\parity.spec.ts:68:5 › D-69 Cài đặt · Vai trò & phân quyền @1440 ──────────────
+    [parity] › parity\parity.spec.ts:68:5 › D-69 Cài đặt · Vai trò & phân quyền @390 ───────────────
+  6 passed (57.9s)
+node.exe : Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error: ERR_PNPM...EXEC_FIRST_FAIL:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+
+PLAYWRIGHT EXIT 1 (per D-134 pixel diff is reference + owner image review)
+=== MEASURED ROWS FROM results.json ===

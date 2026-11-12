@@ -1,6 +1,8 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useDomainLabels } from '@/i18n/domain-labels';
+
+import { useLocale, useTranslations } from 'next-intl';
 import { formatCount, industriesOf, kindCount, regionCount } from '../model';
 import {
   GROUP_SORTS,
@@ -13,6 +15,7 @@ import {
   type GroupStats,
 } from '../types';
 import styles from './groups.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 const VIEW_ICON = {
   grid: 'M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z',
@@ -52,11 +55,11 @@ export function GroupsHead({ view, onCreate, onExport, onView }: HeadProps) {
   return (
     <div className={styles.headRow}>
       <div className={styles.heading}>{t('heading')}</div>
-      <button type="button" className={styles.btnPrimary} onClick={onCreate}>
+      <button data-act="write" type="button" className={styles.btnPrimary} onClick={onCreate}>
         <span className={styles.plus}>+</span>
         {t('create')}
       </button>
-      <button type="button" className={styles.btnGhost} onClick={onExport}>
+      <button data-act="write" type="button" className={styles.btnGhost} onClick={onExport}>
         <Svg d="M12 3v12M7 10l5 5 5-5M4 19h16" size={14} />
         {t('export')}
       </button>
@@ -83,12 +86,13 @@ export function GroupsHead({ view, onCreate, onExport, onView }: HeadProps) {
 }
 
 export function GroupsStats({ s }: { s: GroupStats }) {
+  const locale = useLocale();
   const t = useTranslations('groups.list.stats');
   const items = [
-    [t('groups'), String(s.groups)],
-    [t('provinces'), t('provincesValue', { count: s.provinces })],
-    [t('members'), formatCount(s.members)],
-    [t('weekly'), formatCount(s.weekly)],
+    [t('groups'), formatCount(s.groups, locale)],
+    [t('provinces'), t('provincesValue', { count: formatCount(s.provinces, locale) })],
+    [t('members'), formatCount(s.members, locale)],
+    [t('weekly'), formatCount(s.weekly, locale)],
   ];
   return (
     <div className={styles.stats}>
@@ -110,7 +114,9 @@ interface FilterProps {
 
 /** Miền (Tất cả / Bắc / Trung / Nam), loại nhóm + ngành (D-89 v4), ô tìm, sắp xếp */
 export function GroupsFilters({ all, params, onChange }: FilterProps) {
+  const numberText = useNumberText();
   const t = useTranslations('groups.list');
+  const labels = useDomainLabels();
   return (
     <>
       <div className={styles.filters}>
@@ -123,8 +129,8 @@ export function GroupsFilters({ all, params, onChange }: FilterProps) {
               className={`${styles.region} ${params.region === r ? styles.regionOn : ''}`}
               onClick={() => onChange({ region: r, page: 1 })}
             >
-              {r === 'all' ? t('regionAll') : r}
-              <span className={styles.regionN}>{regionCount(all, r)}</span>
+              {r === 'all' ? t('regionAll') : labels.canonicalRegion(r)}
+              <span className={styles.regionN}>{numberText(regionCount(all, r))}</span>
             </button>
           ))}
         </div>
@@ -138,7 +144,7 @@ export function GroupsFilters({ all, params, onChange }: FilterProps) {
               onClick={() => onChange({ kind: k, page: 1 })}
             >
               {t(`kind.${k}`)}
-              <span className={styles.regionN}>{kindCount(all, k)}</span>
+              <span className={styles.regionN}>{numberText(kindCount(all, k))}</span>
             </button>
           ))}
         </div>

@@ -1,13 +1,14 @@
 'use client';
 
 import type { ReportGroupRow, ReportProvinceRow } from '@opchub/shared/api-domains';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { fmt } from '../model';
 import { NoData } from './report-metrics';
 import styles from './reports.module.css';
 
 /** B2 khối C — một dòng / nhóm của tỉnh */
 export function ReportGroupTable({ rows }: { rows: readonly ReportGroupRow[] }) {
+  const locale = useLocale();
   const t = useTranslations('reports');
   return (
     <section className={styles.card} aria-label={t('table.groups')}>
@@ -27,8 +28,8 @@ export function ReportGroupTable({ rows }: { rows: readonly ReportGroupRow[] }) 
               <tr key={r.groupId}>
                 <td>{r.name}</td>
                 <td>{r.owner || <NoData />}</td>
-                <td className={styles.right}>{fmt(r.members)}</td>
-                <td className={styles.right}>{fmt(r.messages)}</td>
+                <td className={styles.right}>{fmt(r.members, locale)}</td>
+                <td className={styles.right}>{fmt(r.messages, locale)}</td>
               </tr>
             ))}
           </tbody>
@@ -43,6 +44,7 @@ const PROVINCE_KEYS = ['newMembers', 'totalMembers', 'events', 'feeRevenue'] as 
 
 /** B3 "BẢNG KPI THEO TỈNH" + dòng Tổng vùng (cùng công thức CSV) */
 export function ReportProvinceTable({ rows }: { rows: readonly ReportProvinceRow[] }) {
+  const locale = useLocale();
   const t = useTranslations('reports');
   const total = (k: (typeof PROVINCE_KEYS)[number]) => rows.reduce((a, r) => a + r[k], 0);
   return (
@@ -65,7 +67,7 @@ export function ReportProvinceTable({ rows }: { rows: readonly ReportProvinceRow
                 <td>{r.province}</td>
                 {PROVINCE_KEYS.map((k) => (
                   <td key={k} className={styles.right}>
-                    {fmt(r[k])}
+                    {fmt(r[k], locale)}
                   </td>
                 ))}
               </tr>
@@ -74,7 +76,7 @@ export function ReportProvinceTable({ rows }: { rows: readonly ReportProvinceRow
               <td>{t('table.total')}</td>
               {PROVINCE_KEYS.map((k) => (
                 <td key={k} className={styles.right}>
-                  {fmt(total(k))}
+                  {fmt(total(k), locale)}
                 </td>
               ))}
             </tr>

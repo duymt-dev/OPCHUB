@@ -7,9 +7,11 @@ import { useRequestActions } from '../hooks/use-request-actions';
 import { useStaff } from '../hooks/use-requests';
 import { hasText } from '../model';
 import styles from './request-comments.module.css';
+import { useAdminUiLabels } from '@/i18n/ui-labels';
 
 /** Ô soạn bình luận nội bộ (RichTextField) + chip "Gắn tên" + "Gửi bình luận" */
 export function CommentComposer({ code }: { code: string }) {
+  const ui = useAdminUiLabels();
   const d = useTranslations('requests.drawer');
   const t = useTranslations('requests.toast');
   const staff = useStaff();
@@ -35,6 +37,8 @@ export function CommentComposer({ code }: { code: string }) {
   return (
     <div className={styles.box}>
       <RichTextField
+        labels={ui.editor}
+        keyboardControls
         key={edKey}
         value={html}
         onChange={setHtml}

@@ -1,0 +1,21 @@
+TIP824 authenticated Thai Overview/Profile/Settings 1440/390 visual subset; production Admin/test working tree based on582e8579; full Thai25-file catalog, actual language-specific body anchors. Portal source unchanged since77484e3f. Requires real MSW Portal Affiliate relay, no DB/global seed/reset. Same6 Thai three-screen browser assertions in native; actual UI login/read-only API and no masks. Not complete16-AC acceptance.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-thai.spec.ts
+[WebServer] (node:12052) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:12684) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+(node:23832) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\admin-i18n-thai.spec.ts:38:5 › D-141 AC824-07/15 Thai actual overview 1440, not all-language acceptance (6.2s)
+  ok 2 [behavior] › behavior\admin-i18n-thai.spec.ts:38:5 › D-141 AC824-07/15 Thai actual overview 390, not all-language acceptance (4.5s)
+  ok 3 [behavior] › behavior\admin-i18n-thai.spec.ts:38:5 › D-141 AC824-07/15 Thai actual profile 1440, not all-language acceptance (5.3s)
+  ok 4 [behavior] › behavior\admin-i18n-thai.spec.ts:38:5 › D-141 AC824-07/15 Thai actual profile 390, not all-language acceptance (4.3s)
+  ok 5 [behavior] › behavior\admin-i18n-thai.spec.ts:38:5 › D-141 AC824-07/15 Thai actual settings 1440, not all-language acceptance (4.9s)
+  ok 6 [behavior] › behavior\admin-i18n-thai.spec.ts:38:5 › D-141 AC824-07/15 Thai actual settings 390, not all-language acceptance (4.2s)
+
+  6 passed (40.0s)
+EXIT 0
+Postcommit receipt source264842f8: all35 final tested catalog/test/README/manifest blobs match HEAD and worktree after normal hooks. Build/catalog/production inputs unchanged by the later sidebar-test-only readiness correction. Original working-tree base retained above.

@@ -1,0 +1,134 @@
+{
+  "title": "Biaya keanggotaan",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "stats": {
+    "total": "Total anggota",
+    "paid": "Sudah membayar (berlaku)",
+    "trial": "Masa gratis 3 bulan",
+    "expired": "Kedaluwarsa · perlu peningkatan paket",
+    "soon": "Segera kedaluwarsa (30 hari)",
+    "revenue": "Pendapatan biaya keanggotaan tahunan"
+  },
+  "heading": "Biaya keanggotaan sistem",
+  "search": "Cari nama, email...",
+  "searchLabel": "Cari anggota menurut nama atau email",
+  "remindAll": "Kirim pengingat massal",
+  "tabsLabel": "Filter menurut status biaya",
+  "tabs": {
+    "gdv": "Gratis · Direktur Wilayah",
+    "all": "Semua",
+    "active": "Aktif",
+    "trial": "Masa gratis 3 bulan",
+    "pending": "Menunggu pembayaran",
+    "soon": "Segera kedaluwarsa",
+    "expired": "Kedaluwarsa"
+  },
+  "status": {
+    "regional_director": "Gratis · Direktur Wilayah",
+    "trial": "Masa gratis 3 bulan",
+    "active": "Aktif",
+    "pending_payment": "Menunggu pembayaran",
+    "expiring": "Segera kedaluwarsa",
+    "expired": "Kedaluwarsa"
+  },
+  "type": {
+    "business": "Bisnis",
+    "personal": "Perorangan",
+    "investor": "Investor"
+  },
+  "col": {
+    "name": "Nama anggota",
+    "email": "Email anggota",
+    "groups": "Grup yang diikuti",
+    "type": "Jenis",
+    "joined": "Terdaftar",
+    "status": "Status biaya",
+    "paid": "Tanggal pembayaran",
+    "until": "Berlaku hingga"
+  },
+  "selectAll": "Pilih semua di halaman ini",
+  "selectRow": "Pilih {name}",
+  "bulk": {
+    "label": "Tindakan massal",
+    "selected": "Terpilih",
+    "unit": "anggota",
+    "collect": "Catat pembayaran diterima",
+    "remind": "Kirim pengingat",
+    "csv": "Ekspor CSV",
+    "clear": "Hapus pilihan"
+  },
+  "row": {
+    "collect": "Catat pembayaran diterima",
+    "renew": "Perpanjang 12 bulan",
+    "remind": "Kirim pengingat"
+  },
+  "empty": "Tidak ada anggota yang cocok",
+  "pager": {
+    "unit": "anggota",
+    "prev": "Halaman sebelumnya",
+    "next": "Halaman berikutnya",
+    "pageSize": "Baris per halaman"
+  },
+  "toast": {
+    "collected": "Pembayaran {amount} dicatat · {name}",
+    "reminded": "Pengingat pembayaran dikirim melalui email ke {to}",
+    "bulkCollected": "Pembayaran keanggotaan dicatat: {n}",
+    "bulkReminded": "Email pengingat anggota dikirim: {n}",
+    "exported": "Anggota diekspor: {n}",
+    "failed": "Tidak dapat diproses, silakan coba lagi"
+  },
+  "error": "Tidak dapat memuat biaya keanggotaan",
+  "retry": "Coba lagi",
+  "txn": {
+    "link": "Transaksi untuk direkonsiliasi",
+    "linkCount": "Transaksi untuk direkonsiliasi ({n})",
+    "linkShort": "Rekonsiliasi",
+    "linkShortCount": "Rekonsiliasi ({n})",
+    "title": "Transaksi untuk direkonsiliasi",
+    "subtitle": "Transfer bank yang tidak cocok dengan anggota secara otomatis — bagian akuntansi meninjau dan mencocokkannya secara manual",
+    "heading": "Transfer bank yang belum cocok",
+    "back": "Kembali ke Biaya keanggotaan",
+    "col": {
+      "receivedAt": "Diterima pada",
+      "amount": "Jumlah",
+      "content": "Berita transfer",
+      "reason": "Alasan tidak cocok",
+      "hint": "Anggota / kode penggalangan dana yang disarankan",
+      "action": "Tindakan"
+    },
+    "match": "Cocokkan manual",
+    "more": "Muat lainnya",
+    "empty": "Tidak ada transaksi untuk direkonsiliasi",
+    "error": "Tidak dapat memuat transaksi",
+    "retry": "Coba lagi",
+    "dialog": {
+      "title": "Cocokkan transaksi secara manual",
+      "txn": "Transaksi {amount}",
+      "member": "Anggota",
+      "memberPlaceholder": "Cari nama, email, atau kode anggota...",
+      "results": "Hasil pencarian anggota",
+      "noResult": "Tidak ditemukan anggota yang cocok",
+      "picked": "Terpilih: {name} · {code}",
+      "mode": "Cocokkan ke",
+      "modeFee": "Biaya keanggotaan",
+      "modeFundraising": "Paket Penggalangan Dana",
+      "fundraising": "Pembayaran penggalangan dana yang belum dibayar",
+      "fundraisingPlaceholder": "Cari kode penggalangan dana, nama proyek, atau kode anggota pemilik...",
+      "fundraisingResults": "Hasil pencarian pembayaran penggalangan dana",
+      "noFundraising": "Tidak ada pembayaran penggalangan dana belum dibayar yang cocok",
+      "pickedFundraising": "Terpilih: {code} · {project}",
+      "reason": "Alasan",
+      "reasonPlaceholder": "Mis. pelanggan dikonfirmasi melalui telepon, diverifikasi dengan rekening koran",
+      "confirm": "Cocokkan transaksi {amount} ke {name}?",
+      "cancel": "Batal",
+      "back": "Kembali",
+      "next": "Lanjutkan",
+      "submit": "Cocokkan transaksi"
+    },
+    "toast": {
+      "matched": "Transaksi dicocokkan ke {name} · berlaku hingga {date}",
+      "matchedFundraising": "Transaksi dicocokkan ke paket penggalangan dana {code} · menunggu peninjauan Admin",
+      "failed": "Tidak dapat mencocokkan transaksi. Silakan coba lagi"
+    }
+  }
+}

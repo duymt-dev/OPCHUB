@@ -1,7 +1,8 @@
 'use client';
 
 import type { WelcomeMail } from '@opchub/shared/api-domains';
-import { useTranslations } from 'next-intl';
+import { createTranslator } from 'next-intl';
+import source from '../../../../messages/vi/marketing.json';
 import styles from './welcome-preview.module.css';
 
 interface Props {
@@ -9,9 +10,12 @@ interface Props {
   name: string;
 }
 
+// The frame represents the actual Vietnamese email, not translated Admin controls (D-141).
+const emailText = createTranslator({ locale: 'vi', messages: source.mail });
+
 /** Bản xem trước email chào mừng (tab Email tự động + hộp "Xem" ở Nhật ký gửi) */
 export function WelcomePreview({ tpl, name }: Props) {
-  const t = useTranslations('marketing.mail');
+  const t = emailText;
   const atts = tpl.attachments.filter((a) => a.title.trim() || a.url.trim());
   return (
     <div className={styles.frame}>

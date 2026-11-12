@@ -1,0 +1,174 @@
+{
+  "close": "关闭",
+  "clear": "清除",
+  "pagination": {
+    "unit": "项",
+    "prev": "上一页",
+    "next": "下一页",
+    "page": "第 {n} 页",
+    "pageSize": "每页行数",
+    "perPage": "{n} / 页",
+    "range": "显示 {from}–{to} / {total} {unit}"
+  },
+  "bulk": {
+    "selected": "已选择",
+    "clear": "清除选择",
+    "aria": "批量操作"
+  },
+  "calendar": {
+    "today": "今天",
+    "week": "最近 7 天",
+    "days30": "过去 30 天",
+    "month": "本月",
+    "previousMonth": "上月",
+    "from": "开始日期",
+    "to": "结束日期"
+  },
+  "editor": {
+    "undo": "撤销（Ctrl+Z）",
+    "redo": "重做（Ctrl+Y）",
+    "heading": "标题",
+    "paragraph": "段落",
+    "bold": "加粗",
+    "italic": "斜体",
+    "underline": "下划线",
+    "strike": "删除线",
+    "bulletList": "• 列表",
+    "bulletListTitle": "项目符号列表",
+    "orderedList": "1. 列表",
+    "orderedListTitle": "编号列表",
+    "quote": "引用",
+    "link": "链接",
+    "linkTitle": "插入链接",
+    "clear": "清除格式",
+    "linkUrl": "链接地址",
+    "linkInsert": "插入",
+    "linkRemove": "移除链接",
+    "linkCancel": "取消",
+    "linkInvalid": "链接必须以 http:// 或 https:// 开头"
+  },
+  "errors": {
+    "minNumber": "最小值：{min}",
+    "maxNumber": "最大值：{max}",
+    "integer": "请输入整数",
+    "bankAccountNumber": "银行账号必须包含 6–20 位数字",
+    "bankHolderLetters": "账户持有人姓名只能包含字母",
+    "notifyDeviceFailed": "无法更新通知",
+    "adminPasswordRule": "新密码至少需要八个字符，须包含大写字母及数字",
+    "currentPasswordRequired": "请输入当前密码",
+    "confirmPasswordRequired": "请确认新密码",
+    "newPasswordRequired": "请输入新密码",
+    "nameMin": "姓名至少需要两个字符",
+    "nameMax": "姓名不得超过 100 个字符",
+    "phoneMax": "电话号码不得超过 30 个字符",
+    "avatarUrl": "图片 URL 无效",
+    "required": "请填写此字段",
+    "invalid": "值无效",
+    "minLength": "请输入至少 {min} 个字符",
+    "maxLength": "请输入不超过 {max} 个字符",
+    "passwordRule": "密码至少需要八个字符，须包含大写字母及数字",
+    "passwordMismatch": "两次输入的密码不一致",
+    "passwordSame": "新密码须不同于当前密码",
+    "imageType": "图片必须为 PNG/JPEG/WEBP 格式",
+    "imageUpload": "图片上传失败，请重试",
+    "imageSize": "图片最大 5 MB",
+    "failed": "操作失败，请重试",
+    "dateRange": "日期范围须为 0 至 90 天"
+  },
+  "regions": {
+    "north": "北部",
+    "central": "中部",
+    "centralDirector": "中部与西原地区",
+    "south": "南部"
+  },
+  "reviewReasons": [
+    "描述信息不完整",
+    "封面图片不合适",
+    "广告／垃圾信息",
+    "违反社群规则",
+    "与现有项目重复"
+  ],
+  "aiSuggestion": {
+    "failed": "暂时无法生成建议，请稍后重试",
+    "suggest": "AI 建议",
+    "use": "使用建议",
+    "skip": "忽略",
+    "title": "内容建议"
+  },
+  "permissions": {
+    "overview": {
+      "view": "查看概览与数据"
+    },
+    "members": {
+      "view": "查看会员列表及详情",
+      "action": "锁定／解锁、分配群组、导出数据"
+    },
+    "fees": {
+      "view": "查看缴费状态",
+      "action": "记录收款、发送缴费提醒"
+    },
+    "groups": {
+      "view": "查看群组及聊天室",
+      "action": "创建／编辑群组及主题、审核会员",
+      "moderate": "审核敏感消息"
+    },
+    "bots": {
+      "view": "查看机器人",
+      "action": "配置虚拟角色及脚本"
+    },
+    "events": {
+      "view": "查看活动及报名名单",
+      "action": "创建／编辑活动、签到"
+    },
+    "projects": {
+      "view": "查看项目",
+      "action": "审核／隐藏项目"
+    },
+    "investors": {
+      "view": "查看投资者",
+      "action": "与投资者沟通并导出数据"
+    },
+    "services": {
+      "view": "查看服务申请",
+      "action": "处理申请及服务目录"
+    },
+    "affiliate": {
+      "view": "查看推广员及佣金",
+      "action": "编辑佣金比例、取消佣金",
+      "payout": "向区域总监付款",
+      "regional": "任命／撤销区域总监（免收会员费）"
+    },
+    "settings": {
+      "general": "常规信息及领域分类",
+      "mail": "欢迎邮件及 SMTP",
+      "admins": "管理员账户及权限",
+      "log": "操作日志"
+    },
+    "stores": {
+      "view": "查看店铺及本地需求",
+      "action": "隐藏／显示违规店铺及需求"
+    },
+    "reports": {
+      "view": "查看及导出 B1／B2／B3 报表"
+    }
+  },
+  "permissionMenus": {
+    "overview": "概览",
+    "members": "会员",
+    "fees": "会员费",
+    "groups": "社区群组",
+    "bots": "互动机器人",
+    "events": "内容与活动",
+    "projects": "项目",
+    "investors": "投资人",
+    "services": "服务",
+    "affiliate": "推广者",
+    "settings": "设置",
+    "stores": "店铺与需求",
+    "reports": "报表"
+  },
+  "chart": {
+    "month": "{n} 月",
+    "week": "第 {n} 周"
+  }
+}

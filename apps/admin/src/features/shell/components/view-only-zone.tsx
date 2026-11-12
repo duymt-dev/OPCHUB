@@ -1,20 +1,21 @@
 'use client';
 
 import { useToast } from '@opchub/ui';
-import { useTranslations } from 'next-intl';
-import type { MouseEvent, ReactNode } from 'react';
+import { useMessages, useTranslations } from 'next-intl';
+import { useMemo, type MouseEvent, type ReactNode } from 'react';
 import { isWriteClick, type RoTarget } from '../model-ro';
+import { createRoMatcher } from '../ro-matcher';
 import styles from './rbac.module.css';
 
 function pathOf(target: EventTarget, root: HTMLElement): RoTarget[] {
   const out: RoTarget[] = [];
-  let el = target instanceof HTMLElement ? target : null;
+  let el = target instanceof Element ? target : null;
   while (el && el !== root) {
     out.push({
       tag: el.tagName,
       text: el.textContent ?? '',
       title: el.getAttribute('title') ?? el.getAttribute('aria-label') ?? '',
-      roOk: el.hasAttribute('data-ro-ok'),
+      roOk: el.hasAttribute('data-ro-ok') || el.matches('nav,[role="tablist"],[role="tab"]'),
       act: el.matches('[data-act],select,input[type=checkbox]'),
       pointer: getComputedStyle(el).cursor === 'pointer',
     });
@@ -43,6 +44,8 @@ export function ViewOnlyZone({
   children: ReactNode;
 }) {
   const t = useTranslations('common.rbac');
+  const messages = useMessages();
+  const matcher = useMemo(() => createRoMatcher(messages), [messages]);
   const toast = useToast();
   if (!readOnly)
     return (
@@ -52,7 +55,7 @@ export function ViewOnlyZone({
       </>
     );
   const guard = (e: MouseEvent<HTMLDivElement>) => {
-    if (!isWriteClick(pathOf(e.target, e.currentTarget))) return;
+    if (!isWriteClick(pathOf(e.target, e.currentTarget), matcher)) return;
     e.stopPropagation();
     e.preventDefault();
     toast(t('viewOnlyToast', { role }));

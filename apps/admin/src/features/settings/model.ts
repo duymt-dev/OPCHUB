@@ -1,3 +1,4 @@
+import { formatCurrency } from '@/i18n/format';
 import { ADMIN_PERMISSION_KEYS, type AdminPermissionKey } from '@opchub/shared';
 import type { AdminCategory, AdminRoleRow } from '@opchub/shared/api-domains';
 import type { CategoryDraft, CategoryFilter } from './types';
@@ -119,4 +120,4 @@ export function roleTone(index: number): { bg: string; fg: string } {
 }
 
 /** Tiền VND hiển thị như prototype `VN` (`toLocaleString('vi-VN') + 'đ'`) */
-export const vnd = (n: number) => `${n.toLocaleString('vi-VN')}đ`;
+export const vnd = (n: number, locale = 'vi') => formatCurrency(n, 'VND', locale);

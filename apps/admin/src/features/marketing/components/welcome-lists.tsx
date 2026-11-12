@@ -3,6 +3,7 @@
 import type { WelcomeMail } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
 import styles from './auto-panel.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 interface Props {
   w: WelcomeMail;
@@ -38,6 +39,7 @@ export function IncludeSwitches({ w, set }: Props) {
 }
 
 export function AttachmentList({ w, set }: Props) {
+  const numberText = useNumberText();
   const t = useTranslations('marketing.auto');
   const atts = w.attachments;
   const put = (i: number, p: Partial<(typeof atts)[number]>) =>
@@ -46,11 +48,11 @@ export function AttachmentList({ w, set }: Props) {
     <div className={styles.group}>
       <div className={styles.attHead}>
         <span>{t('atts')}</span>
-        <span className={styles.muted}>{t('attN', { n: atts.length })}</span>
+        <span className={styles.muted}>{t('attN', { n: numberText(atts.length) })}</span>
       </div>
       {atts.map((a, i) => (
         <div key={i} className={styles.att}>
-          <span className={styles.num}>{i + 1}</span>
+          <span className={styles.num}>{numberText(i + 1)}</span>
           <input
             className={styles.input}
             value={a.title}
@@ -88,23 +90,24 @@ export function AttachmentList({ w, set }: Props) {
 }
 
 export function RuleList({ w, set }: Props) {
+  const numberText = useNumberText();
   const t = useTranslations('marketing.auto');
   return (
     <div className={styles.group}>
       {t('rules')}
       {w.rules.map((r, i) => (
         <div key={i} className={styles.rule}>
-          <span className={styles.num}>{i + 1}</span>
+          <span className={styles.num}>{numberText(i + 1)}</span>
           <input
             className={styles.input}
             value={r}
-            aria-label={t('ruleN', { n: i + 1 })}
+            aria-label={t('ruleN', { n: numberText(i + 1) })}
             onChange={(e) => set({ rules: w.rules.map((x, j) => (j === i ? e.target.value : x)) })}
           />
           <button
             type="button"
             className={styles.rm}
-            aria-label={t('ruleRm', { n: i + 1 })}
+            aria-label={t('ruleRm', { n: numberText(i + 1) })}
             onClick={() => set({ rules: w.rules.filter((_, j) => j !== i) })}
           >
             ×

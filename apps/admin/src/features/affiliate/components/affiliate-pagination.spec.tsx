@@ -1,6 +1,16 @@
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { NextIntlClientProvider } from 'next-intl';
+import type { ReactNode } from 'react';
+import { messages } from '@/i18n/messages';
+import { cleanup, fireEvent, render as renderBase, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { AffiliatePagination } from './affiliate-pagination';
+
+const render = (node: ReactNode) =>
+  renderBase(
+    <NextIntlClientProvider locale="vi" messages={messages}>
+      {node}
+    </NextIntlClientProvider>,
+  );
 
 afterEach(cleanup);
 

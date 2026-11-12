@@ -4,6 +4,7 @@ import type { AdminCategory } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
 import { Switch } from './switch';
 import styles from './categories.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 const COLS = ['order', 'name', 'scope', 'projects', 'biz', 'visible'] as const;
 
@@ -26,12 +27,13 @@ function CategoryRow({
   editing: boolean;
   act: RowActions;
 }) {
+  const numberText = useNumberText();
   const t = useTranslations('settings.cat');
   const cls = [styles.row, c.enabled ? '' : styles.off, editing ? styles.editing : ''];
   return (
     <div role="row" className={cls.join(' ')}>
       <div className={styles.order} role="cell">
-        <span className={styles.idx}>{i + 1}</span>
+        <span className={styles.idx}>{numberText(i + 1)}</span>
         {([-1, 1] as const).map((d) => {
           const label = d < 0 ? t('up') : t('down');
           return (
@@ -59,8 +61,8 @@ function CategoryRow({
           </span>
         ))}
       </div>
-      <span role="cell">{c.projectCount}</span>
-      <span role="cell">{c.bizCount}</span>
+      <span role="cell">{numberText(c.projectCount)}</span>
+      <span role="cell">{numberText(c.bizCount)}</span>
       <div role="cell">
         <Switch
           on={c.enabled}

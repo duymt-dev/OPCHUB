@@ -1,7 +1,8 @@
 'use client';
 
 import { FieldErrorOf, type FieldErrorProps, invalidProps } from '@opchub/ui';
-import { useTranslations } from 'next-intl';
+import { eventDay } from '../presentation';
+import { useLocale, useTranslations } from 'next-intl';
 import type { EventField, EventFormState, FormMode } from '../types';
 import styles from './event-form.module.css';
 
@@ -13,10 +14,7 @@ export interface FieldProps {
   err: (k: EventField) => FieldErrorProps | undefined;
 }
 
-const MODES: { key: FormMode; label: string }[] = [
-  { key: 'offline', label: 'Offline' },
-  { key: 'online', label: 'Online' },
-];
+const MODES: { key: FormMode }[] = [{ key: 'offline' }, { key: 'online' }];
 
 export function Req({ children }: { children: string }) {
   return (
@@ -67,7 +65,9 @@ export function CoverField({
 
 /** Tên, hình thức, ngày + giờ bắt đầu / kết thúc */
 export function BasicFields({ f, set, err }: FieldProps) {
+  const locale = useLocale();
   const t = useTranslations('events.form');
+  const modeLabel = useTranslations('events.mode');
   return (
     <>
       <label className={styles.field}>
@@ -93,7 +93,7 @@ export function BasicFields({ f, set, err }: FieldProps) {
               className={`${styles.segItem} ${f.mode === m.key ? styles.segOn : ''}`}
               onClick={() => set({ mode: m.key })}
             >
-              {m.label}
+              {modeLabel(m.key)}
             </button>
           ))}
         </div>
@@ -110,7 +110,9 @@ export function BasicFields({ f, set, err }: FieldProps) {
           />
           <FieldErrorOf e={err('date')} />
           <span className={styles.hint}>
-            {f.id && !f.date ? t('dateHint', { day: f.currentDay }) : ''}
+            {f.id && !f.date
+              ? t('dateHint', { day: eventDay(f.startsAt, f.currentDay, locale) })
+              : ''}
           </span>
         </label>
         <label className={styles.field}>

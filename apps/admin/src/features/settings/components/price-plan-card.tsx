@@ -1,10 +1,11 @@
 'use client';
 
 import { discountPctOf, monthlyAboveList, monthlyOf } from '@opchub/shared';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import { vnd } from '../model';
 import styles from './price.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 /** Ô số của prototype (`inputmode="numeric"`, nhãn trên, gợi ý dưới) */
 export function PriceInput({
@@ -44,6 +45,8 @@ export function PricePlanCard({
   y: number;
   onSet: (k: 'list' | 'y', v: string) => void;
 }) {
+  const numberText = useNumberText();
+  const locale = useLocale();
   const t = useTranslations('settings.price');
   return (
     <div className={styles.plan} data-plan={g}>
@@ -55,7 +58,7 @@ export function PricePlanCard({
         <PriceInput
           label={t('list')}
           value={list}
-          hint={t('listHint', { amount: vnd(list * 12) })}
+          hint={t('listHint', { amount: vnd(list * 12, locale) })}
           onChange={(v) => onSet('list', v)}
         />
         <PriceInput
@@ -67,8 +70,10 @@ export function PricePlanCard({
       </div>
       <div className={styles.preview}>
         <span className={styles.previewLabel}>{t('preview')}</span>
-        <b className={styles.previewPrice}>{t('perMonth', { amount: vnd(monthlyOf(y)) })}</b>
-        <span className={styles.off}>{t('off', { pct: discountPctOf(list, y) })}</span>
+        <b className={styles.previewPrice}>
+          {t('perMonth', { amount: vnd(monthlyOf(y), locale) })}
+        </b>
+        <span className={styles.off}>{t('off', { pct: numberText(discountPctOf(list, y)) })}</span>
       </div>
       {monthlyAboveList(list, y) ? <span className={styles.warn}>{t('warn')}</span> : null}
     </div>

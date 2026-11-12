@@ -1,7 +1,8 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { statCards } from './data';
-import { flowCards } from './flow';
+import { flowCards, flowTextParams } from './flow';
 import { OVERVIEW_FIXTURE } from '@opchub/shared/mock-domains';
+import { prepareAdminIntl } from '@/i18n/intl/runtime';
 
 const FLOW = {
   paidMembers: 1,
@@ -11,6 +12,44 @@ const FLOW = {
   projects: { pending: 2, published: 11 },
   groups: 90,
 };
+
+describe('D-141 AC824-08 system-flow prepared Myanmar presentation', () => {
+  it('does not bypass scoped CLDR via native NumberFormat after preparation', async () => {
+    await prepareAdminIntl('my');
+    const native = vi.spyOn(Intl, 'NumberFormat');
+    try {
+      const cards = flowCards(FLOW, 'my');
+      expect(cards.map((card) => card.value)).toEqual(['၁ / ၈', '၁၇', '၁၁', '၂', '၉၀']);
+      expect(flowTextParams({ hidden: 0, draft: 1234 }, 'my')).toEqual({
+        hidden: '၀',
+        draft: '၁,၂၃၄',
+      });
+      expect(native).not.toHaveBeenCalled();
+      expect(cards[1]?.sub).toEqual({ hidden: 1, draft: 2 });
+      expect(FLOW.stores).toEqual({ published: 17, hidden: 1, draft: 2 });
+    } finally {
+      native.mockRestore();
+    }
+  });
+
+  it.each(['vi', 'en', 'en-SG', 'zh', 'id', 'th', 'ms', 'ms-BN', 'fil', 'km', 'lo'])(
+    '%s retains counts, status, routes and raw parameters while formatting presentation',
+    async (locale) => {
+      await prepareAdminIntl(locale);
+      const snapshot = structuredClone(FLOW);
+      const cards = flowCards(FLOW, locale);
+      const raw = (card: (typeof cards)[number]) => ({
+        key: card.key,
+        href: card.href,
+        done: card.done,
+        sub: card.sub,
+      });
+      expect(cards.map(raw)).toEqual(flowCards(FLOW).map(raw));
+      expect(FLOW).toEqual(snapshot);
+      expect(flowTextParams({ count: 0 }, locale)).toEqual({ count: '0' });
+    },
+  );
+});
 
 describe('D-89 Tổng quan v4 — Luồng hệ thống + 4 thẻ số', () => {
   it('5 thẻ theo thứ tự prototype; dự án còn chờ duyệt → "Cần làm", hết chờ → "Hoàn tất"', () => {

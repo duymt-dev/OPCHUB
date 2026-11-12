@@ -11,11 +11,13 @@ import { AdminCreateDrawer } from './admin-create-drawer';
 import { AdminRow } from './admin-row';
 import styles from './admins.module.css';
 import ui from './settings.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 const COLS = ['account', 'role', 'tfa', 'last'] as const;
 
 /** RB-R02 / R04 / R08 "Tài khoản quản trị" — tách biệt TK thành viên (D-52) */
 export function AdminsTab({ ask }: { ask: AskConfirm }) {
+  const numberText = useNumberText();
   const t = useTranslations('settings.admins');
   const a = useAdmins(ask);
   const roles = useQuery({ queryKey: settingsKeys.roles, queryFn: fetchRoles }).data ?? [];
@@ -26,7 +28,7 @@ export function AdminsTab({ ask }: { ask: AskConfirm }) {
       <div className={styles.headRow}>
         <div>
           <div className={ui.h18}>{t('heading')}</div>
-          <div className={ui.muted}>{t('count', { n: a.rows.length })}</div>
+          <div className={ui.muted}>{t('count', { n: numberText(a.rows.length) })}</div>
         </div>
         <button type="button" className={styles.create} onClick={create.start}>
           {t('create')}

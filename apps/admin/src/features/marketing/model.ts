@@ -1,3 +1,4 @@
+import { formatDate, formatNumber, formatPercentPoints } from '@/i18n/format';
 import type {
   Campaign,
   CampaignCreate,
@@ -11,25 +12,21 @@ import type { CampaignFormErrors, CampaignFormState } from './types';
 
 /** Hiển thị: số kiểu Việt Nam, thời gian theo giờ VN (luật 9) */
 
-export const fmtN = (n: number) => n.toLocaleString('vi-VN');
-
-const PARTS = new Intl.DateTimeFormat('en-GB', {
-  day: '2-digit',
-  month: '2-digit',
-  year: 'numeric',
-  hour: '2-digit',
-  minute: '2-digit',
-  hourCycle: 'h23',
-  timeZone: 'Asia/Ho_Chi_Minh',
-});
+export const fmtN = (n: number, locale = 'vi') => formatNumber(n, locale);
 
 /** ISO UTC → "12/10/2026 09:00" (giờ VN) như prototype; null → "—" */
-export function vnDateTime(isoStr: string | null): string {
-  if (!isoStr) return '—';
-  const p = Object.fromEntries(
-    PARTS.formatToParts(new Date(isoStr)).map((x) => [x.type, x.value]),
-  ) as Record<string, string>;
-  return `${p.day}/${p.month}/${p.year} ${p.hour}:${p.minute}`;
+export function vnDateTime(isoStr: string | null, locale = 'vi'): string {
+  const options = { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' } as const;
+  if (locale === 'vi') {
+    const date = formatDate(isoStr, locale);
+    return date === '—' ? date : date + ' ' + formatDate(isoStr, locale, options);
+  }
+  return formatDate(isoStr, locale, {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    ...options,
+  });
 }
 
 const VN_OFFSET_H = 7;
@@ -52,13 +49,23 @@ export const STATUS_TONE: Record<CampaignStatus, 'green' | 'blue' | 'orange' | '
 };
 
 /** Dòng bảng như prototype: chỉ chiến dịch đã gửi có % mở / click */
-export function campaignCells(c: Campaign) {
+export function campaignCells(c: Campaign, locale = 'vi') {
   const sent = c.status === 'sent';
   return {
-    recipients: c.recipients ? fmtN(c.recipients) : '—',
-    open: sent && c.openRate !== null ? `${c.openRate}%` : '—',
-    click: sent && c.clickRate !== null ? `${c.clickRate}%` : '—',
-    at: vnDateTime(c.sendAt),
+    recipients: c.recipients ? fmtN(c.recipients, locale) : '—',
+    open:
+      sent && c.openRate !== null
+        ? locale === 'vi'
+          ? `${c.openRate}%`
+          : formatPercentPoints(c.openRate, locale, 20)
+        : '—',
+    click:
+      sent && c.clickRate !== null
+        ? locale === 'vi'
+          ? `${c.clickRate}%`
+          : formatPercentPoints(c.clickRate, locale, 20)
+        : '—',
+    at: vnDateTime(c.sendAt, locale),
     canSend: c.status === 'draft' || c.status === 'scheduled',
     canDelete: c.status !== 'sending',
     /** BUG-036: "Dừng gửi" khi đang gửi / đã lên lịch */
@@ -75,13 +82,18 @@ export const MAIL_STATUS_TONE: Record<MailLogStatus, 'ok' | 'pending' | 'fail' |
 };
 
 /** 4 thẻ thống kê */
-export function statValues(s: MarketingSummary | undefined) {
+export function statValues(s: MarketingSummary | undefined, locale = 'vi') {
   if (!s) return { campaigns: '—', sent: '—', open: '—', welcome: '—' };
   return {
-    campaigns: String(s.campaigns),
-    sent: fmtN(s.sent30d),
-    open: s.avgOpenRate === null ? '—' : `${s.avgOpenRate}%`,
-    welcome: String(s.welcomeSent),
+    campaigns: fmtN(s.campaigns, locale),
+    sent: fmtN(s.sent30d, locale),
+    open:
+      s.avgOpenRate === null
+        ? '—'
+        : locale === 'vi'
+          ? `${s.avgOpenRate}%`
+          : formatPercentPoints(s.avgOpenRate, locale, 20),
+    welcome: fmtN(s.welcomeSent, locale),
   };
 }
 

@@ -11,4 +11,6 @@ export interface RichTextFieldProps {
   errorId?: string | undefined;
   /** Bản dịch nhãn; thiếu khoá → tiếng Việt mặc định */
   labels?: Partial<RichTextLabels> | undefined;
+  /** Optional keyboard activation; omitted preserves existing consumers. */
+  keyboardControls?: boolean;
 }

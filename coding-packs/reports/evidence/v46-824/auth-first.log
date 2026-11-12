@@ -1,0 +1,523 @@
+Auth initial fixture diagnostic, production unchanged eb9a9a0a. First TEMP wrapper had a PowerShell quoting parse error before any test/process/API action; fixed only wrapper grep quoting. First actual case failed an incorrect fixture roles endpoint /admin/roles404 before account creation; corrected to existing controller /admin/admin-roles, no production change or HTTP waiver.
+Source working tree based on 94c3191c; candidate production build (not final committed proof). Complete10 raw bundles/250 files. Auth diagnostic: one English desktop flow of24 registered browser cases; prefix-only provisioning approved, exact dedicated auth guard, no existing account edits; production source eb9a9a0a unchanged; same assertions both modes, real auth plus exact prefix-owned first-password/2FA mutations and typed expected MFA401 challenge, no business/global-setting writes. MSW-only diagnostic, no native preflight invoked; original PG5432/opchub_test/services/data retained, no SQL/seed/reset/repair. Unmasked images and exact Myanmar anchors, not all-language/state/control/value/performance or human approval.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-auth.spec.ts --grep 'actual first-password and 2FA en 1440'
+[WebServer] (node:19108) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:15140) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:11104) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA en 1440 (3.6s)
+
+
+  1) [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA en 1440
+
+    Error: page.evaluate: SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+
+       at behavior\admin-i18n-auth\provision.ts:32
+
+      30 | }
+      31 | async function browserApi(page: Page, token: string, path: string, body?: unknown) {
+    > 32 |   return page.evaluate(
+         |               ^
+      33 |     async ({ token, path, body }) => {
+      34 |       const response = await fetch(`/v1/admin/${path}`, {
+      35 |         method: body === undefined ? 'GET' : 'POST',
+        at browserApi (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-auth\provision.ts:32:15)
+        at provision (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-auth\provision.ts:48:23)
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-auth.spec.ts:14:23
+
+    Error: Exact prefix/principal-bound auth protocol, no business writes
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "Unexpected HTTP 404 /v1/admin/roles",
+    + ]
+
+       at behavior\admin-i18n-auth\fixtures.ts:65
+
+      63 |         protocol.errors,
+      64 |         'Exact prefix/principal-bound auth protocol, no business writes',
+    > 65 |       ).toEqual([]);
+         |         ^
+      66 |       expect(browserErrors, 'No hydration/Intl/browser errors').toEqual([]);
+      67 |       expect(console401.filter((p) => p.endsWith('/login')).length).toBeLessThanOrEqual(1);
+      68 |       expect(console401.filter((p) => p.endsWith('/refresh')).length).toBeLessThanOrEqual(1);
+        at Object.base.extend.audit.auto (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-auth\fixtures.ts:65:9)
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-auth-results-msw\admin-i18n-auth-D-141-AC82-a56d3-st-password-and-2FA-en-1440-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA en 1440
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+System.Management.Automation.RemoteException
+EXIT 1
+
+--- Corrected roles endpoint diagnostic: real first-password/validation/preservation PASS through optional 2FA local-error locale switch; fixture locator mistake on label including its inline error. Corrected to assert the full exact accessible name including translated error, no production change or weakened label assertion. ---
+Source working tree based on 94c3191c; candidate production build (not final committed proof). Complete10 raw bundles/250 files. Auth diagnostic: one English desktop flow of24 registered browser cases; prefix-only provisioning approved, exact dedicated auth guard, no existing account edits; production source eb9a9a0a unchanged; same assertions both modes, real auth plus exact prefix-owned first-password/2FA mutations and typed expected MFA401 challenge, no business/global-setting writes. MSW-only diagnostic, no native preflight invoked; original PG5432/opchub_test/services/data retained, no SQL/seed/reset/repair. Unmasked images and exact Myanmar anchors, not all-language/state/control/value/performance or human approval.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-auth.spec.ts --grep 'actual first-password and 2FA en 1440'
+[WebServer] (node:34340) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:34360) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:17696) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA en 1440 (12.8s)
+
+
+  1) [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA en 1440
+
+    Error: expect(locator).toHaveValue(expected) failed
+
+    Locator: getByLabel('Mã 6 số', { exact: true })
+    Expected: "123"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveValue" getByLabel('Mã 6 số', { exact: true }) with timeout 5000ms
+      - waiting for getByLabel('Mã 6 số', { exact: true })
+
+
+       at behavior\admin-i18n-auth\two-factor.ts:41
+
+      39 |   const other = authLabels(alternate);
+      40 |   await expect(page.getByText(other.totp.errCode, { exact: true })).toBeVisible();
+    > 41 |   await expect(page.getByLabel(other.twoFactor.code, { exact: true })).toHaveValue('123');
+         |                                                                        ^
+      42 |   expect((await page.getByTestId('totp-uri').textContent()) === uri).toBe(true);
+      43 |   await selectLocale(page, locale);
+      44 |   expect(audit.protocol.counts.get('auth/2fa/enable')).toBeUndefined();
+        at twoFactor (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-auth\two-factor.ts:41:72)
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-auth.spec.ts:16:7
+
+    Error: Exact auth flow count: auth/login
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 3
+    Received: 2
+
+       at behavior\admin-i18n-auth\fixtures.ts:79
+
+      77 |         challenge: 1,
+      78 |       }))
+    > 79 |         expect(protocol.counts.get(key), `Exact auth flow count: ${key}`).toBe(count);
+         |                                                                           ^
+      80 |     },
+      81 |     { auto: true },
+      82 |   ],
+        at Object.base.extend.audit.auto (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-auth\fixtures.ts:79:75)
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-auth-results-msw\admin-i18n-auth-D-141-AC82-a56d3-st-password-and-2FA-en-1440-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA en 1440
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+System.Management.Automation.RemoteException
+EXIT 1
+
+--- Full MSW diagnostic reaches valid enable, expected MFA401, then actual verify400 (not waived). Existing mock issues mfa.<short-id>, shorter than the unchanged shared minimum20-character mfaToken. Native controller issues opaque32-character tokens. Keep schema/assertions and fix the mock contract, after checking same flow native. ---
+Source working tree based on 94c3191c; candidate production build (not final committed proof). Complete10 raw bundles/250 files. Auth diagnostic: one English desktop flow of24 registered browser cases; prefix-only provisioning approved, exact dedicated auth guard, no existing account edits; production source eb9a9a0a unchanged; same assertions both modes, real auth plus exact prefix-owned first-password/2FA mutations and typed expected MFA401 challenge, no business/global-setting writes. MSW-only diagnostic, no native preflight invoked; original PG5432/opchub_test/services/data retained, no SQL/seed/reset/repair. Unmasked images and exact Myanmar anchors, not all-language/state/control/value/performance or human approval.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-auth.spec.ts --grep 'actual first-password and 2FA en 1440'
+[WebServer] (node:27056) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:35320) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:32548) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA en 1440 (1.0m)
+
+
+  1) [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA en 1440
+
+    Test timeout of 60000ms exceeded.
+
+    Error: Exact prefix/principal-bound auth protocol, no business writes
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "Unexpected HTTP 400 /v1/admin/auth/totp/verify",
+    + ]
+
+       at behavior\admin-i18n-auth\fixtures.ts:65
+
+      63 |         protocol.errors,
+      64 |         'Exact prefix/principal-bound auth protocol, no business writes',
+    > 65 |       ).toEqual([]);
+         |         ^
+      66 |       expect(browserErrors, 'No hydration/Intl/browser errors').toEqual([]);
+      67 |       expect(console401.filter((p) => p.endsWith('/login')).length).toBeLessThanOrEqual(1);
+      68 |       expect(console401.filter((p) => p.endsWith('/refresh')).length).toBeLessThanOrEqual(1);
+        at Object.base.extend.audit.auto (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-auth\fixtures.ts:65:9)
+
+    Error: page.waitForResponse: Test timeout of 60000ms exceeded.
+
+       at behavior\admin-i18n-auth\provision.ts:14
+
+      12 |
+      13 | export const waitApi = (page: Page, path: string, status = 200) => {
+    > 14 |   const pending = page.waitForResponse(
+         |                        ^
+      15 |     (r) => new URL(r.url()).pathname === `/v1/admin/${path}` && r.status() === status,
+      16 |   );
+      17 |   void pending.catch(() => undefined);
+        at waitApi (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-auth\provision.ts:14:24)
+        at twoFactor (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-auth\two-factor.ts:68:20)
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-auth.spec.ts:16:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-auth-results-msw\admin-i18n-auth-D-141-AC82-a56d3-st-password-and-2FA-en-1440-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA en 1440
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+System.Management.Automation.RemoteException
+EXIT 1
+
+--- First native diagnostic: reaches real own-account setup/enable and MFA challenge; verify401 rejects reuse of setup code (native confirmSetup.fresh stores used code90s). Fixture now waits for the next real RFC6238 step; no server/schema/replay-policy change, timeout relaxation or HTTP waiver. API waiter now asserts the first actual response status immediately rather than waiting out60s on an unexpected status. ---
+Source working tree based on 94c3191c; candidate production build, not final committed proof. Complete10 raw bundles/250 files. Auth diagnostic one English desktop flow,24 browser cases registered; prefix-owned accounts approved, production eb9a9a0a auth inputs unchanged; same assertions both modes, real auth plus exact owned first-password/2FA writes and expected typed MFA401, no business/global-setting writes. Approved native wrapper/listener/endpoints revalidated by native preflight; original PG5432/opchub_test/services/data retained, no SQL/seed/reset/repair. Unmasked images and exact Myanmar anchors, not all-language/state/control/value/performance or human approval.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-auth.spec.ts --grep 'actual first-password and 2FA en 1440'
+[WebServer] (node:17764) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:26844) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA en 1440 (1.0m)
+
+
+  1) [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA en 1440
+
+    Test timeout of 60000ms exceeded.
+
+    Error: Exact prefix/principal-bound auth protocol, no business writes
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "Unexpected HTTP 401 /v1/admin/auth/totp/verify",
+    + ]
+
+       at behavior\admin-i18n-auth\fixtures.ts:65
+
+      63 |         protocol.errors,
+      64 |         'Exact prefix/principal-bound auth protocol, no business writes',
+    > 65 |       ).toEqual([]);
+         |         ^
+      66 |       expect(browserErrors, 'No hydration/Intl/browser errors').toEqual([]);
+      67 |       expect(console401.filter((p) => p.endsWith('/login')).length).toBeLessThanOrEqual(1);
+      68 |       expect(console401.filter((p) => p.endsWith('/refresh')).length).toBeLessThanOrEqual(1);
+        at Object.base.extend.audit.auto (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-auth\fixtures.ts:65:9)
+
+    Error: page.waitForResponse: Test timeout of 60000ms exceeded.
+
+       at behavior\admin-i18n-auth\provision.ts:14
+
+      12 |
+      13 | export const waitApi = (page: Page, path: string, status = 200) => {
+    > 14 |   const pending = page.waitForResponse(
+         |                        ^
+      15 |     (r) => new URL(r.url()).pathname === `/v1/admin/${path}` && r.status() === status,
+      16 |   );
+      17 |   void pending.catch(() => undefined);
+        at waitApi (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-auth\provision.ts:14:24)
+        at twoFactor (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-auth\two-factor.ts:68:20)
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-auth.spec.ts:16:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-auth-results-native\admin-i18n-auth-D-141-AC82-a56d3-st-password-and-2FA-en-1440-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA en 1440
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+System.Management.Automation.RemoteException
+EXIT 1
+
+--- Corrected real fresh-code native diagnostic (before image additions): English desktop PASS,12.1s; unchanged timeout/schema/API/services, one newly owned fixture only. ---
+Source working tree based on 94c3191c; candidate production build, not final committed proof. Complete10 raw bundles/250 files. Auth diagnostic one English desktop flow,24 browser cases registered; prefix-owned accounts approved, production eb9a9a0a auth inputs unchanged; same assertions both modes, real auth plus exact owned first-password/2FA writes and expected typed MFA401, no business/global-setting writes. Approved native wrapper/listener/endpoints revalidated by native preflight; original PG5432/opchub_test/services/data retained, no SQL/seed/reset/repair. Unmasked images and exact Myanmar anchors, not all-language/state/control/value/performance or human approval.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-auth.spec.ts --grep 'actual first-password and 2FA en 1440'
+[WebServer] (node:18144) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:6840) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA en 1440 (12.1s)
+
+  1 passed (17.9s)
+EXIT 0
+
+--- Corrected opaque-MFA MSW + secret-free image diagnostic: English desktop PASS,11.2s. Not full24/33 acceptance. ---
+Source working tree based on 94c3191c; candidate production build (not final committed proof). Complete10 raw bundles/250 files. Auth diagnostic: one English desktop flow of24 registered browser cases; prefix-only provisioning approved, exact dedicated auth guard, no existing account edits; production source eb9a9a0a unchanged; same assertions both modes, real auth plus exact prefix-owned first-password/2FA mutations and typed expected MFA401 challenge, no business/global-setting writes. MSW-only diagnostic, no native preflight invoked; original PG5432/opchub_test/services/data retained, no SQL/seed/reset/repair. Unmasked images and exact Myanmar anchors, not all-language/state/control/value/performance or human approval.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-auth.spec.ts --grep 'actual first-password and 2FA en 1440'
+[WebServer] (node:34024) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:32000) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:17720) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA en 1440 (11.2s)
+
+  1 passed (17.6s)
+EXIT 0
+
+--- Myanmar mobile diagnostic functionally PASS but agent image review finds button labels overflowing36px hit boxes (original preserved as auth-first-capture-clipped-my-msw-390.png). Stronger text-range/viewport assertions added before CSS fix; toast readiness waits actual2.2-second dismissal, archived initial Vietnamese capture. ---
+Source working tree based on 94c3191c; candidate production build (not final committed proof). Complete10 raw bundles/250 files. Auth diagnostic: one Myanmar mobile flow of24 registered browser cases; prefix-only provisioning approved, exact dedicated auth guard, no existing account edits; production source eb9a9a0a unchanged; same assertions both modes, real auth plus exact prefix-owned first-password/2FA mutations and typed expected MFA401 challenge, no business/global-setting writes. MSW-only diagnostic, no native preflight invoked; original PG5432/opchub_test/services/data retained, no SQL/seed/reset/repair. Unmasked images and exact Myanmar anchors, not all-language/state/control/value/performance or human approval.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-auth.spec.ts --grep 'actual first-password and 2FA my 390'
+[WebServer] (node:19944) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:31316) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:10604) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA my 390 (12.4s)
+
+  1 passed (17.9s)
+EXIT 0
+
+--- Stronger original My390 geometry check FAIL: setup dialog viewport ratio0 after unconditional leaveAuth scroll reset. Native first33 functional-only cases passed before this stronger check; not accepted as final geometry/image proof. Preserve setup scroll, reset only on completed app entry; callbacks/routes/session/API unchanged. ---
+Source working tree based on 94c3191c; candidate production build (not final committed proof). Complete10 raw bundles/250 files. Auth diagnostic: one Myanmar mobile flow of24 registered browser cases; prefix-only provisioning approved, exact dedicated auth guard, no existing account edits; production source eb9a9a0a unchanged; same assertions both modes, real auth plus exact prefix-owned first-password/2FA mutations and typed expected MFA401 challenge, no business/global-setting writes. MSW-only diagnostic, no native preflight invoked; original PG5432/opchub_test/services/data retained, no SQL/seed/reset/repair. Unmasked images and exact Myanmar anchors, not all-language/state/control/value/performance or human approval.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-auth.spec.ts --grep 'actual first-password and 2FA my 390'
+[WebServer] (node:24896) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:12140) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:26652) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA my 390 (10.1s)
+
+
+  1) [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA my 390
+
+    Error: expect(locator).toBeInViewport() failed
+
+    Locator:  getByRole('dialog')
+    Expected: in viewport
+    Received: viewport ratio 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeInViewport" getByRole('dialog') with timeout 5000ms
+      - waiting for getByRole('dialog')
+        14 × locator resolved to <form role="dialog" aria-modal="true" class="dTsusG_card Fig3uG_dialog" aria-labelledby="first-password-title">…</form>
+           - unexpected value "viewport ratio 0"
+
+
+       at behavior\admin-i18n-auth\geometry.ts:5
+
+      3 | export async function authGeometry(page: Page, state: 'first-password' | 'mfa') {
+      4 |   const form = state === 'first-password' ? page.getByRole('dialog') : page.locator('form');
+    > 5 |   await expect(form).toBeInViewport({ ratio: 1 });
+        |                      ^
+      6 |   const buttons = await form.getByRole('button').evaluateAll((nodes) => nodes.map((node, index) => {
+      7 |     const outer = node.getBoundingClientRect();
+      8 |     const range = document.createRange();
+        at authGeometry (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-auth\geometry.ts:5:22)
+        at authImage (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-auth\images.ts:17:9)
+        at firstPassword (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-auth\first-password.ts:27:3)
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-auth.spec.ts:15:7
+
+    Error: Exact auth flow count: auth/login
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 3
+    Received: 2
+
+       at behavior\admin-i18n-auth\fixtures.ts:79
+
+      77 |         challenge: 1,
+      78 |       }))
+    > 79 |         expect(protocol.counts.get(key), `Exact auth flow count: ${key}`).toBe(count);
+         |                                                                           ^
+      80 |     },
+      81 |     { auto: true },
+      82 |   ],
+        at Object.base.extend.audit.auto (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-auth\fixtures.ts:79:75)
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-auth-results-msw\admin-i18n-auth-D-141-AC82-3f79f-rst-password-and-2FA-my-390-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA my 390
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+System.Management.Automation.RemoteException
+EXIT 1
+
+--- Scroll-only correction now passes initial viewport gate; stronger original My390 action geometry FAIL: button0 bottom591.203125, second text line bottom610.203125,19px outside hit box. Fix natural height with36px minimum, original padding/font/callbacks retained; no masking/truncation. ---
+Source working tree based on 94c3191c; candidate production build (not final committed proof). Complete10 raw bundles/250 files. Auth diagnostic: one Myanmar mobile flow of24 registered browser cases; prefix-only provisioning approved, exact dedicated auth guard, no existing account edits; production source eb9a9a0a unchanged; same assertions both modes, real auth plus exact prefix-owned first-password/2FA mutations and typed expected MFA401 challenge, no business/global-setting writes. MSW-only diagnostic, no native preflight invoked; original PG5432/opchub_test/services/data retained, no SQL/seed/reset/repair. Unmasked images and exact Myanmar anchors, not all-language/state/control/value/performance or human approval.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-auth.spec.ts --grep 'actual first-password and 2FA my 390'
+[WebServer] (node:17468) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:11344) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:2056) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA my 390 (5.2s)
+
+
+  1) [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA my 390
+
+    Error: {"index":0,"outer":{"left":57.7578125,"right":143.0703125,"top":555.203125,"bottom":591.203125},"text":[{"left":83.0546875,"right":117.7578125,"top":560.203125,"bottom":579.203125},{"left":78.4296875,"right":122.3984375,"top":591.203125,"bottom":610.203125}]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 592.203125
+    Received:    610.203125
+
+       at behavior\admin-i18n-auth\geometry.ts:30
+
+      28 |       expect(text.right, receipt).toBeLessThanOrEqual(button.outer.right + 1);
+      29 |       expect(text.top, receipt).toBeGreaterThanOrEqual(button.outer.top - 1);
+    > 30 |       expect(text.bottom, receipt).toBeLessThanOrEqual(button.outer.bottom + 1);
+         |                                    ^
+      31 |     }
+      32 | }
+      33 |
+        at authGeometry (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-auth\geometry.ts:30:36)
+        at authImage (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-auth\images.ts:17:3)
+        at firstPassword (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-auth\first-password.ts:27:3)
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-auth.spec.ts:15:7
+
+    Error: Exact auth flow count: auth/login
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 3
+    Received: 2
+
+       at behavior\admin-i18n-auth\fixtures.ts:79
+
+      77 |         challenge: 1,
+      78 |       }))
+    > 79 |         expect(protocol.counts.get(key), `Exact auth flow count: ${key}`).toBe(count);
+         |                                                                           ^
+      80 |     },
+      81 |     { auto: true },
+      82 |   ],
+        at Object.base.extend.audit.auto (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-auth\fixtures.ts:79:75)
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-auth-results-msw\admin-i18n-auth-D-141-AC82-3f79f-rst-password-and-2FA-my-390-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA my 390
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+System.Management.Automation.RemoteException
+EXIT 1
+
+--- First native33 functional cases before viewport/text-range/toast readiness gates; not final acceptance ---
+Source working tree based on 94c3191c; candidate production build, not final committed proof. Complete10 raw bundles/250 files. Full33 auth cases:24 actual first-password/setup/MFA browser flows,12 identities x2 widths;9 pure RFC/guard contracts, not33 independent browser workflows; prefix-owned accounts approved, production eb9a9a0a auth inputs unchanged; same assertions both modes, real auth plus exact owned first-password/2FA writes and expected typed MFA401, no business/global-setting writes. Approved native wrapper/listener/endpoints revalidated by native preflight; original PG5432/opchub_test/services/data retained, no SQL/seed/reset/repair. Unmasked images and exact Myanmar anchors, not all-language/state/control/value/performance or human approval.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-auth.spec.ts behavior/admin-i18n-auth/totp-contract.spec.ts behavior/admin-i18n-auth/protocol-contract.spec.ts
+[WebServer] (node:13696) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 33 tests using 1 worker
+
+(node:11112) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [behavior] › behavior\admin-i18n-auth\protocol-contract.spec.ts:10:3 › D-141 AC824-04 fixture guard rejects unowned mutation /v1/admin/settings/general (7ms)
+  ok  2 [behavior] › behavior\admin-i18n-auth\protocol-contract.spec.ts:10:3 › D-141 AC824-04 fixture guard rejects unowned mutation /v1/admin/admin-accounts/existing/status (1ms)
+  ok  3 [behavior] › behavior\admin-i18n-auth\protocol-contract.spec.ts:10:3 › D-141 AC824-04 fixture guard rejects unowned mutation /v1/admin/admin-accounts/existing/role (1ms)
+  ok  4 [behavior] › behavior\admin-i18n-auth\protocol-contract.spec.ts:10:3 › D-141 AC824-04 fixture guard rejects unowned mutation /v1/admin/auth/first-password (1ms)
+  ok  5 [behavior] › behavior\admin-i18n-auth\protocol-contract.spec.ts:15:1 › D-141 AC824-04 fixture guard rejects existing identity and malformed401 (7ms)
+  ok  6 [behavior] › behavior\admin-i18n-auth\totp-contract.spec.ts:12:3 › D-141 AC824-04 RFC6238 six digits at 59 (2ms)
+  ok  7 [behavior] › behavior\admin-i18n-auth\totp-contract.spec.ts:12:3 › D-141 AC824-04 RFC6238 six digits at 1111111109 (1ms)
+  ok  8 [behavior] › behavior\admin-i18n-auth\totp-contract.spec.ts:12:3 › D-141 AC824-04 RFC6238 six digits at 20000000000 (1ms)
+  ok  9 [behavior] › behavior\admin-i18n-auth\totp-contract.spec.ts:15:1 › D-141 AC824-04 rejects non-TOTP and unsupported parameters (3ms)
+  ok 10 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA vi 1440 (18.9s)
+  ok 11 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA vi 390 (30.1s)
+  ok 12 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA en 1440 (30.1s)
+  ok 13 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA en 390 (29.9s)
+  ok 14 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA en-SG 1440 (29.9s)
+  ok 15 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA en-SG 390 (30.0s)
+  ok 16 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA zh 1440 (29.9s)
+  ok 17 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA zh 390 (30.0s)
+  ok 18 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA id 1440 (30.1s)
+  ok 19 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA id 390 (29.9s)
+  ok 20 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA th 1440 (30.0s)
+  ok 21 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA th 390 (30.1s)
+  ok 22 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA ms 1440 (30.1s)
+  ok 23 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA ms 390 (30.0s)
+  ok 24 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA ms-BN 1440 (29.9s)
+  ok 25 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA ms-BN 390 (29.9s)
+  ok 26 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA fil 1440 (30.0s)
+  ok 27 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA fil 390 (30.0s)
+  ok 28 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA km 1440 (30.0s)
+  ok 29 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA km 390 (30.0s)
+  ok 30 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA lo 1440 (30.9s)
+  ok 31 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA lo 390 (29.1s)
+  ok 32 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA my 1440 (29.9s)
+  ok 33 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA my 390 (30.1s)
+
+  Slow test file: [behavior] › behavior\admin-i18n-auth.spec.ts (11.8m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  33 passed (11.9m)
+EXIT 0
+
+===== Final My390 diagnostic after natural action sizing; candidate build; not full acceptance =====
+Source working tree based on 94c3191c; candidate production build (not final committed proof). Complete10 raw bundles/250 files. Auth diagnostic: one Myanmar mobile flow of24 registered browser cases; prefix-only provisioning approved, exact dedicated auth guard, no existing account edits; rebuilt candidate Admin production includes opaque mock MFA, setup scroll preservation and natural action sizing; same assertions both modes, real auth plus exact prefix-owned first-password/2FA mutations and typed expected MFA401 challenge, no business/global-setting writes. MSW-only diagnostic, no native preflight invoked; original PG5432/opchub_test/services/data retained, no SQL/seed/reset/repair. Unmasked images and exact Myanmar anchors, not all-language/state/control/value/performance or human approval.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-auth.spec.ts --grep 'actual first-password and 2FA my 390'
+[WebServer] (node:12220) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:26232) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:30668) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA my 390 (37.1s)
+[WebServer] Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+[WebServer]
+[WebServer]   × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\admin
+[WebServer]
+
+  1 passed (42.9s)
+EXIT 0

@@ -1,0 +1,19 @@
+TIP824 native authenticated Filipino Overview/Profile/Settings 1440/390 visual subset; production/test working tree based on582e8579. Private API listener belongs to unchanged approved wrapper; local database port is not5432. No seed/reset/migration, no original service stop; authenticated session creation only. Full6-case Filipino actual three-screen suite, identical assertions to MSW; no global seed/reset. Not all-language/error/loading/native feature acceptance.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-visual.spec.ts
+[WebServer] (node:30384) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+(node:6596) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\admin-i18n-visual.spec.ts:38:5 › D-141 AC824-07/15 Filipino actual overview 1440, not all-language acceptance (4.6s)
+  ok 2 [behavior] › behavior\admin-i18n-visual.spec.ts:38:5 › D-141 AC824-07/15 Filipino actual overview 390, not all-language acceptance (3.8s)
+  ok 3 [behavior] › behavior\admin-i18n-visual.spec.ts:38:5 › D-141 AC824-07/15 Filipino actual profile 1440, not all-language acceptance (4.4s)
+  ok 4 [behavior] › behavior\admin-i18n-visual.spec.ts:38:5 › D-141 AC824-07/15 Filipino actual profile 390, not all-language acceptance (3.8s)
+  ok 5 [behavior] › behavior\admin-i18n-visual.spec.ts:38:5 › D-141 AC824-07/15 Filipino actual settings 1440, not all-language acceptance (4.4s)
+  ok 6 [behavior] › behavior\admin-i18n-visual.spec.ts:38:5 › D-141 AC824-07/15 Filipino actual settings 390, not all-language acceptance (3.8s)
+
+  6 passed (29.1s)
+EXIT 0
+Postcommit receipt source264842f8: all35 final tested catalog/test/README/manifest blobs match HEAD and worktree after normal hooks. Build/catalog/production inputs unchanged by the later sidebar-test-only readiness correction. Original working-tree base retained above.

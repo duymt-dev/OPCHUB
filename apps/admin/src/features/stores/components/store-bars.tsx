@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import styles from './stores.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 interface BulkProps {
   count: number;
@@ -13,10 +14,11 @@ interface BulkProps {
 
 /** Prototype `hasSel`: "N gian hàng đã chọn · Hiển thị · Ẩn … Bỏ chọn" */
 export function StoreBulkBar(p: BulkProps) {
+  const numberText = useNumberText();
   const t = useTranslations('stores.bulk');
   return (
     <div className={styles.bulk} role="region" aria-label={t('label')}>
-      <b>{t('selected', { n: p.count })}</b>
+      <b>{t('selected', { n: numberText(p.count) })}</b>
       {p.canAct ? (
         <>
           <button type="button" className={styles.bulkShow} onClick={p.onShow}>
@@ -44,10 +46,13 @@ interface PagerProps {
 
 /** Prototype `pgT`: "Trang x / y · N gian hàng" + ‹ › */
 export function StorePager({ page, pages, total, onPage }: PagerProps) {
+  const numberText = useNumberText();
   const t = useTranslations('stores.pager');
   return (
     <div className={styles.pager}>
-      <span>{t('text', { page, pages, total })}</span>
+      <span>
+        {t('text', { page: numberText(page), pages: numberText(pages), total: numberText(total) })}
+      </span>
       <button
         type="button"
         aria-label={t('prev')}

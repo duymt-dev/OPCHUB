@@ -1,0 +1,541 @@
+TIP824 scoped standalone Intl constructors/data; working tree based one5e5bf05. No global Intl replacement, Portal/shared/business/API/DB change. Exact package/locale-source/timezone/license hashes in intl-data/receipt.json. Public auth does not evaluate unused Intl locale data; authenticated shell/pages prepare selected km/lo/my before formatting, same pinned CLDR on server/client. Resource loading/error copy uses existing translations. No skip/timeout/assertion relaxation.
+Actual offline installed Chromium native capabilities (before app overrides; none are installed):
+[
+  {
+    "locale": "vi-VN",
+    "date": [
+      "vi-VN"
+    ],
+    "number": [
+      "vi-VN"
+    ],
+    "plural": [
+      "vi-VN"
+    ]
+  },
+  {
+    "locale": "en-GB",
+    "date": [
+      "en-GB"
+    ],
+    "number": [
+      "en-GB"
+    ],
+    "plural": [
+      "en-GB"
+    ]
+  },
+  {
+    "locale": "en-SG",
+    "date": [
+      "en-SG"
+    ],
+    "number": [
+      "en-SG"
+    ],
+    "plural": [
+      "en-SG"
+    ]
+  },
+  {
+    "locale": "zh-CN",
+    "date": [
+      "zh-CN"
+    ],
+    "number": [
+      "zh-CN"
+    ],
+    "plural": [
+      "zh-CN"
+    ]
+  },
+  {
+    "locale": "id-ID",
+    "date": [
+      "id-ID"
+    ],
+    "number": [
+      "id-ID"
+    ],
+    "plural": [
+      "id-ID"
+    ]
+  },
+  {
+    "locale": "th-TH",
+    "date": [
+      "th-TH"
+    ],
+    "number": [
+      "th-TH"
+    ],
+    "plural": [
+      "th-TH"
+    ]
+  },
+  {
+    "locale": "ms-MY",
+    "date": [
+      "ms-MY"
+    ],
+    "number": [
+      "ms-MY"
+    ],
+    "plural": [
+      "ms-MY"
+    ]
+  },
+  {
+    "locale": "ms-BN",
+    "date": [
+      "ms-BN"
+    ],
+    "number": [
+      "ms-BN"
+    ],
+    "plural": [
+      "ms-BN"
+    ]
+  },
+  {
+    "locale": "fil-PH",
+    "date": [
+      "fil-PH"
+    ],
+    "number": [
+      "fil-PH"
+    ],
+    "plural": [
+      "fil-PH"
+    ]
+  },
+  {
+    "locale": "km-KH",
+    "date": [],
+    "number": [],
+    "plural": [
+      "km-KH"
+    ]
+  },
+  {
+    "locale": "lo-LA",
+    "date": [],
+    "number": [],
+    "plural": [
+      "lo-LA"
+    ]
+  },
+  {
+    "locale": "my-MM",
+    "date": [],
+    "number": [],
+    "plural": [
+      "my-MM"
+    ]
+  }
+]
+COMMAND pnpm --filter @opchub/admin exec vitest run src/i18n/intl/runtime.spec.ts src/i18n/intl/resources.spec.ts src/providers/admin-intl-ready.spec.tsx src/i18n/request.spec.ts src/i18n/format.spec.ts src/features/bots/components/reply-groups.spec.tsx --maxWorkers=1
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  6 passed (6)
+      Tests  60 passed (60)
+   Start at  01:48:54
+   Duration  38.75s (import 53%, environment 37%, tests 5%, transform 4%)
+
+     Import  409 modules were evaluated 672 times · 19.77s total, 53% of tracked time
+             ~7.74s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+             learn more: https://vitest.dev/guide/improving-performance#test-isolation
+
+FOCUSED EXIT 0
+
+INITIAL PICKER MSW OBSERVATION FAILURE (production/value assertions not weakened): one old Overview poll body was lost by CDP at F5; real loader IDs and request epochs now distinguish only this exact destroyed-document protocol failure. HTTP failures/writes/JSON failures/current or restored loader errors remain strict, polling and default timeouts unchanged. Initial diagnostic retained:
+TIP824 actual numeric picker, ten currently translated selector identities incl aliases, three explicit canonical ranges (21Nov, year boundary, leap day) at1440/390. Six cases/mode, same assertions both modes, actual login and read-only guard, actual selector pointer switches, retained URL/API YYYY-MM-DD and alias/F5. General Intl date/number formatting and missing km/my catalog acceptance remain open. Current scoped Intl working tree based one5e5bf05, same-source production builds and strengthened current tests. MSW Portal relay only, no DB/global seed/reset.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-picker.spec.ts
+[WebServer] (node:3036) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:13444) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+(node:20572) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker nonambiguous 1440, ten translated identities not full Intl acceptance (7.0s)
+  ok 2 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker year-boundary 1440, ten translated identities not full Intl acceptance (6.2s)
+  ok 3 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker leap-day 1440, ten translated identities not full Intl acceptance (6.2s)
+  ok 4 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker nonambiguous 390, ten translated identities not full Intl acceptance (6.2s)
+  ok 5 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker year-boundary 390, ten translated identities not full Intl acceptance (6.1s)
+  x  6 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker leap-day 390, ten translated identities not full Intl acceptance (6.3s)
+
+
+  1) [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker leap-day 390, ten translated identities not full Intl acceptance
+
+    Error: response.json: Protocol error (Network.getResponseBody): No resource with given identifier found
+    Response body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.
+
+       at behavior\admin-i18n\fixtures.ts:93
+
+      91 |         if (response.ok() && response.headers()['content-type']?.includes('application/json')) {
+      92 |           const parsing = (async () => {
+    > 93 |             const parsed = z.json().parse((await response.json()) as unknown);
+         |                                                           ^
+      94 |             rawContent(parsed, raw);
+      95 |             // Stored moderation keywords are user-authored content, not filter-control labels.
+      96 |             if (path === '/v1/admin/moderation/keywords')
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n\fixtures.ts:93:59
+        at _Page.responseListener (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n\fixtures.ts:103:12)
+
+    Error Context: test-results\admin-i18n-picker-D-141-AC-be261-es-not-full-Intl-acceptance-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker leap-day 390, ten translated identities not full Intl acceptance
+  5 passed (44.0s)
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+System.Management.Automation.RemoteException
+EXIT 1
+
+Initial post-extraction native navigation attempt: HTTP500 /v1/admin/badges guard failure; retained below. No ignored HTTP error or weakened assertion.
+TIP824 native real-selector navigation/draft/settings and explicit covered-handler provider-refresh probes; production/test working tree based one5e5bf05. Private API listener belongs to unchanged approved wrapper; local database port is not5432. No seed/reset/migration, no original service stop; authenticated session creation only. Full10-case suite;2 synthetic covered-selector-handler probes do not prove modal pointer accessibility, identical assertions to MSW; no global seed/reset. Not all-language/error/loading/native feature acceptance.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-navigation.spec.ts
+[WebServer] (node:7524) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 10 tests using 1 worker
+
+(node:26440) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [behavior] › behavior\admin-i18n-navigation.spec.ts:20:3 › D-141 AC824-01/05 aliases retain country identity and profile draft after refresh 1440 (3.8s)
+  ok  2 [behavior] › behavior\admin-i18n-navigation.spec.ts:43:3 › D-141 AC824-05 member URL filters page and protected data survive real locale switches 1440 (4.3s)
+  ok  3 [behavior] › behavior\admin-i18n-navigation.spec.ts:84:3 › D-141 AC824-10 profile draft and local password errors switch without submitting 1440 (4.0s)
+  ok  4 [behavior] › behavior\admin-i18n-navigation.spec.ts:128:3 › D-141 AC824-10/11 provider refresh probe preserves open group drawer and canonical draft 1440 (3.1s)
+  ok  5 [behavior] › behavior\admin-i18n-navigation.spec.ts:169:3 › D-141 AC824-13 selector cookie and12 options remain independent of saved language settings 1440 (4.0s)
+  ok  6 [behavior] › behavior\admin-i18n-navigation.spec.ts:20:3 › D-141 AC824-01/05 aliases retain country identity and profile draft after refresh 390 (3.1s)
+[WebServer] Failed to proxy http://127.0.0.1:53792/v1/admin/badges Error: read ECONNRESET
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4077,
+[WebServer]   code: 'ECONNRESET',
+[WebServer]   syscall: 'read'
+[WebServer] }
+[WebServer] Error: read ECONNRESET
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4077,
+[WebServer]   code: 'ECONNRESET',
+[WebServer]   syscall: 'read'
+[WebServer] }
+  x   7 [behavior] › behavior\admin-i18n-navigation.spec.ts:43:3 › D-141 AC824-05 member URL filters page and protected data survive real locale switches 390 (4.3s)
+(node:16192) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  8 [behavior] › behavior\admin-i18n-navigation.spec.ts:84:3 › D-141 AC824-10 profile draft and local password errors switch without submitting 390 (6.6s)
+  ok  9 [behavior] › behavior\admin-i18n-navigation.spec.ts:128:3 › D-141 AC824-10/11 provider refresh probe preserves open group drawer and canonical draft 390 (6.1s)
+  ok 10 [behavior] › behavior\admin-i18n-navigation.spec.ts:169:3 › D-141 AC824-13 selector cookie and12 options remain independent of saved language settings 390 (6.5s)
+
+
+  1) [behavior] › behavior\admin-i18n-navigation.spec.ts:43:3 › D-141 AC824-05 member URL filters page and protected data survive real locale switches 390
+
+    Error: Loaded-state coverage requires successful API preconditions
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "500 /v1/admin/badges",
+    + ]
+
+       at behavior\admin-i18n\fixtures.ts:137
+
+      135 |         'Read-only browsing must not mutate settings, content or export personal data',
+      136 |       ).toEqual([]);
+    > 137 |       expect(failures, 'Loaded-state coverage requires successful API preconditions').toEqual([]);
+          |                                                                                       ^
+      138 |       expect(errors, 'No hydration, Intl missing-message or other browser errors').toEqual([]);
+      139 |     },
+      140 |     { auto: true },
+        at Object.base.extend.guard.auto (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n\fixtures.ts:137:87)
+
+    Error Context: test-results\admin-i18n-navigation-D-14-f2eba-ve-real-locale-switches-390-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\admin-i18n-navigation.spec.ts:43:3 › D-141 AC824-05 member URL filters page and protected data survive real locale switches 390
+  9 passed (58.7s)
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+System.Management.Automation.RemoteException
+EXIT 1
+
+Type-only pre/post-build syntax emits identical JavaScript: "export {};"
+
+20 frozen production/resource/dependency inputs match both WIPe5e5bf05 builds; the sole later type-syntax input emits identical JS (recorded above). Final37 source/test/manifest/resource-reference blobs match 3c967476/worktree after normal hooks. Full root3115 passed +2 existing skips, fresh Admin1392/189files and5 cached suites. Browser70 =48 UI assertions (4 synthetic probes included) +22 pure helper cases. Not whole-TIP DONE.
+
+FOLLOW-UP source89c2ed1b: browser test-only extension to three scoped CLDR locales; production/apps/packages/infra/lockfiles byte-identical to built source0e3803b3 (git diff --exit-code verified). Reused both verified production builds, not a new build claim. Raw DTO/independent Node full-ICU date-VND/selected response SHA256/global Intl unchanged/no-public-data-fetch oracles retained. No original PG5432/data/services or private service changes; native wrapper/listener/endpoints revalidated. Six cases/mode, not a new full212-case run; prior208/208 per mode belongs to source0e3803b3. Root verification below has cached3367 passed +2 existing skips, not fresh unit execution or extra unique tests.
+Working tree based956d6b83; browser-only three-locale Intl extension. No production/catalog/API/data changes. Actual root gates, cached tasks explicit.
+COMMAND pnpm lint
+$ turbo run lint
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running lint in 9 packages
+   • Remote caching disabled
+
+@opchub/e2e:lint: cache miss, executing 888581b160d1c5b4
+@opchub/integrations:lint: cache hit, replaying logs 1fb607819a53b21e
+@opchub/db:lint: cache hit, replaying logs 8df791dba6501ec7
+@opchub/server:lint: cache hit, replaying logs 7f4b11d47879bedd
+@opchub/integrations:lint: $ eslint src
+@opchub/db:lint: $ eslint src seed test
+@opchub/ui:lint: cache hit, replaying logs eea5bd38bfdbc884
+@opchub/ui:lint: $ eslint src
+@opchub/server:lint: $ eslint src test
+@opchub/portal:lint: cache hit, replaying logs 71e3df361172b94e
+@opchub/portal:lint: $ eslint src
+@opchub/admin:lint: cache hit, replaying logs 5f5bda6cf8822dc7
+@opchub/shared:lint: cache hit, replaying logs f9d493ea0cb6d67f
+@opchub/admin:lint: $ eslint src
+@opchub/shared:lint: $ eslint src
+@opchub/e2e:lint: $ eslint parity behavior audit server llm env.ts urls.ts
+
+ Tasks:    8 successful, 8 total
+Cached:    7 cached, 8 total
+  Time:    17.774s
+
+EXIT 0
+COMMAND pnpm typecheck
+$ turbo run typecheck
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running typecheck in 9 packages
+   • Remote caching disabled
+
+@opchub/ui:typecheck: cache hit, replaying logs 24d1fa8fcf34937b
+@opchub/shared:typecheck: cache hit, replaying logs 2af37fea5a693c30
+@opchub/integrations:typecheck: cache hit, replaying logs 60f5b494e043fdc4
+@opchub/db:typecheck: cache hit, replaying logs 35eaf239ef03390a
+@opchub/e2e:typecheck: cache miss, executing 2e5fd486758dec20
+@opchub/portal:typecheck: cache hit, replaying logs 384ceac62a366d53
+@opchub/db:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/shared:typecheck: $ tsc -p tsconfig.json
+@opchub/integrations:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/portal:typecheck: $ next typegen && tsc --noEmit
+@opchub/portal:typecheck: Generating route types...
+@opchub/portal:typecheck: ✓ Types generated successfully
+@opchub/ui:typecheck: $ tsc -p tsconfig.json
+@opchub/admin:typecheck: cache hit, replaying logs a4b90a948f740b8d
+@opchub/server:typecheck: cache hit, replaying logs f44a5951da8d2c30
+@opchub/server:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/admin:typecheck: $ next typegen && tsc --noEmit
+@opchub/admin:typecheck: Generating route types...
+@opchub/admin:typecheck: ✓ Types generated successfully
+@opchub/e2e:typecheck: $ tsc -p tsconfig.json
+
+ Tasks:    8 successful, 8 total
+Cached:    7 cached, 8 total
+  Time:    6.949s
+
+EXIT 0
+COMMAND pnpm depcheck
+$ depcruise apps/portal apps/admin packages e2e --config .dependency-cruiser.cjs && depcruise apps/server --config .dependency-cruiser.cjs --ts-config tsconfig.depcruise.server.json
+
+✔ no dependency violations found (2838 modules, 8683 dependencies cruised)
+
+
+✔ no dependency violations found (1260 modules, 5995 dependencies cruised)
+
+EXIT 0
+COMMAND pnpm test --env-mode=loose
+$ turbo run test --concurrency=2 --env-mode=loose
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running test in 9 packages
+   • Remote caching disabled
+
+@opchub/admin:test: cache hit, replaying logs abde063efe269f5e
+@opchub/admin:test: $ vitest run --passWithNoTests
+@opchub/admin:test:
+@opchub/admin:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+@opchub/admin:test:
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test:
+@opchub/admin:test:  Test Files  194 passed (194)
+@opchub/admin:test:       Tests  1644 passed (1644)
+@opchub/admin:test:    Start at  08:01:30
+@opchub/admin:test:    Duration  1245.46s (import 54%, environment 35%, tests 10%, transform 1%)
+@opchub/admin:test:
+@opchub/admin:test:      Import  1307 modules were evaluated 6471 times · 647.94s total, 54% of tracked time
+@opchub/admin:test:              ~517.07s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/admin:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
+@opchub/admin:test:
+@opchub/ui:test: cache hit, replaying logs 93ecb6a3e3980f04
+@opchub/ui:test: $ vitest run
+@opchub/ui:test:
+@opchub/ui:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/ui
+@opchub/ui:test:
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test:
+@opchub/ui:test:  Test Files  24 passed (24)
+@opchub/ui:test:       Tests  88 passed (88)
+@opchub/ui:test:    Start at  22:02:39
+@opchub/ui:test:    Duration  124.68s (import 50%, environment 44%, tests 4%, transform 1%)
+@opchub/ui:test:
+@opchub/ui:test:     Isolate  24 workers spawned · ~4.78s startup each (spawn + environment, per file)
+@opchub/ui:test:              at least ~52.62s faster with isolate: false — reuses workers across files instead of one per file
+@opchub/ui:test:
+@opchub/server:test: cache hit, replaying logs c2e070d3adeeddab
+@opchub/portal:test: cache hit, replaying logs c499ac8b2dccf1b3
+@opchub/server:test: $ vitest run --project unit
+@opchub/server:test:
+@opchub/server:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+@opchub/server:test:
+@opchub/server:test:
+@opchub/server:test:  Test Files  57 passed (57)
+@opchub/server:test:       Tests  276 passed (276)
+@opchub/server:test:    Start at  16:03:29
+@opchub/server:test:    Duration  57.63s (import 83%, transform 12%, tests 4%, worker 1%)
+@opchub/server:test:
+@opchub/server:test:      Import  |unit| 400 modules were evaluated 1913 times · 65.27s total, 83% of tracked time
+@opchub/server:test:              ~22.11s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/server:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
+@opchub/server:test:
+@opchub/portal:test: $ vitest run --passWithNoTests
+@opchub/portal:test:
+@opchub/portal:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/portal
+@opchub/portal:test:
+@opchub/portal:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/portal:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/portal:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/portal:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/portal:test:
+@opchub/portal:test:  Test Files  85 passed (85)
+@opchub/portal:test:       Tests  476 passed (476)
+@opchub/portal:test:    Start at  16:04:29
+@opchub/portal:test:    Duration  353.37s (environment 47%, import 47%, tests 4%, transform 1%)
+@opchub/portal:test:
+@opchub/portal:test:      Import  804 modules were evaluated 5111 times · 309.19s total, 47% of tracked time
+@opchub/portal:test:              ~113.00s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/portal:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
+@opchub/portal:test:
+@opchub/integrations:test: cache hit, replaying logs b6c214e97c1022b8
+@opchub/shared:test: cache hit, replaying logs b0ac9becdf974ad3
+@opchub/integrations:test: $ vitest run
+@opchub/integrations:test:
+@opchub/integrations:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/integrations
+@opchub/integrations:test:
+@opchub/integrations:test:
+@opchub/integrations:test:  Test Files  13 passed | 1 skipped (14)
+@opchub/integrations:test:       Tests  126 passed | 2 skipped (128)
+@opchub/integrations:test:    Start at  16:03:15
+@opchub/integrations:test:    Duration  11.26s (import 54%, transform 25%, tests 18%, worker 3%)
+@opchub/integrations:test:
+@opchub/integrations:test:      Import  151 modules were evaluated 343 times · 6.24s total, 54% of tracked time
+@opchub/integrations:test:              ~709ms faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/integrations:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
+@opchub/integrations:test:
+@opchub/shared:test: $ vitest run
+@opchub/shared:test:
+@opchub/shared:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/shared
+@opchub/shared:test:
+@opchub/shared:test:
+@opchub/shared:test:  Test Files  127 passed (127)
+@opchub/shared:test:       Tests  757 passed (757)
+@opchub/shared:test:    Start at  16:00:10
+@opchub/shared:test:    Duration  158.12s (import 86%, transform 9%, tests 4%, worker 1%)
+@opchub/shared:test:
+@opchub/shared:test:      Import  432 modules were evaluated 893 times · 162.66s total, 86% of tracked time
+@opchub/shared:test:              ~18.76s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/shared:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
+@opchub/shared:test:
+
+ Tasks:    6 successful, 6 total
+Cached:    6 cached, 6 total
+  Time:    171ms >>> FULL TURBO
+
+EXIT 0
+
+NATIVE6
+Source 89c2ed1b. Complete10 raw bundles/250 files. Six focused real Fees cases, Khmer/Lao/Myanmar at1440/390, independent Node date-VND and selected CLDR payload/global Intl oracles; not a full212-case execution; same assertions both modes, real login200 and strict HTTP/JSON/no-business-write guard. Approved native wrapper/listener/endpoints revalidated by native preflight; original PG5432/opchub_test/services/data retained, no SQL/seed/reset/repair. Unmasked images and exact Myanmar anchors, not all-language/state/control/value/performance or human approval.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-intl.spec.ts
+[WebServer] (node:14956) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+(node:11900) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\admin-i18n-intl.spec.ts:57:5 › D-141 AC824-08/11/16 actual lo fees match independent Node dates/currency and selected Intl registration 1440 (3.3s)
+  ok 2 [behavior] › behavior\admin-i18n-intl.spec.ts:57:5 › D-141 AC824-08/11/16 actual lo fees match independent Node dates/currency and selected Intl registration 390 (2.7s)
+  ok 3 [behavior] › behavior\admin-i18n-intl.spec.ts:57:5 › D-141 AC824-08/11/16 actual km fees match independent Node dates/currency and selected Intl registration 1440 (2.9s)
+  ok 4 [behavior] › behavior\admin-i18n-intl.spec.ts:57:5 › D-141 AC824-08/11/16 actual km fees match independent Node dates/currency and selected Intl registration 390 (2.7s)
+  ok 5 [behavior] › behavior\admin-i18n-intl.spec.ts:57:5 › D-141 AC824-08/11/16 actual my fees match independent Node dates/currency and selected Intl registration 1440 (3.0s)
+  ok 6 [behavior] › behavior\admin-i18n-intl.spec.ts:57:5 › D-141 AC824-08/11/16 actual my fees match independent Node dates/currency and selected Intl registration 390 (2.7s)
+
+  6 passed (21.8s)
+EXIT 0
+
+MSW6
+Source 89c2ed1b. Complete10 raw bundles/250 files. Six focused real Fees cases, Khmer/Lao/Myanmar at1440/390, independent Node date-VND and selected CLDR payload/global Intl oracles; not a full212-case execution; same assertions both modes, real login200 and strict HTTP/JSON/no-business-write guard. Approved native wrapper/listener/endpoints revalidated by native preflight; original PG5432/opchub_test/services/data retained, no SQL/seed/reset/repair. Unmasked images and exact Myanmar anchors, not all-language/state/control/value/performance or human approval.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-intl.spec.ts
+[WebServer] (node:5768) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:30316) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+(node:8112) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\admin-i18n-intl.spec.ts:57:5 › D-141 AC824-08/11/16 actual lo fees match independent Node dates/currency and selected Intl registration 1440 (4.8s)
+  ok 2 [behavior] › behavior\admin-i18n-intl.spec.ts:57:5 › D-141 AC824-08/11/16 actual lo fees match independent Node dates/currency and selected Intl registration 390 (4.7s)
+  ok 3 [behavior] › behavior\admin-i18n-intl.spec.ts:57:5 › D-141 AC824-08/11/16 actual km fees match independent Node dates/currency and selected Intl registration 1440 (4.6s)
+  ok 4 [behavior] › behavior\admin-i18n-intl.spec.ts:57:5 › D-141 AC824-08/11/16 actual km fees match independent Node dates/currency and selected Intl registration 390 (4.3s)
+  ok 5 [behavior] › behavior\admin-i18n-intl.spec.ts:57:5 › D-141 AC824-08/11/16 actual my fees match independent Node dates/currency and selected Intl registration 1440 (4.6s)
+  ok 6 [behavior] › behavior\admin-i18n-intl.spec.ts:57:5 › D-141 AC824-08/11/16 actual my fees match independent Node dates/currency and selected Intl registration 390 (4.4s)
+
+  6 passed (34.0s)
+EXIT 0

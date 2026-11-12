@@ -3,6 +3,7 @@ import { regionalMinYear, regionalPercent, type RegionalPolicy } from '@opchub/s
 import { useTranslations } from 'next-intl';
 import { usePolicyPreview } from '../hooks/use-policy-preview';
 import styles from './policy-reference.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 export function policyYears(policy: RegionalPolicy) {
   const minimum = regionalMinYear(policy);
@@ -15,6 +16,7 @@ export function policyYears(policy: RegionalPolicy) {
   }));
 }
 export function PolicyYearTable() {
+  const numberText = useNumberText();
   const t = useTranslations('affiliate.policy');
   const policy = usePolicyPreview();
   return (
@@ -34,26 +36,28 @@ export function PolicyYearTable() {
                 <td>
                   <b>
                     {row.last
-                      ? t('fromYear', { year: row.year })
-                      : t(row.year === 1 ? 'firstYear' : 'renewalYear', { year: row.year })}
+                      ? t('fromYear', { year: numberText(row.year) })
+                      : t(row.year === 1 ? 'firstYear' : 'renewalYear', {
+                          year: numberText(row.year),
+                        })}
                   </b>
                   <small>
                     {row.last
-                      ? t('floorHint', { percent: row.percent })
+                      ? t('floorHint', { percent: numberText(row.percent) })
                       : row.year === 1
                         ? t('firstHint')
-                        : t('stepHint', { step: policy.regionalStep })}
+                        : t('stepHint', { step: numberText(policy.regionalStep) })}
                   </small>
                 </td>
                 <td>
-                  <strong>{100 - row.percent}%</strong>
+                  <strong>{numberText(100 - row.percent)}%</strong>
                 </td>
                 <td>
-                  <strong className={styles.blue}>{row.percent}%</strong>
+                  <strong className={styles.blue}>{numberText(row.percent)}%</strong>
                 </td>
                 <td>
                   <span className={styles.ratio}>
-                    {100 - row.percent} / {row.percent}
+                    {numberText(100 - row.percent)} / {numberText(row.percent)}
                   </span>
                 </td>
               </tr>

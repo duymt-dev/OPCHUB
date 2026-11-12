@@ -7,6 +7,7 @@ import type { AdminGroup } from '../types';
 import { FieldPick, GroupPick, Preview, StatusFormat } from './export-sections';
 import { Dialog } from './overlay';
 import btn from './overlay.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 interface BodyProps {
   groups: AdminGroup[];
@@ -33,6 +34,7 @@ function DownloadIcon() {
 }
 
 function ExportBody({ groups, initial, onClose }: BodyProps) {
+  const numberText = useNumberText();
   const t = useTranslations('groups.export');
   const s = useExportState(initial, onClose);
   const counts = useMemberCounts(true).data ?? {};
@@ -52,7 +54,7 @@ function ExportBody({ groups, initial, onClose }: BodyProps) {
           </button>
           <button type="button" className={btn.primary} onClick={s.submit}>
             <DownloadIcon />
-            {t('download', { count: s.rows })}
+            {t('download', { count: numberText(s.rows) })}
           </button>
         </>
       }

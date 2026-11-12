@@ -1,0 +1,156 @@
+{
+  "title": "Projek OPC",
+  "sub": "Urus dan terbitkan projek ahli",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "heading": "Moderasi projek",
+  "headingSub": "Projek yang dikemukakan ahli mesti diluluskan sebelum dipaparkan ke awam",
+  "viewLabel": "Mod paparan",
+  "viewGrid": "Paparan grid",
+  "viewList": "Paparan senarai",
+  "tabsLabel": "Status projek",
+  "tabs": {
+    "pending": "Menunggu semakan",
+    "live": "Dipaparkan",
+    "hidden": "Disembunyikan",
+    "changes": "Perlu dipinda",
+    "rejected": "Ditolak",
+    "draft": "Draf"
+  },
+  "status": {
+    "pending_review": "Menunggu semakan",
+    "published": "Dipaparkan",
+    "hidden": "Disembunyikan",
+    "needs_changes": "Perlu dipinda",
+    "rejected": "Ditolak",
+    "draft": "Draf"
+  },
+  "act": {
+    "review": "Lihat & semak",
+    "detail": "Butiran",
+    "view": "Lihat",
+    "delete": "Padam"
+  },
+  "featuredMark": "Pilihan",
+  "revision": "Semakan",
+  "updated": "{owner} · Dikemas kini {date}",
+  "emptyPending": "Tiada projek yang menunggu semakan",
+  "empty": "Tiada projek di bahagian ini.",
+  "loadError": "Tidak dapat memuatkan projek",
+  "retry": "Cuba lagi",
+  "col": {
+    "project": "Projek",
+    "category": "Bidang",
+    "owner": "Pemilik projek",
+    "date": "Dikemukakan",
+    "status": "Status"
+  },
+  "selectAll": "Pilih semua projek di halaman ini",
+  "selectRow": "Pilih {name}",
+  "bulk": {
+    "label": "Tindakan projek pukal",
+    "selected": "Dipilih",
+    "unit": "item",
+    "publish": "Luluskan & terbitkan",
+    "hide": "Sembunyi",
+    "delete": "Padam",
+    "clear": "Padam pilihan"
+  },
+  "pager": {
+    "unit": "projek",
+    "prev": "Halaman sebelumnya",
+    "next": "Halaman seterusnya",
+    "pageSize": "Projek setiap halaman"
+  },
+  "drawer": {
+    "title": "Lihat & semak projek",
+    "close": "Tutup",
+    "detail": "Penerangan terperinci",
+    "prevNote": "Catatan semakan sebelumnya:",
+    "feature": "Jadikan projek pilihan minggu ini",
+    "featureHint": "Dipaparkan di bahagian teratas Terokai projek · hanya projek yang diterbitkan",
+    "feedback": "Maklum balas kepada penulis",
+    "reasonLabel": "Sebab",
+    "reasonPlaceholder": "Sebab (ketika meminta perubahan / menolak)",
+    "notePlaceholder": "Mesej kepada pemilik projek: perubahan yang diperlukan, sebab penolakan…",
+    "noteLabel": "Mesej kepada pemilik projek",
+    "reject": "Tolak",
+    "changes": "Minta perubahan",
+    "approve": "Luluskan & terbitkan",
+    "hide": "Sembunyikan projek",
+    "republish": "Terbitkan semula"
+  },
+  "info": {
+    "owner": "Penulis",
+    "country": "Negara",
+    "category": "Bidang",
+    "stage": "Peringkat",
+    "website": "Laman web",
+    "testUrl": "Pautan uji",
+    "repo": "Kod sumber",
+    "visibility": "Keterlihatan",
+    "funding": "Pengumpulan dana",
+    "team": "Pasukan",
+    "groups": "Dikongsi ke kumpulan",
+    "date": "Dikemukakan"
+  },
+  "stage": {
+    "idea": "Idea",
+    "developing": "Sedang dibangunkan",
+    "mvp": "MVP",
+    "growth": "Pertumbuhan",
+    "launched": "Telah dilancarkan"
+  },
+  "val": {
+    "none": "—",
+    "noRepo": "Belum dikongsi",
+    "repoPublic": "Awam",
+    "repoPrivate": "Persendirian",
+    "visPublic": "Awam",
+    "visPrivate": "Persendirian",
+    "noFunding": "Tidak",
+    "funding": "{amount} untuk {equity}% ekuiti"
+  },
+  "confirm": {
+    "cancel": "Batal",
+    "deleteTitle": "Padam projek?",
+    "deleteOne": "Projek {name} dan maklum balasnya akan dipadam secara kekal. Tindakan ini direkodkan.",
+    "deleteMany": "Projek beserta maklum balas yang akan dipadam secara kekal: {count}. Tindakan ini direkodkan.",
+    "delete": "Padam",
+    "hideTitle": "Sembunyikan projek?",
+    "hideOne": "{name} tidak lagi kelihatan oleh awam. Pemilik projek akan dimaklumkan.",
+    "hideMany": "Projek diterbitkan yang akan disembunyikan dari Terokai: {count}.",
+    "hide": "Sembunyi",
+    "rejectTitle": "Tolak projek?",
+    "rejectOne": "{name} akan ditolak kerana: {reason}. Pemilik projek akan dimaklumkan.",
+    "reject": "Tolak"
+  },
+  "toast": {
+    "approved": "Diluluskan & diterbitkan · {name}",
+    "changes": "Perubahan diminta · {name}",
+    "rejected": "Ditolak · {name}",
+    "hidden": "Disembunyikan · {name}",
+    "deleted": "Projek {name} dipadam",
+    "published": "Projek diterbitkan: {count}",
+    "hiddenMany": "Projek disembunyikan: {count}",
+    "deletedMany": "Projek dipadam: {count}",
+    "skipped": "{text} · projek tidak sah dilangkau: {count}",
+    "needNote": "Masukkan sebab atau mesej untuk meminta perubahan",
+    "needReason": "Pilih sebab penolakan",
+    "featured": "{name} dijadikan projek pilihan minggu ini",
+    "unfeatured": "Status pilihan dipadam",
+    "featureLiveOnly": "Hanya projek diterbitkan yang dapat dijadikan pilihan",
+    "failed": "Tindakan gagal. Sila cuba lagi"
+  },
+  "fund": {
+    "status": {
+      "pending_payment": "Pengumpulan dana · menunggu pembayaran",
+      "pending_review": "Pengumpulan dana · menunggu semakan",
+      "active": "Sedang mengumpul dana",
+      "rejected": "Pengumpulan dana · ditolak"
+    },
+    "approve": "Luluskan pengumpulan dana",
+    "reject": "Tolak",
+    "approved": "Pengumpulan dana diluluskan · komisen afiliasi 10% direkodkan sebagai rujukan (jika ada perujuk)",
+    "rejected": "Pakej pengumpulan dana ditolak"
+  }
+}

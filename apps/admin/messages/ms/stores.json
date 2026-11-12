@@ -1,0 +1,79 @@
+{
+  "title": "Kedai",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "kpi": {
+    "total": "Jumlah kedai",
+    "published": "Dipaparkan",
+    "draft": "Draf",
+    "hidden": "Disembunyikan Admin"
+  },
+  "search": "Cari kedai, industri, provinsi...",
+  "filtersLabel": "Penapis mengikut status kedai",
+  "filter": {
+    "all": "Semua",
+    "published": "Dipaparkan",
+    "draft": "Draf",
+    "hidden": "Disembunyikan"
+  },
+  "status": {
+    "published": "Dipaparkan",
+    "draft": "Draf",
+    "hidden": "Disembunyikan Admin"
+  },
+  "kind": {
+    "product": "Produk",
+    "service": "Perkhidmatan"
+  },
+  "table": {
+    "label": "Senarai kedai",
+    "all": "Pilih semua di halaman ini",
+    "store": "Kedai",
+    "field": "Industri",
+    "province": "Provinsi / bandar",
+    "items": "Produk/perkhidmatan",
+    "updated": "Kemas kini",
+    "status": "Status",
+    "actions": "Tindakan",
+    "view": "Lihat",
+    "hide": "Sembunyi",
+    "show": "Paparkan"
+  },
+  "bulk": {
+    "label": "Tindakan pukal",
+    "selected": "Kedai dipilih: {n}",
+    "show": "Paparkan",
+    "hide": "Sembunyi",
+    "clear": "Padam pilihan"
+  },
+  "pager": {
+    "text": "Halaman {page} / {pages} · Kedai: {total}",
+    "prev": "Halaman sebelumnya",
+    "next": "Halaman seterusnya"
+  },
+  "drawer": {
+    "title": "Butiran kedai",
+    "close": "Tutup butiran",
+    "closeBtn": "Tutup",
+    "meta": "Pemilik: {owner} · {loc} · dikemas kini {date}",
+    "items": "Produk & perkhidmatan",
+    "contactPrice": "Hubungi untuk tawaran harga",
+    "hide": "Sembunyikan kedai",
+    "show": "Paparkan kembali",
+    "feature": "Tandakan Pilihan",
+    "unfeature": "Padam Pilihan",
+    "publicPage": "Halaman awam",
+    "publicCopy": "Salin",
+    "publicCopied": "Pautan halaman awam disalin",
+    "publicCopyError": "Tidak dapat menyalin pautan"
+  },
+  "toast": {
+    "hidden": "Kedai disembunyikan: {n}",
+    "shown": "Kedai dipaparkan: {n}",
+    "failed": "Tidak dapat dilaksanakan, sila cuba lagi",
+    "featured": "\"{name}\" ditandakan sebagai Pilihan",
+    "unfeatured": "Status Pilihan dipadam dari \"{name}\""
+  },
+  "empty": "Tiada kedai yang sepadan.",
+  "error": "Tidak dapat memuatkan kedai",
+  "retry": "Cuba lagi"
+}

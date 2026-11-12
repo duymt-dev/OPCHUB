@@ -1,3 +1,4 @@
+import { formatNumber } from '@/i18n/format';
 import type { GroupAdminUpsertInput, GroupDetail, GroupItem } from '@opchub/shared/api-domains';
 import { tones, type ToneName } from '@opchub/ui';
 import type {
@@ -58,7 +59,7 @@ export function pageSlice<T>(list: T[], page: number, size: number) {
   return { page: cur, items: list.slice((cur - 1) * size, cur * size) };
 }
 
-export const formatCount = (n: number) => n.toLocaleString('vi-VN');
+export const formatCount = (n: number, locale = 'vi') => formatNumber(n, locale);
 
 /** Chữ viết tắt: 2 chữ cuối của tên ("OPC Hà Nội" → "HN") */
 export const initialsOf = (name: string) =>

@@ -1,0 +1,126 @@
+{
+  "shell": {
+    "navTitle": "ADMINISTRATION",
+    "search": "Search...",
+    "notifications": "Notifications",
+    "menu": "Menu",
+    "back": "Home",
+    "collapse": "Collapse sidebar",
+    "expand": "Expand sidebar",
+    "language": "English",
+    "profile": "My profile",
+    "logout": "Sign out",
+    "brandTag": "ADMIN",
+    "upcoming": "Upcoming events",
+    "viewAll": "View all",
+    "settings": "System settings",
+    "globalSearch": {
+      "placeholder": "Search members, stores, needs, projects, groups…",
+      "empty": "No results found",
+      "clear": "Clear search",
+      "hint": "Enter at least 2 characters to search...",
+      "emptyQuery": "No results found for ‘{query}’",
+      "loading": "Searching…",
+      "failed": "Unable to load search results",
+      "groups": {
+        "store": "Stores",
+        "need": "Local needs",
+        "project": "OPC projects",
+        "group": "Community groups",
+        "member": "Members"
+      },
+      "members": "Members: {n}"
+    }
+  },
+  "nav": {
+    "overview": "Overview",
+    "members": "Members",
+    "fees": "Membership fees",
+    "groups": "Community groups",
+    "bots": "Interaction bots",
+    "events": "Content & Events",
+    "needs": "Local needs",
+    "stores": "Stores",
+    "projects": "OPC projects",
+    "investors": "Investors",
+    "requests": "Services",
+    "affiliate": "Affiliate network",
+    "reports": "Reports",
+    "marketing": "Marketing",
+    "settings": "System settings"
+  },
+  "navGroup": {
+    "people": "PEOPLE & COMMUNITY",
+    "business": "BUSINESS CONNECTIONS",
+    "revenue": "REVENUE & PARTNERS"
+  },
+  "role": {
+    "super_admin": "Super Admin",
+    "admin": "Administrator",
+    "moderator": "Moderator",
+    "member": "Member"
+  },
+  "state": {
+    "loading": "Loading…",
+    "error": "Unable to load data",
+    "retry": "Try again",
+    "notFound": "Page not found"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "markAll": "Mark all as read",
+    "tabAll": "All",
+    "tabUnread": "Unread ({n})",
+    "empty": "No notifications"
+  },
+  "ago": {
+    "now": "Just now",
+    "minutes": "{n} minutes ago",
+    "hours": "{n} hours ago",
+    "days": "{n} days ago"
+  },
+  "errors": {
+    "fixFields": "Please check the highlighted fields",
+    "failed": "The action failed. Please try again"
+  },
+  "rbac": {
+    "viewOnly": "View-only mode — the <b>{role}</b> role cannot perform actions in this section.",
+    "viewOnlyToast": "The {role} role can only view this section",
+    "preview": "Previewing Admin as <b>{role}</b> — only menus allowed for this role are shown.",
+    "previewExit": "Exit preview",
+    "forbiddenTitle": "You do not have permission to view this section",
+    "forbiddenBody": "Your role is not allowed to open this section.",
+    "forbiddenBack": "Go to an allowed section",
+    "twoFactor": "Enable two-factor authentication"
+  },
+  "adminProfile": {
+    "nameRequired": "Please enter your full name",
+    "enabled": "Enabled",
+    "name": "Full name",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "passwordRule": "At least 8 characters, including an uppercase letter and a digit",
+    "noRole": "No role assigned",
+    "security": "Security & Role",
+    "passwordSaved": "Password updated",
+    "emailHint": "Email assigned by an administrator",
+    "passwordTitle": "Change password",
+    "role": "Current role",
+    "changePassword": "Update password",
+    "enable": "Enable two-factor authentication",
+    "email": "Sign-in email",
+    "failed": "Unable to update. Please try again",
+    "disabled": "Not enabled",
+    "save": "Save details",
+    "saved": "Personal details saved",
+    "personal": "Personal details",
+    "phone": "Phone number",
+    "imageRule": "JPG/PNG/WebP image, up to 5 MB",
+    "subtitle": "Manage your personal details and administrator account security",
+    "confirmPassword": "Confirm new password",
+    "upload": "Upload new photo",
+    "remove": "Remove photo",
+    "title": "My profile",
+    "twoFactor": "Two-factor authentication (2FA)"
+  }
+}

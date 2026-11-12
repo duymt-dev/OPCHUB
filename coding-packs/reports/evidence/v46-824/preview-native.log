@@ -1,0 +1,30 @@
+Corrected candidate based ef4a08b0; rebuilt Admin adds only existing data-act write markers to group table/grid/header. Original source ff6be9ee build/audit is superseded for final production proof. Retain initial 2passed/2failed MSW result above; actual English Edit dialog opened under VI-word guard. Same four cases now check three write actions each locale, unchanged strict guard/timeouts; no backend permission/Portal/catalog/CSS or existing role changes. No writes except normal login/refresh; UI role preview is not backend403 proof. COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-preview.spec.ts
+[WebServer] (node:6928) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:32944) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\admin-i18n-preview.spec.ts:24:3 › D-141 AC824-06/11/15 role preview internal forbidden EN/VI/My 1440 (2.6s)
+  ok 2 [behavior] › behavior\admin-i18n-preview.spec.ts:53:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 1440 (3.3s)
+  ok 3 [behavior] › behavior\admin-i18n-preview.spec.ts:24:3 › D-141 AC824-06/11/15 role preview internal forbidden EN/VI/My 390 (2.0s)
+  ok 4 [behavior] › behavior\admin-i18n-preview.spec.ts:53:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 390 (3.2s)
+
+  4 passed (15.3s)
+EXIT 0
+Corrected candidate based ef4a08b0; rebuilt Admin includes existing data-act group write markers, mobile action wrapping, Element-target capture and nearest semantic-control selection before inherited-pointer fallback. Original source ff6be9ee build/audit is superseded for final production proof. Retain initial 2passed/2failed MSW result above; actual English Edit dialog opened under VI-word guard. Same four cases now check three write actions each locale, unchanged strict guard/timeouts; no backend permission/Portal/catalog or existing role changes; Admin-only mobile table CSS wraps complete labels. No writes except normal login/refresh; UI role preview is not backend403 proof. COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-preview.spec.ts
+[WebServer] (node:9188) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:25948) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\admin-i18n-preview.spec.ts:24:3 › D-141 AC824-06/11/15 role preview internal forbidden EN/VI/My 1440 (6.0s)
+  ok 2 [behavior] › behavior\admin-i18n-preview.spec.ts:53:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 1440 (4.2s)
+  ok 3 [behavior] › behavior\admin-i18n-preview.spec.ts:24:3 › D-141 AC824-06/11/15 role preview internal forbidden EN/VI/My 390 (2.5s)
+  ok 4 [behavior] › behavior\admin-i18n-preview.spec.ts:53:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 390 (3.3s)
+
+  4 passed (22.6s)
+EXIT 0

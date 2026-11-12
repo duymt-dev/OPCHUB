@@ -1,0 +1,1771 @@
+# TIP-V46-824 - Exact file manifest
+
+## Canonical group/persona browser saves
+
+Measured English save/readback retains canonical province/region, but actual group table displays raw `Miền Trung` rather than translated `Central` (strict independent row-caption assertion fails). Correct only the table's existing canonical-region projection through the established domain hook. Preserve province/user strings, raw DTO, filters, callbacks and all values. Separate regression covers three fixed regions and unknown custom-region fallback, en→vi→en, original object/callback identity. The original failing browser log is retained; production builds/audit must be refreshed after this correction.
+
+| Action | Exact path | Scope |
+|---|---|---|
+| modify | `apps/admin/src/features/groups/components/group-table.tsx` | Render established canonical-region label projection only; raw DTO and province stay unchanged. |
+| create | `apps/admin/src/features/groups/components/group-table-region.spec.tsx` | Three known regions/custom fallback, live locale rerender and raw row/action identity. |
+
+Owner-approved prefix-only fixtures, one new industry group and one disabled persona per serial worker/run, reused only after fresh identity/ownership reads. Group creation necessarily creates its own rooms/membership/audit/outbox through existing APIs; never changes an existing group, user account, global permission/config or original database. Use the existing province group's owner unchanged; staff links belong only to the new fixture group. Persona stays disabled and assigned solely to that group; no script/run/bot automation/export/delete endpoint. Existing records are read-only. English/Myanmar at1440/390 test translated option selection, exact raw request/response/persisted values, custom content and URL region values. Same assertions in both modes; production remains4c6cebd4 unless a measured defect is separately declared before correction.
+
+| Action | Exact path | Scope |
+|---|---|---|
+| create | `e2e/behavior/admin-i18n-values.spec.ts` | Serial English/Myanmar desktop/mobile canonical saves on owned fixtures. |
+| create | `e2e/behavior/admin-i18n-values/types.ts` | Prefix ownership and canonical DTO/body types. |
+| create | `e2e/behavior/admin-i18n-values/protocol.ts` | Exact queued mutation/principal/ownership/DTO guard; no unowned/global/enable writes. |
+| create | `e2e/behavior/admin-i18n-values/protocol-contract.spec.ts` | Pure negative guards; never performs a backend mutation. |
+| create | `e2e/behavior/admin-i18n-values/fixtures.ts` | Dedicated approved-write guard, real login and private-native preflight. |
+| create | `e2e/behavior/admin-i18n-values/api.ts` | Normal authenticated browser fetch and exact response waiters, credentials memory-only. |
+| create | `e2e/behavior/admin-i18n-values/provision.ts` | Existing API creates one prefix group/disabled persona, fresh reads before reuse, no SQL/reset/delete. |
+| create | `e2e/behavior/admin-i18n-values/labels.ts` | Raw expected UI catalogs/aliases, canonical values independent from translated labels. |
+| create | `e2e/behavior/admin-i18n-values/navigation.ts` | Actual localized mobile Menu then sidebar link; no offscreen force-click/dispatch or timeout increase. |
+| create | `e2e/behavior/admin-i18n-values/groups.ts` | Actual owned group editor/province/region save, canonical query and persisted read. |
+| create | `e2e/behavior/admin-i18n-values/personas.ts` | Actual owned disabled persona presets/custom content save and persisted read. |
+| modify | `e2e/playwright.admin-i18n.config.ts` | Register canonical save flows/pure guards; preserve all existing assertions/timeouts. |
+| create | `coding-packs/reports/evidence/v46-824/values-msw.log` | Actual canonical MSW results, not a full-suite claim. |
+| create | `coding-packs/reports/evidence/v46-824/values-native.log` | Same save assertions on approved isolated native cluster and retained owned fixtures. |
+| create | `coding-packs/reports/evidence/v46-824/values-first.log` | Preserve measured failures and classification before correction, if any. |
+| create | `coding-packs/reports/evidence/v46-824/values-quality.log` | Exact required root gates and cache status for this phase. |
+
+## Approved canonical-save fixtures (owner reply12/11/2026)
+
+For AC824-11 the owner explicitly permits creating/editing separate `tip824-i18n-*` group/persona fixtures through existing Admin APIs on the approved isolated cluster; retain them for independent comparison. Do not edit pre-existing records, permissions or global settings, do not touch PG5432 and do not seed/reset/repair. This permission is not evidence that save-value/RBAC acceptance has run. Declare literal implementation/test/evidence paths before that phase begins; the public-password phase below remains zero-API.
+
+## Public password presentation states (no API writes)
+
+Exercise real public forgot/reset routes for all12 selector identities at1440/390, unchanged assertions in both modes. Local invalid-email/empty-password/mismatch and missing-token states only: no email send, password reset, login, seed or intercepted response. This is not proof of successful email delivery/password reset. Preserve drafts, URL/query/hash, native labels, metadata and F5; capture only blank fields, no real token/credential. Production inputs stay source4c6cebd4 unless an actual defect is measured and declared separately first.
+
+| Action | Exact path | Scope |
+|---|---|---|
+| create | `e2e/behavior/admin-i18n-password.spec.ts` | Twelve identities/two widths, public local-error and missing-token flows. |
+| create | `e2e/behavior/admin-i18n-password/fixtures.ts` | Dedicated public no-API/no-browser-error guard, existing private native preflight unchanged. |
+| create | `e2e/behavior/admin-i18n-password/labels.ts` | Exact raw auth/meta catalog labels, aliases preserve identity. |
+| create | `e2e/behavior/admin-i18n-password/flows.ts` | Actual pointer locale refresh, preserved drafts, local-only errors, F5/missing-token navigation. |
+| create | `e2e/behavior/admin-i18n-password/images.ts` | Blank-field unmasked evidence and actual action text/viewport bounds; no masking. |
+| modify | `e2e/playwright.admin-i18n.config.ts` | Register public presentation cases without changing existing guards/assertions/timeouts. |
+| create | `coding-packs/reports/evidence/v46-824/password-msw.log` | Actual public password MSW results, not successful backend reset proof. |
+| create | `coding-packs/reports/evidence/v46-824/password-native.log` | Same public assertions on approved native mode; no DB clients/fixtures/writes. |
+| create | `coding-packs/reports/evidence/v46-824/password-first.log` | Preserve measured failures before correction, if any. |
+| create | `coding-packs/reports/evidence/v46-824/password-quality.log` | Required root gates/cache status for test-only public password additions; no fresh unit-count/build claim. |
+| create | `coding-packs/reports/evidence/v46-824/password-forgot-vi-msw-390.png` | Actual blank-field forgot local-error state. |
+| create | `coding-packs/reports/evidence/v46-824/password-reset-vi-msw-390.png` | Actual reset missing-token state, no secret. |
+| create | `coding-packs/reports/evidence/v46-824/password-forgot-my-msw-390.png` | Same actual Myanmar forgot state. |
+| create | `coding-packs/reports/evidence/v46-824/password-reset-my-msw-390.png` | Same actual Myanmar reset state. |
+| create | `coding-packs/reports/evidence/v46-824/password-forgot-vi-native-390.png` | Same native-mode Vietnamese forgot state. |
+| create | `coding-packs/reports/evidence/v46-824/password-reset-vi-native-390.png` | Same native-mode Vietnamese reset state. |
+| create | `coding-packs/reports/evidence/v46-824/password-forgot-my-native-390.png` | Same native-mode Myanmar forgot state. |
+| create | `coding-packs/reports/evidence/v46-824/password-reset-my-native-390.png` | Same native-mode Myanmar reset state. |
+
+## Auth image privacy and viewport proof
+
+The stronger actual viewport assertion also found the mobile setup dialog entirely offscreen: LoginScreen calls leaveAuth (scroll-to-top) even when transitioning to another Auth setup route. Preserve scroll for setup routes and reset only when actually entering the app, using a small Admin-only navigation helper. No route/next target, session, restriction, API or shared/Portal layout change; the existing prototype-style frosted Auth frame remains unchanged.
+
+| Action | Exact path | Scope |
+|---|---|---|
+| create | `apps/admin/src/features/auth/navigate-after-auth.ts` | Preserve existing setup-route scroll, reset only for completed app entry. |
+| create | `apps/admin/src/features/auth/navigate-after-auth.spec.ts` | Both setup routes and exact safe next/query/hash/reset ordering regression. |
+| modify | `apps/admin/src/features/auth/components/login-screen.tsx` | Delegate existing final/setup navigation to helper. |
+| modify | `apps/admin/src/features/auth/hooks/use-first-password.ts` | Consistent scroll semantics after unchanged session/restriction handling. |
+| modify | `apps/admin/src/features/auth/components/two-factor-screen.tsx` | Reset app-entry scroll after enable, unchanged callbacks/target. |
+
+Agent review found Myanmar mobile action text extending beyond the fixed36px buttons. Add real text-range/hit-box assertions before correcting only Admin setup action sizing; preserve36px minimum, full labels, Portal defaults and auth callbacks. First captures also contain the naturally expiring prior provisioning logout toast; final image readiness waits for real dismissal, never hides/masks it.
+
+| Action | Exact path | Scope |
+|---|---|---|
+| create | `e2e/behavior/admin-i18n-auth/geometry.ts` | Actual auth action text ranges inside their visible hit boxes and dialog/form viewport bounds, all twelve identities. |
+| modify | `apps/admin/src/features/auth/components/setup.module.css` | Content-sized Admin auth actions with36px minimum; no fixed-height clipping or Portal change. |
+| create | `apps/admin/src/features/auth/tests/setup-layout.spec.ts` | Preserve minimum hit height/full-label wrapping; actual geometry remains a browser requirement. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-capture-clipped-my-msw-390.png` | Preserve inspected original clipped Myanmar action labels; no setup secret or populated password fields. |
+
+Capture only empty first-password fields and the subsequent login MFA form, never the setup form that exposes an otpauth secret. Actual unmasked images, same assertions in both modes, no fabricated human/owner approval. Assert no setup-secret DOM or nonempty password fields before capture and viewport bounds for every identity, including identities without saved images.
+
+| Action | Exact path | Scope |
+|---|---|---|
+| create | `e2e/behavior/admin-i18n-auth/images.ts` | Secret-free unmasked auth evidence, fixed seven screenshot locales and two viewports; no masking/response interception. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-capture-toast-vi-native-390.png` | Preserve inspected first capture with the preceding English provisioning logout toast; final capture waits for actual natural dismissal, not masking. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-vi-msw-1440.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-vi-msw-1440.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-vi-msw-390.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-vi-msw-390.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-vi-native-1440.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-vi-native-1440.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-vi-native-390.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-vi-native-390.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-en-msw-1440.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-en-msw-1440.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-en-msw-390.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-en-msw-390.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-en-native-1440.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-en-native-1440.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-en-native-390.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-en-native-390.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-zh-msw-1440.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-zh-msw-1440.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-zh-msw-390.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-zh-msw-390.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-zh-native-1440.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-zh-native-1440.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-zh-native-390.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-zh-native-390.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-th-msw-1440.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-th-msw-1440.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-th-msw-390.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-th-msw-390.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-th-native-1440.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-th-native-1440.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-th-native-390.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-th-native-390.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-km-msw-1440.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-km-msw-1440.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-km-msw-390.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-km-msw-390.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-km-native-1440.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-km-native-1440.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-km-native-390.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-km-native-390.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-lo-msw-1440.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-lo-msw-1440.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-lo-msw-390.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-lo-msw-390.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-lo-native-1440.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-lo-native-1440.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-lo-native-390.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-lo-native-390.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-my-msw-1440.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-my-msw-1440.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-my-msw-390.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-my-msw-390.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-my-native-1440.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-my-native-1440.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-my-native-390.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-my-native-390.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+
+## Approved isolated auth fixture verification — after source eb9a9a0a
+
+Actual MSW diagnostic found a pre-existing contract defect: `mfa.<short mock id>` fails the shared minimum20-character token schema, making valid challenge verification return400. Per mandatory two-mode testing rule, correct the mock to the existing native opaque challenge contract, not the shared schema or browser assertions. Native uses a five-minute, single-use challenge with five invalid-code attempts. No server/API/schema/Portal change is authorized or planned.
+
+| Action | Exact path | Scope |
+|---|---|---|
+| create | `apps/admin/src/mocks/handlers/mock-admin-mfa.ts` | Opaque schema-valid mock challenge, existing native five-minute/single-use/five-fail semantics. |
+| create | `apps/admin/src/mocks/handlers/mock-admin-mfa.spec.ts` | Real shared-schema validation, short IDs, expiry/replay/invalid-token/failure cap, no live credentials. |
+| modify | `apps/admin/src/mocks/handlers/auth.ts` | Delegate mock issuance/verification; keep shared validation/native response contract, no schema relaxation. |
+
+Owner permitted prefix-owned accounts through the existing Admin API on the approved private cluster. Create a unique `tip824-auth-` account per case, assign an existing non-Super-Admin role, change only its own first password/2FA through real UI/API. Do not modify roles, global security configuration, existing accounts, DBs or services. Retain isolated fixtures, no reset/seed/direct SQL. Identical MSW/native assertions; keep the loaded-state read-only guard unchanged. Separate auth protocol guard permits only this exact provisioning/auth sequence, validates principal/DTO/request bodies and the expected MFA401 challenge. No stored credentials/tokens/otpauth URI/screenshots/traces in repository evidence.
+
+| Action | Exact path | Scope |
+|---|---|---|
+| modify | `e2e/behavior/admin-i18n/fixtures.ts` | Export existing private-endpoint validation unchanged for reuse; no guard relaxation. |
+| create | `e2e/behavior/admin-i18n-auth/labels.ts` | Typed physical raw auth/UI/profile labels, fixed twelve identities. |
+| create | `e2e/behavior/admin-i18n-auth/protocol.ts` | Prefix/principal-bound exact auth write and response protocol guard, secret-free diagnostics. |
+| create | `e2e/behavior/admin-i18n-auth/fixtures.ts` | Dedicated auth guard and private preflight; no global reset fixture or broad HTTP waiver. |
+| create | `e2e/behavior/admin-i18n-auth/provision.ts` | Existing Admin API creates prefix-only fixture, in-memory random passwords, existing role unchanged, real logout/login. |
+| create | `e2e/behavior/admin-i18n-auth/first-password.ts` | Real restricted route, inert backdrop/local validation/live-label draft preservation, exact own-account password payload. |
+| create | `e2e/behavior/admin-i18n-auth/two-factor.ts` | Real optional profile setup, local error/live locale, valid RFC6238 enable and subsequent challenge/verify. |
+| create | `e2e/behavior/admin-i18n-auth/totp.ts` | Independent RFC6238 SHA1/6-digit oracle; no fixed live OTP or secret persistence. |
+| create | `e2e/behavior/admin-i18n-auth/totp-contract.spec.ts` | Published RFC vectors and invalid-input negatives, not authenticated workflow evidence. |
+| create | `e2e/behavior/admin-i18n-auth/protocol-contract.spec.ts` | Disallowed business/role/existing-account writes and malformed challenge negatives. |
+| create | `e2e/behavior/admin-i18n-auth.spec.ts` | Twelve selector identities ×two widths actual first-password/setup/login challenge flows, same assertions both modes. |
+| modify | `e2e/playwright.admin-i18n.config.ts` | Register auth cases/pure guard contracts without changing existing cases, assertions or timeouts. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first.log` | Retain real initial failures, no tokens/password/otpauth output. |
+| create | `coding-packs/reports/evidence/v46-824/auth-msw.log` | Actual same-assertion MSW auth results, safe protocol metadata only. |
+| create | `coding-packs/reports/evidence/v46-824/auth-native.log` | Actual approved private-native auth results, no original services/DB mutation. |
+| create | `coding-packs/reports/evidence/v46-824/auth-quality.log` | Exact root gates/cache status; test-only additions do not imply fresh production builds. |
+
+## Owner-approved UTC serializer correction — 12/11/2026
+
+Owner: “Cho phép sửa serializer UTC tương đương”. The browser discovered an existing AI call-log 400: date inputs emit +07:00 while the query accepts UTC Z. Only the presentation serializer may change, retaining exactly the same Vietnamese day boundaries/instants. No schema, API, server, range policy or persistence change. Initial failure remains in controls-first.log.
+
+| Action | Exact path | Scope |
+|---|---|---|
+| create | `apps/admin/src/features/settings/ai-call-date-input.ts` | Serialize unchanged VN day boundaries as equivalent UTC Z. |
+| create | `apps/admin/src/features/settings/ai-call-date-input.spec.ts` | Exact boundaries, leap/month/year rollover, instant equivalence and existing query compatibility. |
+| modify | `apps/admin/src/features/settings/components/ai/ai-call-filters.tsx` | Use serializer in the existing nonempty date-input handlers only. |
+
+## Owner-approved optional RichText controls — 12/11/2026
+
+Owner approved optional close labels and Enter/Space support, Admin-only opt-in; Portal defaults and mouse actions remain unchanged. This narrowly supersedes the earlier shared-UI restriction for these literal paths only.
+
+| Action | Exact path | Scope |
+|---|---|---|
+| modify | `packages/ui/src/rich-text-field/types.ts` | Optional keyboardControls, default off. |
+| modify | `packages/ui/src/rich-text-field/labels.ts` | Optional close label, no changed default. |
+| modify | `packages/ui/src/rich-text-field/rich-text-field-impl.tsx` | Extract toolbar and forward opt-in. |
+| create | `packages/ui/src/rich-text-field/rich-text-toolbar.tsx` | Preserve pointer behavior, optional Enter/Space activation. |
+| create | `packages/ui/src/rich-text-field/rich-text-toolbar.spec.tsx` | Default/opt-in/pointer/repeat/null-editor regressions. |
+| modify | `packages/ui/src/rich-text-field/link-dialog.tsx` | Forward optional close label only. |
+| create | `packages/ui/src/rich-text-field/link-dialog-i18n.spec.tsx` | Default Vietnamese/opted-in close label regression. |
+| modify | `apps/admin/src/i18n/ui-labels.ts` | Live Admin close translation. |
+| modify | `apps/admin/src/i18n/ui-labels.spec.tsx` | Assert translated editor close label. |
+| modify | `apps/admin/src/features/events/components/event-form.tsx` | Admin keyboard opt-in. |
+| modify | `apps/admin/src/features/marketing/components/campaign-form-fields.tsx` | Admin keyboard opt-in. |
+| modify | `apps/admin/src/features/projects/components/review-body.tsx` | Admin keyboard opt-in. |
+| modify | `apps/admin/src/features/requests/components/comment-composer.tsx` | Admin keyboard opt-in. |
+| modify | `apps/admin/src/features/events/components/sheet.tsx` | Keep Escape in the active nested dialog from discarding the containing Admin event draft. No save/business behavior change. |
+| create | `apps/admin/src/features/events/components/sheet-keyboard.spec.tsx` | Outer Escape/close unchanged, nested Escape preserves draft, closed sheet listener cleanup. |
+
+Owner also permits prefix-owned auth fixture accounts through the existing Admin API on the approved isolated cluster only (first-password/2FA). No fixture has been created by this declaration; exact fixture tooling paths must be declared before implementation. No existing accounts, PG5432/opchub_test, original services or resets are authorized.
+
+
+## Actual native control browser phase — after auditb2b8acf0
+
+| Action | Exact path | Scope |
+|---|---|---|
+| create | `e2e/behavior/admin-i18n/control-labels.ts` | Fixed12 identities, typed physical raw UI/member/event/AI labels and independent control/number oracles. |
+| create | `e2e/behavior/admin-i18n/control-calendar.ts` | Real AntD open preset/header/keyboard/Gregorian/popup bounds checks, no date or business mutation. |
+| create | `e2e/behavior/admin-i18n/control-members.ts` | Actual DTO-backed pager/bulk count labels, canonical page values and local selection/clear keyboard actions; no exports or mutations. |
+| create | `e2e/behavior/admin-i18n/control-editor.ts` | Real Event drawer, translated toolbar/link dialog, keyboard/local URL validation/content retention, no submit. |
+| create | `e2e/behavior/admin-i18n/control-empty.ts` | Actual AI call-log valid future-range GET proves native AntD empty label/filters and close control; no intercepted backend or export. |
+| create | `e2e/behavior/admin-i18n-controls.spec.ts` | Fixed12 identities ×2 widths ×4 real control flows; same MSW/native assertions and strict existing guards. |
+| modify | `e2e/playwright.admin-i18n.config.ts` | Register native control behavior file, preserve all existing cases/assertions and no DB fixture. |
+| create | `coding-packs/reports/evidence/v46-824/controls-first.log` | Retain actual initial control defects and diagnostic errors, not waived. |
+| create | `coding-packs/reports/evidence/v46-824/controls-msw.log` | Actual control commands/results for production MSW, scope/counts explicit. |
+| create | `coding-packs/reports/evidence/v46-824/controls-native.log` | Identical assertions on approved private native API, strict guards/no reset. |
+| create | `coding-packs/reports/evidence/v46-824/controls-quality.log` | Root lint/typecheck/depcheck for control implementation, actual cache status. |
+| create | `coding-packs/reports/evidence/v46-824/controls-unit.log` | Root tests including fresh UI/Admin/Portal dependency regressions; not browser proof. |
+| create | `coding-packs/reports/evidence/v46-824/controls-portal.log` | Fresh Portal production build after optional shared RichText change; unchanged defaults, not native/API proof. |
+| create | `apps/admin/src/providers/admin-controls.module.css` | Admin-body-scoped mobile calendar layout; stack both panels/presets, keep full content and vertical access, no hidden-overflow mask or Portal change. |
+| create | `apps/admin/src/providers/admin-controls.spec.ts` | Scoped/mobile-only style and Portal-default regression contracts; actual DOM bounds remain browser gates. |
+| modify | `apps/admin/src/app/layout.tsx` | Attach Admin-only control scope class to existing body, no extra provider/DOM wrapper/auth changes. |
+
+## Production baseline measurement phase — after test89c2ed1b
+
+| Action | Exact path | Scope |
+|---|---|---|
+| create | `e2e/audit/admin-performance/config.ts` | Validate explicit local audit metadata; no new env, globalSetup, DB access or original services. |
+| create | `e2e/audit/admin-performance/flight.ts` | Decode actual Next Flight queue data without eval, require exactly one resolved message catalog, compare raw selected bundle. |
+| create | `e2e/audit/admin-performance/assets.ts` | Cold browser actual executable JS/CSS/font response body hashes and deterministic gzip sizes, strict read-only/error guards. |
+| create | `e2e/audit/admin-performance/measure.ts` | Fresh-context real native session, actual route data readiness, HTML/RSC/catalog/resource receipts, no credentials/content persisted. |
+| create | `e2e/audit/admin-i18n-performance.spec.ts` | Twelve cold route/locale measurements and concurrent SSR locale isolation, baseline/current same assertions. |
+| create | `e2e/audit/admin-performance-contract.spec.ts` | Pure extraction/single-catalog/invalid-Flight/config negatives; not authenticated browser proof. |
+| create | `e2e/audit/admin-performance/compare.ts` | Validate all24 fixed raw browser receipts and asset sums; compute12 exact route comparisons and explicit original250KB debt, fail over15% regression. |
+| create | `e2e/audit/admin-performance-budget.spec.ts` | Actual paired measurement budget gate and pure empty/negative/over15% comparison negatives. |
+| create | `coding-packs/reports/evidence/v46-824/performance-baseline-build.log` | Original f7c1b2b8 archive/frozen install/build receipt, retaining actual failed attempts. |
+| create | `coding-packs/reports/evidence/v46-824/performance.log` | Actual baseline/current measurement commands and output, failures retained, no DB credentials. |
+| create | `coding-packs/reports/evidence/v46-824/performance.json` | Actual route-wise baseline/current JS gzip, RSC/catalog/font receipts and15%/250KB findings, not cached test timing. |
+| create | `coding-packs/reports/evidence/v46-824/performance.md` | Method, source/build hashes, cold-cache mode, asset/data split, baseline debt and regression findings. |
+
+## Reduced-ICU browser completion phase — after source0e3803b3
+
+| Action | Exact path | Scope |
+|---|---|---|
+| modify | `e2e/behavior/admin-i18n-intl.spec.ts` | Extend unchanged real Fees/raw DTO/independent Node date-VND/global-Intl/selected-payload oracles from Lao to all three scoped CLDR locales, Khmer/Lao/Myanmar at both widths. No production/API/data/guard change. |
+| modify | `coding-packs/reports/evidence/v46-824/intl-runtime.log` | Preserve prior focused failures/results and append actual six-case-per-mode reduced-ICU run, explicit source/build scope. |
+
+Mandatory HEADER appendix to [TIP-V46-824](TIP-V46-824-admin-i18n.md). This is NOT a second implementation TIP. Baseline: `dev f7c1b2b8`, 2026-11-11.
+
+## Ownership and scope
+
+### Thai raw/auth implementation checkpoint (not whole-TIP acceptance)
+
+All25 already-declared Thai catalog paths are implemented in this lane; the initial12 were followed by the remaining13 before committing. All original ACs remain required. Preserve source/canonical values and Portal code. Reuse only unambiguous exact-source Portal translations after Admin-context review; no filler/fallback counts as translated. No font binary change is planned: verify every staged character against the existing Thai plus Latin cmap first.
+
+| Operation | File | Scope |
+|---|---|---|
+| create | `apps/admin/src/i18n/tests/thai-catalog.spec.ts` | Fixed25-file inventory, raw ICU/shape/NFC/no-copy, canonical/neutral and Admin-context/glyph cases; not final10-bundle readiness. |
+| create | `coding-packs/reports/evidence/v46-824/thai.log` | Actual complete Thai raw/context/glyph outputs and whole10-bundle incomplete inventory/provenance. |
+| create | `coding-packs/reports/evidence/v46-824/th-auth-msw-1440.png` | Actual unmasked Thai auth-only image; not Profile or whole bundle. |
+| create | `coding-packs/reports/evidence/v46-824/th-auth-msw-390.png` | Actual unmasked Thai auth-only image; not Profile or whole bundle. |
+| create | `coding-packs/reports/evidence/v46-824/th-auth-server-1440.png` | Actual unmasked mocking-off Thai auth-only image, no native API acceptance claimed. |
+| create | `coding-packs/reports/evidence/v46-824/th-auth-server-390.png` | Actual unmasked mocking-off Thai auth-only image, no native API acceptance claimed. |
+
+### Approved optional sidebar badge formatter — 11/11/2026
+
+Owner: “Đồng ý thêm callback tùy chọn, giữ nguyên Portal”. Presentation only; raw badge counts, visibility, href/navigation callbacks and Portal defaults stay unchanged. AppShell already forwards its props to Sidebar, so its implementation needs no change. These exact additions are declared before implementation; existing AdminShell path remains owned.
+
+| Operation | File | Scope |
+|---|---|---|
+| modify | `packages/ui/src/app-shell/types.ts` | Optional formatBadgeCount callback; no locale dependency or changed default. |
+| modify | `packages/ui/src/app-shell/sidebar.tsx` | Invoke only for visible badge presentation; preserve raw truthiness, dot and navigation. |
+| create | `packages/ui/src/app-shell/sidebar-badge.spec.tsx` | Actual AppShell/Sidebar default, formatted badge, zero/dot, raw values, rerender and navigation regressions. |
+| create | `apps/admin/src/features/shell/components/admin-shell-badge.spec.tsx` | Actual AdminShell opt-in and live Myanmar/VI/English number projection, preserving raw nav/route. |
+| create | `coding-packs/reports/evidence/v46-824/sidebar-badge.log` | Actual focused callback tests; not whole Myanmar catalog/browser acceptance. |
+| create | `coding-packs/reports/evidence/v46-824/portal-sidebar-regression.log` | Fresh Portal unit regression and production build for approved shared change. |
+| create | `apps/admin/src/i18n/numbering-system.spec.ts` | Pin Myanmar presentation digits under reduced browser ICU; retain caller options and VI defaults. |
+
+Actual browser finding: Chromium156 falls back from unsupported my-MM to en-US/Latin digits, unlike Node's full ICU. The already-owned Admin format.ts must explicitly default Myanmar numberingSystem to mymr (caller options still win), retaining all raw values and Portal behavior. This is formatting correctness within D-141, not a new business policy or a claim that the missing Myanmar prose catalog exists.
+
+- One serial implementation lane. No parallel Admin/shared-UI edits. Prior TIP822/823 are merged.
+- Every path below is literal, including Next route brackets; there are no wildcard write grants.
+- `modify` is an audited boundary, not an instruction to make artificial edits: report unchanged paths as `no change needed` with reason. Audit all listed callers, not only definitions.
+- New findings outside these paths: update this manifest and intersection review BEFORE edits. Business/backend changes still require owner approval (D-93).
+- Test/evidence paths are future execute deliverables, not claims that files or passing results already exist. Font licenses must come from the real upstream source.
+- Planning changes in this commit are ONLY requirements D-141, task row824, TIP and this manifest.
+
+## Catalog partition (all 10 bundles)
+
+Keep all existing logical namespaces. The six physical settings parts are merged under `settings`, never `settings.core.*`. Duplicate top-level keys must fail tests.
+
+| Physical part | Existing root keys owned |
+|---|---|
+| settings/core.json | title, sub, screenLabel, tabsLabel, tabs, tabSub, common, general, cat, lang |
+| settings/access.json | roles, admins, sso |
+| settings/mail.json | mail, smtp |
+| settings/audit.json | log, time |
+| settings/finance.json | price, renewal, bank |
+| settings/ai.json | ai, app; new aiCalls labels for AI call-log UI |
+
+New logical namespaces: `meta`, `ui`, `botOptions` (physical `bot-options.json`). All 16 other existing namespaces remain. Total physical catalog files planned: **250** (25 per bundle); no alias duplicate catalogs for en-SG/ms-BN. Add key coverage against the assembled logical tree as well as physical-file existence.
+
+Baseline settings has **524** string leaves. Its sorted `[path,value]` entries (lexical ASCII key order, `JSON.stringify`, UTF-8, no trailing newline) have SHA-256 `390994d81ce3359924591554b33bc29792097d798ba37fa2559639bfc3c97e5a`. This is a catalog integrity fixture, **not a Git commit SHA or completion identifier**. Compare old keys/values before adding labels; additions must not overwrite existing source strings.
+
+## Audit boundaries that must not be mechanically translated
+
+- `features/bots/types.ts`: preset strings are existing values; introduce translated labels separately, do not change persisted prompt/tone/gender/hour values.
+- `features/groups/model.ts`: search comparisons and client export formatting are not UI locale migrations. `features/groups/types.ts` regions may be canonical filter values.
+- `features/projects/types.ts`: rejection presets must preserve submitted canonical value; user-authored reasons remain raw.
+- `lib/permission-model.ts`: if already consumes only registry keys, leave unchanged; never replace grant logic with translated labels.
+- `features/requests/model.ts`: example/author personal names are data, not copy needing translation.
+- All model date parsers, API values, query keys and export files keep prior behavior. Change UI formatting signatures and callers, not the business calculations.
+- API/server error messages and server notification/audit/email payloads remain raw per D-65/D-141. Client-only validation and upload errors must be localized without weakening schema checks.
+- UI labels defaulting to Vietnamese in packages/ui must be overridden from Admin at call sites. Initially only UiProvider and DateRangePicker were authorized. Owner approved the11/11/2026 execute clarification: also add optional number-format props to Pagination and BulkBar, retaining all Portal defaults and numeric callbacks. No other shared production file is authorized.
+
+## Runtime, screens, shared UI and dependencies (252 paths)
+
+| Action | Exact path | Responsibility |
+|---|---|---|
+| modify | `apps/admin/package.json` | Runtime/locale wiring, label props or local validation; no API/behavior redesign. |
+| modify | `apps/admin/src/app/(admin)/affiliate/[[...slug]]/page.tsx` | Localize route metadata, preserve robots and routing. |
+| modify | `apps/admin/src/app/(admin)/bots/[[...slug]]/page.tsx` | Localize route metadata, preserve robots and routing. |
+| modify | `apps/admin/src/app/(admin)/events/page.tsx` | Localize route metadata, preserve robots and routing. |
+| modify | `apps/admin/src/app/(admin)/fees/page.tsx` | Localize route metadata, preserve robots and routing. |
+| modify | `apps/admin/src/app/(admin)/fees/transactions/page.tsx` | Localize route metadata, preserve robots and routing. |
+| modify | `apps/admin/src/app/(admin)/groups/[id]/chat/page.tsx` | Localize route metadata, preserve robots and routing. |
+| modify | `apps/admin/src/app/(admin)/groups/page.tsx` | Localize route metadata, preserve robots and routing. |
+| modify | `apps/admin/src/app/(admin)/investors/page.tsx` | Localize route metadata, preserve robots and routing. |
+| modify | `apps/admin/src/app/(admin)/marketing/page.tsx` | Localize route metadata, preserve robots and routing. |
+| modify | `apps/admin/src/app/(admin)/members/page.tsx` | Localize route metadata, preserve robots and routing. |
+| modify | `apps/admin/src/app/(admin)/needs/page.tsx` | Localize route metadata, preserve robots and routing. |
+| modify | `apps/admin/src/app/(admin)/overview/page.tsx` | Localize route metadata, preserve robots and routing. |
+| modify | `apps/admin/src/app/(admin)/profile/page.tsx` | Runtime/locale wiring, label props or local validation; no API/behavior redesign. |
+| modify | `apps/admin/src/app/(admin)/projects/[[...slug]]/page.tsx` | Localize route metadata, preserve robots and routing. |
+| modify | `apps/admin/src/app/(admin)/reports/page.tsx` | Localize route metadata, preserve robots and routing. |
+| modify | `apps/admin/src/app/(admin)/requests/[[...tab]]/page.tsx` | Localize route metadata, preserve robots and routing. |
+| modify | `apps/admin/src/app/(admin)/settings/page.tsx` | Localize route metadata, preserve robots and routing. |
+| modify | `apps/admin/src/app/(admin)/stores/page.tsx` | Localize route metadata, preserve robots and routing. |
+| modify | `apps/admin/src/app/(public)/first-password/page.tsx` | Localize route metadata, preserve robots and routing. |
+| modify | `apps/admin/src/app/(public)/forgot-password/page.tsx` | Localize route metadata, preserve robots and routing. |
+| modify | `apps/admin/src/app/(public)/login/page.tsx` | Localize route metadata, preserve robots and routing. |
+| modify | `apps/admin/src/app/(public)/reset-password/page.tsx` | Localize route metadata, preserve robots and routing. |
+| modify | `apps/admin/src/app/(public)/two-factor/page.tsx` | Localize route metadata, preserve robots and routing. |
+| modify | `apps/admin/src/app/layout.tsx` | Runtime/locale wiring, label props or local validation; no API/behavior redesign. |
+| modify | `apps/admin/src/components/ai-suggest-button.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/components/affiliate-detail-head.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/components/affiliate-page-header.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/components/affiliate-pagination.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/components/affiliate-stats.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/components/affiliate-table-columns.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/components/affiliate-table.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/components/affiliate-tabs.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/components/affiliate.module.css` | Only if translated labels overflow; do not redesign Vietnamese layout. |
+| modify | `apps/admin/src/features/affiliate/components/agent-bulk-bar.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/components/agent-month-select.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/components/agent-period.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/components/cancel-dialog.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/components/commission-bulk-bar.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/components/commission-table-columns.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/components/commission-table.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/components/customer-payout-history.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/components/customer-table-columns.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/components/customers-table.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/components/payout-months-table-columns.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/components/payout-months-table.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/components/policy-plan-table.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/components/policy-terms.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/components/rate-dialog.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/format.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/hooks/use-affiliate-policy-form.ts` | Runtime/locale wiring, label props or local validation; no API/behavior redesign. |
+| modify | `apps/admin/src/features/affiliate/model.spec.ts` | Regression: canonical behavior unchanged; locale formatting explicit. |
+| modify | `apps/admin/src/features/affiliate/model.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/regional/components/regional-history.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/regional/components/regional-payee-bank-dialog.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/regional/components/regional-payout-dialog.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/regional/components/regional-payout-history.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/regional/components/regional-share-items.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/regional/components/regional-share-kpis.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/regional/components/regional-share-row.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/regional/components/regional-share-toolbar.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/affiliate/types.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/auth/components/auth-frame.tsx` | Runtime/locale wiring, label props or local validation; no API/behavior redesign. |
+| modify | `apps/admin/src/features/bots/components/bots-screen.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/bots/components/bots.module.css` | Only if translated labels overflow; do not redesign Vietnamese layout. |
+| modify | `apps/admin/src/features/bots/components/bulk/bulk-modal.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/bots/components/bulk/type-delete-dialog.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/bots/components/confirm-delete.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/bots/components/emergency-confirm.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/bots/components/persona-fields.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/bots/components/script-drawer.tsx` | Localize label props and preserve stored values/drafts. |
+| modify | `apps/admin/src/features/bots/components/script-list.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/bots/hooks/use-bot-type-form.ts` | Runtime/locale wiring, label props or local validation; no API/behavior redesign. |
+| modify | `apps/admin/src/features/bots/model.spec.ts` | Regression: canonical behavior unchanged; locale formatting explicit. |
+| modify | `apps/admin/src/features/bots/model.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| create | `apps/admin/src/features/bots/option-labels.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| modify | `apps/admin/src/features/bots/types.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/events/components/event-form.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/events/components/events-screen.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/events/components/events-toolbar.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/events/model.spec.ts` | Regression: canonical behavior unchanged; locale formatting explicit. |
+| modify | `apps/admin/src/features/events/model.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/fees/components/fee-bulk-bar.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/fees/components/fee-stats.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/fees/components/fee-table.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/fees/components/fees-screen.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/fees/components/fundraising-picker.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/fees/components/match-dialog.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/fees/components/txn-table.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/fees/hooks/use-fee-actions.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/fees/hooks/use-fee-transactions.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/fees/model.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/groups/components/ai-report-actions.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/groups/components/chat-viewer.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/groups/components/group-form-fields.tsx` | Runtime/locale wiring, label props or local validation; no API/behavior redesign. |
+| create | `apps/admin/src/features/groups/components/group-form-fields-i18n.spec.tsx` | Real field projection switches canonical region labels while retaining province/name/description and callback values. |
+| modify | `apps/admin/src/features/groups/components/group-grid.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/groups/components/group-list-panel.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/groups/components/group-table.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/groups/components/groups-screen.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/groups/components/groups-toolbar.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/groups/components/moderation-rules.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/groups/components/report-card.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/groups/model.spec.ts` | Regression: canonical behavior unchanged; locale formatting explicit. |
+| modify | `apps/admin/src/features/groups/model.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/groups/types.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/investors/components/investor-profile.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/investors/components/investor-table.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/investors/components/investor-toolbar.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/investors/components/investors-screen.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/investors/model.spec.ts` | Regression: canonical behavior unchanged; locale formatting explicit. |
+| modify | `apps/admin/src/features/investors/model.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/marketing/components/auto-panel.tsx` | Runtime/locale wiring, label props or local validation; no API/behavior redesign. |
+| modify | `apps/admin/src/features/marketing/components/campaign-form-fields.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/marketing/components/campaign-form.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/marketing/components/mail-log.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/marketing/components/marketing-head.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/marketing/components/onboarding-mail.tsx` | Runtime/locale wiring, label props or local validation; no API/behavior redesign. |
+| modify | `apps/admin/src/features/marketing/hooks/use-campaign-flow.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/marketing/hooks/use-marketing-actions.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/marketing/model.spec.ts` | Regression: canonical behavior unchanged; locale formatting explicit. |
+| modify | `apps/admin/src/features/marketing/model.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/members/components/member-bulk-bar.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/members/components/member-grid.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/members/components/member-profile.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/members/components/member-table.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/members/components/members-screen.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/members/model.spec.ts` | Regression: canonical behavior unchanged; locale formatting explicit. |
+| modify | `apps/admin/src/features/members/model.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/needs/components/need-bars.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/needs/components/need-table.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/needs/components/needs-screen.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/needs/model.spec.ts` | Regression: canonical behavior unchanged; locale formatting explicit. |
+| modify | `apps/admin/src/features/needs/model.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/overview/components/conversion-grid.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/overview/components/growth-chart.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/overview/components/overview-range-control.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/overview/components/overview.module.css` | Only if translated labels overflow; do not redesign Vietnamese layout. |
+| modify | `apps/admin/src/features/overview/components/stat-cards.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/overview/components/system-flow.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/overview/data.spec.ts` | Regression: canonical behavior unchanged; locale formatting explicit. |
+| modify | `apps/admin/src/features/overview/data.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/overview/flow.spec.ts` | Regression: canonical behavior unchanged; locale formatting explicit. |
+| modify | `apps/admin/src/features/overview/flow.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/overview/hooks/overview-range.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/overview/hooks/use-conversion.ts` | Runtime/locale wiring, label props or local validation; no API/behavior redesign. |
+| create | `apps/admin/src/features/overview/series-labels.spec.ts` | Dedicated types / deterministic chart-label adapter tests. |
+| create | `apps/admin/src/features/overview/series-labels.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| modify | `apps/admin/src/features/profile/admin-profile.spec.tsx` | Preserve existing assertions and add locale coverage. |
+| modify | `apps/admin/src/features/profile/components/profile-details.tsx` | Localize label props and preserve stored values/drafts. |
+| modify | `apps/admin/src/features/profile/components/profile.module.css` | Only if translated labels overflow; do not redesign Vietnamese layout. |
+| modify | `apps/admin/src/features/profile/form-errors.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/profile/hooks/use-admin-profile.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/profile/hooks/use-profile-password.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/projects/components/project-grid.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/projects/components/project-list-panel.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/projects/components/project-table.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/projects/components/projects-screen.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/projects/components/review-body.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/projects/components/review-drawer.tsx` | Runtime/locale wiring, label props or local validation; no API/behavior redesign. |
+| modify | `apps/admin/src/features/projects/model.spec.ts` | Regression: canonical behavior unchanged; locale formatting explicit. |
+| modify | `apps/admin/src/features/projects/model.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| create | `apps/admin/src/features/projects/rejection-labels.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| modify | `apps/admin/src/features/projects/types.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/reports/components/report-metrics.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/reports/components/report-rows.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/reports/components/report-toolbar.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/reports/model.spec.ts` | Regression: canonical behavior unchanged; locale formatting explicit. |
+| modify | `apps/admin/src/features/reports/model.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/requests/components/comment-composer.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/requests/components/request-comments.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/requests/components/request-info.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/requests/components/request-list-tab.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/requests/components/request-table.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/requests/components/requests-screen.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/requests/components/screen-tabs.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/requests/model.spec.ts` | Regression: canonical behavior unchanged; locale formatting explicit. |
+| modify | `apps/admin/src/features/requests/model.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/settings/components/admin-create-drawer.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/settings/components/ai/ai-call-columns.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/settings/components/ai/ai-call-filters.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/settings/components/ai/ai-call-log.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/settings/components/ai/ai-limits.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/settings/components/ai/ai-provider-detail.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/settings/components/bank-key-field.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/settings/components/bank-short-dialog.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/settings/components/bank-txn-table.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/settings/components/languages-tab.tsx` | Runtime/locale wiring, label props or local validation; no API/behavior redesign. |
+| modify | `apps/admin/src/features/settings/components/price-plan-card.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/settings/components/price-tab.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/settings/components/renewal-cells.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/settings/components/role-matrix.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/settings/components/settings.module.css` | Only if translated labels overflow; do not redesign Vietnamese layout. |
+| modify | `apps/admin/src/features/settings/components/sso-tab.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/settings/components/sso.module.css` | Only if translated labels overflow; do not redesign Vietnamese layout. |
+| modify | `apps/admin/src/features/settings/hooks/use-ai-calls.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/settings/hooks/use-ai-settings.ts` | Runtime/locale wiring, label props or local validation; no API/behavior redesign. |
+| modify | `apps/admin/src/features/settings/hooks/use-app-notify-device.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/settings/hooks/use-audit-log-filters.ts` | Runtime/locale wiring, label props or local validation; no API/behavior redesign. |
+| modify | `apps/admin/src/features/settings/hooks/use-bank-reconcile.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/settings/hooks/use-price-config.ts` | Runtime/locale wiring, label props or local validation; no API/behavior redesign. |
+| modify | `apps/admin/src/features/settings/hooks/use-welcome-mail.ts` | Runtime/locale wiring, label props or local validation; no API/behavior redesign. |
+| modify | `apps/admin/src/features/settings/model.spec.ts` | Regression: canonical behavior unchanged; locale formatting explicit. |
+| modify | `apps/admin/src/features/settings/model.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/shell/components/admin-shell.tsx` | Runtime/locale wiring, label props or local validation; no API/behavior redesign. |
+| modify | `apps/admin/src/features/stores/components/store-bars.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/stores/components/store-drawer.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/stores/components/store-table.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/stores/components/stores-header.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/stores/components/stores-screen.tsx` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/features/stores/model.spec.ts` | Regression: canonical behavior unchanged; locale formatting explicit. |
+| modify | `apps/admin/src/features/stores/model.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| create | `apps/admin/src/i18n/antd-locales.spec.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `apps/admin/src/i18n/antd-locales.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `apps/admin/src/i18n/antd/fil.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `apps/admin/src/i18n/antd/lo.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `apps/admin/src/i18n/domain-labels.spec.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `apps/admin/src/i18n/domain-labels.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `apps/admin/src/i18n/font-config.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `apps/admin/src/i18n/fonts.css` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `apps/admin/src/i18n/format.spec.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `apps/admin/src/i18n/format.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `apps/admin/src/i18n/locales.spec.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `apps/admin/src/i18n/locales.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `apps/admin/src/i18n/message-loader.spec.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `apps/admin/src/i18n/message-loader.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `apps/admin/src/i18n/message-overlay.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `apps/admin/src/i18n/messages.spec.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| modify | `apps/admin/src/i18n/messages.ts` | Runtime/locale wiring, label props or local validation; no API/behavior redesign. |
+| create | `apps/admin/src/i18n/request.spec.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| modify | `apps/admin/src/i18n/request.ts` | Runtime/locale wiring, label props or local validation; no API/behavior redesign. |
+| create | `apps/admin/src/i18n/source-messages.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `apps/admin/src/i18n/tests/catalog-baseline.json` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `apps/admin/src/i18n/tests/message-contract.spec.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `apps/admin/src/i18n/tests/message-contract.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `apps/admin/src/i18n/tests/source-audit-allowlist.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `apps/admin/src/i18n/tests/source-audit.spec.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `apps/admin/src/i18n/types.ts` | Dedicated types / deterministic chart-label adapter tests. |
+| create | `apps/admin/src/i18n/ui-labels.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `apps/admin/src/i18n/use-admin-format.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `apps/admin/src/i18n/validation.spec.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `apps/admin/src/i18n/validation.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| modify | `apps/admin/src/lib/permission-model.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| modify | `apps/admin/src/lib/upload-image.ts` | Presentation audit: labels / formatter / callers only; preserve canonical values and business logic. |
+| create | `apps/admin/src/providers/admin-intl-errors.tsx` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `apps/admin/src/providers/admin-ui-locale-provider.spec.tsx` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `apps/admin/src/providers/admin-ui-locale-provider.tsx` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| modify | `apps/admin/src/providers/app-providers.tsx` | Runtime/locale wiring, label props or local validation; no API/behavior redesign. |
+| modify | `packages/ui/src/date-range-picker/date-range-picker.spec.tsx` | Preserve existing assertions and add locale coverage. |
+| modify | `packages/ui/src/date-range-picker/date-range-picker.tsx` | Runtime/locale wiring, label props or local validation; no API/behavior redesign. |
+| create | `packages/ui/src/providers/ui-provider.spec.tsx` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| modify | `packages/ui/src/providers/ui-provider.tsx` | Runtime/locale wiring, label props or local validation; no API/behavior redesign. |
+| modify | `pnpm-lock.yaml` | Runtime/locale wiring, label props or local validation; no API/behavior redesign. |
+
+## Browser tests (8 paths)
+
+| Action | Exact path | Responsibility |
+|---|---|---|
+| create | `e2e/behavior/admin-i18n-auth.spec.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `e2e/behavior/admin-i18n-controls.spec.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `e2e/behavior/admin-i18n-navigation.spec.ts` | Authenticated real-selector navigation, draft/error/modal and settings independence browser assertions; identical MSW/private-native. |
+| create | `e2e/behavior/admin-i18n/navigation.ts` | Small selector/locale/preserved-URL assertion helper; no seed, reset or business writes. |
+| create | `coding-packs/reports/evidence/v46-824/navigation-msw.log` | Actual same-source navigation browser output; scope recorded separately from loaded-screen matrix. |
+| create | `coding-packs/reports/evidence/v46-824/navigation-native.log` | Actual private-native navigation browser output; no original DB change. |
+| create | `e2e/behavior/admin-i18n-screens.spec.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `e2e/behavior/admin-i18n-values.spec.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `e2e/behavior/admin-i18n-visual.spec.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `e2e/behavior/admin-i18n-sidebar.spec.ts` | Real vi/en/fil expanded/collapsed/mobile sidebar bounds, badges, keyboard and navigation regression; no shortened copy or masks. |
+| create | `e2e/behavior/admin-i18n/sidebar.ts` | Text-range/label/badge/icon bounds assertions; detects internal clipping even when page width is valid. |
+| create | `apps/admin/src/features/shell/components/admin-navigation.css` | Admin-only wrapping for existing sidebar labels/badges, imported only by Admin RootLayout; no shared/Portal or theme geometry change. |
+| create | `apps/admin/src/features/shell/components/admin-navigation-style.spec.ts` | Guards Admin-only stylesheet import, exact semantic selectors and no clipping/geometry/locale-specific workaround. |
+| create | `coding-packs/reports/evidence/v46-824/sidebar-msw.log` | Actual identical sidebar assertions and observed geometry, MSW production build. |
+| create | `coding-packs/reports/evidence/v46-824/sidebar-native.log` | Actual identical sidebar assertions against approved private native API; no original DB/seed/reset. |
+| create | `coding-packs/reports/evidence/v46-824/fil-sidebar-msw-1440.png` | Unmasked actual expanded Filipino sidebar with wrapped labels and visible badges. |
+| create | `coding-packs/reports/evidence/v46-824/fil-sidebar-msw-390.png` | Unmasked actual mobile Filipino drawer, no shortened copy or masks. |
+| create | `coding-packs/reports/evidence/v46-824/fil-sidebar-server-1440.png` | Actual private-native expanded Filipino navigation. |
+| create | `coding-packs/reports/evidence/v46-824/fil-sidebar-server-390.png` | Actual private-native mobile Filipino navigation. |
+| create | `e2e/behavior/admin-i18n/cases.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `e2e/behavior/admin-i18n/helpers.ts` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+
+## Catalogs and translation review (252 paths)
+
+| Action | Exact path | Responsibility |
+|---|---|---|
+| create | `apps/admin/messages/en/affiliate.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/en/auth.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/en/bot-options.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/en/bots.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/en/common.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/en/events.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/en/fees.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/en/groups.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/en/investors.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/en/marketing.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/en/members.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/en/meta.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/en/needs.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/en/overview.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/en/projects.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/en/reports.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/en/requests.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/en/settings/access.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/en/settings/ai.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/en/settings/audit.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/en/settings/core.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/en/settings/finance.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/en/settings/mail.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/en/stores.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/en/ui.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/fil/affiliate.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/fil/auth.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/fil/bot-options.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/fil/bots.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/fil/common.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/fil/events.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/fil/fees.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/fil/groups.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/fil/investors.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/fil/marketing.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/fil/members.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/fil/meta.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/fil/needs.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/fil/overview.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/fil/projects.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/fil/reports.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/fil/requests.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/fil/settings/access.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/fil/settings/ai.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/fil/settings/audit.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/fil/settings/core.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/fil/settings/finance.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/fil/settings/mail.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/fil/stores.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/fil/ui.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/src/i18n/tests/filipino-catalog.spec.ts` | Fixed25-file Filipino raw/context/canonical/glyph inventory; whole10-bundle gate remains independent. |
+| create | `coding-packs/reports/evidence/v46-824/filipino-msw.log` | Actual authenticated Filipino Overview/Profile/Settings browser subset; no full TIP claim. |
+| create | `coding-packs/reports/evidence/v46-824/filipino-native.log` | Same Filipino assertions against private native API, no original DB/seed/reset. |
+| create | `coding-packs/reports/evidence/v46-824/fil-overview-msw-1440.png` | Unmasked actual Filipino Overview. |
+| create | `coding-packs/reports/evidence/v46-824/fil-overview-msw-390.png` | Unmasked actual Filipino Overview. |
+| create | `coding-packs/reports/evidence/v46-824/fil-profile-msw-1440.png` | Unmasked actual Filipino Profile, never substituted with Dashboard. |
+| create | `coding-packs/reports/evidence/v46-824/fil-profile-msw-390.png` | Unmasked actual Filipino Profile. |
+| create | `coding-packs/reports/evidence/v46-824/fil-settings-msw-1440.png` | Unmasked actual Filipino Settings. |
+| create | `coding-packs/reports/evidence/v46-824/fil-settings-msw-390.png` | Unmasked actual Filipino Settings. |
+| create | `coding-packs/reports/evidence/v46-824/fil-overview-server-1440.png` | Unmasked actual Filipino Overview. |
+| create | `coding-packs/reports/evidence/v46-824/fil-overview-server-390.png` | Unmasked actual Filipino Overview. |
+| create | `coding-packs/reports/evidence/v46-824/fil-profile-server-1440.png` | Unmasked actual Filipino Profile. |
+| create | `coding-packs/reports/evidence/v46-824/fil-profile-server-390.png` | Unmasked actual Filipino Profile. |
+| create | `coding-packs/reports/evidence/v46-824/fil-settings-server-1440.png` | Unmasked actual Filipino Settings. |
+| create | `coding-packs/reports/evidence/v46-824/fil-settings-server-390.png` | Unmasked actual Filipino Settings. |
+| create | `coding-packs/reports/evidence/v46-824/filipino.log` | Actual raw/ICU/context/glyph test output and fixed whole-bundle missing-file inventory. |
+| create | `apps/admin/messages/id/affiliate.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/id/auth.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/id/bot-options.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/id/bots.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/id/common.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/id/events.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/id/fees.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/id/groups.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/id/investors.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/id/marketing.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/id/members.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/id/meta.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/id/needs.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/id/overview.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/id/projects.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/id/reports.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/id/requests.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/id/settings/access.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/id/settings/ai.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/id/settings/audit.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/id/settings/core.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/id/settings/finance.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/id/settings/mail.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/id/stores.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/id/ui.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/km/affiliate.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/km/auth.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/km/bot-options.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/km/bots.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/km/common.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/km/events.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/km/fees.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/km/groups.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/km/investors.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/km/marketing.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/km/members.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/km/meta.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/km/needs.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/km/overview.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/km/projects.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/km/reports.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/km/requests.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/km/settings/access.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/km/settings/ai.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/km/settings/audit.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/km/settings/core.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/km/settings/finance.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/km/settings/mail.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/km/stores.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/km/ui.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/lo/affiliate.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/lo/auth.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/lo/bot-options.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/lo/bots.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/lo/common.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/lo/events.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/lo/fees.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/lo/groups.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/lo/investors.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/lo/marketing.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/lo/members.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/lo/meta.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/lo/needs.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/lo/overview.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/lo/projects.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/lo/reports.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/lo/requests.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/lo/settings/access.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/lo/settings/ai.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/lo/settings/audit.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/lo/settings/core.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/lo/settings/finance.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/lo/settings/mail.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/lo/stores.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/lo/ui.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/ms/affiliate.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/ms/auth.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/ms/bot-options.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/ms/bots.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/ms/common.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/ms/events.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/ms/fees.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/ms/groups.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/ms/investors.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/ms/marketing.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/ms/members.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/ms/meta.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/ms/needs.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/ms/overview.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/ms/projects.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/ms/reports.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/ms/requests.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/ms/settings/access.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/ms/settings/ai.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/ms/settings/audit.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/ms/settings/core.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/ms/settings/finance.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/ms/settings/mail.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/ms/stores.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/ms/ui.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/my/affiliate.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/my/auth.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/my/bot-options.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/my/bots.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/my/common.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/my/events.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/my/fees.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/my/groups.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/my/investors.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/my/marketing.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/my/members.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/my/meta.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/my/needs.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/my/overview.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/my/projects.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/my/reports.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/my/requests.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/my/settings/access.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/my/settings/ai.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/my/settings/audit.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/my/settings/core.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/my/settings/finance.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/my/settings/mail.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/my/stores.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/my/ui.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/REVIEW.md` | New small module/test dedicated to the responsibilities specified in TIP-824. |
+| create | `apps/admin/messages/th/affiliate.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/th/auth.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/th/bot-options.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/th/bots.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/th/common.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/th/events.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/th/fees.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/th/groups.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/th/investors.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/th/marketing.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/th/members.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/th/meta.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/th/needs.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/th/overview.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/th/projects.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/th/reports.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/th/requests.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/th/settings/access.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/th/settings/ai.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/th/settings/audit.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/th/settings/core.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/th/settings/finance.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/th/settings/mail.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/th/stores.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/th/ui.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| modify | `apps/admin/messages/vi/affiliate.json` | Source catalog; preserve existing logical keys and Vietnamese copy. |
+| modify | `apps/admin/messages/vi/auth.json` | Source catalog; preserve existing logical keys and Vietnamese copy. |
+| create | `apps/admin/messages/vi/bot-options.json` | Source catalog; preserve existing logical keys and Vietnamese copy. |
+| modify | `apps/admin/messages/vi/bots.json` | Source catalog; preserve existing logical keys and Vietnamese copy. |
+| modify | `apps/admin/messages/vi/common.json` | Source catalog; preserve existing logical keys and Vietnamese copy. |
+| modify | `apps/admin/messages/vi/events.json` | Source catalog; preserve existing logical keys and Vietnamese copy. |
+| modify | `apps/admin/messages/vi/fees.json` | Source catalog; preserve existing logical keys and Vietnamese copy. |
+| modify | `apps/admin/messages/vi/groups.json` | Source catalog; preserve existing logical keys and Vietnamese copy. |
+| modify | `apps/admin/messages/vi/investors.json` | Source catalog; preserve existing logical keys and Vietnamese copy. |
+| modify | `apps/admin/messages/vi/marketing.json` | Source catalog; preserve existing logical keys and Vietnamese copy. |
+| modify | `apps/admin/messages/vi/members.json` | Source catalog; preserve existing logical keys and Vietnamese copy. |
+| create | `apps/admin/messages/vi/meta.json` | Source catalog; preserve existing logical keys and Vietnamese copy. |
+| modify | `apps/admin/messages/vi/needs.json` | Source catalog; preserve existing logical keys and Vietnamese copy. |
+| modify | `apps/admin/messages/vi/overview.json` | Source catalog; preserve existing logical keys and Vietnamese copy. |
+| modify | `apps/admin/messages/vi/projects.json` | Source catalog; preserve existing logical keys and Vietnamese copy. |
+| modify | `apps/admin/messages/vi/reports.json` | Source catalog; preserve existing logical keys and Vietnamese copy. |
+| modify | `apps/admin/messages/vi/requests.json` | Source catalog; preserve existing logical keys and Vietnamese copy. |
+| delete | `apps/admin/messages/vi/settings.json` | Replace with settings domain parts; preserve settings.* at runtime. |
+| create | `apps/admin/messages/vi/settings/access.json` | Source catalog; preserve existing logical keys and Vietnamese copy. |
+| create | `apps/admin/messages/vi/settings/ai.json` | Source catalog; preserve existing logical keys and Vietnamese copy. |
+| create | `apps/admin/messages/vi/settings/audit.json` | Source catalog; preserve existing logical keys and Vietnamese copy. |
+| create | `apps/admin/messages/vi/settings/core.json` | Source catalog; preserve existing logical keys and Vietnamese copy. |
+| create | `apps/admin/messages/vi/settings/finance.json` | Source catalog; preserve existing logical keys and Vietnamese copy. |
+| create | `apps/admin/messages/vi/settings/mail.json` | Source catalog; preserve existing logical keys and Vietnamese copy. |
+| modify | `apps/admin/messages/vi/stores.json` | Source catalog; preserve existing logical keys and Vietnamese copy. |
+| create | `apps/admin/messages/vi/ui.json` | Source catalog; preserve existing logical keys and Vietnamese copy. |
+| create | `apps/admin/messages/zh/affiliate.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/zh/auth.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/zh/bot-options.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/zh/bots.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/zh/common.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/zh/events.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/zh/fees.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/zh/groups.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/zh/investors.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/zh/marketing.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/zh/members.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/zh/meta.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/zh/needs.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/zh/overview.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/zh/projects.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/zh/reports.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/zh/requests.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/zh/settings/access.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/zh/settings/ai.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/zh/settings/audit.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/zh/settings/core.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/zh/settings/finance.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/zh/settings/mail.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/zh/stores.json` | Complete translated catalog; exact structure and ICU argument contract. |
+| create | `apps/admin/messages/zh/ui.json` | Complete translated catalog; exact structure and ICU argument contract. |
+
+## Self-hosted font assets and licenses (12 paths)
+
+| Action | Exact path | Responsibility |
+|---|---|---|
+| create | `apps/admin/public/fonts/NotoSans-Regular.woff2` | Self-host licensed subset, script coverage documented; no runtime CDN. |
+| create | `apps/admin/public/fonts/NotoSansKhmer-Regular.woff2` | Self-host licensed subset, script coverage documented; no runtime CDN. |
+| create | `apps/admin/public/fonts/NotoSansLao-Regular.woff2` | Self-host licensed subset, script coverage documented; no runtime CDN. |
+| create | `apps/admin/public/fonts/NotoSansMyanmar-Regular.woff2` | Self-host licensed subset, script coverage documented; no runtime CDN. |
+| create | `apps/admin/public/fonts/NotoSansSC-Regular.woff2` | Self-host licensed subset, script coverage documented; no runtime CDN. |
+| create | `apps/admin/public/fonts/NotoSansThai-Regular.woff2` | Self-host licensed subset, script coverage documented; no runtime CDN. |
+| create | `apps/admin/public/fonts/OFL-NotoSans.txt` | Upstream license and attribution, not fabricated. |
+| create | `apps/admin/public/fonts/OFL-NotoSansKhmer.txt` | Upstream license and attribution, not fabricated. |
+| create | `apps/admin/public/fonts/OFL-NotoSansLao.txt` | Upstream license and attribution, not fabricated. |
+| create | `apps/admin/public/fonts/OFL-NotoSansMyanmar.txt` | Upstream license and attribution, not fabricated. |
+| create | `apps/admin/public/fonts/OFL-NotoSansSC.txt` | Upstream license and attribution, not fabricated. |
+| create | `apps/admin/public/fonts/OFL-NotoSansThai.txt` | Upstream license and attribution, not fabricated. |
+
+## Traceability and execute evidence (60 paths)
+
+| Action | Exact path | Responsibility |
+|---|---|---|
+| modify | `coding-packs/01-REQUIREMENTS-MATRIX.md` | Planning/traceability only; append or update TIP824-owned sections. |
+| modify | `coding-packs/02-TASK-GRAPH.md` | Planning/traceability only; append or update TIP824-owned sections. |
+| modify | `coding-packs/audit/W1/TEST-GAPS.md` | Planning/traceability only; append or update TIP824-owned sections. |
+| create | `coding-packs/reports/evidence/v46-824/build-msw.log` | Execute-phase evidence only; do not generate fake results during TIP planning. |
+| create | `coding-packs/reports/evidence/v46-824/build-native.log` | Execute-phase evidence only; do not generate fake results during TIP planning. |
+| create | `coding-packs/reports/evidence/v46-824/catalog-audit.md` | Execute-phase evidence only; do not generate fake results during TIP planning. |
+| create | `coding-packs/reports/evidence/v46-824/coverage.md` | Execute-phase evidence only; do not generate fake results during TIP planning. |
+| create | `coding-packs/reports/evidence/v46-824/msw-behavior.log` | Execute-phase evidence only; do not generate fake results during TIP planning. |
+| create | `coding-packs/reports/evidence/v46-824/msw-en-overview-1440.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/msw-en-overview-390.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/msw-en-profile-1440.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/msw-en-profile-390.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/msw-en-settings-1440.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/msw-en-settings-390.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/msw-km-overview-1440.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/msw-km-overview-390.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/msw-lo-settings-1440.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/msw-lo-settings-390.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/msw-my-overview-1440.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/msw-my-overview-390.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/msw-th-overview-1440.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/msw-th-overview-390.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/msw-th-settings-1440.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/msw-th-settings-390.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/msw-vi-overview-1440.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/msw-vi-overview-390.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/msw-vi-profile-1440.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/msw-vi-profile-390.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/msw-zh-overview-1440.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/msw-zh-overview-390.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/native-behavior.log` | Execute-phase evidence only; do not generate fake results during TIP planning. |
+| create | `coding-packs/reports/evidence/v46-824/native-en-overview-1440.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/native-en-overview-390.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/native-en-profile-1440.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/native-en-profile-390.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/native-en-settings-1440.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/native-en-settings-390.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/native-km-overview-1440.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/native-km-overview-390.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/native-lo-settings-1440.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/native-lo-settings-390.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/native-my-overview-1440.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/native-my-overview-390.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/native-th-overview-1440.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/native-th-overview-390.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/native-th-settings-1440.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/native-th-settings-390.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/native-vi-overview-1440.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/native-vi-overview-390.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/native-vi-profile-1440.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/native-vi-profile-390.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/native-zh-overview-1440.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/native-zh-overview-390.png` | Unmasked actual application screenshot; include opened control where specified. |
+| create | `coding-packs/reports/evidence/v46-824/parity-vi.log` | Execute-phase evidence only; do not generate fake results during TIP planning. |
+| create | `coding-packs/reports/evidence/v46-824/performance.md` | Execute-phase evidence only; do not generate fake results during TIP planning. |
+| create | `coding-packs/reports/evidence/v46-824/quality-gates.log` | Execute-phase evidence only; do not generate fake results during TIP planning. |
+| create | `coding-packs/reports/evidence/v46-824/unit.log` | Execute-phase evidence only; do not generate fake results during TIP planning. |
+| create | `coding-packs/reports/TIP-V46-824-completion.md` | Execute-phase evidence only; do not generate fake results during TIP planning. |
+| modify | `coding-packs/tips/TIP-V46-824-admin-i18n-manifest.md` | Planning/traceability only; append or update TIP824-owned sections. |
+| modify | `coding-packs/tips/TIP-V46-824-admin-i18n.md` | Planning/traceability only; append or update TIP824-owned sections. |
+
+## Parallel-break result
+
+Batch = one TIP824. Pairwise conflicts inside the batch = zero. Overlaps with historical TIP822/823 exist and are declared sequential in the main HEADER; both are already in baseline. Do not rewrite old TIPs to create a fake parallel authorization. Recompute this result if another active TIP is introduced.
+
+## Counts and verification
+
+621 explicit paths: 367 create, 253 modify, 1 delete. Modify/delete paths were checked against the working baseline; create paths are planned and absent except the planning documents being created in this phase. No app source file is changed by generating this manifest.
+
+## Execute inventory additions (2026-11-11, same serial lane)
+
+The split removes the old settings JSON import used by six existing tests; redirect fixtures to the public source-messages facade, keeping every assertion. ICU structural comparison is separated from tree traversal. These paths do not overlap any active TIP.
+
+| Action | Exact path | Responsibility |
+|---|---|---|
+| modify | `apps/admin/src/features/settings/components/renewal-tab.spec.tsx` | Redirect obsolete settings fixture import; preserve assertions. |
+| modify | `apps/admin/src/features/settings/components/bank-tab.spec.tsx` | Redirect obsolete settings fixture import; preserve assertions. |
+| modify | `apps/admin/src/features/settings/components/audit-log-tab.spec.tsx` | Redirect obsolete settings fixture import; preserve assertions. |
+| modify | `apps/admin/src/features/settings/components/app-notify-tab.spec.tsx` | Redirect obsolete settings fixture import; preserve assertions. |
+| modify | `apps/admin/src/features/settings/components/app-notify-device.spec.tsx` | Redirect obsolete settings fixture import; preserve assertions. |
+| modify | `apps/admin/src/features/settings/components/ai/ai-tab.spec.tsx` | Redirect obsolete settings fixture import and include real ui labels; preserve assertions. |
+| create | `apps/admin/src/i18n/tests/icu-contract.ts` | Public IntlMessageFormat AST contract comparison, tests only. |
+
+## Execute inventory additions - presentation and control locale integration
+
+One serial TIP lane; no active file overlap. Exact additional paths:
+
+| Action | Exact path | Responsibility |
+|---|---|---|
+| create | `apps/admin/src/i18n/antd/translate-locale.ts` | Strict complete translation of installed AntD locale text; no silent English fallback. |
+| create | `apps/admin/src/i18n/ui-labels.spec.tsx` | Live-locale UI label tests and editor/datepicker label contracts. |
+| modify | `apps/admin/src/features/affiliate/components/affiliate-pagination.spec.tsx` | Add required i18n provider around newly localized pager; retain existing assertions. |
+| modify | `apps/admin/src/features/overview/components/overview-controls.spec.tsx` | Supply the new UI namespace to focused provider fixtures. |
+
+## Execute inventory additions - fallback and renderer fixtures
+
+Exact paths, same serial lane:
+
+| Action | Exact path | Responsibility |
+|---|---|---|
+| modify | `apps/admin/src/features/overview/components/conversion-table.spec.tsx` | Supply the UI namespace for translated region/count labels; keep existing assertions. |
+| create | `apps/admin/src/providers/admin-intl-errors.spec.tsx` | Verify safe readable fallback without raw message keys/ICU variables. |
+
+## Execute inventory additions - raw English catalog verification
+
+Same serial TIP lane, no active overlap.
+
+| Action | Exact path | Responsibility |
+|---|---|---|
+| create | `apps/admin/src/i18n/tests/english-catalog.spec.ts` | Fixed explicit raw-English catalog checks before fallback; exact-key exceptions for proper names and canonical syntax only. |
+
+## Execute inventory additions - canonical content boundaries
+
+Sequential extension, checked before editing. These adapters preserve current Vietnamese event defaults, export bytes and email-preview content independently of Admin presentation locale. No server/DB/shared registry changes or overlap with another active implementation.
+
+| Action | Exact path | Responsibility |
+|---|---|---|
+| create | `apps/admin/src/features/events/content-defaults.ts` | Stable source-language event default content, not a translated UI label. |
+| create | `apps/admin/src/features/events/content-defaults.spec.ts` | Blank/rich-text default and authored content payload regression. |
+| create | `apps/admin/src/features/groups/export-content.ts` | Source-language exported headers/cells independent of dialog language. |
+| create | `apps/admin/src/features/groups/export-content.spec.ts` | CSV/Excel bytes and raw personal content regression. |
+| modify | `apps/admin/src/features/groups/hooks/use-export.ts` | Keep audited export workflow; render exact export-content preview. |
+| modify | `apps/admin/src/features/marketing/components/welcome-preview.tsx` | Keep email body preview in current email-contract language, not GUI locale. |
+| create | `apps/admin/src/features/marketing/components/welcome-preview.spec.tsx` | Verify unchanged email preview under English Admin provider. |
+
+## Execute inventory additions - AI UI and email-boundary regressions
+
+Sequential extension inspected before editing; all production callers and catalogs are already declared. No parallel implementation or backend changes. New `settings.aiCalls` and four `groups.mod.ai*` source labels are additions only; original524 settings leaves and2456 legacy leaves remain protected separately from additions.
+
+| Action | Exact path | Responsibility |
+|---|---|---|
+| create | `apps/admin/src/features/settings/components/ai/ai-call-i18n.spec.tsx` | Live-locale AI filters/columns, canonical filter values and raw provider/model/error/actor data. |
+| create | `apps/admin/src/features/groups/components/moderation-i18n.spec.tsx` | Localized moderation action labels with identical action payloads. |
+| create | `apps/admin/src/features/settings/components/welcome-preview.spec.tsx` | Localized preview chrome with unchanged Vietnamese email body and authored content. |
+| modify | `apps/admin/src/features/settings/components/welcome-preview.tsx` | Keep actual Vietnamese email body distinct from localized preview chrome. |
+| create | `apps/admin/src/features/profile/hooks/use-profile-errors.ts` | Keep structured client issues for live locale changes; preserve raw API field errors and hidden-avatar toast behavior. |
+
+## Execute inventory additions - complete shared-control callers
+
+Sequential extension checked before editing; all production control callers are already enumerated above. Preserve domain overrides and callback values; optional shared defaults remain unchanged for Portal. No API/date parser/export changes.
+
+| Action | Exact path | Responsibility |
+|---|---|---|
+| create | `apps/admin/src/i18n/date-picker.ts` | Locale/Gregorian display pattern and live Vietnam-calendar presets, without global dayjs selection. |
+| create | `apps/admin/src/i18n/date-picker.spec.ts` | All12 locale patterns, VN boundary/month/year, live preset values and unchanged canonical date strings. |
+| create | `apps/admin/src/i18n/tests/control-callers.spec.ts` | AST regression for all Admin shared control callers passing translated label props. |
+| modify | `apps/admin/src/features/stores/components/stores-header.spec.tsx` | Supply real ui messages after wiring the localized date control; retain assertions. |
+| create | `apps/admin/src/features/fees/model.spec.ts` | Locale money/timestamps/null regression with unchanged fee values and actions; no existing domain model suite at this path. |
+
+## Owner-approved execute extension - optional numeric labels (11/11/2026)
+
+Owner answered: “Đồng ý thêm props tùy chọn, giữ nguyên Portal”. No data, calculation, pagination/selection state or callback contract changes. Keep default rendering identical for every existing caller; Admin opts in with its live formatter. Fresh shared-UI/Portal regression and Portal build required.
+
+| Action | Exact path | Responsibility |
+|---|---|---|
+| modify | `packages/ui/src/pagination/pagination.tsx` | Optional numeric button label formatter, preserve numeric callbacks/default output. |
+| modify | `packages/ui/src/bulk-bar/bulk-bar.tsx` | Optional count formatter, preserve selection visibility and callbacks/default output. |
+| create | `packages/ui/src/controls-i18n.spec.tsx` | Optional/default rendering and raw numeric callback regression. |
+| modify | `apps/admin/src/features/affiliate/tests/context.tsx` | Add real ui catalog to shared provider fixture; preserve existing assertions. |
+| create | `coding-packs/reports/evidence/v46-824/build-portal.log` | Actual Portal build after owner-approved shared changes; no Portal business edits. |
+| create | `coding-packs/reports/evidence/v46-824/portal-unit.log` | Fresh direct Portal regression, bypassing consumer cache after shared changes. |
+
+## Execute extension - remaining domain display formatters (11/11/2026)
+
+Sequential presentation-only work; existing domain models and their UI callers are already individually declared above. Preserve compact thresholds/rounding, canonical inputs, search/sort, business flags, API/query parameters and export bytes. Invalid display values remain distinct from zero.
+
+| Action | Exact path | Responsibility |
+|---|---|---|
+| create | `apps/admin/src/i18n/compact-money.ts` | Locale-aware project/investor compact display with original Vietnamese rounding and currency retained. |
+| create | `apps/admin/src/i18n/compact-money.spec.ts` | Original thresholds/rounding and all-locale/null/negative/large currency display regression. |
+| create | `apps/admin/src/i18n/tests/domain-formatters.spec.ts` | Cross-domain live display formatting, VN/Gregorian boundary and unchanged parser/export/content contracts. |
+| create | `apps/admin/src/i18n/tests/formatter-callers.spec.ts` | AST regression that declared UI formatter callers supply the current locale. |
+| modify | `apps/admin/src/features/marketing/components/campaign-table.tsx` | Pass selected locale into campaign display cells; keep action eligibility and DTO values unchanged. |
+| modify | `apps/admin/src/features/affiliate/summary-presentation.ts` | Localize display ratio/month-end date, retaining the existing formula and VN calendar. |
+| create | `apps/admin/src/features/events/presentation.ts` | Locale date/time projection from canonical timestamps, retaining original vi labels and raw DTOs. |
+| create | `apps/admin/src/features/events/presentation.spec.ts` | Event display locale/VN boundary and unchanged raw date/time/payload regression. |
+| modify | `apps/admin/src/features/events/components/event-grid.tsx` | Localize event date/time and visible counts only. |
+| modify | `apps/admin/src/features/events/components/event-table.tsx` | Localize event date/time and visible counts only. |
+| modify | `apps/admin/src/features/events/components/upcoming-block.tsx` | Localize event date/time, mode and visible counts, preserve Meet/content/actions. |
+| modify | `apps/admin/src/features/events/components/registrants-drawer.tsx` | Localize event display and visible counts, preserve check-in/export contracts. |
+| modify | `apps/admin/src/features/events/components/event-form-fields.tsx` | Localize mode labels/edit-date hint; retain form values and datetime parsing. |
+
+## Execute extension - reproducible self-hosted fonts (11/11/2026)
+
+Sequential Admin-only presentation work. Existing six font/OFL assets, font-config/fonts.css, root layout and REVIEW paths are declared above. No Portal/shared UI edits, runtime CDN or new application dependency. A small merged menu-only font covers the twelve native language names without downloading five full script fonts merely to open the selector; main UI loads Latin plus only the selected script. Build-time FontTools/Brotli live in an isolated external venv, never the runtime dependency graph.
+
+| Action | Exact path | Responsibility |
+|---|---|---|
+| create | `apps/admin/public/fonts/LanguageMenu-Regular.woff2` | Licensed merged subset containing only the twelve native language-name glyphs; main UI never uses it. |
+| create | `apps/admin/src/i18n/font-assets.json` | Reproducible asset hashes, sizes, actual cmap ranges and pinned upstream provenance; not translated messages. |
+| create | `apps/admin/src/i18n/font-config.spec.ts` | Finite locale/script CSS stack map, font receipts/catalog glyph coverage and CSS scoping regression. |
+| create | `infra/scripts/build-admin-fonts.py` | Reproducible pinned-upstream conversion/subsetting and actual cmap/byte verification; no project/runtime dependency. |
+| create | `coding-packs/reports/evidence/v46-824/fonts.log` | Actual font generation/glyph/hash/size evidence, not browser glyph acceptance. |
+| create | `e2e/audit/admin-i18n-fonts.spec.ts` | Same MSW/off font-only browser assertions:12 choices,1440/390, actual custom fonts/no platform fallback, native-name menu subset and selected-script network isolation. Does not count as translated catalog acceptance. |
+| create | `e2e/audit/playwright.admin-fonts.config.ts` | Read-only auth-page font audit using isolated configured ports/build outputs; no API fixture/DB seed/reset. |
+
+## Execute extension - complete Simplified Chinese catalog (11/11/2026)
+
+All25 zh catalog paths are already explicitly declared. Reuse Portal translations only for unambiguous exact Vietnamese source matches, translate remaining Admin prose separately, preserve canonical data/examples and ICU contracts. This is one more complete raw bundle, not the final10-bundle gate. No runtime Portal import or translation service. Regenerate the existing SC subset/receipt and extend glyph coverage after adding the catalog.
+
+| Action | Exact path | Responsibility |
+|---|---|---|
+| create | `apps/admin/src/i18n/tests/chinese-catalog.spec.ts` | Fixed25-file Chinese raw-contract/ICU/copy/NFC checks before fallback; missing bundle/file fails. Other seven absent targets remain explicitly incomplete. |
+| create | `coding-packs/reports/evidence/v46-824/zh-auth-msw-1440.png` | Unmasked actual Chinese login screen, MSW desktop; not Profile or Dashboard evidence. |
+| create | `coding-packs/reports/evidence/v46-824/zh-auth-msw-390.png` | Unmasked actual Chinese login screen, MSW mobile. |
+| create | `coding-packs/reports/evidence/v46-824/zh-auth-server-1440.png` | Same Chinese login assertions/image on mocking-off desktop; no API/DB acceptance claim. |
+| create | `coding-packs/reports/evidence/v46-824/zh-auth-server-390.png` | Same Chinese login assertions/image on mocking-off mobile. |
+
+## Indonesian raw catalog checkpoint
+
+Serial follow-up within the same TIP. The25 Indonesian catalog paths above are already declared; context review must distinguish financial reports, abuse reports, open needs, email bodies and bank references. Other six missing targets remain incomplete; no runtime fallback counts as translation.
+
+| Action | Exact path | Ownership / reason |
+|---|---|---|
+| create | `apps/admin/src/i18n/tests/indonesian-catalog.spec.ts` | Fixed25-file raw contracts before fallback, Admin-context and canonical-copy cases; missing file or key must fail. |
+
+## Local auth/upload error-state follow-up
+
+Serial AC824-10/12 implementation. Store client error codes and translate at render; keep API field/message strings raw, drafts and validation predicates unchanged. No shared LoginPanel change without the separately requested owner clarification.
+
+| Action | Exact path | Ownership / reason |
+|---|---|---|
+| create | `apps/admin/src/i18n/use-local-errors.ts` | Typed local-code/raw-text error state; live rendering without reverse-matching server messages. |
+| create | `apps/admin/src/i18n/use-local-errors.spec.tsx` | Local rerender/clear/raw collision regressions. |
+| create | `apps/admin/src/i18n/use-upload-image.ts` | Admin-only localized wrapper around typed local upload failures; API exceptions pass through unchanged. |
+| create | `apps/admin/src/i18n/use-upload-image.spec.tsx` | Live-locale/local-kind/raw-API upload boundary and caller coverage tests. |
+| create | `apps/admin/src/lib/image-upload-error.ts` | Typed browser/storage-local upload error identity, separate from ApiError. |
+| create | `apps/admin/src/lib/upload-image.spec.ts` | Compression/presign/storage contracts and local failure identity. |
+| create | `apps/admin/src/features/auth/hooks/use-first-password.ts` | Extract existing hook; preserve strength/equality/session/routing, render local errors from codes. |
+| create | `apps/admin/src/features/auth/tests/local-errors.spec.tsx` | Actual auth form/hook draft/error locale-switch regressions and raw API negatives. |
+| modify | `apps/admin/src/features/auth/components/first-password-screen.tsx` | Hook extraction facade; no auth-flow redesign. |
+| modify | `apps/admin/src/features/auth/components/forgot-screen.tsx` | Local email validation remains live under locale switch. |
+| modify | `apps/admin/src/features/auth/components/reset-screen.tsx` | Structured local link/password errors, raw server errors unchanged. |
+| modify | `apps/admin/src/features/auth/components/totp-step.tsx` | Local six-digit error code; raw API errors unchanged. |
+| modify | `apps/admin/src/features/auth/components/two-factor-form.tsx` | Local six-digit error code; raw API errors unchanged. |
+| modify | `apps/admin/src/features/bots/components/persona-drawer.tsx` | Opt into typed local upload error translation; file rules/values unchanged. |
+| modify | `apps/admin/src/features/groups/components/group-form.tsx` | Opt into typed local upload error translation; file rules/values unchanged. |
+| modify | `apps/admin/src/features/settings/components/logo-picker.tsx` | Opt into typed local upload error translation; immediate logo save semantics unchanged. |
+
+## Owner-approved optional LoginPanel error formatting
+
+Owner explicitly approved optional error formatting for Admin while retaining Portal defaults. The formatter changes displayed errors only; onSubmit returns the same string/undefined contract, drafts, demo-account clearing, pending state and actions remain unchanged. No Portal production file is edited. Shared/UI and fresh Portal regression plus Portal production build are required.
+
+| Action | Exact path | Ownership / reason |
+|---|---|---|
+| modify | `packages/ui/src/auth/types.ts` | Optional typed formatError prop, default behavior unchanged. |
+| modify | `packages/ui/src/auth/login-panel.tsx` | Present formatted error without mutating internal login form state. |
+| create | `packages/ui/src/auth/login-panel-i18n.spec.tsx` | Default/raw output, live opt-in formatting, draft/demo/error-clear and callback regressions. |
+| modify | `apps/admin/src/features/auth/components/login-screen.tsx` | Retain known client/auth-message provenance; formatter rerenders only known local keys and leaves raw API strings unchanged. |
+| create | `e2e/audit/admin-local-errors.spec.ts` | Actual vi/en public-auth local-error/draft/query/hash/cookie checks at1440/390, same assertions in both modes, no submitted API mutations. Not the final all-language/auth suite. |
+| create | `e2e/audit/playwright.admin-local-errors.config.ts` | Reuse isolated font-audit startup only; no fixtures/seeds/global database setup. |
+| create | `coding-packs/reports/evidence/v46-824/local-errors.log` | Actual same-assertion MSW/off public-auth local-error output; never whole native API acceptance. |
+
+## Domain client-validation provenance follow-up
+
+Serial AC824-10/12 work. Preserve schemas, canonical values, field whitelists and API error text. Add six UI labels in the already-owned vi/en/zh/id ui catalogs; other six bundles remain incomplete. Refresh only active client errors on locale change; never resurrect cleared errors, overwrite remembered API errors, change drafts or submit a mutation.
+
+| Action | Exact path | Ownership / reason |
+|---|---|---|
+| create | `apps/admin/src/i18n/use-schema-form-errors.ts` | Domain client error rendering / regression, no business or API redesign. |
+| create | `apps/admin/src/i18n/use-schema-form-errors.spec.tsx` | Domain client error rendering / regression, no business or API redesign. |
+| create | `apps/admin/src/i18n/schema-validation.spec.ts` | Domain client error rendering / regression, no business or API redesign. |
+| create | `apps/admin/src/features/affiliate/components/policy-i18n.spec.tsx` | Domain client error rendering / regression, no business or API redesign. |
+| create | `apps/admin/src/features/affiliate/regional/components/regional-bank-i18n.spec.tsx` | Domain client error rendering / regression, no business or API redesign. |
+| create | `apps/admin/src/features/bots/hooks/use-bot-type-form-i18n.spec.tsx` | Domain client error rendering / regression, no business or API redesign. |
+| create | `apps/admin/src/features/settings/hooks/use-price-config-i18n.spec.tsx` | Domain client error rendering / regression, no business or API redesign. |
+| create | `apps/admin/src/features/settings/hooks/use-app-notify-device-i18n.spec.tsx` | Domain client error rendering / regression, no business or API redesign. |
+| modify | `apps/admin/src/features/affiliate/regional/components/regional-bank-fields.tsx` | Domain client error rendering / regression, no business or API redesign. |
+| modify | `apps/admin/src/features/affiliate/components/policy-form.spec.tsx` | Domain client error rendering / regression, no business or API redesign. |
+| modify | `apps/admin/src/features/affiliate/regional/components/regional-payee-bank-dialog.spec.tsx` | Domain client error rendering / regression, no business or API redesign. |
+| create | `apps/admin/src/i18n/use-issue-message.ts` | Live locale formatting for structured Zod issue parameters; no parser changes. |
+| modify | `apps/admin/src/features/bots/tests/context.tsx` | Supply the real source ui catalog for new local error rendering in existing regressions. |
+| create | `apps/admin/src/i18n/tests/domain-context.tsx` | Shared test-only real vi/en providers for client validation provenance; no production API change. |
+| create | `coding-packs/reports/evidence/v46-824/schema-errors.log` | Actual domain client-validation tests, not full native or all-language browser acceptance. |
+
+## Malay raw-bundle follow-up
+
+Serial AC824-02/07/15 work: all25 already-declared ms catalogs, exact source keys/ICU, canonical-copy exceptions unchanged. Reuse unambiguous exact-source Portal Malay text; adapt the reviewed Admin Indonesian translations into Malay and review Admin-specific terminology/context. Document this provenance and native-reviewed=false. The ms-BN selection keeps its own identity while loading ms. No Portal source, API, database or business change.
+
+| Action | Exact path | Ownership / reason |
+|---|---|---|
+| create | `apps/admin/src/i18n/tests/malay-catalog.spec.ts` | Explicit25-file raw checks plus Admin-context/canonical cases; not a replacement for the final10-bundle gate. |
+| create | `coding-packs/reports/evidence/v46-824/malay.log` | Actual focused raw/runtime/glyph results and translation provenance, not full native API acceptance. |
+
+## Full production source audit follow-up
+
+AC824-06/08 inventory and verification tooling: inspect all Admin production TS/TSX (not fixture/test/mocks), including English/unaccented text, JSX accessibility/control props, indirect constants, client-message calls and type-checked numeric/enum display expressions. Review findings individually; preserve canonical payloads, raw content and exports. A source audit does not replace browser/native coverage. Exact file/literal/reason registries will be declared before creation after inventory.
+
+| Action | Exact path | Ownership / reason |
+|---|---|---|
+| create | `infra/scripts/audit-admin-i18n.mjs` | CLI orchestrator for a complete source inventory and non-skipping verification. |
+| create | `infra/scripts/admin-i18n/source-files.mjs` | Production corpus and TypeScript program/fixture setup. |
+| create | `infra/scripts/admin-i18n/literals.mjs` | AST contexts for human literals, not Vietnamese-only grep. |
+| create | `infra/scripts/admin-i18n/numeric.mjs` | Type-checked display/translation number and enum inventory; never rewrites parsers or payloads. |
+| create | `infra/scripts/admin-i18n/registry.mjs` | Exact exception verification with nonempty reasons and stale-entry detection. |
+| create | `apps/admin/src/i18n/tests/source-audit.spec.ts` | Positive/negative fixtures for the CLI using stdin, without deleting production catalogs. |
+| create | `coding-packs/reports/evidence/v46-824/source-audit.json` | Actual complete-source findings/classifications and command/version metadata. |
+| create | `apps/admin/src/i18n/number-text.ts` | Presentation-only, full Number precision; no parsing or business rounding. |
+| create | `apps/admin/src/i18n/use-number-text.ts` | Live-locale scalar formatting hook for audited display call sites. |
+| create | `apps/admin/src/i18n/number-text.spec.tsx` | Precision/null/locale/draft contract regressions. |
+| create | `apps/admin/src/features/settings/hooks/use-ai-provider-label.ts` | Translate only the fixed custom-provider label; retain provider IDs, brands, models and hints. |
+| create | `apps/admin/src/features/settings/hooks/use-ai-provider-label.spec.tsx` | Custom label switching and canonical provider contract tests. |
+
+| modify | `apps/admin/src/features/affiliate/components/affiliate-detail-tabs.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/affiliate/components/affiliate-identity.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/affiliate/components/affiliate-rate-editor.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/affiliate/components/list-toolbar.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/affiliate/components/policy-rules.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/affiliate/components/policy-year-table.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/affiliate/hooks/use-affiliate-writes.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/affiliate/hooks/use-commission-status-writes.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/affiliate/regional/components/regional-config-panel.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/affiliate/regional/components/regional-slot-summary.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/bots/components/activity-log.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/bots/components/automation-header.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/bots/components/bulk/bulk-form.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/bots/components/bulk/bulk-modal-frame.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/bots/components/bulk/bulk-progress.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/bots/components/bulk/bulk-result-card.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/bots/components/bulk/bulk-result-summary.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/bots/components/persona-list.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/bots/components/reply-groups.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/bots/components/reply-heading.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/bots/components/reply-run.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/bots/components/script-lines.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/bots/components/thread-list.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/bots/hooks/use-bot-emergency.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/groups/components/export-modal.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/groups/components/export-sections.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/groups/components/group-form-rooms.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/groups/components/keyword-panel.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/groups/components/moderation-panel.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/groups/hooks/use-group-delete.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/investors/hooks/use-investors.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/marketing/components/regional-mail-list.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/marketing/components/welcome-lists.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/members/components/assign-modal.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/members/components/cells.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/members/components/member-filters.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/members/components/members-toolbar.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/members/hooks/use-confirm-requests.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/members/hooks/use-member-actions.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/members/hooks/use-member-export.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/needs/components/need-toolbar.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/needs/hooks/use-needs.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/projects/components/projects-head.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/projects/hooks/use-project-bulk.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/requests/components/catalog-tab.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/requests/hooks/use-request-actions.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/components/admins-tab.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/components/ai/ai-tab.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/components/categories-tab.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/components/category-table.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/components/renewal-tab.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/components/role-cards.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/components/settings-nav.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/components/welcome-lists.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/hooks/use-app-notify.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/hooks/use-audit-log.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/hooks/use-rel-time.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/hooks/use-renewal.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/hooks/use-roles.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/shell/components/admin-notifications.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/shell/components/admin-search.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/shell/hooks/use-notifications.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/stores/components/store-toolbar.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/stores/hooks/use-stores.ts` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/components/ai/ai-allocation.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/components/ai/ai-provider-grid.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+| modify | `apps/admin/src/features/settings/components/ai/ai-provider-fields.tsx` | Audited display scalar only; keep raw form/DTO/callback/query/export values and business rounding. |
+
+### Exact source-audit exception registries (reviewed before creation)
+
+| Operation | File | Scope |
+|---|---|---|
+| create | `infra/scripts/admin-i18n/exceptions/metadata-1.json` | Exact file/kind/literal/reason, and actual enum values; reject wildcard, stale and changed literals. |
+| create | `infra/scripts/admin-i18n/exceptions/domain-enums-1.json` | Exact file/kind/literal/reason, and actual enum values; reject wildcard, stale and changed literals. |
+| create | `infra/scripts/admin-i18n/exceptions/domain-1.json` | Exact file/kind/literal/reason, and actual enum values; reject wildcard, stale and changed literals. |
+| create | `infra/scripts/admin-i18n/exceptions/domain-2.json` | Exact file/kind/literal/reason, and actual enum values; reject wildcard, stale and changed literals. |
+| create | `infra/scripts/admin-i18n/exceptions/domain-3.json` | Exact file/kind/literal/reason, and actual enum values; reject wildcard, stale and changed literals. |
+| create | `infra/scripts/admin-i18n/exceptions/content-1.json` | Exact file/kind/literal/reason, and actual enum values; reject wildcard, stale and changed literals. |
+| create | `infra/scripts/admin-i18n/exceptions/antd-fil-1.json` | Exact file/kind/literal/reason, and actual enum values; reject wildcard, stale and changed literals. |
+| create | `infra/scripts/admin-i18n/exceptions/antd-fil-2.json` | Exact file/kind/literal/reason, and actual enum values; reject wildcard, stale and changed literals. |
+| create | `infra/scripts/admin-i18n/exceptions/antd-fil-3.json` | Exact file/kind/literal/reason, and actual enum values; reject wildcard, stale and changed literals. |
+| create | `infra/scripts/admin-i18n/exceptions/antd-fil-4.json` | Exact file/kind/literal/reason, and actual enum values; reject wildcard, stale and changed literals. |
+| create | `infra/scripts/admin-i18n/exceptions/antd-lo-1.json` | Exact file/kind/literal/reason, and actual enum values; reject wildcard, stale and changed literals. |
+| create | `infra/scripts/admin-i18n/exceptions/technical-1.json` | Exact file/kind/literal/reason, and actual enum values; reject wildcard, stale and changed literals. |
+
+| create | `coding-packs/reports/evidence/v46-824/source-audit.log` | Actual focused units, source scan summary and numeric migration receipt; no browser/native acceptance claimed. |
+
+### English authenticated screen/browser verification (serial, no global seed/reset)
+
+| Operation | File | Scope |
+|---|---|---|
+| create | `e2e/playwright.admin-i18n.config.ts` | Typed browser cases/helpers or actual verification output; same assertions both modes, fail closed on native isolation, no original DB operation. |
+| create | `e2e/behavior/admin-i18n/fixtures.ts` | Typed browser cases/helpers or actual verification output; same assertions both modes, fail closed on native isolation, no original DB operation. |
+| create | `e2e/behavior/admin-i18n/screen-cases.ts` | Typed browser cases/helpers or actual verification output; same assertions both modes, fail closed on native isolation, no original DB operation. |
+| create | `e2e/behavior/admin-i18n/chrome.ts` | Typed browser cases/helpers or actual verification output; same assertions both modes, fail closed on native isolation, no original DB operation. |
+| create | `e2e/behavior/admin-i18n/dialogs.ts` | Typed browser cases/helpers or actual verification output; same assertions both modes, fail closed on native isolation, no original DB operation. |
+| create | `coding-packs/reports/evidence/v46-824/english-msw.log` | Typed browser cases/helpers or actual verification output; same assertions both modes, fail closed on native isolation, no original DB operation. |
+| create | `coding-packs/reports/evidence/v46-824/english-native.log` | Typed browser cases/helpers or actual verification output; same assertions both modes, fail closed on native isolation, no original DB operation. |
+| create | `coding-packs/reports/evidence/v46-824/en-overview-msw-1440.png` | Unmasked actual English screen image, named route and viewport; not prototype parity or native approval. |
+| create | `coding-packs/reports/evidence/v46-824/en-overview-server-1440.png` | Unmasked actual English screen image, named route and viewport; not prototype parity or native approval. |
+| create | `coding-packs/reports/evidence/v46-824/en-overview-msw-390.png` | Unmasked actual English screen image, named route and viewport; not prototype parity or native approval. |
+| create | `coding-packs/reports/evidence/v46-824/en-overview-server-390.png` | Unmasked actual English screen image, named route and viewport; not prototype parity or native approval. |
+| create | `coding-packs/reports/evidence/v46-824/en-profile-msw-1440.png` | Unmasked actual English screen image, named route and viewport; not prototype parity or native approval. |
+| create | `coding-packs/reports/evidence/v46-824/en-profile-server-1440.png` | Unmasked actual English screen image, named route and viewport; not prototype parity or native approval. |
+| create | `coding-packs/reports/evidence/v46-824/en-profile-msw-390.png` | Unmasked actual English screen image, named route and viewport; not prototype parity or native approval. |
+| create | `coding-packs/reports/evidence/v46-824/en-profile-server-390.png` | Unmasked actual English screen image, named route and viewport; not prototype parity or native approval. |
+| create | `coding-packs/reports/evidence/v46-824/en-settings-msw-1440.png` | Unmasked actual English screen image, named route and viewport; not prototype parity or native approval. |
+| create | `coding-packs/reports/evidence/v46-824/en-settings-server-1440.png` | Unmasked actual English screen image, named route and viewport; not prototype parity or native approval. |
+| create | `coding-packs/reports/evidence/v46-824/en-settings-msw-390.png` | Unmasked actual English screen image, named route and viewport; not prototype parity or native approval. |
+| create | `coding-packs/reports/evidence/v46-824/en-settings-server-390.png` | Unmasked actual English screen image, named route and viewport; not prototype parity or native approval. |
+
+| modify | `apps/admin/src/features/affiliate/regional/components/regional-assignment.tsx` | Project the region enum to translated visible/aria labels only; member IDs and mutation parameters stay canonical. |
+| create | `apps/admin/src/features/affiliate/regional/components/regional-labels-i18n.spec.tsx` | Actual summary/assignment labels and accessible selector live-switch by region enum, preserving raw member data and callback values. |
+
+Native browser clarification: the already-owned bots.module.css also bounds existing AntD skeleton placeholder widths inside Bot cards at390, discovered while checking translated tabs. Keep shared PageSkeleton/Portal untouched; no hiding real text, viewport masks or assertion tolerance changes.
+
+
+### Thai actual three-screen browser proof (same assertions both modes)
+
+Observed native sidebar badge test readiness race: initial count snapshot ran before the real asynchronous badge response. The already-owned admin-i18n-sidebar.spec.ts must await the first actual badge's attachment before reading its numeric baseline, in both modes. Keep every positive/raw-count/geometry assertion and default timeout; no fixtures, backend or production behavior change.
+
+| Operation | File | Scope |
+|---|---|---|
+| create | `e2e/behavior/admin-i18n-thai.spec.ts` | Authenticated Thai Overview/Profile/Settings1440/390, real login/read-only guard and unmasked images; not all-language acceptance. |
+| create | `coding-packs/reports/evidence/v46-824/thai-msw.log` | Actual6-case Thai browser output. |
+| create | `coding-packs/reports/evidence/v46-824/thai-native.log` | Same6 assertions against approved isolated native API, no reset/seed/SQL/original service change. |
+| create | `coding-packs/reports/evidence/v46-824/th-overview-msw-1440.png` | Actual unmasked Thai overview image, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/th-overview-msw-390.png` | Actual unmasked Thai overview image, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/th-overview-server-1440.png` | Actual unmasked Thai overview image, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/th-overview-server-390.png` | Actual unmasked Thai overview image, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/th-profile-msw-1440.png` | Actual unmasked Thai profile image, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/th-profile-msw-390.png` | Actual unmasked Thai profile image, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/th-profile-server-1440.png` | Actual unmasked Thai profile image, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/th-profile-server-390.png` | Actual unmasked Thai profile image, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/th-settings-msw-1440.png` | Actual unmasked Thai settings image, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/th-settings-msw-390.png` | Actual unmasked Thai settings image, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/th-settings-server-1440.png` | Actual unmasked Thai settings image, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/th-settings-server-390.png` | Actual unmasked Thai settings image, not owner/native-human approval. |
+
+### Lao complete raw catalog checks
+
+### Reproducible scoped Intl constructors for km/lo/my
+
+Reason for new dependencies: installed Chromium lacks the three Intl locales while Node supports them, so native fallback changes dates, digits and separators. Pin standalone FormatJS DateTimeFormat8.0.3 and NumberFormat10.0.4, with extracted official CLDR49 data for only the selected one of km/lo/my and the exact Asia/Ho_Chi_Minh timezone record. These implement presentation only, not business parsers or exchanged values. Use the same constructors/data on SSR and client for those three identities, never replace global Intl, change Portal, fetch an external service or mutate a default locale per request. Other nine selector identities retain native constructors. Each selected locale is prepared before descendant formatting; keep QueryClient/auth/form instances and no keyed subtree. Require tests for loading failure, cross-request isolation, dates/timezone/number boundaries and drafts. Full JS/data isolation/performance must still be measured; no budget waiver.
+
+Avoid copying large generated locale JSON into application source: import the six explicitly selected official package locale modules instead. Those pinned modules expose their raw data through upstream FormatJS registration buffers; read those buffers without replacing Intl, changing a shared default or clearing another consumer's data. Exact source module hashes/versions belong in the reproducible receipt. Only the tiny exact Vietnam timezone resource/license is copied. No runtime eval, external service or all-language payload. Existing package/lock/request/formatter/provider/consumer paths remain presentation-only; no unrelated upgrade.
+
+| Operation | File | Scope |
+|---|---|---|
+| modify | `pnpm-workspace.yaml` | Pin two new independent Intl constructor dependencies, no upgrade of the existing stack. |
+| create | `infra/scripts/build-admin-intl-data.mjs` | Reproduce official pinned locale/timezone resources in an isolated build-only VM, no runtime eval/global Intl modification. |
+| create | `apps/admin/src/i18n/intl-data/vietnam-time-zone.json` | Exact official packed Asia/Ho_Chi_Minh record, historical offsets retained, not a fixed +07 substitute. |
+| create | `apps/admin/src/i18n/intl-data/receipt.json` | Source versions, hashes and exact resource inventory. |
+| create | `apps/admin/src/i18n/intl-data/LICENSE.txt` | Exact upstream redistribution license. |
+| create | `apps/admin/public/licenses/formatjs-intl.txt` | Same exact upstream license available in the distributed public application. |
+| create | `apps/admin/src/i18n/intl/runtime.ts` | Finite cached preparation and scoped immutable constructor choice; no global Intl replacement or locale default mutation. |
+| create | `apps/admin/src/i18n/intl/data-loaders.ts` | Explicit lazy resource imports for only selected km/lo/my, no unsafe locale interpolation. |
+| create | `apps/admin/src/i18n/intl/types.ts` | Internal typed constructor/data contracts. |
+| create | `apps/admin/src/i18n/intl/registration-data.ts` | Read only the pinned package's selected registration buffers, fail closed if missing, never replace Intl or clear other data. |
+| create | `apps/admin/src/i18n/intl/resource-error.ts` | Structured scoped-resource failure, not a raw user-facing technical message. |
+| create | `apps/admin/src/i18n/intl/runtime.spec.ts` | Real constructors/data, locale/number/timezone/calendar/value/parallel-isolation and global-preservation tests. |
+| create | `apps/admin/src/i18n/intl/resources.spec.ts` | Exact pinned package/data/license/hash inventory, no undisclosed locale payloads. |
+| create | `apps/admin/src/providers/admin-intl-ready.tsx` | Suspense readiness inside stable QueryClient, no key/remount or silent English fallback on loading failure. |
+| modify | `apps/admin/src/app/(admin)/layout.tsx` | Gate authenticated shell/pages inside existing AuthGate; public auth has no date/currency displays and must not download unused Intl constructors/data. Root QueryClient/UiProvider/ToastProvider remain unchanged. |
+| create | `apps/admin/src/providers/admin-intl-ready.spec.tsx` | Deferred/rejected readiness and retained draft/subtree checks. |
+| create | `apps/admin/src/providers/admin-intl-resource-boundary.tsx` | Readable selected-language resource error/retry only; unrelated errors propagate, QueryClient/auth remain outside. |
+| modify | `apps/admin/src/features/bots/components/reply-history.tsx` | Use the same prepared Admin date formatter instead of a separate native next-intl date path; authored content untouched. |
+| create | `coding-packs/reports/evidence/v46-824/intl-runtime.log` | Actual focused constructor/provider/resource/request regression outputs. |
+| create | `e2e/behavior/admin-i18n-intl.spec.ts` | Actual Lao fee display against independent Node Intl/raw DTOs; scoped-data/global-Intl isolation and retained Profile draft across deferred language switches, both modes. |
+| create | `coding-packs/reports/evidence/v46-824/intl-msw.log` | Current same-assertion Intl browser output, no DB/seed/reset. |
+| create | `coding-packs/reports/evidence/v46-824/intl-native.log` | Same Intl assertions against approved isolated native API, original DB/services retained. |
+| create | `infra/scripts/audit-admin-intl-chunks.mjs` | Inspect actual built locale-data chunk markers/hash/bytes; fail missing, duplicate or mixed-locale payloads, not a substitute for original-baseline route budgets. |
+| create | `apps/admin/src/i18n/intl/chunks.spec.ts` | Plain/escaped/date/number/core and mixed-locale negative fixtures for the actual chunk auditor. |
+| create | `coding-packs/reports/evidence/v46-824/intl-chunks.json` | Actual MSW/native built data assets and hashes used to reject unselected locale payload responses. |
+| create | `e2e/behavior/admin-i18n/response-lifetime.ts` | Classify only exact CDP body-unavailable errors belonging to a committed older document; current-document/JSON/HTTP failures remain strict. |
+| create | `e2e/behavior/admin-i18n/response-lifetime.spec.ts` | Eleven pure positive/negative protocol-lifetime cases in both modes, including restored-loader protection; not authenticated UI coverage. |
+
+Observed harness race: an Overview poll's response body became unavailable when the picker F5 test committed a new document. Keep real polling, every URL/value assertion, HTTP/error/write guard and default timeout. Track actual Chromium main-frame loaderId changes and request document epochs; discard only this exact stale-document CDP body error, record paths/epochs explicitly, and continue rejecting current-document body failures or malformed JSON. Do not suppress API HTTP failures or fabricate raw-content exceptions for discarded bodies. This is observation-lifetime handling, not a production/fixture/clock change or a claim that discarded old response bodies were validated.
+
+Reduced-ICU follow-up: keep picker display patterns deterministic for the existing twelve approved locale profiles, not inferred from optional browser ICU coverage. This fixes numeric picker order only, not general Intl date/number/month-name support. No dependency added: the inspected FormatJS package would require separate lifecycle/data/payload design; no polyfill or global Intl replacement is introduced here. Canonical YYYY-MM-DD URL/API values and Vietnam-calendar preset behavior remain unchanged. The full reduced-ICU formatter defect remains open until separately fixed and verified.
+
+Picker browser harness correction: existing fetchOverview intentionally omits default period=month from the API query while retaining the explicit URL parameter. Assert exactly null plus only from/to API keys, not a permissive null-or-month alternative; keep URL period=month, range, locale, guard and F5 assertions unchanged. Preserve the initial six-case diagnostic failure; no production/query behavior change.
+
+| Operation | File | Scope |
+|---|---|---|
+| create | `apps/admin/src/i18n/date-picker-format.spec.ts` | Fixed twelve-profile patterns with Intl unavailable/unsupported, invalid-cookie fallback; no locale discovery. |
+| create | `e2e/behavior/admin-i18n-picker.spec.ts` | Actual numeric picker order across ten currently translated selector identities, leap/year ranges, real locale switches and canonical URL/API range invariants; not missing Khmer/Myanmar catalog acceptance. |
+| create | `coding-packs/reports/evidence/v46-824/picker-msw.log` | Same picker browser assertions in MSW, no DB access. |
+| create | `coding-packs/reports/evidence/v46-824/picker-native.log` | Same assertions against approved isolated native API, no reset/seed/SQL/original service changes. |
+| create | `coding-packs/reports/evidence/v46-824/picker-unit.log` | Actual numeric picker regression and focused existing formatter/preset tests, including retained red diagnostic. |
+
+| Operation | File | Scope |
+|---|---|---|
+| create | `apps/admin/src/i18n/tests/lao-catalog.spec.ts` | Explicit25-file raw Lao shape, ICU, prose/script, canonical examples, reviewed context and every glyph; not final ten-bundle gate. |
+| create | `coding-packs/reports/evidence/v46-824/lao.log` | Actual focused Lao raw/request/font test output. |
+
+### Lao actual three-screen browser proof
+
+| Operation | File | Scope |
+|---|---|---|
+| create | `e2e/behavior/admin-i18n-lao.spec.ts` | Same six Lao Overview/Profile/Settings1440/390 read-only assertions in MSW/native; not all-language acceptance. |
+| create | `coding-packs/reports/evidence/v46-824/lao-msw.log` | Actual six-case msw Lao browser output. |
+| create | `coding-packs/reports/evidence/v46-824/lao-native.log` | Actual six-case native Lao browser output. |
+| create | `coding-packs/reports/evidence/v46-824/lo-overview-msw-1440.png` | Actual unmasked Lao screen, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/lo-overview-msw-390.png` | Actual unmasked Lao screen, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/lo-overview-server-1440.png` | Actual unmasked Lao screen, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/lo-overview-server-390.png` | Actual unmasked Lao screen, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/lo-profile-msw-1440.png` | Actual unmasked Lao screen, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/lo-profile-msw-390.png` | Actual unmasked Lao screen, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/lo-profile-server-1440.png` | Actual unmasked Lao screen, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/lo-profile-server-390.png` | Actual unmasked Lao screen, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/lo-settings-msw-1440.png` | Actual unmasked Lao screen, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/lo-settings-msw-390.png` | Actual unmasked Lao screen, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/lo-settings-server-1440.png` | Actual unmasked Lao screen, not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/lo-settings-server-390.png` | Actual unmasked Lao screen, not owner/native-human approval. |
+
+## Khmer raw catalog execution inventory (2026-11-12)
+
+Existing explicit km catalog rows remain authoritative. Implement all25 incrementally without placeholder files or treating fallback as translated. Initial12 physical catalogs: auth, common, bot-options, meta, overview, investors, needs, reports, requests, stores, ui, settings/audit. Exact-source unambiguous Portal matches may be retained only as build-time translation input, never runtime cross-app imports; correct Admin-specific context explicitly.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| create | `apps/admin/src/i18n/tests/khmer-catalog.spec.ts` | Fixed staged Khmer raw inventory/key/type/ICU/NFC/no-copy, exact context and unchanged font cmap; grow to explicit25 when complete, never claim final10-bundle gate from staged checks. |
+
+| modify | `e2e/audit/admin-i18n-fonts.spec.ts` | Keep all24 font assertions per mode; add actual Khmer public-login heading/title and unmasked screenshot, not full Khmer body/catalog acceptance. |
+| create | `coding-packs/reports/evidence/v46-824/km-auth-msw-1440.png` | Public Khmer auth at1440; no native-human/owner approval. |
+| create | `coding-packs/reports/evidence/v46-824/km-auth-msw-390.png` | Public Khmer auth at390; no native-human/owner approval. |
+| create | `coding-packs/reports/evidence/v46-824/km-auth-server-1440.png` | Same public auth assertions with native-mode frontend, not DB acceptance. |
+| create | `coding-packs/reports/evidence/v46-824/km-auth-server-390.png` | Same public auth assertions with native-mode frontend, not DB acceptance. |
+| create | `coding-packs/reports/evidence/v46-824/khmer-raw.log` | Focused44-case raw/ICU/context/cmap verification;12 of25 catalogs only. |
+
+## Complete Khmer inventory follow-through (2026-11-12)
+
+Complete the13 existing explicitly declared km paths, preserving all12 staged files byte-for-byte. Extend khmer-catalog.spec.ts to fixed25 files/2667 leaves and exact canonical examples; extend existing request.spec.ts with actual Khmer auth/Profile/Overview and all six merged settings parts, with no fallback. Native-human-reviewed remains false, Myanmar and final10-bundle/full-AC acceptance remain open.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| modify | `apps/admin/src/i18n/request.spec.ts` | Actual complete Khmer request loading, all settings domains and no warning/fallback; no runtime/source-vi change. |
+
+| create | `e2e/behavior/admin-i18n-khmer.spec.ts` | Six actual Khmer Overview/Profile/Settings cases at1440/390, same read-only assertions both modes, not all-language or all-state acceptance. |
+| modify | `e2e/behavior/admin-i18n/fixtures.ts` | Add explicit Khmer login/notification label identity; retain strict HTTP/JSON/document/write guards. |
+| modify | `e2e/playwright.admin-i18n.config.ts` | Include explicit Khmer actual-screen suite without global DB/reset fixtures. |
+| create | `coding-packs/reports/evidence/v46-824/khmer-msw.log` | Actual six-case Khmer screen output, no full TIP claim. |
+| create | `coding-packs/reports/evidence/v46-824/khmer-native.log` | Same six assertions against revalidated approved private native API; original PG5432 retained. |
+| create | `coding-packs/reports/evidence/v46-824/km-overview-msw-1440.png` | Actual unmasked Khmer overview body at1440; not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/km-overview-msw-390.png` | Actual unmasked Khmer overview body at390; not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/km-overview-server-1440.png` | Actual unmasked Khmer overview body at1440; not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/km-overview-server-390.png` | Actual unmasked Khmer overview body at390; not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/km-profile-msw-1440.png` | Actual unmasked Khmer profile body at1440; not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/km-profile-msw-390.png` | Actual unmasked Khmer profile body at390; not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/km-profile-server-1440.png` | Actual unmasked Khmer profile body at1440; not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/km-profile-server-390.png` | Actual unmasked Khmer profile body at390; not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/km-settings-msw-1440.png` | Actual unmasked Khmer settings body at1440; not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/km-settings-msw-390.png` | Actual unmasked Khmer settings body at390; not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/km-settings-server-1440.png` | Actual unmasked Khmer settings body at1440; not owner/native-human approval. |
+| create | `coding-packs/reports/evidence/v46-824/km-settings-server-390.png` | Actual unmasked Khmer settings body at390; not owner/native-human approval. |
+
+## Myanmar catalog implementation (2026-11-12)
+
+Implement all25 existing explicit my paths in domain-sized stages, without placeholder files or treating runtime fallback as translation. First17 physical catalogs (1260 source leaves) cover auth, bot-options, common, investors, meta, needs, overview, reports, requests, stores, ui and all six settings parts. Other8 business catalogs (1407 leaves) remain required. Preserve all nine completed bundles. Exact-source Portal Myanmar matches are offline input only; review Admin-specific context. No business/API/DB/Portal/shared/dependency/font change. This does not narrow the full16-AC goal.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| create | `apps/admin/src/i18n/tests/myanmar-catalog.spec.ts` | Fixed17-file raw/ICU/NFC/no-copy/script/context/neutral/cmap proof, extending to all25 when complete; not final10-bundle acceptance. |
+| create | `coding-packs/reports/evidence/v46-824/myanmar-raw.log` | Actual staged Myanmar raw test commands/results and limitations. |
+
+| create | `e2e/behavior/admin-i18n-myanmar.spec.ts` | Six actual Myanmar core Overview/Profile/Settings1440/390 cases, same strict read-only assertions both modes; not missing8-domain or all-language acceptance. |
+| modify | `e2e/behavior/admin-i18n/fixtures.ts` | Add explicit Myanmar login/notification identity, no guard change. |
+| modify | `e2e/playwright.admin-i18n.config.ts` | Register explicit Myanmar core suite without seed/global DB fixtures. |
+| modify | `e2e/audit/admin-i18n-fonts.spec.ts` | Keep24 font cases/mode; add actual Myanmar public auth heading/title/image, not full body proof. |
+| create | `coding-packs/reports/evidence/v46-824/myanmar-msw.log` | Actual six-case Myanmar core browser output. |
+| create | `coding-packs/reports/evidence/v46-824/myanmar-native.log` | Same assertions on revalidated approved isolated native API, original5432 retained. |
+| create | `coding-packs/reports/evidence/v46-824/my-auth-msw-1440.png` | Actual unmasked Myanmar auth at1440; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-auth-msw-390.png` | Actual unmasked Myanmar auth at390; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-auth-server-1440.png` | Actual unmasked Myanmar auth at1440; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-auth-server-390.png` | Actual unmasked Myanmar auth at390; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-overview-msw-1440.png` | Actual unmasked Myanmar overview at1440; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-overview-msw-390.png` | Actual unmasked Myanmar overview at390; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-overview-server-1440.png` | Actual unmasked Myanmar overview at1440; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-overview-server-390.png` | Actual unmasked Myanmar overview at390; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-profile-msw-1440.png` | Actual unmasked Myanmar profile at1440; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-profile-msw-390.png` | Actual unmasked Myanmar profile at390; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-profile-server-1440.png` | Actual unmasked Myanmar profile at1440; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-profile-server-390.png` | Actual unmasked Myanmar profile at390; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-settings-msw-1440.png` | Actual unmasked Myanmar settings at1440; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-settings-msw-390.png` | Actual unmasked Myanmar settings at390; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-settings-server-1440.png` | Actual unmasked Myanmar settings at1440; not owner/native-human review. |
+| create | `coding-packs/reports/evidence/v46-824/my-settings-server-390.png` | Actual unmasked Myanmar settings at390; not owner/native-human review. |
+
+## Myanmar browser evidence readiness follow-up
+
+Native font My1440 failed the unchanged initial Latin-download assertion before the login content/network had been explicitly awaited; retain failure and strengthen loaded-page preconditions (visible username field + network idle + fonts.ready), never drop Latin/script/menu/CDP assertions or change timeout. Sidebar bounds probing scrolls links into view; restore the actual aside as well as nav before screenshot, not a production layout change. My Overview screenshots also expose native Intl.NumberFormat bypass in system flow (Latin5/12 while KPI counts use Myanmar digits); this remains an explicit AC824-08 finding to fix before full completion, not waived by raw/font tests.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| modify | `e2e/behavior/admin-i18n/sidebar.ts` | Preserve every bounds/badge/icon assertion; restore actual aside scroll position after probing so screenshots represent top-of-sidebar state. |
+| modify | `e2e/audit/admin-i18n-fonts.spec.ts` | Explicitly await loaded login DOM/network before font observation; preserve all24 strict assertions/mode and timeout, no arbitrary sleep. |
+
+## Myanmar system-flow formatter correction
+
+Route the five system-flow primary values and plain ICU numeric parameters through the existing scoped presentation formatter. Keep raw DTOs, counts, navigation, status logic, polling and API contracts unchanged. Add reduced-ICU unit regression and exact actual-response Myanmar browser oracles; no missing-catalog/full-TIP waiver.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| modify | `apps/admin/src/features/overview/flow.ts` | Reuse scoped formatNumber for primary values and a pure numeric parameter projection. |
+| modify | `apps/admin/src/features/overview/flow.spec.ts` | Actual prepared CLDR, reduced-native-ICU bypass detection, raw DTO/parameter/status invariants. |
+| modify | `apps/admin/src/features/overview/components/system-flow.tsx` | Format display-only subtext arguments without changing numeric model data. |
+| modify | `e2e/behavior/admin-i18n-myanmar.spec.ts` | Compare all five primary counts and three subtexts against raw response and independent Node Myanmar number oracle. |
+| create | `coding-packs/reports/evidence/v46-824/myanmar-flow.log` | Focused regression, original failure and corrected gate evidence. |
+
+## Complete Myanmar raw bundle
+
+Add the eight remaining business catalogs from reviewed offline source/target pairs; preserve the earlier17 files byte-for-byte. Expand fixed raw/context/ICU/script/glyph/canonical checks to25 files/2667 leaves, and actual request/no-fallback coverage. This is not a waiver of the final10-bundle gate or full16-AC acceptance. Runtime/API/DB/Portal/shared/fonts/other language catalogs stay unchanged.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| create | `apps/admin/messages/my/affiliate.json` | Complete regional director/referrer business labels, unchanged canonical placeholders. |
+| create | `apps/admin/messages/my/bots.json` | Complete persona/script/automation/emergency/reply/schedule labels. |
+| create | `apps/admin/messages/my/events.json` | Complete event/detail/form/attendee labels. |
+| create | `apps/admin/messages/my/fees.json` | Complete fee/transaction/matching labels. |
+| create | `apps/admin/messages/my/groups.json` | Complete group/chat/moderation/export labels. |
+| create | `apps/admin/messages/my/marketing.json` | Complete campaign/template/delivery-log labels. |
+| create | `apps/admin/messages/my/members.json` | Complete member/registration/business-profile labels. |
+| create | `apps/admin/messages/my/projects.json` | Complete project/moderation/fundraising labels. |
+| modify | `apps/admin/src/i18n/tests/myanmar-catalog.spec.ts` | Fixed25-file raw/shape/ICU/context/canonical/script/font checks, exact neutral keys only. |
+| modify | `apps/admin/src/i18n/request.spec.ts` | Actual complete Myanmar request load without fallback/warnings. |
+| modify | `apps/admin/messages/REVIEW.md` | Exact provenance/glossary/counts; native-reviewed=false. |
+| modify | `e2e/behavior/admin-i18n-myanmar.spec.ts` | Retitle scope after raw25 completion: core-screen coverage only, same assertions and numeric response oracles. |
+| modify | `apps/admin/src/features/overview/flow.spec.ts` | Add required AC824-08 trace prefix to unchanged scoped-formatter regression assertions. |
+| create | `coding-packs/reports/evidence/v46-824/myanmar-complete-raw.log` | Actual raw/request failures, filesystem test-cache diagnosis and default successful retry; test cache only, no production workaround. |
+
+## Fixed full raw-catalog production gate
+
+Once all250 physical files exist, enforce the original10-bundle inventory in unit and Admin build scripts, never folder discovery or resolved fallback. Review every source-copy exception by exact path, exact source value and allowed bundle identities; unknown ASCII source copies must fail too. Negative tests use isolated physical filesystem fixtures, not production catalog deletion. No new dependencies or runtime imports.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| create | `apps/admin/src/i18n/tests/production-catalogs.ts` | Fixed10 bundles ×25 files, raw filesystem contract/copy validator, no fallback/discovery. |
+| create | `apps/admin/src/i18n/tests/production-copy-policy.ts` | Reviewed exact92 canonical/brand/technical/locale-natural source-copy exceptions; source value and locale bound, no wildcard. |
+| create | `apps/admin/src/i18n/tests/production-catalogs.spec.ts` | Actual250-file positive and isolated physical missing-locale/file/key/type/ICU/empty/TODO/source-copy negative proof. |
+| modify | `apps/admin/package.json` | Require the fixed raw-catalog gate before each Admin production build, preserving Next command and dependency versions. |
+| create | `coding-packs/reports/evidence/v46-824/production-catalogs.log` | Actual full-inventory checker/negative-fixture command output. |
+| modify | `apps/admin/src/i18n/tests/icu-contract.ts` | Bounded immutable string+locale AST-signature memoization for repeated full-tree negative fixtures; still read every physical file, no filesystem/Vitest/app cache-policy or timeout change. |
+| create | `apps/admin/src/i18n/tests/icu-contract-cache.spec.ts` | Prove memoized parser still separates locale/text, returns defensive copies and rejects malformed ICU; no skipped negative case. |
+
+## Full fixed locale core-screen evidence
+
+After raw250 completion, exercise every one of12 selector identities (10 bundles and2 aliases) on actual Overview/Profile/Settings at1440/390, same native/MSW guards. Capture the seven required screenshot languages, never substitute Dashboard for Profile. Expand existing canonical picker checks to Khmer/Myanmar. This is loaded core-screen/picker evidence, not all auth/state/dialog/value/performance acceptance.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| create | `e2e/behavior/admin-i18n/core-labels.ts` | Fixed12 identities, zod-validated raw catalog expectations; no app formatter/runtime import. |
+| create | `e2e/behavior/admin-i18n-all-locales.spec.ts` |72 actual locale/core-screen/viewport cases per mode with strict login/read-only guard, exact anchors/metadata/identity and unmasked images. |
+| modify | `e2e/playwright.admin-i18n.config.ts` | Register full fixed locale core-screen suite. |
+| modify | `e2e/behavior/admin-i18n-picker.spec.ts` | Extend unchanged canonical range/URL/API/F5 assertions to all12 identities, including complete km/my. |
+| create | `coding-packs/reports/evidence/v46-824/all-locales-msw.log` | Actual full72-case loaded core-screen evidence, no broad state claim. |
+| create | `coding-packs/reports/evidence/v46-824/all-locales-native.log` | Identical72-case core-screen assertions against approved isolated API, original native/data safety retained. |
+| create | `coding-packs/reports/evidence/v46-824/full-i18n-msw.log` | Full registered208-case i18n behavior run; distinguish72 fixed core cases, helper protocol cases and synthetic probes, not all-state/full-TIP acceptance. |
+| create | `coding-packs/reports/evidence/v46-824/full-i18n-native.log` | Same208 assertions against private native prerequisites; auth sessions only, no original DB/service/data mutation. |
+| create | `coding-packs/reports/evidence/v46-824/full-i18n-first-msw.log` | Preserve source6022 first full run:198 pass/10 fail, not full acceptance. |
+| create | `coding-packs/reports/evidence/v46-824/full-i18n-first-native.log` | Preserve source6022 first full run:197 pass/11 fail, strict native proxy failures retained. |
+| modify | `coding-packs/tips/TIP-V46-824-admin-i18n.md` | Update only execution status to reflect complete raw250; retain original full16-AC scope and NOT DONE/no merge status. |
+
+## Correct full-regression findings and loaded-state evidence
+
+Preserve original6022 failures. Measure Indonesian390 DOM overflow before choosing a scoped Admin-only fix, never mask document overflow. Keep all12 picker identities and explicitly select en-SG before the unchanged alias/F5 oracle. Use exact translated Myanmar menu trigger, retaining real clicks and every badge/geometry/URL assertion. Require actual schema-valid core responses/rendered data and hidden login toast before screenshots; keep every HTTP/JSON/write/error guard and timeout unchanged.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| modify | `e2e/behavior/admin-i18n-all-locales.spec.ts` | Actual data-ready assertions and diagnostic page overflow geometry, not weaker width checks. |
+| modify | `e2e/behavior/admin-i18n/core-labels.ts` | Raw translated field/toast expectations for loaded-core checks. |
+| create | `e2e/behavior/admin-i18n/core-ready.ts` | Schema-valid real Overview/General response wait and rendered-value/hidden-toast prerequisites. |
+| modify | `e2e/behavior/admin-i18n-picker.spec.ts` | Restore explicit en-SG selection before existing F5/canonical checks after all12 traversals. |
+| modify | `e2e/behavior/admin-i18n-sidebar.spec.ts` | Exact translated My menu trigger; no count, geometry or real-click relaxation. |
+| create | `coding-packs/reports/evidence/v46-824/mobile-layout.log` | Measured original mobile overflow, correction attempts and actual regression outputs. |
+| create | `coding-packs/reports/evidence/v46-824/mobile-layout-first.log` | Preserve original measured393/390 viewport overflow and language popover left=-43.94 before correction, including label-query diagnostic correction. |
+| create | `apps/admin/src/features/shell/components/admin-language-switch.tsx` | Admin-only styling facade forwarding every existing LanguageSwitch prop; Portal/shared untouched. |
+| create | `apps/admin/src/features/shell/components/admin-language-switch.module.css` | Mobile-only trigger padding and viewport-contained scrolling popover, preserving full names/flags/options, no hidden-overflow mask. |
+| create | `apps/admin/src/features/shell/components/admin-language-switch.spec.tsx` | Exact prop forwarding and Admin-scoped/mobile-only style contract; real geometry checked in browser. |
+| modify | `apps/admin/src/features/shell/components/admin-shell.tsx` | Wire small Admin-only language facade; preserve auth/nav/permission/badge logic. |
+| modify | `apps/admin/src/i18n/tests/icu-contract.ts` | Encode cache tuple unambiguously, preserving locale/text identity even for malformed fixture strings. |
+| modify | `apps/admin/src/i18n/tests/icu-contract-cache.spec.ts` | Negative delimiter-collision fixture must still reject an invalid locale; no raw-gate relaxation. |
+| create | `coding-packs/reports/evidence/v46-824/vi-overview-msw-1440.png` | Unmasked actual required-language overview image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/vi-overview-msw-390.png` | Unmasked actual required-language overview image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/vi-overview-server-1440.png` | Unmasked actual required-language overview image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/vi-overview-server-390.png` | Unmasked actual required-language overview image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/vi-profile-msw-1440.png` | Unmasked actual required-language profile image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/vi-profile-msw-390.png` | Unmasked actual required-language profile image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/vi-profile-server-1440.png` | Unmasked actual required-language profile image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/vi-profile-server-390.png` | Unmasked actual required-language profile image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/vi-settings-msw-1440.png` | Unmasked actual required-language settings image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/vi-settings-msw-390.png` | Unmasked actual required-language settings image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/vi-settings-server-1440.png` | Unmasked actual required-language settings image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/vi-settings-server-390.png` | Unmasked actual required-language settings image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/zh-overview-msw-1440.png` | Unmasked actual required-language overview image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/zh-overview-msw-390.png` | Unmasked actual required-language overview image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/zh-overview-server-1440.png` | Unmasked actual required-language overview image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/zh-overview-server-390.png` | Unmasked actual required-language overview image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/zh-profile-msw-1440.png` | Unmasked actual required-language profile image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/zh-profile-msw-390.png` | Unmasked actual required-language profile image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/zh-profile-server-1440.png` | Unmasked actual required-language profile image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/zh-profile-server-390.png` | Unmasked actual required-language profile image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/zh-settings-msw-1440.png` | Unmasked actual required-language settings image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/zh-settings-msw-390.png` | Unmasked actual required-language settings image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/zh-settings-server-1440.png` | Unmasked actual required-language settings image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/zh-settings-server-390.png` | Unmasked actual required-language settings image; no owner/native-human approval implied. |
+
+## Owner approval: isolated saved-disabled language probe (2026-11-12)
+
+Owner explicitly permits temporarily disabling exactly one non-default language through the existing Admin Settings API on the already approved isolated cluster, checking the selector and F5, then restoring the exact original language settings. Snapshot the full typed response first; send only the one-code toggle, never defaultLocale/progress/other settings. Use finally cleanup with a fresh pre-restore read and a one-code restore, and verify a fresh full response equals the original snapshot. If unrelated configuration drift is detected, do not overwrite it; report the discrepancy. Do not change PG5432, original services, schema/seed or other settings. No mutation has yet been made under this approval; the canonical group/persona phase retains its original no-global-write scope.
+
+Next-phase files are declared before implementation; existing read-only/canonical guards must not be relaxed:
+
+| Operation | Path | Purpose |
+|---|---|---|
+| create | `e2e/behavior/admin-i18n-disabled.spec.ts` | Actual saved-disabled selector/F5 probe with exact snapshot/one-code restore, identical UI assertions in both modes. |
+| create | `e2e/behavior/admin-i18n-disabled/api.ts` | Typed existing Settings API, exact one-language toggle and full restoration receipt; no DB client or secrets in evidence. |
+| create | `e2e/behavior/admin-i18n-disabled/fixtures.ts` | Separate narrow approval guard; unchanged existing suite guards. |
+| modify | `e2e/playwright.admin-i18n.config.ts` | Register the isolated disabled-language probe after canonical phase is committed. |
+| create | `coding-packs/reports/evidence/v46-824/disabled-msw.log` | Actual MSW selector behavior and restoration receipt, limitations explicit. |
+| create | `coding-packs/reports/evidence/v46-824/disabled-native.log` | Actual isolated native saved-disabled state and exact API restoration receipt. |
+
+| create | `coding-packs/reports/evidence/v46-824/disabled-quality.log` | Actual final required root gates and frozen harness provenance; existing production ff6be9ee unchanged. |
+
+Disabled probe scope: identical UI/wire assertions in both modes. Before reload, repeated fresh Settings reads must equal the exact one-code disabled snapshot. After F5, require all12 selector options and selected cookie identity, with zero implicit PATCHes. Finally accepts only the exact disabled snapshot or exact original snapshot (MSW browser-memory settings can naturally reset on reload); any unrelated drift fails without overwriting it. Record which restoration path actually occurred. This does not claim MSW business configuration persists through F5, change its persistence model, or waive native full restoration verification.
+
+## Read-only chat viewer and raw messages (declared before implementation)
+
+Existing seeded province/industry groups and their rooms/messages are read-only prerequisites, not new chat fixtures. Real API DTOs must match rendered sender/body/file bytes and room names, English/VI chrome must switch without changing selected room or adding a composer. Both populated and empty room states, exact successful API prerequisites, translated metadata and mobile bounds use identical assertions in MSW/native. No new mutation permission, message send/read-marker/moderation/export, interception, seed/reset or production change is authorized by this test declaration.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| create | `e2e/behavior/admin-i18n-chat.spec.ts` | Actual read-only populated/empty group chat, raw payload/render and EN/VI room-state checks at1440/390. |
+| create | `e2e/behavior/admin-i18n/chat.ts` | Typed existing chat response readers and rendered raw-message oracle; no runtime app imports or writes. |
+| modify | `e2e/playwright.admin-i18n.config.ts` | Register scoped chat coverage without relaxing current guards/timeouts. |
+| create | `coding-packs/reports/evidence/v46-824/chat-msw.log` | Actual focused chat results, failures retained if any. |
+| create | `coding-packs/reports/evidence/v46-824/chat-native.log` | Same assertions on approved isolated native API; original services/DB untouched. |
+| create | `coding-packs/reports/evidence/v46-824/chat-quality.log` | Actual required root gates and source/provenance checks. |
+
+## Owner approval: isolated unassigned role fixture (2026-11-12)
+
+Owner explicitly permits creating and editing one prefix-owned `tip824-i18n-*` role via the existing Admin API on the approved isolated cluster for AC824-11 matrix-wire verification. Never assign this role to any account, alter an existing role/permission or original PG5432 data/service. Retain the fixture for independent inspection. Snapshot/read back unchanged existing role permissions and account associations; if the UI batches matrix writes for unrelated roles, do not submit that batch merely for this test. Declare the exact role-test/helper/evidence paths before implementing the next phase. This approval does not change the current chat phase's strict read-only scope.
+## Read-only role-preview UI and internal forbidden state
+
+Only the existing Super Admin's documented in-memory role preview is used, through its real selector with the unchanged existing editor role. No role/account/permission write or assignment; original roles are freshly read and compared after leaving preview. This proves UI preview/internal forbidden/read-only behavior, not genuine backend403 authorization for a restricted account. Existing read-only guard remains unchanged. If translated read-only actions actually open an editor, preserve the failing result and declare a narrowly scoped semantic-action correction before touching production.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| create | `e2e/behavior/admin-i18n-preview.spec.ts` | EN/VI/My preview forbidden state and real view-only edit click at1440/390; no data mutation. |
+| create | `e2e/behavior/admin-i18n/preview.ts` | Actual typed role reads, existing preview selector and raw-role restoration oracle. |
+| modify | `e2e/playwright.admin-i18n.config.ts` | Register role-preview UI probes with unchanged guards/timeouts. |
+| create | `coding-packs/reports/evidence/v46-824/preview-msw.log` | Actual MSW preview UI results, including original failures. |
+| create | `coding-packs/reports/evidence/v46-824/preview-native.log` | Same preview UI assertions against approved isolated native API. |
+| create | `coding-packs/reports/evidence/v46-824/preview-quality.log` | Actual required gates/provenance, not cached test results counted as new. |
+
+## Measured translated group read-only action defect
+
+Original preview MSW run: internal forbidden2/2 pass, view-only edit0/2 fail. Error context shows actual English Edit dialog opened; the existing VI verb-prefix guard does not recognize English Edit. Correct only group primary write buttons by marking their established write semantics with the existing `data-act` mechanism already enforced by ViewOnlyZone. No change to guard policy, backend permissions, label text, callbacks when writable, schema or Portal. Grid/table edit/export/delete and group header create/export must behave identically for all12 identities. Safe view/chat/list/grid actions remain unmarked and usable. Do not claim all other domains audited by this scoped correction.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| modify | `apps/admin/src/features/groups/components/group-table.tsx` | Mark edit/export/delete write buttons using existing semantic guard hook. |
+| modify | `apps/admin/src/features/groups/components/group-grid.tsx` | Same semantic write markers for grid actions; chat remains safe. |
+| modify | `apps/admin/src/features/groups/components/groups-toolbar.tsx` | Mark create/export writes; view/filter actions unchanged. |
+| create | `apps/admin/src/features/groups/components/group-read-only.spec.tsx` | All12 identities: translated table actions blocked in real ViewOnlyZone, safe chat passed, writable callbacks unchanged; static grid/header marker contract. |
+| create | `coding-packs/reports/evidence/v46-824/preview-build.log` | Actual both-mode candidate Admin builds after semantic marker correction. |
+
+| create | `apps/admin/src/i18n/tests/group-read-only.spec.tsx` | Cross-domain integration tests live outside feature internals: real GroupTable/Grid/Header inside ViewOnlyZone for all12 identities, both writable/read-only, safe actions preserved. Supersedes the uncreated group-components test path above; no cross-feature production import. |
+
+| create | `apps/admin/src/features/groups/components/group-table-actions.tsx` | Extract unchanged table action markup after semantic attributes make the table function81 lines; obey80-line function cap without policy suppression. |
+
+Measured second finding after semantic fix: Myanmar390 group-table action row is non-wrapping; clicking Delete scrolls the document horizontally44px, document width434/viewport390, Delete text reaches423.875 in document coordinates. Internal region-button scrolling is intentional and separately clipped; toast bounds/text remain contained (width195, right292.5/text273.34), so do not change shared toast or hide document overflow. Add wrapping only to the mobile table action flex row, preserving full labels, all actions and desktop/VI geometry when the actions already fit. Retain the original geometry failures; final assertion remains document width<=viewport.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| modify | `apps/admin/src/features/groups/components/group-table.module.css` | Mobile-only action wrapping for measured Myanmar434/390 overflow; no clipping, shortened labels, shared/Portal/desktop change. |
+
+## Semantic write marker nested-icon regression probe
+
+The group header export button contains SVG; test an actual SVG path target through the existing ViewOnlyZone capture handler, not only a button's text node. If the current HTMLElement-only target walk bypasses the existing data-act marker, accept only a target traversal correction (Element, not permission policy/verb lists), preserving writable and safe actions. This does not authorize changes to backend RBAC or shared UI.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| create | `apps/admin/src/features/shell/components/view-only-zone-svg.spec.tsx` | Actual SVG-path click respects established semantic write/safe markers in read-only and writable states. |
+| modify | `apps/admin/src/features/shell/components/view-only-zone.tsx` | Only if probe fails: include SVG Element targets when walking to the existing capture root; same policy/callbacks. |
+
+Nested SVG probe actually fails in read-only mode (write callback1 rather than0); writable case passes. The target walk starts with HTMLElement only, and the old classifier can stop on a descendant's inherited pointer cursor before reaching the enclosing semantic button. Correct both traversal and nearest explicit control selection: existing roOk/act/Button/Anchor semantics precede inherited-pointer fallback. Preserve the existing VI label rules for unmarked legacy controls, safe actions and writable behavior; no backend RBAC/shared/Portal change.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| modify | `apps/admin/src/features/shell/model-ro.ts` | Find nearest explicit semantic control before legacy inherited-pointer heuristic; no permission changes. |
+| create | `apps/admin/src/features/shell/model-ro-semantic.spec.ts` | Descendant pointer/SVG, safe markers, actual control boundary and legacy fallback regressions. |
+
+| create | `coding-packs/reports/evidence/v46-824/acceptance.md` | Current16-AC completion audit separating source-bound functional evidence from final rerun obligations; historical checkpoints remain historical. |
+
+## Deterministic upload import-contract scan (test-only)
+
+Final13-file full root run terminal failed: Admin1746/1747, only existing upload consumer AST audit timed out at5000ms under full load (observed9088ms), while its unchanged focused diagnostic passes. Preserve this failure, do not increase timeout/skip a file or waive the full gate. Optimize only import extraction using the installed TypeScript import preprocessor instead of building complete parent-linked TSX trees for every feature file. Every physical feature source is still freshly read/scanned, exact five consumers and raw/aliased-import negatives unchanged. Prove escaped/type/namespace imports and comment/string negatives, and record an independent full-AST-versus-preprocessor comparison on all actual current production feature files for both relevant module specifiers. Production source/CSS/catalog/browser binaries stay unchanged; build/browser proof reused only for those unchanged bytes.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| modify | `apps/admin/src/i18n/use-upload-image.spec.tsx` | Same complete physical source inventory/consumer/raw-import assertions; use dedicated lexical import extractor instead of full-file AST allocation. |
+| create | `apps/admin/src/i18n/tests/import-contract.ts` | Test-only installed TypeScript preProcessFile adapter, no cache/discovery exclusion/runtime import. |
+| create | `apps/admin/src/i18n/tests/import-contract.spec.ts` | Static/type/namespace/escaped import and non-import negatives against independent AST oracle; additional re-export/dynamic guards. |
+
+## Shared audit cores, preserving negative coverage and real CLI smoke
+
+Bounded QoS full root39155 terminated FAIL: Admin1750/1757,203/205 files; all7 failures are unchanged5000ms deadlines in spawn-per-case source/chunk audit tests (not business assertions). Resource wrapper restored Normal/63. Do not retry unchanged full roots indefinitely or increase deadlines. Extract the existing exact source-analysis and chunk-classification bodies into small shared pure modules used by the same production CLIs and their unit tests. Retain all19 source and6 chunk contract cases/assertions and fresh TypeScript fixture programs, no new source exclusions or result/AST cache; run these pure Node tests in Node, not unused JSDOM. Add real subprocess CLI/core parity smoke for valid/invalid classification and retain exit-code/JSON behavior. Report direct-core cases separately from CLI smoke; never claim19 separate CLI invocations after refactor. Production Admin/CSS/catalog/browser bytes remain unchanged, verifier source provenance must be refreshed after commit.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| create | `infra/scripts/admin-i18n/audit-core.mjs` | Extract unchanged analysis/status logic shared by CLI and fresh fixture tests. |
+| create | `infra/scripts/admin-i18n/audit-core.d.mts` | Strict unknown-return typed test boundary, no any/production app dependency. |
+| modify | `infra/scripts/audit-admin-i18n.mjs` | Wire shared core, preserve production program, JSON/inventory/status/exit contract and full source fingerprint. |
+| modify | `apps/admin/src/i18n/tests/source-audit.spec.ts` | Same19 semantic cases through actual shared core, fresh fixture contexts; Node environment and real CLI parity smoke. |
+| create | `infra/scripts/admin-intl/chunk-contract.mjs` | Exact extracted chunk payload classifier, no algorithm or asset-inventory changes. |
+| create | `infra/scripts/admin-intl/chunk-contract.d.mts` | Typed pure chunk-classification boundary. |
+| modify | `infra/scripts/audit-admin-intl-chunks.mjs` | Existing real build/fixture CLI uses extracted classifier unchanged. |
+| modify | `apps/admin/src/i18n/intl/chunks.spec.ts` | Same6 plain/escaped/mixed/missing cases through actual shared classifier plus subprocess CLI parity smoke; no deadline changes. |
+
+## Owner-requested focused acceptance review (2026-11-12)
+
+Re-run existing read-only core screens and controls for vi/en/my at1440/390, navigation/F5/draft preservation, and role-preview UI. No new tests, fixtures, writes, schema/RBAC changes or reinterpretation as full383-case acceptance. Reuse current verified production builds; record both mode results and inspect actual Profile screenshots (not Overview). Existing declared core images may be refreshed on the same current application bytes. Original native5432 and test data/services untouched.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| create | `coding-packs/reports/evidence/v46-824/review-msw.log` | Focused existing read-only acceptance commands/results. |
+| create | `coding-packs/reports/evidence/v46-824/review-native.log` | Same assertions on approved isolated native runtime. |
+
+## Final TIP-DONE closure — cross-domain ViewOnlyZone, remaining browser ACs, regressions and SHA-bound gates (2026-11-12)
+
+Resolve the remaining cross-domain `ViewOnlyZone` write-guard gap across all 10 locales using active-locale catalog message paths already loaded in `NextIntlClientProvider` (zero extra bundle/catalog payload, keeping existing `WRITE_LABEL`/`SAFE_LABEL` and semantic `data-act`/`data-ro-ok` behavior intact), align `D-141 AC824-xx` test prefixes, add dual-mode (`msw` + isolated `server`) browser proofs for `AC824-06/10/11/12/14` (prefix-owned `tip824-*` role matrix save keeping existing roles unchanged, genuine restricted `lecturer` account read-only + 403 boundaries in `en`/`my`, hidden profile avatar client upload toast, and raw backend error/notification/audit/email preview boundaries), run full suites + Step 9 regressions + Vietnamese parity + final-SHA performance receipts, and reconcile completion artifacts.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| create | `apps/admin/src/features/shell/ro-catalog-paths.ts` | Canonical catalog dot-paths for write actions and safe navigation/selection controls across Admin domains. |
+| create | `apps/admin/src/features/shell/ro-matcher.ts` | Cached active-locale ICU-template regex matcher from `useMessages()` for `ViewOnlyZone`. |
+| modify | `apps/admin/src/features/shell/model-ro.ts` | Accept optional active-locale `RoLabelMatcher` alongside legacy Vietnamese `WRITE_LABEL`/`SAFE_LABEL` and semantic markers. |
+| modify | `apps/admin/src/features/shell/components/view-only-zone.tsx` | Wire active-locale `createRoMatcher(useMessages())` and treat `<nav>`/`[role="tablist"]`/`[role="tab"]` as safe navigation. |
+| create | `apps/admin/src/features/shell/ro-matcher.spec.tsx` | Verify write blocking and safe-control pass-through across all 10 real locale bundles (`vi, en, zh, id, th, ms, fil, km, lo, my`). |
+| modify | `apps/admin/src/features/affiliate/components/policy-i18n.spec.tsx` | Prepend `D-141 ` prefix to `AC824-10` and `AC824-12` test titles. |
+| modify | `apps/admin/src/features/affiliate/regional/components/regional-bank-i18n.spec.tsx` | Prepend `D-141 ` prefix to `AC824-10` test title. |
+| modify | `apps/admin/src/features/bots/hooks/use-bot-type-form-i18n.spec.tsx` | Prepend `D-141 ` prefix to `AC824-10` and `AC824-12` test titles. |
+| create | `e2e/behavior/admin-i18n-contracts.spec.ts` | Dual-mode `D-141 AC824-06/10/11/12/14` browser contract entry suite. |
+| create | `e2e/behavior/admin-i18n-contracts/fixtures.ts` | Browser/console error guard, private-native preflight and authenticated helpers without demo reset/seed. |
+| create | `e2e/behavior/admin-i18n-contracts/matrix.ts` | Prefix-owned `tip824-i18n-role` UI matrix toggle/save preserving canonical permission keys and pre-existing roles. |
+| create | `e2e/behavior/admin-i18n-contracts/restricted.ts` | Prefix-owned restricted `lecturer` account login, `en`/`my` `ViewOnlyZone` write block on `/members`, Forbidden UI and backend 403 check. |
+| create | `e2e/behavior/admin-i18n-contracts/boundaries.ts` | Profile invalid-avatar client upload toast (`en`/`my`) and raw backend error/notification/audit-log/welcome-mail boundaries. |
+| modify | `e2e/playwright.admin-i18n.config.ts` | Register `admin-i18n-contracts.spec.ts` in the dual-mode Admin i18n Playwright suite. |
+| create | `coding-packs/reports/evidence/v46-824/final-full-msw.log` | Full `playwright.admin-i18n.config.ts` MSW run log on final application SHA. |
+| create | `coding-packs/reports/evidence/v46-824/final-full-native.log` | Full `playwright.admin-i18n.config.ts` isolated Native run log on final application SHA. |
+| create | `coding-packs/reports/evidence/v46-824/final-regressions-msw.log` | Mandatory Step 9 Admin + Portal Playwright regressions log. |
+| create | `coding-packs/reports/evidence/v46-824/final-parity-vi.log` | Vietnamese prototype parity reference log (`D-01`, auth, settings) per `D-134`. |
+| create | `coding-packs/reports/evidence/v46-824/final-quality.log` | Root `lint`, `typecheck`, `test`, `depcheck`, static source audit and Intl chunk audit on final SHA. |
+| modify | `coding-packs/reports/evidence/v46-824/source-audit.json` | Refresh clean-source AST audit receipt (`dirty: false`) bound to final application SHA. |
+| modify | `coding-packs/reports/evidence/v46-824/source-audit.log` | Append final application SHA static audit summary. |
+| modify | `coding-packs/reports/evidence/v46-824/intl-chunks.json` | Refresh clean-source Intl chunk payload isolation receipt (`dirty: false`) bound to final application SHA. |
+| modify | `coding-packs/reports/evidence/v46-824/performance.json` | Refresh `AC824-16` performance and bundle-budget receipt bound to final application SHA. |
+| modify | `coding-packs/reports/evidence/v46-824/performance.md` | Document final-SHA `AC824-16` cold measurements and baseline >250KiB First Load JS disclosure. |
+| modify | `coding-packs/reports/evidence/v46-824/performance.log` | Record final-SHA performance measurement execution output. |
+| modify | `coding-packs/reports/evidence/v46-824/coverage.md` | Reconcile top Coverage Matrix table with verified MSW + isolated Native dual-mode coverage. |
+| modify | `coding-packs/reports/evidence/v46-824/acceptance.md` | Finalize 16-AC acceptance matrix bound to final SHA. |
+| modify | `coding-packs/reports/TIP-V46-824-completion.md` | Finalize `STATUS: DONE` completion report with full gates, verification steps and disclosures. |
+| modify | `coding-packs/tips/TIP-V46-824-admin-i18n.md` | Update `Status` header and complete 12 `BUILDER-CHECKLIST` items. |
+| modify | `coding-packs/02-TASK-GRAPH.md` | Update row `V46-824` only to `DONE` with final SHA, counts and PR #120 link. |
+| modify | `coding-packs/audit/W1/TEST-GAPS.md` | Append final `TIP-V46-824` completion trace entry. |

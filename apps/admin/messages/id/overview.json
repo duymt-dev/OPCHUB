@@ -1,0 +1,76 @@
+{
+  "title": "Ringkasan",
+  "sub": "Pantau pertumbuhan, acara, dan moderasi konten komunitas",
+  "stats": {
+    "members": "Anggota",
+    "membersDelta": "+{pct}% bulan ini",
+    "membersRangeDelta": "+{pct}% dalam periode terpilih",
+    "freshRangeDelta": "Dalam periode terpilih",
+    "communities": "Komunitas",
+    "communitiesDelta": "+{n} grup baru",
+    "fresh": "Anggota baru",
+    "freshDelta": "Bulan {month}",
+    "events": "Acara",
+    "eventsDelta": "{n} akan datang"
+  },
+  "growth": {
+    "title": "Pertumbuhan anggota",
+    "week": "Minggu",
+    "month": "Bulan",
+    "year": "Tahun",
+    "delta": "+{pct}%",
+    "deltaNote": "+{n} anggota bulan ini",
+    "rangeDeltaNote": "+{n} anggota dalam periode terpilih",
+    "active": "Aktif",
+    "new": "Baru",
+    "inactive": "Belum diaktifkan"
+  },
+  "flow": {
+    "title": "Alur sistem",
+    "sub": "Angka langsung dari modul",
+    "done": "Selesai",
+    "todo": "Perlu tindakan",
+    "fees": {
+      "name": "Anggota yang sudah membayar",
+      "sub": "Diaktifkan otomatis saat transfer direkonsiliasi",
+      "cta": "Biaya keanggotaan"
+    },
+    "stores": {
+      "name": "Toko yang ditampilkan",
+      "sub": "{hidden} tersembunyi · {draft} draf",
+      "cta": "Toko"
+    },
+    "needs": {
+      "name": "Kebutuhan terbuka",
+      "sub": "{closed} ditutup",
+      "cta": "Kebutuhan"
+    },
+    "projects": {
+      "name": "Proyek menunggu peninjauan",
+      "sub": "{published} proyek ditampilkan",
+      "cta": "Tinjau proyek"
+    },
+    "groups": {
+      "name": "Grup komunitas",
+      "sub": "Grup provinsi & industri",
+      "cta": "Komunitas"
+    }
+  },
+  "conversion": {
+    "heading": "Konversi gratis ke berbayar menurut wilayah",
+    "sub": "Rasio = Sudah membayar / (Sudah membayar + Kedaluwarsa dan belum membayar) · anggota setelah masa gratis 3 bulan",
+    "export": "Ekspor CSV",
+    "region": "Wilayah",
+    "director": "Direktur Wilayah",
+    "trial": "Masa percobaan",
+    "paid": "Sudah membayar",
+    "expired": "Kedaluwarsa dan belum membayar",
+    "rate": "Rasio konversi",
+    "total": "Nasional",
+    "unappointed": "Belum ditunjuk",
+    "exported": "3 baris diekspor – chuyen-doi-theo-vung.csv",
+    "failed": "Tidak dapat memuat angka atau mengekspor CSV",
+    "loading": "Memuat angka…",
+    "retry": "Coba lagi"
+  }
+}

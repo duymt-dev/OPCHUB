@@ -1,0 +1,47 @@
+Source working tree based on 821ff652; candidate production build, not final committed proof. Complete10 raw bundles/250 files. Full33 auth cases:24 actual first-password/setup/MFA browser flows,12 identities x2 widths;9 pure RFC/guard contracts, not33 independent browser workflows; prefix-owned accounts approved, rebuilt candidate Admin includes mock MFA, setup scroll preservation and natural action sizing; same assertions both modes, real auth plus exact owned first-password/2FA writes and expected typed MFA401, no business/global-setting writes. Approved native wrapper/listener/endpoints revalidated by native preflight; OPCHUB original services/data/opchub_test retained; auth suite uses no SQL/seed/reset/repair; separate owner-authorized appchat scheduler pool runtime operation is not part of this auth suite. Unmasked images and exact Myanmar anchors, not all-language/state/control/value/performance or human approval.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-auth.spec.ts behavior/admin-i18n-auth/totp-contract.spec.ts behavior/admin-i18n-auth/protocol-contract.spec.ts
+[WebServer] (node:33176) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 33 tests using 1 worker
+
+(node:35292) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [behavior] › behavior\admin-i18n-auth\protocol-contract.spec.ts:10:3 › D-141 AC824-04 fixture guard rejects unowned mutation /v1/admin/settings/general (7ms)
+  ok  2 [behavior] › behavior\admin-i18n-auth\protocol-contract.spec.ts:10:3 › D-141 AC824-04 fixture guard rejects unowned mutation /v1/admin/admin-accounts/existing/status (1ms)
+  ok  3 [behavior] › behavior\admin-i18n-auth\protocol-contract.spec.ts:10:3 › D-141 AC824-04 fixture guard rejects unowned mutation /v1/admin/admin-accounts/existing/role (1ms)
+  ok  4 [behavior] › behavior\admin-i18n-auth\protocol-contract.spec.ts:10:3 › D-141 AC824-04 fixture guard rejects unowned mutation /v1/admin/auth/first-password (1ms)
+  ok  5 [behavior] › behavior\admin-i18n-auth\protocol-contract.spec.ts:15:1 › D-141 AC824-04 fixture guard rejects existing identity and malformed401 (7ms)
+  ok  6 [behavior] › behavior\admin-i18n-auth\totp-contract.spec.ts:12:3 › D-141 AC824-04 RFC6238 six digits at 59 (2ms)
+  ok  7 [behavior] › behavior\admin-i18n-auth\totp-contract.spec.ts:12:3 › D-141 AC824-04 RFC6238 six digits at 1111111109 (1ms)
+  ok  8 [behavior] › behavior\admin-i18n-auth\totp-contract.spec.ts:12:3 › D-141 AC824-04 RFC6238 six digits at 20000000000 (1ms)
+  ok  9 [behavior] › behavior\admin-i18n-auth\totp-contract.spec.ts:15:1 › D-141 AC824-04 rejects non-TOTP and unsupported parameters (3ms)
+  ok 10 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA vi 1440 (15.9s)
+  ok 11 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA vi 390 (30.5s)
+  ok 12 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA en 1440 (29.6s)
+  ok 13 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA en 390 (30.0s)
+  ok 14 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA en-SG 1440 (30.1s)
+  ok 15 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA en-SG 390 (29.9s)
+  ok 16 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA zh 1440 (30.0s)
+  ok 17 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA zh 390 (29.9s)
+  ok 18 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA id 1440 (30.1s)
+  ok 19 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA id 390 (29.8s)
+  ok 20 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA th 1440 (30.0s)
+  ok 21 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA th 390 (30.0s)
+  ok 22 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA ms 1440 (30.1s)
+  ok 23 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA ms 390 (30.0s)
+  ok 24 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA ms-BN 1440 (30.0s)
+  ok 25 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA ms-BN 390 (29.9s)
+  ok 26 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA fil 1440 (30.0s)
+  ok 27 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA fil 390 (30.0s)
+  ok 28 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA km 1440 (30.0s)
+  ok 29 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA km 390 (30.0s)
+  ok 30 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA lo 1440 (30.0s)
+  ok 31 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA lo 390 (29.9s)
+  ok 32 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA my 1440 (30.0s)
+  ok 33 [behavior] › behavior\admin-i18n-auth.spec.ts:9:5 › D-141 AC824-04/10 actual first-password and 2FA my 390 (30.0s)
+
+  Slow test file: [behavior] › behavior\admin-i18n-auth.spec.ts (11.8m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  33 passed (11.8m)
+EXIT 0

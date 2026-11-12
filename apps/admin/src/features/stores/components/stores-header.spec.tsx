@@ -3,6 +3,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { afterEach, expect, it, vi } from 'vitest';
 import type { ReactNode } from 'react';
 import { StoresHeader } from './stores-header';
+import ui from '../../../../messages/vi/ui.json';
 
 vi.mock('@opchub/ui', () => ({
   PageHeader: ({ title, extra }: { title: string; extra: ReactNode }) => (
@@ -18,7 +19,7 @@ vi.mock('@opchub/ui', () => ({
 afterEach(cleanup);
 it('retains the translated title and functional range control with locally scoped styling', () => {
   const view = render(
-    <NextIntlClientProvider locale="vi" messages={{ stores: { title: 'Gian hàng' } }}>
+    <NextIntlClientProvider locale="vi" messages={{ stores: { title: 'Gian hàng' }, ui }}>
       <StoresHeader />
     </NextIntlClientProvider>,
   );

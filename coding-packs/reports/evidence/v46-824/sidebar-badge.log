@@ -1,0 +1,27 @@
+Source working tree based on39e0783f. Approved optional shared badge formatter;5 actual AppShell/Sidebar tests and1 actual AdminShell live-locale contract test plus2 reduced-ICU number-format units. Admin composition mocks the shared boundary, shared tests use the actual forwarding/Sidebar. Myanmar digits here are unit projection, not whole Myanmar catalog/browser acceptance. Initial UI fixtures expected whitespace in link names; corrected to actual DOM accessible names. Browser red run showed my-MM fell back to en-US/Latin in Chromium156; explicit Myanmar numbering default fixes presentation, not counts. Root lint initially found AdminShell81 lines: reuse its existing locale with the pure numberText formatter instead of a duplicate locale hook, no rule suppression.
+COMMAND pnpm --filter @opchub/ui exec vitest run src/app-shell/sidebar-badge.spec.tsx --maxWorkers=2
+Expanded filter files: src/app-shell/sidebar-badge.spec.tsx 
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/ui
+
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  22:14:50
+   Duration  2.14s (environment 71%, import 14%, tests 12%, transform 2%, worker 1%)
+
+EXIT 0
+COMMAND pnpm --filter @opchub/admin exec vitest run src/features/shell/components/admin-shell-badge.spec.tsx --maxWorkers=2
+Expanded filter files: src/features/shell/components/admin-shell-badge.spec.tsx src/i18n/numbering-system.spec.ts
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  2 passed (2)
+      Tests  3 passed (3)
+   Start at  22:14:53
+   Duration  2.24s (environment 75%, import 19%, transform 3%, tests 2%, worker 1%)
+
+EXIT 0
+Postcommit receipt: source e7c6ca13; all10 tested source/test/TIP/manifest blobs match HEAD and worktree after normal hooks. Original precommit working-tree base retained above.
+Harness note: an earlier PS single-string splat expanded the additional test path into character filters, unintentionally running all1195 Admin cases (PASS); raw output retained in TEMP. Correct array splatting then reran the intended5 UI +3 Admin focused cases above. No test assertion/source/skip/timeout changes; full root separately passes.

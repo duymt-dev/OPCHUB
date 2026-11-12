@@ -2,7 +2,9 @@
 import { Button, Form, Input } from 'antd';
 import { useTranslations } from 'next-intl';
 import { regionalBankSchema, type RegionalSlot } from '@opchub/shared/api-domains';
+import { useSchemaFormErrors } from '@/i18n/use-schema-form-errors';
 import styles from './regional.module.css';
+const BANK_FIELDS = ['bankName', 'bankNo', 'bankHolder'] as const;
 
 export function RegionalBankFields({
   bank,
@@ -15,6 +17,7 @@ export function RegionalBankFields({
 }) {
   const t = useTranslations('affiliate.regional');
   const [form] = Form.useForm<RegionalSlot['bank']>();
+  const errors = useSchemaFormErrors(form, BANK_FIELDS);
   const values = Form.useWatch([], form) as RegionalSlot['bank'] | undefined;
   const dirty =
     values &&
@@ -45,7 +48,7 @@ export function RegionalBankFields({
                     const result = regionalBankSchema.shape[key].safeParse(value);
                     return result.success
                       ? Promise.resolve()
-                      : Promise.reject(new Error(result.error.issues[0]?.message));
+                      : Promise.reject(new Error(errors.message(result.error.issues[0], key)));
                   },
                 },
               ]}

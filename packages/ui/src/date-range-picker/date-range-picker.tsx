@@ -23,6 +23,8 @@ export interface DateRangePickerProps {
   presets?: TimeRangePickerProps['presets'];
   placeholder?: [string, string];
   prefix?: ReactNode;
+  /** Must be registered by the app; scoped to instances, never changes dayjs.locale globally. */
+  dateLocale?: string;
 }
 
 const DEFAULT_PRESETS: NonNullable<TimeRangePickerProps['presets']> = [
@@ -60,11 +62,17 @@ export function DateRangePicker({
   presets = DEFAULT_PRESETS,
   placeholder,
   prefix,
+  dateLocale,
 }: DateRangePickerProps) {
+  const localize = (range: DateRangeValue): DateRangeValue =>
+    dateLocale
+      ? [range[0]?.locale(dateLocale) ?? null, range[1]?.locale(dateLocale) ?? null]
+      : range;
+  const localizedDefault = localize(defaultValue);
   return (
     <RangePicker
       className={`${styles.dateRangePicker} ${className ?? ''}`}
-      defaultValue={defaultValue}
+      defaultValue={localizedDefault}
       format={format}
       separator="–"
       allowClear={allowClear}
@@ -73,7 +81,7 @@ export function DateRangePicker({
       prefix={prefix ?? <Icon name="calendar" size={15} stroke="rgba(0,0,0,0.65)" />}
       suffixIcon={<Icon name="chevronDown" size={14} stroke="rgba(0,0,0,0.45)" />}
       {...(style ? { style } : {})}
-      {...(value !== undefined ? { value } : {})}
+      {...(value !== undefined ? { value: value ? localize(value) : null } : {})}
       {...(onChange ? { onChange } : {})}
       {...(placeholder ? { placeholder } : {})}
     />

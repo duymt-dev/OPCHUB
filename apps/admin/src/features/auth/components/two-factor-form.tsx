@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { ApiError } from '@/lib/api-client';
+import { useLocalErrors } from '@/i18n/use-local-errors';
 import { enableTwoFactor, setupTwoFactor } from '../api';
 import { SetupField } from './setup-field';
 import styles from './setup.module.css';
@@ -32,17 +33,17 @@ export function TwoFactorForm({
     retry: false,
   });
   const [code, setCode] = useState('');
-  const [error, setError] = useState<string>();
+  const error = useLocalErrors<'code', 'errCode'>((key) => tTotp(key));
   const [busy, setBusy] = useState(false);
 
   const submit = async () => {
-    if (!/^\d{6}$/.test(code)) return setError(tTotp('errCode'));
+    if (!/^\d{6}$/.test(code)) return error.local({ code: 'errCode' });
     setBusy(true);
     try {
       onDone(await enableTwoFactor(code));
     } catch (e) {
       if (!(e instanceof ApiError)) throw e;
-      setError(e.fields.find((f) => f.path === 'code')?.message ?? e.message);
+      error.raw({ code: e.fields.find((f) => f.path === 'code')?.message ?? e.message });
     } finally {
       setBusy(false);
     }
@@ -82,7 +83,7 @@ export function TwoFactorForm({
         placeholder={t('codePlaceholder')}
         value={code}
         onChange={(v) => setCode(v.replace(/\D/g, '').slice(0, 6))}
-        error={error}
+        error={error.errors.code}
       />
       <div className={styles.actions}>
         <button type="button" className={styles.btn} onClick={onCancel}>

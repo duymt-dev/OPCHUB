@@ -1,0 +1,18 @@
+{
+  "tones": [
+    "Palakaibigan at mahilig magtanong",
+    "Praktikal, nagbabahagi ng karanasan",
+    "Eksperto, detalyadong mga sagot",
+    "Nagbibigay-inspirasyon",
+    "Maikli at teknikal",
+    "Baguhang mausisa"
+  ],
+  "genders": ["Lalaki", "Babae", "Iba pa"],
+  "hours": ["8:00 – 22:00", "8:00 – 12:00", "12:00 – 18:00", "18:00 – 23:00", "Buong araw"],
+  "scriptTypes": [
+    "Mga tanong at sagot",
+    "Talakayan",
+    "Pagbabahagi ng karanasan",
+    "Pagpapakilala ng kaganapan / proyekto"
+  ]
+}

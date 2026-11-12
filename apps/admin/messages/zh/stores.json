@@ -1,0 +1,79 @@
+{
+  "title": "店铺",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "kpi": {
+    "total": "店铺总数",
+    "published": "展示中",
+    "draft": "草稿",
+    "hidden": "已由管理员隐藏"
+  },
+  "search": "搜索店铺、行业或省份...",
+  "filtersLabel": "按店铺状态筛选",
+  "filter": {
+    "all": "全部",
+    "published": "展示中",
+    "draft": "草稿",
+    "hidden": "已隐藏"
+  },
+  "status": {
+    "published": "展示中",
+    "draft": "草稿",
+    "hidden": "已由管理员隐藏"
+  },
+  "kind": {
+    "product": "产品",
+    "service": "服务"
+  },
+  "table": {
+    "label": "店铺列表",
+    "all": "选择本页全部项目",
+    "store": "店铺",
+    "field": "行业",
+    "province": "省 / 市",
+    "items": "产品／服务",
+    "updated": "已更新",
+    "status": "状态",
+    "actions": "操作",
+    "view": "查看",
+    "hide": "隐藏",
+    "show": "显示"
+  },
+  "bulk": {
+    "label": "批量操作",
+    "selected": "已选择店铺：{n}",
+    "show": "显示",
+    "hide": "隐藏",
+    "clear": "清除选择"
+  },
+  "pager": {
+    "text": "第 {page}/{pages} 页 · 店铺：{total}",
+    "prev": "上一页",
+    "next": "下一页"
+  },
+  "drawer": {
+    "title": "店铺详情",
+    "close": "关闭详情",
+    "closeBtn": "关闭",
+    "meta": "店主：{owner} · {loc} · 更新于 {date}",
+    "items": "产品与服务",
+    "contactPrice": "联系询价",
+    "hide": "隐藏店铺",
+    "show": "重新显示",
+    "feature": "设为精选",
+    "unfeature": "取消精选",
+    "publicPage": "公开页面",
+    "publicCopy": "复制",
+    "publicCopied": "已复制公开页面链接",
+    "publicCopyError": "无法复制链接"
+  },
+  "toast": {
+    "hidden": "已隐藏店铺：{n}",
+    "shown": "已显示店铺：{n}",
+    "failed": "无法完成操作，请重试",
+    "featured": "已将“{name}”设为精选",
+    "unfeatured": "已取消“{name}”的精选状态"
+  },
+  "empty": "没有匹配的店铺。",
+  "error": "无法加载店铺列表",
+  "retry": "重试"
+}

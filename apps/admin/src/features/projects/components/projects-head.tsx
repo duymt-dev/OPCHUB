@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { PROJECT_VIEWS, REVIEW_TABS, type ProjectView, type ReviewTab } from '../types';
 import styles from './projects.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 const VIEW_ICON = {
   grid: 'M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z',
@@ -66,6 +67,7 @@ interface TabsProps {
 
 /** 6 tab trạng thái; số "Chờ duyệt" > 0 thì pill đỏ (rvTabs) */
 export function ReviewTabs({ active, counts, onChange }: TabsProps) {
+  const numberText = useNumberText();
   const t = useTranslations('projects');
   return (
     <div className={styles.tabs} role="tablist" aria-label={t('tabsLabel')}>
@@ -83,7 +85,9 @@ export function ReviewTabs({ active, counts, onChange }: TabsProps) {
           >
             {/* nhãn bọc span để tìm được theo chữ chính xác (số đếm là phần tử riêng) */}
             <span>{t(`tabs.${k}`)}</span>
-            <span className={`${styles.count} ${hot ? styles.hot : ''}`}>{counts[k]}</span>
+            <span className={`${styles.count} ${hot ? styles.hot : ''}`}>
+              {numberText(counts[k])}
+            </span>
           </button>
         );
       })}

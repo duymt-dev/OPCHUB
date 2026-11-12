@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl';
 import { flagSrc, memberInitials } from '../model';
 import type { GroupChip } from '../types';
 import styles from './cells.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 /** Avatar thành viên: hiện ảnh nếu có, fallback về chữ viết tắt trên nền màu */
 export function MemberAvatar({
@@ -89,6 +90,7 @@ export function GroupChips({
   more: number;
   chipClass?: string | undefined;
 }) {
+  const numberText = useNumberText();
   return (
     <div className={styles.chips}>
       {chips.map((g) => (
@@ -100,7 +102,7 @@ export function GroupChips({
           {g.name}
         </span>
       ))}
-      {more > 0 ? <span className={chipClass ?? styles.more}>+{more}</span> : null}
+      {more > 0 ? <span className={chipClass ?? styles.more}>+{numberText(more)}</span> : null}
     </div>
   );
 }

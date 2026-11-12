@@ -6,15 +6,17 @@ import { useAffiliateRateEditor } from '../hooks/use-affiliate-rate-editor';
 import type { AffiliateRateEditorProps } from '../types';
 import layout from './affiliate-detail.module.css';
 import styles from './affiliate-rate-editor.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 /** Single-agent edits stay in the rate panel; bulk edits retain their separate dialog. */
 export function AffiliateRateEditor({ id, rate }: AffiliateRateEditorProps) {
+  const numberText = useNumberText();
   const t = useTranslations('affiliate');
   const editor = useAffiliateRateEditor({ id, rate });
   if (!editor.editing)
     return (
       <>
-        <b className={layout.rateValue}>{rate}%</b>
+        <b className={layout.rateValue}>{numberText(rate)}%</b>
         <Button type="link" onClick={editor.open}>
           {t('editRate')}
         </Button>

@@ -1,25 +1,18 @@
+import { formatDate } from '@/i18n/format';
 import type { ServiceRequest } from '@opchub/shared/api-domains';
 
 /** Hiển thị: ngày theo giờ VN (luật 9) */
 
-const TZ = 'Asia/Ho_Chi_Minh';
-const DATE = new Intl.DateTimeFormat('vi-VN', {
-  day: '2-digit',
-  month: '2-digit',
-  year: 'numeric',
-  timeZone: TZ,
-});
-const AGO = new Intl.DateTimeFormat('vi-VN', {
-  day: '2-digit',
-  month: '2-digit',
-  hour: '2-digit',
-  minute: '2-digit',
-  timeZone: TZ,
-});
-
-export const vnDate = (iso: string) => DATE.format(new Date(iso));
+export const vnDate = (iso: string, locale = 'vi') => formatDate(iso, locale);
 /** Giờ bình luận như prototype (toLocaleString ngày/tháng + giờ:phút) */
-export const commentTime = (iso: string) => AGO.format(new Date(iso));
+export const commentTime = (iso: string, locale = 'vi') =>
+  formatDate(iso, locale, {
+    day: '2-digit',
+    month: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hourCycle: 'h23',
+  });
 
 /** Chữ cái đầu của từ cuối tên (prototype `ini`) */
 export const lastInitial = (name: string) => (name.split(' ').pop() ?? '?').charAt(0) || '?';

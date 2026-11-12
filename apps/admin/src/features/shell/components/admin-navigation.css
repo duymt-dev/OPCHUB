@@ -1,0 +1,10 @@
+/* Imported only by Admin RootLayout. Keep shared/Portal geometry and collapsed display rules. */
+aside[data-mini] > nav > a > span:first-of-type {
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+aside[data-mini] > nav > a > span:nth-of-type(2) {
+  flex-shrink: 0;
+}

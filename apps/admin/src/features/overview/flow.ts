@@ -1,4 +1,5 @@
 import type { AdminOverview } from '@opchub/shared/api-domains';
+import { formatNumber } from '@/i18n/format';
 
 export type FlowKey = 'fees' | 'stores' | 'needs' | 'projects' | 'groups';
 
@@ -13,39 +14,45 @@ export interface FlowCard {
   done: boolean;
 }
 
-const nf = new Intl.NumberFormat('vi-VN');
-
 /** D-89 v4 "Luồng hệ thống" (prototype `FLOW.admin`): 5 thẻ theo thứ tự prototype */
-export function flowCards(f: AdminOverview['flow']): FlowCard[] {
+export function flowCards(f: AdminOverview['flow'], locale = 'vi'): FlowCard[] {
+  const number = (value: number) => formatNumber(value, locale);
   return [
     {
       key: 'fees',
       href: '/fees',
-      value: `${nf.format(f.paidMembers)} / ${nf.format(f.members)}`,
+      value: `${number(f.paidMembers)} / ${number(f.members)}`,
       sub: {},
       done: true,
     },
     {
       key: 'stores',
       href: '/stores',
-      value: nf.format(f.stores.published),
+      value: number(f.stores.published),
       sub: { hidden: f.stores.hidden, draft: f.stores.draft },
       done: true,
     },
     {
       key: 'needs',
       href: '/needs',
-      value: nf.format(f.needs.open),
+      value: number(f.needs.open),
       sub: { closed: f.needs.closed },
       done: true,
     },
     {
       key: 'projects',
       href: '/projects?tab=pending',
-      value: nf.format(f.projects.pending),
+      value: number(f.projects.pending),
       sub: { published: f.projects.published },
       done: f.projects.pending === 0,
     },
-    { key: 'groups', href: '/groups', value: nf.format(f.groups), sub: {}, done: true },
+    { key: 'groups', href: '/groups', value: number(f.groups), sub: {}, done: true },
   ];
+}
+
+/** Plain ICU placeholders are strings; preserve raw numeric card parameters for business callers. */
+export function flowTextParams(sub: FlowCard['sub'], locale: string): Record<string, string> {
+  return Object.fromEntries(
+    Object.entries(sub).map(([key, value]) => [key, formatNumber(value, locale)]),
+  );
 }

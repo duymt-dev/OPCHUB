@@ -4,12 +4,16 @@ import { DateRangePicker, PageHeader } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import type { RequestTab } from '../types';
 import styles from './requests.module.css';
+import { useAdminUiLabels } from '@/i18n/ui-labels';
 
 const TABS: RequestTab[] = ['list', 'catalog'];
 
 export function RequestsHeader() {
+  const ui = useAdminUiLabels();
   const t = useTranslations('requests');
-  return <PageHeader title={t('title')} subtitle=" " extra={<DateRangePicker />} />;
+  return (
+    <PageHeader title={t('title')} subtitle=" " extra={<DateRangePicker {...ui.dateRange} />} />
+  );
 }
 
 /** Tab "Yêu cầu đăng ký" / "Danh mục dịch vụ" (gạch chân xanh như prototype rqTabs) */

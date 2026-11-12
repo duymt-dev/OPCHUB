@@ -1,0 +1,464 @@
+Source working tree based on1dd3118a. RED regression before numeric-picker fix, not an accepted failing gate.
+COMMAND pnpm --filter @opchub/admin exec vitest run src/i18n/date-picker-format.spec.ts --maxWorkers=2
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+stderr | src/i18n/date-picker-format.spec.ts > D-141 AC824-08/09 reduced-ICU numeric picker, not general Intl formatters > vi preserves approved display order when Intl cannot supply locale data
+[vitest] The DateTimeFormat mock did not use 'function' or 'class' in its implementation, see https://vitest.dev/api/vi#vi-spyon for examples.
+System.Management.Automation.RemoteException
+stderr | src/i18n/date-picker-format.spec.ts > D-141 AC824-08/09 reduced-ICU numeric picker, not general Intl formatters > en preserves approved display order when Intl cannot supply locale data
+[vitest] The DateTimeFormat mock did not use 'function' or 'class' in its implementation, see https://vitest.dev/api/vi#vi-spyon for examples.
+System.Management.Automation.RemoteException
+stderr | src/i18n/date-picker-format.spec.ts > D-141 AC824-08/09 reduced-ICU numeric picker, not general Intl formatters > en-SG preserves approved display order when Intl cannot supply locale data
+[vitest] The DateTimeFormat mock did not use 'function' or 'class' in its implementation, see https://vitest.dev/api/vi#vi-spyon for examples.
+System.Management.Automation.RemoteException
+stderr | src/i18n/date-picker-format.spec.ts > D-141 AC824-08/09 reduced-ICU numeric picker, not general Intl formatters > zh preserves approved display order when Intl cannot supply locale data
+[vitest] The DateTimeFormat mock did not use 'function' or 'class' in its implementation, see https://vitest.dev/api/vi#vi-spyon for examples.
+System.Management.Automation.RemoteException
+stderr | src/i18n/date-picker-format.spec.ts > D-141 AC824-08/09 reduced-ICU numeric picker, not general Intl formatters > id preserves approved display order when Intl cannot supply locale data
+[vitest] The DateTimeFormat mock did not use 'function' or 'class' in its implementation, see https://vitest.dev/api/vi#vi-spyon for examples.
+System.Management.Automation.RemoteException
+stderr | src/i18n/date-picker-format.spec.ts > D-141 AC824-08/09 reduced-ICU numeric picker, not general Intl formatters > th preserves approved display order when Intl cannot supply locale data
+[vitest] The DateTimeFormat mock did not use 'function' or 'class' in its implementation, see https://vitest.dev/api/vi#vi-spyon for examples.
+System.Management.Automation.RemoteException
+stderr | src/i18n/date-picker-format.spec.ts > D-141 AC824-08/09 reduced-ICU numeric picker, not general Intl formatters > ms preserves approved display order when Intl cannot supply locale data
+[vitest] The DateTimeFormat mock did not use 'function' or 'class' in its implementation, see https://vitest.dev/api/vi#vi-spyon for examples.
+System.Management.Automation.RemoteException
+stderr | src/i18n/date-picker-format.spec.ts > D-141 AC824-08/09 reduced-ICU numeric picker, not general Intl formatters > ms-BN preserves approved display order when Intl cannot supply locale data
+[vitest] The DateTimeFormat mock did not use 'function' or 'class' in its implementation, see https://vitest.dev/api/vi#vi-spyon for examples.
+System.Management.Automation.RemoteException
+stderr | src/i18n/date-picker-format.spec.ts > D-141 AC824-08/09 reduced-ICU numeric picker, not general Intl formatters > fil preserves approved display order when Intl cannot supply locale data
+[vitest] The DateTimeFormat mock did not use 'function' or 'class' in its implementation, see https://vitest.dev/api/vi#vi-spyon for examples.
+System.Management.Automation.RemoteException
+stderr | src/i18n/date-picker-format.spec.ts > D-141 AC824-08/09 reduced-ICU numeric picker, not general Intl formatters > km preserves approved display order when Intl cannot supply locale data
+[vitest] The DateTimeFormat mock did not use 'function' or 'class' in its implementation, see https://vitest.dev/api/vi#vi-spyon for examples.
+System.Management.Automation.RemoteException
+stderr | src/i18n/date-picker-format.spec.ts > D-141 AC824-08/09 reduced-ICU numeric picker, not general Intl formatters > lo preserves approved display order when Intl cannot supply locale data
+[vitest] The DateTimeFormat mock did not use 'function' or 'class' in its implementation, see https://vitest.dev/api/vi#vi-spyon for examples.
+System.Management.Automation.RemoteException
+stderr | src/i18n/date-picker-format.spec.ts > D-141 AC824-08/09 reduced-ICU numeric picker, not general Intl formatters > my preserves approved display order when Intl cannot supply locale data
+[vitest] The DateTimeFormat mock did not use 'function' or 'class' in its implementation, see https://vitest.dev/api/vi#vi-spyon for examples.
+System.Management.Automation.RemoteException
+ ❯ src/i18n/date-picker-format.spec.ts (17 tests | 12 failed) 35ms
+   ❯ D-141 AC824-08/09 reduced-ICU numeric picker, not general Intl formatters (17)
+     × vi preserves approved display order when Intl cannot supply locale data 7ms
+     × en preserves approved display order when Intl cannot supply locale data 1ms
+     × en-SG preserves approved display order when Intl cannot supply locale data 1ms
+     × zh preserves approved display order when Intl cannot supply locale data 1ms
+     × id preserves approved display order when Intl cannot supply locale data 1ms
+     × th preserves approved display order when Intl cannot supply locale data 0ms
+     × ms preserves approved display order when Intl cannot supply locale data 0ms
+     × ms-BN preserves approved display order when Intl cannot supply locale data 1ms
+     × fil preserves approved display order when Intl cannot supply locale data 1ms
+     × km preserves approved display order when Intl cannot supply locale data 1ms
+     × lo preserves approved display order when Intl cannot supply locale data 0ms
+     × my preserves approved display order when Intl cannot supply locale data 0ms
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯ Failed Tests 12 ⎯⎯⎯⎯⎯⎯⎯
+System.Management.Automation.RemoteException
+ FAIL  src/i18n/date-picker-format.spec.ts > D-141 AC824-08/09 reduced-ICU numeric picker, not general Intl formatters > vi preserves approved display order when Intl cannot supply locale data
+ FAIL  src/i18n/date-picker-format.spec.ts > D-141 AC824-08/09 reduced-ICU numeric picker, not general Intl formatters > en preserves approved display order when Intl cannot supply locale data
+ FAIL  src/i18n/date-picker-format.spec.ts > D-141 AC824-08/09 reduced-ICU numeric picker, not general Intl formatters > en-SG preserves approved display order when Intl cannot supply locale data
+ FAIL  src/i18n/date-picker-format.spec.ts > D-141 AC824-08/09 reduced-ICU numeric picker, not general Intl formatters > zh preserves approved display order when Intl cannot supply locale data
+ FAIL  src/i18n/date-picker-format.spec.ts > D-141 AC824-08/09 reduced-ICU numeric picker, not general Intl formatters > id preserves approved display order when Intl cannot supply locale data
+ FAIL  src/i18n/date-picker-format.spec.ts > D-141 AC824-08/09 reduced-ICU numeric picker, not general Intl formatters > th preserves approved display order when Intl cannot supply locale data
+ FAIL  src/i18n/date-picker-format.spec.ts > D-141 AC824-08/09 reduced-ICU numeric picker, not general Intl formatters > ms preserves approved display order when Intl cannot supply locale data
+ FAIL  src/i18n/date-picker-format.spec.ts > D-141 AC824-08/09 reduced-ICU numeric picker, not general Intl formatters > ms-BN preserves approved display order when Intl cannot supply locale data
+ FAIL  src/i18n/date-picker-format.spec.ts > D-141 AC824-08/09 reduced-ICU numeric picker, not general Intl formatters > fil preserves approved display order when Intl cannot supply locale data
+ FAIL  src/i18n/date-picker-format.spec.ts > D-141 AC824-08/09 reduced-ICU numeric picker, not general Intl formatters > km preserves approved display order when Intl cannot supply locale data
+ FAIL  src/i18n/date-picker-format.spec.ts > D-141 AC824-08/09 reduced-ICU numeric picker, not general Intl formatters > lo preserves approved display order when Intl cannot supply locale data
+ FAIL  src/i18n/date-picker-format.spec.ts > D-141 AC824-08/09 reduced-ICU numeric picker, not general Intl formatters > my preserves approved display order when Intl cannot supply locale data
+TypeError: () => {
+			throw new Error("Numeric picker must not depend on optional browser ICU");
+		} is not a constructor
+ ❯ datePickerFormat src/i18n/date-picker.ts:7:10
+      5| /** Numeric Gregorian display only; picker callbacks still transport c…
+      6| export function datePickerFormat(locale: string): string {
+      7|   return new Intl.DateTimeFormat(intlLocaleOf(locale), {
+       |          ^
+      8|     calendar: 'gregory',
+      9|     timeZone: ADMIN_TIME_ZONE,
+ ❯ src/i18n/date-picker-format.spec.ts:28:24
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/12]⎯
+System.Management.Automation.RemoteException
+
+ Test Files  1 failed (1)
+      Tests  12 failed | 5 passed (17)
+   Start at  00:01:02
+   Duration  2.54s (environment 81%, import 12%, transform 5%, tests 2%, worker 1%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\admin
+System.Management.Automation.RemoteException
+RED EXIT 1
+
+GREEN actual focused tests after numeric-picker fix. Source working tree based on1dd3118a.
+COMMAND pnpm --filter @opchub/admin exec vitest run src/i18n/date-picker-format.spec.ts src/i18n/date-picker.spec.ts src/i18n/format.spec.ts --maxWorkers=2
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  3 passed (3)
+      Tests  45 passed (45)
+   Start at  00:02:32
+   Duration  6.03s (environment 84%, import 12%, transform 2%, worker 1%, tests 1%)
+
+    Isolate  3 workers spawned · ~2.55s startup each (spawn + environment, per file)
+             at least ~1.28s faster with isolate: false — reuses workers across files instead of one per file
+
+GREEN EXIT 0
+
+INITIAL FULL ROOT RUN: 2 audit timeout failures with 2 workers, default5000ms;1356 Admin cases passed,5 cached suites. Preserve full output, no assertion/timeout/source changes to hide failure.
+Source working tree based on1dd3118a. Full root tests; VITEST_MAX_WORKERS=2 passed through Turbo loose mode, a resource cap only. No test skip, assertion or timeout reductions. No overlapping production builds.
+COMMAND pnpm test --env-mode=loose
+$ turbo run test --concurrency=2 --env-mode=loose
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running test in 9 packages
+   • Remote caching disabled
+
+@opchub/shared:test: cache hit, replaying logs b0ac9becdf974ad3
+@opchub/server:test: cache hit, replaying logs c2e070d3adeeddab
+@opchub/shared:test: $ vitest run
+@opchub/server:test: $ vitest run --project unit
+@opchub/server:test:
+@opchub/server:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+@opchub/server:test:
+@opchub/server:test:
+@opchub/server:test:  Test Files  57 passed (57)
+@opchub/shared:test:
+@opchub/server:test:       Tests  276 passed (276)
+@opchub/shared:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/shared
+@opchub/server:test:    Start at  16:03:29
+@opchub/shared:test:
+@opchub/server:test:    Duration  57.63s (import 83%, transform 12%, tests 4%, worker 1%)
+@opchub/shared:test:
+@opchub/server:test:
+@opchub/shared:test:  Test Files  127 passed (127)
+@opchub/server:test:      Import  |unit| 400 modules were evaluated 1913 times · 65.27s total, 83% of tracked time
+@opchub/shared:test:       Tests  757 passed (757)
+@opchub/server:test:              ~22.11s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/shared:test:    Start at  16:00:10
+@opchub/server:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
+@opchub/shared:test:    Duration  158.12s (import 86%, transform 9%, tests 4%, worker 1%)
+@opchub/server:test:
+@opchub/shared:test:
+@opchub/shared:test:      Import  432 modules were evaluated 893 times · 162.66s total, 86% of tracked time
+@opchub/shared:test:              ~18.76s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/shared:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
+@opchub/shared:test:
+@opchub/portal:test: cache hit, replaying logs c499ac8b2dccf1b3
+@opchub/portal:test: $ vitest run --passWithNoTests
+@opchub/portal:test:
+@opchub/portal:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/portal
+@opchub/portal:test:
+@opchub/portal:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/portal:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/portal:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/portal:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/portal:test:
+@opchub/portal:test:  Test Files  85 passed (85)
+@opchub/portal:test:       Tests  476 passed (476)
+@opchub/portal:test:    Start at  16:04:29
+@opchub/portal:test:    Duration  353.37s (environment 47%, import 47%, tests 4%, transform 1%)
+@opchub/portal:test:
+@opchub/portal:test:      Import  804 modules were evaluated 5111 times · 309.19s total, 47% of tracked time
+@opchub/portal:test:              ~113.00s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/integrations:test: cache hit, replaying logs b6c214e97c1022b8
+@opchub/portal:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
+@opchub/portal:test:
+@opchub/integrations:test: $ vitest run
+@opchub/integrations:test:
+@opchub/integrations:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/integrations
+@opchub/integrations:test:
+@opchub/integrations:test:
+@opchub/integrations:test:  Test Files  13 passed | 1 skipped (14)
+@opchub/integrations:test:       Tests  126 passed | 2 skipped (128)
+@opchub/integrations:test:    Start at  16:03:15
+@opchub/integrations:test:    Duration  11.26s (import 54%, transform 25%, tests 18%, worker 3%)
+@opchub/integrations:test:
+@opchub/integrations:test:      Import  151 modules were evaluated 343 times · 6.24s total, 54% of tracked time
+@opchub/integrations:test:              ~709ms faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/integrations:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
+@opchub/integrations:test:
+@opchub/admin:test: cache miss, executing 38536aabd6b843b4
+@opchub/ui:test: cache hit, replaying logs 93ecb6a3e3980f04
+@opchub/ui:test: $ vitest run
+@opchub/ui:test:
+@opchub/ui:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/ui
+@opchub/ui:test:
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test:
+@opchub/ui:test:  Test Files  24 passed (24)
+@opchub/ui:test:       Tests  88 passed (88)
+@opchub/ui:test:    Start at  22:02:39
+@opchub/ui:test:    Duration  124.68s (import 50%, environment 44%, tests 4%, transform 1%)
+@opchub/ui:test:
+@opchub/ui:test:     Isolate  24 workers spawned · ~4.78s startup each (spawn + environment, per file)
+@opchub/ui:test:              at least ~52.62s faster with isolate: false — reuses workers across files instead of one per file
+@opchub/ui:test:
+@opchub/admin:test: $ vitest run --passWithNoTests
+@opchub/admin:test:
+@opchub/admin:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+@opchub/admin:test:
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test:  ❯ src/i18n/tests/source-audit.spec.ts (19 tests | 2 failed) 52758ms
+@opchub/admin:test:    ❯ D-141 AC824-06/08 complete-source audit negative fixtures (19)
+@opchub/admin:test:      × does not classify translated keys, canonical input attributes, SVG paths or keyboard comparisons as UI 5704ms
+@opchub/admin:test:      × binds enum exceptions to their actual values so new upstream untranslated names cannot slip through 5686ms
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test:
+@opchub/admin:test:
+@opchub/admin:test: ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+@opchub/admin:test:
+@opchub/admin:test:  Test Files  1 failed | 184 passed (185)
+@opchub/admin:test:       Tests  2 failed | 1356 passed (1358)
+@opchub/admin:test:    Start at  00:05:16
+@opchub/admin:test:    Duration  1365.79s (import 58%, environment 37%, tests 5%)
+@opchub/admin:test:
+@opchub/admin:test:      Import  1228 modules were evaluated 6136 times · 1513.57s total, 58% of tracked time
+@opchub/admin:test:              ~559.70s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/admin:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
+@opchub/admin:test:
+@opchub/admin:test:  FAIL  src/i18n/tests/source-audit.spec.ts > D-141 AC824-06/08 complete-source audit negative fixtures > does not classify translated keys, canonical input attributes, SVG paths or keyboard comparisons as UI
+@opchub/admin:test: Error: Test timed out in 5000ms.
+@opchub/admin:test: If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+@opchub/admin:test:  ❯ src/i18n/tests/source-audit.spec.ts:62:3
+@opchub/admin:test:      60|     expect(rows.filter((row) => row.kind === 'numeric-jsx')).toHaveLen…
+@opchub/admin:test:      61|   });
+@opchub/admin:test:      62|   it('does not classify translated keys, canonical input attributes, S…
+@opchub/admin:test:        |   ^
+@opchub/admin:test:      63|     const r =
+@opchub/admin:test:      64|       audit(`${translated} const icon='M8 2v4M16 2v4'; function C({n,k…
+@opchub/admin:test:
+@opchub/admin:test: ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+@opchub/admin:test:
+@opchub/admin:test:  FAIL  src/i18n/tests/source-audit.spec.ts > D-141 AC824-06/08 complete-source audit negative fixtures > binds enum exceptions to their actual values so new upstream untranslated names cannot slip through
+@opchub/admin:test: Error: Test timed out in 5000ms.
+@opchub/admin:test: If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+@opchub/admin:test:  ❯ src/i18n/tests/source-audit.spec.ts:89:3
+@opchub/admin:test:      87|     expect(audit(source, [exception]).status).toBe(expected);
+@opchub/admin:test:      88|   });
+@opchub/admin:test:      89|   it('binds enum exceptions to their actual values so new upstream unt…
+@opchub/admin:test:        |   ^
+@opchub/admin:test:      90|     const exception = {
+@opchub/admin:test:      91|       file,
+@opchub/admin:test:
+@opchub/admin:test: ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+@opchub/admin:test:
+@opchub/admin:test: [ELIFECYCLE] Test failed. See above for more details.
+@opchub/admin#test:  ERROR  command (D:\CODING\OPCHUB\CODING\apps\admin) C:\Users\PC\AppData\Local\Temp\opchub-tip823-pnpm-12-11-2\pnpm.cmd run test exited (1)
+
+ Tasks:    5 successful, 6 total
+Cached:    5 cached, 6 total
+  Time:    22m49.708s
+Failed:    @opchub/admin#test
+
+ ERROR  run failed: command  exited (1)
+[ELIFECYCLE] Test failed. See above for more details.
+EXIT 1
+
+DIAGNOSTIC retry of unchanged audit tests with one worker, no timeout change.
+COMMAND pnpm --filter @opchub/admin exec vitest run src/i18n/tests/source-audit.spec.ts --maxWorkers=1
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  1 passed (1)
+      Tests  19 passed (19)
+   Start at  00:28:28
+   Duration  38.10s (tests 86%, environment 13%, import 1%)
+
+AUDIT RETRY EXIT 0
+
+INITIAL BROWSER HARNESS DIAGNOSTIC: six MSW cases reached ten locale/date assertions but wrongly expected default period=month in the API query. Existing fetchOverview deliberately omits that default. Final test asserts exact omission and only from/to keys, while URL period=month remains exact. No production/API/assertion tolerance/timeout change. Initial output retained below. Native had not run in the stopped chain.
+TIP824 actual numeric picker, ten currently translated selector identities incl aliases, three explicit canonical ranges (21Nov, year boundary, leap day) at1440/390. Six cases/mode, same assertions both modes, actual login and read-only guard, actual selector pointer switches, retained URL/API YYYY-MM-DD and alias/F5. General Intl date/number formatting and missing km/my catalog acceptance remain open. Source70f46a3c. MSW Portal relay only, no DB/global seed/reset.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-picker.spec.ts
+[WebServer] (node:17292) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:13476) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+(node:18820) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker nonambiguous 1440, ten translated identities not full Intl acceptance (6.3s)
+(node:13292) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker year-boundary 1440, ten translated identities not full Intl acceptance (6.7s)
+(node:12760) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker leap-day 1440, ten translated identities not full Intl acceptance (5.4s)
+(node:17772) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  4 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker nonambiguous 390, ten translated identities not full Intl acceptance (5.4s)
+(node:9160) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  5 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker year-boundary 390, ten translated identities not full Intl acceptance (5.0s)
+(node:10296) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  6 [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker leap-day 390, ten translated identities not full Intl acceptance (4.8s)
+
+
+  1) [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker nonambiguous 1440, ten translated identities not full Intl acceptance
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "month"
+    Received: null
+
+      52 |         expect(query.get('from')).toBe(from);
+      53 |         expect(query.get('to')).toBe(to);
+    > 54 |         expect(query.get('period')).toBe('month');
+         |                                     ^
+      55 |       }
+      56 |       // F5 must keep selected alias identity and canonical range, not locale-formatted URL values.
+      57 |       await page.reload({ waitUntil: 'networkidle' });
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-picker.spec.ts:54:37
+
+    Error Context: test-results\admin-i18n-picker-D-141-AC-bdee7-es-not-full-Intl-acceptance-behavior\error-context.md
+
+  2) [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker year-boundary 1440, ten translated identities not full Intl acceptance
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "month"
+    Received: null
+
+      52 |         expect(query.get('from')).toBe(from);
+      53 |         expect(query.get('to')).toBe(to);
+    > 54 |         expect(query.get('period')).toBe('month');
+         |                                     ^
+      55 |       }
+      56 |       // F5 must keep selected alias identity and canonical range, not locale-formatted URL values.
+      57 |       await page.reload({ waitUntil: 'networkidle' });
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-picker.spec.ts:54:37
+
+    Error Context: test-results\admin-i18n-picker-D-141-AC-e3fc1-es-not-full-Intl-acceptance-behavior\error-context.md
+
+  3) [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker leap-day 1440, ten translated identities not full Intl acceptance
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "month"
+    Received: null
+
+      52 |         expect(query.get('from')).toBe(from);
+      53 |         expect(query.get('to')).toBe(to);
+    > 54 |         expect(query.get('period')).toBe('month');
+         |                                     ^
+      55 |       }
+      56 |       // F5 must keep selected alias identity and canonical range, not locale-formatted URL values.
+      57 |       await page.reload({ waitUntil: 'networkidle' });
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-picker.spec.ts:54:37
+
+    Error Context: test-results\admin-i18n-picker-D-141-AC-9b9c9-es-not-full-Intl-acceptance-behavior\error-context.md
+
+  4) [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker nonambiguous 390, ten translated identities not full Intl acceptance
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "month"
+    Received: null
+
+      52 |         expect(query.get('from')).toBe(from);
+      53 |         expect(query.get('to')).toBe(to);
+    > 54 |         expect(query.get('period')).toBe('month');
+         |                                     ^
+      55 |       }
+      56 |       // F5 must keep selected alias identity and canonical range, not locale-formatted URL values.
+      57 |       await page.reload({ waitUntil: 'networkidle' });
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-picker.spec.ts:54:37
+
+    Error Context: test-results\admin-i18n-picker-D-141-AC-4d1b3-es-not-full-Intl-acceptance-behavior\error-context.md
+
+  5) [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker year-boundary 390, ten translated identities not full Intl acceptance
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "month"
+    Received: null
+
+      52 |         expect(query.get('from')).toBe(from);
+      53 |         expect(query.get('to')).toBe(to);
+    > 54 |         expect(query.get('period')).toBe('month');
+         |                                     ^
+      55 |       }
+      56 |       // F5 must keep selected alias identity and canonical range, not locale-formatted URL values.
+      57 |       await page.reload({ waitUntil: 'networkidle' });
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-picker.spec.ts:54:37
+
+    Error Context: test-results\admin-i18n-picker-D-141-AC-2fd6e-es-not-full-Intl-acceptance-behavior\error-context.md
+
+  6) [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker leap-day 390, ten translated identities not full Intl acceptance
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "month"
+    Received: null
+
+      52 |         expect(query.get('from')).toBe(from);
+      53 |         expect(query.get('to')).toBe(to);
+    > 54 |         expect(query.get('period')).toBe('month');
+         |                                     ^
+      55 |       }
+      56 |       // F5 must keep selected alias identity and canonical range, not locale-formatted URL values.
+      57 |       await page.reload({ waitUntil: 'networkidle' });
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-picker.spec.ts:54:37
+
+    Error Context: test-results\admin-i18n-picker-D-141-AC-be261-es-not-full-Intl-acceptance-behavior\error-context.md
+
+  6 failed
+    [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker nonambiguous 1440, ten translated identities not full Intl acceptance
+    [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker year-boundary 1440, ten translated identities not full Intl acceptance
+    [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker leap-day 1440, ten translated identities not full Intl acceptance
+    [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker nonambiguous 390, ten translated identities not full Intl acceptance
+    [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker year-boundary 390, ten translated identities not full Intl acceptance
+    [behavior] › behavior\admin-i18n-picker.spec.ts:24:5 › D-141 AC824-08/09 actual picker leap-day 390, ten translated identities not full Intl acceptance
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+System.Management.Automation.RemoteException
+EXIT 1

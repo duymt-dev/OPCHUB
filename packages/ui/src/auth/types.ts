@@ -72,6 +72,8 @@ export interface LoginPanelProps {
   demoAccounts: DemoAccountItem[];
   /** Thông báo đặt từ ngoài (VD: khóa đăng nhập), hiện như lỗi */
   notice?: string | undefined;
+  /** Optional presentation-only formatting; internal error state and callbacks stay unchanged. */
+  formatError?: ((message: string) => string) | undefined;
   /** Trả về thông báo lỗi để hiện dưới form, hoặc undefined khi thành công */
   onSubmit: (values: LoginValues) => Promise<string | undefined>;
   onRegister?: () => void;

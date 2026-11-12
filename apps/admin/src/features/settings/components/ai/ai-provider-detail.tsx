@@ -1,11 +1,15 @@
 'use client';
 import { AiProviderFields } from './ai-provider-fields';
+import { useAiProviderLabel } from '../../hooks/use-ai-provider-label';
 import { AI_PROVIDER_CATALOG } from '@opchub/shared/api-domains';
-import { useTranslations } from 'next-intl';
+import { formatDate } from '@/i18n/format';
+import { useLocale, useTranslations } from 'next-intl';
 import { Switch } from '../switch';
 import type { AiPanel } from './types';
 import styles from './ai.module.css';
 export function AiProviderDetail({ p }: { p: AiPanel }) {
+  const providerLabel = useAiProviderLabel();
+  const locale = useLocale();
   const t = useTranslations('settings.ai');
   const row = p.form?.providers.find((r) => r.id === p.selected);
   if (!row) return null;
@@ -13,13 +17,13 @@ export function AiProviderDetail({ p }: { p: AiPanel }) {
   const saved = p.query.data?.providers.find((r) => r.id === row.id);
   const set = (patch: Parameters<AiPanel['provider']>[1]) => p.provider(row.id, patch);
   return (
-    <section className={styles.card} aria-label={catalog.name}>
+    <section className={styles.card} aria-label={providerLabel(row.id)}>
       <div className={`${styles.row} ${styles.providerHeading}`}>
         <span className={styles.initials} style={{ background: catalog.color }}>
           {catalog.initials}
         </span>
         <div className={styles.grow}>
-          <b>{catalog.name}</b>
+          <b>{providerLabel(row.id)}</b>
           <small>{t('keySource', { source: catalog.keySource })}</small>
         </div>
         <span>{t('enabled')}</span>
@@ -35,7 +39,7 @@ export function AiProviderDetail({ p }: { p: AiPanel }) {
         <small>
           {t(p.status(row.id))}
           {saved?.checkedAt
-            ? ` · ${t('checked', { at: new Date(saved.checkedAt).toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' }) })}`
+            ? ` · ${t('checked', { at: formatDate(saved.checkedAt, locale, { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: '2-digit', second: '2-digit', hourCycle: 'h23' }) })}`
             : ''}
         </small>
         <button

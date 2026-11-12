@@ -7,12 +7,15 @@ import { useTranslations } from 'next-intl';
 import { useToast } from '@opchub/ui';
 import { useAuthStore } from '@/lib/auth-store';
 import { changePassword } from '../api';
-import { profileFormErrors } from '../form-errors';
+import { useProfileErrors } from './use-profile-errors';
+
+const FIELDS = ['currentPassword', 'newPassword', 'confirmPassword'] as const;
 
 export function useProfilePassword() {
   const t = useTranslations('common.adminProfile');
   const toast = useToast();
   const [form] = Form.useForm<AdminChangePasswordRequest>();
+  const showErrors = useProfileErrors(form, FIELDS, t('failed'));
   const mutation = useMutation({
     mutationFn: async (body: AdminChangePasswordRequest) =>
       changePassword(adminChangePasswordSchema.parse(body)),
@@ -22,12 +25,7 @@ export function useProfilePassword() {
       toast(t('passwordSaved'));
     },
     onError: (error) => {
-      const message = profileFormErrors(
-        form,
-        error,
-        ['currentPassword', 'newPassword', 'confirmPassword'],
-        t('failed'),
-      );
+      const message = showErrors(error);
       if (message) toast(message);
     },
   });

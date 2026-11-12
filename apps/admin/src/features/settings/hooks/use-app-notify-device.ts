@@ -3,6 +3,9 @@ import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { pushSubscribeSchema } from '@opchub/shared/api-domains';
 import { env } from '@/lib/env';
+import { ApiError } from '@/lib/api-client';
+import { useLocalErrors } from '@/i18n/use-local-errors';
+import { useTranslations } from 'next-intl';
 import { fetchDeviceConfig, registerDevice, unregisterDevice } from '../app-notify-api';
 
 type State = 'loading' | 'unsupported' | 'ios' | 'denied' | 'off' | 'on';
@@ -53,7 +56,8 @@ export function useAppNotifyDevice() {
   const config = useQuery({ queryKey: ['push', 'config'], queryFn: fetchDeviceConfig });
   const [state, setState] = useState<State>('loading');
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const t = useTranslations('ui');
+  const error = useLocalErrors<'device', 'notifyDeviceFailed'>((code) => t(`errors.${code}`));
   const enabled = config.data?.enabled;
   useEffect(() => {
     let alive = true;
@@ -83,7 +87,7 @@ export function useAppNotifyDevice() {
   const toggle = async () => {
     if (busy || !config.data?.enabled) return;
     setBusy(true);
-    setError(null);
+    error.clear();
     try {
       const unavailable = blocked();
       if (unavailable) {
@@ -111,10 +115,11 @@ export function useAppNotifyDevice() {
       await enableDevice(registration, config.data.vapidPublicKey);
       setState('on');
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Không thể cập nhật thông báo');
+      if (e instanceof ApiError) error.raw({ device: e.message });
+      else error.local({ device: 'notifyDeviceFailed' });
     } finally {
       setBusy(false);
     }
   };
-  return { state, busy, error, config, toggle };
+  return { state, busy, error: error.errors.device ?? null, config, toggle };
 }

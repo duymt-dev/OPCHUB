@@ -3,19 +3,20 @@
 import { ssoProviders } from '@opchub/shared/fixtures';
 import { PASSWORD_LENGTHS, SESSION_DAYS } from '@opchub/shared/api-domains';
 import { SsoIcon, useToast } from '@opchub/ui';
-import { useTranslations } from 'next-intl';
+import { formatNumber } from '@/i18n/format';
+import { useLocale, useTranslations } from 'next-intl';
 import { useSecurity } from '../hooks/use-security';
 import { OptionRow, Switch } from './switch';
 import styles from './sso.module.css';
 import ui from './settings.module.css';
 
-const nf = new Intl.NumberFormat('vi-VN');
 const nameOf = (id: string) => ssoProviders.find((p) => p.id === id)?.name ?? id;
 
 type Sec = ReturnType<typeof useSecurity>;
 
 /** "Chính sách mật khẩu & bảo mật": độ dài, hạn phiên, 2FA quản trị viên, khoá 5 lần sai (D-44) */
 function PolicyCard({ data, patch }: { data: NonNullable<Sec['data']>; patch: Sec['patch'] }) {
+  const locale = useLocale();
   const t = useTranslations('settings.sso');
   return (
     <section className={ui.card}>
@@ -33,7 +34,7 @@ function PolicyCard({ data, patch }: { data: NonNullable<Sec['data']>; patch: Se
           >
             {PASSWORD_LENGTHS.map((n) => (
               <option key={n} value={n}>
-                {t('chars', { n })}
+                {t('chars', { n: formatNumber(n, locale) })}
               </option>
             ))}
           </select>
@@ -50,7 +51,7 @@ function PolicyCard({ data, patch }: { data: NonNullable<Sec['data']>; patch: Se
           >
             {SESSION_DAYS.map((n) => (
               <option key={n} value={n}>
-                {t('days', { n })}
+                {t('days', { n: formatNumber(n, locale) })}
               </option>
             ))}
           </select>
@@ -77,6 +78,7 @@ function PolicyCard({ data, patch }: { data: NonNullable<Sec['data']>; patch: Se
  * & bảo mật" (độ dài tối thiểu, hạn phiên, 2FA quản trị viên, khoá sau 5 lần sai — D-44).
  */
 export function SsoTab() {
+  const locale = useLocale();
   const t = useTranslations('settings.sso');
   const toast = useToast();
   const { data, patch } = useSecurity();
@@ -91,7 +93,7 @@ export function SsoTab() {
             <div className={ui.h18}>{t('heading')}</div>
             <div className={ui.muted}>{t('headingSub')}</div>
           </div>
-          <span className={styles.count}>{t('onCount', { n: onCount })}</span>
+          <span className={styles.count}>{t('onCount', { n: formatNumber(onCount, locale) })}</span>
         </div>
         <div className={styles.grid}>
           {data.providers.map((p) => {
@@ -120,7 +122,7 @@ export function SsoTab() {
                   />
                 </div>
                 <div className={styles.bottom}>
-                  <span>{t('users', { n: nf.format(p.userCount) })}</span>
+                  <span>{t('users', { n: formatNumber(p.userCount, locale) })}</span>
                   <button
                     type="button"
                     className={styles.cfg}

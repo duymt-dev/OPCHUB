@@ -1,0 +1,179 @@
+{
+  "title": "Ahli",
+  "sub": "Urus akaun ahli, peranan pendaftaran, dan kumpulan",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "card": {
+    "title": "Ahli",
+    "count": "· Akaun: {n}",
+    "search": "Cari mengikut nama, e-mel...",
+    "grid": "Paparan grid",
+    "list": "Paparan senarai",
+    "types": "Jenis akaun",
+    "typeAll": "Semua",
+    "typeBiz": "Perniagaan",
+    "typePer": "Individu"
+  },
+  "col": {
+    "member": "Ahli",
+    "type": "Jenis akaun",
+    "groups": "Kumpulan yang diikuti",
+    "role": "Peranan pendaftaran",
+    "date": "Menyertai",
+    "status": "Status",
+    "selectAll": "Pilih semua di halaman ini",
+    "select": "Pilih {name}",
+    "actions": "Tindakan untuk {name}"
+  },
+  "type": {
+    "business": "Perniagaan",
+    "personal": "Individu",
+    "businessLong": "Perniagaan / Organisasi"
+  },
+  "role": {
+    "member": "Ahli",
+    "lecturer": "Pensyarah",
+    "admin": "Pentadbir"
+  },
+  "status": {
+    "active": "Aktif",
+    "locked": "Dikunci"
+  },
+  "grid": {
+    "joined": "Menyertai {date}",
+    "profile": "Lihat profil pendaftaran →"
+  },
+  "menu": {
+    "title": "Ubah status",
+    "active": "Aktif",
+    "lock": "Kunci akaun",
+    "unlock": "Buka kunci",
+    "assign": "Tetapkan ke kumpulan…",
+    "profile": "Lihat profil pendaftaran"
+  },
+  "bulk": {
+    "selected": "Dipilih",
+    "unit": "item",
+    "assign": "+ Tetapkan ke kumpulan",
+    "lock": "Kunci akaun",
+    "unlock": "Buka kunci",
+    "export": "Eksport CSV",
+    "clear": "Padam pilihan"
+  },
+  "assign": {
+    "titleOne": "Tetapkan {name} ke kumpulan",
+    "titleMany": "Tetapkan ahli ke kumpulan: {n}",
+    "search": "Cari kumpulan mengikut nama atau provinsi/bandar...",
+    "groupRole": "Peranan dalam kumpulan",
+    "already": "Sudah menjadi ahli",
+    "none": "Belum ada kumpulan dipilih",
+    "count": "Kumpulan dipilih: {n}",
+    "cancel": "Batal",
+    "save": "Tetapkan ke kumpulan",
+    "close": "Tutup"
+  },
+  "drawer": {
+    "title": "Profil pendaftaran",
+    "close": "Tutup",
+    "biz": "Maklumat perniagaan",
+    "rep": "Wakil",
+    "per": "Maklumat peribadi",
+    "groups": "Kumpulan yang dipilih ketika mendaftar",
+    "sys": "Sistem",
+    "taxCode": "Nombor cukai",
+    "company": "Nama perniagaan",
+    "field": "Industri",
+    "size": "Saiz",
+    "country": "Negara pendaftaran",
+    "name": "Nama penuh",
+    "position": "Jawatan",
+    "phone": "Nombor telefon",
+    "email": "E-mel",
+    "persona": "Anda ialah",
+    "registered": "Tarikh pendaftaran",
+    "role": "Peranan pendaftaran",
+    "status": "Status",
+    "pending": "Menunggu pengesahan",
+    "rejected": "Pengesahan ditolak",
+    "reject": "Tolak",
+    "approve": "Sahkan perniagaan",
+    "rejectTitle": "Tolak profil perniagaan?",
+    "rejectBody": "{company} tidak akan menerima lencana \"Disahkan\". Akaun kekal dapat digunakan (D-40).",
+    "confirm": "Tolak",
+    "cancel": "Batal"
+  },
+  "roleConfirm": {
+    "title": "Ubah kebenaran sistem?",
+    "body": "{name}: {from} → {to}. Perubahan ini direkodkan di log aktiviti.",
+    "ok": "Ubah kebenaran",
+    "cancel": "Batal"
+  },
+  "lockConfirm": {
+    "title": "Kunci akaun?",
+    "body": "{who} tidak dapat log masuk hingga kunci dibuka. Tindakan ini direkodkan di log aktiviti.",
+    "many": "Akaun: {n}",
+    "ok": "Kunci",
+    "cancel": "Batal"
+  },
+  "pager": {
+    "unit": "ahli",
+    "prev": "Halaman sebelumnya",
+    "next": "Halaman seterusnya",
+    "pageSize": "Bilangan baris setiap halaman"
+  },
+  "toast": {
+    "locked": "Dikunci · {name}",
+    "unlocked": "Kunci dibuka · {name}",
+    "activated": "Ditetapkan Aktif · {name}",
+    "bulkLocked": "Akaun dikunci: {n}",
+    "bulkUnlocked": "Kunci akaun dibuka: {n}",
+    "exporting": "Mengeksport item ke CSV: {n}…",
+    "exported": "Ahli dieksport: {n}",
+    "exportFailed": "Eksport gagal: tidak dapat mencipta fail. Sila cuba lagi",
+    "exportTimeout": "Eksport gagal: penciptaan fail melebihi had masa. Sila cuba lagi",
+    "role": "Peranan {name} dikemas kini",
+    "assigned": "Ahli ditetapkan: {n} · Kumpulan: {g} · Peranan: {role}",
+    "pickGroup": "Sila pilih sekurang-kurangnya 1 kumpulan",
+    "verified": "{name} disahkan",
+    "rejected": "Profil {name} ditolak",
+    "failed": "Tindakan tidak berjaya"
+  },
+  "filters": {
+    "all": "Semua",
+    "results": "{n} hasil",
+    "clear": "Padam penapis ({n})",
+    "grp": "Kumpulan komuniti",
+    "role": {
+      "label": "Peranan pendaftaran",
+      "business": "Perniagaan",
+      "expert": "Pakar",
+      "lecturer": "Pensyarah",
+      "engineer": "Jurutera",
+      "investor": "Pelabur",
+      "freelancer": "Pekerja bebas",
+      "student": "Pelajar"
+    },
+    "fee": {
+      "label": "Yuran keahlian",
+      "paid": "Sudah membayar",
+      "trial": "Percubaan percuma 3 bulan",
+      "unpaid": "Belum membayar / Tamat tempoh"
+    },
+    "st": {
+      "label": "Status",
+      "active": "Aktif",
+      "locked": "Dikunci"
+    },
+    "prof": {
+      "label": "Profil",
+      "done": "Selesai",
+      "inc": "Belum selesai"
+    },
+    "day": {
+      "7": "7 hari lepas",
+      "30": "30 hari terakhir",
+      "90": "90 hari terakhir",
+      "365": "12 bulan terakhir",
+      "label": "Tarikh pendaftaran"
+    }
+  }
+}

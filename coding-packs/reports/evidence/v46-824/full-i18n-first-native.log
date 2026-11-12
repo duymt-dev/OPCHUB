@@ -1,0 +1,586 @@
+Source 6022d311. Complete10 raw bundles/250 files. All208 registered i18n behavior cases, including72 fixed12-identity core-screen/viewport cases and all12 canonical picker identities; includes helper protocol and synthetic modal-handler probes, not208 independent user workflows; same assertions both modes, real login200 and strict HTTP/JSON/no-business-write guard. Approved native wrapper/listener/endpoints revalidated by native preflight; original PG5432/opchub_test/services/data retained, no SQL/seed/reset/repair. Unmasked images and exact Myanmar anchors, not all-language/state/control/value/performance or human approval.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts
+[WebServer] (node:28560) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 208 tests using 1 worker
+
+(node:23016) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok   1 [behavior] › behavior\admin-i18n\response-lifetime.spec.ts:32:3 › D-141 observation lifetime only: older document (14ms)
+  ok   2 [behavior] › behavior\admin-i18n\response-lifetime.spec.ts:32:3 › D-141 observation lifetime only: body method older document (2ms)
+  ok   3 [behavior] › behavior\admin-i18n\response-lifetime.spec.ts:32:3 › D-141 observation lifetime only: same document (1ms)
+  ok   4 [behavior] › behavior\admin-i18n\response-lifetime.spec.ts:32:3 › D-141 observation lifetime only: unknown request epoch (8ms)
+  ok   5 [behavior] › behavior\admin-i18n\response-lifetime.spec.ts:32:3 › D-141 observation lifetime only: future epoch (1ms)
+  ok   6 [behavior] › behavior\admin-i18n\response-lifetime.spec.ts:32:3 › D-141 observation lifetime only: malformed JSON (4ms)
+  ok   7 [behavior] › behavior\admin-i18n\response-lifetime.spec.ts:32:3 › D-141 observation lifetime only: different protocol error (2ms)
+  ok   8 [behavior] › behavior\admin-i18n\response-lifetime.spec.ts:32:3 › D-141 observation lifetime only: unrelated message (1ms)
+  ok   9 [behavior] › behavior\admin-i18n\response-lifetime.spec.ts:32:3 › D-141 observation lifetime only: non-error object (1ms)
+  ok  10 [behavior] › behavior\admin-i18n\response-lifetime.spec.ts:32:3 › D-141 observation lifetime only: unanchored text (1ms)
+  ok  11 [behavior] › behavior\admin-i18n\response-lifetime.spec.ts:36:1 › D-141 observation lifetime only: restored current loader is never discarded (4ms)
+  ok  12 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual vi overview 1440, loaded core only not all states (4.0s)
+  ok  13 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual vi overview 390, loaded core only not all states (2.4s)
+  ok  14 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual vi profile 1440, loaded core only not all states (3.4s)
+  ok  15 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual vi profile 390, loaded core only not all states (2.2s)
+  ok  16 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual vi settings 1440, loaded core only not all states (3.5s)
+  ok  17 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual vi settings 390, loaded core only not all states (2.8s)
+  ok  18 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual en overview 1440, loaded core only not all states (3.2s)
+  ok  19 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual en overview 390, loaded core only not all states (2.6s)
+  ok  20 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual en profile 1440, loaded core only not all states (3.6s)
+  ok  21 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual en profile 390, loaded core only not all states (2.4s)
+  ok  22 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual en settings 1440, loaded core only not all states (4.7s)
+  ok  23 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual en settings 390, loaded core only not all states (2.4s)
+  ok  24 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual en-SG overview 1440, loaded core only not all states (4.0s)
+  ok  25 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual en-SG overview 390, loaded core only not all states (2.9s)
+  ok  26 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual en-SG profile 1440, loaded core only not all states (4.0s)
+  ok  27 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual en-SG profile 390, loaded core only not all states (2.4s)
+  ok  28 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual en-SG settings 1440, loaded core only not all states (3.7s)
+  ok  29 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual en-SG settings 390, loaded core only not all states (3.2s)
+  ok  30 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual zh overview 1440, loaded core only not all states (3.8s)
+  ok  31 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual zh overview 390, loaded core only not all states (2.3s)
+  ok  32 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual zh profile 1440, loaded core only not all states (4.3s)
+  ok  33 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual zh profile 390, loaded core only not all states (2.4s)
+  ok  34 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual zh settings 1440, loaded core only not all states (3.8s)
+  ok  35 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual zh settings 390, loaded core only not all states (3.2s)
+  ok  36 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual id overview 1440, loaded core only not all states (3.0s)
+  x   37 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual id overview 390, loaded core only not all states (2.6s)
+(node:19692) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  38 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual id profile 1440, loaded core only not all states (3.0s)
+  x   39 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual id profile 390, loaded core only not all states (2.3s)
+(node:28204) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  40 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual id settings 1440, loaded core only not all states (2.7s)
+  x   41 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual id settings 390, loaded core only not all states (2.3s)
+(node:15532) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  42 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual th overview 1440, loaded core only not all states (2.3s)
+  ok  43 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual th overview 390, loaded core only not all states (2.3s)
+  ok  44 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual th profile 1440, loaded core only not all states (2.8s)
+  ok  45 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual th profile 390, loaded core only not all states (2.4s)
+  ok  46 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual th settings 1440, loaded core only not all states (3.0s)
+  ok  47 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual th settings 390, loaded core only not all states (2.4s)
+  ok  48 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual ms overview 1440, loaded core only not all states (3.7s)
+  ok  49 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual ms overview 390, loaded core only not all states (2.1s)
+  ok  50 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual ms profile 1440, loaded core only not all states (3.6s)
+  ok  51 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual ms profile 390, loaded core only not all states (2.4s)
+  ok  52 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual ms settings 1440, loaded core only not all states (5.1s)
+  ok  53 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual ms settings 390, loaded core only not all states (2.8s)
+  ok  54 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual ms-BN overview 1440, loaded core only not all states (2.8s)
+  ok  55 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual ms-BN overview 390, loaded core only not all states (2.3s)
+  ok  56 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual ms-BN profile 1440, loaded core only not all states (3.0s)
+  ok  57 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual ms-BN profile 390, loaded core only not all states (2.2s)
+  ok  58 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual ms-BN settings 1440, loaded core only not all states (3.0s)
+  ok  59 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual ms-BN settings 390, loaded core only not all states (2.3s)
+  ok  60 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual fil overview 1440, loaded core only not all states (3.7s)
+  ok  61 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual fil overview 390, loaded core only not all states (1.9s)
+  ok  62 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual fil profile 1440, loaded core only not all states (4.3s)
+  ok  63 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual fil profile 390, loaded core only not all states (2.2s)
+  ok  64 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual fil settings 1440, loaded core only not all states (3.3s)
+  ok  65 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual fil settings 390, loaded core only not all states (2.0s)
+  ok  66 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual km overview 1440, loaded core only not all states (5.1s)
+  ok  67 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual km overview 390, loaded core only not all states (1.9s)
+  ok  68 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual km profile 1440, loaded core only not all states (2.9s)
+  ok  69 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual km profile 390, loaded core only not all states (2.1s)
+  ok  70 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual km settings 1440, loaded core only not all states (3.4s)
+  ok  71 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual km settings 390, loaded core only not all states (3.6s)
+  ok  72 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual lo overview 1440, loaded core only not all states (3.2s)
+  ok  73 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual lo overview 390, loaded core only not all states (2.2s)
+  ok  74 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual lo profile 1440, loaded core only not all states (2.7s)
+  ok  75 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual lo profile 390, loaded core only not all states (1.8s)
+  ok  76 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual lo settings 1440, loaded core only not all states (2.8s)
+  ok  77 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual lo settings 390, loaded core only not all states (2.1s)
+  ok  78 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual my overview 1440, loaded core only not all states (2.8s)
+  ok  79 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual my overview 390, loaded core only not all states (2.6s)
+  ok  80 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual my profile 1440, loaded core only not all states (2.8s)
+  ok  81 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual my profile 390, loaded core only not all states (2.2s)
+  ok  82 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual my settings 1440, loaded core only not all states (3.2s)
+  ok  83 [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual my settings 390, loaded core only not all states (2.6s)
+  ok  84 [behavior] › behavior\admin-i18n-intl.spec.ts:46:3 › D-141 AC824-08/11/16 actual Lao fees match independent Node dates/currency and selected Intl registration 1440 (3.1s)
+  ok  85 [behavior] › behavior\admin-i18n-intl.spec.ts:46:3 › D-141 AC824-08/11/16 actual Lao fees match independent Node dates/currency and selected Intl registration 390 (4.0s)
+  ok  86 [behavior] › behavior\admin-i18n-khmer.spec.ts:38:5 › D-141 AC824-07/15 Khmer actual overview 1440, not all-language acceptance (5.1s)
+  ok  87 [behavior] › behavior\admin-i18n-khmer.spec.ts:38:5 › D-141 AC824-07/15 Khmer actual overview 390, not all-language acceptance (4.0s)
+  ok  88 [behavior] › behavior\admin-i18n-khmer.spec.ts:38:5 › D-141 AC824-07/15 Khmer actual profile 1440, not all-language acceptance (6.7s)
+  ok  89 [behavior] › behavior\admin-i18n-khmer.spec.ts:38:5 › D-141 AC824-07/15 Khmer actual profile 390, not all-language acceptance (4.3s)
+  ok  90 [behavior] › behavior\admin-i18n-khmer.spec.ts:38:5 › D-141 AC824-07/15 Khmer actual settings 1440, not all-language acceptance (5.5s)
+  ok  91 [behavior] › behavior\admin-i18n-khmer.spec.ts:38:5 › D-141 AC824-07/15 Khmer actual settings 390, not all-language acceptance (4.0s)
+  ok  92 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual overview 1440, not all-language acceptance (6.4s)
+  ok  93 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual overview 390, not all-language acceptance (4.3s)
+  ok  94 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual profile 1440, not all-language acceptance (5.5s)
+  ok  95 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual profile 390, not all-language acceptance (3.8s)
+  ok  96 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual settings 1440, not all-language acceptance (5.8s)
+[WebServer] Failed to proxy http://127.0.0.1:53792/v1/admin/admin-roles Error: read ECONNRESET
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4077,
+[WebServer]   code: 'ECONNRESET',
+[WebServer]   syscall: 'read'
+[WebServer] }
+[WebServer] Error: read ECONNRESET
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4077,
+[WebServer]   code: 'ECONNRESET',
+[WebServer]   syscall: 'read'
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:53792/v1/admin/settings/languages Error: read ECONNRESET
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4077,
+[WebServer]   code: 'ECONNRESET',
+[WebServer]   syscall: 'read'
+[WebServer] }
+[WebServer] Error: read ECONNRESET
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4077,
+[WebServer]   code: 'ECONNRESET',
+[WebServer]   syscall: 'read'
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:53792/v1/admin/categories Error: read ECONNRESET
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4077,
+[WebServer]   code: 'ECONNRESET',
+[WebServer]   syscall: 'read'
+[WebServer] }
+[WebServer] Error: read ECONNRESET
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4077,
+[WebServer]   code: 'ECONNRESET',
+[WebServer]   syscall: 'read'
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:53792/v1/admin/settings/general Error: read ECONNRESET
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4077,
+[WebServer]   code: 'ECONNRESET',
+[WebServer]   syscall: 'read'
+[WebServer] }
+[WebServer] Error: read ECONNRESET
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4077,
+[WebServer]   code: 'ECONNRESET',
+[WebServer]   syscall: 'read'
+[WebServer] }
+[WebServer] Failed to proxy http://127.0.0.1:53792/v1/admin/settings/ai Error: read ECONNRESET
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4077,
+[WebServer]   code: 'ECONNRESET',
+[WebServer]   syscall: 'read'
+[WebServer] }
+[WebServer] Error: read ECONNRESET
+[WebServer]     at ignore-listed frames {
+[WebServer]   errno: -4077,
+[WebServer]   code: 'ECONNRESET',
+[WebServer]   syscall: 'read'
+[WebServer] }
+  x   97 [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual settings 390, not all-language acceptance (4.3s)
+(node:19148) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  98 [behavior] › behavior\admin-i18n-myanmar.spec.ts:40:5 › D-141 AC824-07/08/15 Myanmar core overview 1440, raw25 complete not full acceptance (5.5s)
+  ok  99 [behavior] › behavior\admin-i18n-myanmar.spec.ts:40:5 › D-141 AC824-07/08/15 Myanmar core overview 390, raw25 complete not full acceptance (4.3s)
+  ok 100 [behavior] › behavior\admin-i18n-myanmar.spec.ts:40:5 › D-141 AC824-07/08/15 Myanmar core profile 1440, raw25 complete not full acceptance (4.4s)
+  ok 101 [behavior] › behavior\admin-i18n-myanmar.spec.ts:40:5 › D-141 AC824-07/08/15 Myanmar core profile 390, raw25 complete not full acceptance (3.8s)
+  ok 102 [behavior] › behavior\admin-i18n-myanmar.spec.ts:40:5 › D-141 AC824-07/08/15 Myanmar core settings 1440, raw25 complete not full acceptance (4.6s)
+  ok 103 [behavior] › behavior\admin-i18n-myanmar.spec.ts:40:5 › D-141 AC824-07/08/15 Myanmar core settings 390, raw25 complete not full acceptance (3.4s)
+  ok 104 [behavior] › behavior\admin-i18n-navigation.spec.ts:20:3 › D-141 AC824-01/05 aliases retain country identity and profile draft after refresh 1440 (2.6s)
+  ok 105 [behavior] › behavior\admin-i18n-navigation.spec.ts:43:3 › D-141 AC824-05 member URL filters page and protected data survive real locale switches 1440 (3.1s)
+  ok 106 [behavior] › behavior\admin-i18n-navigation.spec.ts:84:3 › D-141 AC824-10 profile draft and local password errors switch without submitting 1440 (3.8s)
+  ok 107 [behavior] › behavior\admin-i18n-navigation.spec.ts:128:3 › D-141 AC824-10/11 provider refresh probe preserves open group drawer and canonical draft 1440 (3.1s)
+  ok 108 [behavior] › behavior\admin-i18n-navigation.spec.ts:169:3 › D-141 AC824-13 selector cookie and12 options remain independent of saved language settings 1440 (3.5s)
+  ok 109 [behavior] › behavior\admin-i18n-navigation.spec.ts:20:3 › D-141 AC824-01/05 aliases retain country identity and profile draft after refresh 390 (2.6s)
+  ok 110 [behavior] › behavior\admin-i18n-navigation.spec.ts:43:3 › D-141 AC824-05 member URL filters page and protected data survive real locale switches 390 (4.8s)
+  ok 111 [behavior] › behavior\admin-i18n-navigation.spec.ts:84:3 › D-141 AC824-10 profile draft and local password errors switch without submitting 390 (2.6s)
+  ok 112 [behavior] › behavior\admin-i18n-navigation.spec.ts:128:3 › D-141 AC824-10/11 provider refresh probe preserves open group drawer and canonical draft 390 (2.4s)
+  ok 113 [behavior] › behavior\admin-i18n-navigation.spec.ts:169:3 › D-141 AC824-13 selector cookie and12 options remain independent of saved language settings 390 (2.7s)
+  x  114 [behavior] › behavior\admin-i18n-picker.spec.ts:37:5 › D-141 AC824-08/09 actual picker nonambiguous 1440, all12 identities not full Intl acceptance (10.4s)
+(node:25904) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  115 [behavior] › behavior\admin-i18n-picker.spec.ts:37:5 › D-141 AC824-08/09 actual picker year-boundary 1440, all12 identities not full Intl acceptance (11.1s)
+(node:15836) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  116 [behavior] › behavior\admin-i18n-picker.spec.ts:37:5 › D-141 AC824-08/09 actual picker leap-day 1440, all12 identities not full Intl acceptance (11.5s)
+(node:26808) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  117 [behavior] › behavior\admin-i18n-picker.spec.ts:37:5 › D-141 AC824-08/09 actual picker nonambiguous 390, all12 identities not full Intl acceptance (11.5s)
+(node:9476) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  118 [behavior] › behavior\admin-i18n-picker.spec.ts:37:5 › D-141 AC824-08/09 actual picker year-boundary 390, all12 identities not full Intl acceptance (11.3s)
+(node:19264) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  119 [behavior] › behavior\admin-i18n-picker.spec.ts:37:5 › D-141 AC824-08/09 actual picker leap-day 390, all12 identities not full Intl acceptance (13.3s)
+(node:5316) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 120 [behavior] › behavior\admin-i18n-screens.spec.ts:14:1 › D-141 AC824-15 Vietnamese bot tabs retain mobile navigation without horizontal overflow (2.5s)
+  ok 121 [behavior] › behavior\admin-i18n-screens.spec.ts:54:1 › D-141 AC824-06 chrome scan rejects injected text/aria/placeholder and raw-name prefixes (1.6s)
+  ok 122 [behavior] › behavior\admin-i18n-screens.spec.ts:80:5 › D-141 AC824-06/15 English dialog member-registration 1440 (1.8s)
+  ok 123 [behavior] › behavior\admin-i18n-screens.spec.ts:80:5 › D-141 AC824-06/15 English dialog member-registration 390 (1.5s)
+  ok 124 [behavior] › behavior\admin-i18n-screens.spec.ts:80:5 › D-141 AC824-06/15 English dialog fee-match 1440 (1.7s)
+  ok 125 [behavior] › behavior\admin-i18n-screens.spec.ts:80:5 › D-141 AC824-06/15 English dialog fee-match 390 (1.7s)
+  ok 126 [behavior] › behavior\admin-i18n-screens.spec.ts:80:5 › D-141 AC824-06/15 English dialog group-create 1440 (1.6s)
+  ok 127 [behavior] › behavior\admin-i18n-screens.spec.ts:80:5 › D-141 AC824-06/15 English dialog group-create 390 (1.8s)
+  ok 128 [behavior] › behavior\admin-i18n-screens.spec.ts:80:5 › D-141 AC824-06/15 English dialog group-export-options 1440 (1.7s)
+  ok 129 [behavior] › behavior\admin-i18n-screens.spec.ts:80:5 › D-141 AC824-06/15 English dialog group-export-options 390 (3.0s)
+  ok 130 [behavior] › behavior\admin-i18n-screens.spec.ts:80:5 › D-141 AC824-06/15 English dialog persona-create 1440 (3.6s)
+  ok 131 [behavior] › behavior\admin-i18n-screens.spec.ts:80:5 › D-141 AC824-06/15 English dialog persona-create 390 (2.8s)
+  ok 132 [behavior] › behavior\admin-i18n-screens.spec.ts:80:5 › D-141 AC824-06/15 English dialog script-create 1440 (2.4s)
+  ok 133 [behavior] › behavior\admin-i18n-screens.spec.ts:80:5 › D-141 AC824-06/15 English dialog script-create 390 (2.2s)
+  ok 134 [behavior] › behavior\admin-i18n-screens.spec.ts:80:5 › D-141 AC824-06/15 English dialog event-create 1440 (2.5s)
+  ok 135 [behavior] › behavior\admin-i18n-screens.spec.ts:80:5 › D-141 AC824-06/15 English dialog event-create 390 (2.2s)
+  ok 136 [behavior] › behavior\admin-i18n-screens.spec.ts:80:5 › D-141 AC824-06/15 English dialog store-details 1440 (1.7s)
+  ok 137 [behavior] › behavior\admin-i18n-screens.spec.ts:80:5 › D-141 AC824-06/15 English dialog store-details 390 (1.6s)
+  ok 138 [behavior] › behavior\admin-i18n-screens.spec.ts:80:5 › D-141 AC824-06/15 English dialog project-review 1440 (2.7s)
+  ok 139 [behavior] › behavior\admin-i18n-screens.spec.ts:80:5 › D-141 AC824-06/15 English dialog project-review 390 (2.5s)
+  ok 140 [behavior] › behavior\admin-i18n-screens.spec.ts:80:5 › D-141 AC824-06/15 English dialog investor-details 1440 (2.2s)
+  ok 141 [behavior] › behavior\admin-i18n-screens.spec.ts:80:5 › D-141 AC824-06/15 English dialog investor-details 390 (2.1s)
+  ok 142 [behavior] › behavior\admin-i18n-screens.spec.ts:80:5 › D-141 AC824-06/15 English dialog service-request 1440 (1.9s)
+  ok 143 [behavior] › behavior\admin-i18n-screens.spec.ts:80:5 › D-141 AC824-06/15 English dialog service-request 390 (1.9s)
+  ok 144 [behavior] › behavior\admin-i18n-screens.spec.ts:80:5 › D-141 AC824-06/15 English dialog campaign-create 1440 (2.4s)
+  ok 145 [behavior] › behavior\admin-i18n-screens.spec.ts:80:5 › D-141 AC824-06/15 English dialog campaign-create 390 (1.8s)
+  ok 146 [behavior] › behavior\admin-i18n-screens.spec.ts:80:5 › D-141 AC824-06/15 English dialog administrator-create 1440 (2.1s)
+  ok 147 [behavior] › behavior\admin-i18n-screens.spec.ts:80:5 › D-141 AC824-06/15 English dialog administrator-create 390 (2.1s)
+  ok 148 [behavior] › behavior\admin-i18n-screens.spec.ts:80:5 › D-141 AC824-06/15 English dialog ai-call-log 1440 (3.3s)
+  ok 149 [behavior] › behavior\admin-i18n-screens.spec.ts:80:5 › D-141 AC824-06/15 English dialog ai-call-log 390 (3.3s)
+  ok 150 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded overview 1440 (4.0s)
+  ok 151 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded overview 390 (3.8s)
+  ok 152 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded members 1440 (1.3s)
+  ok 153 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded fees 1440 (1.4s)
+  ok 154 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded transactions 1440 (1.2s)
+  ok 155 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded groups 1440 (2.1s)
+  ok 156 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded moderation 1440 (2.1s)
+  ok 157 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded bots-log 1440 (1.6s)
+  ok 158 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded bots-personas 1440 (2.1s)
+  ok 159 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded bots-scripts 1440 (2.4s)
+  ok 160 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded bots-threads 1440 (3.0s)
+  ok 161 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded bots-replies 1440 (2.3s)
+  ok 162 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded events 1440 (2.9s)
+  ok 163 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded stores 1440 (3.2s)
+  ok 164 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded needs 1440 (1.6s)
+  ok 165 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded projects-live 1440 (1.8s)
+  ok 166 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded projects-pending 1440 (1.5s)
+  ok 167 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded projects-hidden 1440 (1.6s)
+  ok 168 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded projects-changes 1440 (2.5s)
+  ok 169 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded projects-rejected 1440 (2.8s)
+  ok 170 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded projects-draft 1440 (3.5s)
+  ok 171 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded investors 1440 (2.6s)
+  ok 172 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded requests 1440 (2.0s)
+  ok 173 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded service-catalog 1440 (1.6s)
+  ok 174 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded affiliate-com 1440 (2.0s)
+  ok 175 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded affiliate-aff 1440 (1.8s)
+  ok 176 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded affiliate-gdv 1440 (1.5s)
+  ok 177 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded affiliate-gcfg 1440 (2.4s)
+  ok 178 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded affiliate-cfg 1440 (2.4s)
+  ok 179 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded marketing-campaigns 1440 (2.2s)
+  ok 180 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded marketing-auto 1440 (2.1s)
+  ok 181 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded marketing-log 1440 (2.5s)
+  ok 182 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded reports 1440 (2.1s)
+  ok 183 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded profile 1440 (4.3s)
+  ok 184 [behavior] › behavior\admin-i18n-screens.spec.ts:152:5 › D-141 AC824-06/15 English loaded profile 390 (4.4s)
+  ok 185 [behavior] › behavior\admin-i18n-screens.spec.ts:186:1 › D-141 AC824-06 all14 English settings tabs are navigable and display their own bodies (4.1s)
+  ok 186 [behavior] › behavior\admin-i18n-screens.spec.ts:211:3 › D-141 AC824-06/15 English settings general 1440 (3.9s)
+  ok 187 [behavior] › behavior\admin-i18n-screens.spec.ts:211:3 › D-141 AC824-06/15 English settings general 390 (4.1s)
+  ok 188 [behavior] › behavior\admin-i18n-sidebar.spec.ts:12:3 › D-141 AC824-08 sidebar badge digits switch my/vi/en without changing counts 1440; not Myanmar catalog acceptance (4.7s)
+  x  189 [behavior] › behavior\admin-i18n-sidebar.spec.ts:12:3 › D-141 AC824-08 sidebar badge digits switch my/vi/en without changing counts 390; not Myanmar catalog acceptance (1.0m)
+(node:30172) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 190 [behavior] › behavior\admin-i18n-sidebar.spec.ts:58:5 › D-141 AC824-15 sidebar text and badges stay inside links, vi 1440 (3.6s)
+  ok 191 [behavior] › behavior\admin-i18n-sidebar.spec.ts:58:5 › D-141 AC824-15 sidebar text and badges stay inside links, vi 390 (3.3s)
+  ok 192 [behavior] › behavior\admin-i18n-sidebar.spec.ts:58:5 › D-141 AC824-15 sidebar text and badges stay inside links, en 1440 (4.2s)
+  ok 193 [behavior] › behavior\admin-i18n-sidebar.spec.ts:58:5 › D-141 AC824-15 sidebar text and badges stay inside links, en 390 (3.5s)
+  ok 194 [behavior] › behavior\admin-i18n-sidebar.spec.ts:58:5 › D-141 AC824-15 sidebar text and badges stay inside links, fil 1440 (5.0s)
+  ok 195 [behavior] › behavior\admin-i18n-sidebar.spec.ts:58:5 › D-141 AC824-15 sidebar text and badges stay inside links, fil 390 (4.4s)
+  ok 196 [behavior] › behavior\admin-i18n-sidebar.spec.ts:131:1 › D-141 AC824-15 rejects internal clipping even when document width passes (4.7s)
+  ok 197 [behavior] › behavior\admin-i18n-thai.spec.ts:38:5 › D-141 AC824-07/15 Thai actual overview 1440, not all-language acceptance (6.4s)
+  ok 198 [behavior] › behavior\admin-i18n-thai.spec.ts:38:5 › D-141 AC824-07/15 Thai actual overview 390, not all-language acceptance (5.5s)
+  ok 199 [behavior] › behavior\admin-i18n-thai.spec.ts:38:5 › D-141 AC824-07/15 Thai actual profile 1440, not all-language acceptance (7.4s)
+  ok 200 [behavior] › behavior\admin-i18n-thai.spec.ts:38:5 › D-141 AC824-07/15 Thai actual profile 390, not all-language acceptance (5.5s)
+  ok 201 [behavior] › behavior\admin-i18n-thai.spec.ts:38:5 › D-141 AC824-07/15 Thai actual settings 1440, not all-language acceptance (6.7s)
+  ok 202 [behavior] › behavior\admin-i18n-thai.spec.ts:38:5 › D-141 AC824-07/15 Thai actual settings 390, not all-language acceptance (4.5s)
+  ok 203 [behavior] › behavior\admin-i18n-visual.spec.ts:38:5 › D-141 AC824-07/15 Filipino actual overview 1440, not all-language acceptance (6.5s)
+  ok 204 [behavior] › behavior\admin-i18n-visual.spec.ts:38:5 › D-141 AC824-07/15 Filipino actual overview 390, not all-language acceptance (5.7s)
+  ok 205 [behavior] › behavior\admin-i18n-visual.spec.ts:38:5 › D-141 AC824-07/15 Filipino actual profile 1440, not all-language acceptance (9.1s)
+  ok 206 [behavior] › behavior\admin-i18n-visual.spec.ts:38:5 › D-141 AC824-07/15 Filipino actual profile 390, not all-language acceptance (6.2s)
+  ok 207 [behavior] › behavior\admin-i18n-visual.spec.ts:38:5 › D-141 AC824-07/15 Filipino actual settings 1440, not all-language acceptance (5.8s)
+  ok 208 [behavior] › behavior\admin-i18n-visual.spec.ts:38:5 › D-141 AC824-07/15 Filipino actual settings 390, not all-language acceptance (5.1s)
+
+
+  1) [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual id overview 390, loaded core only not all states
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      34 |         if (locale !== 'vi') await englishChrome(page, guard);
+      35 |         else await guard.settle(); // Vietnamese UI is intentional; retain every HTTP/write/error guard.
+    > 36 |         expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
+         |                                                                                               ^
+      37 |           true,
+      38 |         );
+      39 |         await page.evaluate(() => document.fonts.ready);
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-all-locales.spec.ts:36:95
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-full-results-native\admin-i18n-all-locales-D-1-a1476-ed-core-only-not-all-states-behavior\error-context.md
+
+  2) [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual id profile 390, loaded core only not all states
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      34 |         if (locale !== 'vi') await englishChrome(page, guard);
+      35 |         else await guard.settle(); // Vietnamese UI is intentional; retain every HTTP/write/error guard.
+    > 36 |         expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
+         |                                                                                               ^
+      37 |           true,
+      38 |         );
+      39 |         await page.evaluate(() => document.fonts.ready);
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-all-locales.spec.ts:36:95
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-full-results-native\admin-i18n-all-locales-D-1-df426-ed-core-only-not-all-states-behavior\error-context.md
+
+  3) [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual id settings 390, loaded core only not all states
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      34 |         if (locale !== 'vi') await englishChrome(page, guard);
+      35 |         else await guard.settle(); // Vietnamese UI is intentional; retain every HTTP/write/error guard.
+    > 36 |         expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
+         |                                                                                               ^
+      37 |           true,
+      38 |         );
+      39 |         await page.evaluate(() => document.fonts.ready);
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-all-locales.spec.ts:36:95
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-full-results-native\admin-i18n-all-locales-D-1-57f46-ed-core-only-not-all-states-behavior\error-context.md
+
+  4) [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual settings 390, not all-language acceptance
+
+    Error: Loaded-state coverage requires successful API preconditions
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 7
+
+    - Array []
+    + Array [
+    +   "500 /v1/admin/admin-roles",
+    +   "500 /v1/admin/settings/languages",
+    +   "500 /v1/admin/categories",
+    +   "500 /v1/admin/settings/general",
+    +   "500 /v1/admin/settings/ai",
+    + ]
+
+       at behavior\admin-i18n\fixtures.ts:137
+
+      135 |         'Read-only browsing must not mutate settings, content or export personal data',
+      136 |       ).toEqual([]);
+    > 137 |       expect(failures, 'Loaded-state coverage requires successful API preconditions').toEqual([]);
+          |                                                                                       ^
+      138 |       expect(errors, 'No hydration, Intl missing-message or other browser errors').toEqual([]);
+      139 |     },
+      140 |     { auto: true },
+        at Object.base.extend.guard.auto (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n\fixtures.ts:137:87)
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-full-results-native\admin-i18n-lao-D-141-AC824-d6fdd-not-all-language-acceptance-behavior\error-context.md
+
+  5) [behavior] › behavior\admin-i18n-picker.spec.ts:37:5 › D-141 AC824-08/09 actual picker nonambiguous 1440, all12 identities not full Intl acceptance
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('html')
+    Expected: "en-SG"
+    Received: "my"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('html') with timeout 5000ms
+      - waiting for locator('html')
+        13 × locator resolved to <html lang="my">…</html>
+           - unexpected value "my"
+
+
+      71 |       // F5 must keep selected alias identity and canonical range, not locale-formatted URL values.
+      72 |       await page.reload({ waitUntil: 'networkidle' });
+    > 73 |       await expect(page.locator('html')).toHaveAttribute('lang', 'en-SG');
+         |                                          ^
+      74 |       await expect(inputs.nth(0)).toHaveValue(expectedDate(from, 'en-SG'));
+      75 |       await expect(inputs.nth(1)).toHaveValue(expectedDate(to, 'en-SG'));
+      76 |       expect(new URL(page.url()).search).toBe(`?from=${from}&to=${to}&period=month`);
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-picker.spec.ts:73:42
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-full-results-native\admin-i18n-picker-D-141-AC-f50be-es-not-full-Intl-acceptance-behavior\error-context.md
+
+  6) [behavior] › behavior\admin-i18n-picker.spec.ts:37:5 › D-141 AC824-08/09 actual picker year-boundary 1440, all12 identities not full Intl acceptance
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('html')
+    Expected: "en-SG"
+    Received: "my"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('html') with timeout 5000ms
+      - waiting for locator('html')
+        13 × locator resolved to <html lang="my">…</html>
+           - unexpected value "my"
+
+
+      71 |       // F5 must keep selected alias identity and canonical range, not locale-formatted URL values.
+      72 |       await page.reload({ waitUntil: 'networkidle' });
+    > 73 |       await expect(page.locator('html')).toHaveAttribute('lang', 'en-SG');
+         |                                          ^
+      74 |       await expect(inputs.nth(0)).toHaveValue(expectedDate(from, 'en-SG'));
+      75 |       await expect(inputs.nth(1)).toHaveValue(expectedDate(to, 'en-SG'));
+      76 |       expect(new URL(page.url()).search).toBe(`?from=${from}&to=${to}&period=month`);
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-picker.spec.ts:73:42
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-full-results-native\admin-i18n-picker-D-141-AC-ee7b0-es-not-full-Intl-acceptance-behavior\error-context.md
+
+  7) [behavior] › behavior\admin-i18n-picker.spec.ts:37:5 › D-141 AC824-08/09 actual picker leap-day 1440, all12 identities not full Intl acceptance
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('html')
+    Expected: "en-SG"
+    Received: "my"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('html') with timeout 5000ms
+      - waiting for locator('html')
+        13 × locator resolved to <html lang="my">…</html>
+           - unexpected value "my"
+
+
+      71 |       // F5 must keep selected alias identity and canonical range, not locale-formatted URL values.
+      72 |       await page.reload({ waitUntil: 'networkidle' });
+    > 73 |       await expect(page.locator('html')).toHaveAttribute('lang', 'en-SG');
+         |                                          ^
+      74 |       await expect(inputs.nth(0)).toHaveValue(expectedDate(from, 'en-SG'));
+      75 |       await expect(inputs.nth(1)).toHaveValue(expectedDate(to, 'en-SG'));
+      76 |       expect(new URL(page.url()).search).toBe(`?from=${from}&to=${to}&period=month`);
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-picker.spec.ts:73:42
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-full-results-native\admin-i18n-picker-D-141-AC-e644f-es-not-full-Intl-acceptance-behavior\error-context.md
+
+  8) [behavior] › behavior\admin-i18n-picker.spec.ts:37:5 › D-141 AC824-08/09 actual picker nonambiguous 390, all12 identities not full Intl acceptance
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('html')
+    Expected: "en-SG"
+    Received: "my"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('html') with timeout 5000ms
+      - waiting for locator('html')
+        13 × locator resolved to <html lang="my">…</html>
+           - unexpected value "my"
+
+
+      71 |       // F5 must keep selected alias identity and canonical range, not locale-formatted URL values.
+      72 |       await page.reload({ waitUntil: 'networkidle' });
+    > 73 |       await expect(page.locator('html')).toHaveAttribute('lang', 'en-SG');
+         |                                          ^
+      74 |       await expect(inputs.nth(0)).toHaveValue(expectedDate(from, 'en-SG'));
+      75 |       await expect(inputs.nth(1)).toHaveValue(expectedDate(to, 'en-SG'));
+      76 |       expect(new URL(page.url()).search).toBe(`?from=${from}&to=${to}&period=month`);
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-picker.spec.ts:73:42
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-full-results-native\admin-i18n-picker-D-141-AC-97da9-es-not-full-Intl-acceptance-behavior\error-context.md
+
+  9) [behavior] › behavior\admin-i18n-picker.spec.ts:37:5 › D-141 AC824-08/09 actual picker year-boundary 390, all12 identities not full Intl acceptance
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('html')
+    Expected: "en-SG"
+    Received: "my"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('html') with timeout 5000ms
+      - waiting for locator('html')
+        13 × locator resolved to <html lang="my">…</html>
+           - unexpected value "my"
+
+
+      71 |       // F5 must keep selected alias identity and canonical range, not locale-formatted URL values.
+      72 |       await page.reload({ waitUntil: 'networkidle' });
+    > 73 |       await expect(page.locator('html')).toHaveAttribute('lang', 'en-SG');
+         |                                          ^
+      74 |       await expect(inputs.nth(0)).toHaveValue(expectedDate(from, 'en-SG'));
+      75 |       await expect(inputs.nth(1)).toHaveValue(expectedDate(to, 'en-SG'));
+      76 |       expect(new URL(page.url()).search).toBe(`?from=${from}&to=${to}&period=month`);
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-picker.spec.ts:73:42
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-full-results-native\admin-i18n-picker-D-141-AC-e17d7-es-not-full-Intl-acceptance-behavior\error-context.md
+
+  10) [behavior] › behavior\admin-i18n-picker.spec.ts:37:5 › D-141 AC824-08/09 actual picker leap-day 390, all12 identities not full Intl acceptance
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('html')
+    Expected: "en-SG"
+    Received: "my"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('html') with timeout 5000ms
+      - waiting for locator('html')
+        14 × locator resolved to <html lang="my">…</html>
+           - unexpected value "my"
+
+
+      71 |       // F5 must keep selected alias identity and canonical range, not locale-formatted URL values.
+      72 |       await page.reload({ waitUntil: 'networkidle' });
+    > 73 |       await expect(page.locator('html')).toHaveAttribute('lang', 'en-SG');
+         |                                          ^
+      74 |       await expect(inputs.nth(0)).toHaveValue(expectedDate(from, 'en-SG'));
+      75 |       await expect(inputs.nth(1)).toHaveValue(expectedDate(to, 'en-SG'));
+      76 |       expect(new URL(page.url()).search).toBe(`?from=${from}&to=${to}&period=month`);
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-picker.spec.ts:73:42
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-full-results-native\admin-i18n-picker-D-141-AC-4d393-es-not-full-Intl-acceptance-behavior\error-context.md
+
+  11) [behavior] › behavior\admin-i18n-sidebar.spec.ts:12:3 › D-141 AC824-08 sidebar badge digits switch my/vi/en without changing counts 390; not Myanmar catalog acceptance
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Menu', exact: true })
+
+
+      33 |       await selectLocale(page, locale);
+      34 |       // Missing Myanmar prose still falls back to VI. This checks the approved number boundary only.
+    > 35 |       if (width === 390) await page.getByRole('button', { name: 'Menu', exact: true }).click();
+         |                                                                                        ^
+      36 |       for (const item of original) {
+      37 |         const badge = sidebar.locator(`a[href="${item.href}"] > span:nth-of-type(2)`);
+      38 |         await expect(badge).toHaveText(new Intl.NumberFormat(intl).format(item.count));
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-sidebar.spec.ts:35:88
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-full-results-native\admin-i18n-sidebar-D-141-A-efabd--Myanmar-catalog-acceptance-behavior\error-context.md
+
+  11 failed
+    [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual id overview 390, loaded core only not all states
+    [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual id profile 390, loaded core only not all states
+    [behavior] › behavior\admin-i18n-all-locales.spec.ts:17:7 › D-141 AC824-07/15 actual id settings 390, loaded core only not all states
+    [behavior] › behavior\admin-i18n-lao.spec.ts:38:5 › D-141 AC824-07/15 Lao actual settings 390, not all-language acceptance
+    [behavior] › behavior\admin-i18n-picker.spec.ts:37:5 › D-141 AC824-08/09 actual picker nonambiguous 1440, all12 identities not full Intl acceptance
+    [behavior] › behavior\admin-i18n-picker.spec.ts:37:5 › D-141 AC824-08/09 actual picker year-boundary 1440, all12 identities not full Intl acceptance
+    [behavior] › behavior\admin-i18n-picker.spec.ts:37:5 › D-141 AC824-08/09 actual picker leap-day 1440, all12 identities not full Intl acceptance
+    [behavior] › behavior\admin-i18n-picker.spec.ts:37:5 › D-141 AC824-08/09 actual picker nonambiguous 390, all12 identities not full Intl acceptance
+    [behavior] › behavior\admin-i18n-picker.spec.ts:37:5 › D-141 AC824-08/09 actual picker year-boundary 390, all12 identities not full Intl acceptance
+    [behavior] › behavior\admin-i18n-picker.spec.ts:37:5 › D-141 AC824-08/09 actual picker leap-day 390, all12 identities not full Intl acceptance
+    [behavior] › behavior\admin-i18n-sidebar.spec.ts:12:3 › D-141 AC824-08 sidebar badge digits switch my/vi/en without changing counts 390; not Myanmar catalog acceptance
+  197 passed (13.8m)
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+System.Management.Automation.RemoteException
+EXIT 1

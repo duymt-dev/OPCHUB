@@ -1,3 +1,4 @@
+import ui from '../../../../messages/vi/ui.json';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { NextIntlClientProvider } from 'next-intl';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -48,7 +49,11 @@ vi.mock('@opchub/ui', async (original) => ({
 
 const mount = () =>
   render(
-    <NextIntlClientProvider locale="vi" timeZone="Asia/Ho_Chi_Minh" messages={{ overview, common }}>
+    <NextIntlClientProvider
+      locale="vi"
+      timeZone="Asia/Ho_Chi_Minh"
+      messages={{ overview, common, ui }}
+    >
       <OverviewScreen />
     </NextIntlClientProvider>,
   );
@@ -79,7 +84,7 @@ describe('REQ-122 overview controls', () => {
     state.params.period = 'year';
     state.data = mockOverview({ period: 'year' }, new Date('2026-10-16T08:00:00Z'));
     view.rerender(
-      <NextIntlClientProvider locale="vi" messages={{ overview, common }}>
+      <NextIntlClientProvider locale="vi" messages={{ overview, common, ui }}>
         <OverviewScreen />
       </NextIntlClientProvider>,
     );

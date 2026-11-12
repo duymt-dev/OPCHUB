@@ -4,9 +4,11 @@ import { provinces } from '@opchub/shared/fixtures';
 import type { FieldErrorProps } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import type { PersonaField } from '../model';
-import { ACTIVE_HOURS, AGE_RANGES, PERSONA_TONES, type PersonaForm } from '../types';
+import { type PersonaForm } from '../types';
 import { opts, SelectField, TextField } from './fields';
 import f from './form.module.css';
+import { useBotOptionLabels } from '../option-labels';
+import { useNumberText } from '@/i18n/use-number-text';
 
 type Setter = <K extends keyof PersonaForm>(k: K) => (v: PersonaForm[K]) => void;
 
@@ -23,6 +25,8 @@ export function PersonaBasicFields({
   set: Setter;
   err: (k: PersonaField) => FieldErrorProps | undefined;
 }) {
+  const numberText = useNumberText();
+  const options = useBotOptionLabels();
   const t = useTranslations('bots.pf');
   return (
     <>
@@ -50,7 +54,7 @@ export function PersonaBasicFields({
           label={t('age')}
           value={form.ageRange}
           onChange={set('ageRange')}
-          options={[{ value: '', label: t('age') }, ...opts(AGE_RANGES)]}
+          options={[{ value: '', label: t('age') }, ...options.ages]}
         />
       </div>
       <div className={f.two}>
@@ -70,7 +74,9 @@ export function PersonaBasicFields({
       <label className={f.field}>
         <span className={f.labelRow}>
           {t('bio')}
-          <span className={f.counter}>{form.bio.length}/200</span>
+          <span className={f.counter}>
+            {numberText(form.bio.length)}/{numberText(200)}
+          </span>
         </span>
         <textarea
           className={f.textarea}
@@ -88,6 +94,7 @@ export function PersonaBasicFields({
 /** "PHONG CÁCH TƯƠNG TÁC": giọng văn, chuyên môn, tần suất, khung giờ */
 export function PersonaStyleFields({ form, set }: { form: PersonaForm; set: Setter }) {
   const t = useTranslations('bots.pf');
+  const options = useBotOptionLabels();
   return (
     <>
       <div className={f.section}>{t('style')}</div>
@@ -96,7 +103,7 @@ export function PersonaStyleFields({ form, set }: { form: PersonaForm; set: Sett
           label={t('tone')}
           value={form.tone}
           onChange={set('tone')}
-          options={opts(PERSONA_TONES)}
+          options={options.tones}
         />
         <TextField
           label={t('skills')}
@@ -118,7 +125,7 @@ export function PersonaStyleFields({ form, set }: { form: PersonaForm; set: Sett
           label={t('hours')}
           value={form.activeHours}
           onChange={set('activeHours')}
-          options={opts(ACTIVE_HOURS)}
+          options={options.hours}
         />
       </div>
     </>

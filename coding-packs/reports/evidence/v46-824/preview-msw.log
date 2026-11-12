@@ -1,0 +1,365 @@
+Candidate harness based ef4a08b0; production ff6be9ee unchanged. Real existing role-preview selector only; unchanged seeded editor role, no assignments/account/role/global writes. Four viewport/UI cases, same assertions both modes. This is internal UI403/read-only behavior, not genuine restricted-account backend403 evidence. Strict read-only guard unchanged; no interception/reset/seed/SQL/original service change. COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-preview.spec.ts
+[WebServer] (node:32588) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:12888) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:17304) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\admin-i18n-preview.spec.ts:19:3 › D-141 AC824-06/11/15 role preview internal forbidden EN/VI/My 1440 (4.2s)
+  x  2 [behavior] › behavior\admin-i18n-preview.spec.ts:48:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 1440 (8.4s)
+(node:11068) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [behavior] › behavior\admin-i18n-preview.spec.ts:19:3 › D-141 AC824-06/11/15 role preview internal forbidden EN/VI/My 390 (4.2s)
+  x  4 [behavior] › behavior\admin-i18n-preview.spec.ts:48:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 390 (9.1s)
+
+
+  1) [behavior] › behavior\admin-i18n-preview.spec.ts:48:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 1440 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('status').filter({ hasText: 'The Biên tập nội dung role can only view this section' })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('status').filter({ hasText: 'The Biên tập nội dung role can only view this section' }) with timeout 5000ms
+      - waiting for getByRole('status').filter({ hasText: 'The Biên tập nội dung role can only view this section' })
+
+
+      65 |           .getByRole('status')
+      66 |           .filter({ hasText: labels.rbac.viewOnlyToast.replace('{role}', editor.name) }),
+    > 67 |       ).toBeVisible();
+         |         ^
+      68 |       await guard.settle();
+      69 |       await assertViewport(page);
+      70 |     }
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-preview.spec.ts:67:9
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-preview-results-msw\admin-i18n-preview-D-141-A-bffd3--edit-without-mutation-1440-behavior\error-context.md
+
+  2) [behavior] › behavior\admin-i18n-preview.spec.ts:48:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 390 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('status').filter({ hasText: 'The Biên tập nội dung role can only view this section' })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('status').filter({ hasText: 'The Biên tập nội dung role can only view this section' }) with timeout 5000ms
+      - waiting for getByRole('status').filter({ hasText: 'The Biên tập nội dung role can only view this section' })
+
+
+      65 |           .getByRole('status')
+      66 |           .filter({ hasText: labels.rbac.viewOnlyToast.replace('{role}', editor.name) }),
+    > 67 |       ).toBeVisible();
+         |         ^
+      68 |       await guard.settle();
+      69 |       await assertViewport(page);
+      70 |     }
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-preview.spec.ts:67:9
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-preview-results-msw\admin-i18n-preview-D-141-A-52f87-d-edit-without-mutation-390-behavior\error-context.md
+
+  2 failed
+    [behavior] › behavior\admin-i18n-preview.spec.ts:48:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 1440 
+    [behavior] › behavior\admin-i18n-preview.spec.ts:48:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 390 
+  2 passed (36.2s)
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+System.Management.Automation.RemoteException
+EXIT 1
+Corrected candidate based ef4a08b0; rebuilt Admin adds only existing data-act write markers to group table/grid/header. Original source ff6be9ee build/audit is superseded for final production proof. Retain initial 2passed/2failed MSW result above; actual English Edit dialog opened under VI-word guard. Same four cases now check three write actions each locale, unchanged strict guard/timeouts; no backend permission/Portal/catalog/CSS or existing role changes. No writes except normal login/refresh; UI role preview is not backend403 proof. COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-preview.spec.ts
+[WebServer] (node:31056) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:29640) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:29708) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\admin-i18n-preview.spec.ts:19:3 › D-141 AC824-06/11/15 role preview internal forbidden EN/VI/My 1440 (3.9s)
+  ok 2 [behavior] › behavior\admin-i18n-preview.spec.ts:48:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 1440 (4.3s)
+  ok 3 [behavior] › behavior\admin-i18n-preview.spec.ts:19:3 › D-141 AC824-06/11/15 role preview internal forbidden EN/VI/My 390 (3.3s)
+  x  4 [behavior] › behavior\admin-i18n-preview.spec.ts:48:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 390 (4.6s)
+
+
+  1) [behavior] › behavior\admin-i18n-preview.spec.ts:48:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 390 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+       at behavior\admin-i18n\navigation.ts:39
+
+      37 |
+      38 | export async function assertViewport(page: Page): Promise<void> {
+    > 39 |   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+         |                                                                                         ^
+      40 | }
+      41 |
+        at assertViewport (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n\navigation.ts:39:89)
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-preview.spec.ts:70:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-preview-results-msw\admin-i18n-preview-D-141-A-52f87-d-edit-without-mutation-390-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\admin-i18n-preview.spec.ts:48:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 390 
+  3 passed (25.6s)
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+System.Management.Automation.RemoteException
+EXIT 1
+Corrected candidate based ef4a08b0; rebuilt Admin adds only existing data-act write markers to group table/grid/header. Original source ff6be9ee build/audit is superseded for final production proof. Retain initial 2passed/2failed MSW result above; actual English Edit dialog opened under VI-word guard. Same four cases now check three write actions each locale, unchanged strict guard/timeouts; no backend permission/Portal/catalog/CSS or existing role changes. No writes except normal login/refresh; UI role preview is not backend403 proof. COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-preview.spec.ts
+[WebServer] (node:10828) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:18188) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:20496) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [behavior] › behavior\admin-i18n-preview.spec.ts:48:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 390 (5.0s)
+
+
+  1) [behavior] › behavior\admin-i18n-preview.spec.ts:48:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 390 
+
+    Error: {"locale":"my","viewport":390,"scroll":434,"overflow":[{"tag":"BUTTON","class":"YvAmVa_region ","right":444.71875,"width":116.46875,"scroll":115,"client":115},{"tag":"SPAN","class":"YvAmVa_regionN","right":429.71875,"width":18.1875,"scroll":18,"client":18},{"tag":"BUTTON","class":"YvAmVa_region ","right":519.53125,"width":233.765625,"scroll":233,"client":233},{"tag":"SPAN","class":"YvAmVa_regionN","right":504.53125,"width":19.53125,"scroll":20,"client":20}]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 390
+    Received:    434
+
+       at behavior\admin-i18n\preview.ts:49
+
+      47 |       })),
+      48 |   }));
+    > 49 |   expect(bounds.scroll, JSON.stringify({ locale, ...bounds })).toBeLessThanOrEqual(bounds.viewport);
+         |                                                                ^
+      50 | }
+      51 |
+        at previewGeometry (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n\preview.ts:49:64)
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-preview.spec.ts:70:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-preview-results-msw\admin-i18n-preview-D-141-A-52f87-d-edit-without-mutation-390-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\admin-i18n-preview.spec.ts:48:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 390 
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+System.Management.Automation.RemoteException
+EXIT 1
+Corrected candidate based ef4a08b0; rebuilt Admin adds only existing data-act write markers to group table/grid/header. Original source ff6be9ee build/audit is superseded for final production proof. Retain initial 2passed/2failed MSW result above; actual English Edit dialog opened under VI-word guard. Same four cases now check three write actions each locale, unchanged strict guard/timeouts; no backend permission/Portal/catalog/CSS or existing role changes. No writes except normal login/refresh; UI role preview is not backend403 proof. COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-preview.spec.ts
+[WebServer] (node:27068) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:9896) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:20448) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [behavior] › behavior\admin-i18n-preview.spec.ts:48:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 390 (5.0s)
+
+
+  1) [behavior] › behavior\admin-i18n-preview.spec.ts:48:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 390 
+
+    Error: {"locale":"my","viewport":390,"scroll":434,"overflow":[{"tag":"BUTTON","class":"YvAmVa_region ","right":444.71875,"width":116.46875,"scroll":115,"client":115,"position":"static"},{"tag":"SPAN","class":"YvAmVa_regionN","right":429.71875,"width":18.1875,"scroll":18,"client":18,"position":"static"},{"tag":"BUTTON","class":"YvAmVa_region ","right":519.53125,"width":233.765625,"scroll":233,"client":233,"position":"static"},{"tag":"SPAN","class":"YvAmVa_regionN","right":504.53125,"width":19.53125,"scroll":20,"client":20,"position":"static"}]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 390
+    Received:    434
+
+       at behavior\admin-i18n\preview.ts:50
+
+      48 |       })),
+      49 |   }));
+    > 50 |   expect(bounds.scroll, JSON.stringify({ locale, ...bounds })).toBeLessThanOrEqual(bounds.viewport);
+         |                                                                ^
+      51 | }
+      52 |
+        at previewGeometry (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n\preview.ts:50:64)
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-preview.spec.ts:70:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-preview-results-msw\admin-i18n-preview-D-141-A-52f87-d-edit-without-mutation-390-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\admin-i18n-preview.spec.ts:48:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 390 
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+System.Management.Automation.RemoteException
+EXIT 1
+Corrected candidate based ef4a08b0; rebuilt Admin adds only existing data-act write markers to group table/grid/header. Original source ff6be9ee build/audit is superseded for final production proof. Retain initial 2passed/2failed MSW result above; actual English Edit dialog opened under VI-word guard. Same four cases now check three write actions each locale, unchanged strict guard/timeouts; no backend permission/Portal/catalog/CSS or existing role changes. No writes except normal login/refresh; UI role preview is not backend403 proof. COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-preview.spec.ts
+[WebServer] (node:10576) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:32508) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:4192) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [behavior] › behavior\admin-i18n-preview.spec.ts:48:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 390 (4.8s)
+
+
+  1) [behavior] › behavior\admin-i18n-preview.spec.ts:48:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 390 
+
+    Error: {"locale":"my","viewport":390,"scroll":434,"fixed":[{"tag":"ASIDE","class":"c87mCa_sidebar","role":null,"width":272,"right":0,"left":-272,"offset":0,"transform":"matrix(1, 0, 0, 1, -272, 0)"},{"tag":"DIV","class":"BEx13a_toast","role":"status","width":195,"right":292.5,"left":97.5,"offset":195,"transform":"matrix(1, 0, 0, 1, -97.5, 0)"}],"overflow":[{"tag":"BUTTON","class":"YvAmVa_region ","right":444.71875,"width":116.46875,"scroll":115,"client":115,"position":"static"},{"tag":"SPAN","class":"YvAmVa_regionN","right":429.71875,"width":18.1875,"scroll":18,"client":18,"position":"static"},{"tag":"BUTTON","class":"YvAmVa_region ","right":519.53125,"width":233.765625,"scroll":233,"client":233,"position":"static"},{"tag":"SPAN","class":"YvAmVa_regionN","right":504.53125,"width":19.53125,"scroll":20,"client":20,"position":"static"}]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 390
+    Received:    434
+
+       at behavior\admin-i18n\preview.ts:62
+
+      60 |       })),
+      61 |   }));
+    > 62 |   expect(bounds.scroll, JSON.stringify({ locale, ...bounds })).toBeLessThanOrEqual(bounds.viewport);
+         |                                                                ^
+      63 | }
+      64 |
+        at previewGeometry (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n\preview.ts:62:64)
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-preview.spec.ts:70:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-preview-results-msw\admin-i18n-preview-D-141-A-52f87-d-edit-without-mutation-390-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\admin-i18n-preview.spec.ts:48:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 390 
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+System.Management.Automation.RemoteException
+EXIT 1
+Corrected candidate based ef4a08b0; rebuilt Admin adds only existing data-act write markers to group table/grid/header. Original source ff6be9ee build/audit is superseded for final production proof. Retain initial 2passed/2failed MSW result above; actual English Edit dialog opened under VI-word guard. Same four cases now check three write actions each locale, unchanged strict guard/timeouts; no backend permission/Portal/catalog/CSS or existing role changes. No writes except normal login/refresh; UI role preview is not backend403 proof. COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-preview.spec.ts
+[WebServer] (node:32060) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:26192) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:22116) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [behavior] › behavior\admin-i18n-preview.spec.ts:48:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 390 (4.7s)
+
+
+  1) [behavior] › behavior\admin-i18n-preview.spec.ts:48:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 390 
+
+    Error: {"locale":"my","viewport":390,"scroll":434,"fixed":[{"tag":"ASIDE","class":"c87mCa_sidebar","role":null,"width":272,"right":0,"left":-272,"offset":0,"transform":"matrix(1, 0, 0, 1, -272, 0)","scroll":271,"client":271,"textRight":-17},{"tag":"DIV","class":"BEx13a_toast","role":"status","width":195,"right":292.5,"left":97.5,"offset":195,"transform":"matrix(1, 0, 0, 1, -97.5, 0)","scroll":195,"client":195,"textRight":273.34375}],"overflow":[{"tag":"BUTTON","class":"YvAmVa_region ","right":444.71875,"width":116.46875,"scroll":115,"client":115,"position":"static"},{"tag":"SPAN","class":"YvAmVa_regionN","right":429.71875,"width":18.1875,"scroll":18,"client":18,"position":"static"},{"tag":"BUTTON","class":"YvAmVa_region ","right":519.53125,"width":233.765625,"scroll":233,"client":233,"position":"static"},{"tag":"SPAN","class":"YvAmVa_regionN","right":504.53125,"width":19.53125,"scroll":20,"client":20,"position":"static"}]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 390
+    Received:    434
+
+       at behavior\admin-i18n\preview.ts:69
+
+      67 |       })),
+      68 |   }));
+    > 69 |   expect(bounds.scroll, JSON.stringify({ locale, ...bounds })).toBeLessThanOrEqual(bounds.viewport);
+         |                                                                ^
+      70 | }
+      71 |
+        at previewGeometry (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n\preview.ts:69:64)
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-preview.spec.ts:70:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-preview-results-msw\admin-i18n-preview-D-141-A-52f87-d-edit-without-mutation-390-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\admin-i18n-preview.spec.ts:48:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 390 
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+System.Management.Automation.RemoteException
+EXIT 1
+Corrected candidate based ef4a08b0; rebuilt Admin adds only existing data-act write markers to group table/grid/header. Original source ff6be9ee build/audit is superseded for final production proof. Retain initial 2passed/2failed MSW result above; actual English Edit dialog opened under VI-word guard. Same four cases now check three write actions each locale, unchanged strict guard/timeouts; no backend permission/Portal/catalog/CSS or existing role changes. No writes except normal login/refresh; UI role preview is not backend403 proof. COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-preview.spec.ts
+[WebServer] (node:26836) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:17336) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:5188) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [behavior] › behavior\admin-i18n-preview.spec.ts:48:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 390 (5.8s)
+
+
+  1) [behavior] › behavior\admin-i18n-preview.spec.ts:48:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 390 
+
+    Error: {"locale":"my","viewport":390,"scrollX":44,"scroll":434,"textOverflow":[{"text":"တောင်ပိုင်း","right":449.53125},{"text":"၂၁","right":473.71875},{"text":"လုပ်ငန်းကဏ္ဍအလိုက် အဖွဲ့များ","right":523},{"text":"၅၆","right":548.53125},{"text":"ဖျက်ရန်","right":423.875},{"text":"ဖျက်ရန်","right":423.875},{"text":"ဖျက်ရန်","right":423.875},{"text":"ဖျက်ရန်","right":423.875},{"text":"ဖျက်ရန်","right":423.875},{"text":"ဖျက်ရန်","right":423.875},{"text":"ဖျက်ရန်","right":423.875},{"text":"ဖျက်ရန်","right":423.875},{"text":"ဖျက်ရန်","right":423.875},{"text":"ဖျက်ရန်","right":423.875},{"text":"ဖျက်ရန်","right":423.875},{"text":"ဖျက်ရန်","right":423.875}],"fixed":[{"tag":"ASIDE","class":"c87mCa_sidebar","role":null,"width":272,"right":0,"left":-272,"offset":0,"transform":"matrix(1, 0, 0, 1, -272, 0)","scroll":271,"client":271,"textRight":-17},{"tag":"DIV","class":"BEx13a_toast","role":"status","width":195,"right":292.5,"left":97.5,"offset":195,"transform":"matrix(1, 0, 0, 1, -97.5, 0)","scroll":195,"client":195,"textRight":273.34375}],"overflow":[{"tag":"BUTTON","class":"YvAmVa_region ","right":444.71875,"width":116.46875,"scroll":115,"client":115,"position":"static"},{"tag":"SPAN","class":"YvAmVa_regionN","right":429.71875,"width":18.1875,"scroll":18,"client":18,"position":"static"},{"tag":"BUTTON","class":"YvAmVa_region ","right":519.53125,"width":233.765625,"scroll":233,"client":233,"position":"static"},{"tag":"SPAN","class":"YvAmVa_regionN","right":504.53125,"width":19.53125,"scroll":20,"client":20,"position":"static"}]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 390
+    Received:    434
+
+       at behavior\admin-i18n\preview.ts:84
+
+      82 |       })),
+      83 |   }));
+    > 84 |   expect(bounds.scroll, JSON.stringify({ locale, ...bounds })).toBeLessThanOrEqual(bounds.viewport);
+         |                                                                ^
+      85 | }
+      86 |
+        at previewGeometry (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n\preview.ts:84:64)
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-preview.spec.ts:70:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-preview-results-msw\admin-i18n-preview-D-141-A-52f87-d-edit-without-mutation-390-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\admin-i18n-preview.spec.ts:48:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 390 
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+System.Management.Automation.RemoteException
+EXIT 1
+Corrected candidate based ef4a08b0; rebuilt Admin adds only existing data-act write markers to group table/grid/header. Original source ff6be9ee build/audit is superseded for final production proof. Retain initial 2passed/2failed MSW result above; actual English Edit dialog opened under VI-word guard. Same four cases now check three write actions each locale, unchanged strict guard/timeouts; no backend permission/Portal/catalog/CSS or existing role changes. No writes except normal login/refresh; UI role preview is not backend403 proof. COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-preview.spec.ts
+[WebServer] (node:33456) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:33548) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:33324) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\admin-i18n-preview.spec.ts:24:3 › D-141 AC824-06/11/15 role preview internal forbidden EN/VI/My 1440 (4.3s)
+  ok 2 [behavior] › behavior\admin-i18n-preview.spec.ts:53:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 1440 (5.0s)
+  ok 3 [behavior] › behavior\admin-i18n-preview.spec.ts:24:3 › D-141 AC824-06/11/15 role preview internal forbidden EN/VI/My 390 (3.9s)
+  ok 4 [behavior] › behavior\admin-i18n-preview.spec.ts:53:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 390 (5.0s)
+
+  4 passed (26.0s)
+EXIT 0
+Corrected candidate based ef4a08b0; rebuilt Admin includes existing data-act group write markers, mobile action wrapping, Element-target capture and nearest semantic-control selection before inherited-pointer fallback. Original source ff6be9ee build/audit is superseded for final production proof. Retain initial 2passed/2failed MSW result above; actual English Edit dialog opened under VI-word guard. Same four cases now check three write actions each locale, unchanged strict guard/timeouts; no backend permission/Portal/catalog or existing role changes; Admin-only mobile table CSS wraps complete labels. No writes except normal login/refresh; UI role preview is not backend403 proof. COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-preview.spec.ts
+[WebServer] (node:26120) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:29204) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:29680) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\admin-i18n-preview.spec.ts:24:3 › D-141 AC824-06/11/15 role preview internal forbidden EN/VI/My 1440 (4.2s)
+  ok 2 [behavior] › behavior\admin-i18n-preview.spec.ts:53:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 1440 (4.6s)
+  ok 3 [behavior] › behavior\admin-i18n-preview.spec.ts:24:3 › D-141 AC824-06/11/15 role preview internal forbidden EN/VI/My 390 (3.7s)
+  ok 4 [behavior] › behavior\admin-i18n-preview.spec.ts:53:3 › D-141 AC824-11/15 view-only preview blocks translated edit without mutation 390 (4.8s)
+
+  4 passed (26.1s)
+EXIT 0

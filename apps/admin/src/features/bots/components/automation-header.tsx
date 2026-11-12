@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import type { BotScheduleControl } from '../types';
 import { Switch } from './bits';
 import styles from './auto-panel.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 export function AutomationHeader({
   control,
@@ -17,6 +18,7 @@ export function AutomationHeader({
   todayCount: number;
   disabled: boolean;
 }) {
+  const numberText = useNumberText();
   const t = useTranslations('bots.auto');
   const scheduleText = useTranslations('bots.schedule');
   const state = enabled ? control.state : 'paused';
@@ -38,7 +40,7 @@ export function AutomationHeader({
         </span>
       </div>
       <div className={styles.count}>
-        <b className={styles.countValue}>{todayCount}</b>
+        <b className={styles.countValue}>{numberText(todayCount)}</b>
         <span className={styles.countLabel}>{t('today')}</span>
       </div>
       <Switch

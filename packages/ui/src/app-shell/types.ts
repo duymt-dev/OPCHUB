@@ -40,6 +40,8 @@ export interface AppShellProps {
   logoAlt: string;
   brandTag?: string;
   nav: NavItem[];
+  /** Optional badge presentation only; raw counts and visibility stay unchanged. */
+  formatBadgeCount?: (count: number) => string;
   activeKey: string;
   pageTitle: string;
   user: ShellUser;

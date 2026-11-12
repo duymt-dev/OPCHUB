@@ -1,7 +1,8 @@
 'use client';
 
 import { AdminSearch } from './admin-search';
-import { AppShell, LanguageSwitch, useToast } from '@opchub/ui';
+import { AppShell, useToast } from '@opchub/ui';
+import { AdminLanguageSwitch } from './admin-language-switch';
 import { useLocale, useTranslations } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
 import type { ReactNode } from 'react';
@@ -9,6 +10,7 @@ import { languageOptions, LOCALE_COOKIE } from '@opchub/shared/fixtures';
 import { logout } from '@/features/auth';
 import { useAuthStore } from '@/lib/auth-store';
 import { useSessionEndNavigator } from '@/lib/session-end-navigator';
+import { numberText } from '@/i18n/number-text';
 import { useNavBadges } from '../hooks/use-nav-badges';
 import { useAdminNav } from '../hooks/use-admin-nav';
 import { useMenuMe } from '../hooks/use-menu-me';
@@ -99,6 +101,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
       logoSrc="/opchub-logo.png"
       logoAlt="OPC HUB ASEAN – One Person Company Hub"
       brandTag={t('shell.brandTag')}
+      formatBadgeCount={(count) => numberText(count, locale)}
       nav={items.map((n, i) => ({
         key: n.key,
         label: t(`nav.${n.key}`),
@@ -121,7 +124,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
       labels={labels}
       notifications={<AdminNotifications />}
       language={
-        <LanguageSwitch
+        <AdminLanguageSwitch
           title={tAuth('langTitle')}
           current={locale}
           options={languageOptions}

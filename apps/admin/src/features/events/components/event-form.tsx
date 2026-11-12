@@ -3,9 +3,10 @@
 import { RichTextField, translateErrors, useImageUpload, useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import { uploadImage } from '@/lib/upload-image';
+import { useUploadImage } from '@/i18n/use-upload-image';
 import { useFormErrors } from '@/lib/use-form-errors';
 import { useGroupOptions, useSaveEvent } from '../hooks/use-events';
+import { EVENT_DESCRIPTION_DEFAULT } from '../content-defaults';
 import {
   EVENT_FIELD_MAP,
   emptyEventForm,
@@ -19,11 +20,14 @@ import { BasicFields, CoverField, RegSwitch, SeatsFields } from './event-form-fi
 import { MeetField, PlaceFields } from './event-place-fields';
 import { Sheet } from './sheet';
 import btn from './sheet.module.css';
+import { useAdminUiLabels } from '@/i18n/ui-labels';
 
 /** `new` = tạo mới; sự kiện = sửa */
 export type EventFormTarget = 'new' | EventView | null;
 
 function FormBody({ initial, onClose }: { initial: EventFormState; onClose: () => void }) {
+  const ui = useAdminUiLabels();
+  const uploadImage = useUploadImage();
   const t = useTranslations('events');
   const toast = useToast();
   const save = useSaveEvent();
@@ -50,7 +54,7 @@ function FormBody({ initial, onClose }: { initial: EventFormState; onClose: () =
     const errs = validateEvent(f);
     if (fe.check(translateErrors(errs, (e) => t(`errors.${e}`)))) return;
     if (save.isPending || cover.uploading) return;
-    const body = formToUpsert(f, t('form.descDefault'));
+    const body = formToUpsert(f, EVENT_DESCRIPTION_DEFAULT);
     save.mutate(
       { body, id: f.id },
       {
@@ -74,6 +78,8 @@ function FormBody({ initial, onClose }: { initial: EventFormState; onClose: () =
         <div className={styles.field}>
           {t('form.desc')}
           <RichTextField
+            labels={ui.editor}
+            keyboardControls
             value={f.description}
             onChange={(description) => set({ description })}
             placeholder={t('form.descPh')}

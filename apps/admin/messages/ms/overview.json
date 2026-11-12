@@ -1,0 +1,76 @@
+{
+  "title": "Gambaran keseluruhan",
+  "sub": "Pantau pertumbuhan, acara, dan moderasi kandungan komuniti",
+  "stats": {
+    "members": "Ahli",
+    "membersDelta": "+{pct}% bulan ini",
+    "membersRangeDelta": "+{pct}% dalam tempoh dipilih",
+    "freshRangeDelta": "Dalam tempoh dipilih",
+    "communities": "Komuniti",
+    "communitiesDelta": "+{n} kumpulan baharu",
+    "fresh": "Ahli baharu",
+    "freshDelta": "Bulan {month}",
+    "events": "Acara",
+    "eventsDelta": "{n} akan datang"
+  },
+  "growth": {
+    "title": "Pertumbuhan ahli",
+    "week": "Minggu",
+    "month": "Bulan",
+    "year": "Tahun",
+    "delta": "+{pct}%",
+    "deltaNote": "+{n} ahli bulan ini",
+    "rangeDeltaNote": "+{n} ahli dalam tempoh dipilih",
+    "active": "Aktif",
+    "new": "Baharu",
+    "inactive": "Belum diaktifkan"
+  },
+  "flow": {
+    "title": "Aliran sistem",
+    "sub": "Angka langsung daripada modul",
+    "done": "Selesai",
+    "todo": "Perlu tindakan",
+    "fees": {
+      "name": "Ahli yang sudah membayar",
+      "sub": "Diaktifkan automatik ketika pindahan diselaraskan",
+      "cta": "Yuran keahlian"
+    },
+    "stores": {
+      "name": "Kedai yang dipaparkan",
+      "sub": "{hidden} tersembunyi · {draft} draf",
+      "cta": "Kedai"
+    },
+    "needs": {
+      "name": "Keperluan terbuka",
+      "sub": "{closed} ditutup",
+      "cta": "Keperluan"
+    },
+    "projects": {
+      "name": "Projek menunggu semakan",
+      "sub": "{published} projek dipaparkan",
+      "cta": "Semak projek"
+    },
+    "groups": {
+      "name": "Kumpulan komuniti",
+      "sub": "Kumpulan provinsi & industri",
+      "cta": "Komuniti"
+    }
+  },
+  "conversion": {
+    "heading": "Penukaran percuma ke berbayar mengikut wilayah",
+    "sub": "Kadar = Sudah membayar / (Sudah membayar + Tamat tempoh dan belum membayar) · ahli selepas percubaan percuma 3 bulan",
+    "export": "Eksport CSV",
+    "region": "Wilayah",
+    "director": "Pengarah Wilayah",
+    "trial": "Masa percubaan",
+    "paid": "Sudah membayar",
+    "expired": "Tamat tempoh dan belum membayar",
+    "rate": "Kadar penukaran",
+    "total": "Seluruh negara",
+    "unappointed": "Belum dilantik",
+    "exported": "3 baris dieksport – chuyen-doi-theo-vung.csv",
+    "failed": "Tidak dapat memuatkan angka atau mengeksport CSV",
+    "loading": "Memuatkan angka…",
+    "retry": "Cuba lagi"
+  }
+}

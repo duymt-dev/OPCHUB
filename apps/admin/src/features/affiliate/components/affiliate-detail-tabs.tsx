@@ -4,8 +4,10 @@ import { useTranslations } from 'next-intl';
 import type { AffiliateDetailTabsProps } from '../types';
 import { useAffiliateTabVisibility } from '../hooks/use-affiliate-tab-visibility';
 import styles from './affiliate.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 export function AffiliateDetailTabs({ tab, customers, update }: AffiliateDetailTabsProps) {
+  const numberText = useNumberText();
   const t = useTranslations('affiliate');
   const ref = useAffiliateTabVisibility(tab, customers);
   return (
@@ -22,7 +24,7 @@ export function AffiliateDetailTabs({ tab, customers, update }: AffiliateDetailT
           role="tab"
           aria-label={
             key === 'customers'
-              ? `${t('tabs.agentCustomers')}${customers === undefined ? '' : ` ${customers}`}`
+              ? `${t('tabs.agentCustomers')}${customers === undefined ? '' : ` ${numberText(customers)}`}`
               : t('tabs.months')
           }
           data-ro-ok
@@ -31,7 +33,7 @@ export function AffiliateDetailTabs({ tab, customers, update }: AffiliateDetailT
           onClick={() => update({ tab: key, page: 1 })}
         >
           <span>{t(key === 'customers' ? 'tabs.agentCustomers' : 'tabs.months')}</span>
-          <span className={styles.hint}>{key === 'customers' ? customers : null}</span>
+          <span className={styles.hint}>{key === 'customers' ? numberText(customers) : null}</span>
         </button>
       ))}
     </div>

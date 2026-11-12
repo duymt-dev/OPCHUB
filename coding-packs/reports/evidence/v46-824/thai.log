@@ -1,0 +1,16 @@
+Source working tree based on582e8579. Thai25 explicit raw files/2667 leaves, not whole10-bundle acceptance. Provenance693 retained exact-source Portal matches +1968 direct/context-corrected leaves (includes1 existing blank header) +6 canonical examples;37 Portal context corrections,1693 distinct direct draft pairs. Native-reviewed=false; Portal/shared/API/DB/font binaries unchanged. Known Vitest dynamic-import-map cache was cleared using documented vitest --clearCache after introducing the new Thai directory; production loader unchanged. km/lo/my remain absent;175/250 file presence, final fixed10-bundle gate pending.
+COMMAND pnpm --filter @opchub/admin exec vitest run src/i18n/tests/thai-catalog.spec.ts src/i18n/request.spec.ts src/i18n/font-config.spec.ts --maxWorkers=2
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  3 passed (3)
+      Tests  129 passed (129)
+   Start at  22:37:15
+   Duration  5.55s (environment 65%, tests 25%, import 7%, transform 3%, worker 1%)
+
+    Isolate  3 workers spawned · ~2.05s startup each (spawn + environment, per file)
+             at least ~1.03s faster with isolate: false — reuses workers across files instead of one per file
+
+EXIT 0
+Postcommit receipt source264842f8: all35 final tested catalog/test/README/manifest blobs match HEAD and worktree after normal hooks. Build/catalog/production inputs unchanged by the later sidebar-test-only readiness correction. Original working-tree base retained above.

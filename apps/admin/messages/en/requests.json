@@ -1,0 +1,79 @@
+{
+  "title": "Services",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "tabs": {
+    "label": "Services",
+    "list": "Registration requests",
+    "catalog": "Program & service catalog"
+  },
+  "heading": "Service registration requests",
+  "search": "Search code, name, email, organization...",
+  "searchLabel": "Find requests by code, name, email or organization",
+  "csv": "Export CSV",
+  "col": {
+    "code": "Code",
+    "contact": "Contact person",
+    "service": "Service",
+    "province": "Province/city",
+    "date": "Submitted"
+  },
+  "kind": {
+    "business": "Business / Organization",
+    "personal": "Individual"
+  },
+  "detail": "Details",
+  "empty": "No matching requests",
+  "pager": {
+    "unit": "requests",
+    "prev": "Previous page",
+    "next": "Next page",
+    "pageSize": "Rows per page"
+  },
+  "drawer": {
+    "title": "Request {code}",
+    "close": "Close",
+    "service": "Service",
+    "kind": "Customer type",
+    "contact": "Contact person",
+    "phone": "Phone number",
+    "email": "Email",
+    "org": "Organization / Tax ID",
+    "province": "Province/city",
+    "date": "Submitted",
+    "note": "Request description",
+    "thread": "Internal discussion",
+    "threadCount": "Comments: {n} · visible to administrators only",
+    "editor": "Write an internal note: quotation, contract, progress…",
+    "mention": "Mention:",
+    "send": "Send comment"
+  },
+  "confirm": {
+    "deleteTitle": "Delete service?",
+    "deleteBody": "\"{name}\" will be removed from the catalog and will no longer appear on the User Portal.",
+    "delete": "Delete",
+    "cancel": "Cancel"
+  },
+  "catalog": {
+    "heading": "Program & service catalog",
+    "sub": "Displayed on the User Portal in the Service plans popup under “Other services & programs” and in the service selector on the consultation request form. Turn visibility off to hide it from the User Portal.",
+    "name": "Program / service name",
+    "model": "Format",
+    "desc": "Short description",
+    "used": "Requests: {n}",
+    "visible": "Visible",
+    "delete": "Delete",
+    "add": "+ Add program / service"
+  },
+  "toast": {
+    "commented": "Comment sent",
+    "notified": "Sent and notified {names}",
+    "emptyComment": "Enter a comment",
+    "exported": "Requests exported: {n}",
+    "deleted": "Service deleted",
+    "inUse": "This service has requests — hide it instead of deleting it",
+    "failed": "Unable to complete the action. Please try again"
+  },
+  "error": "Unable to load service requests",
+  "retry": "Try again",
+  "sub": "Consultation requests from User Portal › Service plans"
+}

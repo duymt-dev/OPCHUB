@@ -1,0 +1,92 @@
+[
+  {
+    "file": "apps/admin/src/features/requests/model.ts",
+    "kind": "human-literal",
+    "text": "Phạm Thu Hà",
+    "reason": "Assignee identity/proper name in domain data, never translate identity content."
+  },
+  {
+    "file": "apps/admin/src/features/requests/model.ts",
+    "kind": "human-literal",
+    "text": "Trần Đức Anh",
+    "reason": "Assignee identity/proper name in domain data, never translate identity content."
+  },
+  {
+    "file": "apps/admin/src/features/settings/components/ai/ai-call-log.tsx",
+    "kind": "ui-literal",
+    "text": "VND",
+    "reason": "Currency code; amounts are localized without currency conversion."
+  },
+  {
+    "file": "apps/admin/src/features/settings/components/ai/ai-provider-detail.tsx",
+    "kind": "ui-literal",
+    "text": "numeric",
+    "reason": "Intl.DateTimeFormat option value, not a visible untranslated label."
+  },
+  {
+    "file": "apps/admin/src/features/settings/components/ai/ai-provider-detail.tsx",
+    "kind": "ui-literal",
+    "text": "2-digit",
+    "reason": "Intl.DateTimeFormat option value, not a visible untranslated label."
+  },
+  {
+    "file": "apps/admin/src/features/settings/components/ai/ai-provider-detail.tsx",
+    "kind": "ui-literal",
+    "text": "h23",
+    "reason": "Intl.DateTimeFormat option value, not a visible untranslated label."
+  },
+  {
+    "file": "apps/admin/src/features/settings/components/ai/ai-provider-fields.tsx",
+    "kind": "ui-literal",
+    "text": "https://…/v1",
+    "reason": "Canonical endpoint URL example, not translatable prose."
+  },
+  {
+    "file": "apps/admin/src/features/settings/components/logo-picker.tsx",
+    "kind": "ui-literal",
+    "text": "OPC HUB",
+    "reason": "Locale-independent OPC Hub brand identity."
+  },
+  {
+    "file": "apps/admin/src/features/settings/components/smtp-tab.tsx",
+    "kind": "ui-literal",
+    "text": "B",
+    "reason": "Brevo provider monogram; stable brand identity."
+  },
+  {
+    "file": "apps/admin/src/features/settings/components/welcome-preview.tsx",
+    "kind": "ui-literal",
+    "text": "OPC Hub",
+    "reason": "Locale-independent OPC Hub brand identity."
+  },
+  {
+    "file": "apps/admin/src/features/settings/hooks/use-ai-calls.ts",
+    "kind": "human-literal",
+    "text": "export failed",
+    "reason": "Internal export failure sentinel; onError always renders translated exportFailed."
+  },
+  {
+    "file": "apps/admin/src/features/settings/hooks/use-app-notify-device.ts",
+    "kind": "human-literal",
+    "text": "(display-mode: standalone)",
+    "reason": "Browser CSS media query/API property name, not a visible untranslated label."
+  },
+  {
+    "file": "apps/admin/src/features/settings/hooks/use-app-notify-device.ts",
+    "kind": "human-literal",
+    "text": "Notification",
+    "reason": "Browser CSS media query/API property name, not a visible untranslated label."
+  },
+  {
+    "file": "apps/admin/src/features/settings/hooks/use-smtp.ts",
+    "kind": "human-literal",
+    "text": "OPC Hub",
+    "reason": "Fallback outgoing email sender identity/content, not Admin chrome."
+  },
+  {
+    "file": "apps/admin/src/features/stores/components/stores-screen.tsx",
+    "kind": "ui-literal",
+    "text": "Admin · Gian hàng",
+    "reason": "Stable non-visible data-screen-label instrumentation/test locator; visible heading uses translations. Not an aria/title/placeholder."
+  }
+]

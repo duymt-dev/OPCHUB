@@ -1,0 +1,14 @@
+[
+  {
+    "file": "apps/admin/src/features/marketing/components/welcome-preview.tsx",
+    "kind": "numeric-jsx",
+    "text": "i + 1",
+    "reason": "Number inside actual Vietnamese outgoing email preview content; preserve email bytes and content contract, not Admin chrome."
+  },
+  {
+    "file": "apps/admin/src/features/settings/components/welcome-preview.tsx",
+    "kind": "numeric-jsx",
+    "text": "i + 1",
+    "reason": "Number inside actual Vietnamese outgoing email preview content; preserve email bytes and content contract, not Admin chrome."
+  }
+]

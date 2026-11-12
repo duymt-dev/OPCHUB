@@ -1,0 +1,134 @@
+{
+  "title": "Yuran keahlian",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "stats": {
+    "total": "Jumlah ahli",
+    "paid": "Sudah membayar (berkuat kuasa)",
+    "trial": "Dalam percubaan percuma 3 bulan",
+    "expired": "Tamat tempoh · perlu peningkatan pakej",
+    "soon": "Segera tamat tempoh (30 hari)",
+    "revenue": "Pendapatan yuran keahlian tahunan"
+  },
+  "heading": "Yuran keahlian sistem",
+  "search": "Cari nama, e-mel...",
+  "searchLabel": "Cari ahli mengikut nama atau e-mel",
+  "remindAll": "Hantar peringatan pukal",
+  "tabsLabel": "Tapis mengikut status yuran",
+  "tabs": {
+    "gdv": "Percuma · Pengarah Wilayah",
+    "all": "Semua",
+    "active": "Aktif",
+    "trial": "Percubaan percuma 3 bulan",
+    "pending": "Menunggu pembayaran",
+    "soon": "Segera tamat tempoh",
+    "expired": "Tamat tempoh"
+  },
+  "status": {
+    "regional_director": "Percuma · Pengarah Wilayah",
+    "trial": "Percubaan percuma 3 bulan",
+    "active": "Aktif",
+    "pending_payment": "Menunggu pembayaran",
+    "expiring": "Segera tamat tempoh",
+    "expired": "Tamat tempoh"
+  },
+  "type": {
+    "business": "Perniagaan",
+    "personal": "Individu",
+    "investor": "Pelabur"
+  },
+  "col": {
+    "name": "Nama ahli",
+    "email": "E-mel ahli",
+    "groups": "Kumpulan yang diikuti",
+    "type": "Jenis",
+    "joined": "Berdaftar",
+    "status": "Status yuran",
+    "paid": "Tarikh pembayaran",
+    "until": "Sah hingga"
+  },
+  "selectAll": "Pilih semua di halaman ini",
+  "selectRow": "Pilih {name}",
+  "bulk": {
+    "label": "Tindakan pukal",
+    "selected": "Dipilih",
+    "unit": "ahli",
+    "collect": "Catat pembayaran diterima",
+    "remind": "Hantar peringatan",
+    "csv": "Eksport CSV",
+    "clear": "Padam pilihan"
+  },
+  "row": {
+    "collect": "Catat pembayaran diterima",
+    "renew": "Perbaharui 12 bulan",
+    "remind": "Hantar peringatan"
+  },
+  "empty": "Tiada ahli yang sepadan",
+  "pager": {
+    "unit": "ahli",
+    "prev": "Halaman sebelumnya",
+    "next": "Halaman seterusnya",
+    "pageSize": "Bilangan baris setiap halaman"
+  },
+  "toast": {
+    "collected": "Pembayaran {amount} direkodkan · {name}",
+    "reminded": "Peringatan pembayaran dihantar melalui e-mel ke {to}",
+    "bulkCollected": "Pembayaran keahlian direkodkan: {n}",
+    "bulkReminded": "E-mel peringatan ahli dihantar: {n}",
+    "exported": "Ahli dieksport: {n}",
+    "failed": "Tidak dapat dilaksanakan, sila cuba lagi"
+  },
+  "error": "Tidak dapat memuatkan yuran keahlian",
+  "retry": "Cuba lagi",
+  "txn": {
+    "link": "Transaksi untuk diselaraskan",
+    "linkCount": "Transaksi untuk diselaraskan ({n})",
+    "linkShort": "Selaraskan",
+    "linkShortCount": "Selaraskan ({n})",
+    "title": "Transaksi untuk diselaraskan",
+    "subtitle": "Pindahan bank yang tidak sepadan dengan ahli secara automatik — bahagian perakaunan menyemak dan memadankannya secara manual",
+    "heading": "Pindahan bank yang belum sepadan",
+    "back": "Kembali ke Yuran keahlian",
+    "col": {
+      "receivedAt": "Diterima pada",
+      "amount": "Jumlah",
+      "content": "Rujukan pindahan",
+      "reason": "Sebab tidak sepadan",
+      "hint": "Ahli / kod pengumpulan dana yang disarankan",
+      "action": "Tindakan"
+    },
+    "match": "Padankan manual",
+    "more": "Muatkan lagi",
+    "empty": "Tiada transaksi untuk diselaraskan",
+    "error": "Tidak dapat memuatkan transaksi",
+    "retry": "Cuba lagi",
+    "dialog": {
+      "title": "Padankan transaksi secara manual",
+      "txn": "Transaksi {amount}",
+      "member": "Ahli",
+      "memberPlaceholder": "Cari nama, e-mel, atau kod ahli...",
+      "results": "Hasil carian ahli",
+      "noResult": "Tidak ditemui ahli yang sepadan",
+      "picked": "Dipilih: {name} · {code}",
+      "mode": "Padankan ke",
+      "modeFee": "Yuran keahlian",
+      "modeFundraising": "Pakej Pengumpulan Dana",
+      "fundraising": "Pembayaran pengumpulan dana yang belum dibayar",
+      "fundraisingPlaceholder": "Cari kod pengumpulan dana, nama projek, atau kod ahli pemilik...",
+      "fundraisingResults": "Hasil carian pembayaran pengumpulan dana",
+      "noFundraising": "Tiada pembayaran pengumpulan dana belum dibayar yang sepadan",
+      "pickedFundraising": "Dipilih: {code} · {project}",
+      "reason": "Sebab",
+      "reasonPlaceholder": "Cth. pelanggan mengesahkan melalui telefon, disemak dengan penyata bank",
+      "confirm": "Padankan transaksi {amount} ke {name}?",
+      "cancel": "Batal",
+      "back": "Kembali",
+      "next": "Teruskan",
+      "submit": "Padankan transaksi"
+    },
+    "toast": {
+      "matched": "Transaksi dipadankan ke {name} · berkuat kuasa hingga {date}",
+      "matchedFundraising": "Transaksi dipadankan ke pakej pengumpulan dana {code} · menunggu semakan Admin",
+      "failed": "Tidak dapat memadankan transaksi. Sila cuba lagi"
+    }
+  }
+}

@@ -5,6 +5,7 @@ import { type ConfirmRequest, useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import type { AdminProject } from '../types';
 import { useBulkProjects, useDeleteProject, useFeatureProject } from './use-projects';
+import { useNumberText } from '@/i18n/use-number-text';
 
 interface Ctx {
   ask: (req: ConfirmRequest) => void;
@@ -15,6 +16,7 @@ const BULK_TOAST = { publish: 'published', hide: 'hiddenMany', delete: 'deletedM
 
 /** Xoá một dự án, thao tác hàng loạt (D-54) và nổi bật tuần — xoá / ẩn qua hộp xác nhận */
 export function useProjectBulk({ ask, done }: Ctx) {
+  const numberText = useNumberText();
   const t = useTranslations('projects');
   const toast = useToast();
   const bulk = useBulkProjects();
@@ -32,8 +34,10 @@ export function useProjectBulk({ ask, done }: Ctx) {
     });
 
   const bulkMsg = (action: ProjectBulkAction, r: ProjectBulkResult) => {
-    const text = t(`toast.${BULK_TOAST[action]}`, { count: r.done.length });
-    return r.skipped.length ? t('toast.skipped', { text, count: r.skipped.length }) : text;
+    const text = t(`toast.${BULK_TOAST[action]}`, { count: numberText(r.done.length) });
+    return r.skipped.length
+      ? t('toast.skipped', { text, count: numberText(r.skipped.length) })
+      : text;
   };
 
   const run = (ids: string[], action: ProjectBulkAction, clear: () => void) =>
@@ -53,7 +57,7 @@ export function useProjectBulk({ ask, done }: Ctx) {
     const isDel = action === 'delete';
     ask({
       title: t(isDel ? 'confirm.deleteTitle' : 'confirm.hideTitle'),
-      body: t(isDel ? 'confirm.deleteMany' : 'confirm.hideMany', { count: ids.length }),
+      body: t(isDel ? 'confirm.deleteMany' : 'confirm.hideMany', { count: numberText(ids.length) }),
       okLabel: t(isDel ? 'confirm.delete' : 'confirm.hide'),
       cancelLabel: t('confirm.cancel'),
       danger: true,

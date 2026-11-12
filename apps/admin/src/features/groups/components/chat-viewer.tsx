@@ -2,15 +2,16 @@
 
 import { ErrorState, PageHeader, PageSkeleton } from '@opchub/ui';
 import { useQuery } from '@tanstack/react-query';
-import { useTranslations } from 'next-intl';
+import { formatDate } from '@/i18n/format';
+import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useState } from 'react';
 import { fetchMessages, fetchRooms, groupKeys } from '../api';
 import { useGroupDetail } from '../hooks/use-groups';
 import styles from './chat-viewer.module.css';
 
-const time = (iso: string) =>
-  new Date(iso).toLocaleString('vi-VN', {
+const time = (iso: string, locale: string) =>
+  formatDate(iso, locale, {
     timeZone: 'Asia/Ho_Chi_Minh',
     hour: '2-digit',
     minute: '2-digit',
@@ -19,6 +20,7 @@ const time = (iso: string) =>
   });
 
 function Messages({ roomId }: { roomId: string }) {
+  const locale = useLocale();
   const t = useTranslations('groups.chat');
   const q = useQuery({
     queryKey: groupKeys.messages(roomId),
@@ -39,7 +41,7 @@ function Messages({ roomId }: { roomId: string }) {
           <div className={styles.msgHead}>
             <b>{m.sender.name}</b>
             {m.hiddenAt ? <span>{t('hidden')}</span> : null}
-            <span className={styles.time}>{time(m.createdAt)}</span>
+            <span className={styles.time}>{time(m.createdAt, locale)}</span>
           </div>
           {m.body ? <div className={styles.body}>{m.body}</div> : null}
           {m.attachment ? (

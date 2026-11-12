@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { messageOf } from '@/lib/api-errors';
 import { featureStore, fetchStore, fetchStores, moderateStores, storeKeys } from '../api';
 import type { StoreParams } from '../types';
+import { useNumberText } from '@/i18n/use-number-text';
 
 export function useStores(params: StoreParams) {
   return useQuery({
@@ -25,6 +26,7 @@ export function useStoreDetail(id: string | null) {
 
 /** Ẩn / Hiển thị (đơn lẻ, hàng loạt) — BE ghi audit_logs từng gian hàng (luật 10) */
 export function useStoreModeration(onDone: () => void) {
+  const numberText = useNumberText();
   const t = useTranslations('stores.toast');
   const toast = useToast();
   const qc = useQueryClient();
@@ -33,7 +35,7 @@ export function useStoreModeration(onDone: () => void) {
       moderateStores(action, ids),
     onSuccess: (_d, v) => {
       // Prototype đếm theo số gian hàng được chọn ("Đã ẩn N gian hàng")
-      toast(t(v.action === 'hide' ? 'hidden' : 'shown', { n: v.ids.length }));
+      toast(t(v.action === 'hide' ? 'hidden' : 'shown', { n: numberText(v.ids.length) }));
       onDone();
       void qc.invalidateQueries({ queryKey: storeKeys.all });
     },

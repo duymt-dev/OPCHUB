@@ -22,7 +22,7 @@ function AiKeyField({ p }: { p: AiPanel }) {
           type={visible ? 'text' : 'password'}
           value={row.key ?? ''}
           autoComplete="off"
-          placeholder={catalog.keyHint}
+          placeholder={row.id === 'custom' ? t('key') : catalog.keyHint}
           disabled={p.busy}
           onChange={(e) => set({ key: e.target.value })}
         />

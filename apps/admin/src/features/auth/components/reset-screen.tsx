@@ -2,11 +2,11 @@
 
 import { passwordScore } from '@opchub/shared/api-domains';
 import { ResetPanel, useToast } from '@opchub/ui';
-import type { ResetFieldErrors } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { ApiError } from '@/lib/api-client';
+import { useLocalErrors } from '@/i18n/use-local-errors';
 import { resetPassword } from '../api';
 import { AuthFrame } from './auth-frame';
 import { KEEP_SCROLL } from '../keep-scroll';
@@ -33,10 +33,13 @@ export function ResetScreen() {
   const router = useRouter();
   const toast = useToast();
   const token = useSearchParams().get('token') ?? '';
-  const [invalid, setInvalid] = useState<string | undefined>(
-    token ? undefined : t('reset.missingToken'),
+  const invalid = useLocalErrors<'link', 'missingToken'>(
+    (key) => t(`reset.${key}`),
+    token ? {} : { link: { kind: 'local', code: 'missingToken' } },
   );
-  const [fieldErrors, setFieldErrors] = useState<ResetFieldErrors>();
+  const fields = useLocalErrors<'newPassword' | 'confirm', 'errEmpty' | 'errMismatch'>((key) =>
+    t(`reset.${key}`),
+  );
   const [busy, setBusy] = useState(false);
   const labels = {
     ...(Object.fromEntries(KEYS.map((k) => [k, t(`reset.${k}`)])) as Record<
@@ -48,9 +51,9 @@ export function ResetScreen() {
   };
 
   const submit = async (newPassword: string, confirm: string) => {
-    if (!newPassword) return setFieldErrors({ newPassword: t('reset.errEmpty') });
-    if (newPassword !== confirm) return setFieldErrors({ confirm: t('reset.errMismatch') });
-    setFieldErrors(undefined);
+    if (!newPassword) return fields.local({ newPassword: 'errEmpty' });
+    if (newPassword !== confirm) return fields.local({ confirm: 'errMismatch' });
+    fields.clear();
     setBusy(true);
     try {
       await resetPassword({ token, newPassword });
@@ -59,10 +62,12 @@ export function ResetScreen() {
     } catch (e) {
       if (!(e instanceof ApiError)) throw e;
       const field = e.fields.find((f) => f.path === 'newPassword');
-      if (field) setFieldErrors({ newPassword: field.message });
+      if (field) fields.raw({ newPassword: field.message });
       // Token sai định dạng (zod) → cùng thông điệp link không hợp lệ như server
-      else if (e.status === 400) setInvalid(e.fields.length ? t('reset.missingToken') : e.message);
-      else toast(e.message);
+      else if (e.status === 400) {
+        if (e.fields.length) invalid.local({ link: 'missingToken' });
+        else invalid.raw({ link: e.message });
+      } else toast(e.message);
     } finally {
       setBusy(false);
     }
@@ -73,8 +78,8 @@ export function ResetScreen() {
       <ResetPanel
         labels={labels}
         strengthOf={passwordScore}
-        invalid={invalid}
-        fieldErrors={fieldErrors}
+        invalid={invalid.errors.link}
+        fieldErrors={fields.errors}
         busy={busy}
         onSubmit={(p, c) => void submit(p, c)}
         onResend={() => router.push('/forgot-password', KEEP_SCROLL)}

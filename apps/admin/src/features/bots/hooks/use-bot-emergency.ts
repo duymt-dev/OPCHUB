@@ -9,11 +9,13 @@ import { messageOf } from '@/lib/api-errors';
 import { useCan } from '@/lib/permissions';
 import { botKeys, emergencyStop, hideBotMessages } from '../api';
 import type { BotEmergencyAction } from '../types';
+import { useNumberText } from '@/i18n/use-number-text';
 
 export const botEmergencyKey = ['bots', 'emergency-write'] as const;
 
 /** Destructive writes are confirmed by the caller, never optimistic or retried. */
 export function useBotEmergency() {
+  const numberText = useNumberText();
   const allowed = useCan('bots.action');
   const qc = useQueryClient();
   const toast = useToast();
@@ -35,9 +37,9 @@ export function useBotEmergency() {
         qc.setQueryData<BotSettings>(botKeys.settings(), (old) =>
           old ? { ...old, enabled: false } : old,
         );
-        toast(t('stopped', { n: result.stopped }));
+        toast(t('stopped', { n: numberText(result.stopped) }));
       } else {
-        toast(t('hidden', { n: result.hidden, rooms: result.rooms }));
+        toast(t('hidden', { n: numberText(result.hidden), rooms: numberText(result.rooms) }));
       }
       await Promise.all([
         qc.invalidateQueries({ queryKey: botKeys.all }),

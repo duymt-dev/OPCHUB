@@ -8,14 +8,15 @@ import { useState } from 'react';
 import { useFormErrors } from '@/lib/use-form-errors';
 import { botKeys, saveScript } from '../api';
 import { SCRIPT_FIELD_MAP, type ScriptField, scriptBody, scriptError } from '../model';
-import { SCRIPT_TYPES, type GroupRef, type ScriptForm } from '../types';
+import type { GroupRef, ScriptForm } from '../types';
 import { Switch } from './bits';
-import { GroupChips, opts, SelectField, TextField } from './fields';
+import { GroupChips, SelectField, TextField } from './fields';
 import f from './form.module.css';
 import s from './script-drawer.module.css';
 import { ScriptLines } from './script-lines';
 import { ScriptPreview } from './script-preview';
 import { Sheet } from './sheet';
+import { useBotOptionLabels } from '../option-labels';
 
 interface Props {
   initial: ScriptForm;
@@ -102,6 +103,7 @@ type Setter = <K extends keyof ScriptForm>(k: K) => (v: ScriptForm[K]) => void;
 /** Loại, độ trễ giữa lượt, thời điểm chạy */
 function TimingFields({ form, set }: { form: ScriptForm; set: Setter }) {
   const t = useTranslations('bots');
+  const options = useBotOptionLabels();
   return (
     <>
       <div className={f.two}>
@@ -109,7 +111,7 @@ function TimingFields({ form, set }: { form: ScriptForm; set: Setter }) {
           label={t('sf.type')}
           value={form.type}
           onChange={set('type')}
-          options={opts(SCRIPT_TYPES)}
+          options={options.scriptTypes}
         />
         <TextField
           label={t('sf.delay')}

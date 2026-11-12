@@ -1,12 +1,14 @@
 'use client';
 import { Button } from 'antd';
-import { useTranslations } from 'next-intl';
+import { formatNumber } from '@/i18n/format';
+import { useLocale, useTranslations } from 'next-intl';
 import { ErrorState, PageSkeleton } from '@opchub/ui';
 import type { RegionalRegion } from '@opchub/shared/api-domains';
 import { useRegionalShareItems } from '../hooks/use-regional-shares';
 import { affiliateDate, affiliateMoney } from '../../format';
 import styles from './regional-share.module.css';
 export function RegionalShareItems({ region }: { region: RegionalRegion }) {
+  const locale = useLocale();
   const t = useTranslations('affiliate.regional.share');
   const q = useRegionalShareItems(region);
   if (q.isError)
@@ -41,12 +43,15 @@ export function RegionalShareItems({ region }: { region: RegionalRegion }) {
           .map((item) => (
             <div key={item.id} role="row" className={styles.item}>
               {[
-                affiliateDate(item.recordedAt),
+                affiliateDate(item.recordedAt, locale),
                 item.customerName,
                 item.affiliateName,
-                affiliateMoney(item.baseAmount),
-                t('percentYear', { percent: item.percent, year: item.customerYear }),
-                affiliateMoney(item.directorAmount),
+                affiliateMoney(item.baseAmount, locale),
+                t('percentYear', {
+                  percent: formatNumber(item.percent, locale),
+                  year: formatNumber(item.customerYear, locale),
+                }),
+                affiliateMoney(item.directorAmount, locale),
                 t(item.status === 'paid' ? 'paidStatus' : 'pendingStatus'),
               ].map((text, i) => (
                 <span role="cell" key={i}>
@@ -58,7 +63,7 @@ export function RegionalShareItems({ region }: { region: RegionalRegion }) {
       </div>
       {more > 0 && (
         <Button type="link" loading={q.isFetchingNextPage} onClick={() => void q.fetchNextPage()}>
-          {t('more', { n: more })}
+          {t('more', { n: formatNumber(more, locale) })}
         </Button>
       )}
     </section>

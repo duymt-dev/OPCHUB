@@ -15,6 +15,7 @@ import {
 } from '../api';
 import { useMemberExport } from './use-member-export';
 import { usePatchMembers } from './use-members';
+import { useNumberText } from '@/i18n/use-number-text';
 
 const STATUS_TOAST = { locked: 'locked', active: 'unlocked' } as const;
 
@@ -23,6 +24,7 @@ const STATUS_TOAST = { locked: 'locked', active: 'unlocked' } as const;
  * Trạng thái / vai trò cập nhật lạc quan + toast ngay như prototype; lỗi thì hoàn tác.
  */
 export function useMemberActions() {
+  const numberText = useNumberText();
   const t = useTranslations('members.toast');
   const tRole = useTranslations('members.role');
   const toast = useToast();
@@ -48,7 +50,7 @@ export function useMemberActions() {
     onMutate: (v) => {
       const undo = patch(v.ids, (m) => ({ ...m, status: v.status }));
       const key = v.status === 'locked' ? 'bulkLocked' : 'bulkUnlocked';
-      toast(t(key, { n: v.ids.length }));
+      toast(t(key, { n: numberText(v.ids.length) }));
       return undo;
     },
     onError: (e, _v, undo) => (undo?.(), fail(e)),
@@ -61,7 +63,13 @@ export function useMemberActions() {
     mutationFn: (v: { ids: string[]; groups: string[]; role: 'member' | 'lecturer' }) =>
       assignGroups(v.ids, v.groups, v.role),
     onSuccess: (_r, v) =>
-      toast(t('assigned', { n: v.ids.length, g: v.groups.length, role: tRole(v.role) })),
+      toast(
+        t('assigned', {
+          n: numberText(v.ids.length),
+          g: numberText(v.groups.length),
+          role: tRole(v.role),
+        }),
+      ),
     onError: fail,
     onSettled: refresh,
   });

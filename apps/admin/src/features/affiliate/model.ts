@@ -1,5 +1,6 @@
 import { affiliateMonthSchema } from '@opchub/shared/api-domains';
 import { z } from 'zod';
+import { formatDate } from '@/i18n/format';
 import type { AffiliatePageQuery } from '@opchub/shared/api-domains';
 
 const sizeSchema = z.coerce.number().int().min(1).max(100);
@@ -41,9 +42,12 @@ export function affiliateQuery(params: AffiliatePageQuery): string {
   return query.toString();
 }
 
-export function affiliateMonthLabel(key: string): string {
+export function affiliateMonthLabel(key: string, locale = 'vi'): string {
   const parsed = affiliateMonthSchema.safeParse(key);
-  return parsed.success ? `${key.slice(5)}/${key.slice(0, 4)}` : key;
+  if (!parsed.success) return key;
+  return locale === 'vi'
+    ? `${key.slice(5)}/${key.slice(0, 4)}`
+    : formatDate(`${key}-01`, locale, { month: '2-digit', year: 'numeric' });
 }
 
 /** Financial totals remain server-owned; this only gates an ended calendar month. */

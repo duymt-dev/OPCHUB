@@ -2,9 +2,10 @@
 import { AffiliateRegionCell } from './affiliate-region-cell';
 
 import type { TableProps } from 'antd';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import type { AffiliateAdminListRow } from '@opchub/shared/api-domains';
 import Link from 'next/link';
+import { formatNumber, formatPercentPoints } from '@/i18n/format';
 import { affiliateMoney } from '../format';
 import { AgentIdentity } from './agent-identity';
 import { AgentPeriodAmount, AgentPeriodStatus } from './agent-period';
@@ -13,6 +14,7 @@ import { affiliateMonthLabel } from '../model';
 export function useAffiliateColumns(
   month: string | null,
 ): NonNullable<TableProps<AffiliateAdminListRow>['columns']> {
+  const locale = useLocale();
   const t = useTranslations('affiliate');
   return [
     {
@@ -28,21 +30,28 @@ export function useAffiliateColumns(
       render: (_, row) => <AffiliateRegionCell region={row.region} />,
     },
     { title: t('columns.code'), dataIndex: 'code', width: 110 },
-    { title: t('columns.rateShort'), key: 'rate', width: 70, render: (_, row) => `${row.rate}%` },
+    {
+      title: t('columns.rateShort'),
+      key: 'rate',
+      width: 70,
+      render: (_, row) => formatPercentPoints(row.rate, locale, 20),
+    },
     {
       title: t('columns.customers'),
       key: 'customers',
       width: 90,
-      render: (_, row) => row.lifetime.customers,
+      render: (_, row) => formatNumber(row.lifetime.customers, locale),
     },
     {
       title: t('columns.revenue'),
       key: 'revenue',
       width: 120,
-      render: (_, row) => affiliateMoney(row.lifetime.revenue),
+      render: (_, row) => affiliateMoney(row.lifetime.revenue, locale),
     },
     {
-      title: t('periodCommission', { month: month ? affiliateMonthLabel(month) : t('allMonths') }),
+      title: t('periodCommission', {
+        month: month ? affiliateMonthLabel(month, locale) : t('allMonths'),
+      }),
       key: 'balance',
       width: 130,
       render: (_, row) => <AgentPeriodAmount period={row.period} />,

@@ -21,10 +21,18 @@ import { GroupForm } from './group-form';
 import { GroupListPanel } from './group-list-panel';
 import styles from './groups.module.css';
 import { ModerationPanel } from './moderation-panel';
+import { useAdminUiLabels } from '@/i18n/ui-labels';
 
 function GroupsHeader() {
+  const ui = useAdminUiLabels();
   const t = useTranslations('groups');
-  return <PageHeader title={t('title')} subtitle={t('sub')} extra={<DateRangePicker />} />;
+  return (
+    <PageHeader
+      title={t('title')}
+      subtitle={t('sub')}
+      extra={<DateRangePicker {...ui.dateRange} />}
+    />
+  );
 }
 
 /** D-23 → D-35: Admin "Nhóm cộng đồng" (orchestrator) */

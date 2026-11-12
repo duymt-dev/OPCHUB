@@ -1,7 +1,11 @@
+import { getTranslations } from 'next-intl/server';
 import type { Metadata } from 'next';
 import { BotsScreen } from '@/features/bots';
 
-export const metadata: Metadata = { title: 'Bot tương tác · OPC Hub Admin' };
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('meta');
+  return { title: `${t('bots')} · OPC Hub Admin` };
+}
 export const dynamic = 'force-dynamic';
 
 /** /bots · /bots/personas[/new|/:id] · /bots/scripts[/new|/:id] · /bots/threads (D-36 → D-41) */

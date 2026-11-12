@@ -1,0 +1,620 @@
+
+Intermediate msw build before table-action extraction; not final tested source. Full actual log follows.
+Source working tree based on ef4a08b0; Admin build mode=msw dist=.next-msw-tip824; compile only, no API verification
+$ vitest run src/i18n/tests/production-catalogs.spec.ts && next build
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  1 passed (1)
+      Tests  49 passed (49)
+   Start at  14:44:13
+   Duration  36.17s (tests 90%, environment 9%)
+
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 588ms
+- Experiments (use with caution):
+  · optimizePackageImports
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 4.4s
+  Running TypeScript ...
+  Finished TypeScript in 20.1s ...
+  Collecting page data using 5 workers ...
+  Generating static pages using 5 workers (0/10) ...
+  Generating static pages using 5 workers (2/10)
+  Generating static pages using 5 workers (4/10)
+  Generating static pages using 5 workers (7/10)
+✓ Generating static pages using 5 workers (10/10) in 1077ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /affiliate/[[...slug]]
+├ ƒ /bots/[[...slug]]
+├ ƒ /events
+├ ƒ /fees
+├ ƒ /fees/transactions
+├ ƒ /first-password
+├ ƒ /forgot-password
+├ ƒ /groups
+├ ƒ /groups/[id]/chat
+├ ƒ /investors
+├ ƒ /login
+├ ƒ /marketing
+├ ƒ /members
+├ ƒ /needs
+├ ƒ /overview
+├ ƒ /profile
+├ ƒ /projects/[[...slug]]
+├ ƒ /reports
+├ ƒ /requests/[[...tab]]
+├ ƒ /reset-password
+├ ƒ /settings
+├ ƒ /stores
+└ ƒ /two-factor
+
+
+ƒ  (Dynamic)  server-rendered on demand
+
+EXIT 0
+
+Intermediate native build before table-action extraction; not final tested source. Full actual log follows.
+Source working tree based on ef4a08b0; Admin build mode=native dist=.next-server-tip824; compile only, no API verification
+$ vitest run src/i18n/tests/production-catalogs.spec.ts && next build
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  1 passed (1)
+      Tests  49 passed (49)
+   Start at  14:45:24
+   Duration  31.72s (tests 87%, environment 13%)
+
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 780ms
+- Experiments (use with caution):
+  · optimizePackageImports
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 6.2s
+  Running TypeScript ...
+  Finished TypeScript in 17.5s ...
+  Collecting page data using 5 workers ...
+  Generating static pages using 5 workers (0/10) ...
+  Generating static pages using 5 workers (2/10)
+  Generating static pages using 5 workers (4/10)
+  Generating static pages using 5 workers (7/10)
+✓ Generating static pages using 5 workers (10/10) in 829ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /affiliate/[[...slug]]
+├ ƒ /bots/[[...slug]]
+├ ƒ /events
+├ ƒ /fees
+├ ƒ /fees/transactions
+├ ƒ /first-password
+├ ƒ /forgot-password
+├ ƒ /groups
+├ ƒ /groups/[id]/chat
+├ ƒ /investors
+├ ƒ /login
+├ ƒ /marketing
+├ ƒ /members
+├ ƒ /needs
+├ ƒ /overview
+├ ƒ /profile
+├ ƒ /projects/[[...slug]]
+├ ƒ /reports
+├ ƒ /requests/[[...tab]]
+├ ƒ /reset-password
+├ ƒ /settings
+├ ƒ /stores
+└ ƒ /two-factor
+
+
+ƒ  (Dynamic)  server-rendered on demand
+
+EXIT 0
+
+Intermediate extracted-action msw build before measured mobile wrapping; not final production evidence. Actual log follows.
+Source working tree based on ef4a08b0; Admin build mode=msw dist=.next-msw-tip824; compile only, no API verification
+$ vitest run src/i18n/tests/production-catalogs.spec.ts && next build
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  1 passed (1)
+      Tests  49 passed (49)
+   Start at  14:47:53
+   Duration  26.35s (tests 89%, environment 11%)
+
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 443ms
+- Experiments (use with caution):
+  · optimizePackageImports
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.6s
+  Running TypeScript ...
+  Finished TypeScript in 21.1s ...
+  Collecting page data using 5 workers ...
+  Generating static pages using 5 workers (0/10) ...
+  Generating static pages using 5 workers (2/10)
+  Generating static pages using 5 workers (4/10)
+  Generating static pages using 5 workers (7/10)
+✓ Generating static pages using 5 workers (10/10) in 748ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /affiliate/[[...slug]]
+├ ƒ /bots/[[...slug]]
+├ ƒ /events
+├ ƒ /fees
+├ ƒ /fees/transactions
+├ ƒ /first-password
+├ ƒ /forgot-password
+├ ƒ /groups
+├ ƒ /groups/[id]/chat
+├ ƒ /investors
+├ ƒ /login
+├ ƒ /marketing
+├ ƒ /members
+├ ƒ /needs
+├ ƒ /overview
+├ ƒ /profile
+├ ƒ /projects/[[...slug]]
+├ ƒ /reports
+├ ƒ /requests/[[...tab]]
+├ ƒ /reset-password
+├ ƒ /settings
+├ ƒ /stores
+└ ƒ /two-factor
+
+
+ƒ  (Dynamic)  server-rendered on demand
+
+EXIT 0
+
+Intermediate extracted-action native build before measured mobile wrapping; not final production evidence. Actual log follows.
+Source working tree based on ef4a08b0; Admin build mode=native dist=.next-server-tip824; compile only, no API verification
+$ vitest run src/i18n/tests/production-catalogs.spec.ts && next build
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  1 passed (1)
+      Tests  49 passed (49)
+   Start at  14:48:53
+   Duration  19.70s (tests 89%, environment 10%)
+
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 483ms
+- Experiments (use with caution):
+  · optimizePackageImports
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 4.1s
+  Running TypeScript ...
+  Finished TypeScript in 12.1s ...
+  Collecting page data using 5 workers ...
+  Generating static pages using 5 workers (0/10) ...
+  Generating static pages using 5 workers (2/10)
+  Generating static pages using 5 workers (4/10)
+  Generating static pages using 5 workers (7/10)
+✓ Generating static pages using 5 workers (10/10) in 795ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /affiliate/[[...slug]]
+├ ƒ /bots/[[...slug]]
+├ ƒ /events
+├ ƒ /fees
+├ ƒ /fees/transactions
+├ ƒ /first-password
+├ ƒ /forgot-password
+├ ƒ /groups
+├ ƒ /groups/[id]/chat
+├ ƒ /investors
+├ ƒ /login
+├ ƒ /marketing
+├ ƒ /members
+├ ƒ /needs
+├ ƒ /overview
+├ ƒ /profile
+├ ƒ /projects/[[...slug]]
+├ ƒ /reports
+├ ƒ /requests/[[...tab]]
+├ ƒ /reset-password
+├ ƒ /settings
+├ ƒ /stores
+└ ƒ /two-factor
+
+
+ƒ  (Dynamic)  server-rendered on demand
+
+EXIT 0
+
+FINAL msw candidate build with semantic write markers, extracted actions and measured mobile action wrapping. Actual log follows.
+Source working tree based on ef4a08b0; Admin build mode=msw dist=.next-msw-tip824; compile only, no API verification
+$ vitest run src/i18n/tests/production-catalogs.spec.ts && next build
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  1 passed (1)
+      Tests  49 passed (49)
+   Start at  14:55:54
+   Duration  17.09s (tests 89%, environment 11%)
+
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 438ms
+- Experiments (use with caution):
+  · optimizePackageImports
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.2s
+  Running TypeScript ...
+  Finished TypeScript in 9.1s ...
+  Collecting page data using 5 workers ...
+  Generating static pages using 5 workers (0/10) ...
+  Generating static pages using 5 workers (2/10)
+  Generating static pages using 5 workers (4/10)
+  Generating static pages using 5 workers (7/10)
+✓ Generating static pages using 5 workers (10/10) in 635ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /affiliate/[[...slug]]
+├ ƒ /bots/[[...slug]]
+├ ƒ /events
+├ ƒ /fees
+├ ƒ /fees/transactions
+├ ƒ /first-password
+├ ƒ /forgot-password
+├ ƒ /groups
+├ ƒ /groups/[id]/chat
+├ ƒ /investors
+├ ƒ /login
+├ ƒ /marketing
+├ ƒ /members
+├ ƒ /needs
+├ ƒ /overview
+├ ƒ /profile
+├ ƒ /projects/[[...slug]]
+├ ƒ /reports
+├ ƒ /requests/[[...tab]]
+├ ƒ /reset-password
+├ ƒ /settings
+├ ƒ /stores
+└ ƒ /two-factor
+
+
+ƒ  (Dynamic)  server-rendered on demand
+
+EXIT 0
+
+FINAL native candidate build with semantic write markers, extracted actions and measured mobile action wrapping. Actual log follows.
+Source working tree based on ef4a08b0; Admin build mode=native dist=.next-server-tip824; compile only, no API verification
+$ vitest run src/i18n/tests/production-catalogs.spec.ts && next build
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  1 passed (1)
+      Tests  49 passed (49)
+   Start at  14:56:29
+   Duration  18.38s (tests 90%, environment 9%)
+
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 373ms
+- Experiments (use with caution):
+  · optimizePackageImports
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.6s
+  Running TypeScript ...
+  Finished TypeScript in 11.3s ...
+  Collecting page data using 5 workers ...
+  Generating static pages using 5 workers (0/10) ...
+  Generating static pages using 5 workers (2/10)
+  Generating static pages using 5 workers (4/10)
+  Generating static pages using 5 workers (7/10)
+✓ Generating static pages using 5 workers (10/10) in 973ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /affiliate/[[...slug]]
+├ ƒ /bots/[[...slug]]
+├ ƒ /events
+├ ƒ /fees
+├ ƒ /fees/transactions
+├ ƒ /first-password
+├ ƒ /forgot-password
+├ ƒ /groups
+├ ƒ /groups/[id]/chat
+├ ƒ /investors
+├ ƒ /login
+├ ƒ /marketing
+├ ƒ /members
+├ ƒ /needs
+├ ƒ /overview
+├ ƒ /profile
+├ ƒ /projects/[[...slug]]
+├ ƒ /reports
+├ ƒ /requests/[[...tab]]
+├ ƒ /reset-password
+├ ƒ /settings
+├ ƒ /stores
+└ ƒ /two-factor
+
+
+ƒ  (Dynamic)  server-rendered on demand
+
+EXIT 0
+
+Previously final msw group-marker/mobile build before newly reproduced SVG guard traversal correction; superseded for final production proof. Actual prior log follows.
+Source working tree based on ef4a08b0; Admin build mode=msw dist=.next-msw-tip824; compile only, no API verification
+$ vitest run src/i18n/tests/production-catalogs.spec.ts && next build
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  1 passed (1)
+      Tests  49 passed (49)
+   Start at  14:55:54
+   Duration  17.09s (tests 89%, environment 11%)
+
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 438ms
+- Experiments (use with caution):
+  · optimizePackageImports
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.2s
+  Running TypeScript ...
+  Finished TypeScript in 9.1s ...
+  Collecting page data using 5 workers ...
+  Generating static pages using 5 workers (0/10) ...
+  Generating static pages using 5 workers (2/10)
+  Generating static pages using 5 workers (4/10)
+  Generating static pages using 5 workers (7/10)
+✓ Generating static pages using 5 workers (10/10) in 635ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /affiliate/[[...slug]]
+├ ƒ /bots/[[...slug]]
+├ ƒ /events
+├ ƒ /fees
+├ ƒ /fees/transactions
+├ ƒ /first-password
+├ ƒ /forgot-password
+├ ƒ /groups
+├ ƒ /groups/[id]/chat
+├ ƒ /investors
+├ ƒ /login
+├ ƒ /marketing
+├ ƒ /members
+├ ƒ /needs
+├ ƒ /overview
+├ ƒ /profile
+├ ƒ /projects/[[...slug]]
+├ ƒ /reports
+├ ƒ /requests/[[...tab]]
+├ ƒ /reset-password
+├ ƒ /settings
+├ ƒ /stores
+└ ƒ /two-factor
+
+
+ƒ  (Dynamic)  server-rendered on demand
+
+EXIT 0
+
+Previously final native group-marker/mobile build before newly reproduced SVG guard traversal correction; superseded for final production proof. Actual prior log follows.
+Source working tree based on ef4a08b0; Admin build mode=native dist=.next-server-tip824; compile only, no API verification
+$ vitest run src/i18n/tests/production-catalogs.spec.ts && next build
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  1 passed (1)
+      Tests  49 passed (49)
+   Start at  14:56:29
+   Duration  18.38s (tests 90%, environment 9%)
+
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 373ms
+- Experiments (use with caution):
+  · optimizePackageImports
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.6s
+  Running TypeScript ...
+  Finished TypeScript in 11.3s ...
+  Collecting page data using 5 workers ...
+  Generating static pages using 5 workers (0/10) ...
+  Generating static pages using 5 workers (2/10)
+  Generating static pages using 5 workers (4/10)
+  Generating static pages using 5 workers (7/10)
+✓ Generating static pages using 5 workers (10/10) in 973ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /affiliate/[[...slug]]
+├ ƒ /bots/[[...slug]]
+├ ƒ /events
+├ ƒ /fees
+├ ƒ /fees/transactions
+├ ƒ /first-password
+├ ƒ /forgot-password
+├ ƒ /groups
+├ ƒ /groups/[id]/chat
+├ ƒ /investors
+├ ƒ /login
+├ ƒ /marketing
+├ ƒ /members
+├ ƒ /needs
+├ ƒ /overview
+├ ƒ /profile
+├ ƒ /projects/[[...slug]]
+├ ƒ /reports
+├ ƒ /requests/[[...tab]]
+├ ƒ /reset-password
+├ ƒ /settings
+├ ƒ /stores
+└ ƒ /two-factor
+
+
+ƒ  (Dynamic)  server-rendered on demand
+
+EXIT 0
+
+FINAL SVG-aware msw candidate build: semantic group write markers, mobile wrapping, Element traversal and nearest explicit control selection. Supersedes earlier intermediate builds above. Actual log follows.
+Source working tree based on ef4a08b0; Admin build mode=msw dist=.next-msw-tip824; compile only, no API verification
+$ vitest run src/i18n/tests/production-catalogs.spec.ts && next build
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  1 passed (1)
+      Tests  49 passed (49)
+   Start at  15:07:22
+   Duration  27.00s (tests 90%, environment 10%)
+
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 931ms
+- Experiments (use with caution):
+  · optimizePackageImports
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.2s
+  Running TypeScript ...
+  Finished TypeScript in 17.6s ...
+  Collecting page data using 5 workers ...
+  Generating static pages using 5 workers (0/10) ...
+  Generating static pages using 5 workers (2/10)
+  Generating static pages using 5 workers (4/10)
+  Generating static pages using 5 workers (7/10)
+✓ Generating static pages using 5 workers (10/10) in 824ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /affiliate/[[...slug]]
+├ ƒ /bots/[[...slug]]
+├ ƒ /events
+├ ƒ /fees
+├ ƒ /fees/transactions
+├ ƒ /first-password
+├ ƒ /forgot-password
+├ ƒ /groups
+├ ƒ /groups/[id]/chat
+├ ƒ /investors
+├ ƒ /login
+├ ƒ /marketing
+├ ƒ /members
+├ ƒ /needs
+├ ƒ /overview
+├ ƒ /profile
+├ ƒ /projects/[[...slug]]
+├ ƒ /reports
+├ ƒ /requests/[[...tab]]
+├ ƒ /reset-password
+├ ƒ /settings
+├ ƒ /stores
+└ ƒ /two-factor
+
+
+ƒ  (Dynamic)  server-rendered on demand
+
+EXIT 0
+
+FINAL SVG-aware native candidate build: semantic group write markers, mobile wrapping, Element traversal and nearest explicit control selection. Supersedes earlier intermediate builds above. Actual log follows.
+Source working tree based on ef4a08b0; Admin build mode=native dist=.next-server-tip824; compile only, no API verification
+$ vitest run src/i18n/tests/production-catalogs.spec.ts && next build
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  1 passed (1)
+      Tests  49 passed (49)
+   Start at  15:08:20
+   Duration  22.96s (tests 89%, environment 11%)
+
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 498ms
+- Experiments (use with caution):
+  · optimizePackageImports
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 3.4s
+  Running TypeScript ...
+  Finished TypeScript in 13.5s ...
+  Collecting page data using 5 workers ...
+  Generating static pages using 5 workers (0/10) ...
+  Generating static pages using 5 workers (2/10)
+  Generating static pages using 5 workers (4/10)
+  Generating static pages using 5 workers (7/10)
+✓ Generating static pages using 5 workers (10/10) in 798ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /affiliate/[[...slug]]
+├ ƒ /bots/[[...slug]]
+├ ƒ /events
+├ ƒ /fees
+├ ƒ /fees/transactions
+├ ƒ /first-password
+├ ƒ /forgot-password
+├ ƒ /groups
+├ ƒ /groups/[id]/chat
+├ ƒ /investors
+├ ƒ /login
+├ ƒ /marketing
+├ ƒ /members
+├ ƒ /needs
+├ ƒ /overview
+├ ƒ /profile
+├ ƒ /projects/[[...slug]]
+├ ƒ /reports
+├ ƒ /requests/[[...tab]]
+├ ƒ /reset-password
+├ ƒ /settings
+├ ƒ /stores
+└ ƒ /two-factor
+
+
+ƒ  (Dynamic)  server-rendered on demand
+
+EXIT 0

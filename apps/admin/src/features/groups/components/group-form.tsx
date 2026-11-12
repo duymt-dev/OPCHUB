@@ -4,7 +4,7 @@ import type { AdminRoom } from '@opchub/shared/api-domains';
 import { translateErrors, useImageUpload, useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import { uploadImage } from '@/lib/upload-image';
+import { useUploadImage } from '@/i18n/use-upload-image';
 import { useFormErrors } from '@/lib/use-form-errors';
 import { useGroupDetail, usePeople, useSaveGroup } from '../hooks/use-groups';
 import {
@@ -32,6 +32,7 @@ interface BodyProps {
 }
 
 function FormBody({ initial, all, topics, onClose }: BodyProps) {
+  const uploadImage = useUploadImage();
   const t = useTranslations('groups.form');
   const tt = useTranslations('groups.toast');
   const toast = useToast();

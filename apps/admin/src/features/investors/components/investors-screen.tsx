@@ -10,9 +10,11 @@ import { InvestorDrawer } from './investor-drawer';
 import { InvestorTable } from './investor-table';
 import { InvestorStats, InvestorToolbar } from './investor-toolbar';
 import styles from './investors.module.css';
+import { useAdminUiLabels } from '@/i18n/ui-labels';
 
 /** D-58 → D-60 Nhà đầu tư: orchestrator — thống kê, lọc (URL), bảng, phân trang, drawer */
 export function InvestorsScreen() {
+  const ui = useAdminUiLabels();
   const t = useTranslations('investors');
   const { params, update } = useInvestorParams();
   const { list, summary } = useInvestors(params);
@@ -30,7 +32,7 @@ export function InvestorsScreen() {
 
   return (
     <>
-      <PageHeader title={t('title')} subtitle=" " extra={<DateRangePicker />} />
+      <PageHeader title={t('title')} subtitle=" " extra={<DateRangePicker {...ui.dateRange} />} />
       <div data-screen-label="Admin · Nhà đầu tư" className={styles.wrap}>
         <InvestorStats s={summary.data} />
         <div className={styles.card}>
@@ -62,6 +64,7 @@ export function InvestorsScreen() {
             onChange={(page) => update({ page })}
             onSizeChange={(size) => update({ size, page: 1 })}
             labels={{
+              ...ui.pagination,
               unit: t('pager.unit'),
               prev: t('pager.prev'),
               next: t('pager.next'),

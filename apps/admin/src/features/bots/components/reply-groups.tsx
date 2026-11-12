@@ -1,19 +1,27 @@
 'use client';
 
 import type { BotReplyOverview } from '@opchub/shared/api-domains';
-import { useFormatter, useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { formatDate } from '@/i18n/format';
 import styles from './reply-panel.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 export function ReplyGroups({ data }: { data: BotReplyOverview }) {
+  const numberText = useNumberText();
   const t = useTranslations('bots.replies');
-  const format = useFormatter();
+  const locale = useLocale();
   const next = data.groups.find((row) => row.personaCount > 0);
   return (
     <>
       <section className={styles.box} aria-label={t('groups')}>
         <header className={styles.sectionHead}>
           <h3>{t('groups')}</h3>
-          <span>{t('pending', { n: data.pendingTotal, groups: data.groupCount })}</span>
+          <span>
+            {t('pending', {
+              n: numberText(data.pendingTotal),
+              groups: numberText(data.groupCount),
+            })}
+          </span>
         </header>
         {data.groups.length ? (
           data.groups.map((row) => (
@@ -26,7 +34,7 @@ export function ReplyGroups({ data }: { data: BotReplyOverview }) {
                   <span className={styles.badge}>{t('priority')}</span>
                 ) : null}
                 {!row.personaCount ? <span>{t('noPersona')}</span> : null}
-                <span>{t('waiting', { n: row.pending })}</span>
+                <span>{t('waiting', { n: numberText(row.pending) })}</span>
               </div>
             </div>
           ))
@@ -40,11 +48,11 @@ export function ReplyGroups({ data }: { data: BotReplyOverview }) {
             <h3>
               {t('next', {
                 group: next.groupName,
-                n: next.pending,
-                sample: data.settings.sampleSize,
+                n: numberText(next.pending),
+                sample: numberText(data.settings.sampleSize),
               })}
             </h3>
-            <span>{t('personas', { n: next.personaCount })}</span>
+            <span>{t('personas', { n: numberText(next.personaCount) })}</span>
           </header>
           {next.preview.map((row) => (
             <div className={`${styles.message} ${styles.previewRow}`} key={row.id}>
@@ -54,7 +62,7 @@ export function ReplyGroups({ data }: { data: BotReplyOverview }) {
                   <span className={styles.time}>
                     {' '}
                     ·{' '}
-                    {format.dateTime(new Date(row.createdAt), {
+                    {formatDate(row.createdAt, locale, {
                       hour: '2-digit',
                       minute: '2-digit',
                       timeZone: 'Asia/Ho_Chi_Minh',

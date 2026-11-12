@@ -9,6 +9,7 @@ import { REPORT_FILTERS, type ReportFilter } from '../types';
 import { KeywordPanel } from './keyword-panel';
 import styles from './moderation.module.css';
 import { ReportCard } from './report-card';
+import { useNumberText } from '@/i18n/use-number-text';
 
 interface Props {
   filter: ReportFilter;
@@ -22,6 +23,7 @@ interface Props {
  * phục tin / Khóa N ngày), quy tắc + thời gian khoá, bộ lọc từ khóa.
  */
 export function ModerationPanel({ filter, onFilter }: Props) {
+  const numberText = useNumberText();
   const t = useTranslations('groups.mod');
   const tt = useTranslations('groups.toast');
   const toast = useToast();
@@ -45,7 +47,7 @@ export function ModerationPanel({ filter, onFilter }: Props) {
   const lock = (r: Report) =>
     act.mutate(
       { r, action: 'lock' },
-      { onSuccess: () => toast(tt('lockedDays', { name: r.senderName, days })) },
+      { onSuccess: () => toast(tt('lockedDays', { name: r.senderName, days: numberText(days) })) },
     );
 
   return (
@@ -54,10 +56,12 @@ export function ModerationPanel({ filter, onFilter }: Props) {
         <div className={styles.top}>
           <div className={styles.titles}>
             <div className={styles.title}>{t('title')}</div>
-            <div className={styles.sub}>{t('sub', { days })}</div>
+            <div className={styles.sub}>{t('sub', { days: numberText(days) })}</div>
           </div>
           <div className={styles.right}>
-            <span className={styles.pending}>{t('pending', { count: reports.length })}</span>
+            <span className={styles.pending}>
+              {t('pending', { count: numberText(reports.length) })}
+            </span>
             <div className={styles.seg} role="radiogroup" aria-label={t('filterLabel')}>
               {REPORT_FILTERS.map((k) => (
                 <button

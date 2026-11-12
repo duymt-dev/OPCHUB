@@ -1,0 +1,179 @@
+Original source6022d311, strengthened real data/hidden-toast readiness. First diagnostic used getByRole instead of the existing exact getByLabel contract for required name; corrected selector (not data assertion), then measured viewport393/390, avatar right392.859 and language popover left=-43.9375/right314.859. No production styles were injected or overflow assertions waived.
+Source f833e240. Complete10 raw bundles/250 files. All208 registered i18n behavior cases, including72 fixed12-identity core-screen/viewport cases and all12 canonical picker identities; includes helper protocol and synthetic modal-handler probes, not208 independent user workflows; same assertions both modes, real login200 and strict HTTP/JSON/no-business-write guard. Approved native wrapper/listener/endpoints revalidated by native preflight; original PG5432/opchub_test/services/data retained, no SQL/seed/reset/repair. Unmasked images and exact Myanmar anchors, not all-language/state/control/value/performance or human approval.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts
+[WebServer] (node:11540) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:16172) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:29620) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [behavior] › behavior\admin-i18n-all-locales.spec.ts:18:7 › D-141 AC824-07/15 actual id profile 390, loaded core only not all states (7.7s)
+
+
+  1) [behavior] › behavior\admin-i18n-all-locales.spec.ts:18:7 › D-141 AC824-07/15 actual id profile 390, loaded core only not all states
+
+    Error: expect(locator).not.toHaveValue(expected) failed
+
+    Locator: getByRole('textbox', { name: 'Nama lengkap', exact: true })
+    Expected: not ""
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "not toHaveValue" getByRole('textbox', { name: 'Nama lengkap', exact: true }) with timeout 5000ms
+      - waiting for getByRole('textbox', { name: 'Nama lengkap', exact: true })
+
+
+       at behavior\admin-i18n\core-ready.ts:49
+
+      47 |       );
+      48 |     } else if (screen.id === 'profile') {
+    > 49 |       await expect(page.getByRole('textbox', { name: screen.field, exact: true })).not.toHaveValue(
+         |                                                                                        ^
+      50 |         '',
+      51 |       );
+      52 |       await expect(page.getByRole('textbox', { name: screen.email, exact: true })).toHaveValue(
+        at ready (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n\core-ready.ts:49:88)
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-all-locales.spec.ts:25:15
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-mobile-layout-results\admin-i18n-all-locales-D-1-df426-ed-core-only-not-all-states-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\admin-i18n-all-locales.spec.ts:18:7 › D-141 AC824-07/15 actual id profile 390, loaded core only not all states
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+System.Management.Automation.RemoteException
+EXIT 1
+
+Source f833e240. Complete10 raw bundles/250 files. All208 registered i18n behavior cases, including72 fixed12-identity core-screen/viewport cases and all12 canonical picker identities; includes helper protocol and synthetic modal-handler probes, not208 independent user workflows; same assertions both modes, real login200 and strict HTTP/JSON/no-business-write guard. Approved native wrapper/listener/endpoints revalidated by native preflight; original PG5432/opchub_test/services/data retained, no SQL/seed/reset/repair. Unmasked images and exact Myanmar anchors, not all-language/state/control/value/performance or human approval.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts
+[WebServer] (node:5128) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:12176) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:13528) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [behavior] › behavior\admin-i18n-all-locales.spec.ts:18:7 › D-141 AC824-07/15 actual id profile 390, loaded core only not all states (5.3s)
+
+
+  1) [behavior] › behavior\admin-i18n-all-locales.spec.ts:18:7 › D-141 AC824-07/15 actual id profile 390, loaded core only not all states
+
+    Error: {"width":390,"scroll":393,"overflow":[{"tag":"BUTTON","class":"oDYnGW_me","right":392.859375,"width":70,"text":"Quản trị hệ thốngSuper Admin"}]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 390
+    Received:    393
+
+      51 |             })),
+      52 |         }));
+    > 53 |         expect(layout.scroll, JSON.stringify(layout)).toBeLessThanOrEqual(layout.width);
+         |                                                       ^
+      54 |         await page.evaluate(() => document.fonts.ready);
+      55 |         if (width === 1440) await assertSidebarLabels(page.locator('aside[data-mini]'));
+      56 |         if (IMAGE_LOCALES.has(locale)) {
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-all-locales.spec.ts:53:55
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-mobile-layout-results\admin-i18n-all-locales-D-1-df426-ed-core-only-not-all-states-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\admin-i18n-all-locales.spec.ts:18:7 › D-141 AC824-07/15 actual id profile 390, loaded core only not all states
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+System.Management.Automation.RemoteException
+EXIT 1
+
+Source f833e240. Complete10 raw bundles/250 files. All208 registered i18n behavior cases, including72 fixed12-identity core-screen/viewport cases and all12 canonical picker identities; includes helper protocol and synthetic modal-handler probes, not208 independent user workflows; same assertions both modes, real login200 and strict HTTP/JSON/no-business-write guard. Approved native wrapper/listener/endpoints revalidated by native preflight; original PG5432/opchub_test/services/data retained, no SQL/seed/reset/repair. Unmasked images and exact Myanmar anchors, not all-language/state/control/value/performance or human approval.
+COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts
+[WebServer] (node:30456) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:12472) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:10948) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [behavior] › behavior\admin-i18n-all-locales.spec.ts:18:7 › D-141 AC824-07/15 actual id profile 390, loaded core only not all states (4.8s)
+
+
+  1) [behavior] › behavior\admin-i18n-all-locales.spec.ts:18:7 › D-141 AC824-07/15 actual id profile 390, loaded core only not all states
+
+    Error: {"width":390,"scroll":393,"overflow":[{"tag":"BUTTON","class":"oDYnGW_me","right":392.859375,"width":70,"text":"Quản trị hệ thốngSuper Admin"}],"menuBounds":{"left":-43.9375,"right":314.859375}}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 390
+    Received:    393
+
+      64 |         }));
+      65 |         const diagnostics = JSON.stringify({ ...layout, menuBounds });
+    > 66 |         expect(layout.scroll, diagnostics).toBeLessThanOrEqual(layout.width);
+         |                                            ^
+      67 |         if (menuBounds) {
+      68 |           expect(menuBounds.left, diagnostics).toBeGreaterThanOrEqual(0);
+      69 |           expect(menuBounds.right, diagnostics).toBeLessThanOrEqual(width);
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-all-locales.spec.ts:66:44
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-mobile-layout-results\admin-i18n-all-locales-D-1-df426-ed-core-only-not-all-states-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\admin-i18n-all-locales.spec.ts:18:7 › D-141 AC824-07/15 actual id profile 390, loaded core only not all states
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+System.Management.Automation.RemoteException
+EXIT 1
+
+Initial required root lint stopped at consistent-type-imports in core-ready.ts (type-only coreScreens/CORE_LOCALES import). Corrected to import type, no assertion changes. Original root lint output:
+Source working tree based onf833e240; complete Myanmar25/2667 with8 new business catalogs/1407 leaves, preserving earlier17 files. Fixed10-bundle250-file raw/build gate49 physical positive/negative cases and92 exact source/key/locale copy receipts. Full16-AC/control/state/value/performance acceptance remains open; raw presence alone is not DONE. Admin-only mobile language wrapper, real loaded-data/popover browser checks, canonical picker/sidebar fixtures and unambiguous ICU cache tuple. No business/API/DB/Portal/shared/dependency/font change. Actual root commands, cached tasks identified by Turbo; no DB/service mutation.
+COMMAND pnpm lint
+$ turbo run lint
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running lint in 9 packages
+   • Remote caching disabled
+
+@opchub/shared:lint: cache hit, replaying logs f9d493ea0cb6d67f
+@opchub/admin:lint: cache miss, executing 5f5bda6cf8822dc7
+@opchub/shared:lint: $ eslint src
+@opchub/server:lint: cache hit, replaying logs 7f4b11d47879bedd
+@opchub/server:lint: $ eslint src test
+@opchub/e2e:lint: cache miss, executing 8ef78c7fc6a5f900
+@opchub/ui:lint: cache hit, replaying logs eea5bd38bfdbc884
+@opchub/db:lint: cache hit, replaying logs 8df791dba6501ec7
+@opchub/db:lint: $ eslint src seed test
+@opchub/portal:lint: cache hit, replaying logs 71e3df361172b94e
+@opchub/integrations:lint: cache hit, replaying logs 1fb607819a53b21e
+@opchub/portal:lint: $ eslint src
+@opchub/integrations:lint: $ eslint src
+@opchub/ui:lint: $ eslint src
+@opchub/admin:lint: $ eslint src
+@opchub/e2e:lint: $ eslint parity behavior audit server llm env.ts urls.ts
+@opchub/e2e:lint:
+@opchub/e2e:lint: D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n\core-ready.ts
+@opchub/e2e:lint:   3:1  error  All imports in the declaration are only used as types. Use `import type`  @typescript-eslint/consistent-type-imports
+@opchub/e2e:lint:
+@opchub/e2e:lint: ✖ 1 problem (1 error, 0 warnings)
+@opchub/e2e:lint:   1 error and 0 warnings potentially fixable with the `--fix` option.
+@opchub/e2e:lint:
+@opchub/e2e:lint: [ELIFECYCLE] Command failed with exit code 1.
+@opchub/e2e#lint:  ERROR  command (D:\CODING\OPCHUB\CODING\e2e) C:\Users\PC\AppData\Local\Temp\opchub-tip823-pnpm-12-11-2\pnpm.cmd run lint exited (1)
+
+ Tasks:    6 successful, 8 total
+Cached:    6 cached, 8 total
+  Time:    24.827s
+Failed:    @opchub/e2e#lint
+
+ ERROR  run failed: command  exited (1)
+[ELIFECYCLE] Command failed with exit code 1.
+EXIT 1

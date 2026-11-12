@@ -1,0 +1,79 @@
+{
+  "title": "Mga Tindahan",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "kpi": {
+    "total": "Kabuuang mga tindahan",
+    "published": "Nakikita",
+    "draft": "Draft",
+    "hidden": "Itinago ng Admin"
+  },
+  "search": "Maghanap ng tindahan, industriya, lalawigan...",
+  "filtersLabel": "I-filter ayon sa katayuan ng tindahan",
+  "filter": {
+    "all": "Lahat",
+    "published": "Nakikita",
+    "draft": "Draft",
+    "hidden": "Nakatago"
+  },
+  "status": {
+    "published": "Nakikita",
+    "draft": "Draft",
+    "hidden": "Itinago ng Admin"
+  },
+  "kind": {
+    "product": "Produkto",
+    "service": "Serbisyo"
+  },
+  "table": {
+    "label": "Listahan ng mga tindahan",
+    "all": "Piliin lahat sa pahinang ito",
+    "store": "Tindahan",
+    "field": "Industriya",
+    "province": "Lalawigan / lungsod",
+    "items": "Mga produkto/serbisyo",
+    "updated": "Na-update",
+    "status": "Katayuan",
+    "actions": "Mga Aksyon",
+    "view": "Tingnan",
+    "hide": "Itago",
+    "show": "Ipakita"
+  },
+  "bulk": {
+    "label": "Mga maramihang aksyon",
+    "selected": "Mga napiling tindahan: {n}",
+    "show": "Ipakita",
+    "hide": "Itago",
+    "clear": "Alisin ang pagpili"
+  },
+  "pager": {
+    "text": "Pahina {page} / {pages} · Mga tindahan: {total}",
+    "prev": "Nakaraang pahina",
+    "next": "Susunod na pahina"
+  },
+  "drawer": {
+    "title": "Mga detalye ng tindahan",
+    "close": "Isara ang mga detalye",
+    "closeBtn": "Isara",
+    "meta": "May-ari: {owner} · {loc} · na-update noong {date}",
+    "items": "Mga Produkto at Serbisyo",
+    "contactPrice": "Makipag-ugnayan para sa presyo",
+    "hide": "Itago ang tindahan",
+    "show": "Ipakita muli",
+    "feature": "Markahan bilang Itinatampok",
+    "unfeature": "Alisin sa Itinatampok",
+    "publicPage": "Pampublikong pahina",
+    "publicCopy": "Kopyahin",
+    "publicCopied": "Nakopya ang link ng pampublikong pahina",
+    "publicCopyError": "Hindi makopya ang link"
+  },
+  "toast": {
+    "hidden": "Mga naitagong tindahan: {n}",
+    "shown": "Mga naipakitang tindahan: {n}",
+    "failed": "Hindi makumpleto ang aksyon. Subukang muli",
+    "featured": "Minarkahan bilang Itinatampok ang \"{name}\"",
+    "unfeatured": "Inalis sa Itinatampok ang \"{name}\""
+  },
+  "empty": "Walang tumutugmang tindahan.",
+  "error": "Hindi ma-load ang mga tindahan",
+  "retry": "Subukang muli"
+}

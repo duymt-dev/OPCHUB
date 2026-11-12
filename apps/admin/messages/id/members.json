@@ -1,0 +1,179 @@
+{
+  "title": "Anggota",
+  "sub": "Kelola akun anggota, peran pendaftaran, dan grup",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "card": {
+    "title": "Anggota",
+    "count": "· Akun: {n}",
+    "search": "Cari menurut nama, email...",
+    "grid": "Tampilan kisi",
+    "list": "Tampilan daftar",
+    "types": "Jenis akun",
+    "typeAll": "Semua",
+    "typeBiz": "Bisnis",
+    "typePer": "Perorangan"
+  },
+  "col": {
+    "member": "Anggota",
+    "type": "Jenis akun",
+    "groups": "Grup yang diikuti",
+    "role": "Peran pendaftaran",
+    "date": "Bergabung",
+    "status": "Status",
+    "selectAll": "Pilih semua di halaman ini",
+    "select": "Pilih {name}",
+    "actions": "Tindakan untuk {name}"
+  },
+  "type": {
+    "business": "Bisnis",
+    "personal": "Perorangan",
+    "businessLong": "Bisnis / Organisasi"
+  },
+  "role": {
+    "member": "Anggota",
+    "lecturer": "Pengajar",
+    "admin": "Administrator"
+  },
+  "status": {
+    "active": "Aktif",
+    "locked": "Dikunci"
+  },
+  "grid": {
+    "joined": "Bergabung {date}",
+    "profile": "Lihat profil pendaftaran →"
+  },
+  "menu": {
+    "title": "Ubah status",
+    "active": "Aktif",
+    "lock": "Kunci akun",
+    "unlock": "Buka kunci",
+    "assign": "Tetapkan ke grup…",
+    "profile": "Lihat profil pendaftaran"
+  },
+  "bulk": {
+    "selected": "Terpilih",
+    "unit": "item",
+    "assign": "+ Tetapkan ke grup",
+    "lock": "Kunci akun",
+    "unlock": "Buka kunci",
+    "export": "Ekspor CSV",
+    "clear": "Hapus pilihan"
+  },
+  "assign": {
+    "titleOne": "Tetapkan {name} ke grup",
+    "titleMany": "Tetapkan anggota ke grup: {n}",
+    "search": "Cari grup menurut nama atau provinsi/kota...",
+    "groupRole": "Peran dalam grup",
+    "already": "Sudah menjadi anggota",
+    "none": "Belum ada grup dipilih",
+    "count": "Grup terpilih: {n}",
+    "cancel": "Batal",
+    "save": "Tetapkan ke grup",
+    "close": "Tutup"
+  },
+  "drawer": {
+    "title": "Profil pendaftaran",
+    "close": "Tutup",
+    "biz": "Informasi bisnis",
+    "rep": "Perwakilan",
+    "per": "Informasi pribadi",
+    "groups": "Grup yang dipilih saat mendaftar",
+    "sys": "Sistem",
+    "taxCode": "Nomor pajak",
+    "company": "Nama bisnis",
+    "field": "Bidang",
+    "size": "Skala",
+    "country": "Negara pendaftaran",
+    "name": "Nama lengkap",
+    "position": "Jabatan",
+    "phone": "Nomor telepon",
+    "email": "Email",
+    "persona": "Anda adalah",
+    "registered": "Tanggal pendaftaran",
+    "role": "Peran pendaftaran",
+    "status": "Status",
+    "pending": "Menunggu verifikasi",
+    "rejected": "Verifikasi ditolak",
+    "reject": "Tolak",
+    "approve": "Verifikasi bisnis",
+    "rejectTitle": "Tolak profil bisnis?",
+    "rejectBody": "{company} tidak akan menerima lencana \"Terverifikasi\". Akun tetap dapat digunakan (D-40).",
+    "confirm": "Tolak",
+    "cancel": "Batal"
+  },
+  "roleConfirm": {
+    "title": "Ubah izin sistem?",
+    "body": "{name}: {from} → {to}. Perubahan ini dicatat di log aktivitas.",
+    "ok": "Ubah izin",
+    "cancel": "Batal"
+  },
+  "lockConfirm": {
+    "title": "Kunci akun?",
+    "body": "{who} tidak dapat masuk hingga kunci dibuka. Tindakan ini dicatat di log aktivitas.",
+    "many": "Akun: {n}",
+    "ok": "Kunci",
+    "cancel": "Batal"
+  },
+  "pager": {
+    "unit": "anggota",
+    "prev": "Halaman sebelumnya",
+    "next": "Halaman berikutnya",
+    "pageSize": "Baris per halaman"
+  },
+  "toast": {
+    "locked": "Dikunci · {name}",
+    "unlocked": "Kunci dibuka · {name}",
+    "activated": "Diatur Aktif · {name}",
+    "bulkLocked": "Akun dikunci: {n}",
+    "bulkUnlocked": "Kunci akun dibuka: {n}",
+    "exporting": "Mengekspor item ke CSV: {n}…",
+    "exported": "Anggota diekspor: {n}",
+    "exportFailed": "Ekspor gagal: tidak dapat membuat berkas. Silakan coba lagi",
+    "exportTimeout": "Ekspor gagal: waktu pembuatan berkas habis. Silakan coba lagi",
+    "role": "Peran {name} diperbarui",
+    "assigned": "Anggota ditetapkan: {n} · Grup: {g} · Peran: {role}",
+    "pickGroup": "Silakan pilih minimal 1 grup",
+    "verified": "{name} diverifikasi",
+    "rejected": "Profil {name} ditolak",
+    "failed": "Tindakan tidak berhasil"
+  },
+  "filters": {
+    "all": "Semua",
+    "results": "{n} hasil",
+    "clear": "Hapus filter ({n})",
+    "grp": "Grup komunitas",
+    "role": {
+      "label": "Peran pendaftaran",
+      "business": "Bisnis",
+      "expert": "Ahli",
+      "lecturer": "Pengajar",
+      "engineer": "Insinyur",
+      "investor": "Investor",
+      "freelancer": "Pekerja lepas",
+      "student": "Mahasiswa"
+    },
+    "fee": {
+      "label": "Biaya keanggotaan",
+      "paid": "Sudah membayar",
+      "trial": "Masa gratis 3 bulan",
+      "unpaid": "Belum membayar / Kedaluwarsa"
+    },
+    "st": {
+      "label": "Status",
+      "active": "Aktif",
+      "locked": "Dikunci"
+    },
+    "prof": {
+      "label": "Profil",
+      "done": "Selesai",
+      "inc": "Belum selesai"
+    },
+    "day": {
+      "7": "7 hari terakhir",
+      "30": "30 hari terakhir",
+      "90": "90 hari terakhir",
+      "365": "12 bulan terakhir",
+      "label": "Tanggal pendaftaran"
+    }
+  }
+}

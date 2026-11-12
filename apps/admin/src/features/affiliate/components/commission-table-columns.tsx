@@ -1,7 +1,8 @@
 'use client';
 
 import type { TableProps } from 'antd';
-import { useTranslations } from 'next-intl';
+import { formatNumber } from '@/i18n/format';
+import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { affiliateDate, affiliateMoney } from '../format';
 import type { CommissionRow } from '../types';
@@ -12,13 +13,14 @@ export function useCommissionColumns(
   cancel: (ids: string[]) => void,
   restore: (ids: string[]) => void,
 ): NonNullable<TableProps<CommissionRow>['columns']> {
+  const locale = useLocale();
   const t = useTranslations('affiliate');
   return [
     {
       title: t('columns.date'),
       key: 'date',
       width: 100,
-      render: (_, row) => affiliateDate(row.date),
+      render: (_, row) => affiliateDate(row.date, locale),
     },
     { title: t('columns.customer'), dataIndex: 'customerName' },
     {
@@ -34,7 +36,7 @@ export function useCommissionColumns(
       title: t('columns.revenue'),
       key: 'revenue',
       width: 110,
-      render: (_, row) => affiliateMoney(row.feeAmount),
+      render: (_, row) => affiliateMoney(row.feeAmount, locale),
     },
     {
       title: t('columns.rate'),
@@ -42,15 +44,15 @@ export function useCommissionColumns(
       width: 150,
       render: (_, row) =>
         t(row.customerYear === 1 ? 'commissionFirstYear' : 'commissionRenewalYear', {
-          rate: row.rate,
-          year: row.customerYear,
+          rate: formatNumber(row.rate, locale),
+          year: formatNumber(row.customerYear, locale),
         }),
     },
     {
       title: t('columns.commission'),
       key: 'amount',
       width: 110,
-      render: (_, row) => <b>{affiliateMoney(row.amount)}</b>,
+      render: (_, row) => <b>{affiliateMoney(row.amount, locale)}</b>,
     },
     {
       title: t('columns.status'),

@@ -1,7 +1,7 @@
 'use client';
 
 import type { AdminService, ServiceRequest } from '@opchub/shared/api-domains';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { vnDate } from '../model';
 import styles from './request-table.module.css';
 
@@ -15,6 +15,7 @@ interface Props {
 
 /** Bảng lưới tự vẽ như prototype (`data-m="tbl"`), cuộn ngang ở màn hẹp */
 export function RequestTable({ rows, services, onOpen }: Props) {
+  const locale = useLocale();
   const t = useTranslations('requests');
   return (
     <div data-m="tbl" className={styles.tbl}>
@@ -48,7 +49,7 @@ export function RequestTable({ rows, services, onOpen }: Props) {
                 {r.address || '—'}
               </span>
               <span className={`${styles.td} ${styles.muted}`} role="cell">
-                {vnDate(r.createdAt)}
+                {vnDate(r.createdAt, locale)}
               </span>
               <div className={styles.actions} role="cell">
                 <button type="button" className={styles.link} onClick={() => onOpen(r)}>

@@ -1,3 +1,5 @@
+import { compactMoney } from '@/i18n/compact-money';
+import { formatDate } from '@/i18n/format';
 import type { ProjectStatus } from '@opchub/shared';
 import type { ProjectFunding } from '@opchub/shared/api-domains';
 import {
@@ -75,24 +77,11 @@ export function drawerActions(s: ProjectStatus, pendingRevision = false) {
 }
 
 /** dd/mm/yyyy theo giờ Việt Nam */
-export function vnDate(isoStr: string): string {
-  return new Intl.DateTimeFormat('vi-VN', {
-    timeZone: 'Asia/Ho_Chi_Minh',
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-  }).format(new Date(isoStr));
-}
+export const vnDate = (isoStr: string, locale = 'vi') => formatDate(isoStr, locale);
 
 /** Số tiền gọi vốn rút gọn như prototype ($150K, 2 tỷ ₫, 300 triệu ₫) */
-export function formatMoney(n: number, cur: ProjectFunding['currency']): string {
-  if (cur === 'USD') {
-    if (n >= 1e6) return `$${(n / 1e6).toFixed(n % 1e6 ? 1 : 0)}M`;
-    return n >= 1e3 ? `$${Math.round(n / 1e3)}K` : `$${n}`;
-  }
-  if (n >= 1e9) return `${(n / 1e9).toFixed(n % 1e9 ? 1 : 0).replace('.', ',')} tỷ ₫`;
-  return n >= 1e6 ? `${Math.round(n / 1e6)} triệu ₫` : `${n.toLocaleString('vi-VN')} ₫`;
-}
+export const formatMoney = (n: number, cur: ProjectFunding['currency'], locale = 'vi') =>
+  compactMoney(n, cur, locale);
 
 /** Bỏ thẻ HTML của ô soạn thảo → văn bản thuần */
 export function plainText(html: string): string {
@@ -122,7 +111,7 @@ export interface InfoLabels {
 }
 
 /** Bảng thông tin trong drawer (thứ tự prototype) */
-export function infoRows(p: AdminProject, l: InfoLabels): InfoRow[] {
+export function infoRows(p: AdminProject, l: InfoLabels, locale = 'vi'): InfoRow[] {
   const repo = p.repo
     ? `${p.repo.provider === 'gitlab' ? 'GitLab' : 'GitHub'} · ${
         p.repo.visibility === 'private' ? l.repoPrivate : l.repoPublic
@@ -143,12 +132,15 @@ export function infoRows(p: AdminProject, l: InfoLabels): InfoRow[] {
     [
       'funding',
       p.funding
-        ? l.funding(formatMoney(p.funding.amount, p.funding.currency), p.funding.equityPercent)
+        ? l.funding(
+            formatMoney(p.funding.amount, p.funding.currency, locale),
+            p.funding.equityPercent,
+          )
         : l.noFunding,
     ],
     ['team', team],
     ['groups', p.groupNames.join(', ') || l.none],
-    ['date', vnDate(p.createdAt)],
+    ['date', vnDate(p.createdAt, locale)],
   ];
   return rows.map(([key, value]) => ({ key, value: value || l.none }));
 }

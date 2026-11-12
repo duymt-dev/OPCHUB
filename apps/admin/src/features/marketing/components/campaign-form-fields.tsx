@@ -2,13 +2,14 @@
 
 import { CAMPAIGN_AUDIENCE, type MailTemplate } from '@opchub/shared/api-domains';
 import { FieldErrorOf, type FieldErrorProps, invalidProps, RichTextField } from '@opchub/ui';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useGroupOptions } from '../hooks/use-marketing';
 import { applyTemplate, fmtN, toggleGroup } from '../model';
 import { MAIL_VARS, type CampaignFormError, type CampaignFormState } from '../types';
 import styles from './campaign-form.module.css';
 import { AdminAiSuggestButton } from '@/components/ai-suggest-button';
 import { useState } from 'react';
+import { useAdminUiLabels } from '@/i18n/ui-labels';
 
 interface FieldProps {
   f: CampaignFormState;
@@ -83,6 +84,7 @@ export function AudienceField({
   err,
   estimate,
 }: FieldProps & Err & { estimate: number | undefined }) {
+  const locale = useLocale();
   const t = useTranslations('marketing.form');
   const groups = useGroupOptions(f.audience === 'groups').data ?? [];
   return (
@@ -129,7 +131,7 @@ export function AudienceField({
       ) : null}
       <FieldErrorOf e={err('groups')} />
       <span className={styles.estimate} aria-live="polite">
-        {t('estimate', { n: fmtN(estimate ?? 0) })}
+        {t('estimate', { n: fmtN(estimate ?? 0, locale) })}
       </span>
     </div>
   );
@@ -161,6 +163,7 @@ export function BodyField({
   rev,
   onInsert,
 }: FieldProps & { rev: number; onInsert: (v: string) => void }) {
+  const ui = useAdminUiLabels();
   const t = useTranslations('marketing.form');
   const [aiRevision, setAiRevision] = useState(0);
   return (
@@ -174,6 +177,8 @@ export function BodyField({
         }}
       />
       <RichTextField
+        labels={ui.editor}
+        keyboardControls
         key={`${rev}:${aiRevision}`}
         value={f.body}
         onChange={(body) => set({ body })}

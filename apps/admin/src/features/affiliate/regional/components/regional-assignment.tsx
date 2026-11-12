@@ -7,6 +7,7 @@ import { useRegionalCandidates } from '../hooks/use-regional-directors';
 import { useRegionalConfirmations } from '../hooks/use-regional-confirmations';
 import type { useRegionalWrites } from '../hooks/use-regional-writes';
 import styles from './regional.module.css';
+import { useDomainLabels } from '@/i18n/domain-labels';
 
 export function RegionalAssignment({
   slot,
@@ -22,6 +23,7 @@ export function RegionalAssignment({
   mutate: ReturnType<typeof useRegionalWrites>['mutateAsync'];
 }) {
   const t = useTranslations('affiliate.regional');
+  const regionLabel = useDomainLabels().region(slot.region, true);
   const [search, setSearch] = useState('');
   const [open, setOpen] = useState(false);
   const query = useRegionalCandidates(slot.region, search, open || forceOpen);
@@ -36,7 +38,7 @@ export function RegionalAssignment({
         {t('member')}
         <Select
           virtual={false}
-          aria-label={`${t('member')} ${slot.label}`}
+          aria-label={`${t('member')} ${regionLabel}`}
           showSearch={{ filterOption: false, onSearch: setSearch }}
           options={options}
           value={slot.member?.id ?? null}
@@ -56,7 +58,7 @@ export function RegionalAssignment({
       </label>
       <div className={styles.field}>
         <span>{t('region')}</span>
-        <span className={styles.regionValue}>{slot.label}</span>
+        <span className={styles.regionValue}>{regionLabel}</span>
       </div>
     </div>
   );

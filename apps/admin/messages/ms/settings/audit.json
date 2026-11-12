@@ -1,0 +1,42 @@
+{
+  "log": {
+    "filterTag": "Kategori",
+    "filterActor": "Pelaku",
+    "filterRange": "Julat tarikh",
+    "from": "Dari tarikh",
+    "to": "Hingga tarikh",
+    "system": "Sistem",
+    "clearFilters": "Padam penapis",
+    "retryActors": "Muat semula senarai pelaku",
+    "emptyFiltered": "Tiada tindakan yang sepadan",
+    "heading": "Log aktiviti pentadbir",
+    "headingSub": "Mencatat automatik semua tindakan pentadbir (penguncian, kelulusan, pembayaran, perubahan konfigurasi…) selama 90 hari terakhir.",
+    "empty": "Belum ada aktiviti",
+    "tag": {
+      "affiliate": "Ahli gabungan",
+      "sso": "SSO",
+      "member": "Ahli",
+      "permission": "Kebenaran",
+      "project": "Projek",
+      "language": "Bahasa",
+      "moderation": "Moderasi",
+      "settings": "Konfigurasi",
+      "content": "Kandungan",
+      "report": "Laporan",
+      "pricing": "Harga"
+    },
+    "export": "Eksport CSV",
+    "more": "Muatkan lagi",
+    "loading": "Memuatkan log aktiviti…",
+    "failed": "Tidak dapat memuatkan log aktiviti atau mengeksport CSV",
+    "retry": "Cuba lagi",
+    "exported": "Baris dieksport: {n} – nhat-ky-hoat-dong.csv"
+  },
+  "time": {
+    "now": "baharu sahaja",
+    "minutes": "{n} minit lalu",
+    "hours": "{n} jam lalu",
+    "yesterday": "Semalam",
+    "days": "{n} hari lalu"
+  }
+}

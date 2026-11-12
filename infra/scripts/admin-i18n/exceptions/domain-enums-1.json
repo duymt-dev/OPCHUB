@@ -1,0 +1,140 @@
+[
+  {
+    "file": "apps/admin/src/features/affiliate/components/affiliate-identity.tsx",
+    "kind": "enum-jsx",
+    "text": "agent.bank.bankName",
+    "values": [
+      "Vietcombank",
+      "VietinBank",
+      "BIDV",
+      "Agribank",
+      "Techcombank",
+      "MB Bank",
+      "ACB",
+      "VPBank",
+      "Sacombank",
+      "TPBank",
+      "HDBank",
+      "VIB",
+      "SHB",
+      "OCB",
+      "MSB"
+    ],
+    "reason": "Bank proper names from the fixed catalog; preserve bank identity and selected API values."
+  },
+  {
+    "file": "apps/admin/src/features/affiliate/components/agent-identity.tsx",
+    "kind": "enum-jsx",
+    "text": "bank.bankName",
+    "values": [
+      "Vietcombank",
+      "VietinBank",
+      "BIDV",
+      "Agribank",
+      "Techcombank",
+      "MB Bank",
+      "ACB",
+      "VPBank",
+      "Sacombank",
+      "TPBank",
+      "HDBank",
+      "VIB",
+      "SHB",
+      "OCB",
+      "MSB"
+    ],
+    "reason": "Bank proper names from the fixed catalog; preserve bank identity and selected API values."
+  },
+  {
+    "file": "apps/admin/src/features/affiliate/components/customer-payout-history.tsx",
+    "kind": "enum-jsx",
+    "text": "row.bank.bankName",
+    "values": [
+      "Vietcombank",
+      "VietinBank",
+      "BIDV",
+      "Agribank",
+      "Techcombank",
+      "MB Bank",
+      "ACB",
+      "VPBank",
+      "Sacombank",
+      "TPBank",
+      "HDBank",
+      "VIB",
+      "SHB",
+      "OCB",
+      "MSB"
+    ],
+    "reason": "Bank proper names from the fixed catalog; preserve bank identity and selected API values."
+  },
+  {
+    "file": "apps/admin/src/features/bots/components/script-lines.tsx",
+    "kind": "enum-jsx",
+    "text": "b.ch",
+    "values": ["↑", "↓", "×"],
+    "reason": "Direction/remove glyph commands; accessible button titles are separately localized."
+  },
+  {
+    "file": "apps/admin/src/features/fees/components/fee-table.tsx",
+    "kind": "enum-jsx",
+    "text": "mark",
+    "values": ["", "✓", "–"],
+    "reason": "Selection-state glyphs; not translatable words."
+  },
+  {
+    "file": "apps/admin/src/features/marketing/components/campaign-form-fields.tsx",
+    "kind": "enum-jsx",
+    "text": "v",
+    "values": ["{{ten}}", "{{email}}", "{{nhom}}", "{{link_dang_nhap}}"],
+    "reason": "Immutable email-template variable syntax; never translate token bytes."
+  },
+  {
+    "file": "apps/admin/src/features/marketing/components/onboarding-mail.tsx",
+    "kind": "enum-jsx",
+    "text": "v",
+    "values": ["link", "ten", "con_thieu"],
+    "reason": "Immutable email-template variable names; never translate token bytes."
+  },
+  {
+    "file": "apps/admin/src/features/settings/components/ai/ai-provider-detail.tsx",
+    "kind": "enum-jsx",
+    "text": "catalog.initials",
+    "values": ["D", "G", "+", "A", "O", "U"],
+    "reason": "Provider brand monograms, not translatable names."
+  },
+  {
+    "file": "apps/admin/src/features/settings/components/ai/ai-provider-fields.tsx",
+    "kind": "enum-jsx",
+    "text": "catalog.keyHint",
+    "values": ["sk-ant-…", "sk-…", "AIza…", "usg_…", "API key"],
+    "reason": "Canonical provider key-prefix examples; the custom provider branch displays translated key. Preserve all actual provider-prefix bytes."
+  },
+  {
+    "file": "apps/admin/src/features/settings/components/ai/ai-provider-fields.tsx",
+    "kind": "enum-jsx",
+    "text": "m",
+    "values": [
+      "auto",
+      "claude-sonnet-5-5",
+      "claude-opus-5-5",
+      "claude-haiku-5-5",
+      "gpt-4.1",
+      "gpt-4.1-mini",
+      "gpt-4o",
+      "gemini-3.8-flash",
+      "gemini-3.5-flash-lite",
+      "gemini-4-argon",
+      "deepseek-flash",
+      "deepseek-v4-pro"
+    ],
+    "reason": "Stable AI model IDs used by provider APIs; never translate model identifiers."
+  },
+  {
+    "file": "apps/admin/src/features/settings/components/ai/ai-provider-grid.tsx",
+    "kind": "enum-jsx",
+    "text": "c.initials",
+    "values": ["D", "G", "+", "A", "O", "U"],
+    "reason": "Provider brand monograms, not translatable names."
+  }
+]

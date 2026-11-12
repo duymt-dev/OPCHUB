@@ -4,6 +4,7 @@ import type { WelcomeMail } from '@opchub/shared/api-domains';
 import { Icon } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import styles from './welcome-mail.module.css';
+import { useNumberText } from '@/i18n/use-number-text';
 
 interface Props {
   mail: WelcomeMail;
@@ -12,6 +13,7 @@ interface Props {
 
 /** Tài liệu đính kèm (tiêu đề + URL), "Bổ sung tài liệu đính kèm" — D-70 */
 export function AttachmentsEditor({ mail, edit }: Props) {
+  const numberText = useNumberText();
   const t = useTranslations('settings.mail');
   const atts = mail.attachments;
   const setAtt = (i: number, p: Partial<WelcomeMail['attachments'][number]>) =>
@@ -20,11 +22,11 @@ export function AttachmentsEditor({ mail, edit }: Props) {
     <div className={styles.group}>
       <div className={styles.groupHead}>
         <span className={styles.grow}>{t('attachments')}</span>
-        <span className={styles.count}>{t('attCount', { n: atts.length })}</span>
+        <span className={styles.count}>{t('attCount', { n: numberText(atts.length) })}</span>
       </div>
       {atts.map((a, i) => (
         <div key={i} className={styles.attRow}>
-          <span className={styles.n}>{i + 1}</span>
+          <span className={styles.n}>{numberText(i + 1)}</span>
           <input
             className={styles.input}
             value={a.title}
@@ -64,24 +66,25 @@ export function AttachmentsEditor({ mail, edit }: Props) {
 
 /** Quy định hoạt động, "+ Thêm quy định" — D-70 */
 export function RulesEditor({ mail, edit }: Props) {
+  const numberText = useNumberText();
   const t = useTranslations('settings.mail');
   return (
     <div className={styles.group}>
       {t('rules')}
       {mail.rules.map((r, i) => (
         <div key={i} className={styles.ruleRow}>
-          <span className={styles.n}>{i + 1}</span>
+          <span className={styles.n}>{numberText(i + 1)}</span>
           <input
             className={styles.input}
             value={r}
-            aria-label={t('rule', { n: i + 1 })}
+            aria-label={t('rule', { n: numberText(i + 1) })}
             onChange={(e) =>
               edit({ rules: mail.rules.map((x, j) => (j === i ? e.target.value : x)) })
             }
           />
           <button
             type="button"
-            aria-label={t('ruleRemove', { n: i + 1 })}
+            aria-label={t('ruleRemove', { n: numberText(i + 1) })}
             className={styles.x28}
             onClick={() => edit({ rules: mail.rules.filter((_, j) => j !== i) })}
           >

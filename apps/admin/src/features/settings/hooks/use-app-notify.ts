@@ -6,7 +6,10 @@ import { useTranslations } from 'next-intl';
 import type { AppNotifySettings } from '@opchub/shared/api-domains';
 import { appNotifyKey, fetchAppNotify, saveAppNotify, testAppNotify } from '../app-notify-api';
 import { useSettingsMutation } from './use-settings-mutation';
+import { useNumberText } from '@/i18n/use-number-text';
+
 export function useAppNotify() {
+  const numberText = useNumberText();
   const t = useTranslations('settings.app');
   const toast = useToast();
   const qc = useQueryClient();
@@ -26,7 +29,11 @@ export function useAppNotify() {
     key: appNotifyKey,
     fn: testAppNotify,
     onDone: (result) => {
-      toast(result.deviceCount ? t('sentDevices', { n: result.deviceCount }) : t('noDevices'));
+      toast(
+        result.deviceCount
+          ? t('sentDevices', { n: numberText(result.deviceCount) })
+          : t('noDevices'),
+      );
       void qc.invalidateQueries({ queryKey: ['notifications'] });
     },
   });

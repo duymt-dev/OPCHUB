@@ -9,6 +9,7 @@ import styles from './affiliate.module.css';
 import { AffiliateExportButton } from './affiliate-export-button';
 import layout from './agent-toolbar.module.css';
 import { AgentMonthSelect } from './agent-month-select';
+import { useNumberText } from '@/i18n/use-number-text';
 
 export function ListToolbar({
   params,
@@ -21,6 +22,7 @@ export function ListToolbar({
   counts: AffiliateStatusCounts;
   defaultRate?: number | undefined;
 }) {
+  const numberText = useNumberText();
   const t = useTranslations('affiliate');
   const [draft, setDraft] = useState({ source: params.q, value: params.q });
   if (draft.source !== params.q) setDraft({ source: params.q, value: params.q });
@@ -57,7 +59,7 @@ export function ListToolbar({
                 <span>
                   {t(`status.${value}`)}
                   {counts[value] !== undefined ? (
-                    <small className={styles.filterCount}>{counts[value]}</small>
+                    <small className={styles.filterCount}>{numberText(counts[value])}</small>
                   ) : null}
                 </span>
               ),
@@ -68,7 +70,9 @@ export function ListToolbar({
       ) : (
         <>
           <span className={styles.hint} data-affiliate-hint>
-            {defaultRate === undefined ? t('autoHint') : t('autoRateHint', { rate: defaultRate })}
+            {defaultRate === undefined
+              ? t('autoHint')
+              : t('autoRateHint', { rate: numberText(defaultRate) })}
           </span>
           <AgentMonthSelect value={params.month} onChange={(month) => update({ month, page: 1 })} />
         </>

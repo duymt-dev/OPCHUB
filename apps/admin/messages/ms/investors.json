@@ -1,0 +1,61 @@
+{
+  "title": "Pelabur",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "stats": {
+    "total": "Jumlah pelabur",
+    "fund": "Dana pelaburan",
+    "business": "Pelabur perniagaan",
+    "individual": "Pelabur individu",
+    "amount": "Jumlah minat pelaburan"
+  },
+  "heading": "Pelabur",
+  "sub": "Dana dan individu yang menyatakan minat melabur dalam projek OPC",
+  "search": "Cari nama, perniagaan, dana, nombor telefon...",
+  "searchLabel": "Cari pelabur",
+  "csv": "Eksport CSV",
+  "tabsLabel": "Penapis mengikut jenis pelabur",
+  "tabs": {
+    "all": "Semua",
+    "fund": "Dana pelaburan",
+    "business": "Perniagaan",
+    "individual": "Individu"
+  },
+  "kind": {
+    "fund": "Dana pelaburan",
+    "business": "Perniagaan",
+    "individual": "Individu"
+  },
+  "col": {
+    "investor": "Pelabur",
+    "kind": "Jenis",
+    "org": "Perniagaan / Dana",
+    "phone": "Nombor telefon",
+    "projects": "Projek yang diminati",
+    "total": "Jumlah minat"
+  },
+  "detail": "Butiran",
+  "empty": "Tiada pelabur yang sepadan",
+  "pager": {
+    "unit": "pelabur",
+    "prev": "Halaman sebelumnya",
+    "next": "Halaman seterusnya",
+    "pageSize": "Bilangan baris setiap halaman"
+  },
+  "drawer": {
+    "title": "Butiran pelabur",
+    "close": "Tutup",
+    "org": "Perniagaan / Dana",
+    "phone": "Nombor telefon",
+    "total": "Jumlah minat pelaburan",
+    "copy": "Salin nombor",
+    "projects": "Projek yang diminati ({n})",
+    "owner": "Pemilik projek: {owner} · {date}"
+  },
+  "toast": {
+    "copied": "Nombor telefon disalin",
+    "exported": "Pelabur dieksport: {n}",
+    "failed": "Tidak dapat dilaksanakan, sila cuba lagi"
+  },
+  "error": "Tidak dapat memuatkan senarai pelabur",
+  "retry": "Cuba lagi"
+}

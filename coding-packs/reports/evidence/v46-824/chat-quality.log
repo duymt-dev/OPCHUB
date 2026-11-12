@@ -1,0 +1,231 @@
+
+COMMAND pnpm lint
+Read-only chat harness phase; production ff6be9ee unchanged; cached results reported as cached, not new tests. Worker cap2 only, existing timeouts/assertions/skips unchanged. No concurrent OPCHUB browser/build jobs.
+$ turbo run lint
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running lint in 9 packages
+   • Remote caching disabled
+
+@opchub/e2e:lint: cache miss, executing 1c4fef1fb6a6d638
+@opchub/ui:lint: cache hit, replaying logs 83c0b0731ba71c3a
+@opchub/integrations:lint: cache hit, replaying logs 1fb607819a53b21e
+@opchub/ui:lint: $ eslint src
+@opchub/integrations:lint: $ eslint src
+@opchub/db:lint: cache hit, replaying logs 8df791dba6501ec7
+@opchub/db:lint: $ eslint src seed test
+@opchub/admin:lint: cache hit, replaying logs d3562a2cdbc0239c
+@opchub/admin:lint: $ eslint src
+@opchub/shared:lint: cache hit, replaying logs f9d493ea0cb6d67f
+@opchub/shared:lint: $ eslint src
+@opchub/portal:lint: cache hit, replaying logs 71e3df361172b94e
+@opchub/portal:lint: $ eslint src
+@opchub/server:lint: cache hit, replaying logs 7f4b11d47879bedd
+@opchub/server:lint: $ eslint src test
+@opchub/e2e:lint: $ eslint parity behavior audit server llm env.ts urls.ts
+
+ Tasks:    8 successful, 8 total
+Cached:    7 cached, 8 total
+  Time:    26.119s 
+
+EXIT 0
+
+COMMAND pnpm typecheck
+Read-only chat harness phase; production ff6be9ee unchanged; cached results reported as cached, not new tests. Worker cap2 only, existing timeouts/assertions/skips unchanged. No concurrent OPCHUB browser/build jobs.
+$ turbo run typecheck
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running typecheck in 9 packages
+   • Remote caching disabled
+
+@opchub/e2e:typecheck: cache miss, executing 692dacf29d5732ad
+@opchub/integrations:typecheck: cache hit, replaying logs 60f5b494e043fdc4
+@opchub/server:typecheck: cache hit, replaying logs f44a5951da8d2c30
+@opchub/integrations:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/server:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/db:typecheck: cache hit, replaying logs 35eaf239ef03390a
+@opchub/db:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/shared:typecheck: cache hit, replaying logs 2af37fea5a693c30
+@opchub/ui:typecheck: cache hit, replaying logs e28363fa83524181
+@opchub/shared:typecheck: $ tsc -p tsconfig.json
+@opchub/ui:typecheck: $ tsc -p tsconfig.json
+@opchub/portal:typecheck: cache hit, replaying logs 384ceac62a366d53
+@opchub/portal:typecheck: $ next typegen && tsc --noEmit
+@opchub/portal:typecheck: Generating route types...
+@opchub/portal:typecheck: ✓ Types generated successfully
+@opchub/admin:typecheck: cache hit, replaying logs 926f403fcf04adc0
+@opchub/admin:typecheck: $ next typegen && tsc --noEmit
+@opchub/admin:typecheck: Generating route types...
+@opchub/admin:typecheck: ✓ Types generated successfully
+@opchub/e2e:typecheck: $ tsc -p tsconfig.json
+
+ Tasks:    8 successful, 8 total
+Cached:    7 cached, 8 total
+  Time:    13.236s 
+
+EXIT 0
+
+COMMAND pnpm test --env-mode=loose
+Read-only chat harness phase; production ff6be9ee unchanged; cached results reported as cached, not new tests. Worker cap2 only, existing timeouts/assertions/skips unchanged. No concurrent OPCHUB browser/build jobs.
+$ turbo run test --concurrency=2 --env-mode=loose
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running test in 9 packages
+   • Remote caching disabled
+
+@opchub/shared:test: cache hit, replaying logs b0ac9becdf974ad3
+@opchub/shared:test: $ vitest run
+@opchub/shared:test: 
+@opchub/shared:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/shared
+@opchub/shared:test: 
+@opchub/shared:test: 
+@opchub/shared:test:  Test Files  127 passed (127)
+@opchub/shared:test:       Tests  757 passed (757)
+@opchub/shared:test:    Start at  16:00:10
+@opchub/shared:test:    Duration  158.12s (import 86%, transform 9%, tests 4%, worker 1%)
+@opchub/shared:test: 
+@opchub/shared:test:      Import  432 modules were evaluated 893 times · 162.66s total, 86% of tracked time
+@opchub/shared:test:              ~18.76s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/shared:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
+@opchub/shared:test: 
+@opchub/portal:test: cache hit, replaying logs c499ac8b2dccf1b3
+@opchub/portal:test: $ vitest run --passWithNoTests
+@opchub/portal:test: 
+@opchub/portal:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/portal
+@opchub/portal:test: 
+@opchub/portal:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/portal:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/portal:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/portal:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/portal:test: 
+@opchub/portal:test:  Test Files  85 passed (85)
+@opchub/portal:test:       Tests  476 passed (476)
+@opchub/portal:test:    Start at  16:04:29
+@opchub/portal:test:    Duration  353.37s (environment 47%, import 47%, tests 4%, transform 1%)
+@opchub/portal:test: 
+@opchub/portal:test:      Import  804 modules were evaluated 5111 times · 309.19s total, 47% of tracked time
+@opchub/portal:test:              ~113.00s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/portal:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
+@opchub/portal:test: 
+@opchub/ui:test: cache hit, replaying logs f23be7c60e31a11d
+@opchub/ui:test: $ vitest run
+@opchub/ui:test: 
+@opchub/ui:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/ui
+@opchub/ui:test: 
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: 
+@opchub/ui:test:  Test Files  26 passed (26)
+@opchub/ui:test:       Tests  95 passed (95)
+@opchub/ui:test:    Start at  10:54:50
+@opchub/ui:test:    Duration  147.41s (import 54%, environment 39%, tests 6%)
+@opchub/ui:test: 
+@opchub/ui:test:     Isolate  26 workers spawned · ~2.35s startup each (spawn + environment, per file)
+@opchub/ui:test:              at least ~58.79s faster with isolate: false — reuses workers across files instead of one per file
+@opchub/ui:test: 
+@opchub/admin:test: cache hit, replaying logs 0ef7fd09083d471f
+@opchub/admin:test: $ vitest run --passWithNoTests
+@opchub/admin:test: 
+@opchub/admin:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+@opchub/admin:test: 
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test: 
+@opchub/admin:test:  Test Files  201 passed (201)
+@opchub/admin:test:       Tests  1668 passed (1668)
+@opchub/admin:test:    Start at  14:04:56
+@opchub/admin:test:    Duration  776.61s (import 49%, environment 37%, tests 13%, transform 1%)
+@opchub/admin:test: 
+@opchub/admin:test:      Import  1324 modules were evaluated 6677 times · 726.81s total, 49% of tracked time
+@opchub/admin:test:              ~269.85s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/admin:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
+@opchub/admin:test: 
+@opchub/server:test: cache hit, replaying logs c2e070d3adeeddab
+@opchub/server:test: $ vitest run --project unit
+@opchub/server:test: 
+@opchub/server:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+@opchub/server:test: 
+@opchub/server:test: 
+@opchub/server:test:  Test Files  57 passed (57)
+@opchub/server:test:       Tests  276 passed (276)
+@opchub/server:test:    Start at  16:03:29
+@opchub/server:test:    Duration  57.63s (import 83%, transform 12%, tests 4%, worker 1%)
+@opchub/server:test: 
+@opchub/server:test:      Import  |unit| 400 modules were evaluated 1913 times · 65.27s total, 83% of tracked time
+@opchub/server:test:              ~22.11s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/server:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
+@opchub/server:test: 
+@opchub/integrations:test: cache hit, replaying logs b6c214e97c1022b8
+@opchub/integrations:test: $ vitest run
+@opchub/integrations:test: 
+@opchub/integrations:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/integrations
+@opchub/integrations:test: 
+@opchub/integrations:test: 
+@opchub/integrations:test:  Test Files  13 passed | 1 skipped (14)
+@opchub/integrations:test:       Tests  126 passed | 2 skipped (128)
+@opchub/integrations:test:    Start at  16:03:15
+@opchub/integrations:test:    Duration  11.26s (import 54%, transform 25%, tests 18%, worker 3%)
+@opchub/integrations:test: 
+@opchub/integrations:test:      Import  151 modules were evaluated 343 times · 6.24s total, 54% of tracked time
+@opchub/integrations:test:              ~709ms faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+@opchub/integrations:test:              learn more: https://vitest.dev/guide/improving-performance#test-isolation
+@opchub/integrations:test: 
+
+ Tasks:    6 successful, 6 total
+Cached:    6 cached, 6 total
+  Time:    181ms >>> FULL TURBO
+
+EXIT 0
+
+COMMAND pnpm depcheck
+Read-only chat harness phase; production ff6be9ee unchanged; cached results reported as cached, not new tests. Worker cap2 only, existing timeouts/assertions/skips unchanged. No concurrent OPCHUB browser/build jobs.
+$ depcruise apps/portal apps/admin packages e2e --config .dependency-cruiser.cjs && depcruise apps/server --config .dependency-cruiser.cjs --ts-config tsconfig.depcruise.server.json
+
+✔ no dependency violations found (2901 modules, 8895 dependencies cruised)
+
+
+✔ no dependency violations found (1260 modules, 5995 dependencies cruised)
+
+EXIT 0

@@ -1,0 +1,22 @@
+Working source based on9145beff; complete25-file Khmer raw bundle/2667 leaves, prior12 catalogs unchanged. Not final10-bundle/all16-AC acceptance; Myanmar missing, native-reviewed=false.
+Initial raw84 run:82 passed/2 failed for generic reused Admin labels events.card.list and marketing.form.body. Corrected new catalog values only to attendee list/email content (also onbMail.body); unchanged assertions then84 passed. Portal reuse pendingStatus corrected to retain end-of-month payment timing. Source/canonical/API behavior unchanged.
+Initial request14 run:13 passed/1 failed; all20 Khmer namespaces unavailable40 warnings despite present valid files. Diagnostic actual same14 request cases with --fsModuleCache=false passed14/14; no assertion/timeout/skip change. This identifies a stale Vitest filesystem transformed dynamic-import glob. Clear only Vitest caches via supported CLI below, then rerun default98 focused cases (no cache/loader bypass). No production loader/import/fallback modification.
+COMMAND pnpm --filter @opchub/admin exec vitest --clearCache
+[cache] cleared results cache at D:/CODING/OPCHUB/CODING/apps/admin/node_modules/.vite-vitest/vitest/da39a3ee5e6b4b0d3255bfef95601890afd80709/results.json
+[cache] cleared fs module cache at D:/CODING/OPCHUB/CODING/node_modules/.vitest-cache
+COMMAND pnpm --filter @opchub/admin exec vitest run src/i18n/tests/khmer-catalog.spec.ts src/i18n/request.spec.ts
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  2 passed (2)
+      Tests  98 passed (98)
+   Start at  04:03:34
+   Duration  7.60s (environment 67%, tests 18%, transform 9%, import 6%)
+
+    Isolate  2 workers spawned · ~2.60s startup each (spawn + environment, per file)
+             at least ~2.60s faster with isolate: false — reuses workers across files instead of one per file
+
+EXIT 0
+
+Final source3bd94726:20 frozen source/catalog/test/harness/manifest inputs match HEAD/worktree after normal hooks; all12 prior Khmer files unchanged. Full root3200 passed +2 existing skips, fresh Admin1477/190files and5 cached suites; focused98 included, not additional. Both Admin production builds use committed3bd94726. Current64 browser cases =12 actual Khmer body +48 public font/auth (4 Khmer auth cases included) +4 read-only Fees en/lo date/currency/data-payload hash. No full10-bundle/all16-AC completion; all25 Myanmar catalogs still absent.

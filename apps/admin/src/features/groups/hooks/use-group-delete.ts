@@ -5,9 +5,11 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import type { AdminGroup } from '../types';
 import { useDeleteGroups } from './use-groups';
+import { useNumberText } from '@/i18n/use-number-text';
 
 /** Xóa nhóm luôn qua hộp xác nhận (D-32); API ghi audit_logs cho từng nhóm */
 export function useGroupDelete() {
+  const numberText = useNumberText();
   const t = useTranslations('groups');
   const toast = useToast();
   const del = useDeleteGroups();
@@ -20,7 +22,7 @@ export function useGroupDelete() {
       title: t('confirm.deleteTitle'),
       body: one
         ? t('confirm.deleteOne', { name: one.name })
-        : t('confirm.deleteMany', { count: list.length }),
+        : t('confirm.deleteMany', { count: numberText(list.length) }),
       okLabel: t('confirm.delete'),
       cancelLabel: t('confirm.cancel'),
       danger: true,
@@ -34,7 +36,7 @@ export function useGroupDelete() {
               toast(
                 one
                   ? t('toast.deleted', { name: one.name })
-                  : t('toast.deletedMany', { count: list.length }),
+                  : t('toast.deletedMany', { count: numberText(list.length) }),
               );
             },
           },

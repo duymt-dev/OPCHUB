@@ -1,6 +1,7 @@
 'use client';
 import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useTranslations } from 'next-intl';
+import { formatNumber } from '@/i18n/format';
+import { useLocale, useTranslations } from 'next-intl';
 import { useToast } from '@opchub/ui';
 import {
   fetchBank,
@@ -15,7 +16,17 @@ import {
 import { useSettingsMutation } from './use-settings-mutation';
 import { useBankKey } from './use-bank-key';
 
+function downloadBankCsv(r: Awaited<ReturnType<typeof exportBank>>) {
+  const url = URL.createObjectURL(new Blob([r.csv], { type: 'text/csv;charset=utf-8' }));
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = r.filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 export function useBankReconcile() {
+  const locale = useLocale();
   const t = useTranslations('settings.bank'),
     toast = useToast(),
     qc = useQueryClient();
@@ -35,7 +46,13 @@ export function useBankReconcile() {
   const test = useSettingsMutation({
     key: bankKeys.config,
     fn: testBank,
-    onDone: (r) => toast(t('connected', { provider: t(`providers.${r.provider}`), n: r.received })),
+    onDone: (r) =>
+      toast(
+        t('connected', {
+          provider: t(`providers.${r.provider}`),
+          n: formatNumber(r.received, locale),
+        }),
+      ),
   });
   const simulate = useSettingsMutation({
     key: bankKeys.list,
@@ -43,13 +60,11 @@ export function useBankReconcile() {
     onDone: (r) => {
       refresh();
       toast(
-        r.autoActivated
-          ? t('simulatedOn', {
-              amount: new Intl.NumberFormat('vi-VN').format(r.amount),
-              content: r.content,
-              name: r.memberName,
-            })
-          : t('simulatedOff', { amount: new Intl.NumberFormat('vi-VN').format(r.amount) }),
+        t(r.autoActivated ? 'simulatedOn' : 'simulatedOff', {
+          amount: formatNumber(r.amount, locale),
+          content: r.content,
+          name: r.memberName,
+        }),
       );
     },
   });
@@ -64,14 +79,7 @@ export function useBankReconcile() {
   const csv = useSettingsMutation({
     key: bankKeys.list,
     fn: exportBank,
-    onDone: (r) => {
-      const url = URL.createObjectURL(new Blob([r.csv], { type: 'text/csv;charset=utf-8' }));
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = r.filename;
-      a.click();
-      URL.revokeObjectURL(url);
-    },
+    onDone: downloadBankCsv,
   });
   return {
     config,
