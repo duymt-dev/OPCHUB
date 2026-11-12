@@ -2,18 +2,18 @@
   "status": "PASS",
   "command": "node infra/scripts/audit-admin-i18n.mjs",
   "source": {
-    "gitHead": "eb9a9a0a4503771eae875f1a048df0cb35afb0b3",
+    "gitHead": "4c6cebd413e628def057d13a36bb3821088fd86b",
     "dirty": false,
-    "corpusSha256": "eaa08c1a4bb4455768d04cd1754af9003f76a0d9a3606252bc20dd57eedebe8c",
-    "fingerprintFiles": 610,
+    "corpusSha256": "677c066cdd1a4b4fa42936366f8b19e21e6f803b56d5c5f0117cc56f093fb817",
+    "fingerprintFiles": 611,
     "fingerprintScope": "Scanned production source plus audit scripts and exact exception registries; not catalogs or browser evidence"
   },
-  "sourceFiles": 593,
+  "sourceFiles": 594,
   "excluded": [
     "test/spec/declaration files",
     "tests/__tests__/mocks/__mocks__ fixture directories"
   ],
-  "durationMs": 49101,
+  "durationMs": 29050,
   "rows": [
     {
       "file": "apps/admin/src/app/(admin)/affiliate/[[...slug]]/page.tsx",
@@ -359,20 +359,20 @@
     {
       "file": "apps/admin/src/features/auth/components/login-screen.tsx",
       "kind": "ui-literal",
-      "line": 24,
+      "line": 25,
       "text": "demoAdmin",
-      "start": 1017,
-      "end": 1028,
+      "start": 1071,
+      "end": 1082,
       "disposition": "retained-contract",
       "reason": "Descriptor translation key passed to t(label); the rendered demo action label is localized."
     },
     {
       "file": "apps/admin/src/features/auth/components/login-screen.tsx",
       "kind": "ui-literal",
-      "line": 25,
+      "line": 26,
       "text": "demoUser",
-      "start": 1082,
-      "end": 1092,
+      "start": 1136,
+      "end": 1146,
       "disposition": "retained-contract",
       "reason": "Descriptor translation key passed to t(label); the rendered demo action label is localized."
     },
