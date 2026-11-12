@@ -1,0 +1,480 @@
+First diagnostic:9 pure guards pass, browser fixture is lost after hard page.goto. Actual group count returns90. Admin MSW groups/personas are browser-memory handlers (browser.ts), unlike affiliate relay; full reload resets that mock runtime. AC824-11 requires real save/canonical request/response and fresh read, not new MSW persistence. Use one real logged-in workflow with all four locale/viewport steps, actual sidebar navigation, API readback and editor reopen in BOTH modes. No native-only skip/branch, schema/timeout change, synthetic data replacement or new mock persistence feature. F5/cookie requirements remain tested separately by existing auth/navigation cases.
+Candidate harness based on b3304c74, unchanged production4c6cebd4. Diagnostic=True. Full inventory13 cases:4 actual owned save flows (en/my x1440/390),9 pure guards, not13 independent user workflows. Explicit owner-approved prefix-only isolated fixtures; one industry group/disabled persona per worker/run; only own group rooms/staff/audit/outbox created, existing records read-only, no global setting/permission/SQL/seed/reset/delete/run/export. Same assertions both modes. No native/API service restart; original opchub_test retained. COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-values.spec.ts behavior/admin-i18n-values/protocol-contract.spec.ts --grep canonical owned saves en 1440|save guard
+[WebServer] (node:31784) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:9256) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 10 tests using 1 worker
+
+(node:27496) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:65:1 › D-141 AC824-11 save guard requires verified principal (13ms)
+  ok  2 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:68:1 › D-141 AC824-11 save guard rejects non-prefixed name (5ms)
+  ok  3 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:73:1 › D-141 AC824-11 save guard rejects unowned patch ID (5ms)
+  ok  4 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:78:1 › D-141 AC824-11 save guard rejects global writes (2ms)
+  ok  5 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:83:1 › D-141 AC824-11 save guard rejects changed wire body (3ms)
+  ok  6 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:90:1 › D-141 AC824-11 save guard never enables fixture persona (7ms)
+  ok  7 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:95:1 › D-141 AC824-11 save guard rejects unrelated group assignments (6ms)
+  ok  8 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:100:1 › D-141 AC824-11 save guard rejects translated response data (3ms)
+  ok  9 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:108:1 › D-141 AC824-11 save guard rejects changed persisted identity (3ms)
+  x  10 [behavior] › behavior\admin-i18n-values.spec.ts:9:5 › D-141 AC824-11 canonical owned saves en 1440 (8.3s)
+
+
+  1) [behavior] › behavior\admin-i18n-values.spec.ts:9:5 › D-141 AC824-11 canonical owned saves en 1440 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('tip824-i18n-9dfcdab5-0dec-43d9-82cf-1e1de9d3bb20', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('tip824-i18n-9dfcdab5-0dec-43d9-82cf-1e1de9d3bb20', { exact: true }) with timeout 5000ms
+      - waiting for getByText('tip824-i18n-9dfcdab5-0dec-43d9-82cf-1e1de9d3bb20', { exact: true })
+
+
+       at behavior\admin-i18n-values\groups.ts:23
+
+      21 |   await audit.settle();
+      22 |   await page.goto(`${ADMIN_URL}/groups?view=list&q=${encodeURIComponent(previous.name)}#canonical`);
+    > 23 |   await expect(page.getByText(previous.name, { exact: true })).toBeVisible();
+         |                                                                ^
+      24 |   const detail = waitApi(page, `groups/${encodeURIComponent(previous.id)}`);
+      25 |   const edit = page.getByRole('button', { name: t.groups.list.edit, exact: true });
+      26 |   await expect(edit).toHaveCount(1);
+        at saveGroup (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-values\groups.ts:23:64)
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-values.spec.ts:13:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-values-results-msw\admin-i18n-values-D-141-AC-0e16d-nonical-owned-saves-en-1440-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\admin-i18n-values.spec.ts:9:5 › D-141 AC824-11 canonical owned saves en 1440 
+  9 passed (14.7s)
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+System.Management.Automation.RemoteException
+EXIT 1
+
+===== Exact name locator collided with unmodified custom industry option; scope exact name to bold row title. Await each actual URL update before next control to avoid racing router.replace. Static inspection also finds group table rendering raw canonical region; add independent translated-row assertion before any production correction. =====
+Candidate harness based on b3304c74, unchanged production4c6cebd4. Diagnostic=True. Full inventory10 cases:1 real owned workflow containing all4 en/my x1440/390 substeps, plus9 pure guards, not10 independent user workflows. Explicit owner-approved prefix-only isolated fixtures; one industry group/disabled persona per workflow/run; ordinary soft navigation plus fresh API read/editor reopen, no new MSW hard-reload persistence feature; only own group rooms/staff/audit/outbox created, existing records read-only, no global setting/permission/SQL/seed/reset/delete/run/export. Same assertions both modes. No native/API service restart; original opchub_test retained. COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-values.spec.ts behavior/admin-i18n-values/protocol-contract.spec.ts --grep canonical owned saves en 1440|save guard
+[WebServer] (node:35024) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:11824) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 10 tests using 1 worker
+
+(node:8268) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:65:1 › D-141 AC824-11 save guard requires verified principal (17ms)
+  ok  2 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:68:1 › D-141 AC824-11 save guard rejects non-prefixed name (15ms)
+  ok  3 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:73:1 › D-141 AC824-11 save guard rejects unowned patch ID (14ms)
+  ok  4 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:78:1 › D-141 AC824-11 save guard rejects global writes (4ms)
+  ok  5 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:83:1 › D-141 AC824-11 save guard rejects changed wire body (8ms)
+  ok  6 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:90:1 › D-141 AC824-11 save guard never enables fixture persona (8ms)
+  ok  7 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:95:1 › D-141 AC824-11 save guard rejects unrelated group assignments (7ms)
+  ok  8 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:100:1 › D-141 AC824-11 save guard rejects translated response data (6ms)
+  ok  9 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:108:1 › D-141 AC824-11 save guard rejects changed persisted identity (5ms)
+  x  10 [behavior] › behavior\admin-i18n-values.spec.ts:7:1 › D-141 AC824-11 canonical owned saves en 1440/390 and my 1440/390 (4.2s)
+
+
+  1) [behavior] › behavior\admin-i18n-values.spec.ts:7:1 › D-141 AC824-11 canonical owned saves en 1440/390 and my 1440/390 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('tip824-i18n-4cb44b5b-8497-4e15-845f-8747d520c914', { exact: true })
+    Expected: visible
+    Error: strict mode violation: getByText('tip824-i18n-4cb44b5b-8497-4e15-845f-8747d520c914', { exact: true }) resolved to 2 elements:
+        1) <option value="tip824-i18n-4cb44b5b-8497-4e15-845f-8747d520c914">tip824-i18n-4cb44b5b-8497-4e15-845f-8747d520c914</option> aka getByLabel('Filter by industry')
+        2) <b class="uZIFwW_name">tip824-i18n-4cb44b5b-8497-4e15-845f-8747d520c914</b> aka getByRole('article').getByText('tip824-i18n-4cb44b5b-8497-')
+
+    Call log:
+      - Expect "toBeVisible" getByText('tip824-i18n-4cb44b5b-8497-4e15-845f-8747d520c914', { exact: true }) with timeout 5000ms
+      - waiting for getByText('tip824-i18n-4cb44b5b-8497-4e15-845f-8747d520c914', { exact: true })
+
+
+       at behavior\admin-i18n-values\groups.ts:24
+
+      22 |   await page.getByPlaceholder(t.groups.list.search).fill(previous.name);
+      23 |   await page.getByRole('button', { name: t.groups.list.viewList, exact: true }).click();
+    > 24 |   await expect(page.getByText(previous.name, { exact: true })).toBeVisible();
+         |                                                                ^
+      25 |   const detail = waitApi(page, `groups/${encodeURIComponent(previous.id)}`);
+      26 |   const edit = page.getByRole('button', { name: t.groups.list.edit, exact: true });
+      27 |   await expect(edit).toHaveCount(1);
+        at saveGroup (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-values\groups.ts:24:64)
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-values.spec.ts:17:9
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-values.spec.ts:14:7
+
+    Error: Two owned creates plus eight actual UI saves
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 10
+    Received: 2
+
+       at behavior\admin-i18n-values\fixtures.ts:65
+
+      63 |       ).toEqual([]);
+      64 |       expect(protocol.logins).toBe(1);
+    > 65 |       expect(protocol.expected.length, 'Two owned creates plus eight actual UI saves').toBe(10);
+         |                                                                                        ^
+      66 |       expect(protocol.expected.every((e) => e.seen && e.done)).toBe(true);
+      67 |       expect(errors, 'No hydration/Intl/browser errors').toEqual([]);
+      68 |       expect(refreshErrors).toBeLessThanOrEqual(1);
+        at Object.base.extend.audit.auto (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-values\fixtures.ts:65:88)
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-values-results-msw\admin-i18n-values-D-141-AC-71db2-en-1440-390-and-my-1440-390-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\admin-i18n-values.spec.ts:7:1 › D-141 AC824-11 canonical owned saves en 1440/390 and my 1440/390 
+  9 passed (18.6s)
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+System.Management.Automation.RemoteException
+EXIT 1
+
+===== Actual product defect: English saved group table lacks exact translated row caption Đà Nẵng · Central; raw request/DTO assertions passed. GroupTable renders g.region directly. Manifest declares Admin-only existing-domain-hook projection and isolated regression before correction. =====
+Candidate harness based on b3304c74, unchanged production4c6cebd4. Diagnostic=True. Full inventory10 cases:1 real owned workflow containing all4 en/my x1440/390 substeps, plus9 pure guards, not10 independent user workflows. Explicit owner-approved prefix-only isolated fixtures; one industry group/disabled persona per workflow/run; ordinary soft navigation plus fresh API read/editor reopen, no new MSW hard-reload persistence feature; only own group rooms/staff/audit/outbox created, existing records read-only, no global setting/permission/SQL/seed/reset/delete/run/export. Same assertions both modes. No native/API service restart; original opchub_test retained. COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-values.spec.ts behavior/admin-i18n-values/protocol-contract.spec.ts --grep canonical owned saves en 1440|save guard
+[WebServer] (node:12512) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:21704) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 10 tests using 1 worker
+
+(node:24200) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:65:1 › D-141 AC824-11 save guard requires verified principal (59ms)
+  ok  2 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:68:1 › D-141 AC824-11 save guard rejects non-prefixed name (43ms)
+  ok  3 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:73:1 › D-141 AC824-11 save guard rejects unowned patch ID (6ms)
+  ok  4 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:78:1 › D-141 AC824-11 save guard rejects global writes (10ms)
+  ok  5 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:83:1 › D-141 AC824-11 save guard rejects changed wire body (17ms)
+  ok  6 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:90:1 › D-141 AC824-11 save guard never enables fixture persona (5ms)
+  ok  7 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:95:1 › D-141 AC824-11 save guard rejects unrelated group assignments (3ms)
+  ok  8 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:100:1 › D-141 AC824-11 save guard rejects translated response data (6ms)
+  ok  9 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:108:1 › D-141 AC824-11 save guard rejects changed persisted identity (6ms)
+  x  10 [behavior] › behavior\admin-i18n-values.spec.ts:7:1 › D-141 AC824-11 canonical owned saves en 1440/390 and my 1440/390 (10.2s)
+
+
+  1) [behavior] › behavior\admin-i18n-values.spec.ts:7:1 › D-141 AC824-11 canonical owned saves en 1440/390 and my 1440/390 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('Đà Nẵng · Central', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('Đà Nẵng · Central', { exact: true }) with timeout 5000ms
+      - waiting for getByText('Đà Nẵng · Central', { exact: true })
+
+
+       at behavior\admin-i18n-values\groups.ts:53
+
+      51 |   await expect(panel).toBeHidden();
+      52 |   await audit.settle();
+    > 53 |   await expect(page.getByText(`${province} · ${label}`, { exact: true })).toBeVisible();
+         |                                                                           ^
+      54 |   const filter = page.getByRole('group', { name: t.groups.list.regionLabel, exact: true });
+      55 |   await filter.getByRole('button').filter({ hasText: label }).click();
+      56 |   await expect.poll(() => new URL(page.url()).searchParams.get('region')).toBe(region);
+        at saveGroup (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-values\groups.ts:53:75)
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-values.spec.ts:17:9
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-values.spec.ts:14:7
+
+    Error: Two owned creates plus eight actual UI saves
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 10
+    Received: 3
+
+       at behavior\admin-i18n-values\fixtures.ts:65
+
+      63 |       ).toEqual([]);
+      64 |       expect(protocol.logins).toBe(1);
+    > 65 |       expect(protocol.expected.length, 'Two owned creates plus eight actual UI saves').toBe(10);
+         |                                                                                        ^
+      66 |       expect(protocol.expected.every((e) => e.seen && e.done)).toBe(true);
+      67 |       expect(errors, 'No hydration/Intl/browser errors').toEqual([]);
+      68 |       expect(refreshErrors).toBeLessThanOrEqual(1);
+        at Object.base.extend.audit.auto (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-values\fixtures.ts:65:88)
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-values-results-msw\admin-i18n-values-D-141-AC-71db2-en-1440-390-and-my-1440-390-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\admin-i18n-values.spec.ts:7:1 › D-141 AC824-11 canonical owned saves en 1440/390 and my 1440/390 
+  9 passed (22.7s)
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+System.Management.Automation.RemoteException
+EXIT 1
+
+===== First corrected candidate build: raw49/compile pass, TypeScript fails unsupported RTL getByRole exact option in new regression. Remove unsupported option; RTL name string matching remains exact. No timeout/assertion weakening. =====
+Source working tree based on b3304c74; Admin build mode=msw dist=.next-msw-tip824; compile only, no API verification
+$ vitest run src/i18n/tests/production-catalogs.spec.ts && next build
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  1 passed (1)
+      Tests  49 passed (49)
+   Start at  13:47:02
+   Duration  16.62s (tests 88%, environment 11%)
+
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 384ms
+- Experiments (use with caution):
+  · optimizePackageImports
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.5s
+  Running TypeScript ...
+src/features/groups/components/group-table-region.spec.tsx(62,70): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+    Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+  Overload 2 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+    Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+Failed to type check.
+System.Management.Automation.RemoteException
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\apps\admin
+System.Management.Automation.RemoteException
+EXIT 1
+
+===== Corrected region build: pure9 pass; workflow timeout60s after two creates and first group/persona saves. Cause not yet established. Preserve timeout/assertions and add credential-free phase/pending-path diagnostics, no timeout increase. =====
+Candidate harness based on b3304c74, rebuilt Admin candidate includes existing-domain-hook group table region projection; original production4c6cebd4 is superseded for final audit/build proof. Diagnostic=False. Full inventory10 cases:1 real owned workflow containing all4 en/my x1440/390 substeps, plus9 pure guards, not10 independent user workflows. Explicit owner-approved prefix-only isolated fixtures; one industry group/disabled persona per workflow/run; ordinary soft navigation plus fresh API read/editor reopen, no new MSW hard-reload persistence feature; only own group rooms/staff/audit/outbox created, existing records read-only, no global setting/permission/SQL/seed/reset/delete/run/export. Same assertions both modes. No native/API service restart; original opchub_test retained. COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-values.spec.ts behavior/admin-i18n-values/protocol-contract.spec.ts
+[WebServer] (node:19112) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:24240) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 10 tests using 1 worker
+
+(node:1236) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:65:1 › D-141 AC824-11 save guard requires verified principal (11ms)
+  ok  2 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:68:1 › D-141 AC824-11 save guard rejects non-prefixed name (7ms)
+  ok  3 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:73:1 › D-141 AC824-11 save guard rejects unowned patch ID (5ms)
+  ok  4 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:78:1 › D-141 AC824-11 save guard rejects global writes (1ms)
+  ok  5 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:83:1 › D-141 AC824-11 save guard rejects changed wire body (2ms)
+  ok  6 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:90:1 › D-141 AC824-11 save guard never enables fixture persona (4ms)
+  ok  7 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:95:1 › D-141 AC824-11 save guard rejects unrelated group assignments (3ms)
+  ok  8 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:100:1 › D-141 AC824-11 save guard rejects translated response data (3ms)
+  ok  9 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:108:1 › D-141 AC824-11 save guard rejects changed persisted identity (3ms)
+  x  10 [behavior] › behavior\admin-i18n-values.spec.ts:7:1 › D-141 AC824-11 canonical owned saves en 1440/390 and my 1440/390 (1.0m)
+
+
+  1) [behavior] › behavior\admin-i18n-values.spec.ts:7:1 › D-141 AC824-11 canonical owned saves en 1440/390 and my 1440/390 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: Two owned creates plus eight actual UI saves
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 10
+    Received: 4
+
+       at behavior\admin-i18n-values\fixtures.ts:65
+
+      63 |       ).toEqual([]);
+      64 |       expect(protocol.logins).toBe(1);
+    > 65 |       expect(protocol.expected.length, 'Two owned creates plus eight actual UI saves').toBe(10);
+         |                                                                                        ^
+      66 |       expect(protocol.expected.every((e) => e.seen && e.done)).toBe(true);
+      67 |       expect(errors, 'No hydration/Intl/browser errors').toEqual([]);
+      68 |       expect(refreshErrors).toBeLessThanOrEqual(1);
+        at Object.base.extend.audit.auto (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-values\fixtures.ts:65:88)
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-values-results-msw\admin-i18n-values-D-141-AC-71db2-en-1440-390-and-my-1440-390-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\admin-i18n-values.spec.ts:7:1 › D-141 AC824-11 canonical owned saves en 1440/390 and my 1440/390 
+  9 passed (1.1m)
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+System.Management.Automation.RemoteException
+EXIT 1
+
+===== Phase diagnostic establishes timeout cause: second (mobile) substep attempts hidden offscreen sidebar link, not request slowness/overall workflow duration. Open the actual localized mobile Menu before real link clicks; keep60s timeout and all four saves/readbacks. No force-click/DOM dispatch/skip. =====
+Candidate harness based on b3304c74, rebuilt Admin candidate includes existing-domain-hook group table region projection; original production4c6cebd4 is superseded for final audit/build proof. Diagnostic=False. Full inventory10 cases:1 real owned workflow containing all4 en/my x1440/390 substeps, plus9 pure guards, not10 independent user workflows. Explicit owner-approved prefix-only isolated fixtures; one industry group/disabled persona per workflow/run; ordinary soft navigation plus fresh API read/editor reopen, no new MSW hard-reload persistence feature; only own group rooms/staff/audit/outbox created, existing records read-only, no global setting/permission/SQL/seed/reset/delete/run/export. Same assertions both modes. No native/API service restart; original opchub_test retained. COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-values.spec.ts behavior/admin-i18n-values/protocol-contract.spec.ts
+[WebServer] (node:8984) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:31568) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 10 tests using 1 worker
+
+(node:22888) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:65:1 › D-141 AC824-11 save guard requires verified principal (10ms)
+  ok  2 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:68:1 › D-141 AC824-11 save guard rejects non-prefixed name (6ms)
+  ok  3 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:73:1 › D-141 AC824-11 save guard rejects unowned patch ID (4ms)
+  ok  4 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:78:1 › D-141 AC824-11 save guard rejects global writes (1ms)
+  ok  5 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:83:1 › D-141 AC824-11 save guard rejects changed wire body (2ms)
+  ok  6 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:90:1 › D-141 AC824-11 save guard never enables fixture persona (2ms)
+  ok  7 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:95:1 › D-141 AC824-11 save guard rejects unrelated group assignments (3ms)
+  ok  8 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:100:1 › D-141 AC824-11 save guard rejects translated response data (2ms)
+  ok  9 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:108:1 › D-141 AC824-11 save guard rejects changed persisted identity (2ms)
+  x  10 [behavior] › behavior\admin-i18n-values.spec.ts:7:1 › D-141 AC824-11 canonical owned saves en 1440/390 and my 1440/390 (1.0m)
+
+
+  1) [behavior] › behavior\admin-i18n-values.spec.ts:7:1 › D-141 AC824-11 canonical owned saves en 1440/390 and my 1440/390 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: Two owned creates plus eight actual UI saves
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 10
+    Received: 4
+
+       at behavior\admin-i18n-values\fixtures.ts:82
+
+      80 |       ).toEqual([]);
+      81 |       expect(protocol.logins).toBe(1);
+    > 82 |       expect(protocol.expected.length, 'Two owned creates plus eight actual UI saves').toBe(10);
+         |                                                                                        ^
+      83 |       expect(protocol.expected.every((e) => e.seen && e.done)).toBe(true);
+      84 |       expect(errors, 'No hydration/Intl/browser errors').toEqual([]);
+      85 |       expect(refreshErrors).toBeLessThanOrEqual(1);
+        at Object.base.extend.audit.auto (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-values\fixtures.ts:82:88)
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('a[href="/groups"]')
+        - locator resolved to <a href="/groups" class="c87mCa_navItem" title="Community groups">…</a>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not stable
+        - retrying click action
+        - waiting 20ms
+        - waiting for element to be visible, enabled and stable
+        - element is not stable
+      2 × retrying click action
+          - waiting 100ms
+          - waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - element is outside of the viewport
+      103 × retrying click action
+            - waiting 500ms
+            - waiting for element to be visible, enabled and stable
+            - element is visible, enabled and stable
+            - scrolling into view if needed
+            - done scrolling
+            - element is outside of the viewport
+      - retrying click action
+        - waiting 500ms
+        - waiting for element to be visible, enabled and stable
+
+
+       at behavior\admin-i18n-values\groups.ts:21
+
+      19 |   const label = width === 1440 ? t.regions.central : t.regions.north;
+      20 |   await audit.settle();
+    > 21 |   await page.locator('a[href="/groups"]').click();
+         |                                           ^
+      22 |   await page.getByPlaceholder(t.groups.list.search).fill(previous.name);
+      23 |   await expect.poll(() => new URL(page.url()).searchParams.get('q')).toBe(previous.name);
+      24 |   await page.getByRole('button', { name: t.groups.list.viewList, exact: true }).click();
+        at saveGroup (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-values\groups.ts:21:43)
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-values.spec.ts:17:9
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-values.spec.ts:14:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-values-results-msw\admin-i18n-values-D-141-AC-71db2-en-1440-390-and-my-1440-390-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\admin-i18n-values.spec.ts:7:1 › D-141 AC824-11 canonical owned saves en 1440/390 and my 1440/390 
+  9 passed (1.1m)
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+System.Management.Automation.RemoteException
+EXIT 1
+
+===== Actual mobile Menu now works; next failure is fixture waiter: second editor is correctly served from TanStack detail cache, so no duplicate GET occurs. Do not force a refetch or alter application cache. Assert exact owned form name/province before the save, retain actual exact PATCH request/DTO and fresh backend GET readback after every substep. Existing60s timeout retained. =====
+Candidate harness based on b3304c74, rebuilt Admin candidate includes existing-domain-hook group table region projection; original production4c6cebd4 is superseded for final audit/build proof. Diagnostic=False. Full inventory10 cases:1 real owned workflow containing all4 en/my x1440/390 substeps, plus9 pure guards, not10 independent user workflows. Explicit owner-approved prefix-only isolated fixtures; one industry group/disabled persona per workflow/run; ordinary soft navigation plus fresh API read/editor reopen, no new MSW hard-reload persistence feature; only own group rooms/staff/audit/outbox created, existing records read-only, no global setting/permission/SQL/seed/reset/delete/run/export. Same assertions both modes. No native/API service restart; original opchub_test retained. COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-values.spec.ts behavior/admin-i18n-values/protocol-contract.spec.ts
+[WebServer] (node:25308) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:28888) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 10 tests using 1 worker
+
+(node:33092) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:65:1 › D-141 AC824-11 save guard requires verified principal (12ms)
+  ok  2 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:68:1 › D-141 AC824-11 save guard rejects non-prefixed name (5ms)
+  ok  3 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:73:1 › D-141 AC824-11 save guard rejects unowned patch ID (4ms)
+  ok  4 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:78:1 › D-141 AC824-11 save guard rejects global writes (1ms)
+  ok  5 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:83:1 › D-141 AC824-11 save guard rejects changed wire body (2ms)
+  ok  6 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:90:1 › D-141 AC824-11 save guard never enables fixture persona (2ms)
+  ok  7 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:95:1 › D-141 AC824-11 save guard rejects unrelated group assignments (3ms)
+  ok  8 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:100:1 › D-141 AC824-11 save guard rejects translated response data (2ms)
+  ok  9 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:108:1 › D-141 AC824-11 save guard rejects changed persisted identity (2ms)
+  x  10 [behavior] › behavior\admin-i18n-values.spec.ts:7:1 › D-141 AC824-11 canonical owned saves en 1440/390 and my 1440/390 (1.0m)
+
+
+  1) [behavior] › behavior\admin-i18n-values.spec.ts:7:1 › D-141 AC824-11 canonical owned saves en 1440/390 and my 1440/390 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: Two owned creates plus eight actual UI saves
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 10
+    Received: 4
+
+       at behavior\admin-i18n-values\fixtures.ts:82
+
+      80 |       ).toEqual([]);
+      81 |       expect(protocol.logins).toBe(1);
+    > 82 |       expect(protocol.expected.length, 'Two owned creates plus eight actual UI saves').toBe(10);
+         |                                                                                        ^
+      83 |       expect(protocol.expected.every((e) => e.seen && e.done)).toBe(true);
+      84 |       expect(errors, 'No hydration/Intl/browser errors').toEqual([]);
+      85 |       expect(refreshErrors).toBeLessThanOrEqual(1);
+        at Object.base.extend.audit.auto (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-values\fixtures.ts:82:88)
+
+    Error: page.waitForResponse: Test timeout of 60000ms exceeded.
+
+       at behavior\admin-i18n-values\api.ts:6
+
+      4 | export const waitApi = (page: Page, path: string, status = 200) => {
+      5 |   const pending = page
+    > 6 |     .waitForResponse((r) => new URL(r.url()).pathname === `/v1/admin/${path}`)
+        |      ^
+      7 |     .then((r) => {
+      8 |       expect(r.status(), `Exact API prerequisite: ${path}`).toBe(status);
+      9 |       return r;
+        at waitApi (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-values\api.ts:6:6)
+        at saveGroup (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-values\groups.ts:28:18)
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-values.spec.ts:17:9
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-i18n-values.spec.ts:14:7
+
+    Error Context: C:\Users\PC\AppData\Local\Temp\tip824-values-results-msw\admin-i18n-values-D-141-AC-71db2-en-1440-390-and-my-1440-390-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\admin-i18n-values.spec.ts:7:1 › D-141 AC824-11 canonical owned saves en 1440/390 and my 1440/390 
+  9 passed (1.1m)
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+System.Management.Automation.RemoteException
+EXIT 1

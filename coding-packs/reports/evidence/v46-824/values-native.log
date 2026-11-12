@@ -1,0 +1,21 @@
+Candidate harness based on b3304c74, rebuilt Admin candidate includes existing-domain-hook group table region projection; original production4c6cebd4 is superseded for final audit/build proof. Diagnostic=False. Full inventory10 cases:1 real owned workflow containing all4 en/my x1440/390 substeps, plus9 pure guards, not10 independent user workflows. Explicit owner-approved prefix-only isolated fixtures; one industry group/disabled persona per workflow/run; ordinary soft navigation plus fresh API read/editor reopen, no new MSW hard-reload persistence feature; only own group rooms/staff/audit/outbox created, existing records read-only, no global setting/permission/SQL/seed/reset/delete/run/export. Same assertions both modes. Native wrapper/listener/endpoints revalidated by unchanged approved preflight. No native/API service restart; original opchub_test retained. COMMAND pnpm --filter @opchub/e2e exec playwright test -c playwright.admin-i18n.config.ts behavior/admin-i18n-values.spec.ts behavior/admin-i18n-values/protocol-contract.spec.ts
+[WebServer] (node:22332) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 10 tests using 1 worker
+
+(node:8016) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:65:1 › D-141 AC824-11 save guard requires verified principal (31ms)
+  ok  2 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:68:1 › D-141 AC824-11 save guard rejects non-prefixed name (11ms)
+  ok  3 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:73:1 › D-141 AC824-11 save guard rejects unowned patch ID (9ms)
+  ok  4 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:78:1 › D-141 AC824-11 save guard rejects global writes (9ms)
+  ok  5 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:83:1 › D-141 AC824-11 save guard rejects changed wire body (2ms)
+  ok  6 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:90:1 › D-141 AC824-11 save guard never enables fixture persona (12ms)
+  ok  7 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:95:1 › D-141 AC824-11 save guard rejects unrelated group assignments (8ms)
+  ok  8 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:100:1 › D-141 AC824-11 save guard rejects translated response data (6ms)
+  ok  9 [behavior] › behavior\admin-i18n-values\protocol-contract.spec.ts:108:1 › D-141 AC824-11 save guard rejects changed persisted identity (19ms)
+  ok 10 [behavior] › behavior\admin-i18n-values.spec.ts:7:1 › D-141 AC824-11 canonical owned saves en 1440/390 and my 1440/390 (22.0s)
+
+  10 passed (56.2s)
+EXIT 0

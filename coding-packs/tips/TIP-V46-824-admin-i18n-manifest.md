@@ -1,5 +1,35 @@
 # TIP-V46-824 - Exact file manifest
 
+## Canonical group/persona browser saves
+
+Measured English save/readback retains canonical province/region, but actual group table displays raw `Miền Trung` rather than translated `Central` (strict independent row-caption assertion fails). Correct only the table's existing canonical-region projection through the established domain hook. Preserve province/user strings, raw DTO, filters, callbacks and all values. Separate regression covers three fixed regions and unknown custom-region fallback, en→vi→en, original object/callback identity. The original failing browser log is retained; production builds/audit must be refreshed after this correction.
+
+| Action | Exact path | Scope |
+|---|---|---|
+| modify | `apps/admin/src/features/groups/components/group-table.tsx` | Render established canonical-region label projection only; raw DTO and province stay unchanged. |
+| create | `apps/admin/src/features/groups/components/group-table-region.spec.tsx` | Three known regions/custom fallback, live locale rerender and raw row/action identity. |
+
+Owner-approved prefix-only fixtures, one new industry group and one disabled persona per serial worker/run, reused only after fresh identity/ownership reads. Group creation necessarily creates its own rooms/membership/audit/outbox through existing APIs; never changes an existing group, user account, global permission/config or original database. Use the existing province group's owner unchanged; staff links belong only to the new fixture group. Persona stays disabled and assigned solely to that group; no script/run/bot automation/export/delete endpoint. Existing records are read-only. English/Myanmar at1440/390 test translated option selection, exact raw request/response/persisted values, custom content and URL region values. Same assertions in both modes; production remains4c6cebd4 unless a measured defect is separately declared before correction.
+
+| Action | Exact path | Scope |
+|---|---|---|
+| create | `e2e/behavior/admin-i18n-values.spec.ts` | Serial English/Myanmar desktop/mobile canonical saves on owned fixtures. |
+| create | `e2e/behavior/admin-i18n-values/types.ts` | Prefix ownership and canonical DTO/body types. |
+| create | `e2e/behavior/admin-i18n-values/protocol.ts` | Exact queued mutation/principal/ownership/DTO guard; no unowned/global/enable writes. |
+| create | `e2e/behavior/admin-i18n-values/protocol-contract.spec.ts` | Pure negative guards; never performs a backend mutation. |
+| create | `e2e/behavior/admin-i18n-values/fixtures.ts` | Dedicated approved-write guard, real login and private-native preflight. |
+| create | `e2e/behavior/admin-i18n-values/api.ts` | Normal authenticated browser fetch and exact response waiters, credentials memory-only. |
+| create | `e2e/behavior/admin-i18n-values/provision.ts` | Existing API creates one prefix group/disabled persona, fresh reads before reuse, no SQL/reset/delete. |
+| create | `e2e/behavior/admin-i18n-values/labels.ts` | Raw expected UI catalogs/aliases, canonical values independent from translated labels. |
+| create | `e2e/behavior/admin-i18n-values/navigation.ts` | Actual localized mobile Menu then sidebar link; no offscreen force-click/dispatch or timeout increase. |
+| create | `e2e/behavior/admin-i18n-values/groups.ts` | Actual owned group editor/province/region save, canonical query and persisted read. |
+| create | `e2e/behavior/admin-i18n-values/personas.ts` | Actual owned disabled persona presets/custom content save and persisted read. |
+| modify | `e2e/playwright.admin-i18n.config.ts` | Register canonical save flows/pure guards; preserve all existing assertions/timeouts. |
+| create | `coding-packs/reports/evidence/v46-824/values-msw.log` | Actual canonical MSW results, not a full-suite claim. |
+| create | `coding-packs/reports/evidence/v46-824/values-native.log` | Same save assertions on approved isolated native cluster and retained owned fixtures. |
+| create | `coding-packs/reports/evidence/v46-824/values-first.log` | Preserve measured failures and classification before correction, if any. |
+| create | `coding-packs/reports/evidence/v46-824/values-quality.log` | Exact required root gates and cache status for this phase. |
+
 ## Approved canonical-save fixtures (owner reply12/11/2026)
 
 For AC824-11 the owner explicitly permits creating/editing separate `tip824-i18n-*` group/persona fixtures through existing Admin APIs on the approved isolated cluster; retain them for independent comparison. Do not edit pre-existing records, permissions or global settings, do not touch PG5432 and do not seed/reset/repair. This permission is not evidence that save-value/RBAC acceptance has run. Declare literal implementation/test/evidence paths before that phase begins; the public-password phase below remains zero-API.
@@ -1579,3 +1609,18 @@ Preserve original6022 failures. Measure Indonesian390 DOM overflow before choosi
 | create | `coding-packs/reports/evidence/v46-824/zh-settings-msw-390.png` | Unmasked actual required-language settings image; no owner/native-human approval implied. |
 | create | `coding-packs/reports/evidence/v46-824/zh-settings-server-1440.png` | Unmasked actual required-language settings image; no owner/native-human approval implied. |
 | create | `coding-packs/reports/evidence/v46-824/zh-settings-server-390.png` | Unmasked actual required-language settings image; no owner/native-human approval implied. |
+
+## Owner approval: isolated saved-disabled language probe (2026-11-12)
+
+Owner explicitly permits temporarily disabling exactly one non-default language through the existing Admin Settings API on the already approved isolated cluster, checking the selector and F5, then restoring the exact original language settings. Snapshot the full typed response first; send only the one-code toggle, never defaultLocale/progress/other settings. Use finally cleanup with a fresh pre-restore read and a one-code restore, and verify a fresh full response equals the original snapshot. If unrelated configuration drift is detected, do not overwrite it; report the discrepancy. Do not change PG5432, original services, schema/seed or other settings. No mutation has yet been made under this approval; the canonical group/persona phase retains its original no-global-write scope.
+
+Next-phase files are declared before implementation; existing read-only/canonical guards must not be relaxed:
+
+| Operation | Path | Purpose |
+|---|---|---|
+| create | `e2e/behavior/admin-i18n-disabled.spec.ts` | Actual saved-disabled selector/F5 probe with exact snapshot/one-code restore, identical UI assertions in both modes. |
+| create | `e2e/behavior/admin-i18n-disabled/api.ts` | Typed existing Settings API, exact one-language toggle and full restoration receipt; no DB client or secrets in evidence. |
+| create | `e2e/behavior/admin-i18n-disabled/fixtures.ts` | Separate narrow approval guard; unchanged existing suite guards. |
+| modify | `e2e/playwright.admin-i18n.config.ts` | Register the isolated disabled-language probe after canonical phase is committed. |
+| create | `coding-packs/reports/evidence/v46-824/disabled-msw.log` | Actual MSW selector behavior and restoration receipt, limitations explicit. |
+| create | `coding-packs/reports/evidence/v46-824/disabled-native.log` | Actual isolated native saved-disabled state and exact API restoration receipt. |

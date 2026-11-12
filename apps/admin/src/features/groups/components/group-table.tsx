@@ -1,6 +1,7 @@
 'use client';
 
 import { useLocale, useTranslations } from 'next-intl';
+import { useDomainLabels } from '@/i18n/domain-labels';
 import type { KeyboardEvent } from 'react';
 import { formatCount } from '../model';
 import type { AdminGroup } from '../types';
@@ -42,6 +43,7 @@ interface Props {
 
 /** D-24 / D-26: bảng nhóm (dạng danh sách) có chọn nhiều */
 export function GroupTable({ items, selected, onToggle, onToggleAll, actions }: Props) {
+  const labels = useDomainLabels();
   const locale = useLocale();
   const t = useTranslations('groups.list');
   const n = items.filter((g) => selected.has(g.id)).length;
@@ -79,7 +81,7 @@ export function GroupTable({ items, selected, onToggle, onToggleAll, actions }: 
                 </div>
               </div>
               <span className={styles.muted}>
-                {g.province} · {g.region}
+                {g.province} · {labels.canonicalRegion(g.region)}
               </span>
               <span>{formatCount(g.memberCount, locale)}</span>
               <span>{formatCount(g.weeklyActive, locale)}</span>

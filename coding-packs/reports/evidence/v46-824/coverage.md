@@ -2,6 +2,14 @@
 
 **Partial evidence only.** Metadata implementation is not proof that a route body, dialog, every locale or API is verified.
 
+## Canonical group/persona save candidate — based onb3304c74
+
+10/10 MSW +10/10 private-native PASS, same assertions: one real4-substep en/my ×1440/390 workflow plus9 pure guards per mode, not20 independent user flows. Exact two owned creates/eight UI saves per mode, raw request/typed DTO/fresh GET readback and editor reopen. Canonical province/kind/industry/region URL and Vietnamese tone/gender/hours preserved; custom names/bio/title/skills/rules/rooms/staff stay raw; persona remains disabled with only owned group assignment. Native fixture retention explicitly approved. No existing record/global permission/config change, original DB/service restart, direct PG client/SQL/reset/seed/delete/export/run.
+
+Measured raw English table region corrected via existing Admin domain label projection, separate4-case known/custom en→vi→en/raw-action regression. Both rebuilt Admin outputs including49 raw-catalog cases each PASS;14 code/unit/harness blobs frozen for post-hook comparison. Root gates PASS: lint8/6cached, typecheck8/6cached, depcheck2895/8869 plus1260/5995;3398 unique tests +2 existing integration skips, fresh Admin1668/201files, other5 suites cached. Source commit pending. New production bytes supersede4c6cebd4 for final source/performance proof. Initial browser-memory hard-reload reset, duplicate option/title, hidden mobile sidebar, redundant cached-GET waiter and unsupported RTL option failures retained. Same real soft navigation/API read/editor reopen in both modes, no new mock persistence claim, timeout increase/skip/force-click or weakened wire assertions. F5 requirements remain separately covered, not claimed for new mock business records.
+
+Expanded375 cases/19files not fully executed. Remaining RBAC/permission/raw/export/config/state/403/chat/VI-prototype and final full-suite/audit/performance obligations stay open. See values-{msw,native,first,quality}.log and completion report.
+
 ## Public password states — unchanged production4c6cebd4
 
 24/24 MSW +24/24 private-native PASS with identical assertions:12 identities ×2 widths, forgot invalid-email, reset empty/mismatch plus real pointer switch/preserved drafts, missing-token/F5/title/cookie/query/hash and resend/back. Dedicated strict zero-API guard, no login/fixtures/email/reset/DB clients or production changes. This is presentation/local-validation proof, not successful email delivery/reset or sent-state API acceptance. Eight blank-field Vi/My390 images (2 states ×2 modes), all12 identities checked for full panel viewport/action text bounds/no horizontal overflow. Agent-reviewed My MSW forgot, My native missing-token and Vi native forgot; no human/owner approval fabricated.
