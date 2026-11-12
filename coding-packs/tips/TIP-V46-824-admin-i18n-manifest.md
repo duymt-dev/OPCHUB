@@ -1,5 +1,34 @@
 # TIP-V46-824 - Exact file manifest
 
+## Approved canonical-save fixtures (owner reply12/11/2026)
+
+For AC824-11 the owner explicitly permits creating/editing separate `tip824-i18n-*` group/persona fixtures through existing Admin APIs on the approved isolated cluster; retain them for independent comparison. Do not edit pre-existing records, permissions or global settings, do not touch PG5432 and do not seed/reset/repair. This permission is not evidence that save-value/RBAC acceptance has run. Declare literal implementation/test/evidence paths before that phase begins; the public-password phase below remains zero-API.
+
+## Public password presentation states (no API writes)
+
+Exercise real public forgot/reset routes for all12 selector identities at1440/390, unchanged assertions in both modes. Local invalid-email/empty-password/mismatch and missing-token states only: no email send, password reset, login, seed or intercepted response. This is not proof of successful email delivery/password reset. Preserve drafts, URL/query/hash, native labels, metadata and F5; capture only blank fields, no real token/credential. Production inputs stay source4c6cebd4 unless an actual defect is measured and declared separately first.
+
+| Action | Exact path | Scope |
+|---|---|---|
+| create | `e2e/behavior/admin-i18n-password.spec.ts` | Twelve identities/two widths, public local-error and missing-token flows. |
+| create | `e2e/behavior/admin-i18n-password/fixtures.ts` | Dedicated public no-API/no-browser-error guard, existing private native preflight unchanged. |
+| create | `e2e/behavior/admin-i18n-password/labels.ts` | Exact raw auth/meta catalog labels, aliases preserve identity. |
+| create | `e2e/behavior/admin-i18n-password/flows.ts` | Actual pointer locale refresh, preserved drafts, local-only errors, F5/missing-token navigation. |
+| create | `e2e/behavior/admin-i18n-password/images.ts` | Blank-field unmasked evidence and actual action text/viewport bounds; no masking. |
+| modify | `e2e/playwright.admin-i18n.config.ts` | Register public presentation cases without changing existing guards/assertions/timeouts. |
+| create | `coding-packs/reports/evidence/v46-824/password-msw.log` | Actual public password MSW results, not successful backend reset proof. |
+| create | `coding-packs/reports/evidence/v46-824/password-native.log` | Same public assertions on approved native mode; no DB clients/fixtures/writes. |
+| create | `coding-packs/reports/evidence/v46-824/password-first.log` | Preserve measured failures before correction, if any. |
+| create | `coding-packs/reports/evidence/v46-824/password-quality.log` | Required root gates/cache status for test-only public password additions; no fresh unit-count/build claim. |
+| create | `coding-packs/reports/evidence/v46-824/password-forgot-vi-msw-390.png` | Actual blank-field forgot local-error state. |
+| create | `coding-packs/reports/evidence/v46-824/password-reset-vi-msw-390.png` | Actual reset missing-token state, no secret. |
+| create | `coding-packs/reports/evidence/v46-824/password-forgot-my-msw-390.png` | Same actual Myanmar forgot state. |
+| create | `coding-packs/reports/evidence/v46-824/password-reset-my-msw-390.png` | Same actual Myanmar reset state. |
+| create | `coding-packs/reports/evidence/v46-824/password-forgot-vi-native-390.png` | Same native-mode Vietnamese forgot state. |
+| create | `coding-packs/reports/evidence/v46-824/password-reset-vi-native-390.png` | Same native-mode Vietnamese reset state. |
+| create | `coding-packs/reports/evidence/v46-824/password-forgot-my-native-390.png` | Same native-mode Myanmar forgot state. |
+| create | `coding-packs/reports/evidence/v46-824/password-reset-my-native-390.png` | Same native-mode Myanmar reset state. |
+
 ## Auth image privacy and viewport proof
 
 The stronger actual viewport assertion also found the mobile setup dialog entirely offscreen: LoginScreen calls leaveAuth (scroll-to-top) even when transitioning to another Auth setup route. Preserve scroll for setup routes and reset only when actually entering the app, using a small Admin-only navigation helper. No route/next target, session, restriction, API or shared/Portal layout change; the existing prototype-style frosted Auth frame remains unchanged.

@@ -3,6 +3,16 @@
 **STATUS: IN PROGRESS / PARTIAL — NOT DONE, NOT READY TO MERGE.**
 The active goal remains the entire approved TIP and all16 ACs. No scope reduction; the agent has not opened a PR, merged or released.
 
+## Public password presentation states — production4c6cebd4 unchanged
+
+**24/24 MSW +24/24 approved native PASS**, identical assertions across12 selector identities ×1440/390: actual forgot invalid-email error; reset empty/mismatch errors with preserved drafts under real pointer locale changes; missing-token block, F5/cookie/title/query/hash and resend/back navigation. Dedicated public guard requires **zero API calls**, so this proves local UI/metadata/error persistence, not successful email delivery, sent-state API behavior or password reset. No login/fixture/account change, interception, DB client, seed/reset or production/shared/Portal change.
+
+Eight actual blank-field images cover Vietnamese/Myanmar forgot-error and reset-missing-token390 in both modes. Full panel viewport, action text-range/hit-box and document-width checks apply to all12 identities. Agent inspected My MSW forgot, My native missing-token and Vi native forgot: no clipped buttons/tofu observed; no native-human/owner approval claimed. Initial fixture collisions with Next's route announcer and duplicate hero/form h1 were fixed by exact auth-content/translated-heading scoping, not first-match suppression. Chromium nearest-edge scroll produced ratio0.9993568062782288; ordinary centered document scrolling now retains the strict ratio1 oracle without changing CSS or hiding content. Failures are preserved in password-first.log.
+
+Required root gates PASS: lint8 tasks/7 cached, typecheck8/7 cached; depcheck2883 modules/8822 dependencies plus1260/5995. Root3394 unique tests +2 existing integration skips are **all6 suites cached**, not new/fresh unit runs or a benchmark. Six harness/config files frozen for post-hook comparison. Production inputs remain byte-identical to4c6cebd4; reuse its verified builds/audit, no fresh production build claim. Registered inventory is now365 cases/17files; this focused48-case execution is not a full365-case run. Browser-owned UI helpers closed and no PG client/pool was opened by these public tests; required native services remain held.
+
+Evidence: [MSW24](evidence/v46-824/password-msw.log), [native24](evidence/v46-824/password-native.log), [diagnostics](evidence/v46-824/password-first.log), [gates/cache](evidence/v46-824/password-quality.log). Remaining raw API/sent states, English loading/empty/error/403/chat, canonical save/RBAC/export/config negatives, VI prototype and final same-source full runs/performance/traceability are not inferred PASS. Whole TIP remains PARTIAL.
+
 ## Auth workflows — source4c6cebd4
 
 **Still PARTIAL / NOT DONE / NOT READY TO MERGE.** Final auth browser runs now pass **33/33 MSW and33/33 approved private-native**, with identical assertions:24 actual workflows per mode (12 selector identities ×1440/390) plus9 pure RFC6238/protocol negatives. This is not a full run of the expanded341-case registered suite. Final post-format required root gates PASS: lint8 tasks/7 cached, typecheck8/7 cached, depcheck2878 modules/8803 dependencies plus1260/5995, and3394 unique tests plus2 existing integration skips. Admin1664 tests/200 files ran fresh; other5 suites cached; worker cap2 only, no timeout/assertion/skip change. All24 frozen production/unit/harness Git blobs match the tested worktree and source4c6cebd4 after normal hooks. Source committed/pushed and clean status verified. Fresh static audit at4c6cebd4 PASS/dirty=false:594 production files,303 findings,0 unreviewed/errors,611 fingerprint files; corpus `677c066cdd1a4b4fa42936366f8b19e21e6f803b56d5c5f0117cc56f093fb817`. CSS/catalogs/browser evidence remain outside that fingerprint; this does not prove final performance/full-suite acceptance.
@@ -63,7 +73,7 @@ Fresh public font/auth48 PASS (24/mode) on0e3803b3, separate from authenticated/
 
 Evidence: [root gates](evidence/v46-824/quality-gates.log), [units](evidence/v46-824/unit.log), [MSW208](evidence/v46-824/full-i18n-msw.log), [native208](evidence/v46-824/full-i18n-native.log), [initial geometry/selector/lint failures](evidence/v46-824/mobile-layout-first.log), [six-case candidate diagnostic](evidence/v46-824/mobile-layout.log), [source audit](evidence/v46-824/source-audit.json). Candidate diagnostic is six MSW cases on working-tree source, not additional unique full-suite cases.
 
-### Current acceptance audit — all16 retained
+### Historical acceptance checkpoint at0e3803b3 — superseded by later scoped evidence above
 
 | AC | Verdict / evidence and remaining work |
 |---|---|

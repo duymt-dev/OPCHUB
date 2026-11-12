@@ -2,6 +2,12 @@
 
 **Partial evidence only.** Metadata implementation is not proof that a route body, dialog, every locale or API is verified.
 
+## Public password states — unchanged production4c6cebd4
+
+24/24 MSW +24/24 private-native PASS with identical assertions:12 identities ×2 widths, forgot invalid-email, reset empty/mismatch plus real pointer switch/preserved drafts, missing-token/F5/title/cookie/query/hash and resend/back. Dedicated strict zero-API guard, no login/fixtures/email/reset/DB clients or production changes. This is presentation/local-validation proof, not successful email delivery/reset or sent-state API acceptance. Eight blank-field Vi/My390 images (2 states ×2 modes), all12 identities checked for full panel viewport/action text bounds/no horizontal overflow. Agent-reviewed My MSW forgot, My native missing-token and Vi native forgot; no human/owner approval fabricated.
+
+Initial route-announcer/duplicate-h1 fixture collisions corrected with exact auth/title scoping. Ordinary centered document scroll fixes nearest-edge fractional ratio0.9993568062782288 while retaining ratio1; no CSS masking or product change. Both actual failures retained. Root lint8/7cached, typecheck8/7cached, depcheck2883/8822 plus1260/5995 PASS; root3394 +2 existing skips **all6 cached**, not extra/fresh unique units. Six candidate harness blobs frozen; production/build/audit inputs identical4c6cebd4. Expanded365 cases/17files registered, not fully run. Remaining API/sent/state/save/RBAC/raw/export/config/VI-prototype and final full-suite/performance proof stay open. Evidence password-{msw,native,first,quality}.log.
+
 ## Auth workflows — source4c6cebd4
 
 **33/33 MSW +33/33 private-native PASS**, identical assertions:24 actual prefix-owned first-password → optional2FA setup/enable → logout/MFA verification workflows per mode across12 identities and1440/390, plus9 pure RFC/protocol negatives. Existing non-Super role/permissions and exact auth payloads/DTOs are checked. First-password locale refresh under the inert backdrop is explicitly a covered-handler probe, not actual selector accessibility;2FA setup uses real pointer selection and preserves draft/raw URI. No native account reset/seed, original-account mutation, schema/API/RBAC/Portal/shared change or assertion/timeout/skip relaxation.

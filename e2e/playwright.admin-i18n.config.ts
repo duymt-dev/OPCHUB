@@ -28,6 +28,7 @@ export default defineConfig({
         'admin-i18n-all-locales.spec.ts',
         'admin-i18n-controls.spec.ts',
         'admin-i18n-auth.spec.ts',
+        'admin-i18n-password.spec.ts',
         'admin-i18n-auth/totp-contract.spec.ts',
         'admin-i18n-auth/protocol-contract.spec.ts',
         'admin-i18n/response-lifetime.spec.ts',
