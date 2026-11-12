@@ -1722,3 +1722,12 @@ Bounded QoS full root39155 terminated FAIL: Admin1750/1757,203/205 files; all7 f
 | create | `infra/scripts/admin-intl/chunk-contract.d.mts` | Typed pure chunk-classification boundary. |
 | modify | `infra/scripts/audit-admin-intl-chunks.mjs` | Existing real build/fixture CLI uses extracted classifier unchanged. |
 | modify | `apps/admin/src/i18n/intl/chunks.spec.ts` | Same6 plain/escaped/mixed/missing cases through actual shared classifier plus subprocess CLI parity smoke; no deadline changes. |
+
+## Owner-requested focused acceptance review (2026-11-12)
+
+Re-run existing read-only core screens and controls for vi/en/my at1440/390, navigation/F5/draft preservation, and role-preview UI. No new tests, fixtures, writes, schema/RBAC changes or reinterpretation as full383-case acceptance. Reuse current verified production builds; record both mode results and inspect actual Profile screenshots (not Overview). Existing declared core images may be refreshed on the same current application bytes. Original native5432 and test data/services untouched.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| create | `coding-packs/reports/evidence/v46-824/review-msw.log` | Focused existing read-only acceptance commands/results. |
+| create | `coding-packs/reports/evidence/v46-824/review-native.log` | Same assertions on approved isolated native runtime. |
