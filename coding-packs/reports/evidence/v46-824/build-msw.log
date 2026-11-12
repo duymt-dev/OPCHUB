@@ -1,21 +1,30 @@
-Source 17f74404; Admin build mode=msw dist=.next-msw-tip824; compile only, no API verification
-$ next build
+Source 6022d311; Admin build mode=msw dist=.next-msw-tip824; compile only, no API verification
+$ vitest run src/i18n/tests/production-catalogs.spec.ts && next build
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  1 passed (1)
+      Tests  49 passed (49)
+   Start at  07:01:36
+   Duration  30.66s (tests 94%, environment 6%)
+
 ▲ Next.js 16.4.2 (Turbopack)
 - Environments: .env.local
-✓ Running next.config.ts took 423ms
+✓ Running next.config.ts took 460ms
 - Experiments (use with caution):
   · optimizePackageImports
 
   Creating an optimized production build ...
-✓ Compiled successfully in 4.5s
+✓ Compiled successfully in 4.0s
   Running TypeScript ...
-  Finished TypeScript in 10.9s ...
+  Finished TypeScript in 10.2s ...
   Collecting page data using 5 workers ...
   Generating static pages using 5 workers (0/10) ...
   Generating static pages using 5 workers (2/10)
   Generating static pages using 5 workers (4/10)
   Generating static pages using 5 workers (7/10)
-✓ Generating static pages using 5 workers (10/10) in 668ms
+✓ Generating static pages using 5 workers (10/10) in 593ms
   Finalizing page optimization ...
 
 Route (app)

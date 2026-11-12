@@ -1,0 +1,346 @@
+Source working tree based on38f0c17d. Complete Myanmar25 files/2667 leaves, earlier17 files/1260 leaves preserved. Eight new files/1407 leaves:249 retained Portal exact-source leaves,1148 explicit-pair leaves,10 context-corrected leaves.918 newly written pairs plus89 prior-core reused pairs cover1007 distinct selected sources. Complete bundle603 retained Portal +2039 explicit +25 context corrections =2667. Native-reviewed=false; no other language/runtime/API/DB/business/Portal/shared/font/dependency change. First focused raw/request attempt:111pass/2fail of113; raw checker incorrectly assumed canonical examples equal English (MS brand/room slug differ); corrected exact two English comparison variants only, preserving source-exact target, ICU/copy/script rules. Actual My request unavailable for all20 namespaces/40 warnings despite present raw files; no fallback assertion removed. Capture default failure then diagnostic filesystem-cache-disabled run, supported cache clear and default retry, not production workaround.
+COMMAND pnpm --filter @opchub/admin exec vitest run src/i18n/tests/myanmar-catalog.spec.ts src/i18n/request.spec.ts
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+ ❯ src/i18n/request.spec.ts (15 tests | 1 failed) 634ms
+   ❯ D-141 AC824-01/04 request-scoped messages, no authOverrides (15)
+     × D-141 AC824-07 loads complete Myanmar business/core/settings without warning or fallback 45ms
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+System.Management.Automation.RemoteException
+ FAIL  src/i18n/request.spec.ts > D-141 AC824-01/04 request-scoped messages, no authOverrides > D-141 AC824-07 loads complete Myanmar business/core/settings without warning or fallback
+AssertionError: expected "vi.fn()" to not be called at all, but actually been called 40 times
+System.Management.Automation.RemoteException
+Received:
+System.Management.Automation.RemoteException
+  1st vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog unavailable: my/affiliate],
+    ]
+System.Management.Automation.RemoteException
+  2nd vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog fallback: my/affiliate/affiliate],
+    ]
+System.Management.Automation.RemoteException
+  3rd vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog unavailable: my/auth],
+    ]
+System.Management.Automation.RemoteException
+  4th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog fallback: my/auth/auth],
+    ]
+System.Management.Automation.RemoteException
+  5th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog unavailable: my/bots],
+    ]
+System.Management.Automation.RemoteException
+  6th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog fallback: my/bots/bots],
+    ]
+System.Management.Automation.RemoteException
+  7th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog unavailable: my/common],
+    ]
+System.Management.Automation.RemoteException
+  8th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog fallback: my/common/common],
+    ]
+System.Management.Automation.RemoteException
+  9th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog unavailable: my/events],
+    ]
+System.Management.Automation.RemoteException
+  10th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog fallback: my/events/events],
+    ]
+System.Management.Automation.RemoteException
+  11th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog unavailable: my/fees],
+    ]
+System.Management.Automation.RemoteException
+  12th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog fallback: my/fees/fees],
+    ]
+System.Management.Automation.RemoteException
+  13th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog unavailable: my/groups],
+    ]
+System.Management.Automation.RemoteException
+  14th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog fallback: my/groups/groups],
+    ]
+System.Management.Automation.RemoteException
+  15th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog unavailable: my/investors],
+    ]
+System.Management.Automation.RemoteException
+  16th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog fallback: my/investors/investors],
+    ]
+System.Management.Automation.RemoteException
+  17th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog unavailable: my/marketing],
+    ]
+System.Management.Automation.RemoteException
+  18th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog fallback: my/marketing/marketing],
+    ]
+System.Management.Automation.RemoteException
+  19th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog unavailable: my/members],
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 113 passed (114)
+   Start at  06:14:46
+   Duration  3.88s (environment 70%, tests 18%, import 7%, transform 5%, worker 1%)
+
+    ]
+System.Management.Automation.RemoteException
+  20th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog fallback: my/members/members],
+    ]
+System.Management.Automation.RemoteException
+  21st vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog unavailable: my/needs],
+    ]
+System.Management.Automation.RemoteException
+  22nd vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog fallback: my/needs/needs],
+    ]
+System.Management.Automation.RemoteException
+  23rd vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog unavailable: my/overview],
+    ]
+System.Management.Automation.RemoteException
+  24th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog fallback: my/overview/overview],
+    ]
+System.Management.Automation.RemoteException
+  25th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog unavailable: my/projects],
+    ]
+System.Management.Automation.RemoteException
+  26th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog fallback: my/projects/projects],
+    ]
+System.Management.Automation.RemoteException
+  27th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog unavailable: my/reports],
+    ]
+System.Management.Automation.RemoteException
+  28th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog fallback: my/reports/reports],
+    ]
+System.Management.Automation.RemoteException
+  29th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog unavailable: my/requests],
+    ]
+System.Management.Automation.RemoteException
+  30th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog fallback: my/requests/requests],
+    ]
+System.Management.Automation.RemoteException
+  31st vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog unavailable: my/stores],
+    ]
+System.Management.Automation.RemoteException
+  32nd vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog fallback: my/stores/stores],
+    ]
+System.Management.Automation.RemoteException
+  33rd vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog unavailable: my/meta],
+    ]
+System.Management.Automation.RemoteException
+  34th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog fallback: my/meta/meta],
+    ]
+System.Management.Automation.RemoteException
+  35th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog unavailable: my/ui],
+    ]
+System.Management.Automation.RemoteException
+  36th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog fallback: my/ui/ui],
+    ]
+System.Management.Automation.RemoteException
+  37th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog unavailable: my/botOptions],
+    ]
+System.Management.Automation.RemoteException
+  38th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog fallback: my/botOptions/botOptions],
+    ]
+System.Management.Automation.RemoteException
+  39th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog unavailable: my/settings],
+    ]
+System.Management.Automation.RemoteException
+  40th vi.fn() call:
+System.Management.Automation.RemoteException
+    Array [
+      "i18n",
+      [Error: Catalog fallback: my/settings/settings],
+    ]
+System.Management.Automation.RemoteException
+System.Management.Automation.RemoteException
+Number of calls: 40
+System.Management.Automation.RemoteException
+ ❯ src/i18n/request.spec.ts:248:29
+    246|     mocks.cookie = 'my';
+    247|     const result = await config();
+    248|     expect(logger.warn).not.toHaveBeenCalled();
+       |                             ^
+    249|     expect(result.locale).toBe('my');
+    250|     expect(result.timeZone).toBe('Asia/Ho_Chi_Minh');
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+System.Management.Automation.RemoteException
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+System.Management.Automation.RemoteException
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\admin
+System.Management.Automation.RemoteException
+EXIT 1
+COMMAND pnpm --filter @opchub/admin exec vitest run src/i18n/tests/myanmar-catalog.spec.ts src/i18n/request.spec.ts --fsModuleCache=false
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  2 passed (2)
+      Tests  114 passed (114)
+   Start at  06:14:51
+   Duration  4.10s (environment 60%, tests 21%, transform 12%, import 6%, worker 1%)
+
+EXIT 0
+COMMAND pnpm --filter @opchub/admin exec vitest --clearCache
+[cache] cleared results cache at D:/CODING/OPCHUB/CODING/apps/admin/node_modules/.vite-vitest/vitest/da39a3ee5e6b4b0d3255bfef95601890afd80709/results.json
+[cache] cleared fs module cache at D:/CODING/OPCHUB/CODING/node_modules/.vitest-cache
+EXIT 0
+COMMAND pnpm --filter @opchub/admin exec vitest run src/i18n/tests/myanmar-catalog.spec.ts src/i18n/request.spec.ts
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  2 passed (2)
+      Tests  114 passed (114)
+   Start at  06:14:56
+   Duration  4.56s (environment 57%, tests 25%, transform 11%, import 6%)
+
+EXIT 0

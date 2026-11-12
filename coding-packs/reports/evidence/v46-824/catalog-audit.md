@@ -1,4 +1,31 @@
-# TIP824 raw catalog readiness - staged Myanmar core checkpoint
+# TIP824 raw catalog readiness — complete fixed inventory
+
+**RAW CONTRACT PASS ONLY — entire TIP remains PARTIAL / NOT DONE.** Source6022d311,2026-11-12:10 required bundles/250 physical JSON files/26,670 string leaves, before fallback. Fixed49-case production checker passes all250 and physically removes every required locale and every Myanmar file in isolated fixtures; missing keys/types/ICU/blank/TODO/copy-policy mutations also fail as required. Both Admin build scripts run this gate before Next. File discovery/resolved Vietnamese fallback never counts as coverage.
+
+| Bundle | Raw files | Required | String leaves | Missing |
+|---|---:|---:|---:|---:|
+| vi |25|25|2667|0|
+| en |25|25|2667|0|
+| zh |25|25|2667|0|
+| id |25|25|2667|0|
+| th |25|25|2667|0|
+| ms |25|25|2667|0|
+| fil |25|25|2667|0|
+| km |25|25|2667|0|
+| lo |25|25|2667|0|
+| my |25|25|2667|0|
+
+Myanmar now25/2667; earlier17/1260 remain byte-identical. Final8/1407 =249 retained Portal exact-source leaves +1148 explicit-pair leaves +10 context-corrected leaves. Whole bundle603 retained +2039 explicit +25 context corrections =2667. New918 source/target pairs plus89 reused earlier-core pairs cover1007 distinct selected source strings. Native-reviewed=false; confidence moderate, not native-human approval.
+
+My99 raw/context/canonical/script/cmap +actual request15 =114 default focused PASS after supported test-cache clear; first default My request failed all20 namespaces with40 warnings, diagnostic no-filesystem-module-cache passed then default114 passed. Production loader/fallback/cache/timeout/skip policy is unchanged. Only two exact English neutral-example variants are accepted for comparison, while target keeps the canonical source examples.
+
+The complete build gate binds92 reviewed copy receipts to exact path/source value/allowed bundle, rejects unknown ASCII copies too, and invalidates stale source receipts. Bounded immutable ICU signature memoization never caches files/fallbacks/failures; physical fixture restoration touches only mutated paths and every check still reads the whole tree.49 production +3 parser-cache +15 checker-contract +My99/request15 =181 focused cases PASS, included in root3364 unique +2 existing skips. First full-root2 slow filesystem-case failures/interrupted run and instrumentation/type/collection corrections remain in production-catalogs.log; final fresh Admin1641/193files/default timeout/worker cap1 PASS, other5 root suites cached.
+
+Both builds on6022d311 PASS including49 gates each. Whole i18n behavior is **not green**: first same-source MSW198/208 and native197/208;21 failed cases total, classified in completion report. Raw correctness is not layout/state/control/value/performance acceptance.
+
+## Historical inventory observations before6022d311
+
+### TIP824 raw catalog readiness - staged Myanmar core checkpoint
 
 **INCOMPLETE / FAIL.** File presence alone is not completion. Counts below are raw source-key presence before any Vietnamese fallback, not native review or proof of ICU validity.
 

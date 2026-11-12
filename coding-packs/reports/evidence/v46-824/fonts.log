@@ -1,77 +1,77 @@
-Production source17f74404. Current public font/auth48 only, identical24 assertions/mode; no native DB/body acceptance from public pages, no original-baseline JS-budget/full-TIP acceptance.
+Source6022d311 both production builds, public font/auth48 only;24 identical cases per mode PASS. Native public pages do not authenticate or prove private DB/body/control/state coverage. Original broader i18n208-mode runs FAILED; font success is not full-TIP acceptance.
 
 Font-only msw browser audit; no database/reset/auth mutation. Same24 assertions as other mode.
-[WebServer] (node:25524) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (node:20112) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
 
 Running 24 tests using 2 workers
 
-(node:29492) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:7116) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:17012) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:21820) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 (Use `node --trace-warnings ...` to show where the warning was created)
-  ok  1 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: vi 390, not catalog acceptance (1.7s)
-  ok  2 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: vi 1440, not catalog acceptance (1.8s)
+  ok  1 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: vi 390, not catalog acceptance (1.9s)
+  ok  2 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: vi 1440, not catalog acceptance (2.0s)
+  ok  3 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: en 1440, not catalog acceptance (1.7s)
   ok  4 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: en 390, not catalog acceptance (1.7s)
-  ok  3 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: en 1440, not catalog acceptance (1.9s)
   ok  6 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: zh 390, not catalog acceptance (2.0s)
   ok  5 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: zh 1440, not catalog acceptance (2.4s)
-  ok  7 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: id 1440, not catalog acceptance (1.5s)
+  ok  7 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: id 1440, not catalog acceptance (1.6s)
   ok  8 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: id 390, not catalog acceptance (1.6s)
-  ok 10 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: th 390, not catalog acceptance (1.6s)
-  ok  9 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: th 1440, not catalog acceptance (2.0s)
-  ok 11 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: ms 1440, not catalog acceptance (1.6s)
-  ok 12 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: ms 390, not catalog acceptance (1.5s)
-  ok 14 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: en-SG 390, not catalog acceptance (1.4s)
+  ok 10 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: th 390, not catalog acceptance (1.7s)
+  ok  9 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: th 1440, not catalog acceptance (2.1s)
+  ok 12 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: ms 390, not catalog acceptance (1.7s)
+  ok 11 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: ms 1440, not catalog acceptance (1.8s)
   ok 13 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: en-SG 1440, not catalog acceptance (1.6s)
-  ok 15 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: fil 1440, not catalog acceptance (1.6s)
+  ok 14 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: en-SG 390, not catalog acceptance (1.6s)
   ok 16 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: fil 390, not catalog acceptance (1.6s)
-  ok 18 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: km 390, not catalog acceptance (1.7s)
-  ok 17 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: km 1440, not catalog acceptance (2.2s)
+  ok 15 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: fil 1440, not catalog acceptance (1.7s)
+  ok 17 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: km 390, not catalog acceptance (2.0s)
+  ok 18 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: km 1440, not catalog acceptance (2.3s)
   ok 19 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: lo 1440, not catalog acceptance (1.6s)
-  ok 20 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: lo 390, not catalog acceptance (1.6s)
+  ok 20 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: lo 390, not catalog acceptance (1.7s)
   ok 22 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: my 390, not catalog acceptance (1.7s)
   ok 21 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: my 1440, not catalog acceptance (2.1s)
+  ok 24 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: ms-BN 390, not catalog acceptance (1.5s)
   ok 23 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: ms-BN 1440, not catalog acceptance (1.6s)
-  ok 24 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: ms-BN 390, not catalog acceptance (1.6s)
 
-  24 passed (24.6s)
+  24 passed (25.7s)
 EXIT 0
 
 Font-only server browser audit; no database/reset/auth mutation. Same24 assertions as other mode.
-[WebServer] (node:9984) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (node:11216) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
 
 Running 24 tests using 2 workers
 
-(node:17108) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:6900) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:21236) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:9968) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 (Use `node --trace-warnings ...` to show where the warning was created)
-  ok  1 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: vi 390, not catalog acceptance (1.3s)
-  ok  2 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: vi 1440, not catalog acceptance (1.4s)
-  ok  4 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: en 390, not catalog acceptance (1.1s)
-  ok  3 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: en 1440, not catalog acceptance (1.2s)
-  ok  6 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: zh 390, not catalog acceptance (1.4s)
-  ok  5 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: zh 1440, not catalog acceptance (1.8s)
+  ok  1 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: vi 390, not catalog acceptance (1.5s)
+  ok  2 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: vi 1440, not catalog acceptance (1.5s)
+  ok  3 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: en 1440, not catalog acceptance (1.4s)
+  ok  4 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: en 390, not catalog acceptance (1.4s)
+  ok  6 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: zh 390, not catalog acceptance (1.6s)
+  ok  5 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: zh 1440, not catalog acceptance (2.0s)
   ok  7 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: id 1440, not catalog acceptance (1.1s)
-  ok  8 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: id 390, not catalog acceptance (1.1s)
-  ok  9 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: th 1440, not catalog acceptance (1.5s)
+  ok  8 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: id 390, not catalog acceptance (1.2s)
+  ok  9 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: th 1440, not catalog acceptance (1.6s)
   ok 10 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: th 390, not catalog acceptance (1.3s)
   ok 11 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: ms 1440, not catalog acceptance (1.2s)
-  ok 12 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: ms 390, not catalog acceptance (1.2s)
-  ok 13 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: en-SG 1440, not catalog acceptance (953ms)
+  ok 12 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: ms 390, not catalog acceptance (1.3s)
+  ok 13 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: en-SG 1440, not catalog acceptance (944ms)
   ok 14 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: en-SG 390, not catalog acceptance (1.1s)
-  ok 15 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: fil 1440, not catalog acceptance (919ms)
-  ok 16 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: fil 390, not catalog acceptance (1.0s)
-  ok 17 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: km 1440, not catalog acceptance (1.5s)
+  ok 15 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: fil 1440, not catalog acceptance (1.0s)
+  ok 16 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: fil 390, not catalog acceptance (1.1s)
+  ok 17 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: km 1440, not catalog acceptance (1.6s)
   ok 18 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: km 390, not catalog acceptance (1.2s)
-  ok 20 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: lo 390, not catalog acceptance (1.1s)
-  ok 19 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: lo 1440, not catalog acceptance (1.2s)
-  ok 22 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: my 390, not catalog acceptance (1.4s)
-  ok 21 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: my 1440, not catalog acceptance (1.9s)
-  ok 23 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: ms-BN 1440, not catalog acceptance (919ms)
-  ok 24 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: ms-BN 390, not catalog acceptance (864ms)
+  ok 19 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: lo 1440, not catalog acceptance (1.4s)
+  ok 20 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: lo 390, not catalog acceptance (1.4s)
+  ok 22 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: my 390, not catalog acceptance (1.7s)
+  ok 21 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: my 1440, not catalog acceptance (2.0s)
+  ok 24 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: ms-BN 390, not catalog acceptance (1.2s)
+  ok 23 audit\admin-i18n-fonts.spec.ts:28:5 › D-141 AC824-15/16 fonts only: ms-BN 1440, not catalog acceptance (1.4s)
 
-  24 passed (18.6s)
+  24 passed (21.2s)
 EXIT 0

@@ -4,7 +4,7 @@
 
 - **TIP-ID:** TIP-V46-824 · **Project:** OPCHUB · **Module:** Admin presentation/i18n.
 - **Priority:** P1 · **Estimated:** XL, khoảng 5–8 ngày công; hơn 22.000 chuỗi đích trước khi bổ sung nhãn còn thiếu. Không coi đây là việc chỉ dịch màn đăng nhập.
-- **Status:** **IN PROGRESS / PARTIAL** — owner đã gọi execute ngày 11/11/2026. Checkpoint nền kỹ thuật đang triển khai; chưa có 9 catalog đích và chưa đạt nghiệm thu i18n. Không merge/release với trạng thái này.
+- **Status:** **IN PROGRESS / PARTIAL — NOT DONE, NOT READY TO MERGE.** Owner đã gọi execute ngày 11/11/2026. Source6022d311 đã đủ10 bundle/250 catalog raw và có fixed raw/build gate; root3364 passed +2 existing skips, cả hai Admin build PASS. Full behavior đầu tiên có lỗi overflow mobile Indonesian và fixture F5/menu cũ, thêm một native API reset; chưa đạt toàn bộ16 AC, chưa mở PR/merge/release. Xem completion report để biết bằng chứng và phần còn thiếu.
 - **Baseline:** `dev` / `origin/dev` tại `f7c1b2b8`, đã có PR #116 (823) và #118 (822).
 - **Branch:** `feature/TIP-V46-824-admin-i18n`, PR vào `dev`; không merge tự động, không release `main`.
 - **Depends on:** V2-117 (mẫu Portal, đã có), V46-822 và V46-823 (đã merge). Không sửa nghiệp vụ hai TIP này.

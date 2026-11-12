@@ -1306,6 +1306,11 @@ After raw250 completion, exercise every one of12 selector identities (10 bundles
 | modify | `e2e/behavior/admin-i18n-picker.spec.ts` | Extend unchanged canonical range/URL/API/F5 assertions to all12 identities, including complete km/my. |
 | create | `coding-packs/reports/evidence/v46-824/all-locales-msw.log` | Actual full72-case loaded core-screen evidence, no broad state claim. |
 | create | `coding-packs/reports/evidence/v46-824/all-locales-native.log` | Identical72-case core-screen assertions against approved isolated API, original native/data safety retained. |
+| create | `coding-packs/reports/evidence/v46-824/full-i18n-msw.log` | Full registered208-case i18n behavior run; distinguish72 fixed core cases, helper protocol cases and synthetic probes, not all-state/full-TIP acceptance. |
+| create | `coding-packs/reports/evidence/v46-824/full-i18n-native.log` | Same208 assertions against private native prerequisites; auth sessions only, no original DB/service/data mutation. |
+| create | `coding-packs/reports/evidence/v46-824/full-i18n-first-msw.log` | Preserve source6022 first full run:198 pass/10 fail, not full acceptance. |
+| create | `coding-packs/reports/evidence/v46-824/full-i18n-first-native.log` | Preserve source6022 first full run:197 pass/11 fail, strict native proxy failures retained. |
+| modify | `coding-packs/tips/TIP-V46-824-admin-i18n.md` | Update only execution status to reflect complete raw250; retain original full16-AC scope and NOT DONE/no merge status. |
 | create | `coding-packs/reports/evidence/v46-824/vi-overview-msw-1440.png` | Unmasked actual required-language overview image; no owner/native-human approval implied. |
 | create | `coding-packs/reports/evidence/v46-824/vi-overview-msw-390.png` | Unmasked actual required-language overview image; no owner/native-human approval implied. |
 | create | `coding-packs/reports/evidence/v46-824/vi-overview-server-1440.png` | Unmasked actual required-language overview image; no owner/native-human approval implied. |
