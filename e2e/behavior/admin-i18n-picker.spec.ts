@@ -1,8 +1,21 @@
 import { test, expect, openLocalized } from './admin-i18n/fixtures';
 import { selectLocale } from './admin-i18n/navigation';
 
-// Fixed translated identities only. km/my still require catalogs and actual locale acceptance.
-const LOCALES = ['lo', 'vi', 'en', 'th', 'zh', 'id', 'ms', 'ms-BN', 'fil', 'en-SG'] as const;
+// Fixed12 identities: ten complete raw bundles and two aliases, never folder discovery.
+const LOCALES = [
+  'lo',
+  'vi',
+  'en',
+  'th',
+  'zh',
+  'id',
+  'ms',
+  'ms-BN',
+  'fil',
+  'en-SG',
+  'km',
+  'my',
+] as const;
 const RANGES = [
   ['nonambiguous', '2026-11-21', '2026-11-30'],
   ['year-boundary', '2026-12-31', '2027-01-01'],
@@ -21,7 +34,7 @@ function expectedDate(value: string, locale: string): string {
 
 for (const width of [1440, 390])
   for (const [name, from, to] of RANGES) {
-    test(`D-141 AC824-08/09 actual picker ${name} ${width}, ten translated identities not full Intl acceptance`, async ({
+    test(`D-141 AC824-08/09 actual picker ${name} ${width}, all12 identities not full Intl acceptance`, async ({
       page,
       guard,
     }) => {

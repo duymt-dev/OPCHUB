@@ -13,7 +13,7 @@ const FLOW = {
   groups: 90,
 };
 
-describe('D-141 system-flow prepared Myanmar presentation', () => {
+describe('D-141 AC824-08 system-flow prepared Myanmar presentation', () => {
   it('does not bypass scoped CLDR via native NumberFormat after preparation', async () => {
     await prepareAdminIntl('my');
     const native = vi.spyOn(Intl, 'NumberFormat');

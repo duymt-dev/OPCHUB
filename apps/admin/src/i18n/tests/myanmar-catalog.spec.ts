@@ -4,8 +4,16 @@ import { describe, expect, it } from 'vitest';
 import receipt from '../font-assets.json';
 import { catalogIssues } from './message-contract';
 
-/** Staged17-file raw inventory; eight business files/final10-bundle gate remain required. */
+/** Fixed complete25-file raw inventory, not the final10-bundle production gate. */
 const FILES = [
+  'affiliate',
+  'bots',
+  'events',
+  'fees',
+  'groups',
+  'marketing',
+  'members',
+  'projects',
   'auth',
   'bot-options',
   'common',
@@ -24,7 +32,33 @@ const FILES = [
   'settings/finance',
   'settings/ai',
 ] as const;
+const ENGLISH_EXAMPLE_VARIANTS = new Map([
+  ['affiliate.policy.mediaAmount', 'Media Soft {amount}'],
+  ['groups.form.roomNamePh', 'room-name'],
+]);
 const NEUTRAL = new Map([
+  ['affiliate.policy.mediaSoft', 'Unchanged Media Soft brand'],
+  ['affiliate.policy.mediaAmount', 'Unchanged MS brand/amount expression'],
+  ['affiliate.dateRange', 'Canonical date-range example'],
+  ['bots.dateRange', 'Canonical date-range example'],
+  ['bots.pf.namePh', 'Existing person-name example'],
+  ['events.dateRange', 'Canonical date-range example'],
+  ['events.form.mapPh', 'Canonical map URL example'],
+  ['events.form.linkPh', 'Canonical meeting URL example'],
+  ['events.form.meetPh', 'Canonical Google Meet URL example'],
+  ['fees.dateRange', 'Canonical date-range example'],
+  ['groups.dateRange', 'Canonical date-range example'],
+  ['groups.form.roomNamePh', 'Canonical room slug example'],
+  ['groups.export.csv', 'Unchanged CSV file-format label'],
+  ['groups.export.xls', 'Unchanged Excel file-format label'],
+  ['marketing.dateRange', 'Canonical date-range example'],
+  ['marketing.auto.attUrl', 'Canonical attachment URL example'],
+  ['marketing.mail.brand', 'Unchanged public domain'],
+  ['marketing.mail.sampleName', 'Existing person-name example'],
+  ['members.dateRange', 'Canonical date-range example'],
+  ['projects.dateRange', 'Canonical date-range example'],
+  ['projects.stage.mvp', 'Canonical MVP stage label'],
+  ['projects.val.none', 'Existing empty-value dash'],
   ['auth.twoFactor.codePlaceholder', 'Canonical six-digit numeric example'],
   ['bot-options.hours.0', 'Canonical time-range example'],
   ['bot-options.hours.1', 'Canonical time-range example'],
@@ -79,7 +113,7 @@ function valueAt(node: unknown, key: string): unknown {
   return node;
 }
 
-describe('D-141 AC824-02 staged Myanmar17-file raw catalogs before fallback', () => {
+describe('D-141 AC824-02 complete Myanmar25-file raw catalogs before fallback', () => {
   it.each(FILES)('%s preserves shape/keys/ICU/NFC with no copied Vietnamese prose', (file) => {
     expect(
       catalogIssues(
@@ -98,6 +132,25 @@ describe('D-141 AC824-02 staged Myanmar17-file raw catalogs before fallback', ()
   });
 
   it.each([
+    ['affiliate', 'title', 'မိတ်ဆက်သူ'],
+    ['affiliate', 'pageTitle', 'မိတ်ဆက်သူကွန်ရက်'],
+    ['affiliate', 'regional.share.affiliates', 'မိတ်ဆက်သူ'],
+    ['affiliate', 'tabs.aff', 'မိတ်ဆက်သူ'],
+    ['affiliate', 'columns.affiliate', 'မိတ်ဆက်သူ'],
+    ['affiliate', 'regional.title', 'ဒေသဒါရိုက်တာ ဆက်တင်များ'],
+    ['affiliate', 'columns.monthStatus', 'လအတွက် အခြေအနေ'],
+    ['bots', 'card.title', 'အသိုင်းအဝိုင်း အပြန်အလှန်ဆက်ဆံရေးဘော့'],
+    ['bots', 'replies.assignmentPending', 'ပြန်ဖြေသည့်အခါ ရွေးမည်'],
+    ['events', 'form.name', 'ပွဲအမည်'],
+    ['events', 'form.meet', 'Google Meet လင့်ခ်'],
+    ['fees', 'status.regional_director', 'အခမဲ့ · ဒေသဒါရိုက်တာ'],
+    ['groups', 'export.statusLocked', 'လော့ခ်ချထားသည်'],
+    ['groups', 'export.cell.locked', 'လော့ခ်ချထားသည်'],
+    ['groups', 'mod.filter.report', 'အဖွဲ့ဝင်တိုင်ကြားမှု'],
+    ['members', 'status.locked', 'လော့ခ်ချထားသည်'],
+    ['members', 'filters.st.locked', 'လော့ခ်ချထားသည်'],
+    ['projects', 'val.repoPublic', 'အများပြည်သူ'],
+    ['projects', 'val.repoPrivate', 'သီးသန့်'],
     ['auth', 'login.submit', 'အကောင့်ဝင်ရန်'],
     ['auth', 'login.welcomeAdmin', 'စီမံခန့်ခွဲမှုဒက်ရှ်ဘုတ်သို့ အကောင့်ဝင်ရန်'],
     ['auth', 'login.welcomeUser', 'မင်္ဂလာပါ၊ အဖွဲ့ဝင်ပေါ်တယ်သို့ အကောင့်ဝင်ပါ'],
@@ -152,7 +205,7 @@ describe('D-141 AC824-02 staged Myanmar17-file raw catalogs before fallback', ()
     expect(valueAt(read('my', file ?? ''), key ?? '')).toBe(expected);
   });
 
-  it('D-141 AC824-02 permits only31 exact neutral examples, not English filler or fake Latin Myanmar', () => {
+  it('D-141 AC824-02 permits only53 exact neutral examples, not English filler or fake Latin Myanmar', () => {
     const retained: string[] = [];
     for (const file of FILES) {
       const source = new Map(leaves(read('vi', file))),
@@ -161,7 +214,8 @@ describe('D-141 AC824-02 staged Myanmar17-file raw catalogs before fallback', ()
         const full = `${file}.${key}`;
         if (NEUTRAL.has(full)) {
           expect(value, full).toBe(source.get(key));
-          expect(value, full).toBe(english.get(key));
+          // Canonical source examples stay unchanged even when English spells out a brand.
+          expect(english.get(key), full).toBe(ENGLISH_EXAMPLE_VARIANTS.get(full) ?? value);
           retained.push(full);
         } else {
           expect(value, full).not.toBe(english.get(key));
@@ -169,11 +223,23 @@ describe('D-141 AC824-02 staged Myanmar17-file raw catalogs before fallback', ()
         }
       }
     }
-    expect(retained).toHaveLength(31);
+    expect(retained).toHaveLength(53);
     expect(retained.sort()).toEqual([...NEUTRAL.keys()].sort());
   });
 
+  it('D-141 AC824-02 retains three separate translated topic examples, not a collapsed placeholder', () => {
+    expect(valueAt(read('my', 'bots'), 'bulk.topicsPlaceholder')).toBe(
+      'OPC အတွက် အီလက်ထရွန်နစ်ငွေတောင်းခံလွှာ\nစိုက်ပျိုးထွက်ကုန်များအတွက် ဈေးကွက် ရှာခြင်း\nဖောက်သည်ဝန်ဆောင်မှုတွင် AI အသုံးပြုခြင်း',
+    );
+  });
+
   it.each([
+    ['bots', 'pf.namePh'],
+    ['events', 'form.mapPh'],
+    ['events', 'form.linkPh'],
+    ['events', 'form.meetPh'],
+    ['groups', 'form.roomNamePh'],
+    ['marketing', 'mail.sampleName'],
     ['settings/core', 'general.tz.ict'],
     ['settings/access', 'admins.drawer.namePh'],
     ['settings/mail', 'mail.sampleName'],
@@ -184,9 +250,9 @@ describe('D-141 AC824-02 staged Myanmar17-file raw catalogs before fallback', ()
     );
   });
 
-  it('D-141 AC824-15 covers all1260 staged leaves with unchanged Myanmar/Latin font cmaps', () => {
+  it('D-141 AC824-15 covers all2667 leaves with unchanged Myanmar/Latin font cmaps', () => {
     const text = FILES.flatMap((file) => leaves(read('my', file)).map(([, value]) => value));
-    expect(text).toHaveLength(1260);
+    expect(text).toHaveLength(2667);
     const ranges = [receipt.assets.NotoSans.cmap, receipt.assets.NotoSansMyanmar.cmap]
       .flatMap((cmap) => cmap.split(','))
       .map((range) => {

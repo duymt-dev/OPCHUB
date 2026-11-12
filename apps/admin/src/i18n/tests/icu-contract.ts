@@ -2,6 +2,11 @@ import { IntlMessageFormat } from 'intl-messageformat';
 
 type Elements = ReturnType<IntlMessageFormat['getAst']>;
 
+// Test/build validation only: identical immutable message+locale has an identical contract.
+// Never cache files, resolved catalogs or failures; changed fixture bytes still parse anew.
+const contracts = new Map<string, readonly string[]>();
+const MAX_CONTRACTS = 32_768;
+
 /** Public ICU AST discriminants: literal=0, argument=1, number=2, date=3, time=4,
  * select=5, plural=6, pound=7, tag=8. A regex cannot distinguish these contracts. */
 function signatures(elements: Elements, result = new Set<string>()): Set<string> {
@@ -25,6 +30,11 @@ function signatures(elements: Elements, result = new Set<string>()): Set<string>
 }
 
 export function icuContract(message: string, locale: string): string[] {
+  const key = `${locale}\0${message}`;
+  const cached = contracts.get(key);
+  if (cached) return [...cached];
   const ast = new IntlMessageFormat(message, locale).getAst();
-  return [...signatures(ast)].sort();
+  const result = [...signatures(ast)].sort();
+  if (contracts.size < MAX_CONTRACTS) contracts.set(key, result);
+  return [...result];
 }

@@ -37,7 +37,7 @@ const SCREENS = [
 
 for (const screen of SCREENS)
   for (const width of [1440, 390]) {
-    test(`D-141 AC824-07/15 Myanmar core ${screen.id} ${width}, not missing8-domain/full acceptance`, async ({
+    test(`D-141 AC824-07/08/15 Myanmar core ${screen.id} ${width}, raw25 complete not full acceptance`, async ({
       page,
       guard,
     }) => {

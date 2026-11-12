@@ -242,4 +242,30 @@ describe('D-141 AC824-01/04 request-scoped messages, no authOverrides', () => {
     expect(messages.auth.login.submit).toBe('Đăng nhập');
     expect(logger.warn).not.toHaveBeenCalled();
   });
+  it('D-141 AC824-07 loads complete Myanmar business/core/settings without warning or fallback', async () => {
+    mocks.cookie = 'my';
+    const result = await config();
+    expect(logger.warn).not.toHaveBeenCalled();
+    expect(result.locale).toBe('my');
+    expect(result.timeZone).toBe('Asia/Ho_Chi_Minh');
+    expect(result.messages).toMatchObject({
+      auth: { login: { submit: 'အကောင့်ဝင်ရန်' } },
+      common: { adminProfile: { title: 'ကိုယ်ရေးပရိုဖိုင်' } },
+      overview: { title: 'ခြုံငုံသုံးသပ်ချက်' },
+      reports: { title: 'အစီရင်ခံစာများ' },
+      affiliate: { title: 'မိတ်ဆက်သူ' },
+      groups: { mod: { filter: { report: 'အဖွဲ့ဝင်တိုင်ကြားမှု' } } },
+      members: { status: { locked: 'လော့ခ်ချထားသည်' } },
+      settings: {
+        general: { heading: 'ပလက်ဖောင်းအချက်အလက်' },
+        roles: { heading: 'အခန်းကဏ္ဍနှင့် ခွင့်ပြုချက်များ' },
+        mail: { heading: 'ကြိုဆိုသည့် အီးမေးလ်' },
+        log: { heading: 'စီမံခန့်ခွဲမှု လုပ်ဆောင်ချက်မှတ်တမ်း' },
+        price: { heading: 'စျေးနှုန်းဆက်တင်များ' },
+        ai: { heading: 'AI ဝန်ဆောင်မှုပေးသူများ' },
+      },
+    });
+    expect(messages.auth.login.submit).toBe('Đăng nhập');
+    expect(logger.warn).not.toHaveBeenCalled();
+  });
 });

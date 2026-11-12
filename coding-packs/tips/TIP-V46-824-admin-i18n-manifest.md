@@ -1258,3 +1258,75 @@ Route the five system-flow primary values and plain ICU numeric parameters throu
 | modify | `apps/admin/src/features/overview/components/system-flow.tsx` | Format display-only subtext arguments without changing numeric model data. |
 | modify | `e2e/behavior/admin-i18n-myanmar.spec.ts` | Compare all five primary counts and three subtexts against raw response and independent Node Myanmar number oracle. |
 | create | `coding-packs/reports/evidence/v46-824/myanmar-flow.log` | Focused regression, original failure and corrected gate evidence. |
+
+## Complete Myanmar raw bundle
+
+Add the eight remaining business catalogs from reviewed offline source/target pairs; preserve the earlier17 files byte-for-byte. Expand fixed raw/context/ICU/script/glyph/canonical checks to25 files/2667 leaves, and actual request/no-fallback coverage. This is not a waiver of the final10-bundle gate or full16-AC acceptance. Runtime/API/DB/Portal/shared/fonts/other language catalogs stay unchanged.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| create | `apps/admin/messages/my/affiliate.json` | Complete regional director/referrer business labels, unchanged canonical placeholders. |
+| create | `apps/admin/messages/my/bots.json` | Complete persona/script/automation/emergency/reply/schedule labels. |
+| create | `apps/admin/messages/my/events.json` | Complete event/detail/form/attendee labels. |
+| create | `apps/admin/messages/my/fees.json` | Complete fee/transaction/matching labels. |
+| create | `apps/admin/messages/my/groups.json` | Complete group/chat/moderation/export labels. |
+| create | `apps/admin/messages/my/marketing.json` | Complete campaign/template/delivery-log labels. |
+| create | `apps/admin/messages/my/members.json` | Complete member/registration/business-profile labels. |
+| create | `apps/admin/messages/my/projects.json` | Complete project/moderation/fundraising labels. |
+| modify | `apps/admin/src/i18n/tests/myanmar-catalog.spec.ts` | Fixed25-file raw/shape/ICU/context/canonical/script/font checks, exact neutral keys only. |
+| modify | `apps/admin/src/i18n/request.spec.ts` | Actual complete Myanmar request load without fallback/warnings. |
+| modify | `apps/admin/messages/REVIEW.md` | Exact provenance/glossary/counts; native-reviewed=false. |
+| modify | `e2e/behavior/admin-i18n-myanmar.spec.ts` | Retitle scope after raw25 completion: core-screen coverage only, same assertions and numeric response oracles. |
+| modify | `apps/admin/src/features/overview/flow.spec.ts` | Add required AC824-08 trace prefix to unchanged scoped-formatter regression assertions. |
+| create | `coding-packs/reports/evidence/v46-824/myanmar-complete-raw.log` | Actual raw/request failures, filesystem test-cache diagnosis and default successful retry; test cache only, no production workaround. |
+
+## Fixed full raw-catalog production gate
+
+Once all250 physical files exist, enforce the original10-bundle inventory in unit and Admin build scripts, never folder discovery or resolved fallback. Review every source-copy exception by exact path, exact source value and allowed bundle identities; unknown ASCII source copies must fail too. Negative tests use isolated physical filesystem fixtures, not production catalog deletion. No new dependencies or runtime imports.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| create | `apps/admin/src/i18n/tests/production-catalogs.ts` | Fixed10 bundles ×25 files, raw filesystem contract/copy validator, no fallback/discovery. |
+| create | `apps/admin/src/i18n/tests/production-copy-policy.ts` | Reviewed exact92 canonical/brand/technical/locale-natural source-copy exceptions; source value and locale bound, no wildcard. |
+| create | `apps/admin/src/i18n/tests/production-catalogs.spec.ts` | Actual250-file positive and isolated physical missing-locale/file/key/type/ICU/empty/TODO/source-copy negative proof. |
+| modify | `apps/admin/package.json` | Require the fixed raw-catalog gate before each Admin production build, preserving Next command and dependency versions. |
+| create | `coding-packs/reports/evidence/v46-824/production-catalogs.log` | Actual full-inventory checker/negative-fixture command output. |
+| modify | `apps/admin/src/i18n/tests/icu-contract.ts` | Bounded immutable string+locale AST-signature memoization for repeated full-tree negative fixtures; still read every physical file, no filesystem/Vitest/app cache-policy or timeout change. |
+| create | `apps/admin/src/i18n/tests/icu-contract-cache.spec.ts` | Prove memoized parser still separates locale/text, returns defensive copies and rejects malformed ICU; no skipped negative case. |
+
+## Full fixed locale core-screen evidence
+
+After raw250 completion, exercise every one of12 selector identities (10 bundles and2 aliases) on actual Overview/Profile/Settings at1440/390, same native/MSW guards. Capture the seven required screenshot languages, never substitute Dashboard for Profile. Expand existing canonical picker checks to Khmer/Myanmar. This is loaded core-screen/picker evidence, not all auth/state/dialog/value/performance acceptance.
+
+| Operation | Path | Purpose |
+|---|---|---|
+| create | `e2e/behavior/admin-i18n/core-labels.ts` | Fixed12 identities, zod-validated raw catalog expectations; no app formatter/runtime import. |
+| create | `e2e/behavior/admin-i18n-all-locales.spec.ts` |72 actual locale/core-screen/viewport cases per mode with strict login/read-only guard, exact anchors/metadata/identity and unmasked images. |
+| modify | `e2e/playwright.admin-i18n.config.ts` | Register full fixed locale core-screen suite. |
+| modify | `e2e/behavior/admin-i18n-picker.spec.ts` | Extend unchanged canonical range/URL/API/F5 assertions to all12 identities, including complete km/my. |
+| create | `coding-packs/reports/evidence/v46-824/all-locales-msw.log` | Actual full72-case loaded core-screen evidence, no broad state claim. |
+| create | `coding-packs/reports/evidence/v46-824/all-locales-native.log` | Identical72-case core-screen assertions against approved isolated API, original native/data safety retained. |
+| create | `coding-packs/reports/evidence/v46-824/vi-overview-msw-1440.png` | Unmasked actual required-language overview image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/vi-overview-msw-390.png` | Unmasked actual required-language overview image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/vi-overview-server-1440.png` | Unmasked actual required-language overview image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/vi-overview-server-390.png` | Unmasked actual required-language overview image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/vi-profile-msw-1440.png` | Unmasked actual required-language profile image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/vi-profile-msw-390.png` | Unmasked actual required-language profile image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/vi-profile-server-1440.png` | Unmasked actual required-language profile image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/vi-profile-server-390.png` | Unmasked actual required-language profile image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/vi-settings-msw-1440.png` | Unmasked actual required-language settings image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/vi-settings-msw-390.png` | Unmasked actual required-language settings image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/vi-settings-server-1440.png` | Unmasked actual required-language settings image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/vi-settings-server-390.png` | Unmasked actual required-language settings image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/zh-overview-msw-1440.png` | Unmasked actual required-language overview image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/zh-overview-msw-390.png` | Unmasked actual required-language overview image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/zh-overview-server-1440.png` | Unmasked actual required-language overview image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/zh-overview-server-390.png` | Unmasked actual required-language overview image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/zh-profile-msw-1440.png` | Unmasked actual required-language profile image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/zh-profile-msw-390.png` | Unmasked actual required-language profile image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/zh-profile-server-1440.png` | Unmasked actual required-language profile image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/zh-profile-server-390.png` | Unmasked actual required-language profile image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/zh-settings-msw-1440.png` | Unmasked actual required-language settings image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/zh-settings-msw-390.png` | Unmasked actual required-language settings image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/zh-settings-server-1440.png` | Unmasked actual required-language settings image; no owner/native-human approval implied. |
+| create | `coding-packs/reports/evidence/v46-824/zh-settings-server-390.png` | Unmasked actual required-language settings image; no owner/native-human approval implied. |
