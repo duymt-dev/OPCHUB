@@ -2,18 +2,18 @@
   "status": "PASS",
   "command": "node infra/scripts/audit-admin-i18n.mjs",
   "source": {
-    "gitHead": "0e3803b34caba2879331195251d87c3ef17875d4",
+    "gitHead": "eb9a9a0a4503771eae875f1a048df0cb35afb0b3",
     "dirty": false,
-    "corpusSha256": "fb448434818fec0c038780a6e57a7bfbf05baac7530fa73e182c82e7b719b1a0",
-    "fingerprintFiles": 609,
+    "corpusSha256": "eaa08c1a4bb4455768d04cd1754af9003f76a0d9a3606252bc20dd57eedebe8c",
+    "fingerprintFiles": 610,
     "fingerprintScope": "Scanned production source plus audit scripts and exact exception registries; not catalogs or browser evidence"
   },
-  "sourceFiles": 592,
+  "sourceFiles": 593,
   "excluded": [
     "test/spec/declaration files",
     "tests/__tests__/mocks/__mocks__ fixture directories"
   ],
-  "durationMs": 29862,
+  "durationMs": 49101,
   "rows": [
     {
       "file": "apps/admin/src/app/(admin)/affiliate/[[...slug]]/page.tsx",
@@ -248,10 +248,10 @@
     {
       "file": "apps/admin/src/app/layout.tsx",
       "kind": "ui-literal",
-      "line": 15,
+      "line": 16,
       "text": "OPC Hub Admin",
-      "start": 641,
-      "end": 656,
+      "start": 703,
+      "end": 718,
       "disposition": "retained-contract",
       "reason": "Required unchanged root metadata brand title."
     },
@@ -889,10 +889,10 @@
     {
       "file": "apps/admin/src/features/marketing/components/campaign-form-fields.tsx",
       "kind": "enum-jsx",
-      "line": 192,
+      "line": 193,
       "text": "v",
-      "start": 6012,
-      "end": 6013,
+      "start": 6037,
+      "end": 6038,
       "values": [
         "{{ten}}",
         "{{email}}",

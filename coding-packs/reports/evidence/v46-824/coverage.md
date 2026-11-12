@@ -2,7 +2,9 @@
 
 **Partial evidence only.** Metadata implementation is not proof that a route body, dialog, every locale or API is verified.
 
-## Actual controls — candidate working tree based on0001c46f
+## Actual controls — source eb9a9a0a
+
+Required root gates passed before source commit/push;29 final source/test/harness blobs verified identical after normal hooks, then clean status. Fresh static audit eb9a9a0a PASS/dirty=false,593 production files/303 findings/0 unreviewed/errors,610 fingerprint files, corpus `eaa08c1a4bb4455768d04cd1754af9003f76a0d9a3606252bc20dd57eedebe8c` (CSS/catalogs/browser excluded). Candidate build production inputs match the committed source; no fresh post-commit full308 run is claimed.
 
 AC07/08/09/15 representative controls now have actual **96/96 MSW +96/96 private-native PASS** (12 identities ×1440/390 ×4 flows), identical assertions and strict real-auth/HTTP/JSON/no-business-write guards. Calendar: localized presets/header/AntD labels, exact Gregorian year (Chinese includes 年), keyboard next/previous, outer and inner no-horizontal-overflow bounds, unchanged date inputs/URL. Members: actual raw DTO totals, localized page/range/options/selection counts, row selection/clear/next-page keyboard, canonical page2/size1. Editor:13 translated tools, Enter opens real link dialog, localized close/error/autofocus, invalid URL remains local, Escape preserves containing unsaved draft and URL. Empty: real future-range AI GETs, DTO empty rows, native localized Empty label, exact VN-boundary-equivalent UTC Z queries and keyboard close. No intercepted backend, save/export or business mutation.
 

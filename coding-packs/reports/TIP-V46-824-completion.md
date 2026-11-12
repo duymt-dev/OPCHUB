@@ -3,7 +3,9 @@
 **STATUS: IN PROGRESS / PARTIAL — NOT DONE, NOT READY TO MERGE.**
 The active goal remains the entire approved TIP and all16 ACs. No scope reduction; the agent has not opened a PR, merged or released.
 
-## Actual-control correction phase — working tree based on0001c46f
+## Actual-control correction phase — source eb9a9a0a
+
+Committed/pushed after required root gates passed, with normal hooks. All29 frozen final source/test/harness Git blobs match the tested worktree and commit after hooks; clean status was checked after push. Candidate Admin builds were made before commit from these unchanged production inputs, not a new post-commit build claim. Fresh source audit at eb9a9a0a PASS/dirty=false:593 production files,303 findings,0 unreviewed/errors,610 fingerprint files; corpus `eaa08c1a4bb4455768d04cd1754af9003f76a0d9a3606252bc20dd57eedebe8c`. CSS/catalogs/browser evidence remain outside that fingerprint. This honestly replaces the old production corpus below; it does not replace final performance/full-suite proof.
 
 Owner approved equivalent UTC serialization after the real AI call-log date filter returned400. The new Admin-only serializer keeps the exact VN day instants (including `.999` end boundary), emitting UTC Z accepted by the unchanged query. No schema/API/server/range policy change. Owner also approved optional RichText close labels and Enter/Space handling; only the four Admin callers opt in, Portal defaults and pointer behavior stay unchanged. The Event sheet now leaves Escape from its nested link dialog to that dialog, preserving the unsaved draft.
 
