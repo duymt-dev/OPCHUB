@@ -130,6 +130,7 @@ export function ReviewFeedback({ reason, note, onReason, onNote }: FeedbackProps
       </select>
       <RichTextField
         labels={ui.editor}
+        keyboardControls
         value={note}
         onChange={onNote}
         minHeight={90}

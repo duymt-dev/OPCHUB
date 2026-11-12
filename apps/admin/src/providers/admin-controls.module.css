@@ -1,0 +1,41 @@
+@media (max-width: 767px) {
+  .scope :global(.ant-picker-dropdown),
+  .scope :global(.ant-picker-panel-container) {
+    max-width: calc(100vw - 24px);
+  }
+
+  .scope :global(.ant-picker-panel-container) {
+    max-height: min(720px, calc(100dvh - 24px));
+    overflow-y: auto;
+  }
+
+  .scope :global(.ant-picker-panel-layout),
+  .scope :global(.ant-picker-panels) {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .scope :global(.ant-picker-dropdown .ant-picker-panel-container .ant-picker-presets) {
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .scope :global(.ant-picker-dropdown .ant-picker-presets ul) {
+    display: flex;
+    flex-wrap: wrap;
+    height: auto;
+    flex: none;
+  }
+
+  .scope :global(.ant-picker-dropdown .ant-picker-presets li) {
+    white-space: normal;
+    overflow: visible;
+  }
+
+  .scope :global(.ant-picker-dropdown .ant-picker-date-panel) {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+}

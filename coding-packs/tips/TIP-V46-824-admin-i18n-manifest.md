@@ -1,5 +1,61 @@
 # TIP-V46-824 - Exact file manifest
 
+## Owner-approved UTC serializer correction — 12/11/2026
+
+Owner: “Cho phép sửa serializer UTC tương đương”. The browser discovered an existing AI call-log 400: date inputs emit +07:00 while the query accepts UTC Z. Only the presentation serializer may change, retaining exactly the same Vietnamese day boundaries/instants. No schema, API, server, range policy or persistence change. Initial failure remains in controls-first.log.
+
+| Action | Exact path | Scope |
+|---|---|---|
+| create | `apps/admin/src/features/settings/ai-call-date-input.ts` | Serialize unchanged VN day boundaries as equivalent UTC Z. |
+| create | `apps/admin/src/features/settings/ai-call-date-input.spec.ts` | Exact boundaries, leap/month/year rollover, instant equivalence and existing query compatibility. |
+| modify | `apps/admin/src/features/settings/components/ai/ai-call-filters.tsx` | Use serializer in the existing nonempty date-input handlers only. |
+
+## Owner-approved optional RichText controls — 12/11/2026
+
+Owner approved optional close labels and Enter/Space support, Admin-only opt-in; Portal defaults and mouse actions remain unchanged. This narrowly supersedes the earlier shared-UI restriction for these literal paths only.
+
+| Action | Exact path | Scope |
+|---|---|---|
+| modify | `packages/ui/src/rich-text-field/types.ts` | Optional keyboardControls, default off. |
+| modify | `packages/ui/src/rich-text-field/labels.ts` | Optional close label, no changed default. |
+| modify | `packages/ui/src/rich-text-field/rich-text-field-impl.tsx` | Extract toolbar and forward opt-in. |
+| create | `packages/ui/src/rich-text-field/rich-text-toolbar.tsx` | Preserve pointer behavior, optional Enter/Space activation. |
+| create | `packages/ui/src/rich-text-field/rich-text-toolbar.spec.tsx` | Default/opt-in/pointer/repeat/null-editor regressions. |
+| modify | `packages/ui/src/rich-text-field/link-dialog.tsx` | Forward optional close label only. |
+| create | `packages/ui/src/rich-text-field/link-dialog-i18n.spec.tsx` | Default Vietnamese/opted-in close label regression. |
+| modify | `apps/admin/src/i18n/ui-labels.ts` | Live Admin close translation. |
+| modify | `apps/admin/src/i18n/ui-labels.spec.tsx` | Assert translated editor close label. |
+| modify | `apps/admin/src/features/events/components/event-form.tsx` | Admin keyboard opt-in. |
+| modify | `apps/admin/src/features/marketing/components/campaign-form-fields.tsx` | Admin keyboard opt-in. |
+| modify | `apps/admin/src/features/projects/components/review-body.tsx` | Admin keyboard opt-in. |
+| modify | `apps/admin/src/features/requests/components/comment-composer.tsx` | Admin keyboard opt-in. |
+| modify | `apps/admin/src/features/events/components/sheet.tsx` | Keep Escape in the active nested dialog from discarding the containing Admin event draft. No save/business behavior change. |
+| create | `apps/admin/src/features/events/components/sheet-keyboard.spec.tsx` | Outer Escape/close unchanged, nested Escape preserves draft, closed sheet listener cleanup. |
+
+Owner also permits prefix-owned auth fixture accounts through the existing Admin API on the approved isolated cluster only (first-password/2FA). No fixture has been created by this declaration; exact fixture tooling paths must be declared before implementation. No existing accounts, PG5432/opchub_test, original services or resets are authorized.
+
+
+## Actual native control browser phase — after auditb2b8acf0
+
+| Action | Exact path | Scope |
+|---|---|---|
+| create | `e2e/behavior/admin-i18n/control-labels.ts` | Fixed12 identities, typed physical raw UI/member/event/AI labels and independent control/number oracles. |
+| create | `e2e/behavior/admin-i18n/control-calendar.ts` | Real AntD open preset/header/keyboard/Gregorian/popup bounds checks, no date or business mutation. |
+| create | `e2e/behavior/admin-i18n/control-members.ts` | Actual DTO-backed pager/bulk count labels, canonical page values and local selection/clear keyboard actions; no exports or mutations. |
+| create | `e2e/behavior/admin-i18n/control-editor.ts` | Real Event drawer, translated toolbar/link dialog, keyboard/local URL validation/content retention, no submit. |
+| create | `e2e/behavior/admin-i18n/control-empty.ts` | Actual AI call-log valid future-range GET proves native AntD empty label/filters and close control; no intercepted backend or export. |
+| create | `e2e/behavior/admin-i18n-controls.spec.ts` | Fixed12 identities ×2 widths ×4 real control flows; same MSW/native assertions and strict existing guards. |
+| modify | `e2e/playwright.admin-i18n.config.ts` | Register native control behavior file, preserve all existing cases/assertions and no DB fixture. |
+| create | `coding-packs/reports/evidence/v46-824/controls-first.log` | Retain actual initial control defects and diagnostic errors, not waived. |
+| create | `coding-packs/reports/evidence/v46-824/controls-msw.log` | Actual control commands/results for production MSW, scope/counts explicit. |
+| create | `coding-packs/reports/evidence/v46-824/controls-native.log` | Identical assertions on approved private native API, strict guards/no reset. |
+| create | `coding-packs/reports/evidence/v46-824/controls-quality.log` | Root lint/typecheck/depcheck for control implementation, actual cache status. |
+| create | `coding-packs/reports/evidence/v46-824/controls-unit.log` | Root tests including fresh UI/Admin/Portal dependency regressions; not browser proof. |
+| create | `coding-packs/reports/evidence/v46-824/controls-portal.log` | Fresh Portal production build after optional shared RichText change; unchanged defaults, not native/API proof. |
+| create | `apps/admin/src/providers/admin-controls.module.css` | Admin-body-scoped mobile calendar layout; stack both panels/presets, keep full content and vertical access, no hidden-overflow mask or Portal change. |
+| create | `apps/admin/src/providers/admin-controls.spec.ts` | Scoped/mobile-only style and Portal-default regression contracts; actual DOM bounds remain browser gates. |
+| modify | `apps/admin/src/app/layout.tsx` | Attach Admin-only control scope class to existing body, no extra provider/DOM wrapper/auth changes. |
+
 ## Production baseline measurement phase — after test89c2ed1b
 
 | Action | Exact path | Scope |

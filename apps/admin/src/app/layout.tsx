@@ -10,6 +10,7 @@ import { AppProviders } from '@/providers/app-providers';
 import { loadAntdLocale } from '@/i18n/antd-locales';
 import { AdminIntlErrors } from '@/providers/admin-intl-errors';
 import { adminFontStyle } from '@/i18n/font-config';
+import controls from '@/providers/admin-controls.module.css';
 
 export const metadata: Metadata = {
   title: 'OPC Hub Admin',
@@ -24,7 +25,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   const uiLocale = await loadAntdLocale(locale);
   return (
     <html lang={locale} style={adminFontStyle(locale)} suppressHydrationWarning>
-      <body suppressHydrationWarning>
+      <body className={controls.scope} suppressHydrationWarning>
         <AntdRegistry>
           <NextIntlClientProvider>
             <AdminIntlErrors>

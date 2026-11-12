@@ -60,6 +60,7 @@ export function useAdminUiLabels() {
   const editor = Object.fromEntries(
     EDITOR_KEYS.map((key) => [key, t(`editor.${key}`)]),
   ) as unknown as RichTextLabels;
+  editor.close = t('close');
   const presetLabels = [
     t('calendar.today'),
     t('calendar.week'),

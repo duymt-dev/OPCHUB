@@ -3,6 +3,7 @@ import { Input, Select, Space } from 'antd';
 import { useTranslations } from 'next-intl';
 import { AI_PROVIDER_IDS, AI_PURPOSES, type AiCallsFilter } from '@opchub/shared/api-domains';
 import { useAiProviderLabel } from '../../hooks/use-ai-provider-label';
+import { serializeAiCallDay } from '../../ai-call-date-input';
 
 const date = (iso: string) => new Date(Date.parse(iso) + 7 * 3600000).toISOString().slice(0, 10);
 export function AiCallFilters({
@@ -27,7 +28,8 @@ export function AiCallFilters({
         aria-label={t('from')}
         value={date(value.from)}
         onChange={(e) => {
-          if (e.target.value) onChange({ ...value, from: `${e.target.value}T00:00:00+07:00` });
+          if (e.target.value)
+            onChange({ ...value, from: serializeAiCallDay(e.target.value, 'from') });
         }}
       />
       <Input
@@ -35,7 +37,7 @@ export function AiCallFilters({
         aria-label={t('to')}
         value={date(value.to)}
         onChange={(e) => {
-          if (e.target.value) onChange({ ...value, to: `${e.target.value}T23:59:59.999+07:00` });
+          if (e.target.value) onChange({ ...value, to: serializeAiCallDay(e.target.value, 'to') });
         }}
       />
       <Select

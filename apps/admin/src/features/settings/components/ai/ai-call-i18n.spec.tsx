@@ -147,12 +147,12 @@ describe('D-141 AC824-06/08/11 AI log live presentation', () => {
       </Labels>,
     );
     fireEvent.change(screen.getByLabelText('From date'), { target: { value: '2026-11-02' } });
-    expect(changed).toHaveBeenLastCalledWith({ ...initial, from: '2026-11-02T00:00:00+07:00' });
+    expect(changed).toHaveBeenLastCalledWith({ ...initial, from: '2026-11-01T17:00:00.000Z' });
     fireEvent.mouseDown(screen.getByRole('combobox', { name: 'AI purpose' }));
     fireEvent.click(screen.getByText('Script', { selector: '.ant-select-item-option-content' }));
     expect(changed).toHaveBeenLastCalledWith({
       ...initial,
-      from: '2026-11-02T00:00:00+07:00',
+      from: '2026-11-01T17:00:00.000Z',
       purpose: 'script',
     });
     const count = changed.mock.calls.length;

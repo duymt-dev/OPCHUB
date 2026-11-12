@@ -178,6 +178,7 @@ export function BodyField({
       />
       <RichTextField
         labels={ui.editor}
+        keyboardControls
         key={`${rev}:${aiRevision}`}
         value={f.body}
         onChange={(body) => set({ body })}

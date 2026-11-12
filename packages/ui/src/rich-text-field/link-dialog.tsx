@@ -38,6 +38,7 @@ export function LinkDialog({
       title={labels.linkTitle}
       size="small"
       onClose={onClose}
+      {...(labels.close === undefined ? {} : { closeLabel: labels.close })}
       footer={
         <>
           {initial ? (

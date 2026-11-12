@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, type ReactNode } from 'react';
+import { useEffect, useRef, type ReactNode } from 'react';
 import styles from './sheet.module.css';
 
 interface SheetProps {
@@ -30,9 +30,15 @@ export function Sheet({
   footer,
   children,
 }: SheetProps) {
+  const sheet = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape' || e.defaultPrevented) return;
+      const dialog = e.target instanceof Element ? e.target.closest('[role="dialog"]') : null;
+      if (dialog && dialog !== sheet.current) return;
+      onClose();
+    };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [open, onClose]);
@@ -48,6 +54,7 @@ export function Sheet({
         onClick={onClose}
       />
       <div
+        ref={sheet}
         className={`${styles.sheet} ${width === 'wide' ? styles.wide : styles.narrow}`}
         role="dialog"
         aria-modal="true"

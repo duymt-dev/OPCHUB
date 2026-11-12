@@ -79,6 +79,7 @@ function FormBody({ initial, onClose }: { initial: EventFormState; onClose: () =
           {t('form.desc')}
           <RichTextField
             labels={ui.editor}
+            keyboardControls
             value={f.description}
             onChange={(description) => set({ description })}
             placeholder={t('form.descPh')}

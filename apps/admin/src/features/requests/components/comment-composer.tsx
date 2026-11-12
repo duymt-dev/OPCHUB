@@ -38,6 +38,7 @@ export function CommentComposer({ code }: { code: string }) {
     <div className={styles.box}>
       <RichTextField
         labels={ui.editor}
+        keyboardControls
         key={edKey}
         value={html}
         onChange={setHtml}

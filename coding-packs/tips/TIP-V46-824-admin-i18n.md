@@ -165,6 +165,12 @@ Mỗi dòng có test mang prefix **D-141 AC824-xx**; số lượng case thực t
 
 ## CONSTRAINTS
 
+### Owner-approved bounded correction — 12/11/2026
+
+Owner also approved optional RichText close labels and optional Enter/Space toolbar handling, enabled by Admin only; Portal defaults and pointer behavior stay unchanged. Exact paths are in the manifest. Auth fixtures are permitted only through existing Admin API, prefix-owned accounts on the approved isolated cluster; existing accounts/data and original services remain untouched. These are narrow approvals, not permission for broad shared UI/backend changes.
+
+Owner approved “Cho phép sửa serializer UTC tương đương” after the actual AI call-log date-filter GET returned 400. Serialize the same +07:00 day boundaries as UTC Z in Admin only; preserve instants, schema/API, range rules and all existing business values. This exception does not authorize backend/schema changes. Keep the original failure and rerun the real filter control against both modes before claiming acceptance.
+
 - **DO NOT:** sửa server/DB/Portal business logic, đổi hợp đồng API/error/export, dịch user content hoặc thay payload canonical, đổi persistence/auth/permission, nối settings language, sửa prototype/baseline/mask ảnh, hardcode language vào UI, global mutable locale theo request, dynamic import từ cookie chưa allowlist.
 - **REUSE:** next-intl/AntD/dayjs đang có; shared locale fixtures và LanguageSwitch; raw zod/API; hiện có props labels; logger. Không import code của Portal, không thêm runtime translator/LLM call.
 - **Dependency:** được khai báo trực tiếp devDependency `intl-messageformat` từ catalog đã có như Portal để test ICU; không import dependency transitive không khai báo. Lockfile chỉ thay importer tương ứng, không upgrade dây chuyền. Nếu cần parser AST ICU chuyên dụng, đối chiếu export công khai của package đã khai báo; thêm package mới phải ghi lý do và cập nhật manifest trước.

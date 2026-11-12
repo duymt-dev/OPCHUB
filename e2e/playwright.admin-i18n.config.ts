@@ -26,6 +26,7 @@ export default defineConfig({
         'admin-i18n-picker.spec.ts',
         'admin-i18n-intl.spec.ts',
         'admin-i18n-all-locales.spec.ts',
+        'admin-i18n-controls.spec.ts',
         'admin-i18n/response-lifetime.spec.ts',
       ],
     },
