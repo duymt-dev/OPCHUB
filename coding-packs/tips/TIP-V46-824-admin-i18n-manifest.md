@@ -1,5 +1,22 @@
 # TIP-V46-824 - Exact file manifest
 
+## Production baseline measurement phase — after test89c2ed1b
+
+| Action | Exact path | Scope |
+|---|---|---|
+| create | `e2e/audit/admin-performance/config.ts` | Validate explicit local audit metadata; no new env, globalSetup, DB access or original services. |
+| create | `e2e/audit/admin-performance/flight.ts` | Decode actual Next Flight queue data without eval, require exactly one resolved message catalog, compare raw selected bundle. |
+| create | `e2e/audit/admin-performance/assets.ts` | Cold browser actual executable JS/CSS/font response body hashes and deterministic gzip sizes, strict read-only/error guards. |
+| create | `e2e/audit/admin-performance/measure.ts` | Fresh-context real native session, actual route data readiness, HTML/RSC/catalog/resource receipts, no credentials/content persisted. |
+| create | `e2e/audit/admin-i18n-performance.spec.ts` | Twelve cold route/locale measurements and concurrent SSR locale isolation, baseline/current same assertions. |
+| create | `e2e/audit/admin-performance-contract.spec.ts` | Pure extraction/single-catalog/invalid-Flight/config negatives; not authenticated browser proof. |
+| create | `e2e/audit/admin-performance/compare.ts` | Validate all24 fixed raw browser receipts and asset sums; compute12 exact route comparisons and explicit original250KB debt, fail over15% regression. |
+| create | `e2e/audit/admin-performance-budget.spec.ts` | Actual paired measurement budget gate and pure empty/negative/over15% comparison negatives. |
+| create | `coding-packs/reports/evidence/v46-824/performance-baseline-build.log` | Original f7c1b2b8 archive/frozen install/build receipt, retaining actual failed attempts. |
+| create | `coding-packs/reports/evidence/v46-824/performance.log` | Actual baseline/current measurement commands and output, failures retained, no DB credentials. |
+| create | `coding-packs/reports/evidence/v46-824/performance.json` | Actual route-wise baseline/current JS gzip, RSC/catalog/font receipts and15%/250KB findings, not cached test timing. |
+| create | `coding-packs/reports/evidence/v46-824/performance.md` | Method, source/build hashes, cold-cache mode, asset/data split, baseline debt and regression findings. |
+
 ## Reduced-ICU browser completion phase — after source0e3803b3
 
 | Action | Exact path | Scope |
