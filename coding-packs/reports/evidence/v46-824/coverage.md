@@ -2,6 +2,14 @@
 
 **Partial evidence only.** Metadata implementation is not proof that a route body, dialog, every locale or API is verified.
 
+## Auth workflow candidate — based on821ff652, root gates passed
+
+**33/33 MSW +33/33 private-native PASS**, identical assertions:24 actual prefix-owned first-password → optional2FA setup/enable → logout/MFA verification workflows per mode across12 identities and1440/390, plus9 pure RFC/protocol negatives. Existing non-Super role/permissions and exact auth payloads/DTOs are checked. First-password locale refresh under the inert backdrop is explicitly a covered-handler probe, not actual selector accessibility;2FA setup uses real pointer selection and preserves draft/raw URI. No native account reset/seed, original-account mutation, schema/API/RBAC/Portal/shared change or assertion/timeout/skip relaxation.
+
+Final images56 =7 locales ×2 widths ×first-password/MFA ×2 modes, plus2 archived initial failures. Actual viewport and action text-range bounds run for all12 identities, blank passwords/no setup-secret DOM and natural toast disappearance before capture. Real defects were corrected in Admin-only setup scroll and content-sized buttons; old offscreen/19px-clipped captures/failures remain. Agent reviewed final My390 and native Vi MFA390; native-human/owner approval remains absent. MSW schema-invalid short challenge was corrected to opaque tokens without weakening shared validation;6 focused units pass in the final fresh Admin root run. Both rebuilt Admin outputs pass physical49-case raw gates; candidate24 code/harness blobs frozen. Post-format root gates PASS: lint8/7cached, typecheck8/7cached, depcheck2878/8803 plus1260/5995;3394 unique tests plus2 existing integration skips, fresh Admin1664/200files and other5 suites cached. No timeout/assertion/skip change; final source commit is recorded separately after hooks.
+
+This does not prove the full expanded341 inventory, forgot/reset, remaining state/403/chat, save/RBAC/raw/export/disabled-config, VI-prototype or fresh final source/performance acceptance. See auth-{msw,native,first,quality}.log and completion report; historical scope below is retained.
+
 ## Actual controls — source eb9a9a0a
 
 Required root gates passed before source commit/push;29 final source/test/harness blobs verified identical after normal hooks, then clean status. Fresh static audit eb9a9a0a PASS/dirty=false,593 production files/303 findings/0 unreviewed/errors,610 fingerprint files, corpus `eaa08c1a4bb4455768d04cd1754af9003f76a0d9a3606252bc20dd57eedebe8c` (CSS/catalogs/browser excluded). Candidate build production inputs match the committed source; no fresh post-commit full308 run is claimed.

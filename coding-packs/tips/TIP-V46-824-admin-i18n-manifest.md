@@ -1,5 +1,120 @@
 # TIP-V46-824 - Exact file manifest
 
+## Auth image privacy and viewport proof
+
+The stronger actual viewport assertion also found the mobile setup dialog entirely offscreen: LoginScreen calls leaveAuth (scroll-to-top) even when transitioning to another Auth setup route. Preserve scroll for setup routes and reset only when actually entering the app, using a small Admin-only navigation helper. No route/next target, session, restriction, API or shared/Portal layout change; the existing prototype-style frosted Auth frame remains unchanged.
+
+| Action | Exact path | Scope |
+|---|---|---|
+| create | `apps/admin/src/features/auth/navigate-after-auth.ts` | Preserve existing setup-route scroll, reset only for completed app entry. |
+| create | `apps/admin/src/features/auth/navigate-after-auth.spec.ts` | Both setup routes and exact safe next/query/hash/reset ordering regression. |
+| modify | `apps/admin/src/features/auth/components/login-screen.tsx` | Delegate existing final/setup navigation to helper. |
+| modify | `apps/admin/src/features/auth/hooks/use-first-password.ts` | Consistent scroll semantics after unchanged session/restriction handling. |
+| modify | `apps/admin/src/features/auth/components/two-factor-screen.tsx` | Reset app-entry scroll after enable, unchanged callbacks/target. |
+
+Agent review found Myanmar mobile action text extending beyond the fixed36px buttons. Add real text-range/hit-box assertions before correcting only Admin setup action sizing; preserve36px minimum, full labels, Portal defaults and auth callbacks. First captures also contain the naturally expiring prior provisioning logout toast; final image readiness waits for real dismissal, never hides/masks it.
+
+| Action | Exact path | Scope |
+|---|---|---|
+| create | `e2e/behavior/admin-i18n-auth/geometry.ts` | Actual auth action text ranges inside their visible hit boxes and dialog/form viewport bounds, all twelve identities. |
+| modify | `apps/admin/src/features/auth/components/setup.module.css` | Content-sized Admin auth actions with36px minimum; no fixed-height clipping or Portal change. |
+| create | `apps/admin/src/features/auth/tests/setup-layout.spec.ts` | Preserve minimum hit height/full-label wrapping; actual geometry remains a browser requirement. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-capture-clipped-my-msw-390.png` | Preserve inspected original clipped Myanmar action labels; no setup secret or populated password fields. |
+
+Capture only empty first-password fields and the subsequent login MFA form, never the setup form that exposes an otpauth secret. Actual unmasked images, same assertions in both modes, no fabricated human/owner approval. Assert no setup-secret DOM or nonempty password fields before capture and viewport bounds for every identity, including identities without saved images.
+
+| Action | Exact path | Scope |
+|---|---|---|
+| create | `e2e/behavior/admin-i18n-auth/images.ts` | Secret-free unmasked auth evidence, fixed seven screenshot locales and two viewports; no masking/response interception. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-capture-toast-vi-native-390.png` | Preserve inspected first capture with the preceding English provisioning logout toast; final capture waits for actual natural dismissal, not masking. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-vi-msw-1440.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-vi-msw-1440.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-vi-msw-390.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-vi-msw-390.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-vi-native-1440.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-vi-native-1440.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-vi-native-390.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-vi-native-390.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-en-msw-1440.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-en-msw-1440.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-en-msw-390.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-en-msw-390.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-en-native-1440.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-en-native-1440.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-en-native-390.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-en-native-390.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-zh-msw-1440.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-zh-msw-1440.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-zh-msw-390.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-zh-msw-390.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-zh-native-1440.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-zh-native-1440.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-zh-native-390.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-zh-native-390.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-th-msw-1440.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-th-msw-1440.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-th-msw-390.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-th-msw-390.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-th-native-1440.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-th-native-1440.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-th-native-390.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-th-native-390.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-km-msw-1440.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-km-msw-1440.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-km-msw-390.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-km-msw-390.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-km-native-1440.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-km-native-1440.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-km-native-390.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-km-native-390.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-lo-msw-1440.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-lo-msw-1440.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-lo-msw-390.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-lo-msw-390.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-lo-native-1440.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-lo-native-1440.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-lo-native-390.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-lo-native-390.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-my-msw-1440.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-my-msw-1440.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-my-msw-390.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-my-msw-390.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-my-native-1440.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-my-native-1440.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first-password-my-native-390.png` | Actual unmasked first-password UI, empty password/OTP fields and no setup URI/secret in DOM. |
+| create | `coding-packs/reports/evidence/v46-824/auth-mfa-my-native-390.png` | Actual unmasked mfa UI, empty password/OTP fields and no setup URI/secret in DOM. |
+
+## Approved isolated auth fixture verification — after source eb9a9a0a
+
+Actual MSW diagnostic found a pre-existing contract defect: `mfa.<short mock id>` fails the shared minimum20-character token schema, making valid challenge verification return400. Per mandatory two-mode testing rule, correct the mock to the existing native opaque challenge contract, not the shared schema or browser assertions. Native uses a five-minute, single-use challenge with five invalid-code attempts. No server/API/schema/Portal change is authorized or planned.
+
+| Action | Exact path | Scope |
+|---|---|---|
+| create | `apps/admin/src/mocks/handlers/mock-admin-mfa.ts` | Opaque schema-valid mock challenge, existing native five-minute/single-use/five-fail semantics. |
+| create | `apps/admin/src/mocks/handlers/mock-admin-mfa.spec.ts` | Real shared-schema validation, short IDs, expiry/replay/invalid-token/failure cap, no live credentials. |
+| modify | `apps/admin/src/mocks/handlers/auth.ts` | Delegate mock issuance/verification; keep shared validation/native response contract, no schema relaxation. |
+
+Owner permitted prefix-owned accounts through the existing Admin API on the approved private cluster. Create a unique `tip824-auth-` account per case, assign an existing non-Super-Admin role, change only its own first password/2FA through real UI/API. Do not modify roles, global security configuration, existing accounts, DBs or services. Retain isolated fixtures, no reset/seed/direct SQL. Identical MSW/native assertions; keep the loaded-state read-only guard unchanged. Separate auth protocol guard permits only this exact provisioning/auth sequence, validates principal/DTO/request bodies and the expected MFA401 challenge. No stored credentials/tokens/otpauth URI/screenshots/traces in repository evidence.
+
+| Action | Exact path | Scope |
+|---|---|---|
+| modify | `e2e/behavior/admin-i18n/fixtures.ts` | Export existing private-endpoint validation unchanged for reuse; no guard relaxation. |
+| create | `e2e/behavior/admin-i18n-auth/labels.ts` | Typed physical raw auth/UI/profile labels, fixed twelve identities. |
+| create | `e2e/behavior/admin-i18n-auth/protocol.ts` | Prefix/principal-bound exact auth write and response protocol guard, secret-free diagnostics. |
+| create | `e2e/behavior/admin-i18n-auth/fixtures.ts` | Dedicated auth guard and private preflight; no global reset fixture or broad HTTP waiver. |
+| create | `e2e/behavior/admin-i18n-auth/provision.ts` | Existing Admin API creates prefix-only fixture, in-memory random passwords, existing role unchanged, real logout/login. |
+| create | `e2e/behavior/admin-i18n-auth/first-password.ts` | Real restricted route, inert backdrop/local validation/live-label draft preservation, exact own-account password payload. |
+| create | `e2e/behavior/admin-i18n-auth/two-factor.ts` | Real optional profile setup, local error/live locale, valid RFC6238 enable and subsequent challenge/verify. |
+| create | `e2e/behavior/admin-i18n-auth/totp.ts` | Independent RFC6238 SHA1/6-digit oracle; no fixed live OTP or secret persistence. |
+| create | `e2e/behavior/admin-i18n-auth/totp-contract.spec.ts` | Published RFC vectors and invalid-input negatives, not authenticated workflow evidence. |
+| create | `e2e/behavior/admin-i18n-auth/protocol-contract.spec.ts` | Disallowed business/role/existing-account writes and malformed challenge negatives. |
+| create | `e2e/behavior/admin-i18n-auth.spec.ts` | Twelve selector identities ×two widths actual first-password/setup/login challenge flows, same assertions both modes. |
+| modify | `e2e/playwright.admin-i18n.config.ts` | Register auth cases/pure guard contracts without changing existing cases, assertions or timeouts. |
+| create | `coding-packs/reports/evidence/v46-824/auth-first.log` | Retain real initial failures, no tokens/password/otpauth output. |
+| create | `coding-packs/reports/evidence/v46-824/auth-msw.log` | Actual same-assertion MSW auth results, safe protocol metadata only. |
+| create | `coding-packs/reports/evidence/v46-824/auth-native.log` | Actual approved private-native auth results, no original services/DB mutation. |
+| create | `coding-packs/reports/evidence/v46-824/auth-quality.log` | Exact root gates/cache status; test-only additions do not imply fresh production builds. |
+
 ## Owner-approved UTC serializer correction — 12/11/2026
 
 Owner: “Cho phép sửa serializer UTC tương đương”. The browser discovered an existing AI call-log 400: date inputs emit +07:00 while the query accepts UTC Z. Only the presentation serializer may change, retaining exactly the same Vietnamese day boundaries/instants. No schema, API, server, range policy or persistence change. Initial failure remains in controls-first.log.

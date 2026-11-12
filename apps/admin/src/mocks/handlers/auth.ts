@@ -7,7 +7,6 @@ import {
   isStrongAdminPassword,
   loginRequestSchema,
   resetPasswordSchema,
-  totpVerifySchema,
 } from '@opchub/shared/api';
 import { mockLogin, mockResetPassword } from '@opchub/shared/mock-data';
 import {
@@ -23,6 +22,7 @@ import { http, HttpResponse } from 'msw/http';
 import { z } from 'zod';
 import { parseBody, userIdOf } from './domain-util';
 import { MOCK_TOTP_SECRET, verifyMockTotp } from './totp';
+import { issueMockAdminMfa, verifyMockAdminMfa } from './mock-admin-mfa';
 import { apiError, API } from './util';
 import {
   clearMockAdminSession,
@@ -61,17 +61,12 @@ export const authHandlers = [
     // D-27 bước 2: TK đã bật 2FA → chưa phát phiên, cần mã TOTP
     if (mockAdminMeOf(r.id)?.twoFactor) {
       return apiError(401, 'UNAUTHORIZED', 'Cần mã xác thực 2 lớp', [
-        { path: 'mfaToken', message: `mfa.${r.id}` },
+        { path: 'mfaToken', message: issueMockAdminMfa(r.id) },
       ]);
     }
     return session(r.id);
   }),
-  http.post(`${API}/admin/auth/totp/verify`, async ({ request }) => {
-    const b = await parseBody(request, totpVerifySchema);
-    if (!b.ok) return b.res;
-    if (!(await verifyMockTotp(b.data.code))) return apiError(401, 'UNAUTHORIZED', MSG.codeInvalid);
-    return session(b.data.mfaToken.replace(/^mfa\./, ''));
-  }),
+  http.post(`${API}/admin/auth/totp/verify`, ({ request }) => verifyMockAdminMfa(request)),
   http.post(`${API}/admin/auth/refresh`, ({ cookies }) => refreshMockAdminSession(cookies)),
   http.post(`${API}/admin/auth/logout`, clearMockAdminSession),
   http.get(`${API}/admin/auth/me`, ({ request }) => {

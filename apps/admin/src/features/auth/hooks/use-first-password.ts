@@ -10,6 +10,7 @@ import { useAuthStore } from '@/lib/auth-store';
 import { useLocalErrors } from '@/i18n/use-local-errors';
 import { changeFirstPassword, logout } from '../api';
 import { setupRouteOf } from '../setup-route';
+import { navigateAfterAdminAuth } from '../navigate-after-auth';
 
 type Field = 'newPassword' | 'confirmPassword';
 type Code = 'adminPasswordRule' | 'passwordMismatch';
@@ -34,7 +35,7 @@ export function useFirstPassword() {
       const s = await changeFirstPassword({ newPassword: pwd, confirmPassword: confirm });
       setSession(s.accessToken, s.admin);
       toast(t('done'));
-      router.replace(setupRouteOf(s.admin) ?? '/overview');
+      navigateAfterAdminAuth(router, setupRouteOf(s.admin), '/overview');
     } catch (e) {
       if (!(e instanceof ApiError)) throw e;
       const next: Partial<Record<Field, string>> = {};

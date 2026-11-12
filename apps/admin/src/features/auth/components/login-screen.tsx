@@ -17,7 +17,8 @@ import { safeNext } from '../safe-next';
 import { AuthFrame } from './auth-frame';
 import { LOGIN_SSO, useLoginLabels } from './login-labels';
 import { TotpStep } from './totp-step';
-import { KEEP_SCROLL, leaveAuth } from '../keep-scroll';
+import { KEEP_SCROLL } from '../keep-scroll';
+import { navigateAfterAdminAuth } from '../navigate-after-auth';
 
 /** TK dùng thử của prototype (`ACCOUNTS`): loại fixture → nhãn + màu thẻ */
 const DEMO_KIND = {
@@ -44,7 +45,7 @@ export function LoginScreen() {
     setSession(res.accessToken, res.admin);
     const setup = setupRouteOf(res.admin);
     if (!setup) toast(t('login.welcomeAdmin'));
-    leaveAuth(() => router.replace(setup ?? next));
+    navigateAfterAdminAuth(router, setup, next);
   };
 
   const labels = useLoginLabels();

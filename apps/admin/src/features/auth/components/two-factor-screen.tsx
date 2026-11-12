@@ -7,6 +7,7 @@ import { useAuthStore } from '@/lib/auth-store';
 import { logout } from '../api';
 import { AuthFrame } from './auth-frame';
 import { TwoFactorForm } from './two-factor-form';
+import { navigateAfterAdminAuth } from '../navigate-after-auth';
 
 /** SEC-R02: "Bắt buộc 2FA cho quản trị viên" bật mà TK chưa có → thiết lập trước khi vào Admin */
 export function TwoFactorScreen() {
@@ -24,7 +25,7 @@ export function TwoFactorScreen() {
         onDone={(s) => {
           setSession(s.accessToken, s.admin);
           toast(t('done'));
-          router.replace('/overview');
+          navigateAfterAdminAuth(router, null, '/overview');
         }}
         onCancel={() => {
           void logout().catch(() => undefined);

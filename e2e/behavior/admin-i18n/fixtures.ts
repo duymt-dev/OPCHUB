@@ -36,7 +36,7 @@ function rawContent(value: Json, strings: Set<string>, content = false): void {
 }
 
 /** Native checks require an explicitly selected, private native cluster, never original PG5432. */
-function requirePrivateNative(): void {
+export function requirePrivateNative(): void {
   if (env.E2E_TARGET !== 'server') return;
   if (!env.DIRECT_URL || env.SKIP_SEED !== '1')
     throw new Error(
