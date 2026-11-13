@@ -184,13 +184,13 @@ test.describe('Quên mật khẩu', () => {
 test.describe('Đổi ngôn ngữ', () => {
   test('chọn English → chữ màn đăng nhập đổi, giữ sau tải lại', async ({ page }) => {
     await page.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
-    await page.getByRole('button', { name: /Tiếng Việt/ }).click();
+    await page.getByRole('button', { name: /Việt Nam/ }).click();
     await expect(page.getByText('CHỌN QUỐC GIA & NGÔN NGỮ')).toBeVisible();
-    await page.getByRole('option', { name: /Toàn cầu/ }).click();
+    await page.getByRole('option', { name: /Anh/ }).click();
     await expect(page.getByText('Remember me')).toBeVisible();
     await expect(page.getByRole('button', { name: 'Sign in', exact: true })).toBeVisible();
     await page.reload({ waitUntil: 'networkidle' });
-    await expect(page.getByRole('button', { name: /English/ })).toBeVisible();
+    await expect(page.getByRole('button', { name: /Anh/ })).toBeVisible();
   });
 });
 

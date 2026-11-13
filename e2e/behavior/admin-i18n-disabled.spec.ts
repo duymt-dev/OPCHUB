@@ -39,7 +39,7 @@ for (const width of [1440, 390]) {
         code,
       );
       const trigger = page.locator('button[aria-haspopup="listbox"]');
-      await expect(trigger).toContainText(choice.native);
+      await expect(trigger).toContainText(choice.country);
       await trigger.click();
       const list = page.getByRole('listbox');
       await expect(list.getByRole('option')).toHaveCount(12);

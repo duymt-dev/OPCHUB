@@ -187,7 +187,7 @@ export const PORTAL_SHELL: Scenario[] = [
     name: 'Topbar · ngôn ngữ',
     start: 'user',
     steps: async (c) => {
-      await tap(c, 'Tiếng Việt');
+      await tap(c, c.side === 'app' ? 'Việt Nam' : 'Tiếng Việt');
       await waitText(c, 'CHỌN QUỐC GIA & NGÔN NGỮ');
     },
   },

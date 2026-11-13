@@ -68,8 +68,8 @@ test.describe('Khung app', () => {
 
   test('ngôn ngữ, menu người dùng, Trang chủ, sự kiện sắp tới', async ({ page }) => {
     await login(page);
-    // D-133 (owner 05/11/2026): keep the selected country's flag, overriding the globe prototype.
-    const lang = page.getByRole('button', { name: 'Tiếng Việt' });
+    // D-133 + D-142: keep the selected country's flag and country label on trigger.
+    const lang = page.getByRole('button', { name: 'Việt Nam' });
     await expect(lang.locator('img')).toHaveCount(1);
     await expect(lang.locator('img')).toHaveAttribute('src', 'https://flagcdn.com/w80/vn.png');
     await expect(lang.locator('svg').first()).toBeVisible();

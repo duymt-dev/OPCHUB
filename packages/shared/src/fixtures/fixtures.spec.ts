@@ -30,11 +30,30 @@ describe('fixtures từ prototype', () => {
 
 describe('fixtures đăng ký', async () => {
   const { phoneCountries, registerGroups, languageOptions } = await import('./register');
-  it('10 mã quốc gia, 34 nhóm có màu, 12 ngôn ngữ', () => {
+  const { localeCountry } = await import('./locale');
+  it('10 mã quốc gia, 34 nhóm có màu, 12 ngôn ngữ (D-142 AC825-01)', () => {
     expect(phoneCountries[0]).toMatchObject({ id: 'vn', dial: '+84' });
     expect(registerGroups).toHaveLength(34);
     expect(registerGroups[1]?.tone.fg).toBe('#FF4D4F');
     expect(languageOptions).toHaveLength(12);
+    expect(languageOptions.map((l) => [l.code, l.country])).toEqual([
+      ['vi', 'Việt Nam'],
+      ['en', 'Anh'],
+      ['zh', 'Trung Quốc'],
+      ['id', 'Indonesia'],
+      ['th', 'Thái Lan'],
+      ['ms', 'Malaysia'],
+      ['en-SG', 'Singapore'],
+      ['fil', 'Philippines'],
+      ['km', 'Campuchia'],
+      ['lo', 'Lào'],
+      ['my', 'Myanmar'],
+      ['ms-BN', 'Brunei'],
+    ]);
+    expect(localeCountry('en')).toBe('Anh');
+    expect(localeCountry('zh')).toBe('Trung Quốc');
+    expect(localeCountry('en-SG')).toBe('Singapore');
+    expect(localeCountry('unknown')).toBe('Việt Nam');
   });
 });
 

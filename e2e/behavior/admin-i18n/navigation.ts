@@ -25,7 +25,7 @@ export async function selectLocale(
   await activate(option);
   await expect(page.locator('html')).toHaveAttribute('lang', code);
   const trigger = page.locator('button[aria-haspopup="listbox"]');
-  await expect(trigger).toContainText(choice.native);
+  await expect(trigger).toContainText(choice.country);
   await expect(trigger.locator('img')).toHaveAttribute('src', choice.flagSrc);
   await expect(page).toHaveURL(before);
   await expect(list).toBeHidden();

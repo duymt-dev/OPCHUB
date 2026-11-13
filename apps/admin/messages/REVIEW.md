@@ -122,12 +122,12 @@ Pinned upstream Google Fonts commit `5bb28733cec313b63fbd415b574b5ae35c8aa8b8`. 
 | Self-hosted file              |   Bytes | Actual cmap entries |
 | ----------------------------- | ------: | ------------------: |
 | NotoSans-Regular.woff2        |   84076 |                1781 |
-| NotoSansSC-Regular.woff2      | 1081440 |                7719 |
-| NotoSansThai-Regular.woff2    |   10636 |                 121 |
-| NotoSansKhmer-Regular.woff2   |   18740 |                 180 |
-| NotoSansLao-Regular.woff2     |   10820 |                 117 |
-| NotoSansMyanmar-Regular.woff2 |   43372 |                 257 |
-| LanguageMenu-Regular.woff2    |    9724 |                  67 |
+| NotoSansSC-Regular.woff2      | 1081104 |                7718 |
+| NotoSansThai-Regular.woff2    |   14272 |                 189 |
+| NotoSansKhmer-Regular.woff2   |   22476 |                 251 |
+| NotoSansLao-Regular.woff2     |   14804 |                 186 |
+| NotoSansMyanmar-Regular.woff2 |   47256 |                 327 |
+| LanguageMenu-Regular.woff2    |    9752 |                  67 |
 
 - Static regular400 instances, width100 when supported. Heavier GUI weights use browser synthesis; these files are not claimed to contain nine real weight masters. Original outlines/shaping tables are retained after subsetting; hinting programs are removed before cross-family merging.
 - Latin is the primary face, with a single selected SC/Thai/Khmer/Lao/Myanmar fallback. CSS URLs are compiled into hashed/basePath-aware Next assets. Registering twelve faces for seven binaries does not download them all; the browser loads only referenced families. The selector alone uses a9.7KB merged font covering all twelve unchanged native names/countries, avoiding five full-script downloads merely to open the menu.
