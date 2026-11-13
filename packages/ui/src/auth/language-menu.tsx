@@ -58,13 +58,13 @@ export function LanguageMenu({
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
       >
-        {/* Cờ của ngôn ngữ đang chọn; khi chưa chọn / không có cờ: quả địa cầu dự phòng */}
+        {/* D-133 + D-142: cờ + tên quốc gia đang chọn; không có cờ thì dùng quả địa cầu dự phòng */}
         {active?.flagSrc ? (
           <img className={styles.triggerFlag} src={active.flagSrc} alt="" />
         ) : (
           <Icon name="globe" size={18} />
         )}
-        {active?.native}
+        {active?.country}
         <Icon
           name="chevronDown"
           size={14}

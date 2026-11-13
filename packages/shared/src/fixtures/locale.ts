@@ -14,9 +14,13 @@ export function isLocale(v: string | undefined): v is string {
   return v !== undefined && LOCALES.includes(v);
 }
 
-/** Tên bản ngữ của ngôn ngữ (nút chọn ngôn ngữ) */
+/** Tên bản ngữ của ngôn ngữ (dòng phụ trong bảng chọn ngôn ngữ) */
 export const localeNative = (code: string) =>
   LANGS.find((l) => l.code === code)?.native ?? 'Tiếng Việt';
+
+/** Tên quốc gia của mã ngôn ngữ (D-142: hiển thị trên nút chọn ngôn ngữ Portal + Admin) */
+export const localeCountry = (code: string) =>
+  LANGS.find((l) => l.code === code)?.country ?? 'Việt Nam';
 
 /**
  * Chuỗi màn đăng nhập đã dịch trong prototype; khóa nào không có thì giữ tiếng Việt.
