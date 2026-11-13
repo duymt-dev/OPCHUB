@@ -46,7 +46,7 @@ for (const option of languageOptions) {
       await page.goto(`${ADMIN_URL}/login`);
       await expect(page.locator('html')).toHaveAttribute('lang', option.code);
       const trigger = page.locator('button[aria-haspopup=listbox]');
-      await expect(trigger).toContainText(option.native);
+      await expect(trigger).toContainText(option.country);
       // The selector can arrive before streamed login/provider content discovers Latin fonts.
       await expect(page.locator('input[autocomplete=username]')).toBeVisible();
       await page.waitForLoadState('networkidle');

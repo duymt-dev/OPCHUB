@@ -12,7 +12,7 @@ for (const [name, origin] of [
     await page.goto(`${origin}/login`, { waitUntil: 'networkidle' });
     await page.evaluate(() => document.fonts.ready);
     const support = page.getByRole('link', { name: 'Liên hệ', exact: true });
-    const language = page.getByRole('button', { name: 'Tiếng Việt', exact: true });
+    const language = page.getByRole('button', { name: 'Việt Nam', exact: true });
     await expect(support).toBeVisible();
     await expect(language).toBeVisible();
     const smallSupport = await support.boundingBox();
